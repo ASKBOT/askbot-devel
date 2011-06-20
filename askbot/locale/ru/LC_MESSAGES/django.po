@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-16 01:42-0500\n"
-"PO-Revision-Date: 2011-06-07 00:48+0300\n"
+"PO-Revision-Date: 2011-06-20 17:53+0300\n"
 "Last-Translator: dassdasdas <sadasdas@dsadsa.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3217,7 +3217,7 @@ msgstr "Остались вопросы?"
 #: skins/default/templates/faq.html:81
 #, python-format
 msgid "Please ask your question at %(ask_question_url)s, help make our community better!"
-msgstr "Задайте свой вопрос в %(ask_question_url)s, помогите сделать наше сообщество лучше!"
+msgstr "<a href=\"%(ask_question_url)s\">Задайте свой вопрос</a>, помогите сделать наше сообщество лучше!"
 
 #: skins/default/templates/feedback.html:3
 msgid "Feedback"
