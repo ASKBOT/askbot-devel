@@ -2,6 +2,11 @@
    this template is included at the very bottow of the
    main template "base.html"
 #}
+<div id="no-javascript">
+  <noscript class="noscript">
+    Askbot works best with Javascript enabled
+  </noscript>
+</div>
 <script type="text/javascript">
     var i18nLang = '{{settings.LANGUAGE_CODE}}';
     var scriptUrl = '/{{settings.ASKBOT_URL}}'
