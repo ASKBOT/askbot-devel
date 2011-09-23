@@ -36,6 +36,8 @@ class QuestionsPageSizeMiddleware(object):
                 user.save()
         # put page_size into session
         request.session["page_size"] = page_size
+        
+class ErrorExceptionMiddleware(object):
 
     def process_exception(self, request, exception):
         #todo: move this to separate middleware
