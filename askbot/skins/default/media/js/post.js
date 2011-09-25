@@ -1281,7 +1281,10 @@ Comment.prototype.setContent = function(data){
 
     this._comment_body.append(' (');
     this._comment_age = $('<span class="age"></span>');
-    this._comment_age.html(this._data['comment_age']);
+    if (is_moderator)
+      this._comment_age.html(this._data['comment_age'] + ' from ' + ip_addr);
+    else
+      this._comment_age.html(this._data['comment_age']);
     this._comment_body.append(this._comment_age);
     this._comment_body.append(')');
 

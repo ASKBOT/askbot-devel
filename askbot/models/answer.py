@@ -23,7 +23,8 @@ class AnswerManager(models.Manager):
                 added_at=None, 
                 wiki=False, 
                 text='', 
-                email_notify=False
+                email_notify=False,
+                ip_addr=None
             ):
 
         answer = Answer(
@@ -33,6 +34,7 @@ class AnswerManager(models.Manager):
             wiki = wiki,
             text = text,
             #.html field is denormalized by the save() call
+            ip_addr = ip_addr,
         )
         if answer.wiki:
             answer.last_edited_by = answer.author
@@ -86,6 +88,7 @@ class Answer(content.Content, DeletableContent):
     question = models.ForeignKey('Question', related_name='answers')
     accepted    = models.BooleanField(default=False)
     accepted_at = models.DateTimeField(null=True, blank=True)
+    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = AnswerManager()
 

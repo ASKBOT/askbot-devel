@@ -102,6 +102,19 @@
                     {% endif %}
                 </span>
                 {% endif %}
+                {% if request.user.is_administrator_or_moderator() %}{{ pipe() }}
+                    {% if question.ip_addr not in bannedIPs %}
+                    <span class="moderate-ip block {{question.ip_addr}}" 
+                            title="{% trans %}block IP {% endtrans %} {{question.ip_addr}}">
+                            <a>{% trans %}block IP {% endtrans %}</a>
+                        </span>
+                    {% else %}
+                    <span class="moderate-ip unblock {{question.ip_addr}}" 
+                            title="{% trans %}unblock IP {% endtrans %} {{question.ip_addr}}">
+                            <a>{% trans %}unblock IP {% endtrans %}</a>
+                        </span>
+                    {% endif %}
+                {% endif %}
                 {% if request.user|can_delete_post(question) %}{{ pipe() }}
                     <a id="question-delete-link-{{question.id}}">{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
                 {% endif %}
@@ -112,7 +125,8 @@
                                         question,
                                         "original_author",
                                         question.wiki,
-                                        settings.MIN_REP_TO_EDIT_WIKI
+                                        settings.MIN_REP_TO_EDIT_WIKI,
+                                        request.user,
                                     )
                     }}
                     {{ 
@@ -121,6 +135,7 @@
                                         "last_updater",
                                         question.wiki,
                                         settings.MIN_REP_TO_EDIT_WIKI,
+                                        request.user,
                                     )
                     }}
             </div>
@@ -243,6 +258,19 @@
                                     {% endif %}
                                 </span>
                                 {% endif %}
+                                {% if request.user.is_administrator_or_moderator() %}{{ pipe() }}
+                                    {% if answer.ip_addr not in bannedIPs %}
+                                    <span class="moderate-ip block {{answer.ip_addr}}" 
+                                            title="{% trans %}block IP {% endtrans %} {{answer.ip_addr}}">
+                                            <a>{% trans %}block IP {% endtrans %}</a>
+                                        </span>
+                                    {% else %}
+                                    <span class="moderate-ip unblock {{answer.ip_addr}}" 
+                                            title="{% trans %}unblock IP {% endtrans %} {{answer.ip_addr}}">
+                                            <a>{% trans %}unblock IP {% endtrans %}</a>
+                                        </span>
+                                    {% endif %}
+                                {% endif %}
                                 {% if request.user|can_delete_post(answer) %}{{ pipe() }}
                                     {% spaceless %}
                                     <span class="action-link">
@@ -263,7 +291,8 @@
                                             answer,
                                             "original_author",
                                             answer.wiki,
-                                            settings.MIN_REP_TO_EDIT_WIKI
+                                            settings.MIN_REP_TO_EDIT_WIKI,
+                                            request.user,
                                         )
                                     }}
                                     {{ 
@@ -271,7 +300,8 @@
                                             answer,
                                             "last_updater",
                                             answer.wiki,
-                                            settings.MIN_REP_TO_EDIT_WIKI
+                                            settings.MIN_REP_TO_EDIT_WIKI,
+                                            request.user,
                                         )
                                     }}
                             </div>
@@ -500,12 +530,20 @@
             {% else %}
                 askbot['settings']['saveCommentOnEnter'] = false;
             {% endif %}
+            askbot['urls']['moderate_ip'] = '{% url moderate_ip %}';
+            var ip_addr = '{{request.META['REMOTE_ADDR']}}';
+            {% if request.user.is_administrator_or_moderator() %}
+                var is_moderator = true;
+            {% else %}
+                var is_moderator = false;
+            {% endif %}
         </script>
         <script type='text/javascript' src='{{"/js/wmd/showdown.js"|media}}'></script>
         <script type='text/javascript' src='{{"/js/wmd/wmd.js"|media}}'></script>
     {% endif %}
     <script type='text/javascript' src='{{"/js/jquery.validate.min.js"|media}}'></script>
     <script type='text/javascript' src='{{"/js/post.js"|media}}'></script>
+    <script type='text/javascript' src='{{"/js/moderate_ip.js"|media}}></script>
     <script type="text/javascript">
         // define reputation needs for comments
         var repNeededForComments = 50;

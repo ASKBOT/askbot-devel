@@ -207,7 +207,7 @@ def ask(request):#view used to ask a new question
             tagnames = form.cleaned_data['tags'].strip()
             text = form.cleaned_data['text']
             ask_anonymously = form.cleaned_data['ask_anonymously']
-
+            ip_addr = request.META['REMOTE_ADDR']
             if request.user.is_authenticated():
                 try:
                     question = request.user.post_question(
@@ -216,7 +216,8 @@ def ask(request):#view used to ask a new question
                                                 tags = tagnames,
                                                 wiki = wiki,
                                                 is_anonymous = ask_anonymously,
-                                                timestamp = timestamp
+                                                timestamp = timestamp,
+                                                ip_addr = ip_addr,
                                             )
                     return HttpResponseRedirect(question.get_absolute_url())
                 except exceptions.PermissionDenied, e:
@@ -236,7 +237,7 @@ def ask(request):#view used to ask a new question
                     text = text,
                     summary = summary,
                     added_at = timestamp,
-                    ip_addr = request.META['REMOTE_ADDR'],
+                    ip_addr = ip_addr,
                 )
                 question.save()
                 return HttpResponseRedirect(url_utils.get_login_url())
@@ -479,6 +480,7 @@ def answer(request, id):#process a new answer
             wiki = form.cleaned_data['wiki']
             text = form.cleaned_data['text']
             update_time = datetime.datetime.now()
+            ip_addr=request.META['REMOTE_ADDR']
 
             if request.user.is_authenticated():
                 try:
@@ -489,6 +491,7 @@ def answer(request, id):#process a new answer
                                         follow = follow,
                                         wiki = wiki,
                                         timestamp = update_time,
+                                        ip_addr = ip_addr,
                                     )
                     return HttpResponseRedirect(answer.get_absolute_url())
                 except exceptions.PermissionDenied, e:
@@ -501,8 +504,9 @@ def answer(request, id):#process a new answer
                                        text=text,
                                        summary=strip_tags(text)[:120],
                                        session_key=request.session.session_key,
-                                       ip_addr=request.META['REMOTE_ADDR'],
                                        )
+                anon.save()
+                anon.ip_addr = ip_addr
                 anon.save()
                 return HttpResponseRedirect(url_utils.get_login_url())
 
@@ -572,9 +576,10 @@ def post_comments(request):#generic ajax handler to load comments to an object
                             '<a href="%(sign_in_url)s">sign in</a>.') % \
                             {'sign_in_url': url_utils.get_login_url()}
                     raise exceptions.PermissionDenied(msg)
-                user.post_comment(
+                comment = user.post_comment(
                             parent_post = obj,
-                            body_text = request.POST.get('comment')
+                            body_text = request.POST.get('comment'),
+                            ip_addr = request.META['REMOTE_ADDR'],
                         )
                 response = __generate_comments_json(obj, user)
             except exceptions.PermissionDenied, e:

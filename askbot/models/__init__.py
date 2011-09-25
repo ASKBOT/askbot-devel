@@ -734,7 +734,6 @@ def user_assert_can_reopen_question(self, question = None):
         general_error_message = general_error_message
     )
 
-
 def user_assert_can_flag_offensive(self, post = None):
 
     assert(post is not None)
@@ -869,6 +868,7 @@ def user_post_comment(
                     parent_post = None,
                     body_text = None,
                     timestamp = None,
+                    ip_addr = None,
                 ):
     """post a comment on behalf of the user
     to parent_post
@@ -887,6 +887,7 @@ def user_post_comment(
                     user = self,
                     comment = body_text,
                     added_at = timestamp,
+                    ip_addr = ip_addr,
                 )
     award_badges_signal.send(None,
         event = 'post_comment',
@@ -1200,7 +1201,8 @@ def user_post_question(
                     tags = None,
                     wiki = False,
                     is_anonymous = False,
-                    timestamp = None
+                    timestamp = None,
+                    ip_addr=None,
                 ):
 
     self.assert_can_post_question()
@@ -1222,6 +1224,7 @@ def user_post_question(
                                     added_at = timestamp,
                                     wiki = wiki,
                                     is_anonymous = is_anonymous,
+                                    ip_addr = ip_addr,
                                 )
     return question
 
@@ -1298,7 +1301,8 @@ def user_post_answer(
                     body_text = None,
                     follow = False,
                     wiki = False,
-                    timestamp = None
+                    timestamp = None,
+                    ip_addr = None,
                 ):
 
     if self == question.author and not self.is_administrator():
@@ -1351,7 +1355,8 @@ def user_post_answer(
                                     text = body_text,
                                     added_at = timestamp,
                                     email_notify = follow,
-                                    wiki = wiki
+                                    wiki = wiki,
+                                    ip_addr = ip_addr,
                                 )
     award_badges_signal.send(None,
         event = 'post_answer',

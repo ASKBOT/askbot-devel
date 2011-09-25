@@ -306,3 +306,10 @@ if 'avatar' in settings.INSTALLED_APPS:
             name='avatar_render_primary'
         ),
     )
+
+
+urlpatterns += (url(
+    r'^moderate_ip/$',
+    views.readers.moderate_ip, 
+    name='moderate_ip'
+),)

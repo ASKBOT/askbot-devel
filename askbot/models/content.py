@@ -81,7 +81,7 @@ class Content(models.Model):
         """
         return html_utils.strip_tags(self.html)[:120] + ' ...'
 
-    def add_comment(self, comment=None, user=None, added_at=None):
+    def add_comment(self, comment=None, user=None, added_at=None, ip_addr=None):
         if added_at is None:
             added_at = datetime.datetime.now()
         if None in (comment ,user):
@@ -92,7 +92,8 @@ class Content(models.Model):
                             content_object=self, 
                             comment=comment, 
                             user=user, 
-                            added_at=added_at
+                            added_at=added_at,
+                            ip_addr = ip_addr,
                         )
         comment.parse_and_save(author = user)
         self.comment_count = self.comment_count + 1

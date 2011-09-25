@@ -88,7 +88,8 @@ class QuestionQuerySet(models.query.QuerySet):
                 wiki = False,
                 is_anonymous = False,
                 tagnames = None,
-                text = None
+                text = None,
+                ip_addr=None,
             ):
 
         question = Question(
@@ -102,7 +103,8 @@ class QuestionQuerySet(models.query.QuerySet):
             tagnames = tagnames,
             #html field is denormalized in .save() call
             text = text,
-            #summary field is denormalized in .save() call
+            #summary field is denormalized in .save() call,
+            ip_addr = ip_addr,
         )
         if question.wiki:
             #DATED COMMENT
@@ -435,7 +437,8 @@ class Question(content.Content, DeletableContent):
     summary              = models.CharField(max_length=180)
 
     favorited_by         = models.ManyToManyField(User, through='FavoriteQuestion', related_name='favorite_questions') 
-    is_anonymous = models.BooleanField(default=False) 
+    is_anonymous = models.BooleanField(default=False)
+    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = QuestionManager()
 
