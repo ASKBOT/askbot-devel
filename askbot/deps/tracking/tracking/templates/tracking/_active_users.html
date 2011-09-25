@@ -1,0 +1,21 @@
+{% load i18n %}<div class="total">
+    {% blocktrans count active.count as counter %}1 active user{% plural %}{{ counter }} active users{% endblocktrans %}
+</div>
+<div class="guests">
+    {% blocktrans count guests.count as counter %}1 guest user{% plural %}{{ counter }} guest users{% endblocktrans %}
+    {% if user.is_superuser %}
+    {% for visitor in guests %}
+    {% if forloop.first %}<ul class="active-guests">{% endif %}
+        <li>{{ visitor.ip_address }}</li>
+    {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="registered">
+    {% blocktrans count registered.count as counter %}1 registered user{% plural %}{{ counter }} registered users{% endblocktrans %}
+    {% for visitor in registered %}
+    {% if forloop.first %}<ul class="active-users">{% endif %}
+        <li>{{ visitor.user }}</li>
+    {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+</div>

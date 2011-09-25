@@ -97,6 +97,7 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
+    'askbot.deps.tracking.middleware.BannedIPMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     #'askbot.middleware.locale.LocaleMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -172,6 +173,7 @@ INSTALLED_APPS = (
     'djcelery',
     'djkombu',
     'followit',
+    'askbot.deps.tracking',
     #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
 )
 

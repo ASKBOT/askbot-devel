@@ -19,3 +19,4 @@ django-recaptcha-works
 python-openid
 pystache==0.3.1
 pytz
+django-tracking

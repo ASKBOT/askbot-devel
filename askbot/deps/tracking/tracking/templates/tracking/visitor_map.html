@@ -1,0 +1,24 @@
+{% extends template %}
+{% load i18n %}
+
+{% block title %}{% trans "Active Visitors Map" %}{% endblock %}
+
+{% block extra-head %}
+{{ block.super }}
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={{ GOOGLE_MAPS_KEY }}" type="text/javascript"></script>
+<script type="text/javascript">
+{% include 'tracking/_active_users.js' %}
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>{% trans "Active Users" %}</h2>
+
+<p>
+    {% trans "Below is a map and a list of recently active users on this site.  It updates itself every 5 seconds or so, adding and removing pins in the map as necessary.  Stick around for a few minutes to see it in action!" %}
+</p>
+
+<div id="active-users-map"></div>
+
+<div id="active-users-list"></div>
+{% endblock %}

@@ -215,7 +215,7 @@ def ask(request):#view used to ask a new question
             tagnames = form.cleaned_data['tags']
             text = form.cleaned_data['text']
             ask_anonymously = form.cleaned_data['ask_anonymously']
-
+            ip_addr = request.META['REMOTE_ADDR']
             if request.user.is_authenticated():
                 try:
                     question = request.user.post_question(
@@ -224,7 +224,8 @@ def ask(request):#view used to ask a new question
                         tags = tagnames,
                         wiki = wiki,
                         is_anonymous = ask_anonymously,
-                        timestamp = timestamp
+                        timestamp = timestamp,
+                        ip_addr = ip_addr,
                     )
                     return HttpResponseRedirect(question.get_absolute_url())
                 except exceptions.PermissionDenied, e:
@@ -487,6 +488,7 @@ def answer(request, id):#process a new answer
             wiki = form.cleaned_data['wiki']
             text = form.cleaned_data['text']
             update_time = datetime.datetime.now()
+            ip_addr = request.META['REMOTE_ADDR']
 
             if request.user.is_authenticated():
                 try:
@@ -497,6 +499,7 @@ def answer(request, id):#process a new answer
                                         follow = follow,
                                         wiki = wiki,
                                         timestamp = update_time,
+                                        ip_addr = ip_addr,
                                     )
                     return HttpResponseRedirect(answer.get_absolute_url())
                 except exceptions.PermissionDenied, e:
@@ -582,7 +585,8 @@ def post_comments(request):#generic ajax handler to load comments to an object
                         '<a href="%(sign_in_url)s">sign in</a>.') % \
                         {'sign_in_url': url_utils.get_login_url()}
                 raise exceptions.PermissionDenied(msg)
-            user.post_comment(parent_post=obj, body_text=request.POST.get('comment'))
+            user.post_comment(parent_post=obj, body_text=request.POST.get('comment'),
+                            ip_addr = request.META['REMOTE_ADDR'],)
             response = __generate_comments_json(obj, user)
         except exceptions.PermissionDenied, e:
             response = HttpResponseForbidden(unicode(e), mimetype="application/json")

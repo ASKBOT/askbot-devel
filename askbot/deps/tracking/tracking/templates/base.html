@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>My Site - {% block title %}Welcome{% endblock %}</title>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.4.min.js"></script>
+<style type="text/css">
+#active-users-map {
+    height: 400px;
+    width: 600px;
+}
+</style>
+{% block extra-head %}{% endblock %}
+</head>
+<body>
+<h1><a href="/">My Site</a></h1>
+{% block content %}{% endblock %}
+
+{% block footer %}
+<p>Copyright &copy; {% now "Y" %} Me. All rights reserved.</p>
+{% endblock %}
+</body>
+</html>

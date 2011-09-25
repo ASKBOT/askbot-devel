@@ -40,6 +40,8 @@ import askbot.conf
 from askbot.conf import settings as askbot_settings
 from askbot.skins.loaders import render_into_skin, get_template #jinja2 template loading enviroment
 
+from askbot.deps.tracking.models import BannedIP
+
 # used in index page
 #todo: - take these out of const or settings
 from askbot.models import Post, Vote
@@ -528,6 +530,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     user_can_post_comment = (
         request.user.is_authenticated() and request.user.can_post_comment()
     )
+    bannedIPs = [i[0] for i in BannedIP.objects.values_list('ip_address')]
 
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
@@ -550,6 +553,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_post': show_post,
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
+        'bannedIPs': bannedIPs,
     }
 
     return render_into_skin('question.html', data, request)
@@ -604,3 +608,25 @@ def widget_questions(request):
     }
     return render_into_skin('question_widget.html', data, request) 
     
+    return {'text': comment.comment}
+
+@anonymous_forbidden
+def moderate_ip(request):
+    if request.method != 'POST':
+        return HttpResponseNotAllowed("Only post method supported.")
+    if not request.user.is_administrator_or_moderator():
+        return HttpResponseNotAllowed("You do not have permission to moderate IP.")
+    try:
+        moderate_type = request.POST['type']
+        ip = request.POST['ip']
+        banned_ips = [i[0] for i in BannedIP.objects.values_list('ip_address')]
+        if moderate_type == 'block':
+            if ip not in banned_ips:
+                BannedIP.objects.create(ip_address = ip)
+        elif moderate_type == 'unblock':
+            BannedIP.objects.filter(ip_address = ip).delete()
+        else:
+            return HttpResponseNotAllowed("Invalid IP moderation type.")
+        return HttpResponse(content='success', status=200)
+    except Exception, e:
+            return HttpResponseNotAllowed(unicode(e))
