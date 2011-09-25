@@ -136,6 +136,7 @@ def try_import(module_name, pypi_package_name):
 
 def test_modules():
     """tests presence of required modules"""
+    try_import('akismet', 'akismet')
     try_import('recaptcha_works', 'django-recaptcha-works')
 
 def test_postgres():

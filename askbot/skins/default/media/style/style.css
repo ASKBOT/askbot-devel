@@ -194,6 +194,10 @@ blockquote {
     background: #777;
 }
 
+#ground p {
+    margin-bottom:0;
+}
+
 #ab-logo {
     padding: 0px 0px 0px 10px;
     position: absolute;
@@ -201,6 +205,10 @@ blockquote {
     left: 0;
     height: 90px;
     width: 70px;
+}
+
+img.license-logo {
+    margin: 6px 0 10px 0;
 }
 
 #ab-meta-nav,

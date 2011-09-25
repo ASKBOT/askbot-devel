@@ -159,8 +159,6 @@ class Migration(DataMigration):
                                         all_users = all_users,
                                         orm = orm
                                     )
-            #print 'was %s' % comment.comment
-            #print 'now %s' % comment.html
             comment.save()
     
     def backwards(self, orm):

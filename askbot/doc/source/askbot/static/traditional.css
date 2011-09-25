@@ -8,11 +8,13 @@
  * :license: BSD, see LICENSE for details.
  *
  */
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Cabin|Cabin+Sketch:700);
 
 body {
     color: #000;
     margin: 0;
     padding: 0;
+    border-color: gray;
 }
 
 /* :::: LAYOUT :::: */
@@ -29,11 +31,11 @@ div.bodywrapper {
 div.body {
     background-color: white;
     padding: 0 20px 30px 0;
-    font-family: "Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif;
+    font-family: "Droid Sans", "Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif;
 }
 
 div.sphinxsidebarwrapper {
-    border: 1px solid #99ccff;
+    border: 1px solid #777;
     padding: 10px;
     margin: 55px 15px 10px 0;
 }
@@ -42,6 +44,7 @@ div.sphinxsidebar {
     float: right;
     margin-left: -100%;
     width: 230px;
+    font-family: "Droid Sans", sans-serif;
 }
 
 div.clearer {
@@ -59,6 +62,7 @@ div.footer {
     background-color: #dcdcdc;
     padding: 9px 0 9px 0;
     text-align: center;
+    font-family: "Droid Sans", sans-serif;
 }
 
 div.related {
@@ -92,6 +96,11 @@ div.related li.right {
 }
 
 /* ::: SIDEBAR :::: */
+div.sphinxsidebar h3, 
+div.sphinxsidebar h4{
+    font-family: 'Cabin', cursive;
+}
+
 div.sphinxsidebar h3 {
     margin: 0;
 }
@@ -100,10 +109,6 @@ div.sphinxsidebar h4 {
     margin: 5px 0 0 0;
 }
 
-div.sphinxsidebar p,
-div.sphinxsidebar a {
-   font-family: "Lucida Grande",Verdana,"Bitstream Vera Sans",Arial,sans-serif;
-}
 
 div.sphinxsidebar p.topless {
     margin: 5px 10px 10px 10px;
@@ -332,11 +337,10 @@ a {
     text-decoration: none;
     border-bottom: 1px solid #dfdfdf;
 }
-a:link:active           { color: #ff0000; }
-a:link:hover            { background-color: #bbeeff; }
-a:visited:hover         { background-color: #bbeeff; }
-a:visited               { color: #3185AB; }
-a:link                  { color: #21759B; }
+a:link:active           { color: #555; }
+a:link:hover            { color: #000; }
+a:visited               { color: #655; }
+a:link                  { color: #555; }
 
 div.body h1,
 div.body h2,
@@ -344,7 +348,7 @@ div.body h3,
 div.body h4,
 div.body h5,
 div.body h6 {
-    font-family: Georgia, Times, "Times New Roman", serif;
+    font-family: 'Cabin', cursive;
     font-weight: bold;
 }
 
@@ -655,23 +659,36 @@ div.viewcode-block:target {
 div.ab-proj-header {
     width: 960px;
     margin: auto;
-    font-family: "Lucida Grande",Tahoma,"Bitstream Vera Sans",Arial,sans-serif;
+    border-bottom: 2px solid #555;
+    font-family: "Droid Sans", sans-serif;
 }
-div.ab-proj-header li {
-    display: inline;
-    padding: 0;
-}
+
 div.ab-proj-header a,
-div.ab-proj-header a:visited,
+div.ab-proj-header a:visited
 {
     text-decoration: none;
+    color: #333;
+    border: none;
+    font-family: "Droid Sans", sans-serif;
 }
-div.ab-proj-header ul {
-    margin: 0;
-    padding: 5px 0 0 0;
-    list-style: none;
+
+div.logo{
+    font-size: 20px;
+    width: 960px;
+    margin: auto;
 }
-div.ab-proj-header .sep {
-    color: #aaa;
-    padding: 0 10px;
+
+div.logo a, div.logo a:visited
+{
+    text-decoration: none;
+    color: #333;
+    border: none;
+    font-family: 'Cabin Sketch', cursive;
+}
+
+div.topnav{
+    float: right;
+    position: relative;
+    right:6px;
+    top:-65px;
 }

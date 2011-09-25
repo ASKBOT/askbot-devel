@@ -120,12 +120,28 @@ by from the root account.
 Create a custom skin in a new directory
 ---------------------------------------
 This is technically possible, but not advisable
-because a redesign of default skin is expected.
+because a redesign of default skin is pending.
+After the redesign your custom skins may be difficult 
+to update.
 
 If you still wish to follow this option,
 name all directories and files the same way as
 in the "default" skin, as some template file names are
 hard-coded in the askbot's python code.
+
+Add setting ``ASKBOT_EXTRA_SKINS_DIR`` to your ``settings.py`` file
+and set its value to the directory with your additional skins.
+
+For example::
+
+    ASKBOT_EXTRA_SKINS_DIR = '/home/myname/my_askbot_themes'
+
+And your directory structure might be::
+
+    /home/myname/my_askbot_themes/
+                          /my_theme
+                                /templates
+                                /media
 
 If you are planning to seriously recode the skin -
 it will be worthwhile learning the ``git`` system

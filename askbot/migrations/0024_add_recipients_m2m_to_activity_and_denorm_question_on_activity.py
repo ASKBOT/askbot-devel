@@ -5,6 +5,7 @@ from south.v2 import DataMigration
 from django.db import models
 from askbot import const
 from askbot.migrations_api.version1 import API
+from unidecode import unidecode
 
 #some of activities are not related to question, so they are not processed here
 APPROPRIATE_ACTIVITIES = (
@@ -51,7 +52,7 @@ class Migration(DataMigration):
 
         if have_problems:
             print 'Migration is now complete, but there were some errors:'
-            print '\n'.join(errors)
+            print unidecode('\n'.join(errors))
             print 'problematic activity objects are: ' + ','.join(bad_ids)
             print 'This is most likely not a big issue, but if you save this error message'
             print 'and email to admin@askbot.org, that would help. Thanks.'

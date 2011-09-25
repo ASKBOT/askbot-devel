@@ -49,11 +49,22 @@ class PageLoadTestCase(TestCase):
         if template:
             if isinstance(r.template, coffin.template.Template):
                 self.assertEqual(r.template.name, template)
-            else:
+            elif isinstance(r.template, list):
                 #asuming that there is more than one template
                 template_names = ','.join([t.name for t in r.template])
                 print 'templates are %s' % template_names
+                if follow == False:
+                    self.fail(
+                        ('Have issue accessing %s. '
+                        'This should not have happened, '
+                        'since you are not expecting a redirect '
+                        'i.e. follow == False, there should be only '
+                        'one template') % url
+                    )
+
                 self.assertEqual(r.template[0].name, template)
+            else:
+                raise Exception('unexpected error while runnig test')
 
 class PageLoadTests(PageLoadTestCase):
     fixtures = ['tmp/fixture2.json', ]
@@ -312,6 +323,26 @@ class PageLoadTests(PageLoadTestCase):
             template = 'user_profile/user_email_subscriptions.html'
         )
         self.client.logout()
+
+    def test_inbox_page(self):
+        asker = models.User.objects.get(id = 2)
+        question = asker.post_question(
+            title = 'How can this happen?',
+            body_text = 'This is the body of my question',
+            tags = 'question answer test',
+        )
+        responder = models.User.objects.get(id = 3)
+        responder.post_answer(
+            question = question,
+            body_text = 'this is the answer text'
+        )
+        self.client.login(method = 'force', user_id = asker.id)
+        self.try_url(
+            'user_profile', 
+            kwargs={'id': asker.id, 'slug': slugify(asker.username)},
+            data={'sort':'inbox'}, 
+            template='user_profile/user_inbox.html',
+        )
 
 class AvatarTests(AskbotTestCase):
 

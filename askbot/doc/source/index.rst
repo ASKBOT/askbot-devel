@@ -1,8 +1,8 @@
 .. _index:
 
-=============================
-Askbot Project Documentation
-=============================
+==================
+Documentation Home
+==================
 
 Askbot is an open source Question and Answer (Q&A) forum project inspired by StackOverflow 
 and YahooAnswers.

@@ -101,6 +101,7 @@ def path_is_clean_for_django(directory):
 
 
 def create_path(directory):
+    """equivalent to mkdir -p"""
     if os.path.isdir(directory):
         return
     elif os.path.exists(directory):
@@ -109,12 +110,17 @@ def create_path(directory):
         os.makedirs(directory)
 
 def touch(file_path, times = None):
+    """implementation of unix ``touch`` in python"""
     #http://stackoverflow.com/questions/1158076/implement-touch-using-python
-    with file(file_path, 'a'):
-            os.utime(file_path, times)
+    fhandle = file(file_path, 'a')
+    try:
+        os.utime(file_path, times)
+    finally:
+        fhandle.close()
 
 SOURCE_DIR = os.path.dirname(os.path.dirname(__file__))
 def get_path_to_help_file():
+    """returns path to the main plain text help file"""
     return os.path.join(SOURCE_DIR, 'doc', 'INSTALL')
 
 def deploy_into(directory, new_project = None):
@@ -145,7 +151,7 @@ def deploy_into(directory, new_project = None):
     print ''
     app_dir = os.path.join(directory, 'askbot')
 
-    copy_dirs = ('doc','cron','upfiles')
+    copy_dirs = ('doc', 'cron', 'upfiles')
     dirs_copied = 0
     for dir_name in copy_dirs:
         src = os.path.join(SOURCE_DIR, dir_name)
@@ -165,6 +171,7 @@ def deploy_into(directory, new_project = None):
     print ''
 
 def dir_name_acceptable(directory):
+    """True if directory is not taken by another python module"""
     dir_name = os.path.basename(directory)
     try:
         imp.find_module(dir_name)

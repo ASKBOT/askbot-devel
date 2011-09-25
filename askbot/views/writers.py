@@ -189,6 +189,7 @@ def import_data(request):
 #@login_required #actually you can post anonymously, but then must register
 @csrf.csrf_protect
 @decorators.check_authorization_to_post(_('Please log in to ask questions'))
+@decorators.check_spam('text')
 def ask(request):#view used to ask a new question
     """a view to ask a new question
     gives space for q title, body, tags and checkbox for to post as wiki
@@ -241,6 +242,18 @@ def ask(request):#view used to ask a new question
                 )
                 question.save()
                 return HttpResponseRedirect(url_utils.get_login_url())
+        else:
+            form = forms.AskForm(request.POST)
+            if 'title' in request.GET:
+                #normally this title is inherited from search query
+                #but it is possible to ask with a parameter title in the url query
+                form.initial['title'] = request.GET['title']
+            else:
+                #attempt to extract title from previous search query
+                search_state = request.session.get('search_state', None)
+                if search_state:
+                    query = search_state.query
+                    form.initial['title'] = query
     else:
         #this branch is for the initial load of ask form
         form = forms.AskForm()
@@ -250,7 +263,7 @@ def ask(request):#view used to ask a new question
             form.initial['title'] = request.GET['title']
         else:
             #attempt to extract title from previous search query
-            search_state = request.session.get('search_state',None)
+            search_state = request.session.get('search_state', None)
             if search_state:
                 query = search_state.query
                 form.initial['title'] = query
@@ -320,6 +333,7 @@ def retag_question(request, id):
 
 @login_required
 @csrf.csrf_protect
+@decorators.check_spam('text')
 def edit_question(request, id):
     """edit question view
     """
@@ -407,6 +421,7 @@ def edit_question(request, id):
 
 @login_required
 @csrf.csrf_protect
+@decorators.check_spam('text')
 def edit_answer(request, id):
     answer = get_object_or_404(models.Answer, id=id)
     try:
@@ -465,6 +480,7 @@ def edit_answer(request, id):
 
 #todo: rename this function to post_new_answer
 @decorators.check_authorization_to_post(_('Please log in to answer questions'))
+@decorators.check_spam('text')
 def answer(request, id):#process a new answer
     """view that posts new answer
 
@@ -552,6 +568,7 @@ def __generate_comments_json(obj, user):#non-view generates json data for the po
     data = simplejson.dumps(json_comments)
     return HttpResponse(data, mimetype="application/json")
 
+@decorators.check_spam('comment')
 def post_comments(request):#generic ajax handler to load comments to an object
     # only support get post comments by ajax now
     user = request.user
@@ -592,6 +609,7 @@ def post_comments(request):#generic ajax handler to load comments to an object
         raise Http404
 
 @decorators.ajax_only
+@decorators.check_spam('text')
 def edit_comment(request):
     if request.user.is_authenticated():
         comment_id = int(request.POST['comment_id'])
@@ -614,7 +632,7 @@ def edit_comment(request):
             'user_id': comment.user.id,
             'is_deletable': is_deletable,
             'is_editable': is_editable,
-            'score': comment.score,            
+            'score': comment.score,
             'voted': comment.is_upvoted_by(request.user),
         }
     else:

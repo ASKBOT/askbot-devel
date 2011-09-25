@@ -4,6 +4,7 @@ from south.db import db
 from south.v2 import DataMigration
 from django.db import models
 from askbot.utils.console import print_action
+from unidecode import unidecode
 
 class Migration(DataMigration):
 
@@ -11,13 +12,16 @@ class Migration(DataMigration):
         "Write your forwards methods here."
         print 'Migrating users to new avatar field'
         for user in orm['auth.user'].objects.all():
-            print_action('migrating user: %s' % user.username)
+            print_action('migrating user: %s' % unidecode(user.username))
             if user.has_custom_avatar ==  True:
                 user.avatar_type = 'a'
             else:
                 user.avatar_type = 'n'
             user.save()
-            print_action('user %s migrated avatar_type: %s' % (user.username, user.avatar_type))
+            print_action(
+                'user %s migrated avatar_type: %s' % \
+                (unidecode(user.username), user.avatar_type)
+            )
 
 
     def backwards(self, orm):

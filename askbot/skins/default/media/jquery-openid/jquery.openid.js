@@ -298,9 +298,21 @@ $.fn.authenticator = function() {
     };
 
     var start_password_login_or_change = function(){
+        //called upon clicking on one of the password login buttons 
         reset_form();
         set_provider_name($(this));
         var provider_name = $(this).attr('name');
+        return setup_password_login_or_change(provider_name);
+    };
+
+    var init_always_visible_password_login = function(){
+        reset_form();
+        //will break wordpress and ldap
+        provider_name_input.val('local');
+        setup_password_login_or_change('local');
+    };
+
+    var setup_password_login_or_change = function(provider_name){
         var token_name = extra_token_name[provider_name]
         var password_action_input = $('input[name=password_action]');
         if (userIsAuthenticated === true){
@@ -427,6 +439,9 @@ $.fn.authenticator = function() {
     };
 
     setup_default_handlers();
+    if (askbot['settings']['signin_always_show_local_login'] === true){
+        init_always_visible_password_login();
+    }
     clear_password_fields();
     return this;
 };

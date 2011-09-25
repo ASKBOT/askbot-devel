@@ -7,14 +7,17 @@ import inspect
 import logging
 from django.conf import settings
 from django.core import exceptions as django_exceptions
-from django.core import urlresolvers
+from django.core.urlresolvers import reverse
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, HttpResponseForbidden, Http404
 from django.http import HttpResponseRedirect
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
+from django.utils.encoding import smart_str
 from askbot import exceptions as askbot_exceptions
 from askbot.conf import settings as askbot_settings
 from askbot.utils import url_utils
+from askbot import get_version
 
 def auto_now_timestamp(func):
     """decorator that will automatically set
@@ -33,12 +36,12 @@ def auto_now_timestamp(func):
 
 def ajax_login_required(view_func):
     @functools.wraps(view_func)
-    def wrap(request,*args,**kwargs):
+    def wrap(request, *args, **kwargs):
         if request.user.is_authenticated():
-            return view_func(request,*args,**kwargs)
+            return view_func(request, *args, **kwargs)
         else:
             json = simplejson.dumps({'login_required':True})
-            return HttpResponseForbidden(json,mimetype='application/json')
+            return HttpResponseForbidden(json, mimetype='application/json')
     return wrap
 
 
@@ -74,14 +77,13 @@ def post_only(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-
 def ajax_only(view_func):
     @functools.wraps(view_func)
-    def wrapper(request,*args,**kwargs):
+    def wrapper(request, *args, **kwargs):
         if not request.is_ajax():
             raise Http404
         try:
-            data = view_func(request,*args,**kwargs)
+            data = view_func(request, *args, **kwargs)
         except Exception, e:
             message = unicode(e)
             if message == '':
@@ -99,7 +101,7 @@ def ajax_only(view_func):
         else:
             data['success'] = 1
             json = simplejson.dumps(data)
-            return HttpResponse(json,mimetype='application/json')
+            return HttpResponse(json, mimetype='application/json')
     return wrapper
 
 def check_authorization_to_post(func_or_message):
@@ -166,3 +168,53 @@ def profile(log_file):
 
         return _inner
     return _outer
+
+def check_spam(field):
+    '''Decorator to check if there is spam in the form'''
+
+    def decorator(view_func):
+        @functools.wraps(view_func)
+        def wrapper(request, *args, **kwargs):
+
+            if askbot_settings.USE_AKISMET and askbot_settings.AKISMET_API_KEY == "":
+                raise ImproperlyConfigured('You have not set AKISMET_API_KEY')
+
+            if askbot_settings.USE_AKISMET and request.method == "POST":
+                comment = smart_str(request.POST[field])
+                data = {'user_ip': request.META["REMOTE_ADDR"],
+                        'user_agent': request.environ['HTTP_USER_AGENT'],
+                        'comment_author': smart_str(request.user.username),
+                        }
+                if request.user.is_authenticated():
+                    data.update({'comment_author_email': request.user.email})
+
+                from akismet import Akismet
+                api = Akismet(
+                    askbot_settings.AKISMET_API_KEY, 
+                    smart_str(askbot_settings.APP_URL), 
+                    "Askbot/%s" % get_version()
+                )
+
+                if api.comment_check(comment, data, build_data=False):
+                    logging.debug(
+                        'Spam detected in %s post at: %s',
+                        request.user.username,
+                        datetime.datetime.now()
+                    )
+                    spam_message = _(
+                        'Spam was detected on your post, sorry '
+                        'for if this is a mistake'
+                    )
+                    if request.is_ajax():
+                        return HttpResponseForbidden(
+                                spam_message, 
+                                mimetype="application/json"
+                            )
+                    else:
+                        request.user.message_set.create(message=spam_message)
+                        return HttpResponseRedirect(reverse('index'))
+
+            return view_func(request, *args, **kwargs)
+        return wrapper
+
+    return decorator

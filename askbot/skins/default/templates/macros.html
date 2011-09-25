@@ -138,8 +138,7 @@
 {%- macro paginator(p, position='left') -%}{# p is paginator context dictionary #}
 {% spaceless %}
     {% if p.is_paginated %}
-        <div class="paginator">
-        <div style="float:{{position}}">
+        <div class="paginator" style="float:{{position}}">
         {% if p.has_previous %}
             <span class="prev"><a href="{{p.base_url}}page={{ p.previous }}{{ p.extend_url }}" title="{% trans %}previous{% endtrans %}">
         &laquo; {% trans %}previous{% endtrans %}</a></span>
@@ -169,7 +168,6 @@
             <span class="next"><a href="{{p.base_url}}page={{ p.next }}{{ p.extend_url }}" title="{% trans %}next page{% endtrans %}">{% trans %}next page{% endtrans %} &raquo;</a></span>
         {% endif %}
         </div>
-        </div> 
     {% endif %}
 {% endspaceless %}
 {%- endmacro -%}
@@ -248,9 +246,9 @@ poor design of the data or methods on data objects #}
     <div class='post-update-info'>
     {% if is_wiki %}
         <p>
-           {%- if post.__class__.__name__ == 'Question' -%}
+           {%- if post.post_type == 'question' -%}
                 {%- trans %}asked{% endtrans %}
-           {% elif post.__class__.__name__ == 'Answer' %}
+           {% elif post.post_type == 'answer' %}
                 {%- trans %}answered{% endtrans %}
            {% else %}
                 {%- trans %}posted{% endtrans %}
@@ -267,9 +265,9 @@ poor design of the data or methods on data objects #}
     {% else %}
         <p style="line-height:12px;">
             {# todo: access to class names needs to be removed here #}
-            {% if post.__class__.__name__=="Question" %}
+            {% if post.post_type == 'question' %}
                 {% trans %}asked{% endtrans %}
-            {% elif post.__class__.name__=="Answer" %}
+            {% elif post.post_type == 'answer' %}
                 {% trans %}answered{% endtrans %}
             {% else %}
                 {% trans %}posted{% endtrans %}
@@ -289,11 +287,11 @@ poor design of the data or methods on data objects #}
     {% endif %}
     </div>
 {% elif contributor_type=="last_updater" %}
-    {% if post.__class__.__name__ in ('Question', 'Answer') %}
+    {% if post.post_type in ('Question', 'Answer') %}
         {% set last_edited_at = post.last_edited_at %}
         {% set original_author = post.author %}
         {% set update_author = post.last_edited_by %}
-    {% elif post.__class__.__name__ in ('QuestionRevision', 'AnswerRevision') %}
+    {% elif post.post_type in ('QuestionRevision', 'AnswerRevision') %}
         {% set last_edited_at = post.revised_at %}
         {% set original_author = None %}{# fake value to force display widget in the revision views #}
         {% set update_author = post.author %}
@@ -302,7 +300,7 @@ poor design of the data or methods on data objects #}
     <div class='post-update-info'>
         <p style="line-height:12px;">
             <a 
-        {% if post.__class__.__name__ == 'Question' %}
+        {% if post.post_type == 'Question' %}
             href="{% url question_revisions post.id %}"
         {% else %}
             href="{% url answer_revisions post.id %}"

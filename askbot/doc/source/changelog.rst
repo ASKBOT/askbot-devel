@@ -1,14 +1,18 @@
 Changes in Askbot
 =================
 
-Development version
+0.7.23 (Current Version)
 -------------------
+* Greeting for anonymuos users can be changed from live settings (Hrishi)
+* Greeting for anonymous users is shown only once (Rag Sagar)
+* Added support for Akismet spam detection service (Adolfo Fitoria)
 * Added noscript message (Arun SAG)
 * Support for url shortening with TinyUrl on link sharing (Rtnpro)
 * Allowed logging in with password and email in the place of login name (Evgeny)
+* Added config settings allowing adjust license information (Evgeny)
 
-0.7.22 (Current Version)
-------------------------
+0.7.22
+------
 * Media resource revision is now incremented 
   automatically any time when media is updated (Adolfo Fitoria, Evgeny Fadeev)
 * First user automatically becomes site administrator (Adolfo Fitoria)

@@ -7,6 +7,7 @@ import sys
 #you might want to install django-debug-toolbar as well
 
 install_requires = [
+    'akismet',
     'django>=1.1.2',
     'Jinja2',
     'Coffin>=0.3',

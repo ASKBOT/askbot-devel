@@ -1,16 +1,19 @@
 {% extends "basic/layout.html" %}
 {% block relbar1 %}
+<div class="logo">
+  <a href="/doc/index.html"><h1>Askbot Project Documentation</h1></a>
+  <div class="topnav">
+    <a href="http://twitter.com/askbot7" alt="Follow us on twitter"><img src="_static/twitter.png"/></a>
+    <a href="https://www.facebook.com/pages/Askbot/128297183877495" alt="like us on Facebook"><img src="_static/facebook.png"/></a>
+  </div>
+</div>
 <div class="ab-proj-header">
-    <ul>
-        <li class="first"><a href="/">Home (forum)</a>
-        <span class="sep">|</span>
-        </li>
-        {#<li><a href="/doc/about.html">About</a></li>
-        <span class="sep">|</span>#}
-        <li><a href="/doc/index.html">Documentation</a></li>
-        {#<span class="sep">|</span>
-        <li><a href="/doc/download.html">Download</a></li>#}
-    </ul>
+        <a href="/">Home</a> | 
+        <a href="/en/questions/" title="Ask Questions">Ask Questions</a> | 
+        <a href="/hire-us" alt='Hire Us'>Hire Us</a> |
+        <a href="/doc/index.html" alt="Documentation">Documentation</a> | 
+        <a href="/contribute" alt='Contribute'>Contribute</a> | 
+        <a href="/feedback/" alt='contact'>Contact</a>
 </div>
 {% endblock %}
 {% block relbar2 %}

@@ -5,6 +5,7 @@ and the application available for the templates
 from django.conf import settings
 import askbot
 from askbot import api
+from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.skins.loaders import get_skin
 from askbot.utils import url_utils
@@ -22,5 +23,6 @@ def application_settings(request):
     return {
         'settings': my_settings,
         'skin': get_skin(request),
-        'moderation_items': api.get_info_on_moderation_items(request.user)
+        'moderation_items': api.get_info_on_moderation_items(request.user),
+        'noscript_url': const.DEPENDENCY_URLS['noscript'],
     }

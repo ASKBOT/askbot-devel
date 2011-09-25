@@ -968,19 +968,26 @@ class EmailFeedSettingField(forms.ChoiceField):
 
 class EditUserEmailFeedsForm(forms.Form):
     FORM_TO_MODEL_MAP = {
-                    'all_questions':'q_all',
-                    'asked_by_me':'q_ask',
-                    'answered_by_me':'q_ans',
-                    'individually_selected':'q_sel',
-                    'mentions_and_comments':'m_and_c',
-                }
+        'all_questions':'q_all',
+        'asked_by_me':'q_ask',
+        'answered_by_me':'q_ans',
+        'individually_selected':'q_sel',
+        'mentions_and_comments':'m_and_c',
+    }
     NO_EMAIL_INITIAL = {
-                    'all_questions':'n',
-                    'asked_by_me':'n',
-                    'answered_by_me':'n',
-                    'individually_selected':'n',
-                    'mentions_and_comments':'n',
-                }
+        'all_questions':'n',
+        'asked_by_me':'n',
+        'answered_by_me':'n',
+        'individually_selected':'n',
+        'mentions_and_comments':'n',
+    }
+    INSTANT_EMAIL_INITIAL = {
+        'all_questions':'i',
+        'asked_by_me':'i',
+        'answered_by_me':'i',
+        'individually_selected':'i',
+        'mentions_and_comments':'i',
+    }
 
     asked_by_me = EmailFeedSettingField(
                             label=_('Asked by me')

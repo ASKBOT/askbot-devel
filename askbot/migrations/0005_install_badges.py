@@ -4,6 +4,7 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
+from unidecode import unidecode
 
 INITIAL_BADGE_DATA = (
     ('Disciplined', 3, 'disciplined', 'Deleted own post with score of 3 or higher', True, 0),
@@ -58,9 +59,9 @@ class Migration(DataMigration):
 
             try:
                 badge = orm.Badge.objects.get(name=name)
-                print 'already have badge %s' % name
+                print 'already have badge %s' % unidecode(name)
             except orm.Badge.DoesNotExist:
-                print 'adding new badge %s' % name
+                print 'adding new badge %s' % unidecode(name)
                 badge = orm.Badge()
                 badge.name = name
 
@@ -79,9 +80,9 @@ class Migration(DataMigration):
                 badge = orm.Badge.objects.get(name = name)
                 badge.award_badge.clear()
                 badge.delete()
-                print 'deleted badge %s' % name
+                print 'deleted badge %s' % unidecode(name)
             except orm.Badge.DoesNotExist:
-                print 'no such badge %s - so skipping' % name
+                print 'no such badge %s - so skipping' % unidecode(name)
                 pass
     
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))

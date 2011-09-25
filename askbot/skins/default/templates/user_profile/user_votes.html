@@ -7,7 +7,7 @@
         <div style="padding-top:5px;font-size:13px;">
         {% for vote in votes %}
             <div style="clear:both;line-height:20px" >
-                <div style="width:150px;float:left">{{vote.voted_at|diff_date(3)}}</div>
+                <div style="width:150px;float:left">{{vote.voted_at|diff_date(True)}}</div>
                 <div style="width:30px;float:left">
                 {% if vote.vote==1 %}
                     <img src="{{"/images/vote-arrow-up-on.png"|media}}" title="{% trans %}upvote{% endtrans %}">

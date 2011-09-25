@@ -7,7 +7,7 @@
         <div style="padding-top:5px;font-size:13px;">
         {% for act in activities %}
             <div style="clear:both;line-height:20px" >
-                <div style="width:180px;float:left">{{ act.time|diff_date(3) }}</div>
+                <div style="width:180px;float:left">{{ act.time|diff_date(True) }}</div>
                 <div style="width:150px;float:left">
                 <span class="user-action-{{ act.type_id }}">{{ act.type }}</span>
                 </div>

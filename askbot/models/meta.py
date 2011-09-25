@@ -160,9 +160,9 @@ class Comment(base.MetaContent, base.UserContent):
         return self.user
 
     def get_updated_activity_data(self, created = False):
-        if self.content_object.__class__.__name__ == 'Question':
+        if self.content_object.post_type == 'question':
             return const.TYPE_ACTIVITY_COMMENT_QUESTION, self
-        elif self.content_object.__class__.__name__ == 'Answer':
+        elif self.content_object.post_type == 'answer':
             return const.TYPE_ACTIVITY_COMMENT_ANSWER, self
 
     def get_response_receivers(self, exclude_list = None):

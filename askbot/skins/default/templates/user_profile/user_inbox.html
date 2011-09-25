@@ -70,7 +70,7 @@ inbox_section - forum|flags
                 <a style="font-size:12px" href="{{ response.user.get_absolute_url() }}">{{ response.user.username }}</a>
                 <a style="text-decoration:none;" href="{{ response.response_url }}">
                     {{ response.response_type }}
-                    ({{ response.timestamp|diff_date(3, True) }}):<br/>
+                    ({{ response.timestamp|diff_date(True) }}):<br/>
                     {{ response.response_snippet}}
                 </a>
                 </div>
@@ -84,7 +84,7 @@ inbox_section - forum|flags
                 <a style="font-size:12px" href="{{ nested_response.user.get_absolute_url() }}">{{ nested_response.user.username }}</a>
                 <a style="text-decoration:none;" href="{{ nested_response.response_url }}">
                     {{ nested_response.response_type }}
-                    ({{ nested_response.timestamp|diff_date(3, True) }}):<br/>
+                    ({{ nested_response.timestamp|diff_date(True) }}):<br/>
                     {{ nested_response.response_snippet}}
                 </a>
                 </div>

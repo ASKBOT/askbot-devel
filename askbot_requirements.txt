@@ -1,3 +1,4 @@
+akismet
 django>=1.1.2
 Jinja2
 Coffin>=0.3

@@ -1204,6 +1204,8 @@ def user_post_question(
                     timestamp = None,
                     ip_addr=None,
                 ):
+    """makes an assertion whether user can post the question
+    then posts it and returns the question object"""
 
     self.assert_can_post_question()
 
@@ -2235,7 +2237,6 @@ def format_instant_notification_email(
         'origin_post_title': origin_post.title,
         'user_subscriptions_url': user_subscriptions_url,
     }
-    subject_line = mail.prefix_the_subject_line(subject_line)
     return subject_line, template.render(Context(update_data))
 
 #todo: action

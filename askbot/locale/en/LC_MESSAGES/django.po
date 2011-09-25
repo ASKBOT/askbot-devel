@@ -499,7 +499,7 @@ msgstr ""
 
 #: conf/email.py:22
 msgid "Prefix for the email subject line"
-msgstr "Welcome to the Q&A forum"
+msgstr ""
 
 #: conf/email.py:24
 msgid ""
@@ -1600,10 +1600,10 @@ msgstr ""
 msgid "bronze"
 msgstr ""
 
-#: const/message_keys.py:19
-#, python-format
-msgid "First time here? Check out the <a href=\"%s\">FAQ</a>!"
-msgstr ""
+
+
+
+
 
 #: const/message_keys.py:22 skins/default/templates/main_page/tab_bar.html:27
 msgid "most relevant questions"

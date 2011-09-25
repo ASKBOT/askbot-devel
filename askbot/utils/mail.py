@@ -15,9 +15,9 @@ def prefix_the_subject_line(subject):
     EMAIL_SUBJECT_LINE_PREFIX either from
     from live settings, which take default from django
     """
-    prefix = askbot_settings.EMAIL_SUBJECT_PREFIX.strip()
+    prefix = askbot_settings.EMAIL_SUBJECT_PREFIX
     if prefix != '':
-        subject = prefix + ' ' + subject
+        subject = prefix.strip() + ' ' + subject.strip()
     return subject
 
 def extract_first_email_address(text):
@@ -89,10 +89,9 @@ def send_mail(
 
     if raise_on_failure is True, exceptions.EmailNotSent is raised
     """
-    prefix = askbot_settings.EMAIL_SUBJECT_PREFIX.strip() + ' '
     try:
         assert(subject_line is not None)
-        subject_line = prefix + subject_line
+        subject_line = prefix_the_subject_line(subject_line)
         msg = mail.EmailMessage(
                         subject_line, 
                         body_text, 

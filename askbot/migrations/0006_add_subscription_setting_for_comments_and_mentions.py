@@ -4,6 +4,7 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
+from unidecode import unidecode
 try:
     from forum import const
     email_feed_setting_model = 'forum.EmailFeedSetting'
@@ -45,7 +46,7 @@ class Migration(DataMigration):
             verbose_frequency = dict(const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES)[frequency]
             print 'added \'%s\' subscription for %s (%d)' % (
                                                             verbose_frequency, 
-                                                            user.username, 
+                                                            unidecode(user.username), 
                                                             user.id
                                                         )
     
