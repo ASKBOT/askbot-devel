@@ -1,4 +1,5 @@
 import re
+import logging
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from markdown2 import Markdown
@@ -9,6 +10,7 @@ URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-
 LINK_PATTERNS = [
     (URL_RE, r'\1'),
 ]
+
 
 def get_parser():
     extras = ['link-patterns', 'video']  
@@ -22,6 +24,20 @@ def get_parser():
         #pip install -e git+git://github.com/andryuha/python-markdown2.git
         extras.append('video')
 
+    if askbot_settings.ENABLE_AUTO_LINKING:
+        pattern_list = askbot_settings.PATTERN.split('\n')
+        url_list = askbot_settings.AUTO_LINK_URL.split('\n')
+        
+        # Check whether  we have matching links for all key terms, Other wise we ignore the key terms
+        # May be we should do this test in update_callback?
+        if len(pattern_list) == len(url_list):
+            for i in range(0,len(pattern_list)):
+                LINK_PATTERNS.append((re.compile(pattern_list[i].strip()),url_list[i].strip()))
+        else:
+            settings_url = askbot_settings.APP_URL+'/settings/AUTOLINK/'
+            logging.debug("Number of keyterms didn't match the number of links, fix this by visiting" + settings_url) 
+            
+            
     return Markdown(
                 html4tags=True,
                 extras=extras,
