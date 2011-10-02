@@ -365,6 +365,11 @@ urlpatterns = patterns('',
         {'domain': 'djangojs','packages': ('askbot',)},
         name = 'askbot_jsi18n'
     ),
+    url(
+    r'^moderate_ip/$',
+    views.readers.moderate_ip,
+    name='moderate_ip'
+    ),
 )
 
 #todo - this url below won't work, because it is defined above
@@ -411,8 +416,3 @@ if 'avatar' in settings.INSTALLED_APPS:
     )
 
 
-urlpatterns += (url(
-    r'^moderate_ip/$',
-    views.readers.moderate_ip, 
-    name='moderate_ip'
-),)

@@ -10,6 +10,7 @@ import datetime
 import logging
 import urllib
 import operator
+from sets import Set
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseNotAllowed
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -530,7 +531,14 @@ def question(request, id):#refactor - long subroutine. display question body, an
     user_can_post_comment = (
         request.user.is_authenticated() and request.user.can_post_comment()
     )
-    bannedIPs = [i[0] for i in BannedIP.objects.values_list('ip_address')]
+    ips = Set([question.ip_addr])
+    for comment in question.comments.all():
+        ips.add(comment.ip_addr)
+    for answer in page_objects.object_list:
+        ips.add(answer.ip_addr)
+        for comment in answer.comments.all():
+            ips.add(comment.ip_addr)
+    bannedIPs = [i[0] for i in BannedIP.objects.filter(ip_address__in = ips).values_list('ip_address')]
 
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
@@ -612,6 +620,10 @@ def widget_questions(request):
 
 @anonymous_forbidden
 def moderate_ip(request):
+    """
+    view to add/remove an IP from BannedIP list,
+    response requires request method post
+    """
     if request.method != 'POST':
         return HttpResponseNotAllowed("Only post method supported.")
     if not request.user.is_administrator_or_moderator():
@@ -619,10 +631,12 @@ def moderate_ip(request):
     try:
         moderate_type = request.POST['type']
         ip = request.POST['ip']
-        banned_ips = [i[0] for i in BannedIP.objects.values_list('ip_address')]
         if moderate_type == 'block':
-            if ip not in banned_ips:
-                BannedIP.objects.create(ip_address = ip)
+            try:
+                BannedIP.objects.get_or_create(ip_address = ip)
+            except BannedIP.MultipleObjectsReturned, e:
+                BannedIP.objects.filter(ip_address=ip).delete()
+                BannedIP.objects.create(ip_address=ip)
         elif moderate_type == 'unblock':
             BannedIP.objects.filter(ip_address = ip).delete()
         else:
