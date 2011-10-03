@@ -12,6 +12,12 @@
 {% endblock %}
 {% block content %}
 <h1><a href="{{ question.get_absolute_url() }}">{{ question.get_question_title() }}</a></h1>
+<p class="rss">
+    (<a
+        href="{{settings.APP_URL}}/feeds/question/{{ question.id }}"
+        title="{% trans %}subscribe to the questions feed{% endtrans %}"
+        >{% trans %}rss feed{% endtrans %}</a>)
+</p>
 <table style="width:100%;" id="question-table" {% if question.deleted %}class="deleted"{%endif%}>
     <tr>
         <td style="width:30px;vertical-align:top">
