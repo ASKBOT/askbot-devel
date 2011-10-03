@@ -70,6 +70,15 @@ settings.register(
 )
 
 settings.register(
+    livesettings.BooleanValue(
+        QA_SITE_SETTINGS,
+        'GREETING_FOR_ANON_USER_ON',
+        default = True,
+        description = _('Check to enable greeting for anonymous user')
+   )
+)
+
+settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'GREETING_FOR_ANONYMOUS_USER',

@@ -43,7 +43,8 @@ class ConnectToSessionMessagesMiddleware(object):
 
             #also set the first greeting one time per session only
             if 'greeting_set' not in request.session and \
-                    'askbot_visitor' not in request.COOKIES:
+                    'askbot_visitor' not in request.COOKIES and \
+			askbot_settings.GREETING_FOR_ANON_USER_ON:
                 request.session['greeting_set'] = True
                 msg = askbot_settings.GREETING_FOR_ANONYMOUS_USER
                 request.user.message_set.create(message=msg)
