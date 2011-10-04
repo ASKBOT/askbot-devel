@@ -366,9 +366,9 @@ urlpatterns = patterns('',
         name = 'askbot_jsi18n'
     ),
     url(
-    r'^moderate_ip/$',
-    views.readers.moderate_ip,
-    name='moderate_ip'
+        r'^moderate_ip/$',
+        views.readers.moderate_ip,
+        name = 'moderate_ip'
     ),
 )
 
