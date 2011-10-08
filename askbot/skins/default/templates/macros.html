@@ -239,7 +239,7 @@
     {% endif %}
 {%- endmacro -%}
 
-{%- macro post_contributor_info(post, contributor_type, is_wiki, wiki_min_rep) -%}
+{%- macro post_contributor_info(post, contributor_type, is_wiki, wiki_min_rep, user=None) -%}
 {# there is a whole bunch of trickery here, probably indicative of 
 poor design of the data or methods on data objects #}
 {% if contributor_type=="original_author" %}
@@ -277,7 +277,12 @@ poor design of the data or methods on data objects #}
             {% else %}
                 <strong>{{post.added_at|diff_date}}</strong>
             {% endif %}
-        </p>
+            </p>
+        {% if user and user.is_authenticated() and user.is_administrator_or_moderator() %}
+          <p>
+          from {{post.ip_addr}}
+          </p>
+        {% endif %}
         {{ post_contributor_avatar_and_credentials(post, post.author) }}
     {% endif %}
     </div>
@@ -497,7 +502,7 @@ for the purposes of the AJAX comment editor #}
                 class="author" 
                 href="{{comment.user.get_profile_url()}}"
             >{{comment.user.username}}</a>
-            <span class="age">&nbsp;({{comment.added_at|diff_date}})</span>
+          <span class="age">&nbsp;({{comment.added_at|diff_date}}{% if user and user.is_authenticated() and user.is_administrator_or_moderator() %} from {{comment.ip_addr}}{% endif %})</span>
             {% if user|can_edit_comment(comment) %}
                 <a class="edit">{% trans %}edit{% endtrans %}</a>
             {% endif %}
