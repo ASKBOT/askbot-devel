@@ -172,12 +172,25 @@ def test_encoding():
                 'to the terminal or log files'
             )
 
+def test_template_loader():
+    """Sends a warning if you have an old style template 
+    loader that used to send a warning"""
+    old_template_loader = 'askbot.skins.loaders.load_template_source'
+    if old_template_loader in django_settings.TEMPLATE_LOADERS:
+        askbot_warning(
+                'In TEMPLATE_LOADERS settings you have an old style '
+                'template loader that throws a Warning on logs '
+                'please change: askbot.skins.loaders.load_template_source '
+                'for: askbot.skins.loaders.filesystem_load_template_source'
+                )
+
 def run_startup_tests():
     """function that runs
     all startup tests, mainly checking settings config so far
     """
 
     #todo: refactor this when another test arrives
+    test_template_loader()
     test_encoding()
     test_modules()
     test_askbot_url()

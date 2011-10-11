@@ -85,7 +85,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
     #below is askbot stuff for this tuple
-    'askbot.skins.loaders.load_template_source',
+    #'askbot.skins.loaders.load_template_source', #changed due to bug 97
+    'askbot.skins.loaders.filesystem_load_template_source',
     #'django.template.loaders.eggs.load_template_source',
 )
 

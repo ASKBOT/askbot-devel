@@ -459,12 +459,12 @@ poor design of the data or methods on data objects #}
                 {% if question.is_anonymous %}
                     <span class="anonymous">{{ question.last_activity_by.get_anonymous_name() }}</span>
                 {% else %}
-                    <a href="{% url user_profile question.last_activity_by.id, question.last_activity_by.username|slugify %}">{{question.last_activity_by.username}}</a>{{ user_country_flag(question.last_activity_by) }}
+                <a href="{% url user_profile question.last_activity_by.id, question.last_activity_by.username|slugify %}" >{{question.last_activity_by.username}}</a>{{ user_country_flag(question.last_activity_by) }}
                 {#{user_score_and_badge_summary(question.last_activity_by)}#}
                 {% endif %}
             </div>
         </div>
-        <h2><a title="{{question.summary|escape}}" href="{{ question.get_absolute_url() }}">{{question.get_question_title()|escape}}</a></h2>
+        <h2><a href="{{ question.get_absolute_url() }}" onmouseover="load_question_body(this, {{question.id}})">{{question.get_question_title()|escape}}</a></h2>
         {{ tag_list_widget(question.get_tag_names()) }}
     </div>
 {%- endmacro -%}

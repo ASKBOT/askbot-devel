@@ -1452,12 +1452,13 @@ def user_add_missing_askbot_subscriptions(self):
                                             'feed_type', flat = True
                                         )
     missing_feed_types = set(need_feed_types) - set(have_feed_types)
-    frequency = askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
     for missing_feed_type in missing_feed_types:
+        attr_key = 'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_%s' % missing_feed_type.upper()
+        freq = getattr(askbot_settings, attr_key)
         feed_setting = EmailFeedSetting(
                             subscriber = self,
                             feed_type = missing_feed_type,
-                            frequency = frequency
+                            frequency = freq
                         )
         feed_setting.save()
 

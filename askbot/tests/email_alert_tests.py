@@ -893,7 +893,7 @@ class EmailFeedSettingTests(utils.AskbotTestCase):
 
         self.assertEquals(
             feed.frequency,
-            askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
+            askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ALL
         )
 
     def test_missing_subscriptions_added_automatically(self):

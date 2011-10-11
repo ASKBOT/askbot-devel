@@ -12,7 +12,7 @@ from askbot.models import signals
 from askbot.views.readers import questions as questions_view
 from askbot.views.commands import vote, get_tag_list
 from askbot.views.writers import delete_comment, post_comments, retag_question
-from askbot.views.readers import revisions
+from askbot.views.readers import revisions, get_question_body
 from askbot.views.meta import media
 from askbot.search.state_manager import ViewLog
 
@@ -21,7 +21,7 @@ from askbot.search.state_manager import ViewLog
 IGNORED_VIEWS = (
     serve, vote, media, delete_comment, post_comments,
     retag_question, revisions, javascript_catalog,
-    get_tag_list
+    get_tag_list, get_question_body
 )
 
 

@@ -140,6 +140,11 @@ urlpatterns = patterns('',
         views.readers.get_comment, 
         name='get_comment'
     ),
+    url(#ajax only
+        r'^question/get_body/$',
+        views.readers.get_question_body, 
+        name='get_question_body'
+    ),
     url(
         r'^%s$' % _('tags/'), 
         views.readers.tags, 

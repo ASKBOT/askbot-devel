@@ -37,19 +37,92 @@ settings.register(
     )
 )
 
+#settings.register(
+#    livesettings.StringValue(
+#        EMAIL,
+#        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE',
+#        default='w',
+#        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+#        description=_('Default news notification frequency'),
+#        help_text=_(
+#                    'This option currently defines default frequency '
+#                    'of emailed updates in the following five categories: '
+#                    'questions asked by user, answered by user, individually '
+#                    'selected, entire forum (per person tag filter applies) '
+#                    'and posts mentioning the user and comment responses'
+#                    )
+#    )
+#)
+
+
 settings.register(
     livesettings.StringValue(
         EMAIL,
-        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE',
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ALL',
         default='w',
         choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
-        description=_('Default news notification frequency'),
+        description=_('Default notification frequency all questions'),
         help_text=_(
-                    'This option currently defines default frequency '
-                    'of emailed updates in the following five categories: '
-                    'questions asked by user, answered by user, individually '
-                    'selected, entire forum (per person tag filter applies) '
-                    'and posts mentioning the user and comment responses'
+                    'Option to define frequency of emailed updates for: '
+                    'all questions.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ASK',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions asked by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question asked by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ANS',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions answered by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question answered by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_SEL',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions individually \
+                       selected by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question individually selected by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_M_AND_C',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency for mentions \
+                       and comments'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Mentions and comments.'
                     )
     )
 )

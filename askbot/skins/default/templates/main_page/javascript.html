@@ -15,6 +15,21 @@
         {% endif %}
     });
     $(window).bind('hashchange', animate_hashes);
+
+    askbot['data']['questions-titles'] = {};
+    function load_question_body(element, question_id){
+      var key = 'question-' + question_id;
+      if ( askbot['data']['questions-titles'][key] == null){
+        $.getJSON('{% url get_question_body %}', function(data){
+          askbot['data']['questions-titles'] = data['questions-titles'];
+          console.debug(data);
+          element.title = askbot['data']['questions-titles'][key];//repeated due to async
+        });
+      } else {
+        element.title = askbot['data']['questions-titles'][key];
+      }
+    }
+
     askbot['urls']['mark_interesting_tag'] = scriptUrl + '{% url mark_interesting_tag %}';
     askbot['urls']['mark_ignored_tag'] = scriptUrl + '{% url mark_ignored_tag %}';
     askbot['urls']['unmark_tag'] = scriptUrl + '{% url unmark_tag %}';

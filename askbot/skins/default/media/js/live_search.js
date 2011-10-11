@@ -97,11 +97,10 @@ var liveSearch = function(){
 
     var render_title = function(result){
         return '<h2>' +
-                    '<a title="' + result['summary'] + '" ' +
-                        'href="' + 
+                    '<a href="' + 
                             askbot['urls']['question_url_template']
                             .replace('{{QuestionID}}', result['id']) +
-                    '">' +
+                    '" onmouseover="load_question_body(this,' + result['id'] + ')">' +
                         result['title'] +
                     '</a>' +
                 '</h2>';

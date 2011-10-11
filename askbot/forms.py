@@ -962,7 +962,7 @@ class TagFilterSelectionForm(forms.ModelForm):
 class EmailFeedSettingField(forms.ChoiceField):
     def __init__(self, *arg, **kwarg):
         kwarg['choices'] = const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES
-        kwarg['initial'] = askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
+        #kwarg['initial'] = askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
         kwarg['widget'] = forms.RadioSelect
         super(EmailFeedSettingField, self).__init__(*arg, **kwarg)
 

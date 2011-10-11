@@ -22,9 +22,11 @@ template.add_to_builtins('askbot.templatetags.extra_filters_jinja')
 #here it is ignored because it is assumed that we won't use unicode paths
 ASKBOT_SKIN_COLLECTION_DIR = os.path.dirname(__file__)
 
-def load_template_source(name, dirs=None):
+#changed the name from load_template_source
+def filesystem_load_template_source(name, dirs=None):
     """Django template loader
     """
+
     if dirs is None:
         dirs = (ASKBOT_SKIN_COLLECTION_DIR, )
     else:
@@ -37,7 +39,9 @@ def load_template_source(name, dirs=None):
     except:
         tname = os.path.join('default','templates',name)
         return filesystem.load_template_source(tname,dirs)
-load_template_source.is_usable = True
+filesystem_load_template_source.is_usable = True
+#added this for backward compatbility
+load_template_source = filesystem_load_template_source
 
 class SkinEnvironment(CoffinEnvironment):
     """Jinja template environment
