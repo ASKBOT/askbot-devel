@@ -37,7 +37,7 @@ def get_parser():
         for item in pairs:
             LINK_PATTERNS.append(
                 (
-                    re.compile(item[0]),
+                    re.compile(item[0].strip()),
                     item[1].strip()
                 )
             )
