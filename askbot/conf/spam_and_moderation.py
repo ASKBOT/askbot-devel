@@ -11,6 +11,11 @@ SPAM_AND_MODERATION = livesettings.ConfigurationGroup(
                     super_group = EXTERNAL_SERVICES
                 )
 
+MIN_DAYS_TO_STAFF_ACCEPT_ANSWER = livesettings.ConfigurationGroup(
+                    'MIN_DAYS_TO_STAFF_ACCEPT_ANSWER',
+                    _('Answer content moderation')
+                )
+
 settings.register(
     livesettings.BooleanValue(
         SPAM_AND_MODERATION,
@@ -29,6 +34,16 @@ settings.register(
         SPAM_AND_MODERATION,
         'AKISMET_API_KEY',
         description=_('Akismet key for spam detection')
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        SPAM_AND_MODERATION,
+        'MIN_DAYS_TO_STAFF_ACCEPT_ANSWER',
+        default=7,
+        description=_('Minimum days to accept an answer, '
+            'if it has not been accepted by the question poster')
     )
 )
 
