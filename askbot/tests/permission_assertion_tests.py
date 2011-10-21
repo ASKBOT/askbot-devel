@@ -1368,6 +1368,11 @@ class AcceptBestAnswerPermissionAssertionTests(utils.AskbotTestCase):
         self.third_user.reputation = 1000000
         self.assert_user_cannot(user = self.third_user)
 
+    def test_moderator_cannot_accept_own_answer(self):
+        self.other_post_answer()
+        self.other_user.set_status('m')
+        self.assert_user_cannot(user = self.other_user)
+
     def test_moderator_cannot_accept_others_answer_today(self):
         self.other_post_answer()
         self.create_user(username = 'third_user')
@@ -1390,24 +1395,6 @@ class AcceptBestAnswerPermissionAssertionTests(utils.AskbotTestCase):
         self.other_user.save()
         self.assert_user_cannot(user = self.other_user)
 
-class VotePermissionAssertionTests(PermissionAssertionTestCase):
-    """Tests permission for voting
-    """
-    def extraSetUp(self):
-        self.min_rep_up = askbot_settings.MIN_REP_TO_VOTE_UP
-        self.min_rep_down = askbot_settings.MIN_REP_TO_VOTE_DOWN
-        self.other_user = self.create_other_user()
-
-    def assert_cannot_vote(self, user = None, dir = None):
-        self.create_user(username = 'third_user')
-        self.third_user.set_status('m')
-        self.assert_user_can(user = self.third_user)
-
-    def test_moderator_cannot_accept_own_answer(self):
-        self.other_post_answer()
-        self.other_user.set_status('m')
-        self.assert_user_cannot(user = self.other_user)
-
     def test_admin_cannot_accept_others_answer_today(self):
         self.other_post_answer()
         self.create_user(username = 'third_user')
@@ -1425,11 +1412,18 @@ class VotePermissionAssertionTests(PermissionAssertionTestCase):
         self.third_user.save()
         self.assert_user_can(user = self.third_user)
 
-    def test_admin_cannot_accept_own_answer(self):
-        self.other_post_answer()
-        self.other_user.set_admin_status()
-        self.other_user.save()
-        self.assert_user_cannot(user = self.other_user)
+class VotePermissionAssertionTests(PermissionAssertionTestCase):
+    """Tests permission for voting
+    """
+    def extraSetUp(self):
+        self.min_rep_up = askbot_settings.MIN_REP_TO_VOTE_UP
+        self.min_rep_down = askbot_settings.MIN_REP_TO_VOTE_DOWN
+        self.other_user = self.create_other_user()
+
+    def assert_cannot_vote(self, user = None, dir = None):
+        self.create_user(username = 'third_user')
+        self.third_user.set_status('m')
+        self.assert_user_can(user = self.third_user)
 
 class VotePermissionAssertionTests(PermissionAssertionTestCase):
     """Tests permission for voting
