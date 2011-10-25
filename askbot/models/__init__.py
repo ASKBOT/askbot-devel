@@ -342,9 +342,22 @@ def user_assert_can_unaccept_best_answer(self, answer = None):
                     low_rep_error_message = low_rep_error_message
                 )
         return # success
+
+    elif self.is_administrator() or self.is_moderator():
+        will_be_able_at = (answer.added_at + 
+            datetime.timedelta(days=askbot_settings.MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER))
+
+        if datetime.datetime.now() < will_be_able_at:
+            error_message = _(
+                'Sorry, you will be able to accept this answer '
+                'only after %(will_be_able_at)s'
+                ) % {'will_be_able_at': will_be_able_at.strftime('%d/%m/%Y')}
+        else:
+            return
+
     else:
         error_message = _(
-            'Sorry, only original author of the question '
+            'Sorry, only moderators or original author of the question '
             ' - %(username)s - can accept or unaccept the best answer'
             ) % {'username': answer.get_owner().username}
 

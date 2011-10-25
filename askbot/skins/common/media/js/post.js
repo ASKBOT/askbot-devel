@@ -398,12 +398,10 @@ var Vote = function(){
     
     var bindEvents = function(){
         // accept answers
-        if(questionAuthorId == currentUserId){
-            var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
-            $(acceptedButtons).unbind('click').click(function(event){
-               Vote.accept($(event.target));
-            });
-        }
+        var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
+        $(acceptedButtons).unbind('click').click(function(event){
+           Vote.accept($(event.target));
+        });
         // set favorite question
         var favoriteButton = getFavoriteButton();
         favoriteButton.unbind('click').click(function(event){

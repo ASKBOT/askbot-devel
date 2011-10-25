@@ -17,7 +17,7 @@
     {% endif %}
     alt="{% trans %}i dont like this answer (click again to cancel){% endtrans %}"
     title="{% trans %}i dont like this answer (click again to cancel){% endtrans %}" />
-{% if request.user == question.author %}
+{% if request.user == question.author or request.user.is_moderator or request.user.is_superuser %}
 <img id="answer-img-accept-{{ answer.id }}" class="answer-img-accept" 
     {% if answer.accepted %}
         src="{{'/images/vote-accepted-on.png'|media}}"
