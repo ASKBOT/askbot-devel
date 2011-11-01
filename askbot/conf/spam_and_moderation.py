@@ -31,4 +31,3 @@ settings.register(
         description=_('Akismet key for spam detection')
     )
 )
-

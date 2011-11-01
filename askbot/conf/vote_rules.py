@@ -78,3 +78,13 @@ settings.register(
         description=_('Number of flags required to automatically delete posts')
     )
 )
+
+settings.register(
+    IntegerValue(
+        VOTE_RULES,
+        'MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER',
+        default=7,
+        description=_('Minimum days to accept an answer, '
+            'if it has not been accepted by the question poster')
+    )
+)
