@@ -1570,7 +1570,7 @@ var socialSharing = function(){
                     url = url.replace('{TEXT}', TEXT);
                     var params = SERVICE_DATA[service_name]['params'];
                     if(!window.open(url, "sharing", params)){
-                        window.location.href=share_url;
+                        window.location.href=url;
                     }
                 }
             });

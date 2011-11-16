@@ -32,11 +32,7 @@ askbot/fixtures
 dist
 *.egg-info
 build
-askbot/upfiles/*.jpg
-askbot/upfiles/*.jpeg
-askbot/upfiles/*.gif
-askbot/upfiles/*.png
-askbot/upfiles/*.ico
+askbot/upfiles/
 askbot/upfiles/avatars/
 askbot/skins/common/media/mathjax/
 /jinja2
