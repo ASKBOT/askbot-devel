@@ -202,6 +202,11 @@ class PageLoadTestCase(AskbotTestCase):
                 kwargs={'id':17},
                 template='revisions.html'
             )
+        self.try_url(
+                'widget_questions',
+                data={'tags': 'test'},
+                template='question_widget.html',
+            )
         self.try_url('users', template='users.html')
         #todo: really odd naming conventions for sort methods
         self.try_url(

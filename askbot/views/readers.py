@@ -12,6 +12,7 @@ import urllib
 import operator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.conf import settings as django_settings
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template import Context
 from django.utils.http import urlencode
@@ -626,3 +627,22 @@ def get_question_body(request):
 
     return {'questions-titles': questions_dict}
     return {'questions-titles': questions_dict}
+
+def widget_questions(request):
+    """Returns the first x questions based on certain tags.
+    @returns template with those questions listed."""
+    # make sure this is a GET request with the correct parameters.
+    if request.method != 'GET' or not request.GET.get('tags'):
+        raise Http404
+    tags_list = request.GET['tags'].split(',')
+    # Get Questions that contain all the matching tags, could be OR instead.
+    matching_questions = models.Question.objects.filter(tags__name__in=tags_list)[:7]
+    data = [] 
+    for matching_question in matching_questions:
+        data.append({
+            'url': '%s%s' % (django_settings.SITE_BASE_URL,
+                             matching_question.get_absolute_url()),
+            'title': matching_question.title
+        })  
+    return render_into_skin('question_widget.html', {'questions': data}, request) 
+    

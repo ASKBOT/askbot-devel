@@ -119,6 +119,11 @@ urlpatterns = patterns('',
         kwargs = {'object_name': 'Question'},
         name='question_revisions'
     ),
+    url(
+        r'^%s$' % _('widget/'), 
+        views.readers.widget_questions, 
+        name='widget_questions'
+    ),
     url(#ajax only
         r'^comment/upvote/$',
         views.commands.upvote_comment,

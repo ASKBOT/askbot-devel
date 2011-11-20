@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <style type="text/css">
+        #container {
+            width: 200px;
+            height: 350px;
+        }
+        ul {
+            list-style: none;
+            padding: 5px;
+            margin: 5px;
+        }
+        li {
+            border-bottom: #CCC 1px solid;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: #464646;
+            font-family: 'Yanone Kaffeesatz', sans-serif;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <ul>
+            {% for question in questions %}
+                <li><a href="{{ question.url }}">
+                  {{ question.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div> 
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300,400,700' rel='stylesheet' type='text/css'>
+</body>
+</html>
