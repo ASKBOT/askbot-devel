@@ -31,10 +31,7 @@ class VoteAdmin(admin.ModelAdmin):
 class FavoriteQuestionAdmin(admin.ModelAdmin):
     """  admin class"""
 
-class QuestionRevisionAdmin(admin.ModelAdmin):
-    """  admin class"""
-
-class AnswerRevisionAdmin(admin.ModelAdmin):
+class PostRevisionAdmin(admin.ModelAdmin):
     """  admin class"""
 
 class AwardAdmin(admin.ModelAdmin):
@@ -52,8 +49,7 @@ admin.site.register(models.Answer, AnswerAdmin)
 admin.site.register(models.Comment, CommentAdmin)
 admin.site.register(models.Vote, VoteAdmin)
 admin.site.register(models.FavoriteQuestion, FavoriteQuestionAdmin)
-admin.site.register(models.QuestionRevision, QuestionRevisionAdmin)
-admin.site.register(models.AnswerRevision, AnswerRevisionAdmin)
+admin.site.register(models.PostRevision, PostRevisionAdmin)
 admin.site.register(models.Award, AwardAdmin)
 admin.site.register(models.Repute, ReputeAdmin)
 admin.site.register(models.Activity, ActivityAdmin)

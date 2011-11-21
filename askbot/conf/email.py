@@ -39,24 +39,6 @@ settings.register(
     )
 )
 
-#settings.register(
-#    livesettings.StringValue(
-#        EMAIL,
-#        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE',
-#        default='w',
-#        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
-#        description=_('Default news notification frequency'),
-#        help_text=_(
-#                    'This option currently defines default frequency '
-#                    'of emailed updates in the following five categories: '
-#                    'questions asked by user, answered by user, individually '
-#                    'selected, entire forum (per person tag filter applies) '
-#                    'and posts mentioning the user and comment responses'
-#                    )
-#    )
-#)
-
-
 settings.register(
     livesettings.StringValue(
         EMAIL,
@@ -139,7 +121,6 @@ settings.register(
             'NOTE: in order to use this feature, it is necessary to '
             'run the management command "send_unanswered_question_reminders" '
             '(for example, via a cron job - with an appropriate frequency) '
-            'and an IMAP server with a dedicated inbox must be configured '
         )
     )
 )
@@ -175,6 +156,55 @@ settings.register(
         description = _(
             'Max. number of reminders to send '
             'about unanswered questions'
+        )
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        EMAIL,
+        'ENABLE_ACCEPT_ANSWER_REMINDERS',
+        default = False,
+        description = _('Send periodic reminders to accept the best answer'),
+        help_text = _(
+            'NOTE: in order to use this feature, it is necessary to '
+            'run the management command "send_accept_answer_reminders" '
+            '(for example, via a cron job - with an appropriate frequency) '
+        )
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'DAYS_BEFORE_SENDING_ACCEPT_ANSWER_REMINDER',
+        default = 3,
+        description = _(
+            'Days before starting to send reminders to accept an answer'
+        ),
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'ACCEPT_ANSWER_REMINDER_FREQUENCY',
+        default = 3,
+        description = _(
+            'How often to send accept answer reminders '
+            '(in days between the reminders sent).'
+        )
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'MAX_ACCEPT_ANSWER_REMINDERS',
+        default = 5,
+        description = _(
+            'Max. number of reminders to send '
+            'to accept the best answer'
         )
     )
 )

@@ -11,7 +11,7 @@ $(document).ready(function(){
         });
 
         if (id_list.length === 0){
-            alert($.i18n._('Please select at least one item'));
+            alert(gettext('Please select at least one item'));
         }
 
         return {id_list: id_list, elements: elements};
@@ -55,12 +55,8 @@ $(document).ready(function(){
             return;
         }
         if (action_type == 'delete'){
-            if (data['id_list'].length === 1){
-                var msg = $.i18n._('Delete this notification?')
-            }
-            else {
-                var msg = $.i18n._('Delete these notifications?')
-            }
+            msg = ngettext('Delete this notification?',
+					'Delete these notifications?', data['id_list'].length);
             if (confirm(msg) === false){
                 return;
             }

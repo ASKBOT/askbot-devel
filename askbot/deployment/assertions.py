@@ -12,7 +12,8 @@ def assert_package_compatibility():
     """raises an exception if any known incompatibilities 
     are found
     """
-    (django_major, django_minor, django_micro) = package_utils.get_django_version()
+    (django_major, django_minor, django_micro) = \
+        package_utils.get_django_version()
     if django_major < 1:
         raise DeploymentError('Django version < 1.0 is not supported by askbot')
 

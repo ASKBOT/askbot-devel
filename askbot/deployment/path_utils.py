@@ -1,5 +1,5 @@
 """utilities in addition to os.path
-that 
+that
 * help to test existing paths on usability for the installation
 * create necessary directories
 * install deployment files
@@ -11,6 +11,9 @@ import re
 import glob
 import shutil
 import imp
+from askbot.utils import console
+from askbot.deployment.template_loader import SettingsTemplate
+
 
 def split_at_break_point(directory):
     """splits directory path into two pieces
@@ -27,6 +30,25 @@ def split_at_break_point(directory):
         head, tail = os.path.split(head)
         tail_bits.insert(0, tail)
     return head, os.path.join(*tail_bits)
+
+def clean_directory(directory):
+    """Returns normalized absolute path to the directory
+    regardless of whether it exists or not
+    or ``None`` - if the path is a file or if ``directory``
+    parameter is ``None``"""
+    if directory is None:
+        return None
+
+    directory = os.path.normpath(directory)
+    directory = os.path.abspath(directory)
+
+    if os.path.isfile(directory):
+        if options.verbosity >= 1 and os.path.isfile(directory):
+            print messages.CANT_INSTALL_INTO_FILE % {'path':directory}
+        sys.exit(1)
+
+        return None
+    return directory
 
 
 def directory_is_writable(directory):
@@ -47,7 +69,7 @@ def directory_is_writable(directory):
 
 
 def can_create_path(directory):
-    """returns True if user can write file into 
+    """returns True if user can write file into
     directory even if it does not exist yet
     and False otherwise
     """
@@ -55,7 +77,7 @@ def can_create_path(directory):
         if not os.path.isdir(directory):
             return False
     else:
-        directory, junk = split_at_break_point(directory)
+        directory = split_at_break_point(directory)[0]
     return directory_is_writable(directory)
 
 
@@ -65,8 +87,12 @@ def has_existing_django_project(directory):
     """returns True is any of the .py files
     in a given directory imports anything from django
     """
-    file_list = glob.glob(directory  + '*.py')
+    directory = os.path.normpath(directory)
+    file_list = glob.glob(directory  + os.path.sep + '*.py')
     for file_name in file_list:
+        if file_name.endswith(os.path.sep + 'manage.py'):
+            #a hack allowing to install into the distro directory
+            continue
         py_file = open(file_name)
         for line in py_file:
             if IMPORT_RE1.match(line) or IMPORT_RE2.match(line):
@@ -123,24 +149,31 @@ def get_path_to_help_file():
     """returns path to the main plain text help file"""
     return os.path.join(SOURCE_DIR, 'doc', 'INSTALL')
 
-def deploy_into(directory, new_project = None):
+def deploy_into(directory, new_project = False, verbosity = 1, context = None):
     """will copy necessary files into the directory
     """
-    assert(new_project is not None)
+    assert(isinstance(new_project, bool))
     if new_project:
-        copy_files = ('__init__.py', 'settings.py', 'manage.py', 'urls.py')
+        copy_files = ('__init__.py', 'manage.py', 'urls.py')
         blank_files = ('__init__.py', 'manage.py')
-        print 'Copying files: '
+        if verbosity >= 1:
+            print 'Copying files: '
         for file_name in copy_files:
             src = os.path.join(SOURCE_DIR, 'setup_templates', file_name)
             if os.path.exists(os.path.join(directory, file_name)):
                 if file_name in blank_files:
                     continue
                 else:
-                    print '* %s' % file_name,
-                    print "- you already have one, please add contents of %s" % src
+                    if file_name == 'urls.py' and new_project:
+                        #overwrite urls.py
+                        shutil.copy(src, directory)
+                    else:
+                        if verbosity >= 1:
+                            print '* %s' % file_name,
+                            print "- you already have one, please add contents of %s" % src
             else:
-                print '* %s ' % file_name
+                if verbosity >= 1:
+                    print '* %s ' % file_name
                 shutil.copy(src, directory)
         #copy log directory
         src = os.path.join(SOURCE_DIR, 'setup_templates', 'log')
@@ -148,7 +181,29 @@ def deploy_into(directory, new_project = None):
         create_path(log_dir)
         touch(os.path.join(log_dir, 'askbot.log'))
 
-    print ''
+        #creating settings file from template
+        if verbosity >= 1:
+            print "Creating settings file"
+        settings_contents = SettingsTemplate(context).render()
+        settings_path = os.path.join(directory, 'settings.py')
+        if os.path.exists(settings_path) and new_project == False:
+            if verbosity >= 1:
+                print "* you already have a settings file please merge the contents"
+        elif new_project == True:
+            settings_file = open(settings_path, 'w+')
+            settings_file.write(settings_contents)
+            #Grab the file!
+            if os.path.exists(context['local_settings']):
+                local_settings = open(context['local_settings'], 'r').read()
+                settings_file.write('\n')
+                settings_file.write(local_settings)
+
+            settings_file.close()
+            if verbosity >= 1:
+                print "settings file created"
+
+    if verbosity >= 1:
+        print ''
     app_dir = os.path.join(directory, 'askbot')
 
     copy_dirs = ('doc', 'cron', 'upfiles')
@@ -158,17 +213,22 @@ def deploy_into(directory, new_project = None):
         dst = os.path.join(app_dir, dir_name)
         if os.path.abspath(src) != os.path.abspath(dst):
             if dirs_copied == 0:
-                print 'copying directories: ',
-            print '* ' + dir_name
+                if verbosity >= 1:
+                    print 'copying directories: ',
+            if verbosity >= 1:
+                print '* ' + dir_name
             if os.path.exists(dst):
                 if os.path.isdir(dst):
-                    print 'Directory %s not empty - skipped' % dst
+                    if verbosity >= 1:
+                        print 'Directory %s not empty - skipped' % dst
                 else:
-                    print 'File %s already exists - skipped' % dst
+                    if verbosity >= 1:
+                        print 'File %s already exists - skipped' % dst
                 continue
             shutil.copytree(src, dst)
             dirs_copied += 1
-    print ''
+    if verbosity >= 1:
+        print ''
 
 def dir_name_acceptable(directory):
     """True if directory is not taken by another python module"""
@@ -178,3 +238,47 @@ def dir_name_acceptable(directory):
         return False
     except ImportError:
         return True
+
+def get_install_directory(force = False):
+    """returns a directory where a new django app/project 
+    can be installed.
+    If ``force`` is ``True`` - will permit
+    using a directory with an existing django project.
+    """
+    from askbot.deployment import messages
+    where_to_deploy_msg = messages.WHERE_TO_DEPLOY_QUIT
+    directory = raw_input(where_to_deploy_msg + ' ')
+    directory = clean_directory(directory)
+
+    if directory is None:
+        return None
+
+    if can_create_path(directory) == False:
+        print messages.format_msg_dir_not_writable(directory)
+        return None
+
+    if os.path.exists(directory):
+        if path_is_clean_for_django(directory):
+            if has_existing_django_project(directory):
+                if not force:
+                    print messages.CANNOT_OVERWRITE_DJANGO_PROJECT % \
+                        {'directory': directory}
+                    return None
+        else:
+            print messages.format_msg_dir_unclean_django(directory)
+            return None
+    elif force == False:
+        message = messages.format_msg_create(directory)
+        should_create_new = console.choice_dialog(
+                            message,
+                            choices = ['yes','no'],
+                            invalid_phrase = messages.INVALID_INPUT
+                        )
+        if should_create_new == 'no':
+            return None
+
+    if not dir_name_acceptable(directory):
+        print messages.format_msg_bad_dir_name(directory)
+        return None
+
+    return directory

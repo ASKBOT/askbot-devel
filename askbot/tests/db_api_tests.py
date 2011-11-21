@@ -5,7 +5,6 @@ e.g. ``some_user.do_something(...)``
 """
 from django.core import exceptions
 from django.core.urlresolvers import reverse
-from django.db import connection
 from django.test.client import Client
 from django.conf import settings
 from askbot.tests.utils import AskbotTestCase
@@ -42,37 +41,6 @@ class DBApiTests(AskbotTestCase):
         self.assertTrue(post.deleted == False)
         self.assertTrue(post.deleted_by == None)
         self.assertTrue(post.deleted_at == None)
-
-    def test_anonymous_question_cache(self):
-        question = self.post_question()
-        settings.DEBUG = True  # because it's forsed to False
-        url = reverse('question', kwargs={'id': question.id})
-
-        client = Client()
-        client.get(url, follow=True)
-        counter = len(connection.queries)
-        client.get(url, follow=True)
-
-        self.assertTrue(counter > len(connection.queries))
-        self.assertEqual(3, len(connection.queries))  # session-related only
-        settings.DEBUG = False
-
-    def test_authentificated_no_question_cache(self):
-        question = self.post_question()
-        settings.DEBUG = True  # because it's forsed to False
-        url = reverse('question', kwargs={'id': question.id})
-
-        password = '123'
-        client = Client()
-        self.other_user.set_password(password)
-        client.login(username=self.other_user.username, password=password)
-
-        client.get(url, follow=True)
-        counter = len(connection.queries)
-        client.get(url, follow=True)
-
-        self.assertEqual(counter, len(connection.queries))
-        settings.DEBUG = False
 
     def test_flag_question(self):
         self.user.set_status('m')

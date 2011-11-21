@@ -37,11 +37,8 @@
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"
     {% endif %}
 ></script>
-<script type='text/javascript' src="{{"/js/i18n.js"|media }}"></script>
-<script type='text/javascript' src="{{"/js/jquery.i18n.js"|media }}"></script>
-<script type='text/javascript' src="{% url "askbot_jsi18n" %}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
-<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300,400,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 {% if settings.ENABLE_MATHJAX %}
     <script type='text/javascript' src="{{settings.MATHJAX_BASE_URL}}/MathJax.js">
         MathJax.Hub.Config({

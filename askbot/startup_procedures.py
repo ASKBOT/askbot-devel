@@ -34,7 +34,7 @@ def format_as_text_tuple_entries(items):
 #
 # *validate emails in settings.py
 def test_askbot_url():
-    """Tests the ASKBOT_URL setting for the 
+    """Tests the ASKBOT_URL setting for the
     well-formedness and raises the ImproperlyConfigured
     exception, if the setting is not good.
     """
@@ -91,8 +91,8 @@ def test_middleware():
 
     if missing_middleware_set:
         error_message = """\n\nPlease add the following middleware (listed after this message)
-to the MIDDLEWARE_CLASSES variable in your site settings.py file. 
-The order the middleware records may be important, please take a look at the example in 
+to the MIDDLEWARE_CLASSES variable in your site settings.py file.
+The order the middleware records may be important, please take a look at the example in
 https://github.com/ASKBOT/askbot-devel/blob/master/askbot/setup_templates/settings.py:\n\n"""
         middleware_text = format_as_text_tuple_entries(missing_middleware_set)
         raise ImproperlyConfigured(PREAMBLE + error_message + middleware_text)
@@ -112,7 +112,7 @@ the list of MIDDLEWARE_CLASSES in your settings.py - these are not used any more
         middleware_text = format_as_text_tuple_entries(remove_middleware_set)
         raise ImproperlyConfigured(PREAMBLE + error_message + middleware_text)
 
-            
+
 
 def test_i18n():
     """askbot requires use of USE_I18N setting"""
@@ -124,7 +124,7 @@ def test_i18n():
         )
 
 def try_import(module_name, pypi_package_name):
-    """tries importing a module and advises to install 
+    """tries importing a module and advises to install
     A corresponding Python package in the case import fails"""
     try:
         load_module(module_name)
@@ -173,15 +173,58 @@ def test_encoding():
             )
 
 def test_template_loader():
-    """Sends a warning if you have an old style template 
+    """Sends a warning if you have an old style template
     loader that used to send a warning"""
     old_template_loader = 'askbot.skins.loaders.load_template_source'
     if old_template_loader in django_settings.TEMPLATE_LOADERS:
         raise ImproperlyConfigured(PREAMBLE + \
                 "\nPlease change: \n"
-                "'askbot.skins.loaders.load_template_source', to\n" 
+                "'askbot.skins.loaders.load_template_source', to\n"
                 "'askbot.skins.loaders.filesystem_load_template_source',\n"
                 "in the TEMPLATE_LOADERS of your settings.py file"
+        )
+
+def test_celery():
+    """Tests celery settings
+    todo: we are testing two things here
+    that correct name is used for the setting
+    and that a valid value is chosen
+    """
+    broker_backend = getattr(django_settings, 'BROKER_BACKEND', None)
+    broker_transport = getattr(django_settings, 'BROKER_TRANSPORT', None)
+
+    if broker_backend is None:
+        if broker_transport is None:
+            raise ImproperlyConfigured(PREAMBLE + \
+                "\nPlease add\n"
+                'BROKER_TRANSPORT = "djkombu.transport.DatabaseTransport"\n'
+                "or other valid value to your settings.py file"
+            )
+        else:
+            #todo: check that broker transport setting is valid
+            return
+
+    if broker_backend != broker_transport:
+        raise ImproperlyConfigured(PREAMBLE + \
+            "\nPlease rename setting BROKER_BACKEND to BROKER_TRANSPORT\n"
+            "in your settings.py file\n"
+            "If you have both in your settings.py - then\n"
+            "delete the BROKER_BACKEND setting and leave the BROKER_TRANSPORT"
+        )
+
+    if hasattr(django_settings, 'BROKER_BACKEND') and not hasattr(django_settings, 'BROKER_TRANSPORT'):
+        raise ImproperlyConfigured(PREAMBLE + \
+            "\nPlease rename setting BROKER_BACKEND to BROKER_TRANSPORT\n"
+            "in your settings.py file"
+        )
+
+def test_cache():
+    """Tests cache settings"""
+    if not hasattr(django_settings, 'CACHE_MIDDLEWARE_ANONYMOUS_ONLY'):
+        raise ImproperlyConfigured(PREAMBLE + \
+            "\nPlease set\n"
+            "CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True\n"
+            "in your settings.py file"
         )
 
 def run_startup_tests():
@@ -197,6 +240,8 @@ def run_startup_tests():
     test_i18n()
     test_postgres()
     test_middleware()
+    test_celery()
+    test_cache()
 
 @transaction.commit_manually
 def run():

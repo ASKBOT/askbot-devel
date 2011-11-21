@@ -6,7 +6,6 @@ from django.conf import settings
 from django.conf.urls.defaults import url, patterns, include
 from django.conf.urls.defaults import handler500, handler404
 from django.contrib import admin
-from django.utils.translation import ugettext as _
 from askbot import views
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
@@ -14,6 +13,11 @@ from askbot.skins.utils import update_media_revision
 
 admin.autodiscover()
 update_media_revision()#needs to be run once, so put it here
+
+if hasattr(settings, "ASKBOT_TRANSLATE_URL") and settings.ASKBOT_TRANSLATE_URL:
+    from django.utils.translation import ugettext as _
+else:
+    _ = lambda s:s
 
 feeds = {
     'rss': RssLastestQuestionsFeed,
@@ -280,7 +284,7 @@ urlpatterns = patterns('',
     url(
         r'^jsi18n/$',
         'django.views.i18n.javascript_catalog',
-        {'packages': ('askbot',)},
+        {'domain': 'djangojs','packages': ('askbot',)},
         name = 'askbot_jsi18n'
     ),
 )

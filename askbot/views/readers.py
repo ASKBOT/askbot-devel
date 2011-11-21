@@ -24,6 +24,7 @@ from django.core.urlresolvers import reverse
 from django.core import exceptions as django_exceptions
 from django.contrib.humanize.templatetags import humanize
 from django.views.decorators.cache import cache_page
+from django.http import QueryDict
 
 import askbot
 from askbot import exceptions
@@ -124,6 +125,24 @@ def questions(request):
         'page_size' : search_state.page_size,#todo in T pagesize -> page_size
     }
 
+    # We need to pass the rss feed url based
+    # on the search state to the template.
+    # We use QueryDict to get a querystring
+    # from dicts and arrays. Much cleaner
+    # than parsing and string formating.
+    rss_query_dict = QueryDict("").copy()
+    if search_state.query:
+        # We have search string in session - pass it to
+        # the QueryDict
+        rss_query_dict.update({"q": search_state.query})
+    if search_state.tags:
+        # We have tags in session - pass it to the
+        # QueryDict but as a list - we want tags+
+        rss_query_dict.setlist("tags", search_state.tags)
+    
+    # Format the url with the QueryDict
+    context_feed_url = '/feeds/rss/?%s' % rss_query_dict.urlencode()
+
     if request.is_ajax():
 
         q_count = paginator.count
@@ -170,7 +189,8 @@ def questions(request):
             'question_counter': question_counter,
             'questions': list(),
             'related_tags': list(),
-            'faces': list()
+            'faces': list(),
+            'feed_url': context_feed_url,
         }
 
         badge_levels = dict(const.BADGE_TYPE_CHOICES)
@@ -223,6 +243,7 @@ def questions(request):
         reset_method_count += 1
     if meta_data.get('author_name',None):
         reset_method_count += 1
+    
 
     template_data = {
         'active_tab': 'questions',
@@ -249,6 +270,7 @@ def questions(request):
         'font_size' : font_size,
         'tag_filter_strategy_choices': const.TAG_FILTER_STRATEGY_CHOICES,
         'update_avatar_data': schedules.should_update_avatar_data(request),
+        'feed_url': context_feed_url,
     }
 
     assert(request.is_ajax() == False)
@@ -355,6 +377,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     """view that displays body of the question and
     all answers to it
     """
+    #process url parameters
     #todo: fix inheritance of sort method from questions
     default_sort_method = request.session.get('questions_sort_method', 'votes')
     form = ShowQuestionForm(request.GET, default_sort_method)
@@ -373,7 +396,14 @@ def question(request, id):#refactor - long subroutine. display question body, an
     #redirect also happens if id of the object's origin post != requested id
     show_post = None #used for permalinks
     if show_comment is not None:
-        #comments
+        #if url calls for display of a specific comment,
+        #check that comment exists, that it belongs to
+        #the current question
+        #if it is an answer comment and the answer is hidden -
+        #redirect to the default view of the question
+        #if the question is hidden - redirect to the main page
+        #in addition - if url points to a comment and the comment
+        #is for the answer - we need the answer object
         try:
             show_comment = models.Comment.objects.get(id = show_comment)
             if str(show_comment.get_origin_post().id) != id:
@@ -396,7 +426,10 @@ def question(request, id):#refactor - long subroutine. display question body, an
             return HttpResponseRedirect(reverse('index'))
 
     elif show_answer is not None:
-        #answers
+        #if the url calls to view a particular answer to 
+        #question - we must check whether the question exists
+        #whether answer is actually corresponding to the current question
+        #and that the visitor is allowed to see it
         try:
             show_post = get_object_or_404(models.Answer, id = show_answer)
             if str(show_post.question.id) != id:

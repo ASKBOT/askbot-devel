@@ -2344,7 +2344,7 @@ msgstr "registrieren/"
 
 #: deps/django_authopenid/urls.py:21
 msgid "signup/"
-msgstr "registrieren/"
+msgstr ""
 
 #: deps/django_authopenid/urls.py:25
 msgid "logout/"

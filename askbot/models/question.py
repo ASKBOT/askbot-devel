@@ -15,7 +15,7 @@ from askbot import exceptions
 from askbot.models.tag import Tag
 from askbot.models.base import AnonymousContent
 from askbot.models.base import DeletableContent
-from askbot.models.base import ContentRevision
+from askbot.models.post import PostRevision
 from askbot.models.base import BaseQuerySetManager
 from askbot.models.base import parse_post_text
 from askbot.models.base import parse_and_save_post
@@ -24,8 +24,6 @@ from askbot.models import signals
 from askbot import const
 from askbot.utils.lists import LazyList
 from askbot.utils.slug import slugify
-from askbot.utils import markup
-from askbot.utils.html import sanitize_html
 from askbot.utils import mysql
 
 #todo: too bad keys are duplicated see const sort methods
@@ -359,6 +357,48 @@ class QuestionQuerySet(models.query.QuerySet):
             tagnames = request_user.ignored_tags
             meta_data['ignored_tag_names'].extend(tagnames.split())
         return qs, meta_data, related_tags
+
+    def added_between(self, start, end):
+        """questions added between ``start`` and ``end`` timestamps"""
+        return self.filter(
+            added_at__gt = start
+        ).exclude(
+            added_at__gt = end
+        )
+
+    def get_questions_needing_reminder(self,
+                                    user = None,
+                                    activity_type = None,
+                                    recurrence_delay = None):
+        """returns list of questions that need a reminder,
+        corresponding the given ``activity_type``
+        ``user`` - is the user receiving the reminder
+        ``recurrence_delay`` - interval between sending the
+        reminders about the same question
+        """
+        from askbot.models import Activity#avoid circular import
+        question_list = list()
+        for question in self:
+            try:
+                activity = Activity.objects.get(
+                    user = user,
+                    question = question,
+                    activity_type = activity_type
+                )
+                now = datetime.datetime.now()
+                if now < activity.active_at + recurrence_delay:
+                    continue
+            except Activity.DoesNotExist:
+                activity = Activity(
+                    user = user,
+                    question = question,
+                    activity_type = activity_type,
+                    content_object = question,
+                )
+            activity.active_at = datetime.datetime.now()
+            activity.save()
+            question_list.append(question)
+        return question_list
 
     #todo: this function is similar to get_response_receivers
     #profile this function against the other one
@@ -718,7 +758,7 @@ class Question(content.Content, DeletableContent):
 
         # Create a new revision
         latest_revision = self.get_latest_revision()
-        QuestionRevision.objects.create(
+        PostRevision.objects.create_question_revision(
             question   = self,
             title      = latest_revision.title,
             author     = retagged_by,
@@ -796,7 +836,7 @@ class Question(content.Content, DeletableContent):
             else:
                 comment = 'No.%s Revision' % rev_no
             
-        return QuestionRevision.objects.create(
+        return PostRevision.objects.create_question_revision(
             question   = self,
             revision   = rev_no,
             title      = self.title,
@@ -965,54 +1005,6 @@ class FavoriteQuestion(models.Model):
     def __unicode__(self):
         return '[%s] favorited at %s' %(self.user, self.added_at)
 
-QUESTION_REVISION_TEMPLATE = ('<h3>%(title)s</h3>\n'
-                              '<div class="text">%(html)s</div>\n'
-                              '<div class="tags">%(tags)s</div>')
-QUESTION_REVISION_TEMPLATE_NO_TAGS = ('<h3>%(title)s</h3>\n'
-                              '<div class="text">%(html)s</div>\n')
-class QuestionRevision(ContentRevision):
-    """A revision of a Question."""
-    question   = models.ForeignKey(Question, related_name='revisions')
-    title      = models.CharField(max_length=300)
-    tagnames   = models.CharField(max_length=125)
-    is_anonymous = models.BooleanField(default=False)
-
-    class Meta(ContentRevision.Meta):
-        db_table = u'question_revision'
-        ordering = ('-revision',)
-
-    def get_question_title(self):
-        return self.question.title
-
-    def get_absolute_url(self):
-        #print 'in QuestionRevision.get_absolute_url()'
-        return reverse('question_revisions', args=[self.question.id])
-
-    def as_html(self, include_tags=True):
-        markdowner = markup.get_parser()
-        if include_tags:
-            return QUESTION_REVISION_TEMPLATE % {
-                'title': self.title,
-                'html': sanitize_html(markdowner.convert(self.text)),
-                'tags': ' '.join(['<a class="post-tag">%s</a>' % tag
-                                  for tag in self.tagnames.split(' ')]),
-            }
-        else:
-            return QUESTION_REVISION_TEMPLATE_NO_TAGS % {
-                'title': self.title,
-                'html': sanitize_html(markdowner.convert(self.text))
-            }
-
-    def save(self, **kwargs):
-        """Looks up the next available revision number."""
-        if not self.revision:
-            self.revision = QuestionRevision.objects.filter(
-                question=self.question).values_list('revision',
-                                                    flat=True)[0] + 1
-        super(QuestionRevision, self).save(**kwargs)
-
-    def __unicode__(self):
-        return u'revision %s of %s' % (self.revision, self.title)
 
 class AnonymousQuestion(AnonymousContent):
     """question that was asked before logging in

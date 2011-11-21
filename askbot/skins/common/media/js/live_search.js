@@ -338,6 +338,12 @@ var liveSearch = function(){
         }
     };
 
+    var change_rss_url = function(feed_url){
+        if(feed_url){
+            $("#ContentLeft a.rss:first").attr("href", feed_url);
+        }
+    }
+
     var remove_search_tag = function(tag_name){
         $.ajax({
             url: askbot['urls']['questions'],
@@ -414,6 +420,7 @@ var liveSearch = function(){
             render_faces(data['faces']);
             render_related_tags(data['related_tags']);
             render_relevance_sort_tab();
+            change_rss_url(data['feed_url']);
             set_active_sort_tab(sortMethod);
             query.focus();
 

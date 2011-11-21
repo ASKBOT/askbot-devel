@@ -25,6 +25,7 @@ install_requires = [
     'django-followit',
     'django-recaptcha-works',
     'python-openid',
+    'pystache==0.3.1',
 ]
 
 import askbot

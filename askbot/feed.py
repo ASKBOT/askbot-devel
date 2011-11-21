@@ -137,11 +137,27 @@ class RssLastestQuestionsFeed(Feed):
     def items(self, item):
         """get questions for the feed
         """
-        return Question.objects.filter(
-                                    deleted=False
-                                ).order_by(
-                                    '-last_activity_at'
-                                )[:30]
+        #initial filtering
+        qs = Question.objects.filter(deleted=False)
+
+        #get search string and tags from GET
+        query = self.request.GET.get("q", None)
+        tags = self.request.GET.getlist("tags")
+
+        if query:
+            #if there's a search string, use the
+            #question search method
+            qs = qs.get_by_text_query(query)
+
+        if tags:
+            #if there are tags in GET, filter the
+            #questions additionally
+            for tag in tags:                
+                qs = qs.filter(tags__name = tag)
+        
+        return qs.order_by('-last_activity_at')
+
+        
 
 def main():
     """main function for use as a script

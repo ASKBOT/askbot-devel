@@ -21,8 +21,12 @@
             {% endif %}
             {# class was searchInput #}
             <input 
-                {% if query %}
+                {% if query and request.user.is_authenticated() %}
+                class="searchInputCancelableAuth"
+                {% elif query %}
                 class="searchInputCancelable"
+                {% elif request.user.is_authenticated() %}
+                class="searchInputAuth" 
                 {% else %}
                 class="searchInput" 
                 {% endif %}

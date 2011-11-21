@@ -810,30 +810,83 @@ class TagFollowedInstantWholeForumEmailAlertTests(utils.AskbotTestCase):
             self.user1.email in outbox[0].recipients()
         )
 
-class UnansweredReminderTests(utils.AskbotTestCase):
+class EmailReminderTestCase(utils.AskbotTestCase):
+    #subclass must define these (example below)
+    #enable_setting_name = 'ENABLE_UNANSWERED_REMINDERS'
+    #frequency_setting_name = 'UNANSWERED_REMINDER_FREQUENCY'
+    #days_before_setting_name = 'DAYS_BEFORE_SENDING_UNANSWERED_REMINDER'
+    #max_reminder_setting_name = 'MAX_UNANSWERED_REMINDERS'
+    
     def setUp(self):
         self.u1 = self.create_user(username = 'user1')
         self.u2 = self.create_user(username = 'user2')
-        askbot_settings.update('ENABLE_UNANSWERED_REMINDERS', True)
-        askbot_settings.update('MAX_UNANSWERED_REMINDERS', 5)
-        askbot_settings.update('UNANSWERED_REMINDER_FREQUENCY', 1)
-        askbot_settings.update('DAYS_BEFORE_SENDING_UNANSWERED_REMINDER', 2)
+        askbot_settings.update(self.enable_setting_name, True)
+        askbot_settings.update(self.max_reminder_setting_name, 5)
+        askbot_settings.update(self.frequency_setting_name, 1)
+        askbot_settings.update(self.days_before_setting_name, 2)
 
-        self.wait_days = askbot_settings.DAYS_BEFORE_SENDING_UNANSWERED_REMINDER
-        self.recurrence_days = askbot_settings.UNANSWERED_REMINDER_FREQUENCY
-        self.max_emails = askbot_settings.MAX_UNANSWERED_REMINDERS
-
+        self.wait_days = getattr(askbot_settings, self.days_before_setting_name)
+        self.recurrence_days = getattr(askbot_settings, self.frequency_setting_name)
+        self.max_emails = getattr(askbot_settings, self.max_reminder_setting_name)
 
     def assert_have_emails(self, email_count = None):
-        management.call_command('send_unanswered_question_reminders')
+        management.call_command(self.command_name)
         outbox = django.core.mail.outbox
         self.assertEqual(len(outbox), email_count)
 
     def do_post(self, timestamp):
-        self.post_question(
+        self.question = self.post_question(
             user = self.u1,
             timestamp = timestamp
         )
+
+
+class AcceptAnswerReminderTests(EmailReminderTestCase):
+    """only two test cases here, because the algorithm here
+    is the same as for unanswered questons,
+    except here we are dealing with the questions that have
+    or do not have an accepted answer
+    """
+    enable_setting_name = 'ENABLE_ACCEPT_ANSWER_REMINDERS'
+    frequency_setting_name = 'ACCEPT_ANSWER_REMINDER_FREQUENCY'
+    days_before_setting_name = 'DAYS_BEFORE_SENDING_ACCEPT_ANSWER_REMINDER'
+    max_reminder_setting_name = 'MAX_ACCEPT_ANSWER_REMINDERS'
+    command_name = 'send_accept_answer_reminders'
+
+    def do_post(self, timestamp):
+        super(AcceptAnswerReminderTests, self).do_post(timestamp)
+        self.answer = self.post_answer(
+            question = self.question,
+            user = self.u2,
+            timestamp = timestamp
+        )
+
+    def test_reminder_positive_wait(self):
+        """a positive test - user must receive a reminder
+        """
+        days_ago = self.wait_days
+        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        self.do_post(timestamp)
+        self.assert_have_emails(1)
+
+    def test_reminder_negative_wait(self):
+        """negative test - the answer is accepted already"""
+        days_ago = self.wait_days
+        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        self.do_post(timestamp)
+        self.u1.accept_best_answer(
+            answer = self.answer,
+        )
+        self.assert_have_emails(0)
+
+
+class UnansweredReminderTests(EmailReminderTestCase):
+    
+    enable_setting_name = 'ENABLE_UNANSWERED_REMINDERS'
+    frequency_setting_name = 'UNANSWERED_REMINDER_FREQUENCY'
+    days_before_setting_name = 'DAYS_BEFORE_SENDING_UNANSWERED_REMINDER'
+    max_reminder_setting_name = 'MAX_UNANSWERED_REMINDERS'
+    command_name = 'send_unanswered_question_reminders'
 
     def test_reminder_positive_wait(self):
         """a positive test - user must receive a reminder

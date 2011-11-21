@@ -92,7 +92,7 @@ poor design of the data or methods on data objects #}
             {% else %}
                 {% trans %}posted{% endtrans %}
             {% endif %}
-            {% if post.__class__.__name__ in ('QuestionRevision', 'AnswerRevision') %}
+            {% if post.__class__.__name__ == 'PostRevision' %}
                 <strong>{{post.revised_at|diff_date}}</strong>
             {% else %}
                 <strong>{{post.added_at|diff_date}}</strong>
@@ -106,7 +106,7 @@ poor design of the data or methods on data objects #}
         {% set last_edited_at = post.last_edited_at %}
         {% set original_author = post.author %}
         {% set update_author = post.last_edited_by %}
-    {% elif post.__class__.__name__ in ('QuestionRevision', 'AnswerRevision') %}
+    {% elif post.__class__.__name__ == 'PostRevision' %}
         {% set last_edited_at = post.revised_at %}
         {% set original_author = None %}{# fake value to force display widget in the revision views #}
         {% set update_author = post.author %}

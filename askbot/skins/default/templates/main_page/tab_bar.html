@@ -1,7 +1,11 @@
 {% import "macros.html" as macros %}
 {% cache 0 "scope_sort_tabs" search_tags request.user scope sort query context.page context.page_size language_code %}
 <a class="rss"
+    {% if feed_url %}
+    href="{{settings.APP_URL}}{{feed_url}}"
+    {% else %}
     href="{{settings.APP_URL}}/feeds/rss/"
+    {% endif %}
     title="{% trans %}subscribe to the questions feed{% endtrans %}"
     >{% trans %}RSS{% endtrans %}
 </a>

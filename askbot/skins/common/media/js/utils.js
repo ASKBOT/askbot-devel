@@ -40,7 +40,7 @@ var getUniqueWords = function(value){
 
 var showMessage = function(element, msg, where) {
     var div = $('<div class="vote-notification"><h3>' + msg + '</h3>(' +
-    $.i18n._('click to close') + ')</div>');
+    gettext('click to close') + ')</div>');
 
     div.click(function(event) {
         $(".vote-notification").fadeOut("fast", function() { $(this).remove(); });
@@ -211,8 +211,8 @@ EditLink.prototype.createDom = function(){
 
 EditLink.prototype.decorate = function(element){
     this._element = element;
-    this._element.attr('title', $.i18n._('click to edit this comment'));
-    this._element.html($.i18n._('edit'));
+    this._element.attr('title', gettext('click to edit this comment'));
+    this._element.html(gettext('edit'));
     this.setHandlerInternal();
 };
 
@@ -366,12 +366,7 @@ Tag.prototype.createDom = function(){
     this._inner_element.attr('rel', 'tag');
     if (this._title === null){
         this.setTitle(
-            $.i18n._(
-                "see questions tagged '{tag}'"
-            ).replace(
-                '{tag}',
-                this.getName()
-            )
+			interpolate(gettext("see questions tagged '%s'"), [this.getName()])
         );
     }
     this._inner_element.attr('title', this._title);

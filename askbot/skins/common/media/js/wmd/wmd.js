@@ -27,19 +27,19 @@ Attacklab.wmdBase = function(){
 	global.isOpera = /opera/.test(nav.userAgent.toLowerCase());
 	global.isKonqueror = /konqueror/.test(nav.userAgent.toLowerCase());
 	
-	var toolbar_strong_label = $.i18n._('bold') + " <strong> Ctrl-B";
-    var toolbar_emphasis_label = $.i18n._('italic') + " <em> Ctrl-I";
-    var toolbar_hyperlink_label = $.i18n._('link') + " <a> Ctrl-L";
-    var toolbar_blockquote_label = $.i18n._('quote') + " <blockquote> Ctrl-.";
-    var toolbar_code_label = $.i18n._('preformatted text') + " <pre><code> Ctrl-K";
-    var toolbar_image_label = $.i18n._('image') + " <img> Ctrl-G";
-    var toolbar_attachment_label = $.i18n._('attachment') + " Ctrl-F";
-    var toolbar_numbered_label = $.i18n._('numbered list') + " <ol> Ctrl-O";
-    var toolbar_bulleted_label = $.i18n._('bulleted list') + " <ul> Ctrl-U";
-    var toolbar_heading_label = $.i18n._('heading') + " <h1>/<h2> Ctrl-H";
-    var toolbar_horizontal_label = $.i18n._('horizontal bar') + " <hr> Ctrl-R";
-    var toolbar_undo_label = $.i18n._('undo') + " Ctrl-Z";
-    var toolbar_redo_label = $.i18n._('redo') + " Ctrl-Y";
+	var toolbar_strong_label = gettext('bold') + " <strong> Ctrl-B";
+    var toolbar_emphasis_label = gettext('italic') + " <em> Ctrl-I";
+    var toolbar_hyperlink_label = gettext('link') + " <a> Ctrl-L";
+    var toolbar_blockquote_label = gettext('quote') + " <blockquote> Ctrl-.";
+    var toolbar_code_label = gettext('preformatted text') + " <pre><code> Ctrl-K";
+    var toolbar_image_label = gettext('image') + " <img> Ctrl-G";
+    var toolbar_attachment_label = gettext('attachment') + " Ctrl-F";
+    var toolbar_numbered_label = gettext('numbered list') + " <ol> Ctrl-O";
+    var toolbar_bulleted_label = gettext('bulleted list') + " <ul> Ctrl-U";
+    var toolbar_heading_label = gettext('heading') + " <h1>/<h2> Ctrl-H";
+    var toolbar_horizontal_label = gettext('horizontal bar') + " <hr> Ctrl-R";
+    var toolbar_undo_label = gettext('undo') + " Ctrl-Z";
+    var toolbar_redo_label = gettext('redo') + " Ctrl-Y";
     
 	// -------------------------------------------------------------------
 	//  YOUR CHANGES GO HERE
@@ -50,9 +50,9 @@ Attacklab.wmdBase = function(){
 	
 	// The text that appears on the upper part of the dialog box when
 	// entering links.
-	var imageDialogText = "<p style='margin-top: 0px'>" + $.i18n._('enter image url') + '</p>';
-	var linkDialogText = "<p style='margin-top: 0px'>" + $.i18n._('enter url') + '</p>';
-    var fileDialogText = "<p>" + $.i18n._('upload file attachment') + '</p>';
+	var imageDialogText = "<p style='margin-top: 0px'>" + gettext('enter image url') + '</p>';
+	var linkDialogText = "<p style='margin-top: 0px'>" + gettext('enter url') + '</p>';
+    var fileDialogText = "<p>" + gettext('upload file attachment') + '</p>';
 	// The default text that appears in the dialog input box when entering
 	// links.
 	var imageDefaultText = "http://";
@@ -244,7 +244,7 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
             text = text.replace('http://https://', 'https://');
             text = text.replace('http://ftp://', 'ftp://');
             
-            if (text.indexOf('http://') === -1 && text.indexOf('ftp://') === -1) {
+            if (text.indexOf('http://') === -1 && text.indexOf('ftp://') === -1 && text.indexOf('https://') === -1) {
                 if (dialogType == 'link'){
                     //add http only to urls
                     text = 'http://' + text;
@@ -1113,7 +1113,7 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
 			}
 			else {
 				// mac and other non-Windows platforms
-				redoButton.title = $.i18n._('redo') + " - Ctrl+Shift+Z";
+				redoButton.title = gettext('redo') + " - Ctrl+Shift+Z";
 			}
 			redoButton.XShift = "-240px";
 			redoButton.execute = function(manager){
@@ -1775,14 +1775,14 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
             
             if (!chunk.selection) {
                 if (itemType == 'image') {
-                    chunk.selection = $.i18n._("image description");
+                    chunk.selection = gettext("image description");
                 }
                 else if (itemType == 'file'){
-                    chunk.selection = localUploadFileName || $.i18n._("file name");
+                    chunk.selection = localUploadFileName || gettext("file name");
                     localUploadFileName = null;
                 }
                 else {
-                    chunk.selection = $.i18n._("link text");
+                    chunk.selection = gettext("link text");
                 }
             }
         }

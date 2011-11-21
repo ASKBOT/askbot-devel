@@ -3,9 +3,19 @@ Changes in Askbot
 
 Development version (not yet published)
 ---------------------------------------
+* Context-sensitive RSS url (`Dejan Noveski <http://www.atomidata.com/>`_)
+* Implemented new version of skin (Byron Corrales)
 * Show unused vote count (Tomasz Zielinski)
 * Categorized live settings (Evgeny)
+* Merge users management command (Daniel Mican)
+* Added management command ``send_accept_answer_reminders`` (Evgeny)
+* Improved the ``askbot-setup`` script (Adolfo, Evgeny)
+* Merge users management command (Daniel Mican)
 * Anonymous caching of the question page (Vlad Bokov)
+* Fixed sharing button bug, css fixes for new template (Alexander Werner)
+* Added ASKBOT_TRANSLATE_URL setting for url localization(Alexander Werner)
+* Changed javascript translation model, moved from jqueryi18n to django(Rosandra Cuello Suñol)
+
 
 0.7.26 (Current Version)
 ------------------------

@@ -29,9 +29,12 @@ The bulk of the management commands fall into this group and will probably be th
 |                                 | the `add_admin` command                                     |
 +---------------------------------+-------------------------------------------------------------+
 | `add_askbot_user --user-name    | Create a user account. If password is not given, an         |
-| --email [--password]            | unusable password will be set.                              |
+| --email [--password]`           | unusable password will be set.                              |
 |                                 | The command does not create associations with               |
 |                                 | any of the external login providers.                        |
++---------------------------------+-------------------------------------------------------------+
+| `merge_users <from_id>          | Merges user accounts and all related data from one user     |
+| <to_id>`                        | to another, the "from user" account is deleted.             |
 +---------------------------------+-------------------------------------------------------------+
 | `dump_forum [--dump-name        | Save forum contents into a file. `--dump-name` parameter is |
 | some_name]`                     | optional                                                    |
@@ -110,6 +113,11 @@ Any configurable options, related to these commands are accessible via "Email" s
 |                                     | This command may be disabled from the "email" section       |
 |                                     | of :ref:`live settings <live-settings>`, as well as         |
 |                                     | an initial wait period and the recurrence delay may be set. |
++-------------------------------------+-------------------------------------------------------------+
+| `send_accept_answer_reminders`      | Sends periodic reminders about accepting best answers.      |
+|                                     | This command may be disabled from the "email" section       |
+|                                     | of the live settings, as well as the appropriate delay      |
+|                                     | parameters may be set.                                      |
 +-------------------------------------+-------------------------------------------------------------+
 
 Data repair commands

@@ -38,27 +38,30 @@ from askbot.templatetags import extra_tags
 question_type = ContentType.objects.get_for_model(models.Question)
 answer_type = ContentType.objects.get_for_model(models.Answer)
 comment_type = ContentType.objects.get_for_model(models.Comment)
-question_revision_type = ContentType.objects.get_for_model(
-                                                models.QuestionRevision
-                                            )
-
-answer_revision_type = ContentType.objects.get_for_model(
-                                            models.AnswerRevision
-                                        )
+post_revision_type = ContentType.objects.get_for_model(models.PostRevision)
 repute_type = ContentType.objects.get_for_model(models.Repute)
+
 question_type_id = question_type.id
 answer_type_id = answer_type.id
 comment_type_id = comment_type.id
-question_revision_type_id = question_revision_type.id
-answer_revision_type_id = answer_revision_type.id
+post_revision_type_id = post_revision_type.id
 repute_type_id = repute_type.id
 
 #todo: queries in the user activity summary view must be redone
-def get_related_object_type_name(content_type_id):
-    if content_type_id in (question_type_id, question_revision_type_id,):
+def get_related_object_type_name(content_type_id, object_id):
+#    if content_type_id in (question_type_id, question_revision_type_id,):
+#        return 'question'
+#    elif content_type_id in (answer_type_id, answer_revision_type_id,):
+#        return 'answer'
+
+    if content_type_id == question_type_id:
         return 'question'
-    elif content_type_id in (answer_type_id, answer_revision_type_id,):
+    elif content_type_id == answer_type_id:
         return 'answer'
+    elif content_type_id == post_revision_type_id:
+        post_revision = models.PostRevision.objects.get(id=object_id)
+        return post_revision.revision_type_str()
+
     return None
 
 def owner_or_moderator_required(f):
@@ -556,18 +559,20 @@ def user_recent(request, user, context):
     # question revisions
     revisions = models.Activity.objects.extra(
         select={
-            'title' : 'question_revision.title',
-            'question_id' : 'question_revision.question_id',
+            'title' : 'askbot_postrevision.title',
+            'question_id' : 'askbot_postrevision.question_id',
             'added_at' : 'activity.active_at',
             'activity_type' : 'activity.activity_type',
-            'summary' : 'question_revision.summary'
+            'summary' : 'askbot_postrevision.summary'
             },
-        tables=['activity', 'question_revision', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = question_revision.id AND '+
-            'question_revision.id=question.id AND NOT question.deleted AND '+
-            'activity.user_id = question_revision.author_id AND activity.user_id = %s AND '+
-            'activity.activity_type=%s'],
-        params=[question_revision_type_id, user.id, const.TYPE_ACTIVITY_UPDATE_QUESTION],
+        tables=['activity', 'askbot_postrevision', 'question'],
+        where=['''
+            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
+            askbot_postrevision.question_id=question.id AND askbot_postrevision.revision_type=%s AND NOT question.deleted AND
+            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
+            activity.activity_type=%s
+        '''],
+        params=[post_revision_type_id, models.PostRevision.QUESTION_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_QUESTION],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -590,16 +595,17 @@ def user_recent(request, user, context):
             'answer_id' : 'answer.id',
             'added_at' : 'activity.active_at',
             'activity_type' : 'activity.activity_type',
-            'summary' : 'answer_revision.summary'
+            'summary' : 'askbot_postrevision.summary'
             },
-        tables=['activity', 'answer_revision', 'question', 'answer'],
-
-        where=['activity.content_type_id = %s AND activity.object_id = answer_revision.id AND '+
-            'activity.user_id = answer_revision.author_id AND activity.user_id = %s AND '+
-            'answer_revision.answer_id=answer.id AND answer.question_id = question.id AND '+
-            'NOT question.deleted AND NOT answer.deleted AND '+
-            'activity.activity_type=%s'],
-        params=[answer_revision_type_id, user.id, const.TYPE_ACTIVITY_UPDATE_ANSWER],
+        tables=['activity', 'askbot_postrevision', 'question', 'answer'],
+        where=['''
+            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
+            askbot_postrevision.answer_id=answer.id AND askbot_postrevision.revision_type=%s AND
+            answer.question_id=question.id AND NOT question.deleted AND NOT answer.deleted AND
+            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
+            activity.activity_type=%s
+        '''],
+        params=[post_revision_type_id, models.PostRevision.ANSWER_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_ANSWER],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -662,7 +668,10 @@ def user_recent(request, user, context):
             'activity_type'
             )
     for award in awards:
-        related_object_type = get_related_object_type_name(award['content_type_id'])
+        related_object_type = get_related_object_type_name(
+            content_type_id=award['content_type_id'],
+            object_id=award['object_id']
+        )
         activities.append(
             AwardEvent(
                 award['awarded_at'],

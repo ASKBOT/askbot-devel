@@ -70,13 +70,7 @@ $.fn.authenticator = function() {
                                 ).find('button');
                 remove_button.click(
                     function(){
-                        var message = $.i18n._(
-                                                'Are you sure you want to remove ' +
-                                                'your {provider} login?'
-                                            ).replace(
-                                                '{provider}', 
-                                                provider_name
-                                            );
+                        var message = interpolate(gettext('Are you sure you want to remove your %s login?'), [provider_name]);
                         if (confirm(message)){
                             $.ajax({
                                 type: 'POST',
@@ -93,10 +87,10 @@ $.fn.authenticator = function() {
                                         $('#ab-existing-login-methods').remove();
                                         $('#ab-show-login-methods').remove();
                                         $('h1').html(
-                                            $.i18n._("Please add one or more login methods.")
+                                            gettext("Please add one or more login methods.")
                                         );
                                         $('#login-intro').html(
-                                            $.i18n._("You don\'t have a method to log in right now, please add one or more by clicking any of the icons below.")
+                                            gettext("You don\'t have a method to log in right now, please add one or more by clicking any of the icons below.")
                                         );
                                         existing_login_methods = null;
                                     }
@@ -138,7 +132,7 @@ $.fn.authenticator = function() {
         if (newpass.val() !== newpass_retyped.val()){
             newpass_retyped.after(
                     '<span class="error">' +
-                    $.i18n._('passwords do not match') + 
+                    gettext('passwords do not match') + 
                     '</span>'
                 );
             newpass.val('').focus();
@@ -165,7 +159,7 @@ $.fn.authenticator = function() {
         else {
             enabler = $(
                     '<p id="login-list-enabler"><a href="#">' +
-                    $.i18n._('Show/change current login methods') +
+                    gettext('Show/change current login methods') +
                     '</a></p>');
             setup_event_handlers(
                 enabler,
@@ -225,18 +219,15 @@ $.fn.authenticator = function() {
         reset_form();
         var token_name = extra_token_name[provider_name]
         if (userIsAuthenticated){
-            var heading_text = $.i18n._(
-                'Please enter your {token_name}, then proceed'
-            );
             $('#openid-heading').html(
-                heading_text.replace('{token_name}', token_name)
+                interpolate(gettext('Please enter your %s, then proceed'), [token_name])
             );
-            var button_text = $.i18n._('Connect your {provider_name} account to {site}');
-            button_text = button_text.replace(
-                                '{provider_name}', provider_name
-                            ).replace(
-                                '{site}', siteName
-                            );
+            var button_text = gettext('Connect your %(provider_name)s account to %(site)s');
+			var data = {
+				provider_name: provider_name,
+				site: siteName
+			}
+			button_text = interpolate(button_text, data, true);
             openid_submit_button.val(button_text);
         } 
         else {
@@ -318,24 +309,22 @@ $.fn.authenticator = function() {
         if (userIsAuthenticated === true){
             var password_button = $('input[name=change_password]');
             var submit_action = submit_change_password;
-            if (existing_login_methods && existing_login_methods[provider_name]){
-                var change_pw_heading = 'Change your {provider} password';
-                var password_heading_text = $.i18n._(change_pw_heading);
-                var password_button_text = $.i18n._('Change password');
-            }
-            else {
-                var create_pw_heading = 'Create a password for {provider}';
-                var password_heading_text = $.i18n._(create_pw_heading);
-                var password_button_text = $.i18n._('Create password');
-            }
             if (provider_name === 'local'){
                 var provider_cleaned_name = siteName;
             }
             else {
                 var provider_cleaned_name = provider_name;
             }
+            if (existing_login_methods && existing_login_methods[provider_name]){
+                var password_heading_text = interpolate(gettext('Change your %s password'), [provider_cleaned_name])
+                var password_button_text = gettext('Change password')
+            }
+            else {
+                var password_heading_text = interpolate(gettext('Create a password for %s'), [provider_cleaned_name])
+                var password_button_text = gettext('Create password')
+            }
             $('#password-heading').html(
-                password_heading_text.replace('{provider}', provider_cleaned_name)
+                password_heading_text
             )
             password_button.val(password_button_text);
             password_action_input.val('change_password');
@@ -348,7 +337,7 @@ $.fn.authenticator = function() {
             var submit_action = submit_login_with_password;
             var create_pw_link = $('a.create-password-account')
             if (create_pw_link.length > 0){
-                create_pw_link.html($.i18n._('Create a password-protected account'));
+                create_pw_link.html(gettext('Create a password-protected account'));
                 var url = create_pw_link.attr('href');
                 if (url.indexOf('?') !== -1){
                     url = url.replace(/\?.*$/,'?login_provider=' + provider_name);

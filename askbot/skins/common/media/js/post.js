@@ -25,11 +25,12 @@ var lanai =
 };
 
 function appendLoader(element) {
+    loading = gettext('loading...')
     element.append('<img class="ajax-loader" ' +
         'src="' + mediaUrl("media/images/indicator.gif") + '" title="' +
-        $.i18n._('loading...') +
+        loading +
         '" alt="' +
-        $.i18n._('loading...') +
+        loading +
     '" />');
 }
 
@@ -121,20 +122,21 @@ var CPValidator = function(){
             };
         },
         getQuestionFormMessages: function(){
+            //todo: here use pluralization function instead of replace
             return {
                 tags: {
-                    required: " " + $.i18n._('tags cannot be empty'),
+                    required: " " + gettext('tags cannot be empty'),
                     maxlength: askbot['messages']['tagLimits'],
                     limit_tag_count: askbot['messages']['maxTagsPerPost'],
                     limit_tag_length: askbot['messages']['maxTagLength']
                 },
                 text: {
-                    required: " " + $.i18n._('content cannot be empty'),
-                    minlength: $.i18n._('content minchars').replace('{0}', 10)
+                    required: " " + gettext('content cannot be empty'),
+                    minlength: gettext('content minchars').replace('{0}', 10)
                 },
                 title: {
-                    required: " " + $.i18n._('please enter title'),
-                    minlength: $.i18n._('title minchars').replace('{0}', 10)
+                    required: " " + gettext('please enter title'),
+                    minlength: gettext('title minchars').replace('{0}', 10)
                 }
             };
         }
@@ -277,24 +279,24 @@ var Vote = function(){
     var questionSubscribeUpdates = 'question-subscribe-updates';
     var questionSubscribeSidebar= 'question-subscribe-sidebar';
     
-    var acceptAnonymousMessage = $.i18n._('insufficient privilege');
-    var acceptOwnAnswerMessage = $.i18n._('cannot pick own answer as best');
+    var acceptAnonymousMessage = gettext('insufficient privilege');
+    var acceptOwnAnswerMessage = gettext('cannot pick own answer as best');
 
     var pleaseLogin = " <a href='" + askbot['urls']['user_signin']
                     + "?next=" + askbot['urls']['question_url_template']
                     + "'>"
-                    + $.i18n._('please login') + "</a>";
+                    + gettext('please login') + "</a>";
 
-    var favoriteAnonymousMessage = $.i18n._('anonymous users cannot follow questions') + pleaseLogin;
-    var subscribeAnonymousMessage = $.i18n._('anonymous users cannot subscribe to questions') + pleaseLogin;
-    var voteAnonymousMessage = $.i18n._('anonymous users cannot vote') + pleaseLogin;
+    var favoriteAnonymousMessage = gettext('anonymous users cannot follow questions') + pleaseLogin;
+    var subscribeAnonymousMessage = gettext('anonymous users cannot subscribe to questions') + pleaseLogin;
+    var voteAnonymousMessage = gettext('anonymous users cannot vote') + pleaseLogin;
     //there were a couple of more messages...
-    var offensiveConfirmation = $.i18n._('please confirm offensive');
-    var offensiveAnonymousMessage = $.i18n._('anonymous users cannot flag offensive posts') + pleaseLogin;
-    var removeConfirmation = $.i18n._('confirm delete');
-    var removeAnonymousMessage = $.i18n._('anonymous users cannot delete/undelete') + pleaseLogin;
-    var recoveredMessage = $.i18n._('post recovered');
-    var deletedMessage = $.i18n._('post deleted');
+    var offensiveConfirmation = gettext('please confirm offensive');
+    var offensiveAnonymousMessage = gettext('anonymous users cannot flag offensive posts') + pleaseLogin;
+    var removeConfirmation = gettext('confirm delete');
+    var removeAnonymousMessage = gettext('anonymous users cannot delete/undelete') + pleaseLogin;
+    var recoveredMessage = gettext('post recovered');
+    var deletedMessage = gettext('post deleted');
     
     var VoteType = {
         acceptAnswer : 0,
@@ -373,13 +375,24 @@ var Vote = function(){
         return $(removeAnswerLinks);
     };
    
-    var setVoteImage = function(voteType, undo, elem){
-        elem.siblings('.post-vote').removeClass('on');
-        if (undo){
-            elem.removeClass('on');
-            return;
+    var setVoteImage = function(voteType, undo, object){
+        var flag = undo ? false : true;
+        if (object.hasClass("on")) {
+          object.removeClass("on");
+        }else{
+          object.addClass("on");
         }
-        elem.addClass('on');
+        
+        if(undo){
+            if(voteType == VoteType.questionUpVote || voteType == VoteType.questionDownVote){
+                $(getQuestionVoteUpButton()).removeClass("on");
+                $(getQuestionVoteDownButton()).removeClass("on");
+            }
+            else{
+                $(getAnswerVoteUpButton(postId)).removeClass("on");
+                $(getAnswerVoteDownButton(postId)).removeClass("on");
+            }
+        }
     };
     
     var setVoteNumber = function(object, number){
@@ -389,10 +402,12 @@ var Vote = function(){
     
     var bindEvents = function(){
         // accept answers
-        var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
-        $(acceptedButtons).unbind('click').click(function(event){
-           Vote.accept($(event.target));
-        });
+        if(questionAuthorId == currentUserId){
+            var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
+            $(acceptedButtons).unbind('click').click(function(event){
+               Vote.accept($(event.target));
+            });
+        }
         // set favorite question
         var favoriteButton = getFavoriteButton();
         favoriteButton.unbind('click').click(function(event){
@@ -555,7 +570,6 @@ var Vote = function(){
         }
         else {
             if (data.status == '1'){
-                //cancel vote
                 setVoteImage(voteType, true, object);
             }
             else {
@@ -598,12 +612,12 @@ var Vote = function(){
         if (data.success == "1"){
             if (removeActionType == 'delete'){
                 postNode.addClass('deleted');
-                postRemoveLink.innerHTML = $.i18n._('undelete');
+                postRemoveLink.innerHTML = gettext('undelete');
                 showMessage(object, deletedMessage);
             }
             else if (removeActionType == 'undelete') {
                 postNode.removeClass('deleted');
-                postRemoveLink.innerHTML = $.i18n._('delete');
+                postRemoveLink.innerHTML = gettext('delete');
                 showMessage(object, recoveredMessage);
             }
         }
@@ -828,7 +842,7 @@ var questionRetagger = function(){
         setupInputEventHandlers(tagInput);
 
         //button = $('<input type="submit" />');
-        //button.val($.i18n._('save tags'));
+        //button.val(gettext('save tags'));
         //div.append(button);
         //setupButtonEventHandlers(button);
         div.validate({//copy-paste from utils.js
@@ -842,7 +856,7 @@ var questionRetagger = function(){
             },
             messages: {
                 tags: {
-                    required: $.i18n._('tags cannot be empty'),
+                    required: gettext('tags cannot be empty'),
                     maxlength: askbot['messages']['tagLimits'],
                     limit_tag_count: askbot['messages']['maxTagsPerPost'],
                     limit_tag_length: askbot['messages']['maxTagLength']
@@ -940,10 +954,10 @@ EditCommentForm.prototype.attachTo = function(comment, mode){
     comment.getElement().hide();
     this._comment_widget.hideButton();
     if (this._type == 'add'){
-        this._submit_btn.html($.i18n._('add comment'));
+        this._submit_btn.html(gettext('add comment'));
     }
     else {
-        this._submit_btn.html($.i18n._('save comment'));
+        this._submit_btn.html(gettext('save comment'));
     }
     this.getElement().show();
     this.focus();
@@ -965,19 +979,22 @@ EditCommentForm.prototype.getCounterUpdater = function(){
             length2 = Math.round(0.9*maxCommentLength);
         }
         
+        //todo:
+        //1) use class instead of color - move color def to css
+        //2) use pluralization and interpolation instead of string replacement
         var color = 'maroon';
         if (length === 0){
-            var feedback = $.i18n._('title minchars').replace('{0}', 10);
+            var feedback = gettext('title minchars').replace('{0}', 10);
         }
         else if (length < 10){
-            var feedback = $.i18n._('enter more characters').replace('{0}', 10 - length);
+            var feedback = gettext('enter more characters').replace('{0}', 10 - length);
         }
         else {
-            color = length > length2 ? "#f00" : length > length1 ? "#f60" : "#999";
-            var feedback = $.i18n._('{0} characters left')
-                            .replace('{0}', maxCommentLength - length);
+            color = length > length2 ? "#f00" : length > length1 ? "#f60" : "#999"
+			chars = maxCommentLength - length
+            var feedback = interpolate(gettext('%s characters left'), [chars])
         }
-        counter.html(feedback).css('color', color);
+        counter.html(feedback).css('color', color)
     };
     return handler;
 };
@@ -1046,7 +1063,7 @@ EditCommentForm.prototype.createDom = function(){
     this._submit_btn = $('<button class="submit small"></button>');
     div.append(this._submit_btn);
     this._cancel_btn = $('<button class="submit small"></button>');
-    this._cancel_btn.html($.i18n._('cancel'));
+    this._cancel_btn.html(gettext('cancel'));
     div.append(this._cancel_btn);
 
     setupButtonEventHandlers(this._submit_btn, this.getSaveHandler());
@@ -1089,7 +1106,7 @@ EditCommentForm.prototype.reset = function(){
 EditCommentForm.prototype.confirmAbandon = function(){
     this.focus(true);
     this._textarea.addClass('highlight');
-    var answer = confirm($.i18n._('confirm abandon comment'));
+    var answer = confirm(gettext('confirm abandon comment'));
     this._textarea.removeClass('highlight');
     return answer;
 };
@@ -1163,7 +1180,7 @@ var Comment = function(widget, data){
     this._data = data || {};
     this._blank = true;//set to false by setContent
     this._element = null;
-    this._delete_prompt = $.i18n._('delete this comment');
+    this._delete_prompt = gettext('delete this comment');
     if (data && data['is_deletable']){
         this._deletable = data['is_deletable'];
     }
@@ -1367,7 +1384,7 @@ Comment.prototype.getDeleteHandler = function(){
     var comment = this;
     var del_icon = this._delete_icon;
     return function(){
-        if (confirm($.i18n._('confirm delete comment'))){
+        if (confirm(gettext('confirm delete comment'))){
             comment.getElement().hide();
             $.ajax({
                 type: 'POST',
@@ -1560,7 +1577,7 @@ var socialSharing = function(){
                     url = url.replace('{TEXT}', TEXT);
                     var params = SERVICE_DATA[service_name]['params'];
                     if(!window.open(url, "sharing", params)){
-                        window.location.href=share_url;
+                        window.location.href=url;
                     }
                 }
             });
