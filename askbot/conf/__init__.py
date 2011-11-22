@@ -19,6 +19,7 @@ import askbot.conf.markup
 import askbot.conf.social_sharing
 import askbot.conf.badges
 import askbot.conf.login_providers
+import askbot.conf.access_control
 import askbot.conf.site_modes
 
 #import main settings object

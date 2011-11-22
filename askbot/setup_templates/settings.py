@@ -102,6 +102,7 @@ MIDDLEWARE_CLASSES = (
 
     #below is askbot stuff for this tuple
     'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
+    'askbot.middleware.forum_mode.ForumModeMiddleware',
     'askbot.middleware.pagesize.QuestionsPageSizeMiddleware',
     'askbot.middleware.cancel.CancelActionMiddleware',
     'django.middleware.transaction.TransactionMiddleware',

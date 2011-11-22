@@ -63,7 +63,8 @@ class ConnectToSessionMessagesMiddleware(object):
         """Adds the ``'askbot_visitor'``key to cookie if user ever
         authenticates so that the anonymous user message won't
         be shown after the user logs out"""
-        if request.user.is_authenticated() and \
+        if hasattr(request, 'user') and \
+                request.user.is_authenticated() and \
                 'askbot_visitor' not in request.COOKIES :
             #import datetime
             #max_age = 365*24*60*60
