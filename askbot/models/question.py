@@ -139,12 +139,12 @@ class QuestionQuerySet(models.query.QuerySet):
                        | models.Q(answers__text__search = search_query)
                     )
         elif 'postgresql_psycopg2' in askbot.get_database_engine_name():
-            rank_clause = "ts_rank(question.text_search_vector, to_tsquery(%s))";
+            rank_clause = "ts_rank(question.text_search_vector, plainto_tsquery(%s))";
             search_query = '&'.join(search_query.split())
             extra_params = (search_query,)
             extra_kwargs = {
                 'select': {'relevance': rank_clause},
-                'where': ['text_search_vector @@ to_tsquery(%s)'],
+                'where': ['text_search_vector @@ plainto_tsquery(%s)'],
                 'params': extra_params,
                 'select_params': extra_params,
             }

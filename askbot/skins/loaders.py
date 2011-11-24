@@ -108,9 +108,11 @@ def get_template(template, request = None):
     request variable will be used in the future to set
     template according to the user preference or admins preference
 
-    at this point request variable is not used though
+    request variable is used to localize the skin if possible
     """
     skin = get_skin(request)
+    if hasattr(request,'LANGUAGE_CODE'):
+        skin.set_language(request.LANGUAGE_CODE)
     return skin.get_template(template)
 
 def render_into_skin(template, data, request, mimetype = 'text/html'):

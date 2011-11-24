@@ -155,7 +155,7 @@ class RssLastestQuestionsFeed(Feed):
             for tag in tags:                
                 qs = qs.filter(tags__name = tag)
         
-        return qs.order_by('-last_activity_at')
+        return qs.order_by('-last_activity_at')[:30]
 
         
 
