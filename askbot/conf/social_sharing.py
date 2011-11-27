@@ -3,7 +3,7 @@ Social sharing settings
 """
 from askbot.conf.settings_wrapper import settings
 from askbot.conf.super_groups import EXTERNAL_SERVICES
-from askbot.deps.livesettings import ConfigurationGroup, BooleanValue
+from askbot.deps.livesettings import ConfigurationGroup, BooleanValue, StringValue
 from django.utils.translation import ugettext as _
 
 SOCIAL_SHARING = ConfigurationGroup(
@@ -54,5 +54,17 @@ settings.register(
         'ENABLE_SHARING_GOOGLE',
         default=True,
         description=_('Check to enable sharing of questions on Google+')
+    )
+)
+
+settings.register(
+    StringValue(
+        SOCIAL_SHARING,
+        'SHARING_SUFFIX_TEXT',
+        default='',
+        description=_('Text (e.g. Hashtag) to add to all social sharing options'),
+        help_text=_(
+                    'Text to add to all social sharing options. Keep it short!'
+                    )
     )
 )
