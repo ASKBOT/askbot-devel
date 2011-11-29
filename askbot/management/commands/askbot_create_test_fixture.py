@@ -2,6 +2,8 @@ from django.core.management.base import NoArgsCommand
 from django.core import management
 import os
 import askbot
+from optparse import make_option
+from askbot.utils.console import choice_dialog
 
 
 # FULL PATH HERE
@@ -16,6 +18,7 @@ EXCLUDE_APPS = ['contenttypes',
                 'askbot.activity',
                 'askbot.activityauditstatus',
                 'askbot.badgedata',
+                'askbot.EmailFeedSetting',
                 'auth.Message']
 
 
@@ -25,6 +28,11 @@ class Command(NoArgsCommand):
     flushes the database again.
     """
 
+    option_list = NoArgsCommand.option_list + (
+        make_option('--noinput', action='store_false', dest='interactive', default=True,
+            help='Do not prompt the user for input of any kind.'),
+    )
+
     def print_if_verbose(self, text):
         "Only print if user chooses verbose output"
         if self.verbosity > 0:
@@ -33,6 +41,13 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         self.verbosity = int(options.get("verbosity", 1))
+        self.interactive = options.get("interactive")
+
+        if self.interactive:
+            answer = choice_dialog("This command will DELETE ALL DATA in the current database, fill the database with test data and flush the test data. Are you absolutely sure you want to proceed?",
+                            choices = ("yes", "no", ))
+            if answer != "yes":
+                return
 
         # First, flush the data
         self.print_if_verbose("FLUSHING THE DATABASE")

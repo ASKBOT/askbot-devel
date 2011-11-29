@@ -19,7 +19,8 @@ PROTECTED_URLS = [
     'faq',
     'user_profile',
     'answer_revisions',
-    'user_subscriptions']
+    'user_subscriptions',
+    'widget_questions']
 
 
 class ForumModeMiddleware(object):

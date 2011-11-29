@@ -1,5 +1,7 @@
 from django.core.management.base import NoArgsCommand
 from askbot.models import User
+from optparse import make_option
+from askbot.utils.console import choice_dialog
 
 
 NUM_USERS = 40
@@ -19,18 +21,22 @@ EMAIL_TEMPLATE = "test_user_%s@askbot.org"
 TITLE_TEMPLATE = "Test question title No.%s"
 TAGS_TEMPLATE = ["tag-%s-0", "tag-%s-1"] # len(TAGS_TEMPLATE) tags per question
 
-CONTENT_TEMPLATE = """Lorem lean startup ipsum product market fit customer 
-                    development acquihire technical cofounder. User engagement 
+CONTENT_TEMPLATE = """Lorem lean startup ipsum product market fit customer
+                    development acquihire technical cofounder. User engagement
                     **A/B** testing *shrink* a market venture capital pitch."""
 
-ANSWER_TEMPLATE = """Accelerator photo sharing business school drop out ramen 
+ANSWER_TEMPLATE = """Accelerator photo sharing business school drop out ramen
                     hustle crush it revenue traction platforms."""
 
-COMMENT_TEMPLATE = """Main differentiators business model micro economics 
+COMMENT_TEMPLATE = """Main differentiators business model micro economics
                     marketplace equity augmented reality human computer"""
 
 
 class Command(NoArgsCommand):
+    option_list = NoArgsCommand.option_list + (
+        make_option('--noinput', action='store_false', dest='interactive', default=True,
+            help='Do not prompt the user for input of any kind.'),
+    )
 
     def print_if_verbose(self, text):
         "Only print if user chooses verbose output"
@@ -47,14 +53,14 @@ class Command(NoArgsCommand):
             s_idx = str(i)
             user = User.objects.create_user(USERNAME_TEMPLATE % s_idx,
                                             EMAIL_TEMPLATE % s_idx)
-            user.set_password(PASSWORD_TEMPLATE % s_idx)            
+            user.set_password(PASSWORD_TEMPLATE % s_idx)
             user.reputation = INITIAL_REPUTATION
-            user.save()            
+            user.save()
             self.print_if_verbose("Created User '%s'" % user.username)
             users.append(user)
         return users
-    
-    
+
+
     def create_questions(self, users):
         "Create the questions and return the last one as active question"
 
@@ -90,7 +96,7 @@ class Command(NoArgsCommand):
                                                 active_question.title, tags,)
                                             )
         return active_question
-    
+
 
     def create_answers(self, users, active_question):
         "Create the answers for the active question, return the active answer"
@@ -115,7 +121,7 @@ class Command(NoArgsCommand):
                                             user.username
                                         ))
                     last_vote = ~last_vote
-                
+
                 active_answer = user.post_answer(
                         question = active_question,
                         body_text = ANSWER_TEMPLATE,
@@ -137,7 +143,7 @@ class Command(NoArgsCommand):
                                                 user.username)
                                             )
         return active_answer
-    
+
 
     def create_comments(self, users, active_question, active_answer):
         """Create the comments for the active question and the active answer,
@@ -160,7 +166,7 @@ class Command(NoArgsCommand):
 
             # Upvote the active answer
             user.upvote(active_answer)
-        
+
         # Upvote active comments
         if active_question_comment and active_answer_comment:
             num_upvotees = NUM_COMMENTS - 1
@@ -169,22 +175,30 @@ class Command(NoArgsCommand):
                 user.upvote(active_answer_comment)
 
         return active_question_comment, active_answer_comment
-        
+
 
     def handle_noargs(self, **options):
+        self.verbosity = int(options.get("verbosity", 1))
+        self.interactive = options.get("interactive")
 
-        self.verbosity = int(options.get("verbosity", 1))        
-        
+        if self.interactive:
+            answer = choice_dialog("This command will DELETE ALL DATA in the current database, and will fill the database with test data. Are you absolutely sure you want to proceed?",
+                            choices = ("yes", "no", ))
+            if answer != "yes":
+                return
+
+
+
         # Create Users
         users = self.create_users()
-        
+
         # Create Questions, vote for questions
         active_question = self.create_questions(users)
-        
+
         # Create Answers, vote for the answers, vote for the active question
         # vote for the active answer
         active_answer = self.create_answers(users, active_question)
-        
+
         # Create Comments, vote for the active answer
         active_question_comment, active_answer_comment = self.create_comments(
                                 users, active_question, active_answer)
@@ -211,7 +225,7 @@ class Command(NoArgsCommand):
                             body_text = ANSWER_TEMPLATE
                         )
         self.print_if_verbose("User has edited the active answer comment")
-        
+
         active_question_comment.user.edit_comment(
                             comment = active_question_comment,
                             body_text = ANSWER_TEMPLATE
