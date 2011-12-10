@@ -18,9 +18,17 @@
     {% endif %}
 {% endif %}
 {% if request.user|can_flag_offensive(question) %}{{ pipe() }}
-<span id="question-offensive-flag-{{ question.id }}" class="offensive-flag" 
+<span id="question-offensive-flag-{{ question.id }}" class="offensive-flag"
     title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
     <a class="question-flag">{% trans %}flag offensive{% endtrans %}</a>
+    {% if request.user|can_see_offensive_flags(question) %}
+        <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
+    {% endif %}
+</span>
+{% elif request.user|can_remove_flag_offensive(question)%}{{ pipe() }}
+<span id="question-offensive-flag-remove-{{ question.id }}" class="offensive-flag"
+    title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
+    <a class="question-flag">{% trans %}remove flag{% endtrans %}</a>
     {% if request.user|can_see_offensive_flags(question) %}
         <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
     {% endif %}

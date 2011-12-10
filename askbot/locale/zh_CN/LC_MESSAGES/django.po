@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-18 00:12+0200\n"
+"POT-Creation-Date: 2011-11-27 02:42-0600\n"
 "PO-Revision-Date: 2010-12-15 00:54\n"
 "Last-Translator: <suyu8776@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -129,19 +129,19 @@ msgstr ""
 msgid "Enter number of points to add or subtract"
 msgstr "输入要添加或减去的分数"
 
-#: forms.py:341 const/__init__.py:245
+#: forms.py:341 const/__init__.py:250
 msgid "approved"
 msgstr "已认证"
 
-#: forms.py:342 const/__init__.py:246
+#: forms.py:342 const/__init__.py:251
 msgid "watched"
 msgstr "查看"
 
-#: forms.py:343 const/__init__.py:247
+#: forms.py:343 const/__init__.py:252
 msgid "suspended"
 msgstr "暂停使用"
 
-#: forms.py:344 const/__init__.py:248
+#: forms.py:344 const/__init__.py:253
 msgid "blocked"
 msgstr "冻结"
 
@@ -150,7 +150,7 @@ msgstr "冻结"
 msgid "administrator"
 msgstr "网站管理员"
 
-#: forms.py:347 const/__init__.py:244
+#: forms.py:347 const/__init__.py:249
 msgid "moderator"
 msgstr "版主"
 
@@ -195,482 +195,528 @@ msgid "Message text"
 msgstr "信息文本"
 
 #: forms.py:542
-msgid "Your name:"
+#, fuzzy
+msgid "Your name (optional):"
 msgstr "用户名"
 
 #: forms.py:543
-msgid "Email (not shared with anyone):"
-msgstr "电子邮件"
+#, fuzzy
+msgid "Email:"
+msgstr "邮件"
 
-#: forms.py:544
+#: forms.py:545
 msgid "Your message:"
 msgstr "你的信息:"
 
-#: forms.py:581
+#: forms.py:550
+msgid "I don't want to give my email or receive a response:"
+msgstr ""
+
+#: forms.py:572
+msgid "Please mark \"I dont want to give my mail\" field."
+msgstr ""
+
+#: forms.py:611
 #, fuzzy
 msgid "ask anonymously"
 msgstr "匿名"
 
-#: forms.py:583
+#: forms.py:613
 msgid "Check if you do not want to reveal your name when asking this question"
 msgstr ""
 
-#: forms.py:743
+#: forms.py:773
 msgid ""
 "You have asked this question anonymously, if you decide to reveal your "
 "identity, please check this box."
 msgstr ""
 
-#: forms.py:747
+#: forms.py:777
 msgid "reveal identity"
 msgstr ""
 
-#: forms.py:805
+#: forms.py:835
 msgid ""
 "Sorry, only owner of the anonymous question can reveal his or her identity, "
 "please uncheck the box"
 msgstr ""
 
-#: forms.py:818
+#: forms.py:848
 msgid ""
 "Sorry, apparently rules have just changed - it is no longer possible to ask "
 "anonymously. Please either check the \"reveal identity\" box or reload this "
 "page and try editing the question again."
 msgstr ""
 
-#: forms.py:856
+#: forms.py:886
 #, fuzzy
 msgid "this email will be linked to gravatar"
 msgstr "不会公开，用于头像显示服务"
 
-#: forms.py:863
+#: forms.py:893
 msgid "Real name"
 msgstr "真实姓名"
 
-#: forms.py:870
+#: forms.py:900
 msgid "Website"
 msgstr "个人网站"
 
-#: forms.py:877
+#: forms.py:907
 msgid "City"
 msgstr ""
 
-#: forms.py:886
+#: forms.py:916
 #, fuzzy
 msgid "Show country"
 msgstr "新帐号"
 
-#: forms.py:891
+#: forms.py:921
 msgid "Date of birth"
 msgstr "生日"
 
-#: forms.py:892
+#: forms.py:922
 msgid "will not be shown, used to calculate age, format: YYYY-MM-DD"
 msgstr "不会公开，只会显示您的年龄，格式为：YYYY-MM-DD"
 
-#: forms.py:898
+#: forms.py:928
 msgid "Profile"
 msgstr "个人简介"
 
-#: forms.py:907
+#: forms.py:937
 msgid "Screen name"
 msgstr "昵称"
 
-#: forms.py:938 forms.py:939
+#: forms.py:968 forms.py:969
 msgid "this email has already been registered, please use another one"
 msgstr "该电子邮件已被注册，请选择另一个再试。"
 
-#: forms.py:946
+#: forms.py:976
 msgid "Choose email tag filter"
 msgstr "选择邮件标签过来"
 
-#: forms.py:993
+#: forms.py:1023
 msgid "Asked by me"
 msgstr "我的提问"
 
-#: forms.py:996
+#: forms.py:1026
 msgid "Answered by me"
 msgstr "我的回答"
 
-#: forms.py:999
+#: forms.py:1029
 msgid "Individually selected"
 msgstr "个人选项"
 
-#: forms.py:1002
+#: forms.py:1032
 msgid "Entire forum (tag filtered)"
 msgstr "整个论坛(标签过滤)"
 
-#: forms.py:1006
+#: forms.py:1036
 msgid "Comments and posts mentioning me"
 msgstr "留言并提交我"
 
-#: forms.py:1085
+#: forms.py:1115
 msgid "okay, let's try!"
 msgstr "试一试"
 
-#: forms.py:1086
+#: forms.py:1116
 msgid "no community email please, thanks"
 msgstr "不需要邮件，谢谢"
 
-#: forms.py:1090
+#: forms.py:1120
 msgid "please choose one of the options above"
 msgstr "请从以上选项中选择一项"
 
 # footer.html
-#: urls.py:53
+#: urls.py:57
 msgid "about/"
 msgstr "关于本站/"
 
-#: urls.py:54
+#: urls.py:58
 msgid "faq/"
 msgstr "常见问题/"
 
-#: urls.py:55
+#: urls.py:59
 msgid "privacy/"
 msgstr "隐私政策/"
 
-#: urls.py:57 urls.py:62
+#: urls.py:61 urls.py:66
 msgid "answers/"
 msgstr "回答/"
 
-#: urls.py:57 urls.py:83 urls.py:203
+#: urls.py:61 urls.py:87 urls.py:207
 msgid "edit/"
 msgstr "编辑/"
 
-#: urls.py:62 urls.py:113
+#: urls.py:66 urls.py:117
 msgid "revisions/"
 msgstr "版本/"
 
-#: urls.py:68 urls.py:78 urls.py:83 urls.py:88 urls.py:93 urls.py:98
-#: urls.py:103 urls.py:108 urls.py:113 urls.py:290
+#: urls.py:72 urls.py:82 urls.py:87 urls.py:92 urls.py:97 urls.py:102
+#: urls.py:107 urls.py:112 urls.py:117 urls.py:294
 msgid "questions/"
 msgstr "问题/"
 
-#: urls.py:78
+#: urls.py:82
 msgid "ask/"
 msgstr "提问/"
 
-#: urls.py:88
+#: urls.py:92
 msgid "retag/"
 msgstr "修改标签/"
 
-#: urls.py:93
+#: urls.py:97
 msgid "close/"
 msgstr "关闭/"
 
-#: urls.py:98
+#: urls.py:102
 msgid "reopen/"
 msgstr "打开/"
 
-#: urls.py:103
+#: urls.py:107
 msgid "answer/"
 msgstr "回答/"
 
-#: urls.py:108
+#: urls.py:112
 msgid "vote/"
 msgstr "票/"
 
-#: urls.py:149
+#: urls.py:153
 msgid "tags/"
 msgstr "标签/"
 
-#: urls.py:192
+#: urls.py:196
 msgid "subscribe-for-tags/"
 msgstr ""
 
-#: urls.py:197 urls.py:203 urls.py:209 urls.py:217
+#: urls.py:201 urls.py:207 urls.py:213 urls.py:221
 msgid "users/"
 msgstr "用户/"
 
-#: urls.py:210
+#: urls.py:214
 #, fuzzy
 msgid "subscriptions/"
 msgstr "订阅"
 
-#: urls.py:222
+#: urls.py:226
 msgid "users/update_has_custom_avatar/"
 msgstr ""
 
-#: urls.py:227 urls.py:232
+#: urls.py:231 urls.py:236
 msgid "badges/"
 msgstr "奖牌榜/"
 
-#: urls.py:237
+#: urls.py:241
 msgid "messages/"
 msgstr "信息/"
 
-#: urls.py:237
+#: urls.py:241
 msgid "markread/"
 msgstr "标记已读/"
 
-#: urls.py:253
+#: urls.py:257
 msgid "upload/"
 msgstr "上传/"
 
-#: urls.py:254
+#: urls.py:258
 msgid "feedback/"
 msgstr "问题反馈/"
 
-#: urls.py:296
+#: urls.py:300
 msgid "question/"
 msgstr "提问/"
 
-#: urls.py:303 setup_templates/settings.py:203
+#: urls.py:307 setup_templates/settings.py:206
 msgid "account/"
 msgstr "账户/"
 
-#: conf/badges.py:12
+#: conf/access_control.py:8
+#, fuzzy
+msgid "Access control settings"
+msgstr "基本设置"
+
+#: conf/access_control.py:17
+msgid "Allow only registered user to access the forum"
+msgstr ""
+
+#: conf/badges.py:13
 msgid "Badge settings"
 msgstr "设置"
 
-#: conf/badges.py:21
+#: conf/badges.py:23
 msgid "Disciplined: minimum upvotes for deleted post"
 msgstr ""
 
-#: conf/badges.py:30
+#: conf/badges.py:32
 msgid "Peer Pressure: minimum downvotes for deleted post"
 msgstr ""
 
-#: conf/badges.py:39
+#: conf/badges.py:41
 msgid "Teacher: minimum upvotes for the answer"
 msgstr "老师:答案的最小推荐票数"
 
-#: conf/badges.py:48
+#: conf/badges.py:50
 msgid "Nice Answer: minimum upvotes for the answer"
 msgstr "好答案:答案的最小推荐票数"
 
-#: conf/badges.py:57
+#: conf/badges.py:59
 msgid "Good Answer: minimum upvotes for the answer"
 msgstr "良好的答案:答案的最小推荐票数"
 
-#: conf/badges.py:66
+#: conf/badges.py:68
 msgid "Great Answer: minimum upvotes for the answer"
 msgstr "极好的答案:答案的最小推荐票数"
 
-#: conf/badges.py:75
+#: conf/badges.py:77
 msgid "Nice Question: minimum upvotes for the question"
 msgstr "好问题:问题的最小推荐票数"
 
-#: conf/badges.py:84
+#: conf/badges.py:86
 msgid "Good Question: minimum upvotes for the question"
 msgstr "良好的问题:问题的最小推荐票数"
 
-#: conf/badges.py:93
+#: conf/badges.py:95
 msgid "Great Question: minimum upvotes for the question"
 msgstr "优秀的问题:问题的最小推荐票数"
 
-#: conf/badges.py:102
+#: conf/badges.py:104
 msgid "Popular Question: minimum views"
 msgstr "受欢迎问题:最小浏览次数"
 
-#: conf/badges.py:111
+#: conf/badges.py:113
 msgid "Notable Question: minimum views"
 msgstr "关注的问题:最小浏览次数"
 
 # close.html
-#: conf/badges.py:120
+#: conf/badges.py:122
 msgid "Famous Question: minimum views"
 msgstr "极好的问题:最小浏览次数"
 
-#: conf/badges.py:129
+#: conf/badges.py:131
 msgid "Self-Learner: minimum answer upvotes"
 msgstr "自学者：答案最少推荐票数"
 
-#: conf/badges.py:138
+#: conf/badges.py:140
 msgid "Civic Duty: minimum votes"
 msgstr "居民义务:最少投票数"
 
-#: conf/badges.py:147
+#: conf/badges.py:149
 msgid "Enlightened Duty: minimum upvotes"
 msgstr ""
 
-#: conf/badges.py:156
+#: conf/badges.py:158
 msgid "Guru: minimum upvotes"
 msgstr "专家:最少推荐票数"
 
-#: conf/badges.py:165
+#: conf/badges.py:167
 msgid "Necromancer: minimum upvotes"
 msgstr ""
 
-#: conf/badges.py:174
+#: conf/badges.py:176
 msgid "Necromancer: minimum delay in days"
 msgstr ""
 
-#: conf/badges.py:183
+#: conf/badges.py:185
 msgid "Associate Editor: minimum number of edits"
 msgstr "联合编辑:最小编辑数"
 
-#: conf/badges.py:192
+#: conf/badges.py:194
 msgid "Favorite Question: minimum stars"
 msgstr "收藏问题:最少星数"
 
-#: conf/badges.py:201
+#: conf/badges.py:203
 msgid "Stellar Question: minimum stars"
 msgstr "重要问题:最少星数"
 
-#: conf/badges.py:210
+#: conf/badges.py:212
 msgid "Commentator: minimum comments"
 msgstr ""
 
-#: conf/badges.py:219
+#: conf/badges.py:221
 msgid "Taxonomist: minimum tag use count"
 msgstr ""
 
-#: conf/badges.py:228
+#: conf/badges.py:230
 msgid "Enthusiast: minimum days"
 msgstr ""
 
-#: conf/email.py:14
+#: conf/email.py:15
 msgid "Email and email alert settings"
 msgstr "邮件及邮件提醒设置"
 
-#: conf/email.py:22
+#: conf/email.py:24
 msgid "Prefix for the email subject line"
 msgstr "邮件主题前缀"
 
-#: conf/email.py:24
+#: conf/email.py:26
 msgid ""
 "This setting takes default from the django settingEMAIL_SUBJECT_PREFIX. A "
 "value entered here will overridethe default."
 msgstr ""
 
-#: conf/email.py:36
+#: conf/email.py:38
 msgid "Maximum number of news entries in an email alert"
 msgstr "邮件提醒的最大新问题数"
 
-#: conf/email.py:64
+#: conf/email.py:48
 #, fuzzy
 msgid "Default notification frequency all questions"
 msgstr "默认新问题通知频率"
 
-#: conf/email.py:66
+#: conf/email.py:50
 msgid "Option to define frequency of emailed updates for: all questions."
 msgstr ""
 
-#: conf/email.py:78
+#: conf/email.py:62
 #, fuzzy
 msgid "Default notification frequency questions asked by the user"
 msgstr "默认新问题通知频率"
 
-#: conf/email.py:80
+#: conf/email.py:64
 msgid ""
 "Option to define frequency of emailed updates for: Question asked by the "
 "user."
 msgstr ""
 
-#: conf/email.py:92
+#: conf/email.py:76
 #, fuzzy
 msgid "Default notification frequency questions answered by the user"
 msgstr "默认新问题通知频率"
 
-#: conf/email.py:94
+#: conf/email.py:78
 msgid ""
 "Option to define frequency of emailed updates for: Question answered by the "
 "user."
 msgstr ""
 
-#: conf/email.py:106
+#: conf/email.py:90
 msgid ""
 "Default notification frequency questions individually                        "
 "selected by the user"
 msgstr ""
 
-#: conf/email.py:109
+#: conf/email.py:93
 msgid ""
 "Option to define frequency of emailed updates for: Question individually "
 "selected by the user."
 msgstr ""
 
-#: conf/email.py:121
+#: conf/email.py:105
 msgid ""
 "Default notification frequency for mentions                        and "
 "comments"
 msgstr ""
 
-#: conf/email.py:124
+#: conf/email.py:108
 msgid ""
 "Option to define frequency of emailed updates for: Mentions and comments."
 msgstr ""
 
-#: conf/email.py:135
+#: conf/email.py:119
 #, fuzzy
 msgid "Send periodic reminders about unanswered questions"
 msgstr "没有未回答的问题"
 
-#: conf/email.py:137
+#: conf/email.py:121
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_unanswered_question_reminders\" (for example, via a cron job "
-"- with an appropriate frequency) and an IMAP server with a dedicated inbox "
-"must be configured "
+"- with an appropriate frequency) "
 msgstr ""
 
-#: conf/email.py:151
+#: conf/email.py:134
 #, fuzzy
 msgid "Days before starting to send reminders about unanswered questions"
 msgstr "没有未回答的问题"
 
-#: conf/email.py:162
+#: conf/email.py:145
 msgid ""
 "How often to send unanswered question reminders (in days between the "
 "reminders sent)."
 msgstr ""
 
-#: conf/email.py:174
+#: conf/email.py:157
 msgid "Max. number of reminders to send about unanswered questions"
 msgstr ""
 
-#: conf/email.py:186
+#: conf/email.py:168
+#, fuzzy
+msgid "Send periodic reminders to accept the best answer"
+msgstr "没有未回答的问题"
+
+#: conf/email.py:170
+msgid ""
+"NOTE: in order to use this feature, it is necessary to run the management "
+"command \"send_accept_answer_reminders\" (for example, via a cron job - with "
+"an appropriate frequency) "
+msgstr ""
+
+#: conf/email.py:183
+#, fuzzy
+msgid "Days before starting to send reminders to accept an answer"
+msgstr "没有未回答的问题"
+
+#: conf/email.py:194
+msgid ""
+"How often to send accept answer reminders (in days between the reminders "
+"sent)."
+msgstr ""
+
+#: conf/email.py:206
+msgid "Max. number of reminders to send to accept the best answer"
+msgstr ""
+
+#: conf/email.py:218
 msgid "Require email verification before allowing to post"
 msgstr "在提交前需要邮件确认"
 
-#: conf/email.py:187
+#: conf/email.py:219
 msgid ""
 "Active email verification is done by sending a verification key in email"
 msgstr "通过发送确认邮件完成邮件激活确认"
 
-#: conf/email.py:196
+#: conf/email.py:228
 msgid "Allow only one account per email address"
 msgstr "每个邮件地址只允许关联一个账户"
 
-#: conf/email.py:205
+#: conf/email.py:237
 msgid "Fake email for anonymous user"
 msgstr "匿名用户邮件"
 
-#: conf/email.py:206
+#: conf/email.py:238
 msgid "Use this setting to control gravatar for email-less user"
 msgstr "使用这个设置没有邮件的用户图像"
 
-#: conf/email.py:215
+#: conf/email.py:247
 #, fuzzy
 msgid "Allow posting questions by email"
 msgstr "登录并提交问题"
 
-#: conf/email.py:217
+#: conf/email.py:249
 msgid ""
 "Before enabling this setting - please fill out IMAP settings in the settings."
 "py file"
 msgstr ""
 
-#: conf/email.py:228
+#: conf/email.py:260
 msgid "Replace space in emailed tags with dash"
 msgstr ""
 
-#: conf/email.py:230
+#: conf/email.py:262
 msgid ""
 "This setting applies to tags written in the subject line of questions asked "
 "by email"
 msgstr ""
 
-#: conf/external_keys.py:10
-msgid "Keys to connect the site with external services like Facebook, etc."
-msgstr "链接到其他服务网站的keys，像Fackbook等"
+#: conf/external_keys.py:11
+#, fuzzy
+msgid "Keys for external services"
+msgstr "LDAP服务URL"
 
-#: conf/external_keys.py:18
+#: conf/external_keys.py:19
 msgid "Google site verification key"
 msgstr "Google网站确认key"
 
-#: conf/external_keys.py:20
+#: conf/external_keys.py:21
 #, fuzzy, python-format
 msgid ""
 "This key helps google index your site please obtain is at <a href=\"%(url)s?"
@@ -680,32 +726,32 @@ msgstr ""
 "site</a>\n"
 "以帮助google索引你的网站"
 
-#: conf/external_keys.py:35
+#: conf/external_keys.py:36
 msgid "Google Analytics key"
 msgstr "Google Analytics key"
 
-#: conf/external_keys.py:37
+#: conf/external_keys.py:38
 #, fuzzy, python-format
 msgid ""
 "Obtain is at <a href=\"%(url)s\">Google Analytics</a> site, if you wish to "
 "use Google Analytics to monitor your site"
 msgstr ""
-"如果你希望使用Google Analytics监控你的网站，请在这里设置 <a href=\"%(ga_site)"
-"s\">Google Analytics</a>"
+"如果你希望使用Google Analytics监控你的网站，请在这里设置 <a href="
+"\"%(ga_site)s\">Google Analytics</a>"
 
-#: conf/external_keys.py:50
+#: conf/external_keys.py:51
 msgid "Enable recaptcha (keys below are required)"
 msgstr "激活recaptcha(下面的keys是必须的)"
 
-#: conf/external_keys.py:59
+#: conf/external_keys.py:60
 msgid "Recaptcha public key"
 msgstr "Recaptcha public key"
 
-#: conf/external_keys.py:67
+#: conf/external_keys.py:68
 msgid "Recaptcha private key"
 msgstr "Recaptcha private key"
 
-#: conf/external_keys.py:69
+#: conf/external_keys.py:70
 #, fuzzy, python-format
 msgid ""
 "Recaptcha is a tool that helps distinguish real people from annoying spam "
@@ -715,11 +761,11 @@ msgstr ""
 "Recaptcha这个工具帮助我们辨别出垃圾邮件中的真实用户,\n"
 "请从这里获取public key <a href=\"http://recaptcha.net\">recaptcha.net</a>"
 
-#: conf/external_keys.py:81
+#: conf/external_keys.py:82
 msgid "Facebook public API key"
 msgstr "Facebook public API key"
 
-#: conf/external_keys.py:83
+#: conf/external_keys.py:84
 #, fuzzy, python-format
 msgid ""
 "Facebook API key and Facebook secret allow to use Facebook Connect login "
@@ -731,15 +777,15 @@ msgstr ""
 "获取这些,通过<a href=\"http://www.\n"
 "facebook.com/developers/createapp.php\">facebook create app</a> 网站"
 
-#: conf/external_keys.py:96
+#: conf/external_keys.py:97
 msgid "Facebook secret key"
 msgstr "Facebook secret key"
 
-#: conf/external_keys.py:104
+#: conf/external_keys.py:105
 msgid "Twitter consumer key"
 msgstr "Twitter consumer key"
 
-#: conf/external_keys.py:106
+#: conf/external_keys.py:107
 #, fuzzy, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">twitter applications site</"
@@ -748,15 +794,15 @@ msgstr ""
 "请在这里注册你的网站 <a href=\"http://dev.twitter.com/apps/\">twitter "
 "applications site</a>"
 
-#: conf/external_keys.py:117
+#: conf/external_keys.py:118
 msgid "Twitter consumer secret"
 msgstr "Twitter consumer secret"
 
-#: conf/external_keys.py:125
+#: conf/external_keys.py:126
 msgid "LinkedIn consumer key"
 msgstr "LinkedIn consumer key"
 
-#: conf/external_keys.py:127
+#: conf/external_keys.py:128
 #, fuzzy, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">LinkedIn developer site</a>"
@@ -764,16 +810,16 @@ msgstr ""
 "请在这里注册你的网站 <a href=\"http://dev.twitter.com/apps/\">twitter "
 "applications site</a>"
 
-#: conf/external_keys.py:138
+#: conf/external_keys.py:139
 msgid "LinkedIn consumer secret"
 msgstr "LinkedIn consumer secret"
 
-#: conf/external_keys.py:146
+#: conf/external_keys.py:147
 #, fuzzy
 msgid "ident.ca consumer key"
 msgstr "LinkedIn consumer key"
 
-#: conf/external_keys.py:148
+#: conf/external_keys.py:149
 #, fuzzy, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">Identi.ca applications "
@@ -782,37 +828,37 @@ msgstr ""
 "请在这里注册你的网站 <a href=\"http://dev.twitter.com/apps/\">twitter "
 "applications site</a>"
 
-#: conf/external_keys.py:159
+#: conf/external_keys.py:160
 #, fuzzy
 msgid "ident.ca consumer secret"
 msgstr "LinkedIn consumer secret"
 
-#: conf/external_keys.py:167
+#: conf/external_keys.py:168
 #, fuzzy
 msgid "Use LDAP authentication for the password login"
 msgstr "为使用密码登录的用户进行LDAP验证"
 
-#: conf/external_keys.py:176
+#: conf/external_keys.py:177
 msgid "LDAP service provider name"
 msgstr "LDAP服务提供商"
 
-#: conf/external_keys.py:184
+#: conf/external_keys.py:185
 msgid "URL for the LDAP service"
 msgstr "LDAP服务URL"
 
-#: conf/external_keys.py:192
+#: conf/external_keys.py:193
 msgid "Explain how to change LDAP password"
 msgstr "如何修改LDAP密码"
 
-#: conf/flatpages.py:10
+#: conf/flatpages.py:11
 msgid "Flatpages - about, privacy policy, etc."
 msgstr "关于，隐私政策等"
 
-#: conf/flatpages.py:17
+#: conf/flatpages.py:19
 msgid "Text of the Q&A forum About page (html format)"
 msgstr "关于页面的Q&A讨论内容(html格式)"
 
-#: conf/flatpages.py:20
+#: conf/flatpages.py:22
 msgid ""
 "Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
 "the \"about\" page to check your input."
@@ -820,12 +866,12 @@ msgstr ""
 "保存, 然后开启 <a href=\"http://validator.w3.org/\">使用HTML验证</a> \"关于"
 "\" 页面去检查你的输入."
 
-#: conf/flatpages.py:30
+#: conf/flatpages.py:32
 #, fuzzy
 msgid "Text of the Q&A forum FAQ page (html format)"
 msgstr "关于页面的Q&A讨论内容(html格式)"
 
-#: conf/flatpages.py:33
+#: conf/flatpages.py:35
 #, fuzzy
 msgid ""
 "Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
@@ -834,11 +880,11 @@ msgstr ""
 "保存, 然后开启 <a href=\"http://validator.w3.org/\">使用HTML验证</a> \"关于"
 "\" 页面去检查你的输入."
 
-#: conf/flatpages.py:44
+#: conf/flatpages.py:46
 msgid "Text of the Q&A forum Privacy Policy (html format)"
 msgstr "Q&A讨论的隐私政策(html格式)"
 
-#: conf/flatpages.py:47
+#: conf/flatpages.py:49
 msgid ""
 "Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
 "the \"privacy\" page to check your input."
@@ -846,37 +892,37 @@ msgstr ""
 "保存, 然后开启 <a href=\"http://validator.w3.org/\">使用HTML验证</a>\"隐私\" "
 "页面去检查你的输入."
 
-#: conf/forum_data_rules.py:11
+#: conf/forum_data_rules.py:12
 #, fuzzy
-msgid "Data entry and display"
+msgid "Data entry and display rules"
 msgstr "设置数据显示方式"
 
-#: conf/forum_data_rules.py:20
+#: conf/forum_data_rules.py:22
 #, python-format
 msgid ""
 "Enable embedding videos. <em>Note: please read <a href=\"%(url)s>read this</"
 "a> first.</em>"
 msgstr ""
 
-#: conf/forum_data_rules.py:31
+#: conf/forum_data_rules.py:33
 msgid "Check to enable community wiki feature"
 msgstr "开启社区wiki功能"
 
-#: conf/forum_data_rules.py:40
+#: conf/forum_data_rules.py:42
 msgid "Allow asking questions anonymously"
 msgstr ""
 
-#: conf/forum_data_rules.py:42
+#: conf/forum_data_rules.py:44
 msgid ""
 "Users do not accrue reputation for anonymous questions and their identity is "
 "not revealed until they change their mind"
 msgstr ""
 
-#: conf/forum_data_rules.py:54
+#: conf/forum_data_rules.py:56
 msgid "Allow posting before logging in"
 msgstr ""
 
-#: conf/forum_data_rules.py:56
+#: conf/forum_data_rules.py:58
 msgid ""
 "Check if you want to allow users start posting questions or answers before "
 "logging in. Enabling this may require adjustments in the user login system "
@@ -884,226 +930,225 @@ msgid ""
 "login system supports this feature."
 msgstr ""
 
-#: conf/forum_data_rules.py:71
+#: conf/forum_data_rules.py:73
 #, fuzzy
 msgid "Allow swapping answer with question"
 msgstr "回答该问题"
 
-#: conf/forum_data_rules.py:73
+#: conf/forum_data_rules.py:75
 msgid ""
 "This setting will help import data from other forums such as zendesk, when "
 "automatic data import fails to detect the original question correctly."
 msgstr ""
 
-#: conf/forum_data_rules.py:85
+#: conf/forum_data_rules.py:87
 msgid "Maximum length of tag (number of characters)"
 msgstr "标签最大长度(字符数)"
 
-#: conf/forum_data_rules.py:93
+#: conf/forum_data_rules.py:95
 #, fuzzy
 msgid "Mandatory tags"
 msgstr "更新标签"
 
-#: conf/forum_data_rules.py:96
+#: conf/forum_data_rules.py:98
 msgid ""
 "At least one of these tags will be required for any new or newly edited "
 "question. A mandatory tag may be wildcard, if the wildcard tags are active."
 msgstr ""
 
-#: conf/forum_data_rules.py:108
+#: conf/forum_data_rules.py:110
 msgid "Force lowercase the tags"
 msgstr ""
 
-#: conf/forum_data_rules.py:110
+#: conf/forum_data_rules.py:112
 msgid ""
 "Attention: after checking this, please back up the database, and run a "
 "management command: <code>python manage.py fix_question_tags</code> to "
 "globally rename the tags"
 msgstr ""
 
-#: conf/forum_data_rules.py:124
+#: conf/forum_data_rules.py:126
 msgid "Format of tag list"
 msgstr ""
 
-#: conf/forum_data_rules.py:126
+#: conf/forum_data_rules.py:128
 msgid ""
 "Select the format to show tags in, either as a simple list, or as a tag cloud"
 msgstr ""
 
-#: conf/forum_data_rules.py:138
+#: conf/forum_data_rules.py:140
 #, fuzzy
 msgid "Use wildcard tags"
 msgstr "相关标签"
 
-#: conf/forum_data_rules.py:140
+#: conf/forum_data_rules.py:142
 msgid ""
 "Wildcard tags can be used to follow or ignore many tags at once, a valid "
 "wildcard tag has a single wildcard at the very end"
 msgstr ""
 
-#: conf/forum_data_rules.py:153
+#: conf/forum_data_rules.py:155
 msgid "Default max number of comments to display under posts"
 msgstr "默认显示最大留言数"
 
-#: conf/forum_data_rules.py:164
+#: conf/forum_data_rules.py:166
 #, python-format
 msgid "Maximum comment length, must be < %(max_len)s"
 msgstr "最大留言长度，必须小于%(max_len)s"
 
-#: conf/forum_data_rules.py:174
+#: conf/forum_data_rules.py:176
 msgid "Limit time to edit comments"
 msgstr ""
 
-#: conf/forum_data_rules.py:176
+#: conf/forum_data_rules.py:178
 msgid "If unchecked, there will be no time limit to edit the comments"
 msgstr ""
 
-#: conf/forum_data_rules.py:187
+#: conf/forum_data_rules.py:189
 msgid "Minutes allowed to edit a comment"
 msgstr ""
 
-#: conf/forum_data_rules.py:188
+#: conf/forum_data_rules.py:190
 msgid "To enable this setting, check the previous one"
 msgstr ""
 
-#: conf/forum_data_rules.py:197
+#: conf/forum_data_rules.py:199
 msgid "Save comment by pressing <Enter> key"
 msgstr ""
 
-#: conf/forum_data_rules.py:206
+#: conf/forum_data_rules.py:208
 msgid "Minimum length of search term for Ajax search"
 msgstr "搜索最小长度"
 
-#: conf/forum_data_rules.py:207
+#: conf/forum_data_rules.py:209
 msgid "Must match the corresponding database backend setting"
 msgstr "必须匹配相关数据库设置"
 
-#: conf/forum_data_rules.py:216
+#: conf/forum_data_rules.py:218
 msgid "Do not make text query sticky in search"
 msgstr ""
 
-#: conf/forum_data_rules.py:218
+#: conf/forum_data_rules.py:220
 msgid ""
 "Check to disable the \"sticky\" behavior of the search query. This may be "
 "useful if you want to move the search bar away from the default position or "
 "do not like the default sticky behavior of the text search query."
 msgstr ""
 
-#: conf/forum_data_rules.py:231
+#: conf/forum_data_rules.py:233
 msgid "Maximum number of tags per question"
 msgstr "每个问题的最多标签数"
 
-#: conf/forum_data_rules.py:243
+#: conf/forum_data_rules.py:245
 msgid "Number of questions to list by default"
 msgstr "默认显示的问题数"
 
-#: conf/forum_data_rules.py:253
+#: conf/forum_data_rules.py:255
 msgid "What should \"unanswered question\" mean?"
 msgstr "\"未回答\"问题是什么?"
 
-#: conf/license.py:12
-#, fuzzy
-msgid "License settings"
-msgstr "基本设置"
+#: conf/license.py:13
+msgid "Content LicensContent License"
+msgstr ""
 
-#: conf/license.py:19
+#: conf/license.py:21
 msgid "Show license clause in the site footer"
 msgstr ""
 
-#: conf/license.py:28
+#: conf/license.py:30
 msgid "Short name for the license"
 msgstr ""
 
-#: conf/license.py:37
+#: conf/license.py:39
 msgid "Full name of the license"
 msgstr ""
 
-#: conf/license.py:38
+#: conf/license.py:40
 msgid "Creative Commons Attribution Share Alike 3.0"
 msgstr ""
 
-#: conf/license.py:46
+#: conf/license.py:48
 msgid "Add link to the license page"
 msgstr ""
 
-#: conf/license.py:55
+#: conf/license.py:57
 #, fuzzy
 msgid "License homepage"
 msgstr "回到首页"
 
-#: conf/license.py:57
+#: conf/license.py:59
 msgid "URL of the official page with all the license legal clauses"
 msgstr ""
 
-#: conf/license.py:67
+#: conf/license.py:69
 #, fuzzy
 msgid "Use license logo"
 msgstr "%(site)s logo"
 
-#: conf/license.py:76
+#: conf/license.py:78
 msgid "License logo image"
 msgstr ""
 
-#: conf/login_providers.py:12
+#: conf/login_providers.py:13
 msgid "Login provider setings"
 msgstr ""
 
-#: conf/login_providers.py:20
+#: conf/login_providers.py:22
 msgid ""
 "Show alternative login provider buttons on the password \"Sign Up\" page"
 msgstr ""
 
-#: conf/login_providers.py:29
+#: conf/login_providers.py:31
 msgid "Always display local login form and hide \"Askbot\" button."
 msgstr ""
 
-#: conf/login_providers.py:38
+#: conf/login_providers.py:40
 msgid "Activate to allow login with self-hosted wordpress site"
 msgstr ""
 
-#: conf/login_providers.py:39
+#: conf/login_providers.py:41
 msgid ""
 "to activate this feature you must fill out the wordpress xml-rpc setting "
 "bellow"
 msgstr ""
 
-#: conf/login_providers.py:48
+#: conf/login_providers.py:50
 msgid ""
 "Fill it with the wordpress url to the xml-rpc, normally http://mysite.com/"
 "xmlrpc.php"
 msgstr ""
 
-#: conf/login_providers.py:49
+#: conf/login_providers.py:51
 msgid ""
 "To enable, go to Settings->Writing->Remote Publishing and check the box for "
 "XML-RPC"
 msgstr ""
 
-#: conf/login_providers.py:60
+#: conf/login_providers.py:62
 msgid "Upload your icon"
 msgstr ""
 
-#: conf/login_providers.py:90
+#: conf/login_providers.py:92
 #, fuzzy, python-format
 msgid "Activate %(provider)s login"
 msgstr "你的%(provider)s登录成功"
 
-#: conf/login_providers.py:95
+#: conf/login_providers.py:97
 #, python-format
 msgid ""
 "Note: to really enable %(provider)s login some additional parameters will "
 "need to be set in the \"External keys\" section"
 msgstr ""
 
-#: conf/markup.py:14
-msgid "Markup formatting"
-msgstr "标记格式"
+#: conf/markup.py:15
+msgid "Markup in posts"
+msgstr ""
 
-#: conf/markup.py:39
+#: conf/markup.py:41
 msgid "Enable code-friendly Markdown"
 msgstr "激活code-friendly Markdown"
 
-#: conf/markup.py:41
+#: conf/markup.py:43
 msgid ""
 "If checked, underscore characters will not trigger italic or bold formatting "
 "- bold and italic text can still be marked up with asterisks. Note that "
@@ -1113,43 +1158,43 @@ msgstr ""
 "下划线的字符将不会有斜体或粗体格式，粗体和斜体内容仍然可以用*号标记。注意"
 "\"MathJax support\" 功能默认是打开的,因为下划线在LaTeX输入中是重度使用的。"
 
-#: conf/markup.py:56
+#: conf/markup.py:58
 msgid "Mathjax support (rendering of LaTeX)"
 msgstr "Mathjax支持(LaTex渲染)"
 
-#: conf/markup.py:58
+#: conf/markup.py:60
 #, fuzzy, python-format
 msgid ""
 "If you enable this feature, <a href=\"%(url)s\">mathjax</a> must be "
 "installed on your server in its own directory."
 msgstr "激活此功能, <a href=\"%(url)s\">mathjax</a> 必须安装到 %(dir)s目录"
 
-#: conf/markup.py:72
+#: conf/markup.py:74
 msgid "Base url of MathJax deployment"
 msgstr "部署MathJax的基本url"
 
-#: conf/markup.py:74
+#: conf/markup.py:76
 msgid ""
 "Note - <strong>MathJax is not included with askbot</strong> - you should "
 "deploy it yourself, preferably at a separate domain and enter url pointing "
 "to the \"mathjax\" directory (for example: http://mysite.com/mathjax)"
 msgstr ""
 
-#: conf/markup.py:89
+#: conf/markup.py:91
 msgid "Enable autolinking with specific patterns"
 msgstr ""
 
-#: conf/markup.py:91
+#: conf/markup.py:93
 msgid ""
 "If you enable this feature, the application  will be able to detect patterns "
 "and auto link to URLs"
 msgstr ""
 
-#: conf/markup.py:104
+#: conf/markup.py:106
 msgid "Regexes to detect the link patterns"
 msgstr ""
 
-#: conf/markup.py:106
+#: conf/markup.py:108
 msgid ""
 "Enter valid regular expressions for the patters, one per line. For example "
 "to detect a bug pattern like #bug123, use the following regex: #bug(\\d+). "
@@ -1158,11 +1203,11 @@ msgid ""
 "expressions elsewhere."
 msgstr ""
 
-#: conf/markup.py:125
+#: conf/markup.py:127
 msgid "URLs for autolinking"
 msgstr ""
 
-#: conf/markup.py:127
+#: conf/markup.py:129
 msgid ""
 "Here, please enter url templates for the patterns entered in the previous "
 "setting, also one entry per line. <strong>Make sure that number of lines in "
@@ -1172,164 +1217,165 @@ msgid ""
 "in the redhat bug tracker."
 msgstr ""
 
-#: conf/minimum_reputation.py:11
-msgid "Minimum reputation required to perform actions"
-msgstr "完成这个动作需要最小积分"
+#: conf/minimum_reputation.py:12
+msgid "Karma thresholds"
+msgstr ""
 
-#: conf/minimum_reputation.py:20
+#: conf/minimum_reputation.py:22
 msgid "Upvote"
 msgstr "投赞成票"
 
-#: conf/minimum_reputation.py:29
+#: conf/minimum_reputation.py:31
 msgid "Downvote"
 msgstr "投反对票"
 
-#: conf/minimum_reputation.py:38
+#: conf/minimum_reputation.py:40
 #, fuzzy
 msgid "Answer own question immediately"
 msgstr "回答你自己的问题"
 
-#: conf/minimum_reputation.py:47
+#: conf/minimum_reputation.py:49
 #, fuzzy
 msgid "Accept own answer"
 msgstr "编辑问题"
 
-#: conf/minimum_reputation.py:56
+#: conf/minimum_reputation.py:58
 msgid "Flag offensive"
 msgstr "垃圾帖"
 
 # todo - check if it's indeed plural
-#: conf/minimum_reputation.py:65
+#: conf/minimum_reputation.py:67
 msgid "Leave comments"
 msgstr "添加留言"
 
-#: conf/minimum_reputation.py:74
+#: conf/minimum_reputation.py:76
 msgid "Delete comments posted by others"
 msgstr "删除其他人的留言"
 
-#: conf/minimum_reputation.py:83
+#: conf/minimum_reputation.py:85
 msgid "Delete questions and answers posted by others"
 msgstr "删除任何一个问题或答案，及其他管理功能"
 
-#: conf/minimum_reputation.py:92
+#: conf/minimum_reputation.py:94
 msgid "Upload files"
 msgstr "上传文件"
 
 # close.html
-#: conf/minimum_reputation.py:101
+#: conf/minimum_reputation.py:103
 msgid "Close own questions"
 msgstr "关闭自己的问题"
 
-#: conf/minimum_reputation.py:110
+#: conf/minimum_reputation.py:112
 msgid "Retag questions posted by other people"
 msgstr "为其他人发布的问题重新设置标签"
 
-#: conf/minimum_reputation.py:119
+#: conf/minimum_reputation.py:121
 msgid "Reopen own questions"
 msgstr "重设问题"
 
-#: conf/minimum_reputation.py:128
+#: conf/minimum_reputation.py:130
 msgid "Edit community wiki posts"
 msgstr "编辑wiki类问题"
 
-#: conf/minimum_reputation.py:137
+#: conf/minimum_reputation.py:139
 msgid "Edit posts authored by other people"
 msgstr "编辑其他人的发布权限"
 
-#: conf/minimum_reputation.py:146
+#: conf/minimum_reputation.py:148
 msgid "View offensive flags"
 msgstr "查看标记垃圾帖"
 
 # must have extra space after in english
-#: conf/minimum_reputation.py:155
+#: conf/minimum_reputation.py:157
 msgid "Close questions asked by others"
 msgstr "关闭其他人的问题"
 
-#: conf/minimum_reputation.py:164
+#: conf/minimum_reputation.py:166
 msgid "Lock posts"
 msgstr "锁定发布"
 
-#: conf/minimum_reputation.py:173
+#: conf/minimum_reputation.py:175
 msgid "Remove rel=nofollow from own homepage"
 msgstr ""
 
-#: conf/minimum_reputation.py:175
+#: conf/minimum_reputation.py:177
 msgid ""
 "When a search engine crawler will see a rel=nofollow attribute on a link - "
 "the link will not count towards the rank of the users personal site."
 msgstr ""
 
-#: conf/reputation_changes.py:12
-msgid "Reputation loss and gain rules"
+#: conf/reputation_changes.py:13
+#, fuzzy
+msgid "Karma loss and gain rules"
 msgstr "积分规则"
 
-#: conf/reputation_changes.py:21
+#: conf/reputation_changes.py:23
 msgid "Maximum daily reputation gain per user"
 msgstr "用户每日获取积分上限"
 
-#: conf/reputation_changes.py:30
+#: conf/reputation_changes.py:32
 msgid "Gain for receiving an upvote"
 msgstr "标记接收的推荐票"
 
-#: conf/reputation_changes.py:39
+#: conf/reputation_changes.py:41
 msgid "Gain for the author of accepted answer"
 msgstr "标记接受回答的作者"
 
-#: conf/reputation_changes.py:48
+#: conf/reputation_changes.py:50
 msgid "Gain for accepting best answer"
 msgstr "标记最佳答案"
 
-#: conf/reputation_changes.py:57
+#: conf/reputation_changes.py:59
 msgid "Gain for post owner on canceled downvote"
 msgstr "标记发布者取消反对票"
 
-#: conf/reputation_changes.py:66
+#: conf/reputation_changes.py:68
 msgid "Gain for voter on canceling downvote"
 msgstr "标记投票者取消反对票"
 
-#: conf/reputation_changes.py:76
+#: conf/reputation_changes.py:78
 msgid "Loss for voter for canceling of answer acceptance"
 msgstr "减少投票者积分当取消回答的接受时"
 
-#: conf/reputation_changes.py:86
+#: conf/reputation_changes.py:88
 msgid "Loss for author whose answer was \"un-accepted\""
 msgstr "减少发布者积分当回答为不可接受时"
 
-#: conf/reputation_changes.py:96
+#: conf/reputation_changes.py:98
 msgid "Loss for giving a downvote"
 msgstr "减少发布者积分当获得反对票时"
 
-#: conf/reputation_changes.py:106
+#: conf/reputation_changes.py:108
 msgid "Loss for owner of post that was flagged offensive"
 msgstr "减少发布者积分当问题被标记为垃圾贴时"
 
-#: conf/reputation_changes.py:116
+#: conf/reputation_changes.py:118
 msgid "Loss for owner of post that was downvoted"
 msgstr "减少发布者积分当问题被投反对票时"
 
-#: conf/reputation_changes.py:126
+#: conf/reputation_changes.py:128
 msgid "Loss for owner of post that was flagged 3 times per same revision"
 msgstr "减少发布者积分当问题被3次同样的修改标记时"
 
-#: conf/reputation_changes.py:136
+#: conf/reputation_changes.py:138
 msgid "Loss for owner of post that was flagged 5 times per same revision"
 msgstr "减少发布者积分当问题被5次同样的修改标记时"
 
-#: conf/reputation_changes.py:146
+#: conf/reputation_changes.py:148
 msgid "Loss for post owner when upvote is canceled"
 msgstr "减少发布者积分当推荐票取消时"
 
-#: conf/sidebar_main.py:11
-msgid "Sidebar widget settings - main page"
+#: conf/sidebar_main.py:12
+msgid "Main page sidebar"
 msgstr ""
 
-#: conf/sidebar_main.py:18 conf/sidebar_profile.py:18
-#: conf/sidebar_question.py:18
+#: conf/sidebar_main.py:20 conf/sidebar_profile.py:20
+#: conf/sidebar_question.py:19
 msgid "Custom sidebar header"
 msgstr ""
 
-#: conf/sidebar_main.py:21 conf/sidebar_profile.py:21
-#: conf/sidebar_question.py:21
+#: conf/sidebar_main.py:23 conf/sidebar_profile.py:23
+#: conf/sidebar_question.py:22
 msgid ""
 "Use this area to enter content at the TOP of the sidebarin HTML format.   "
 "When using this option (as well as the sidebar footer), please use the HTML "
@@ -1337,44 +1383,44 @@ msgid ""
 "all browsers."
 msgstr ""
 
-#: conf/sidebar_main.py:34
+#: conf/sidebar_main.py:36
 msgid "Show avatar block in sidebar"
 msgstr ""
 
-#: conf/sidebar_main.py:36
+#: conf/sidebar_main.py:38
 msgid "Uncheck this if you want to hide the avatar block from the sidebar "
 msgstr ""
 
-#: conf/sidebar_main.py:47
+#: conf/sidebar_main.py:49
 msgid "Limit how many avatars will be displayed on the sidebar"
 msgstr ""
 
-#: conf/sidebar_main.py:57
+#: conf/sidebar_main.py:59
 msgid "Show tag selector in sidebar"
 msgstr ""
 
-#: conf/sidebar_main.py:59
+#: conf/sidebar_main.py:61
 msgid ""
 "Uncheck this if you want to hide the options for choosing interesting and "
 "ignored tags "
 msgstr ""
 
-#: conf/sidebar_main.py:70
+#: conf/sidebar_main.py:72
 msgid "Show tag list/cloud in sidebar"
 msgstr ""
 
-#: conf/sidebar_main.py:72
+#: conf/sidebar_main.py:74
 msgid ""
 "Uncheck this if you want to hide the tag cloud or tag list from the sidebar "
 msgstr ""
 
-#: conf/sidebar_main.py:83 conf/sidebar_profile.py:34
-#: conf/sidebar_question.py:74
+#: conf/sidebar_main.py:85 conf/sidebar_profile.py:36
+#: conf/sidebar_question.py:75
 msgid "Custom sidebar footer"
 msgstr ""
 
-#: conf/sidebar_main.py:86 conf/sidebar_profile.py:37
-#: conf/sidebar_question.py:77
+#: conf/sidebar_main.py:88 conf/sidebar_profile.py:39
+#: conf/sidebar_question.py:78
 msgid ""
 "Use this area to enter content at the BOTTOM of the sidebarin HTML format.   "
 "When using this option (as well as the sidebar header), please use the HTML "
@@ -1382,52 +1428,53 @@ msgid ""
 "all browsers."
 msgstr ""
 
-#: conf/sidebar_profile.py:11
-msgid "Sidebar widget settings - profile page"
-msgstr ""
+#: conf/sidebar_profile.py:12
+#, fuzzy
+msgid "User profile sidebar"
+msgstr "用户概览"
 
 #: conf/sidebar_question.py:11
-msgid "Sidebar widget settings - question page"
-msgstr ""
+#, fuzzy
+msgid "Question page sidebar"
+msgstr "您正在浏览的问题含有以下标签"
 
-#: conf/sidebar_question.py:34
+#: conf/sidebar_question.py:35
 msgid "Show tag list in sidebar"
 msgstr ""
 
-#: conf/sidebar_question.py:36
+#: conf/sidebar_question.py:37
 msgid "Uncheck this if you want to hide the tag list from the sidebar "
 msgstr ""
 
-#: conf/sidebar_question.py:47
+#: conf/sidebar_question.py:48
 msgid "Show meta information in sidebar"
 msgstr ""
 
-#: conf/sidebar_question.py:49
+#: conf/sidebar_question.py:50
 msgid ""
 "Uncheck this if you want to hide the meta information about the question "
 "(post date, views, last updated). "
 msgstr ""
 
-#: conf/sidebar_question.py:61
+#: conf/sidebar_question.py:62
 #, fuzzy
 msgid "Show related questions in sidebar"
 msgstr "相似的问题"
 
-#: conf/sidebar_question.py:63
+#: conf/sidebar_question.py:64
 #, fuzzy
 msgid "Uncheck this if you want to hide the list of related questions. "
 msgstr "最近被更新的问题"
 
-#: conf/site_modes.py:63
-#, fuzzy
-msgid "Site modes"
-msgstr "网站"
-
-#: conf/site_modes.py:72
-msgid "Activate a \"Bootstrap\" mode"
+#: conf/site_modes.py:64
+msgid "Bootstrap mode"
 msgstr ""
 
 #: conf/site_modes.py:74
+msgid "Activate a \"Bootstrap\" mode"
+msgstr ""
+
+#: conf/site_modes.py:76
 msgid ""
 "Bootstrap mode lowers reputation and certain badge thresholds, to values, "
 "more suitable for the smaller communities, <strong>WARNING:</strong> your "
@@ -1435,53 +1482,53 @@ msgid ""
 "changed after you modify this setting."
 msgstr ""
 
-#: conf/site_settings.py:11
-msgid "Q&A forum website parameters and urls"
-msgstr "网站参数及urls"
+#: conf/site_settings.py:12
+msgid "URLS, keywords & greetings"
+msgstr ""
 
-#: conf/site_settings.py:19
+#: conf/site_settings.py:21
 msgid "Site title for the Q&A forum"
 msgstr "网站标题"
 
-#: conf/site_settings.py:28
+#: conf/site_settings.py:30
 msgid "Comma separated list of Q&A site keywords"
 msgstr "以逗号分隔的网站关键字列表"
 
-#: conf/site_settings.py:37
+#: conf/site_settings.py:39
 msgid "Copyright message to show in the footer"
 msgstr "显示在页脚的版权信息"
 
-#: conf/site_settings.py:47
+#: conf/site_settings.py:49
 msgid "Site description for the search engines"
 msgstr "为搜索引擎添加的网站描述"
 
-#: conf/site_settings.py:56
+#: conf/site_settings.py:58
 msgid "Short name for your Q&A forum"
 msgstr "网站缩写"
 
-#: conf/site_settings.py:66
+#: conf/site_settings.py:68
 msgid "Base URL for your Q&A forum, must start with http or https"
 msgstr "网站根地址,必须以http或https开头"
 
-#: conf/site_settings.py:77
+#: conf/site_settings.py:79
 #, fuzzy
 msgid "Check to enable greeting for anonymous user"
 msgstr "匿名用户邮件"
 
-#: conf/site_settings.py:88
+#: conf/site_settings.py:90
 #, fuzzy
 msgid "Text shown in the greeting message shown to the anonymous user"
 msgstr "为匿名用户显示的问候语"
 
-#: conf/site_settings.py:92
+#: conf/site_settings.py:94
 msgid "Use HTML to format the message "
 msgstr ""
 
-#: conf/site_settings.py:101
+#: conf/site_settings.py:103
 msgid "Feedback site URL"
 msgstr "问题反馈URL"
 
-#: conf/site_settings.py:103
+#: conf/site_settings.py:105
 msgid "If left empty, a simple internal feedback form will be used instead"
 msgstr "如果留空，一个简单的内部反馈将被发送"
 
@@ -1594,33 +1641,33 @@ msgstr "接受背景色"
 msgid "Foreground color for accepted answer"
 msgstr "接受回答前景色"
 
-#: conf/skin_general_settings.py:14
-msgid "Skin and User Interface settings"
-msgstr "主题设置"
+#: conf/skin_general_settings.py:15
+msgid "Logos and HTML <head> parts"
+msgstr ""
 
-#: conf/skin_general_settings.py:21
+#: conf/skin_general_settings.py:23
 msgid "Q&A site logo"
 msgstr "网站logo"
 
-#: conf/skin_general_settings.py:23
+#: conf/skin_general_settings.py:25
 msgid "To change the logo, select new file, then submit this whole form."
 msgstr "改logo,选择一个新文件并提交"
 
-#: conf/skin_general_settings.py:37
+#: conf/skin_general_settings.py:39
 msgid "Show logo"
 msgstr ""
 
-#: conf/skin_general_settings.py:39
+#: conf/skin_general_settings.py:41
 msgid ""
 "Check if you want to show logo in the forum header or uncheck in the case "
 "you do not want the logo to appear in the default location"
 msgstr ""
 
-#: conf/skin_general_settings.py:51
+#: conf/skin_general_settings.py:53
 msgid "Site favicon"
 msgstr "网站favicon"
 
-#: conf/skin_general_settings.py:53
+#: conf/skin_general_settings.py:55
 #, python-format
 msgid ""
 "A small 16x16 or 32x32 pixel icon image used to distinguish your site in the "
@@ -1630,21 +1677,21 @@ msgstr ""
 "16x16 或 32x32像素icon图片用于区分你网站的浏览器用户接口。请查看更多favicon信"
 "息在<a href=\"%(favicon_info_url)s\">this page</a>."
 
-#: conf/skin_general_settings.py:71
+#: conf/skin_general_settings.py:73
 msgid "Password login button"
 msgstr "密码登录按钮"
 
-#: conf/skin_general_settings.py:73
+#: conf/skin_general_settings.py:75
 msgid ""
 "An 88x38 pixel image that is used on the login screen for the password login "
 "button."
 msgstr "88x38像素的图片被用于登录界面的密码登录按钮"
 
-#: conf/skin_general_settings.py:88
+#: conf/skin_general_settings.py:90
 msgid "Show all UI functions to all users"
 msgstr "显示所有UI功能给所有用户"
 
-#: conf/skin_general_settings.py:90
+#: conf/skin_general_settings.py:92
 msgid ""
 "If checked, all forum functions will be shown to users, regardless of their "
 "reputation. However to use those functions, moderation rules, reputation and "
@@ -1653,19 +1700,19 @@ msgstr ""
 "如果选择了,所有的网站功能将被展示给用户,不管他们的积分是多少.尽管使用了这些功"
 "能,适度规则,积分和其他限制仍然有作用."
 
-#: conf/skin_general_settings.py:105
+#: conf/skin_general_settings.py:107
 msgid "Select skin"
 msgstr "选择主题"
 
-#: conf/skin_general_settings.py:116
+#: conf/skin_general_settings.py:118
 msgid "Customize HTML <HEAD>"
 msgstr ""
 
-#: conf/skin_general_settings.py:125
+#: conf/skin_general_settings.py:127
 msgid "Custom portion of the HTML <HEAD>"
 msgstr ""
 
-#: conf/skin_general_settings.py:127
+#: conf/skin_general_settings.py:129
 msgid ""
 "<strong>To use this option</strong>, check \"Customize HTML &lt;HEAD&gt;\" "
 "above. Contents of this box will be inserted into the &lt;HEAD&gt; portion "
@@ -1677,11 +1724,11 @@ msgid ""
 "please test the site with the W3C HTML validator service."
 msgstr ""
 
-#: conf/skin_general_settings.py:149
+#: conf/skin_general_settings.py:151
 msgid "Custom header additions"
 msgstr ""
 
-#: conf/skin_general_settings.py:151
+#: conf/skin_general_settings.py:153
 msgid ""
 "Header is the bar at the top of the content that contains user info and site "
 "links, and is common to all pages. Use this area to enter contents of the "
@@ -1690,21 +1737,21 @@ msgid ""
 "sure that your input is valid and works well in all browsers."
 msgstr ""
 
-#: conf/skin_general_settings.py:166
+#: conf/skin_general_settings.py:168
 msgid "Site footer mode"
 msgstr ""
 
-#: conf/skin_general_settings.py:168
+#: conf/skin_general_settings.py:170
 msgid ""
 "Footer is the bottom portion of the content, which is common to all pages. "
 "You can disable, customize, or use the default footer."
 msgstr ""
 
-#: conf/skin_general_settings.py:185
+#: conf/skin_general_settings.py:187
 msgid "Custom footer (HTML format)"
 msgstr ""
 
-#: conf/skin_general_settings.py:187
+#: conf/skin_general_settings.py:189
 msgid ""
 "<strong>To enable this function</strong>, please select option 'customize' "
 "in the \"Site footer mode\" above. Use this area to enter contents of the "
@@ -1713,21 +1760,21 @@ msgid ""
 "that your input is valid and works well in all browsers."
 msgstr ""
 
-#: conf/skin_general_settings.py:202
+#: conf/skin_general_settings.py:204
 msgid "Apply custom style sheet (CSS)"
 msgstr ""
 
-#: conf/skin_general_settings.py:204
+#: conf/skin_general_settings.py:206
 msgid ""
 "Check if you want to change appearance of your form by adding custom style "
 "sheet rules (please see the next item)"
 msgstr ""
 
-#: conf/skin_general_settings.py:216
+#: conf/skin_general_settings.py:218
 msgid "Custom style sheet (CSS)"
 msgstr ""
 
-#: conf/skin_general_settings.py:218
+#: conf/skin_general_settings.py:220
 msgid ""
 "<strong>To use this function</strong>, check \"Apply custom style sheet\" "
 "option above. The CSS rules added in this window will be applied after the "
@@ -1736,19 +1783,19 @@ msgid ""
 "depends (default is empty string) on the url configuration in your urls.py."
 msgstr ""
 
-#: conf/skin_general_settings.py:234
+#: conf/skin_general_settings.py:236
 msgid "Add custom javascript"
 msgstr ""
 
-#: conf/skin_general_settings.py:237
+#: conf/skin_general_settings.py:239
 msgid "Check to enable javascript that you can enter in the next field"
 msgstr ""
 
-#: conf/skin_general_settings.py:247
+#: conf/skin_general_settings.py:249
 msgid "Custom javascript"
 msgstr ""
 
-#: conf/skin_general_settings.py:249
+#: conf/skin_general_settings.py:251
 msgid ""
 "Type or paste plain javascript that you would like to run on your site. Link "
 "to the script will be inserted at the bottom of the HTML output and will be "
@@ -1759,140 +1806,168 @@ msgid ""
 "above)."
 msgstr ""
 
-#: conf/skin_general_settings.py:267
+#: conf/skin_general_settings.py:269
 msgid "Skin media revision number"
 msgstr "主题修正数字"
 
-#: conf/skin_general_settings.py:269
+#: conf/skin_general_settings.py:271
 msgid "Will be set automatically but you can modify it if necessary."
 msgstr ""
 
-#: conf/skin_general_settings.py:280
+#: conf/skin_general_settings.py:282
 msgid "Hash to update the media revision number automatically."
 msgstr ""
 
-#: conf/skin_general_settings.py:284
+#: conf/skin_general_settings.py:286
 msgid "Will be set automatically, it is not necesary to modify manually."
 msgstr ""
 
-#: conf/social_sharing.py:10
+#: conf/social_sharing.py:11
 msgid "Sharing content on social networks"
 msgstr "在社会化网络上共享信息"
 
-#: conf/social_sharing.py:18
+#: conf/social_sharing.py:20
 #, fuzzy
 msgid "Check to enable sharing of questions on Twitter"
 msgstr "激活在Twitter和Facebook上共享问答"
 
-#: conf/social_sharing.py:27
+#: conf/social_sharing.py:29
 #, fuzzy
 msgid "Check to enable sharing of questions on Facebook"
 msgstr "激活在Twitter和Facebook上共享问答"
 
-#: conf/social_sharing.py:36
+#: conf/social_sharing.py:38
 #, fuzzy
 msgid "Check to enable sharing of questions on LinkedIn"
 msgstr "激活在Twitter和Facebook上共享问答"
 
-#: conf/social_sharing.py:45
+#: conf/social_sharing.py:47
 #, fuzzy
 msgid "Check to enable sharing of questions on Identi.ca"
 msgstr "激活在Twitter和Facebook上共享问答"
 
-#: conf/social_sharing.py:54
+#: conf/social_sharing.py:56
 #, fuzzy
 msgid "Check to enable sharing of questions on Google+"
 msgstr "激活在Twitter和Facebook上共享问答"
 
-#: conf/spam_and_moderation.py:9
-msgid "Spam control and content moderation"
+#: conf/spam_and_moderation.py:10
+msgid "Akismet spam protection"
 msgstr ""
 
-#: conf/spam_and_moderation.py:16
+#: conf/spam_and_moderation.py:18
 #, fuzzy
 msgid "Enable Akismet spam detection(keys below are required)"
 msgstr "激活recaptcha(下面的keys是必须的)"
 
-#: conf/spam_and_moderation.py:19
+#: conf/spam_and_moderation.py:21
 #, python-format
 msgid "To get an Akismet key please visit <a href=\"%(url)s\">Akismet site</a>"
 msgstr ""
 
-#: conf/spam_and_moderation.py:29
+#: conf/spam_and_moderation.py:31
 msgid "Akismet key for spam detection"
 msgstr ""
 
-#: conf/user_settings.py:11
+#: conf/super_groups.py:5
+msgid "Reputation, Badges, Votes & Flags"
+msgstr ""
+
+#: conf/super_groups.py:6
+msgid "Static Content, URLS & UI"
+msgstr ""
+
+#: conf/super_groups.py:7
+#, fuzzy
+msgid "Data rules & Formatting"
+msgstr "标记格式"
+
+#: conf/super_groups.py:8
+#, fuzzy
+msgid "External Services"
+msgstr "其他服务"
+
+#: conf/super_groups.py:9
+msgid "Login, Users & Communication"
+msgstr ""
+
+#: conf/user_settings.py:12
 #, fuzzy
 msgid "User settings"
 msgstr "用户隐私设置"
 
-#: conf/user_settings.py:19
+#: conf/user_settings.py:21
 msgid "Allow editing user screen name"
 msgstr "允许修改用户昵称"
 
-#: conf/user_settings.py:28
+#: conf/user_settings.py:30
 #, fuzzy
 msgid "Allow account recovery by email"
 msgstr "发送账户恢复邮件"
 
-#: conf/user_settings.py:37
+#: conf/user_settings.py:39
 #, fuzzy
 msgid "Allow adding and removing login methods"
 msgstr "请添加一个或多个登录方式"
 
-#: conf/user_settings.py:47
+#: conf/user_settings.py:49
 msgid "Minimum allowed length for screen name"
 msgstr "用户昵称允许的最小长度"
 
-#: conf/user_settings.py:57
+#: conf/user_settings.py:59
 msgid "Default Gravatar icon type"
 msgstr ""
 
-#: conf/user_settings.py:59
+#: conf/user_settings.py:61
 msgid ""
 "This option allows you to set the default avatar type for email addresses "
 "without associated gravatar images.  For more information, please visit <a "
 "href=\"http://en.gravatar.com/site/implement/images/\">this page</a>."
 msgstr ""
 
-#: conf/user_settings.py:69
+#: conf/user_settings.py:71
 #, fuzzy
 msgid "Name for the Anonymous user"
 msgstr "匿名用户邮件"
 
-#: conf/vote_rules.py:13
-msgid "Limits applicable to votes and moderation flags"
-msgstr "限制合适的投票数和标记"
+#: conf/vote_rules.py:14
+msgid "Vote and flag limits"
+msgstr ""
 
-#: conf/vote_rules.py:22
+#: conf/vote_rules.py:24
 msgid "Number of votes a user can cast per day"
 msgstr "每用户每天允许的投票数"
 
-#: conf/vote_rules.py:31
+#: conf/vote_rules.py:33
 msgid "Maximum number of flags per user per day"
 msgstr "每用户每天的最多标记"
 
-#: conf/vote_rules.py:40
+#: conf/vote_rules.py:42
 msgid "Threshold for warning about remaining daily votes"
 msgstr "提醒用户每天投票的剩余数"
 
-#: conf/vote_rules.py:49
+#: conf/vote_rules.py:51
 msgid "Number of days to allow canceling votes"
 msgstr "每天允许取消的投票数"
 
-#: conf/vote_rules.py:58
+#: conf/vote_rules.py:60
 #, fuzzy
 msgid "Number of days required before answering own question"
 msgstr "每天允许取消的投票数"
 
-#: conf/vote_rules.py:67
+#: conf/vote_rules.py:69
 msgid "Number of flags required to automatically hide posts"
 msgstr "要求自动隐藏标志数"
 
-#: conf/vote_rules.py:76
+#: conf/vote_rules.py:78
 msgid "Number of flags required to automatically delete posts"
 msgstr "要求自动删除的标志数"
+
+#: conf/vote_rules.py:87
+msgid ""
+"Minimum days to accept an answer, if it has not been accepted by the "
+"question poster"
+msgstr ""
 
 #: const/__init__.py:10
 msgid "duplicate question"
@@ -2000,193 +2075,198 @@ msgstr "未回答的问题"
 msgid "Question has no accepted answers"
 msgstr "仍没有正确答案的问题"
 
-#: const/__init__.py:121
+#: const/__init__.py:122
 msgid "asked a question"
 msgstr "我要提问"
 
-#: const/__init__.py:122
+#: const/__init__.py:123
 msgid "answered a question"
 msgstr "回答问题"
 
-#: const/__init__.py:123
+#: const/__init__.py:124
 msgid "commented question"
 msgstr "评论问题"
 
-#: const/__init__.py:124
+#: const/__init__.py:125
 msgid "commented answer"
 msgstr "评论回答"
 
-#: const/__init__.py:125
+#: const/__init__.py:126
 msgid "edited question"
 msgstr "修改问题"
 
-#: const/__init__.py:126
+#: const/__init__.py:127
 msgid "edited answer"
 msgstr "修改回答"
 
-#: const/__init__.py:127
+#: const/__init__.py:128
 msgid "received award"
 msgstr "获奖"
 
-#: const/__init__.py:128
+#: const/__init__.py:129
 msgid "marked best answer"
 msgstr "标记最佳答案"
 
-#: const/__init__.py:129
+#: const/__init__.py:130
 msgid "upvoted"
 msgstr "投赞成票"
 
-#: const/__init__.py:130
+#: const/__init__.py:131
 msgid "downvoted"
 msgstr "投反对票"
 
-#: const/__init__.py:131
+#: const/__init__.py:132
 msgid "canceled vote"
 msgstr "撤销投票"
 
-#: const/__init__.py:132
+#: const/__init__.py:133
 msgid "deleted question"
 msgstr "删除问题"
 
-#: const/__init__.py:133
+#: const/__init__.py:134
 msgid "deleted answer"
 msgstr "删除回答"
 
-#: const/__init__.py:134
+#: const/__init__.py:135
 msgid "marked offensive"
 msgstr "标记垃圾帖"
 
-#: const/__init__.py:135
+#: const/__init__.py:136
 msgid "updated tags"
 msgstr "更新标签"
 
-#: const/__init__.py:136
+#: const/__init__.py:137
 msgid "selected favorite"
 msgstr "收藏"
 
-#: const/__init__.py:137
+#: const/__init__.py:138
 msgid "completed user profile"
 msgstr "完成个人所有资料"
 
-#: const/__init__.py:138
+#: const/__init__.py:139
 msgid "email update sent to user"
 msgstr "发送邮件更新"
 
-#: const/__init__.py:141
+#: const/__init__.py:142
 #, fuzzy
 msgid "reminder about unanswered questions sent"
 msgstr "查看没有回答的问题"
 
-#: const/__init__.py:143
+#: const/__init__.py:146
+#, fuzzy
+msgid "reminder about accepting the best answer sent"
+msgstr "标记最佳答案"
+
+#: const/__init__.py:148
 msgid "mentioned in the post"
 msgstr "发布提醒"
 
-#: const/__init__.py:194
+#: const/__init__.py:199
 msgid "question_answered"
 msgstr "回答的问题"
 
-#: const/__init__.py:195
+#: const/__init__.py:200
 msgid "question_commented"
 msgstr "留言的问题"
 
-#: const/__init__.py:196
+#: const/__init__.py:201
 msgid "answer_commented"
 msgstr "留言的回答"
 
-#: const/__init__.py:197
+#: const/__init__.py:202
 msgid "answer_accepted"
 msgstr "已接受的回答"
 
-#: const/__init__.py:201
+#: const/__init__.py:206
 msgid "[closed]"
 msgstr "[已关闭]"
 
-#: const/__init__.py:202
+#: const/__init__.py:207
 msgid "[deleted]"
 msgstr "[已删除]"
 
-#: const/__init__.py:203 views/readers.py:613
+#: const/__init__.py:208 views/readers.py:589
 msgid "initial version"
 msgstr "初始版本"
 
-#: const/__init__.py:204
+#: const/__init__.py:209
 msgid "retagged"
 msgstr "更新了标签"
 
-#: const/__init__.py:212
+#: const/__init__.py:217
 msgid "off"
 msgstr ""
 
-#: const/__init__.py:213
+#: const/__init__.py:218
 #, fuzzy
 msgid "exclude ignored"
 msgstr "包含忽略标签"
 
-#: const/__init__.py:214
+#: const/__init__.py:219
 #, fuzzy
 msgid "only selected"
 msgstr "个人选项"
 
-#: const/__init__.py:218
+#: const/__init__.py:223
 msgid "instantly"
 msgstr "立即"
 
-#: const/__init__.py:219
+#: const/__init__.py:224
 msgid "daily"
 msgstr "每日"
 
-#: const/__init__.py:220
+#: const/__init__.py:225
 msgid "weekly"
 msgstr "每周"
 
-#: const/__init__.py:221
+#: const/__init__.py:226
 msgid "no email"
 msgstr "没有邮件"
 
-#: const/__init__.py:228
+#: const/__init__.py:233
 msgid "identicon"
 msgstr ""
 
-#: const/__init__.py:229
+#: const/__init__.py:234
 #, fuzzy
 msgid "mystery-man"
 msgstr "昨天"
 
-#: const/__init__.py:230
+#: const/__init__.py:235
 msgid "monsterid"
 msgstr ""
 
-#: const/__init__.py:231
+#: const/__init__.py:236
 #, fuzzy
 msgid "wavatar"
 msgstr "修改头像"
 
-#: const/__init__.py:232
+#: const/__init__.py:237
 msgid "retro"
 msgstr ""
 
-#: const/__init__.py:279
+#: const/__init__.py:284
 msgid "gold"
 msgstr "金牌"
 
-#: const/__init__.py:280
+#: const/__init__.py:285
 msgid "silver"
 msgstr "银牌"
 
-#: const/__init__.py:281
+#: const/__init__.py:286
 msgid "bronze"
 msgstr "铜牌"
 
-#: const/__init__.py:293
+#: const/__init__.py:298
 msgid "None"
 msgstr ""
 
-#: const/__init__.py:294
+#: const/__init__.py:299
 #, fuzzy
 msgid "Gravatar"
 msgstr "修改头像"
 
-#: const/__init__.py:295
+#: const/__init__.py:300
 msgid "Uploaded Avatar"
 msgstr ""
 
@@ -2318,7 +2398,7 @@ msgid "Incorrect username."
 msgstr "选择一个用户名"
 
 #: deps/django_authopenid/urls.py:9 deps/django_authopenid/urls.py:12
-#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:203
+#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:206
 msgid "signin/"
 msgstr "登录/"
 
@@ -2446,71 +2526,71 @@ msgstr "用你的%(provider)s 账户登录"
 msgid "OpenID %(openid_url)s is invalid"
 msgstr "OpenID %(openid_url)s是不正确的"
 
-#: deps/django_authopenid/views.py:270 deps/django_authopenid/views.py:415
-#: deps/django_authopenid/views.py:443
+#: deps/django_authopenid/views.py:270 deps/django_authopenid/views.py:421
+#: deps/django_authopenid/views.py:449
 #, python-format
 msgid ""
 "Unfortunately, there was some problem when connecting to %(provider)s, "
 "please try again or use another provider"
 msgstr "很不幸,当链接%(provider)s时出现一些问题,请重试或使用其他的服务"
 
-#: deps/django_authopenid/views.py:365
+#: deps/django_authopenid/views.py:371
 msgid "Your new password saved"
 msgstr "你的新密码已保存"
 
-#: deps/django_authopenid/views.py:469
+#: deps/django_authopenid/views.py:475
 msgid "The login password combination was not correct"
 msgstr ""
 
-#: deps/django_authopenid/views.py:573
+#: deps/django_authopenid/views.py:579
 msgid "Please click any of the icons below to sign in"
 msgstr "请点击下面任何一个图标登录"
 
-#: deps/django_authopenid/views.py:575
+#: deps/django_authopenid/views.py:581
 msgid "Account recovery email sent"
 msgstr "发送账户恢复邮件"
 
-#: deps/django_authopenid/views.py:578
+#: deps/django_authopenid/views.py:584
 msgid "Please add one or more login methods."
 msgstr "请添加一个或多个登录方式"
 
-#: deps/django_authopenid/views.py:580
+#: deps/django_authopenid/views.py:586
 msgid "If you wish, please add, remove or re-validate your login methods"
 msgstr "您可以添加，删除或重新验证你的登录方式"
 
-#: deps/django_authopenid/views.py:582
+#: deps/django_authopenid/views.py:588
 msgid "Please wait a second! Your account is recovered, but ..."
 msgstr "请稍等，你的账户正在恢复..."
 
-#: deps/django_authopenid/views.py:584
+#: deps/django_authopenid/views.py:590
 msgid "Sorry, this account recovery key has expired or is invalid"
 msgstr "对不起，这个账户恢复已过期或不正确"
 
-#: deps/django_authopenid/views.py:657
+#: deps/django_authopenid/views.py:663
 #, python-format
 msgid "Login method %(provider_name)s does not exist"
 msgstr "%(provider_name)s登录方式不存在"
 
-#: deps/django_authopenid/views.py:663
+#: deps/django_authopenid/views.py:669
 msgid "Oops, sorry - there was some error - please try again"
 msgstr "对不起，系统出错，请重试"
 
-#: deps/django_authopenid/views.py:754
+#: deps/django_authopenid/views.py:760
 #, python-format
 msgid "Your %(provider)s login works fine"
 msgstr "你的%(provider)s登录成功"
 
-#: deps/django_authopenid/views.py:1065 deps/django_authopenid/views.py:1071
+#: deps/django_authopenid/views.py:1071 deps/django_authopenid/views.py:1077
 #, python-format
 msgid "your email needs to be validated see %(details_url)s"
 msgstr "你的email需要验证，看这里%(details_url)s"
 
-#: deps/django_authopenid/views.py:1092
+#: deps/django_authopenid/views.py:1098
 #, fuzzy, python-format
 msgid "Recover your %(site)s account"
 msgstr "通过邮件恢复你的账户"
 
-#: deps/django_authopenid/views.py:1162
+#: deps/django_authopenid/views.py:1168
 msgid "Please check your email and visit the enclosed link."
 msgstr "请检查你的邮件并访问其内部链接"
 
@@ -2518,99 +2598,32 @@ msgstr "请检查你的邮件并访问其内部链接"
 msgid "Site"
 msgstr "网站"
 
-#: deps/livesettings/values.py:106
+#: deps/livesettings/values.py:68
+msgid "Main"
+msgstr ""
+
+#: deps/livesettings/values.py:127
 msgid "Base Settings"
 msgstr "基本设置"
 
-#: deps/livesettings/values.py:213
+#: deps/livesettings/values.py:234
 msgid "Default value: \"\""
 msgstr "默认值:"
 
-#: deps/livesettings/values.py:220
+#: deps/livesettings/values.py:241
 msgid "Default value: "
 msgstr "默认值:"
 
-#: deps/livesettings/values.py:223
+#: deps/livesettings/values.py:244
 #, python-format
 msgid "Default value: %s"
 msgstr "默认值: %s"
 
 # todo take these out of settings
-#: deps/livesettings/values.py:601
+#: deps/livesettings/values.py:622
 #, fuzzy, python-format
 msgid "Allowed image file types are %(types)s"
 msgstr "只允许上传'%(file_types)s'类型的文件！"
-
-#: deps/livesettings/templates/livesettings/_admin_site_views.html:4
-msgid "Sites"
-msgstr "网站"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Documentation"
-msgstr "文档"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Change password"
-msgstr "修改密码"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Log out"
-msgstr "退出登录"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:14
-#: deps/livesettings/templates/livesettings/site_settings.html:26
-msgid "Home"
-msgstr "首页"
-
-# page title
-#: deps/livesettings/templates/livesettings/group_settings.html:15
-msgid "Edit Group Settings"
-msgstr "修改组设置"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:22
-#: deps/livesettings/templates/livesettings/site_settings.html:50
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] "请改正下面的错误"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:28
-#, python-format
-msgid "Settings included in %(name)s."
-msgstr "设置包含在%(name)s."
-
-#: deps/livesettings/templates/livesettings/group_settings.html:62
-#: deps/livesettings/templates/livesettings/site_settings.html:97
-msgid "You don't have permission to edit values."
-msgstr "你没有权限修改这些值"
-
-# book.html line 123 must be empty in english
-#: deps/livesettings/templates/livesettings/group_settings.html:68
-msgid "Setting groups"
-msgstr "设置组"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:27
-msgid "Edit Site Settings"
-msgstr "编辑网站设置"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:43
-msgid "Livesettings are disabled for this site."
-msgstr "此功能不支持"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:44
-msgid "All configuration options must be edited in the site settings.py file"
-msgstr "所有配置选项都必须在网站的settings.py文件中设置"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:66
-#, python-format
-msgid "Group settings: %(name)s"
-msgstr "组别设置: %(name)s"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:93
-msgid "Uncollapse all"
-msgstr ""
 
 # base_content.html
 #: importers/stackexchange/management/commands/load_stackexchange.py:141
@@ -2640,15 +2653,15 @@ msgstr ""
 #: management/commands/post_emailed_questions.py:55
 #, python-format
 msgid ""
-"<p>Sorry, there was an error posting your question please contact the %(site)"
-"s administrator</p>"
+"<p>Sorry, there was an error posting your question please contact the "
+"%(site)s administrator</p>"
 msgstr ""
 
 #: management/commands/post_emailed_questions.py:61
 #, python-format
 msgid ""
-"<p>Sorry, in order to post questions on %(site)s by email, please <a href=\"%"
-"(url)s\">register first</a></p>"
+"<p>Sorry, in order to post questions on %(site)s by email, please <a href="
+"\"%(url)s\">register first</a></p>"
 msgstr ""
 
 #: management/commands/post_emailed_questions.py:69
@@ -2656,6 +2669,21 @@ msgid ""
 "<p>Sorry, your question could not be posted due to insufficient privileges "
 "of your user account</p>"
 msgstr ""
+
+#: management/commands/send_accept_answer_reminders.py:57
+#, python-format
+msgid "Accept the best answer for %(question_count)d of your questions"
+msgstr ""
+
+#: management/commands/send_accept_answer_reminders.py:62
+#, fuzzy
+msgid "Please accept the best answer for this question:"
+msgstr "成为第一个回答此问题的人!"
+
+#: management/commands/send_accept_answer_reminders.py:64
+#, fuzzy
+msgid "Please accept the best answer for these questions:"
+msgstr "最新问题"
 
 #: management/commands/send_email_alerts.py:411
 #, fuzzy, python-format
@@ -2707,88 +2735,99 @@ msgstr "由于技术问题你可能会接收到一个以前看过的链接，我
 #: management/commands/send_email_alerts.py:490
 #, python-format
 msgid ""
-"go to %(email_settings_link)s to change frequency of email updates or %"
-"(admin_email)s administrator"
+"go to %(email_settings_link)s to change frequency of email updates or "
+"%(admin_email)s administrator"
 msgstr ""
 "到%(email_settings_link)s去修改邮件更新频率或发送邮件给%(admin_email)s管理员"
 
-#: management/commands/send_unanswered_question_reminders.py:80
+#: management/commands/send_unanswered_question_reminders.py:56
 #, fuzzy, python-format
 msgid "%(question_count)d unanswered question about %(topics)s"
 msgid_plural "%(question_count)d unanswered questions about %(topics)s"
 msgstr[0] "关于 %(topics)s问题有%(question_count)d 个更新"
 
-#: models/__init__.py:316
+#: middleware/forum_mode.py:31
+#, fuzzy, python-format
+msgid "Please log in to use %s"
+msgstr "请登录"
+
+#: models/__init__.py:317
 msgid ""
 "Sorry, you cannot accept or unaccept best answers because your account is "
 "blocked"
 msgstr "对不起,你不能认定或否决最佳答案因为你的账户已冻结"
 
-#: models/__init__.py:320
+#: models/__init__.py:321
 msgid ""
 "Sorry, you cannot accept or unaccept best answers because your account is "
 "suspended"
 msgstr "对不起,你不能认定或否决最佳答案因为你的账户已暂停使用"
 
-#: models/__init__.py:333
+#: models/__init__.py:334
 #, fuzzy, python-format
 msgid ""
 ">%(points)s points required to accept or unaccept  your own answer to your "
 "own question"
 msgstr "对不起,你不能认定或否决你自己的回答的自己的问题"
 
-#: models/__init__.py:347
+#: models/__init__.py:353
+#, python-format
+msgid ""
+"Sorry, you will be able to accept this answer only after %(will_be_able_at)s"
+msgstr ""
+
+#: models/__init__.py:361
 #, fuzzy, python-format
 msgid ""
-"Sorry, only original author of the question  - %(username)s - can accept or "
-"unaccept the best answer"
+"Sorry, only moderators or original author of the question  - %(username)s - "
+"can accept or unaccept the best answer"
 msgstr "对不起,只有问题的提问者 - %(username)s - 可以认定最佳答案"
 
-#: models/__init__.py:375
+#: models/__init__.py:389
 msgid "cannot vote for own posts"
 msgstr "不能给自己的帖子投票"
 
-#: models/__init__.py:378
+#: models/__init__.py:392
 msgid "Sorry your account appears to be blocked "
 msgstr "对不起你的账户已冻结"
 
-#: models/__init__.py:383
+#: models/__init__.py:397
 msgid "Sorry your account appears to be suspended "
 msgstr "对不起你的账户已暂停使用"
 
-#: models/__init__.py:393
+#: models/__init__.py:407
 #, python-format
 msgid ">%(points)s points required to upvote"
 msgstr "需要+%(points)s积分才能投支持票。"
 
-#: models/__init__.py:399
+#: models/__init__.py:413
 #, python-format
 msgid ">%(points)s points required to downvote"
 msgstr "需要+%(points)s积分才能投反对票。"
 
-#: models/__init__.py:414
+#: models/__init__.py:428
 msgid "Sorry, blocked users cannot upload files"
 msgstr "对不起,冻结用户不能上传文件"
 
-#: models/__init__.py:415
+#: models/__init__.py:429
 msgid "Sorry, suspended users cannot upload files"
 msgstr "对不起,暂停使用用户不能上传文件"
 
-#: models/__init__.py:417
+#: models/__init__.py:431
 #, python-format
 msgid ""
 "uploading images is limited to users with >%(min_rep)s reputation points"
 msgstr "上传图片只限于积分+%(min_rep)s以上注册用户!"
 
-#: models/__init__.py:436 models/__init__.py:503 models/__init__.py:918
+#: models/__init__.py:450 models/__init__.py:517 models/__init__.py:932
 msgid "blocked users cannot post"
 msgstr "冻结用户不能发布信息"
 
-#: models/__init__.py:437 models/__init__.py:921
+#: models/__init__.py:451 models/__init__.py:935
 msgid "suspended users cannot post"
 msgstr "暂停使用用户不能发布信息"
 
-#: models/__init__.py:464
+#: models/__init__.py:478
 #, fuzzy, python-format
 msgid ""
 "Sorry, comments (except the last one) are editable only within %(minutes)s "
@@ -2798,16 +2837,16 @@ msgid_plural ""
 "minutes from posting"
 msgstr[0] "对不起，留言只能在发布后10分钟内可编辑"
 
-#: models/__init__.py:476
+#: models/__init__.py:490
 msgid "Sorry, but only post owners or moderators can edit comments"
 msgstr "对不起，只有发布者或版主才能修改留言"
 
-#: models/__init__.py:489
+#: models/__init__.py:503
 msgid ""
 "Sorry, since your account is suspended you can comment only your own posts"
 msgstr "对不起，因为你的账户已暂停使用，你只能留言你自己发布的信息"
 
-#: models/__init__.py:493
+#: models/__init__.py:507
 #, python-format
 msgid ""
 "Sorry, to comment any post a minimum reputation of %(min_rep)s points is "
@@ -2816,40 +2855,40 @@ msgstr ""
 "对不起，留言任何信息都需要最少%(min_rep)s积分值,你可以留言你自己发布或回答的"
 "问题"
 
-#: models/__init__.py:521
+#: models/__init__.py:535
 msgid ""
 "This post has been deleted and can be seen only by post owners, site "
 "administrators and moderators"
 msgstr "这个问题已经被删除，而且只能被发布者，网站管理员和版主查看"
 
-#: models/__init__.py:538
+#: models/__init__.py:552
 msgid ""
 "Sorry, only moderators, site administrators and post owners can edit deleted "
 "posts"
 msgstr "对不起，只有版主，网站管理员及发布者可以编辑删除此信息"
 
-#: models/__init__.py:553
+#: models/__init__.py:567
 msgid "Sorry, since your account is blocked you cannot edit posts"
 msgstr "对不起，你不能编辑信息因为你的账户被冻结"
 
-#: models/__init__.py:557
+#: models/__init__.py:571
 msgid "Sorry, since your account is suspended you can edit only your own posts"
 msgstr "对不起，你只能编辑你自己发布的信息因为你的账户被暂停使用"
 
-#: models/__init__.py:562
+#: models/__init__.py:576
 #, python-format
 msgid ""
 "Sorry, to edit wiki posts, a minimum reputation of %(min_rep)s is required"
 msgstr "对不起，编辑wiki信息需要最低积分%(min_rep)s"
 
-#: models/__init__.py:569
+#: models/__init__.py:583
 #, python-format
 msgid ""
 "Sorry, to edit other people's posts, a minimum reputation of %(min_rep)s is "
 "required"
 msgstr "对不起，编辑其他人的信息需要最低积分%(min_rep)s"
 
-#: models/__init__.py:632
+#: models/__init__.py:646
 msgid ""
 "Sorry, cannot delete your question since it has an upvoted answer posted by "
 "someone else"
@@ -2858,234 +2897,235 @@ msgid_plural ""
 "by other users"
 msgstr[0] "对不起，你不能删除问题因为它已经有了投赞成票的答案"
 
-#: models/__init__.py:647
+#: models/__init__.py:661
 msgid "Sorry, since your account is blocked you cannot delete posts"
 msgstr "对不起，你不能删除发布的信息，因为你的账户被冻结了"
 
-#: models/__init__.py:651
+#: models/__init__.py:665
 msgid ""
 "Sorry, since your account is suspended you can delete only your own posts"
 msgstr "对不起，你只能删除你自己发布的信息因为你的账户被暂停使用了"
 
-#: models/__init__.py:655
+#: models/__init__.py:669
 #, python-format
 msgid ""
 "Sorry, to deleted other people' posts, a minimum reputation of %(min_rep)s "
 "is required"
 msgstr "对不起，你必须有%(min_rep)s积分才能删除别人发布的信息"
 
-#: models/__init__.py:675
+#: models/__init__.py:689
 msgid "Sorry, since your account is blocked you cannot close questions"
 msgstr "对不起，因为你的账户已冻结你不能关闭问题"
 
-#: models/__init__.py:679
+#: models/__init__.py:693
 msgid "Sorry, since your account is suspended you cannot close questions"
 msgstr "对不起，因为你的账户已暂停使用你不能关闭问题"
 
-#: models/__init__.py:683
+#: models/__init__.py:697
 #, python-format
 msgid ""
 "Sorry, to close other people' posts, a minimum reputation of %(min_rep)s is "
 "required"
 msgstr "对不起，你必须有%(min_rep)s积分才能关闭别人发布的信息"
 
-#: models/__init__.py:692
+#: models/__init__.py:706
 #, python-format
 msgid ""
 "Sorry, to close own question a minimum reputation of %(min_rep)s is required"
 msgstr "对不起，你必须有%(min_rep)s积分才能关闭自己发布的问题"
 
-#: models/__init__.py:716
+#: models/__init__.py:730
 #, python-format
 msgid ""
-"Sorry, only administrators, moderators or post owners with reputation > %"
-"(min_rep)s can reopen questions."
+"Sorry, only administrators, moderators or post owners with reputation > "
+"%(min_rep)s can reopen questions."
 msgstr "对不起，只有管理员，版主和有%(min_rep)s积分的发布者才能重开问题"
 
-#: models/__init__.py:722
+#: models/__init__.py:736
 #, python-format
 msgid ""
 "Sorry, to reopen own question a minimum reputation of %(min_rep)s is required"
 msgstr "对不起，你必须有%(min_rep)s积分才能重开自己发布的问题"
 
-#: models/__init__.py:742
+#: models/__init__.py:756
 msgid "cannot flag message as offensive twice"
 msgstr "不能两次标记同一信息为垃圾信息"
 
-#: models/__init__.py:747
+#: models/__init__.py:761
 msgid "blocked users cannot flag posts"
 msgstr "冻结用户不能标记信息"
 
-#: models/__init__.py:749
+#: models/__init__.py:763
 msgid "suspended users cannot flag posts"
 msgstr "暂停使用的用户不能标记信息"
 
-#: models/__init__.py:751
+#: models/__init__.py:765
 #, python-format
 msgid "need > %(min_rep)s points to flag spam"
 msgstr "需要大于%(min_rep)s积分值才能标记垃圾信息"
 
-#: models/__init__.py:770
+#: models/__init__.py:784
 #, python-format
 msgid "%(max_flags_per_day)s exceeded"
 msgstr "%(max_flags_per_day)s 被处理"
 
-#: models/__init__.py:785
+#: models/__init__.py:799
 msgid ""
 "Sorry, only question owners, site administrators and moderators can retag "
 "deleted questions"
 msgstr "对不起，只有发问者，网站管理员和版主才能为已删除问题修改标签"
 
-#: models/__init__.py:792
+#: models/__init__.py:806
 msgid "Sorry, since your account is blocked you cannot retag questions"
 msgstr "对不起，你的账户已冻结，你不能为问题修改标签"
 
-#: models/__init__.py:796
+#: models/__init__.py:810
 msgid ""
 "Sorry, since your account is suspended you can retag only your own questions"
 msgstr "对不起，你的账户已暂停使用，你只能为你自己的问题修改标签"
 
-#: models/__init__.py:800
+#: models/__init__.py:814
 #, python-format
 msgid ""
 "Sorry, to retag questions a minimum reputation of %(min_rep)s is required"
 msgstr "对不起，为问题修改标签必须有%(min_rep)s积分值"
 
-#: models/__init__.py:819
+#: models/__init__.py:833
 msgid "Sorry, since your account is blocked you cannot delete comment"
 msgstr "对不起，因为你的账户已冻结你不能删除留言"
 
-#: models/__init__.py:823
+#: models/__init__.py:837
 msgid ""
 "Sorry, since your account is suspended you can delete only your own comments"
 msgstr "对不起，因为你的账户暂停使用，你只能删除你自己的留言"
 
-#: models/__init__.py:827
+#: models/__init__.py:841
 #, python-format
 msgid "Sorry, to delete comments reputation of %(min_rep)s is required"
 msgstr "对不起，删除留言必须有%(min_rep)s积分值"
 
-#: models/__init__.py:850
+#: models/__init__.py:864
 msgid "cannot revoke old vote"
 msgstr "这个投票已经过时，不能撤销。"
 
-#: models/__init__.py:1325 utils/functions.py:70
+#: models/__init__.py:1339 utils/functions.py:70
 #, python-format
 msgid "on %(date)s"
 msgstr "在%(date)s"
 
-#: models/__init__.py:1327
+#: models/__init__.py:1341
 #, fuzzy
 msgid "in two days"
 msgstr "登录并回答该问题"
 
-#: models/__init__.py:1329
+#: models/__init__.py:1343
 msgid "tomorrow"
 msgstr ""
 
-#: models/__init__.py:1331
+#: models/__init__.py:1345
 #, fuzzy, python-format
 msgid "in %(hr)d hour"
 msgid_plural "in %(hr)d hours"
 msgstr[0] "%(hr)d小时前"
 
-#: models/__init__.py:1333
+#: models/__init__.py:1347
 #, fuzzy, python-format
 msgid "in %(min)d min"
 msgid_plural "in %(min)d mins"
 msgstr[0] "%(min)d分钟前"
 
-#: models/__init__.py:1334
+#: models/__init__.py:1348
 #, python-format
 msgid "%(days)d day"
 msgid_plural "%(days)d days"
 msgstr[0] ""
 
-#: models/__init__.py:1336
+#: models/__init__.py:1350
 #, python-format
 msgid ""
 "New users must wait %(days)s before answering their own question.  You can "
 "post an answer %(left)s"
 msgstr ""
 
-#: models/__init__.py:1502
+#: models/__init__.py:1516 skins/default/templates/feedback_email.txt:9
+#: skins/old/templates/feedback_email.txt:9
 #, fuzzy
 msgid "Anonymous"
 msgstr "匿名"
 
-#: models/__init__.py:1598 views/users.py:365
+#: models/__init__.py:1612 views/users.py:371
 msgid "Site Adminstrator"
 msgstr "网站管理员"
 
-#: models/__init__.py:1600 views/users.py:367
+#: models/__init__.py:1614 views/users.py:373
 msgid "Forum Moderator"
 msgstr "论坛版主"
 
-#: models/__init__.py:1602 views/users.py:369
+#: models/__init__.py:1616 views/users.py:375
 msgid "Suspended User"
 msgstr "暂停账户"
 
-#: models/__init__.py:1604 views/users.py:371
+#: models/__init__.py:1618 views/users.py:377
 msgid "Blocked User"
 msgstr "冻结账户"
 
-#: models/__init__.py:1606 views/users.py:373
+#: models/__init__.py:1620 views/users.py:379
 msgid "Registered User"
 msgstr "注册用户"
 
-#: models/__init__.py:1608
+#: models/__init__.py:1622
 msgid "Watched User"
 msgstr "浏览用户"
 
-#: models/__init__.py:1610
+#: models/__init__.py:1624
 msgid "Approved User"
 msgstr "认证用户"
 
-#: models/__init__.py:1719
+#: models/__init__.py:1733
 #, python-format
 msgid "%(username)s karma is %(reputation)s"
 msgstr "%(username)s 积分是 %(reputation)s"
 
-#: models/__init__.py:1729
+#: models/__init__.py:1743
 #, python-format
 msgid "one gold badge"
 msgid_plural "%(count)d gold badges"
 msgstr[0] "%(count)d 金牌"
 
-#: models/__init__.py:1736
+#: models/__init__.py:1750
 #, python-format
 msgid "one silver badge"
 msgid_plural "%(count)d silver badges"
 msgstr[0] "%(count)d 银牌"
 
-#: models/__init__.py:1743
+#: models/__init__.py:1757
 #, python-format
 msgid "one bronze badge"
 msgid_plural "%(count)d bronze badges"
 msgstr[0] "%(count)d 铜牌"
 
-#: models/__init__.py:1754
+#: models/__init__.py:1768
 #, python-format
 msgid "%(item1)s and %(item2)s"
 msgstr "%(item1)s 和 %(item2)s"
 
-#: models/__init__.py:1758
+#: models/__init__.py:1772
 #, python-format
 msgid "%(user)s has %(badges)s"
 msgstr "%(user)s 有 %(badges)s"
 
-#: models/__init__.py:2165 models/__init__.py:2171 models/__init__.py:2176
-#: models/__init__.py:2181
+#: models/__init__.py:2179 models/__init__.py:2185 models/__init__.py:2190
+#: models/__init__.py:2195
 #, python-format
 msgid "Re: \"%(title)s\""
 msgstr "Re: \"%(title)s\""
 
-#: models/__init__.py:2186 models/__init__.py:2191
+#: models/__init__.py:2200 models/__init__.py:2205
 #, python-format
 msgid "Question: \"%(title)s\""
 msgstr "问题:\"%(title)s\""
 
-#: models/__init__.py:2372
+#: models/__init__.py:2386
 #, python-format
 msgid ""
 "Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
@@ -3094,19 +3134,9 @@ msgstr ""
 "恭喜，你获得一块'%(badge_name)s'徽章,查看<a\n"
 " href=\"%(user_profile)s\">你的资料</a>."
 
-#: models/__init__.py:2551 views/commands.py:396
+#: models/__init__.py:2565 views/commands.py:396
 msgid "Your tag subscription was saved, thanks!"
 msgstr ""
-
-#: models/answer.py:105
-msgid ""
-"Sorry, the answer you are looking for is no longer available, because the "
-"parent question has been removed"
-msgstr "对不起,你查找的问题已失效,因为问题已删除"
-
-#: models/answer.py:112
-msgid "Sorry, this answer has been removed and is no longer accessible"
-msgstr "对不起,这个问题已删除"
 
 #: models/badges.py:129
 #, python-format
@@ -3371,52 +3401,62 @@ msgstr "专家"
 msgid "Very active in one tag"
 msgstr "非常活跃的标签"
 
-#: models/meta.py:112
+#: models/content.py:549
+msgid "Sorry, this question has been deleted and is no longer accessible"
+msgstr "对不起,此问题已删除"
+
+#: models/content.py:565
+msgid ""
+"Sorry, the answer you are looking for is no longer available, because the "
+"parent question has been removed"
+msgstr "对不起,你查找的问题已失效,因为问题已删除"
+
+#: models/content.py:572
+msgid "Sorry, this answer has been removed and is no longer accessible"
+msgstr "对不起,这个问题已删除"
+
+#: models/meta.py:116
 msgid ""
 "Sorry, the comment you are looking for is no longer accessible, because the "
 "parent question has been removed"
 msgstr "对不起,你查找的评论不能访问,因为问题已删除"
 
-#: models/meta.py:119
+#: models/meta.py:123
 msgid ""
 "Sorry, the comment you are looking for is no longer accessible, because the "
 "parent answer has been removed"
 msgstr "对不起,你查找的评论不能访问,因为回答已删除"
 
-#: models/question.py:72
+#: models/question.py:63
 #, python-format
 msgid "\" and \"%s\""
 msgstr "\" 和 \"%s\""
 
-#: models/question.py:75
+#: models/question.py:66
 msgid "\" and more"
 msgstr "查看更多"
 
-#: models/question.py:452
-msgid "Sorry, this question has been deleted and is no longer accessible"
-msgstr "对不起,此问题已删除"
-
-#: models/question.py:908
+#: models/question.py:806
 #, python-format
 msgid "%(author)s modified the question"
 msgstr "%(author)s修改了问题"
 
-#: models/question.py:912
+#: models/question.py:810
 #, python-format
 msgid "%(people)s posted %(new_answer_count)s new answers"
 msgstr "%(people)s 发布了 %(new_answer_count)s 新答案"
 
-#: models/question.py:917
+#: models/question.py:815
 #, python-format
 msgid "%(people)s commented the question"
 msgstr "%(people)s评论了问题"
 
-#: models/question.py:922
+#: models/question.py:820
 #, python-format
 msgid "%(people)s commented answers"
 msgstr "%(people)s 评论了答案"
 
-#: models/question.py:924
+#: models/question.py:822
 #, python-format
 msgid "%(people)s commented an answer"
 msgstr "%(people)s 评论了答案"
@@ -3429,8 +3469,8 @@ msgstr "<em>被版主修改. 原因:</em> %(reason)s"
 #: models/repute.py:153
 #, python-format
 msgid ""
-"%(points)s points were added for %(username)s's contribution to question %"
-"(question_title)s"
+"%(points)s points were added for %(username)s's contribution to question "
+"%(question_title)s"
 msgstr "%(points)s分被加给 %(username)s，因为他贡献了 %(question_title)s问题"
 
 #: models/repute.py:158
@@ -3483,6 +3523,84 @@ msgstr "每周"
 #: models/user.py:274
 msgid "No email"
 msgstr "没有邮件"
+
+#: skins/common/templates/authopenid/confirm_email.txt:1
+#: skins/old/templates/authopenid/confirm_email.txt:1
+msgid "Thank you for registering at our Q&A forum!"
+msgstr "感谢你在我们的Q&A论坛注册"
+
+#: skins/common/templates/authopenid/confirm_email.txt:3
+#: skins/old/templates/authopenid/confirm_email.txt:3
+msgid "Your account details are:"
+msgstr "你的详细账户信息为:"
+
+#: skins/common/templates/authopenid/confirm_email.txt:5
+#: skins/old/templates/authopenid/confirm_email.txt:5
+msgid "Username:"
+msgstr "用户名"
+
+#: skins/common/templates/authopenid/confirm_email.txt:6
+#: skins/old/templates/authopenid/confirm_email.txt:6
+msgid "Password:"
+msgstr "密码"
+
+#: skins/common/templates/authopenid/confirm_email.txt:8
+#: skins/old/templates/authopenid/confirm_email.txt:8
+msgid "Please sign in here:"
+msgstr "请在这登录"
+
+#: skins/common/templates/authopenid/confirm_email.txt:11
+#: skins/common/templates/authopenid/email_validation.txt:13
+#: skins/old/templates/authopenid/confirm_email.txt:11
+#: skins/old/templates/authopenid/email_validation.txt:13
+msgid ""
+"Sincerely,\n"
+"Forum Administrator"
+msgstr "您忠实的管理员"
+
+#: skins/common/templates/authopenid/email_validation.txt:1
+#: skins/old/templates/authopenid/email_validation.txt:1
+msgid "Greetings from the Q&A forum"
+msgstr "来自Q&A论坛的祝福"
+
+#: skins/common/templates/authopenid/email_validation.txt:3
+#: skins/old/templates/authopenid/email_validation.txt:3
+msgid "To make use of the Forum, please follow the link below:"
+msgstr "请跟随以下的链接来使用论坛:"
+
+#: skins/common/templates/authopenid/email_validation.txt:7
+#: skins/old/templates/authopenid/email_validation.txt:7
+msgid "Following the link above will help us verify your email address."
+msgstr "点击上面的链接可以帮助我们确认你的邮件地址"
+
+#: skins/common/templates/authopenid/email_validation.txt:9
+msgid ""
+"If you beleive that this message was sent in mistake - \n"
+"no further action is needed. Just ingore this email, we apologize\n"
+"for any inconvenience"
+msgstr ""
+"如果你认为此消息被错误的发送,不要进行更进一步的动作.仅仅忽略这封邮件,为给您带"
+"来的不便道歉."
+
+#: skins/default/templates/feedback_email.txt:2
+#: skins/old/templates/feedback_email.txt:2
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Hello, this is a %(site_title)s forum feedback message.\n"
+msgstr ""
+"\n"
+"你好, 这是从 %(site_title)s 网站发出的反馈信息。\n"
+
+#: skins/old/templates/authopenid/email_validation.txt:9
+#, fuzzy
+msgid ""
+"If you believe that this message was sent in mistake - \n"
+"no further action is needed. Just ignore this email, we apologize\n"
+"for any inconvenience."
+msgstr ""
+"如果你认为此消息被错误的发送,不要进行更进一步的动作.仅仅忽略这封邮件,为给您带"
+"来的不便道歉."
 
 #: templatetags/extra_filters.py:145 templatetags/extra_filters_jinja.py:240
 msgid "no items in counter"
@@ -3655,127 +3773,112 @@ msgstr "请登录"
 msgid "Please sign in to vote"
 msgstr "请在这登录"
 
-#: views/meta.py:83
+#: views/meta.py:84
 msgid "Q&A forum feedback"
 msgstr "Q&A反馈"
 
-#: views/meta.py:84
+#: views/meta.py:85
 msgid "Thanks for the feedback!"
 msgstr "感谢你的反馈"
 
-#: views/meta.py:92
+#: views/meta.py:94
 msgid "We look forward to hearing your feedback! Please, give it next time :)"
 msgstr "我们期望你的反馈"
 
-#: views/readers.py:131
+#: views/readers.py:151
 #, fuzzy, python-format
 msgid "%(q_num)s question, tagged"
 msgid_plural "%(q_num)s questions, tagged"
 msgstr[0] "%(q_num)s个问题"
 
-#: views/readers.py:139
+#: views/readers.py:159
 #, python-format
 msgid "%(q_num)s question"
 msgid_plural "%(q_num)s questions"
 msgstr[0] "%(q_num)s个问题"
 
-#: views/readers.py:177
+#: views/readers.py:199
 #, python-format
 msgid "%(badge_count)d %(badge_level)s badge"
 msgid_plural "%(badge_count)d %(badge_level)s badges"
 msgstr[0] "%(badge_count)d %(badge_level)s奖章"
 
-#: views/readers.py:232
-msgid "vote"
-msgid_plural "votes"
-msgstr[0] "票"
-
-#: views/readers.py:235
-msgid "answer"
-msgid_plural "answers"
-msgstr[0] "回答"
-
-#: views/readers.py:238
-msgid "view"
-msgid_plural "views"
-msgstr[0] "浏览"
-
-#: views/readers.py:440
+#: views/readers.py:415
 msgid ""
 "Sorry, the comment you are looking for has been deleted and is no longer "
 "accessible"
 msgstr "对不起，你找的这个评论已经被删除"
 
-#: views/users.py:224
+#: views/users.py:211
 msgid "moderate this user"
 msgstr "设为版主"
 
-#: views/users.py:225
+#: views/users.py:212
 #, fuzzy
 msgid "moderate user"
 msgstr "中等用户"
 
-#: views/users.py:380
+#: views/users.py:386
 msgid "user profile"
 msgstr "用户概览"
 
-#: views/users.py:381
+#: views/users.py:387
 msgid "user profile overview"
 msgstr "用户概览"
 
-#: views/users.py:685
+#: views/users.py:698
 msgid "recent user activity"
 msgstr "最近活动"
 
-#: views/users.py:686
+#: views/users.py:699
 msgid "profile - recent activity"
 msgstr "最近活动"
 
-#: views/users.py:772
+#: views/users.py:785
 msgid "comments and answers to others questions"
 msgstr "其他问题的回复和评论"
 
-#: views/users.py:773
+#: views/users.py:786
 msgid "profile - responses"
 msgstr "回应 - 用户资料"
 
-#: views/users.py:847
+#: views/users.py:860
 msgid "user vote record"
 msgstr "用户所有投票"
 
-#: views/users.py:848
+#: views/users.py:861
 msgid "profile - votes"
 msgstr "用户资料 - 投票"
 
-#: views/users.py:883
+#: views/users.py:896
 msgid "user reputation in the community"
 msgstr "用户社区积分"
 
-#: views/users.py:884
+#: views/users.py:897
 msgid "profile - user reputation"
 msgstr "积分 - 用户资料"
 
-#: views/users.py:911
+#: views/users.py:924
 msgid "users favorite questions"
 msgstr "用户收藏的问题"
 
-#: views/users.py:912
+#: views/users.py:925
 msgid "profile - favorite questions"
 msgstr "收藏 - 用户资料"
 
-#: views/users.py:932 views/users.py:936
+#: views/users.py:945 views/users.py:949
 msgid "changes saved"
 msgstr "修改已保存"
 
-#: views/users.py:942
+#: views/users.py:955
 msgid "email updates canceled"
 msgstr "邮件更新取消"
 
-#: views/users.py:960
+#: views/users.py:973
 msgid "email subscription settings"
 msgstr "邮件订阅设置"
 
-#: views/users.py:961
+#: views/users.py:974
 msgid "profile - email subscriptions"
 msgstr "邮件订阅"
 
@@ -3834,14 +3937,438 @@ msgstr ""
 msgid "sorry, we seem to have some technical difficulties"
 msgstr "对不起，好像有一些技术上的错误。"
 
+#~ msgid "Sites"
+#~ msgstr "网站"
+
+#~ msgid "Documentation"
+#~ msgstr "文档"
+
+#~ msgid "Change password"
+#~ msgstr "修改密码"
+
+#~ msgid "Log out"
+#~ msgstr "退出登录"
+
+#~ msgid "Home"
+#~ msgstr "首页"
+
+# page title
+#~ msgid "Edit Group Settings"
+#~ msgstr "修改组设置"
+
+#~ msgid "Please correct the error below."
+#~ msgid_plural "Please correct the errors below."
+#~ msgstr[0] "请改正下面的错误"
+
+#~ msgid "Settings included in %(name)s."
+#~ msgstr "设置包含在%(name)s."
+
+#~ msgid "You don't have permission to edit values."
+#~ msgstr "你没有权限修改这些值"
+
+#~ msgid "Edit Site Settings"
+#~ msgstr "编辑网站设置"
+
+#~ msgid "Livesettings are disabled for this site."
+#~ msgstr "此功能不支持"
+
 #~ msgid ""
-#~ "This option currently defines default frequency of emailed updates in the "
-#~ "following five categories: questions asked by user, answered by user, "
-#~ "individually selected, entire forum (per person tag filter applies) and "
-#~ "posts mentioning the user and comment responses"
+#~ "All configuration options must be edited in the site settings.py file"
+#~ msgstr "所有配置选项都必须在网站的settings.py文件中设置"
+
+#~ msgid "Group settings: %(name)s"
+#~ msgstr "组别设置: %(name)s"
+
+#~ msgid "Please enter your <span>user name</span>, then sign in"
+#~ msgstr "请输入你的用户名,然后登录"
+
+#~ msgid "(or select another login method above)"
+#~ msgstr "(或从上面选择一个登录方式)"
+
+#~ msgid "Sign in"
+#~ msgstr "注册帐号"
+
+#~ msgid "Change email"
+#~ msgstr "更换电子邮件"
+
+#~ msgid "Save your email address"
+#~ msgstr "保存您的电子邮件地址"
+
+#~ msgid "change %(email)s info"
+#~ msgstr "更换%(email)s电子邮件"
+
+#~ msgid "here is why email is required, see %(gravatar_faq_url)s"
+#~ msgstr "为什么邮件是必须的,查看 %(gravatar_faq_url)s"
+
+#~ msgid "Your new Email"
+#~ msgstr "你的新邮件地址"
+
+#~ msgid "Your Email"
+#~ msgstr "你的邮件"
+
+#~ msgid "Save Email"
+#~ msgstr "保存邮件地址"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#~ msgid "Validate email"
+#~ msgstr "更换电子邮件"
+
+#~ msgid "validate %(email)s info or go to %(change_email_url)s"
+#~ msgstr "验证%(email)s 信息或到%(change_email_url)s"
+
+#~ msgid "Email not changed"
+#~ msgstr "邮件地址未修改"
+
+#~ msgid "old %(email)s kept, if you like go to %(change_email_url)s"
+#~ msgstr "旧邮件%(email)s被保存,你可以去%(change_email_url)s修改"
+
+#~ msgid "Email changed"
+#~ msgstr "邮件地址已改"
+
+#~ msgid "your current %(email)s can be used for this"
+#~ msgstr "你目前的%(email)s邮件地址可以被用于这里"
+
+#~ msgid "Email verified"
+#~ msgstr "邮件地址确认"
+
+#~ msgid "thanks for verifying email"
+#~ msgstr "感谢你确认邮件地址"
+
+#~ msgid "email key not sent"
+#~ msgstr "邮件地址未发送"
+
+#~ msgid "email key not sent %(email)s change email here %(change_link)s"
+#~ msgstr "邮件地址未发送%(email)s,点这里修改%(change_link)s"
+
+#~ msgid "Registration"
+#~ msgstr "注册"
+
+#~ msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr "注册新 %(provider)s 账户信息, 查看 %(gravatar_faq_url)s"
+
+#~ msgid ""
+#~ "%(username)s already exists, choose another name for \n"
+#~ "                            %(provider)s. Email is required too, see "
+#~ "%(gravatar_faq_url)s\n"
+#~ "                        "
 #~ msgstr ""
-#~ "此选项用于定义在下面的5个分类中当前默认邮件更新频率:用户问的问题,用户问的"
-#~ "问题,个人选择,整个讨论(每个用户标签过滤的请求)和用户提醒及留言回应"
+#~ "%(username)s 账户已存在,在%(provider)s找哦昂选择其他名称. Email也是必须"
+#~ "的, 查看 %(gravatar_faq_url)s"
+
+#~ msgid ""
+#~ "register new external %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr "注册新扩展%(provider)s 账户信息, 查看 %(gravatar_faq_url)s"
+
+#~ msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
+#~ msgstr "注册新Facebook账户信息, 查看 %(gravatar_faq_url)s"
+
+# todo: review this message may be confusing user
+#~ msgid "This account already exists, please use another."
+#~ msgstr "输入您的新帐号已经存在,请使用其他帐号。"
+
+#~ msgid "Screen name label"
+#~ msgstr "昵称"
+
+#~ msgid "Email address label"
+#~ msgstr "您的电子邮件地址"
+
+#~ msgid "receive updates motivational blurb"
+#~ msgstr "获取商品信息更新"
+
+#~ msgid "please select one of the options above"
+#~ msgstr "请从以上选项中选择一项"
+
+#~ msgid "Tag filter tool will be your right panel, once you log in."
+#~ msgstr "当你登录后,标签过滤工具将出现在你右边的面板里"
+
+#~ msgid "create account"
+#~ msgstr "创建帐号"
+
+#~ msgid "Logout"
+#~ msgstr "退出登录"
+
+#~ msgid "User login"
+#~ msgstr "用户登录"
+
+#~ msgid ""
+#~ "\n"
+#~ "        Your answer to %(title)s %(summary)s will be posted once you log "
+#~ "in\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "登录后,你的关于 %(title)s %(summary)s 的回答将被发布"
+
+#~ msgid ""
+#~ "Your question \n"
+#~ "        %(title)s %(summary)s will be posted once you log in\n"
+#~ "        "
+#~ msgstr "登录后,你的关于 %(title)s %(summary)s 的问题将被发布"
+
+#~ msgid ""
+#~ "Take a pick of your favorite service below to sign in using secure OpenID "
+#~ "or similar technology. Your external service password always stays "
+#~ "confidential and you don't have to rememeber or create another one."
+#~ msgstr ""
+#~ "选择以下你最喜欢的方式登录,你的扩展服务密码将被保护且你不需.要记住或创建一"
+#~ "个新密码."
+
+#~ msgid ""
+#~ "It's a good idea to make sure that your existing login methods still "
+#~ "work, or add a new one. Please click any of the icons below to check/"
+#~ "change or add new login methods."
+#~ msgstr ""
+#~ "你最好确认你目前的登录方式可以工作，或者你需要添加一个新的登录方式。请点击"
+#~ "下面任何一个icon选择添加一个新登录方式。"
+
+#~ msgid ""
+#~ "Please add a more permanent login method by clicking one of the icons "
+#~ "below, to avoid logging in via email each time."
+#~ msgstr ""
+#~ "请通过点击以下icon添加更多永久的登录方式，从而避免每次都是用email登录。"
+
+#~ msgid ""
+#~ "Click on one of the icons below to add a new login method or re-validate "
+#~ "an existing one."
+#~ msgstr "点击以下icon，添加一个新的登录方式或者重验证已经存在的登录方式。"
+
+#~ msgid ""
+#~ "You don't have a method to log in right now, please add one or more by "
+#~ "clicking any of the icons below."
+#~ msgstr "你目前还没有一个登录方式，请添加一个或多个通过点击下面的icons。"
+
+#~ msgid ""
+#~ "Please check your email and visit the enclosed link to re-connect to your "
+#~ "account"
+#~ msgstr "请检查你的邮件并访问邮件里链接重连你的账户"
+
+#~ msgid "Please enter your <span>user name and password</span>, then sign in"
+#~ msgstr "使用帐号密码登录"
+
+#~ msgid "Login failed, please try again"
+#~ msgstr "登录失败，请重试"
+
+#, fuzzy
+#~ msgid "Login or email"
+#~ msgstr "没有邮件"
+
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid "Login"
+#~ msgstr "登录"
+
+#~ msgid ""
+#~ "To change your password - please enter the new one twice, then submit"
+#~ msgstr "修改密码-请输入新密码两次并提交"
+
+#~ msgid "New password"
+#~ msgstr "新密码"
+
+#~ msgid "Please, retype"
+#~ msgstr "确认密码"
+
+#~ msgid "Here are your current login methods"
+#~ msgstr "这里有你的登录方式"
+
+#~ msgid "provider"
+#~ msgstr "提供者"
+
+#~ msgid "last used"
+#~ msgstr "上次活动时间"
+
+#~ msgid "delete, if you like"
+#~ msgstr "可以删除"
+
+#~ msgid "delete"
+#~ msgstr "删除"
+
+#, fuzzy
+#~ msgid "cannot be deleted"
+#~ msgstr "取消"
+
+#~ msgid "Still have trouble signing in?"
+#~ msgstr "还有其他问题？"
+
+#~ msgid "Please, enter your email address below and obtain a new key"
+#~ msgstr "请输入你的邮件地址及验证码"
+
+#~ msgid "Please, enter your email address below to recover your account"
+#~ msgstr "恢复账户，请在下面输入你的邮件地址"
+
+#~ msgid "recover your account via email"
+#~ msgstr "通过邮件恢复你的账户"
+
+#~ msgid "Send a new recovery key"
+#~ msgstr "发送一个恢复建"
+
+#~ msgid "Recover your account via email"
+#~ msgstr "通过邮件恢复你的账户"
+
+#~ msgid "Why use OpenID?"
+#~ msgstr "为什么需要OpenID登录？"
+
+#~ msgid "with openid it is easier"
+#~ msgstr ""
+#~ "构建在OpenID网络认证上的本系统，不需要你注册新的帐号，即可使用我们系统的所"
+#~ "有功能"
+
+#~ msgid "reuse openid"
+#~ msgstr "用同一个帐号可登录互联网所有激活OpenID的网站"
+
+#~ msgid "openid is widely adopted"
+#~ msgstr "全世界有1.6亿OpenID帐号，和10,000个支持OpenID的站点"
+
+#~ msgid "openid is supported open standard"
+#~ msgstr "OpenID是有开放标准，并且有相关的基金组织提供支持"
+
+#~ msgid "Find out more"
+#~ msgstr "查看更多"
+
+#~ msgid "Get OpenID"
+#~ msgstr "获取OpenID"
+
+#~ msgid "Signup"
+#~ msgstr "注册帐号"
+
+#, fuzzy
+#~ msgid "Please register by clicking on any of the icons below"
+#~ msgstr "请点击下面任何一个图标登录"
+
+#, fuzzy
+#~ msgid "or create a new user name and password here"
+#~ msgstr "使用帐号密码登录"
+
+#~ msgid "Create login name and password"
+#~ msgstr "使用帐号密码登录"
+
+#~ msgid "Traditional signup info"
+#~ msgstr "传统登录信息"
+
+#~ msgid ""
+#~ "Please read and type in the two words below to help us prevent automated "
+#~ "account creation."
+#~ msgstr "请输入验证信息"
+
+#~ msgid "Create Account"
+#~ msgstr "创建帐号"
+
+#~ msgid "or"
+#~ msgstr "或者"
+
+#~ msgid "return to OpenID login"
+#~ msgstr "返回登录"
+
+#, fuzzy
+#~ msgid "add avatar"
+#~ msgstr "修改头像"
+
+#, fuzzy
+#~ msgid "Change avatar"
+#~ msgstr "修改标签"
+
+#, fuzzy
+#~ msgid "Your current avatar: "
+#~ msgstr "你的详细账户信息为:"
+
+#, fuzzy
+#~ msgid "change avatar"
+#~ msgstr "修改已保存"
+
+#, fuzzy
+#~ msgid "Upload"
+#~ msgstr "上传/"
+
+#, fuzzy
+#~ msgid "delete avatar"
+#~ msgstr "删除回答"
+
+#, fuzzy
+#~ msgid "Delete These"
+#~ msgstr "删除回答"
+
+#~ msgid "answer permanent link"
+#~ msgstr "该回答的链接地址"
+
+#~ msgid "permanent link"
+#~ msgstr "永久链接"
+
+#~ msgid "edit"
+#~ msgstr "编辑"
+
+#~ msgid ""
+#~ "report as offensive (i.e containing spam, advertising, malicious text, "
+#~ "etc.)"
+#~ msgstr "检举该帖为垃“水帖”（含广告、人身攻击、恶意言论等）"
+
+#~ msgid "flag offensive"
+#~ msgstr "垃圾帖？"
+
+# todo please check this in chinese
+#~ msgid "undelete"
+#~ msgstr "取消"
+
+#, fuzzy
+#~ msgid "swap with question"
+#~ msgstr "回答该问题"
+
+#, fuzzy
+#~ msgid "mark this answer as correct (click again to undo)"
+#~ msgstr "最佳答案（再次点击取消操作）"
+
+#~ msgid "%(question_author)s has selected this answer as correct"
+#~ msgstr "这个答案已经被%(question_author)s标记为正确答案"
+
+#, fuzzy
+#~ msgid ""
+#~ "The question has been closed for the following reason <b>\"%(close_reason)"
+#~ "s\"</b> <i>by"
+#~ msgstr "问题因\"%(close_reason)s\"原因已被关闭"
+
+#~ msgid "close date %(closed_at)s"
+#~ msgstr "%(closed_at)s日关闭"
+
+#~ msgid "retag"
+#~ msgstr "更新标签"
+
+#~ msgid "reopen"
+#~ msgstr "打开"
+
+#~ msgid "close"
+#~ msgstr "关闭"
+
+#, fuzzy
+#~ msgid "one of these is required"
+#~ msgstr "必填项"
+
+#~ msgid "(required)"
+#~ msgstr "必填"
+
+#~ msgid "Toggle the real time Markdown editor preview"
+#~ msgstr "打开或者关闭Markdown编辑器的实时预览"
+
+#~ msgid "hide preview"
+#~ msgstr "禁用预览"
+
+#~ msgid "Related tags"
+#~ msgstr "相关标签"
+
+# book.html line 123 must be empty in english
+#~ msgid "Interesting tags"
+#~ msgstr "感兴趣的标签"
+
+#, fuzzy
+#~ msgid "add"
+#~ msgstr "添加"
+
+#~ msgid "Ignored tags"
+#~ msgstr "忽略标签"
+
+#, fuzzy
+#~ msgid "Display tag filter"
+#~ msgstr "选择邮件标签过来"
 
 #~ msgid "Page not found"
 #~ msgstr "此页未找到"
@@ -3913,12 +4440,6 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "Save edit"
 #~ msgstr "现在修改"
 
-#~ msgid "Cancel"
-#~ msgstr "取消"
-
-#~ msgid "hide preview"
-#~ msgstr "禁用预览"
-
 #~ msgid "show preview"
 #~ msgstr "启用预览"
 
@@ -3954,11 +4475,11 @@ msgstr "对不起，好像有一些技术上的错误。"
 #, fuzzy
 #~ msgid ""
 #~ "Below is the list of available badges and number \n"
-#~ "of times each type of badge has been awarded. Give us feedback at %"
-#~ "(feedback_faq_url)s.\n"
+#~ "of times each type of badge has been awarded. Give us feedback at "
+#~ "%(feedback_faq_url)s.\n"
 #~ msgstr ""
-#~ "这里列出社区所有的奖牌，以及每类奖牌获取的所需条件。点击<a href=\\\"%"
-#~ "(feedback_faq_url)s\\\">这里<\\a>给我们反馈。"
+#~ "这里列出社区所有的奖牌，以及每类奖牌获取的所需条件。点击<a href=\\"
+#~ "\"%(feedback_faq_url)s\\\">这里<\\a>给我们反馈。"
 
 #~ msgid "Community badges"
 #~ msgstr "奖牌等级"
@@ -4065,8 +4586,8 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid ""
 #~ "For example, if you ask an interesting question or give a helpful answer, "
 #~ "your input will be upvoted. On the other hand if the answer is misleading "
-#~ "- it will be downvoted. Each vote in favor will generate <strong>%"
-#~ "(REP_GAIN_FOR_RECEIVING_UPVOTE)s</strong> points, each vote against will "
+#~ "- it will be downvoted. Each vote in favor will generate <strong>"
+#~ "%(REP_GAIN_FOR_RECEIVING_UPVOTE)s</strong> points, each vote against will "
 #~ "subtract <strong>%(REP_LOSS_FOR_RECEIVING_DOWNVOTE)s</strong> points. "
 #~ "There is a limit of <strong>%(MAX_REP_GAIN_PER_USER_PER_DAY)s</strong> "
 #~ "points that can be accumulated for a question or answer per day. The "
@@ -4191,22 +4712,11 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ " <span class='big strong'>亲爱的访客</span>,  我们盼望收到你的反馈. \n"
 #~ "请发送你的反馈信息给我们，以帮助我们更好的改进 ."
 
-#~ msgid "(please enter a valid email)"
-#~ msgstr "请输入正确的email地址"
-
 #~ msgid "(this field is required)"
 #~ msgstr "必填项"
 
 #~ msgid "Send Feedback"
 #~ msgstr "问题反馈"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Hello, this is a %(site_title)s forum feedback message.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "你好, 这是从 %(site_title)s 网站发出的反馈信息。\n"
 
 #~ msgid "<p>Dear %(receiving_user_name)s,</p>"
 #~ msgstr "<p>亲爱的 %(receiving_user_name)s,</p>"
@@ -4285,30 +4795,22 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "Share this question on %(site)s"
 #~ msgstr "发布我的提问到Twitter"
 
-#~ msgid "karma:"
-#~ msgstr "按积分排序"
+#, fuzzy
+#~ msgid "i like this question (click again to cancel)"
+#~ msgstr "这篇帖子有价值（再次点击取消操作）"
 
-#~ msgid "badges:"
-#~ msgstr "奖牌榜"
+#~ msgid "i like this answer (click again to cancel)"
+#~ msgstr "这篇帖子有价值（再次点击取消操作）"
 
-#~ msgid "previous"
-#~ msgstr "上一页"
-
-#~ msgid "current page"
-#~ msgstr "当前页"
-
-#~ msgid "page number %(num)s"
-#~ msgstr "第%(num)s页"
-
-#~ msgid "next page"
-#~ msgstr "下一页"
-
-#~ msgid "posts per page"
-#~ msgstr "每页显示："
+#~ msgid "current number of votes"
+#~ msgstr "当前总票数"
 
 #, fuzzy
-#~ msgid "%(username)s's website is %(url)s"
-#~ msgstr "%(username)s当前的状态是 \"%(status)s\""
+#~ msgid "i dont like this question (click again to cancel)"
+#~ msgstr "这篇帖子没有价值（再次点击取消操作）"
+
+#~ msgid "i dont like this answer (click again to cancel)"
+#~ msgstr "这篇帖子没有价值（再次点击取消操作）"
 
 #, fuzzy
 #~ msgid "anonymous user"
@@ -4343,9 +4845,6 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "delete this comment"
 #~ msgstr "删除这个留言"
 
-#~ msgid "edit"
-#~ msgstr "编辑"
-
 #~ msgid "add comment"
 #~ msgstr "添加评论"
 
@@ -4360,14 +4859,23 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgstr[0] "查看<strong>%(counter)s</strong>更多评论"
 
 #, fuzzy
-#~ msgid "one of these is required"
-#~ msgstr "必填项"
+#~ msgid "%(username)s's website is %(url)s"
+#~ msgstr "%(username)s当前的状态是 \"%(status)s\""
 
-#~ msgid "(required)"
-#~ msgstr "必填"
+#~ msgid "previous"
+#~ msgstr "上一页"
 
-#~ msgid "Toggle the real time Markdown editor preview"
-#~ msgstr "打开或者关闭Markdown编辑器的实时预览"
+#~ msgid "current page"
+#~ msgstr "当前页"
+
+#~ msgid "page number %(num)s"
+#~ msgstr "第%(num)s页"
+
+#~ msgid "next page"
+#~ msgstr "下一页"
+
+#~ msgid "posts per page"
+#~ msgstr "每页显示："
 
 #~ msgid "responses for %(username)s"
 #~ msgstr "回应%(username)s"
@@ -4394,193 +4902,6 @@ msgstr "对不起，好像有一些技术上的错误。"
 
 #~ msgid "Privacy policy"
 #~ msgstr "隐私政策"
-
-#~ msgid "i like this post (click again to cancel)"
-#~ msgstr "这篇帖子有价值（再次点击取消操作）"
-
-#~ msgid "current number of votes"
-#~ msgstr "当前总票数"
-
-#~ msgid "i dont like this post (click again to cancel)"
-#~ msgstr "这篇帖子没有价值（再次点击取消操作）"
-
-#~ msgid "retag"
-#~ msgstr "更新标签"
-
-#~ msgid "reopen"
-#~ msgstr "打开"
-
-#~ msgid "close"
-#~ msgstr "关闭"
-
-#~ msgid ""
-#~ "report as offensive (i.e containing spam, advertising, malicious text, "
-#~ "etc.)"
-#~ msgstr "检举该帖为垃“水帖”（含广告、人身攻击、恶意言论等）"
-
-#~ msgid "flag offensive"
-#~ msgstr "垃圾帖？"
-
-# todo please check this in chinese
-#~ msgid "undelete"
-#~ msgstr "取消"
-
-#~ msgid "delete"
-#~ msgstr "删除"
-
-#~ msgid ""
-#~ "The question has been closed for the following reason \"%(close_reason)s"
-#~ "\" by"
-#~ msgstr "问题因\"%(close_reason)s\"原因已被关闭"
-
-#~ msgid "close date %(closed_at)s"
-#~ msgstr "%(closed_at)s日关闭"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "        %(counter)s Answer:\n"
-#~ "        "
-#~ msgid_plural ""
-#~ "\n"
-#~ "        %(counter)s Answers:\n"
-#~ "        "
-#~ msgstr[0] ""
-#~ "\n"
-#~ "%(counter)s个回答:"
-
-#~ msgid "oldest answers will be shown first"
-#~ msgstr "最先回答显示在最前面"
-
-#~ msgid "oldest answers"
-#~ msgstr "最先回答"
-
-#~ msgid "newest answers will be shown first"
-#~ msgstr "最晚回答显示在最前面"
-
-#~ msgid "newest answers"
-#~ msgstr "最近回答"
-
-#~ msgid "most voted answers will be shown first"
-#~ msgstr "投票次数最多的显示在最前面"
-
-#~ msgid "popular answers"
-#~ msgstr "受欢迎的答案"
-
-#~ msgid "i like this answer (click again to cancel)"
-#~ msgstr "这篇帖子有价值（再次点击取消操作）"
-
-#~ msgid "i dont like this answer (click again to cancel)"
-#~ msgstr "这篇帖子没有价值（再次点击取消操作）"
-
-#~ msgid "mark this answer as favorite (click again to undo)"
-#~ msgstr "最佳答案（再次点击取消操作）"
-
-#~ msgid "%(question_author)s has selected this answer as correct"
-#~ msgstr "这个答案已经被%(question_author)s标记为正确答案"
-
-#~ msgid "answer permanent link"
-#~ msgstr "该回答的链接地址"
-
-#~ msgid "permanent link"
-#~ msgstr "永久链接"
-
-#, fuzzy
-#~ msgid "swap with question"
-#~ msgstr "回答该问题"
-
-#, fuzzy
-#~ msgid " or"
-#~ msgstr "或者"
-
-#~ msgid "email"
-#~ msgstr "邮件"
-
-#~ msgid "Notify me once a day when there are any new answers"
-#~ msgstr "当有新回答的时候每天提醒我一次"
-
-#~ msgid "Notify me weekly when there are any new answers"
-#~ msgstr "当有新回答的时候每周提醒我一次"
-
-#~ msgid "Notify me immediately when there are any new answers"
-#~ msgstr "当有新回答的时候立即提醒我一次"
-
-#~ msgid ""
-#~ "You can always adjust frequency of email updates from your %(profile_url)s"
-#~ msgstr "你可以通过%(profile_url)s调整你的邮件更新频率"
-
-#~ msgid "once you sign in you will be able to subscribe for any updates here"
-#~ msgstr "一旦你注册你就可以订阅这里的任何更新"
-
-#, fuzzy
-#~ msgid "Login/Signup to Answer"
-#~ msgstr "登录发布你的答案"
-
-#~ msgid "Your answer"
-#~ msgstr "您的回答"
-
-#~ msgid "Be the first one to answer this question!"
-#~ msgstr "成为第一个回答此问题的人!"
-
-#~ msgid "you can answer anonymously and then login"
-#~ msgstr "你可以匿名回答,然后登录"
-
-#~ msgid "answer your own question only to give an answer"
-#~ msgstr "仅仅为了回答你自己的问题而给一个答案"
-
-#~ msgid "please only give an answer, no discussions"
-#~ msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
-
-#~ msgid "Login/Signup to Post Your Answer"
-#~ msgstr "登录发布你的答案"
-
-#~ msgid "Answer Your Own Question"
-#~ msgstr "回答你自己的问题"
-
-#~ msgid "Answer the question"
-#~ msgstr "回答该问题"
-
-#, fuzzy
-#~ msgid "Question tools"
-#~ msgstr "您正在浏览的问题含有以下标签"
-
-#, fuzzy
-#~ msgid "click to unfollow this question"
-#~ msgstr "被回复最多的问题"
-
-#, fuzzy
-#~ msgid "click to follow this question"
-#~ msgstr "被回复最多的问题"
-
-#, fuzzy
-#~ msgid "email the updates"
-#~ msgstr "邮件更新取消"
-
-#, fuzzy
-#~ msgid "subscribe to this question rss feed"
-#~ msgstr "订阅最新问题"
-
-#, fuzzy
-#~ msgid "subsribe to rss feed"
-#~ msgstr "订阅最新问题"
-
-#~ msgid "Question tags"
-#~ msgstr "您正在浏览的问题含有以下标签"
-
-#~ msgid "question asked"
-#~ msgstr "已问问题"
-
-#~ msgid "question was seen"
-#~ msgstr "浏览量"
-
-#~ msgid "times"
-#~ msgstr "次"
-
-#~ msgid "last updated"
-#~ msgstr "最后更新时间"
-
-#~ msgid "Related questions"
-#~ msgstr "相似的问题"
 
 # page title
 #~ msgid "Edit question"
@@ -4650,8 +4971,16 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "Please, subscribe for the following tags:"
 #~ msgstr "问题曾以"
 
+#, fuzzy
+#~ msgid "Subscribe"
+#~ msgstr "标记垃圾帖"
+
 #~ msgid "Tag list"
 #~ msgstr "标签列表"
+
+#, fuzzy
+#~ msgid "Sort by &raquo;"
+#~ msgstr "排序"
 
 #~ msgid "sorted alphabetically"
 #~ msgstr "按名称的字母先后顺序排序"
@@ -4685,504 +5014,6 @@ msgstr "对不起，好像有一些技术上的错误。"
 
 #~ msgid "Nothing found."
 #~ msgstr "没有找到相关数据。"
-
-#~ msgid "Change email"
-#~ msgstr "更换电子邮件"
-
-#~ msgid "Save your email address"
-#~ msgstr "保存您的电子邮件地址"
-
-#~ msgid "change %(email)s info"
-#~ msgstr "更换%(email)s电子邮件"
-
-#~ msgid "here is why email is required, see %(gravatar_faq_url)s"
-#~ msgstr "为什么邮件是必须的,查看 %(gravatar_faq_url)s"
-
-#~ msgid "Your new Email"
-#~ msgstr "你的新邮件地址"
-
-#~ msgid "Your Email"
-#~ msgstr "你的邮件"
-
-#~ msgid "Save Email"
-#~ msgstr "保存邮件地址"
-
-#~ msgid "Validate email"
-#~ msgstr "更换电子邮件"
-
-#~ msgid "validate %(email)s info or go to %(change_email_url)s"
-#~ msgstr "验证%(email)s 信息或到%(change_email_url)s"
-
-#~ msgid "Email not changed"
-#~ msgstr "邮件地址未修改"
-
-#~ msgid "old %(email)s kept, if you like go to %(change_email_url)s"
-#~ msgstr "旧邮件%(email)s被保存,你可以去%(change_email_url)s修改"
-
-#~ msgid "Email changed"
-#~ msgstr "邮件地址已改"
-
-#~ msgid "your current %(email)s can be used for this"
-#~ msgstr "你目前的%(email)s邮件地址可以被用于这里"
-
-#~ msgid "Email verified"
-#~ msgstr "邮件地址确认"
-
-#~ msgid "thanks for verifying email"
-#~ msgstr "感谢你确认邮件地址"
-
-#~ msgid "email key not sent"
-#~ msgstr "邮件地址未发送"
-
-#~ msgid "email key not sent %(email)s change email here %(change_link)s"
-#~ msgstr "邮件地址未发送%(email)s,点这里修改%(change_link)s"
-
-#~ msgid "Registration"
-#~ msgstr "注册"
-
-#~ msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
-#~ msgstr "注册新 %(provider)s 账户信息, 查看 %(gravatar_faq_url)s"
-
-#~ msgid ""
-#~ "%(username)s already exists, choose another name for \n"
-#~ "                            %(provider)s. Email is required too, see %"
-#~ "(gravatar_faq_url)s\n"
-#~ "                        "
-#~ msgstr ""
-#~ "%(username)s 账户已存在,在%(provider)s找哦昂选择其他名称. Email也是必须"
-#~ "的, 查看 %(gravatar_faq_url)s"
-
-#~ msgid ""
-#~ "register new external %(provider)s account info, see %(gravatar_faq_url)s"
-#~ msgstr "注册新扩展%(provider)s 账户信息, 查看 %(gravatar_faq_url)s"
-
-#~ msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
-#~ msgstr "注册新Facebook账户信息, 查看 %(gravatar_faq_url)s"
-
-# todo: review this message may be confusing user
-#~ msgid "This account already exists, please use another."
-#~ msgstr "输入您的新帐号已经存在,请使用其他帐号。"
-
-#~ msgid "Screen name label"
-#~ msgstr "昵称"
-
-#~ msgid "Email address label"
-#~ msgstr "您的电子邮件地址"
-
-#~ msgid "receive updates motivational blurb"
-#~ msgstr "获取商品信息更新"
-
-#~ msgid "please select one of the options above"
-#~ msgstr "请从以上选项中选择一项"
-
-#~ msgid "Tag filter tool will be your right panel, once you log in."
-#~ msgstr "当你登录后,标签过滤工具将出现在你右边的面板里"
-
-#~ msgid "create account"
-#~ msgstr "创建帐号"
-
-#~ msgid "Thank you for registering at our Q&A forum!"
-#~ msgstr "感谢你在我们的Q&A论坛注册"
-
-#~ msgid "Your account details are:"
-#~ msgstr "你的详细账户信息为:"
-
-#~ msgid "Username:"
-#~ msgstr "用户名"
-
-#~ msgid "Password:"
-#~ msgstr "密码"
-
-#~ msgid "Please sign in here:"
-#~ msgstr "请在这登录"
-
-#~ msgid ""
-#~ "Sincerely,\n"
-#~ "Forum Administrator"
-#~ msgstr "您忠实的管理员"
-
-#~ msgid "Greetings from the Q&A forum"
-#~ msgstr "来自Q&A论坛的祝福"
-
-#~ msgid "To make use of the Forum, please follow the link below:"
-#~ msgstr "请跟随以下的链接来使用论坛:"
-
-#~ msgid "Following the link above will help us verify your email address."
-#~ msgstr "点击上面的链接可以帮助我们确认你的邮件地址"
-
-#~ msgid ""
-#~ "If you beleive that this message was sent in mistake - \n"
-#~ "no further action is needed. Just ingore this email, we apologize\n"
-#~ "for any inconvenience"
-#~ msgstr ""
-#~ "如果你认为此消息被错误的发送,不要进行更进一步的动作.仅仅忽略这封邮件,为给"
-#~ "您带来的不便道歉."
-
-#~ msgid "Logout"
-#~ msgstr "退出登录"
-
-#~ msgid "Please enter your <span>user name</span>, then sign in"
-#~ msgstr "请输入你的用户名,然后登录"
-
-#~ msgid "(or select another login method above)"
-#~ msgstr "(或从上面选择一个登录方式)"
-
-#~ msgid "Sign in"
-#~ msgstr "注册帐号"
-
-#~ msgid "User login"
-#~ msgstr "用户登录"
-
-#~ msgid ""
-#~ "\n"
-#~ "        Your answer to %(title)s %(summary)s will be posted once you log "
-#~ "in\n"
-#~ "        "
-#~ msgstr ""
-#~ "\n"
-#~ "登录后,你的关于 %(title)s %(summary)s 的回答将被发布"
-
-#~ msgid ""
-#~ "Your question \n"
-#~ "        %(title)s %(summary)s will be posted once you log in\n"
-#~ "        "
-#~ msgstr "登录后,你的关于 %(title)s %(summary)s 的问题将被发布"
-
-#~ msgid ""
-#~ "Take a pick of your favorite service below to sign in using secure OpenID "
-#~ "or similar technology. Your external service password always stays "
-#~ "confidential and you don't have to rememeber or create another one."
-#~ msgstr ""
-#~ "选择以下你最喜欢的方式登录,你的扩展服务密码将被保护且你不需.要记住或创建一"
-#~ "个新密码."
-
-#~ msgid ""
-#~ "It's a good idea to make sure that your existing login methods still "
-#~ "work, or add a new one. Please click any of the icons below to check/"
-#~ "change or add new login methods."
-#~ msgstr ""
-#~ "你最好确认你目前的登录方式可以工作，或者你需要添加一个新的登录方式。请点击"
-#~ "下面任何一个icon选择添加一个新登录方式。"
-
-#~ msgid ""
-#~ "Please add a more permanent login method by clicking one of the icons "
-#~ "below, to avoid logging in via email each time."
-#~ msgstr ""
-#~ "请通过点击以下icon添加更多永久的登录方式，从而避免每次都是用email登录。"
-
-#~ msgid ""
-#~ "Click on one of the icons below to add a new login method or re-validate "
-#~ "an existing one."
-#~ msgstr "点击以下icon，添加一个新的登录方式或者重验证已经存在的登录方式。"
-
-#~ msgid ""
-#~ "You don't have a method to log in right now, please add one or more by "
-#~ "clicking any of the icons below."
-#~ msgstr "你目前还没有一个登录方式，请添加一个或多个通过点击下面的icons。"
-
-#~ msgid ""
-#~ "Please check your email and visit the enclosed link to re-connect to your "
-#~ "account"
-#~ msgstr "请检查你的邮件并访问邮件里链接重连你的账户"
-
-#~ msgid "Please enter your <span>user name and password</span>, then sign in"
-#~ msgstr "使用帐号密码登录"
-
-#~ msgid "Login failed, please try again"
-#~ msgstr "登录失败，请重试"
-
-#, fuzzy
-#~ msgid "Login or email"
-#~ msgstr "没有邮件"
-
-#~ msgid "Password"
-#~ msgstr "密码"
-
-#~ msgid "Login"
-#~ msgstr "登录"
-
-#~ msgid ""
-#~ "To change your password - please enter the new one twice, then submit"
-#~ msgstr "修改密码-请输入新密码两次并提交"
-
-#~ msgid "New password"
-#~ msgstr "新密码"
-
-#~ msgid "Please, retype"
-#~ msgstr "确认密码"
-
-#~ msgid "Here are your current login methods"
-#~ msgstr "这里有你的登录方式"
-
-#~ msgid "provider"
-#~ msgstr "提供者"
-
-#~ msgid "last used"
-#~ msgstr "上次活动时间"
-
-#~ msgid "delete, if you like"
-#~ msgstr "可以删除"
-
-#, fuzzy
-#~ msgid "cannot be deleted"
-#~ msgstr "取消"
-
-#~ msgid "Still have trouble signing in?"
-#~ msgstr "还有其他问题？"
-
-#~ msgid "Please, enter your email address below and obtain a new key"
-#~ msgstr "请输入你的邮件地址及验证码"
-
-#~ msgid "Please, enter your email address below to recover your account"
-#~ msgstr "恢复账户，请在下面输入你的邮件地址"
-
-#~ msgid "recover your account via email"
-#~ msgstr "通过邮件恢复你的账户"
-
-#~ msgid "Send a new recovery key"
-#~ msgstr "发送一个恢复建"
-
-#~ msgid "Recover your account via email"
-#~ msgstr "通过邮件恢复你的账户"
-
-#~ msgid "Why use OpenID?"
-#~ msgstr "为什么需要OpenID登录？"
-
-#~ msgid "with openid it is easier"
-#~ msgstr ""
-#~ "构建在OpenID网络认证上的本系统，不需要你注册新的帐号，即可使用我们系统的所"
-#~ "有功能"
-
-#~ msgid "reuse openid"
-#~ msgstr "用同一个帐号可登录互联网所有激活OpenID的网站"
-
-#~ msgid "openid is widely adopted"
-#~ msgstr "全世界有1.6亿OpenID帐号，和10,000个支持OpenID的站点"
-
-#~ msgid "openid is supported open standard"
-#~ msgstr "OpenID是有开放标准，并且有相关的基金组织提供支持"
-
-#~ msgid "Find out more"
-#~ msgstr "查看更多"
-
-#~ msgid "Get OpenID"
-#~ msgstr "获取OpenID"
-
-#~ msgid "Signup"
-#~ msgstr "注册帐号"
-
-#, fuzzy
-#~ msgid "Please register by clicking on any of the icons below"
-#~ msgstr "请点击下面任何一个图标登录"
-
-#, fuzzy
-#~ msgid "or create a new user name and password here"
-#~ msgstr "使用帐号密码登录"
-
-#~ msgid "Create login name and password"
-#~ msgstr "使用帐号密码登录"
-
-#~ msgid "Traditional signup info"
-#~ msgstr "传统登录信息"
-
-#~ msgid ""
-#~ "Please read and type in the two words below to help us prevent automated "
-#~ "account creation."
-#~ msgstr "请输入验证信息"
-
-#~ msgid "Create Account"
-#~ msgstr "创建帐号"
-
-#~ msgid "or"
-#~ msgstr "或者"
-
-#~ msgid "return to OpenID login"
-#~ msgstr "返回登录"
-
-#, fuzzy
-#~ msgid "add avatar"
-#~ msgstr "修改头像"
-
-#, fuzzy
-#~ msgid "Change avatar"
-#~ msgstr "修改标签"
-
-#, fuzzy
-#~ msgid "Your current avatar: "
-#~ msgstr "你的详细账户信息为:"
-
-#, fuzzy
-#~ msgid "change avatar"
-#~ msgstr "修改已保存"
-
-#, fuzzy
-#~ msgid "Upload"
-#~ msgstr "上传/"
-
-#, fuzzy
-#~ msgid "delete avatar"
-#~ msgstr "删除回答"
-
-#, fuzzy
-#~ msgid "Delete These"
-#~ msgstr "删除回答"
-
-#~ msgid "answer tips"
-#~ msgstr "受欢迎的提问"
-
-#~ msgid "please make your answer relevant to this community"
-#~ msgstr "请确认你的答案和这个主题相关"
-
-#~ msgid "try to give an answer, rather than engage into a discussion"
-#~ msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
-
-#~ msgid "please try to provide details"
-#~ msgstr "请详细描述您的问题"
-
-#~ msgid "be clear and concise"
-#~ msgstr "我们推荐您使用中文描述问题，这样可以得到更多的答复机会。"
-
-#~ msgid "see frequently asked questions"
-#~ msgstr "查看常见问题"
-
-#~ msgid "Markdown tips"
-#~ msgstr "标记栏参考"
-
-#~ msgid "*italic*"
-#~ msgstr "*斜体*表示*号内字体为斜体"
-
-#~ msgid "**bold**"
-#~ msgstr "**粗体**表示2个*号内字体为粗体"
-
-#~ msgid "*italic* or _italic_"
-#~ msgstr "*斜体* , _斜体_表示*号或_号内字体为斜体"
-
-#~ msgid "**bold** or __bold__"
-#~ msgstr "**加粗** 或者 __加粗__ "
-
-#~ msgid "link"
-#~ msgstr "链接"
-
-#~ msgid "text"
-#~ msgstr "文本"
-
-#~ msgid "image"
-#~ msgstr "图片"
-
-#~ msgid "numbered list:"
-#~ msgstr "列表："
-
-#~ msgid "basic HTML tags are also supported"
-#~ msgstr "支持基本的HTML标签"
-
-#~ msgid "learn more about Markdown"
-#~ msgstr "有关Markdown详细说明"
-
-#~ msgid "login to post question info"
-#~ msgstr "登录并提交问题"
-
-#, fuzzy
-#~ msgid ""
-#~ "must have valid %(email)s to post, \n"
-#~ "                            see %(email_validation_faq_url)s\n"
-#~ "                            "
-#~ msgstr "必须有正确的%(email)s才能发布，查看%(email_validation_faq_url)s"
-
-#~ msgid "Login/signup to post your question"
-#~ msgstr "登录并发布问题"
-
-#~ msgid "Ask your question"
-#~ msgstr "现在提问"
-
-#~ msgid "each tag must be shorter that %(max_chars)s character"
-#~ msgid_plural "each tag must be shorter than %(max_chars)s characters"
-#~ msgstr[0] "每个标签的长度不超过%(max_chars)s"
-
-#~ msgid "please use %(tag_count)s tag"
-#~ msgid_plural "please use %(tag_count)s tags or less"
-#~ msgstr[0] "最多只能有%(tag_count)s个标签"
-
-# todo: remove magic numbers from this file
-#~ msgid ""
-#~ "please use up to %(tag_count)s tags, less than %(max_chars)s characters "
-#~ "each"
-#~ msgstr "最多%(tag_count)s个标签，每个标签长度小于%(max_chars)s个字符。"
-
-# footer.html
-#~ msgid "about"
-#~ msgstr "关于本站"
-
-#~ msgid "privacy policy"
-#~ msgstr "隐私政策"
-
-#~ msgid "give feedback"
-#~ msgstr "问题反馈"
-
-#~ msgid "back to home page"
-#~ msgstr "回到首页"
-
-#~ msgid "%(site)s logo"
-#~ msgstr "%(site)s logo"
-
-#~ msgid "questions"
-#~ msgstr "问题"
-
-#~ msgid "users"
-#~ msgstr "用户"
-
-#~ msgid "badges"
-#~ msgstr "奖牌榜"
-
-#~ msgid "ask a question"
-#~ msgstr "我要提问"
-
-#~ msgid "logout"
-#~ msgstr "退出登录"
-
-#~ msgid "login"
-#~ msgstr "登录"
-
-# book.html line 123 must be empty in english
-#~ msgid "settings"
-#~ msgstr "设置"
-
-#~ msgid "search"
-#~ msgstr "搜索"
-
-#~ msgid "question tips"
-#~ msgstr "受欢迎的提问"
-
-#~ msgid "please ask a relevant question"
-#~ msgstr "请问与此社区相关的问题"
-
-#~ msgid "please try provide enough details"
-#~ msgstr "请详细描述您的问题"
-
-# book.html line 123 must be empty in english
-#~ msgid "Interesting tags"
-#~ msgstr "感兴趣的标签"
-
-#~ msgid "Add"
-#~ msgstr "添加"
-
-#~ msgid "Ignored tags"
-#~ msgstr "忽略标签"
-
-#, fuzzy
-#~ msgid "Display tag filter"
-#~ msgstr "选择邮件标签过来"
-
-#~ msgid "Did not find what you were looking for?"
-#~ msgstr "你找的问题没有?"
-
-#~ msgid "Please, post your question!"
-#~ msgstr "现在提问"
-
-#~ msgid "subscribe to the questions feed"
-#~ msgstr "订阅最新问题"
-
-#~ msgid "rss feed"
-#~ msgstr "rss "
 
 #~ msgid "with %(author_name)s's contributions"
 #~ msgstr "%(author_name)s的贡献"
@@ -5219,7 +5050,7 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgstr "还没有收藏"
 
 #, fuzzy
-#~ msgid "Please star (bookmark) some questions or follow some users."
+#~ msgid "Please follow some questions or follow some users."
 #~ msgstr "当你查看问题时可以收藏"
 
 #~ msgid "You can expand your search by "
@@ -5238,24 +5069,149 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "Please always feel free to ask your question!"
 #~ msgstr "发布你自己的问题"
 
-#~ msgid "Contributors"
-#~ msgstr "贡献者"
+#~ msgid "Did not find what you were looking for?"
+#~ msgstr "你找的问题没有?"
 
-#~ msgid "Related tags"
-#~ msgstr "相关标签"
+#~ msgid "Please, post your question!"
+#~ msgstr "现在提问"
 
-#~ msgid "In:"
-#~ msgstr "选择:"
+#~ msgid "subscribe to the questions feed"
+#~ msgstr "订阅最新问题"
 
-#~ msgid "see unanswered questions"
-#~ msgstr "查看没有回答的问题"
+#~ msgid "each tag must be shorter that %(max_chars)s character"
+#~ msgid_plural "each tag must be shorter than %(max_chars)s characters"
+#~ msgstr[0] "每个标签的长度不超过%(max_chars)s"
+
+#~ msgid "please use %(tag_count)s tag"
+#~ msgid_plural "please use %(tag_count)s tags or less"
+#~ msgstr[0] "最多只能有%(tag_count)s个标签"
+
+# todo: remove magic numbers from this file
+#~ msgid ""
+#~ "please use up to %(tag_count)s tags, less than %(max_chars)s characters "
+#~ "each"
+#~ msgstr "最多%(tag_count)s个标签，每个标签长度小于%(max_chars)s个字符。"
 
 #, fuzzy
-#~ msgid "see your followed questions"
-#~ msgstr "查看我收藏问题"
+#~ msgid ""
+#~ "\n"
+#~ "        %(counter)s Answer\n"
+#~ "        "
+#~ msgid_plural ""
+#~ "\n"
+#~ "        %(counter)s Answers\n"
+#~ "        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%(counter)s个回答:"
 
-#~ msgid "Sort by:"
-#~ msgstr "排序"
+#~ msgid "oldest answers will be shown first"
+#~ msgstr "最先回答显示在最前面"
+
+#~ msgid "oldest answers"
+#~ msgstr "最先回答"
+
+#~ msgid "newest answers will be shown first"
+#~ msgstr "最晚回答显示在最前面"
+
+#~ msgid "newest answers"
+#~ msgstr "最近回答"
+
+#~ msgid "most voted answers will be shown first"
+#~ msgstr "投票次数最多的显示在最前面"
+
+#~ msgid "popular answers"
+#~ msgstr "受欢迎的答案"
+
+#~ msgid "Answer Your Own Question"
+#~ msgstr "回答你自己的问题"
+
+#, fuzzy
+#~ msgid "Login/Signup to Answer"
+#~ msgstr "登录发布你的答案"
+
+#~ msgid "Your answer"
+#~ msgstr "您的回答"
+
+#~ msgid "Be the first one to answer this question!"
+#~ msgstr "成为第一个回答此问题的人!"
+
+#~ msgid "you can answer anonymously and then login"
+#~ msgstr "你可以匿名回答,然后登录"
+
+#~ msgid "answer your own question only to give an answer"
+#~ msgstr "仅仅为了回答你自己的问题而给一个答案"
+
+#~ msgid "please only give an answer, no discussions"
+#~ msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
+
+#~ msgid "Login/Signup to Post Your Answer"
+#~ msgstr "登录发布你的答案"
+
+#~ msgid "Answer the question"
+#~ msgstr "回答该问题"
+
+#, fuzzy
+#~ msgid " or"
+#~ msgstr "或者"
+
+#~ msgid "email"
+#~ msgstr "邮件"
+
+#, fuzzy
+#~ msgid "Question tools"
+#~ msgstr "您正在浏览的问题含有以下标签"
+
+#, fuzzy
+#~ msgid "click to unfollow this question"
+#~ msgstr "被回复最多的问题"
+
+#, fuzzy
+#~ msgid "click to follow this question"
+#~ msgstr "被回复最多的问题"
+
+#, fuzzy
+#~ msgid "email the updates"
+#~ msgstr "邮件更新取消"
+
+#, fuzzy
+#~ msgid "subscribe to this question rss feed"
+#~ msgstr "订阅最新问题"
+
+#, fuzzy
+#~ msgid "subsribe to rss feed"
+#~ msgstr "订阅最新问题"
+
+#~ msgid "question asked"
+#~ msgstr "已问问题"
+
+#~ msgid "question was seen"
+#~ msgstr "浏览量"
+
+#~ msgid "times"
+#~ msgstr "次"
+
+#~ msgid "last updated"
+#~ msgstr "最后更新时间"
+
+#~ msgid "Related questions"
+#~ msgstr "相似的问题"
+
+#~ msgid "Notify me once a day when there are any new answers"
+#~ msgstr "当有新回答的时候每天提醒我一次"
+
+#~ msgid "Notify me weekly when there are any new answers"
+#~ msgstr "当有新回答的时候每周提醒我一次"
+
+#~ msgid "Notify me immediately when there are any new answers"
+#~ msgstr "当有新回答的时候立即提醒我一次"
+
+#~ msgid ""
+#~ "You can always adjust frequency of email updates from your %(profile_url)s"
+#~ msgstr "你可以通过%(profile_url)s调整你的邮件更新频率"
+
+#~ msgid "once you sign in you will be able to subscribe for any updates here"
+#~ msgstr "一旦你注册你就可以订阅这里的任何更新"
 
 #~ msgid "%(username)s's profile"
 #~ msgstr "%(username)s用户概览"
@@ -5361,6 +5317,10 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ msgid "votes left"
 #~ msgstr "剩余投票数"
 
+#, fuzzy
+#~ msgid "moderation"
+#~ msgstr "版主"
+
 #~ msgid "%(username)s's current status is \"%(status)s\""
 #~ msgstr "%(username)s当前的状态是 \"%(status)s\""
 
@@ -5381,6 +5341,9 @@ msgstr "对不起，好像有一些技术上的错误。"
 
 #~ msgid "Subtract"
 #~ msgstr "减去"
+
+#~ msgid "Add"
+#~ msgstr "添加"
 
 #~ msgid "Send message to %(username)s"
 #~ msgstr "发送信息给%(username)s"
@@ -5487,6 +5450,236 @@ msgstr "对不起，好像有一些技术上的错误。"
 
 #~ msgid "votes"
 #~ msgstr "票"
+
+#~ msgid "answer tips"
+#~ msgstr "受欢迎的提问"
+
+#~ msgid "please make your answer relevant to this community"
+#~ msgstr "请确认你的答案和这个主题相关"
+
+#~ msgid "try to give an answer, rather than engage into a discussion"
+#~ msgstr "建议您提的问题是可以被答复的，而不仅仅是可以讨论。"
+
+#~ msgid "please try to provide details"
+#~ msgstr "请详细描述您的问题"
+
+#~ msgid "be clear and concise"
+#~ msgstr "我们推荐您使用中文描述问题，这样可以得到更多的答复机会。"
+
+#~ msgid "see frequently asked questions"
+#~ msgstr "查看常见问题"
+
+#~ msgid "Markdown tips"
+#~ msgstr "标记栏参考"
+
+#~ msgid "*italic*"
+#~ msgstr "*斜体*表示*号内字体为斜体"
+
+#~ msgid "**bold**"
+#~ msgstr "**粗体**表示2个*号内字体为粗体"
+
+#~ msgid "*italic* or _italic_"
+#~ msgstr "*斜体* , _斜体_表示*号或_号内字体为斜体"
+
+#~ msgid "**bold** or __bold__"
+#~ msgstr "**加粗** 或者 __加粗__ "
+
+#~ msgid "link"
+#~ msgstr "链接"
+
+#~ msgid "text"
+#~ msgstr "文本"
+
+#~ msgid "image"
+#~ msgstr "图片"
+
+#~ msgid "numbered list:"
+#~ msgstr "列表："
+
+#~ msgid "basic HTML tags are also supported"
+#~ msgstr "支持基本的HTML标签"
+
+#~ msgid "learn more about Markdown"
+#~ msgstr "有关Markdown详细说明"
+
+#~ msgid "ask a question"
+#~ msgstr "我要提问"
+
+#~ msgid "login to post question info"
+#~ msgstr "登录并提交问题"
+
+#, fuzzy
+#~ msgid ""
+#~ "must have valid %(email)s to post, \n"
+#~ "                            see %(email_validation_faq_url)s\n"
+#~ "                            "
+#~ msgstr "必须有正确的%(email)s才能发布，查看%(email_validation_faq_url)s"
+
+#~ msgid "Login/signup to post your question"
+#~ msgstr "登录并发布问题"
+
+#~ msgid "Ask your question"
+#~ msgstr "现在提问"
+
+#~ msgid "Contributors"
+#~ msgstr "贡献者"
+
+# footer.html
+#~ msgid "about"
+#~ msgstr "关于本站"
+
+#~ msgid "privacy policy"
+#~ msgstr "隐私政策"
+
+#~ msgid "give feedback"
+#~ msgstr "问题反馈"
+
+#~ msgid "back to home page"
+#~ msgstr "回到首页"
+
+#~ msgid "%(site)s logo"
+#~ msgstr "%(site)s logo"
+
+#~ msgid "users"
+#~ msgstr "用户"
+
+#~ msgid "badges"
+#~ msgstr "奖牌榜"
+
+#~ msgid "question tips"
+#~ msgstr "受欢迎的提问"
+
+#~ msgid "please ask a relevant question"
+#~ msgstr "请问与此社区相关的问题"
+
+#~ msgid "please try provide enough details"
+#~ msgstr "请详细描述您的问题"
+
+#~ msgid "view"
+#~ msgid_plural "views"
+#~ msgstr[0] "浏览"
+
+#~ msgid "answer"
+#~ msgid_plural "answers"
+#~ msgstr[0] "回答"
+
+#~ msgid "vote"
+#~ msgid_plural "votes"
+#~ msgstr[0] "票"
+
+#~ msgid "see unanswered questions"
+#~ msgstr "查看没有回答的问题"
+
+#, fuzzy
+#~ msgid "see your followed questions"
+#~ msgstr "查看我收藏问题"
+
+#~ msgid "karma:"
+#~ msgstr "按积分排序"
+
+#~ msgid "badges:"
+#~ msgstr "奖牌榜"
+
+#~ msgid "logout"
+#~ msgstr "退出登录"
+
+#~ msgid "login"
+#~ msgstr "登录"
+
+# book.html line 123 must be empty in english
+#~ msgid "settings"
+#~ msgstr "设置"
+
+#~ msgid "(please enter a valid email)"
+#~ msgstr "请输入正确的email地址"
+
+#~ msgid "i like this post (click again to cancel)"
+#~ msgstr "这篇帖子有价值（再次点击取消操作）"
+
+#~ msgid "i dont like this post (click again to cancel)"
+#~ msgstr "这篇帖子没有价值（再次点击取消操作）"
+
+#~ msgid ""
+#~ "The question has been closed for the following reason \"%(close_reason)s"
+#~ "\" by"
+#~ msgstr "问题因\"%(close_reason)s\"原因已被关闭"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "        %(counter)s Answer:\n"
+#~ "        "
+#~ msgid_plural ""
+#~ "\n"
+#~ "        %(counter)s Answers:\n"
+#~ "        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%(counter)s个回答:"
+
+#~ msgid "mark this answer as favorite (click again to undo)"
+#~ msgstr "最佳答案（再次点击取消操作）"
+
+#~ msgid "Question tags"
+#~ msgstr "您正在浏览的问题含有以下标签"
+
+#~ msgid "questions"
+#~ msgstr "问题"
+
+#~ msgid "search"
+#~ msgstr "搜索"
+
+#~ msgid "rss feed"
+#~ msgstr "rss "
+
+#, fuzzy
+#~ msgid "Please star (bookmark) some questions or follow some users."
+#~ msgstr "当你查看问题时可以收藏"
+
+#~ msgid "In:"
+#~ msgstr "选择:"
+
+#, fuzzy
+#~ msgid "followed"
+#~ msgstr "所有问题"
+
+#~ msgid "Sort by:"
+#~ msgstr "排序"
+
+#~ msgid "Email (not shared with anyone):"
+#~ msgstr "电子邮件"
+
+#~ msgid "Keys to connect the site with external services like Facebook, etc."
+#~ msgstr "链接到其他服务网站的keys，像Fackbook等"
+
+#~ msgid "Minimum reputation required to perform actions"
+#~ msgstr "完成这个动作需要最小积分"
+
+#, fuzzy
+#~ msgid "Site modes"
+#~ msgstr "网站"
+
+#~ msgid "Q&A forum website parameters and urls"
+#~ msgstr "网站参数及urls"
+
+#~ msgid "Skin and User Interface settings"
+#~ msgstr "主题设置"
+
+#~ msgid "Limits applicable to votes and moderation flags"
+#~ msgstr "限制合适的投票数和标记"
+
+# book.html line 123 must be empty in english
+#~ msgid "Setting groups"
+#~ msgstr "设置组"
+
+#~ msgid ""
+#~ "This option currently defines default frequency of emailed updates in the "
+#~ "following five categories: questions asked by user, answered by user, "
+#~ "individually selected, entire forum (per person tag filter applies) and "
+#~ "posts mentioning the user and comment responses"
+#~ msgstr ""
+#~ "此选项用于定义在下面的5个分类中当前默认邮件更新频率:用户问的问题,用户问的"
+#~ "问题,个人选择,整个讨论(每个用户标签过滤的请求)和用户提醒及留言回应"
 
 # index.html
 #~ msgid "community wiki"
@@ -6121,9 +6314,6 @@ msgstr "对不起，好像有一些技术上的错误。"
 #~ "的。我们不会向任何其他社区用 户、个人或第三方透露您的密码或者电子邮件信"
 #~ "息。用户可以选择性地填写用户资料、个人网站、年龄、城市等信息，我们收集这些"
 #~ "内容为了使用户能够更容易和更满意地使用CNProg提供的网页和服务。"
-
-#~ msgid "Other Services"
-#~ msgstr "其他服务"
 
 #~ msgid "details on sharing data with third parties"
 #~ msgstr ""

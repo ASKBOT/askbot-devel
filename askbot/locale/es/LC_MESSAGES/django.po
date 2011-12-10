@@ -541,10 +541,6 @@ msgstr ""
 msgid "Email and email alert settings"
 msgstr ""
 
-#: conf/email.py:22
-msgid "Prefix for the email subject line"
-msgstr ""
-
 #: conf/email.py:24
 msgid ""
 "This setting takes default from the django settingEMAIL_SUBJECT_PREFIX. A "
@@ -829,10 +825,6 @@ msgstr "Texto para la página de politicas de privacidad del foro (formato html)
 msgid ""
 "Save, then <a href=\"http://validator.w3.org/\">use HTML validator</a> on "
 "the \"faq\" page to check your input."
-msgstr ""
-
-#: conf/flatpages.py:44
-msgid "Text of the Q&A forum Privacy Policy (html format)"
 msgstr ""
 
 #: conf/flatpages.py:47

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 12:16-0400\n"
+"POT-Creation-Date: 2011-11-27 01:58-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr ""
 msgid "loading..."
 msgstr ""
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:857
+#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
 msgid "tags cannot be empty"
 msgstr "anna vähintään yksi tagi"
 
@@ -92,7 +92,7 @@ msgstr "syötä vähintään %s merkkiä"
 msgid "please enter title"
 msgstr ""
 
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:983
+#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
 #, c-format
 msgid "%s title minchars"
 msgstr "syötä vähintään %s merkkiä"
@@ -146,11 +146,11 @@ msgstr "postauksesi on palautettu!"
 msgid "post deleted"
 msgstr "postauksesi on poistettu"
 
-#: skins/common/media/js/post.js:537 skins/old/media/js/post.js:535
+#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
 msgid "Follow"
 msgstr ""
 
-#: skins/common/media/js/post.js:546 skins/common/media/js/post.js.c:555
+#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
 #: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
 #, c-format
 msgid "%s follower"
@@ -158,53 +158,53 @@ msgid_plural "%s followers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: skins/common/media/js/post.js:551 skins/old/media/js/post.js:549
+#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
 msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
 msgstr ""
 
-#: skins/common/media/js/post.js:613
+#: skins/common/media/js/post.js:615
 msgid "undelete"
 msgstr ""
 
-#: skins/common/media/js/post.js:618
+#: skins/common/media/js/post.js:620
 msgid "delete"
 msgstr ""
 
-#: skins/common/media/js/post.js:955
+#: skins/common/media/js/post.js:957
 msgid "add comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:958
+#: skins/common/media/js/post.js:960
 msgid "save comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:986
+#: skins/common/media/js/post.js:990
 #, c-format
 msgid "enter %s more characters"
 msgstr "%s merkkiä jäljellä"
 
-#: skins/common/media/js/post.js:991
+#: skins/common/media/js/post.js:995
 #, c-format
 msgid "%s characters left"
 msgstr "%s merkkiä jäljellä"
 
-#: skins/common/media/js/post.js:1062
+#: skins/common/media/js/post.js:1066
 msgid "cancel"
 msgstr ""
 
-#: skins/common/media/js/post.js:1105
+#: skins/common/media/js/post.js:1109
 msgid "confirm abandon comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:1179
+#: skins/common/media/js/post.js:1183
 msgid "delete this comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:1383
+#: skins/common/media/js/post.js:1387
 msgid "confirm delete comment"
 msgstr "oletko varma, että haluat poistaa tämän kommentin?"
 
-#: skins/common/media/js/post.js:1624 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
 msgid "Please enter question title (>10 characters)"
 msgstr ""
 

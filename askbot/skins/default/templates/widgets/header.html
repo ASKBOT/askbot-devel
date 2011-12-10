@@ -1,13 +1,17 @@
 <!-- template header.html -->
 {% import "macros.html" as macros %}
-<div id="header">
+<div 
+    id="header"
+    class="{% if settings.SHOW_LOGO %}with-logo{% else %}without-logo{% endif %}"
+>
     <div class="content-wrapper">
-        
         <div id="userToolsNav">
             {% include "widgets/user_navigation.html" %}
             {{settings.CUSTOM_HEADER}}
         </div>
+        {% if settings.SHOW_LOGO %}
             {% include "widgets/logo.html" %}
+        {% endif %}
         <div id="metaNav">
             {% include "widgets/meta_nav.html" %}
         </div>

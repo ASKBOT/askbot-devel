@@ -21,6 +21,7 @@ import askbot.conf.badges
 import askbot.conf.login_providers
 import askbot.conf.access_control
 import askbot.conf.site_modes
+import askbot.conf.widgets
 
 #import main settings object
 from askbot.conf.settings_wrapper import settings

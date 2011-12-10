@@ -6,10 +6,12 @@
 {% if answers %}
     {% include "question/answer_tab_bar.html" %}
     {{ macros.paginator(paginator_context) }}
+    <div class="clean"></div>
     {% for answer in answers %}
         {% include "question/answer_card.html" %}
     {% endfor %}
     {{ macros.paginator(paginator_context) }}
+    <div class="clean"></div>
 {% else %}
     {% include "question/sharing_prompt_phrase.html" %}
 {% endif %}

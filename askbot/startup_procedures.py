@@ -12,7 +12,6 @@ import os
 from django.db import transaction
 from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
-from askbot.models import badges
 from askbot.utils.loading import load_module
 
 PREAMBLE = """\n
@@ -120,15 +119,18 @@ def try_import(module_name, pypi_package_name):
     try:
         load_module(module_name)
     except ImportError, error:
-        message = unicode(error) + ' run\npip install %s' % pypi_package_name
-        message += '\nTo install all the dependencies at once, type:'
+        message = 'Error: ' + unicode(error) 
+        message += '\n\nPlease run: >pip install %s' % pypi_package_name
+        message += '\n\nTo install all the dependencies at once, type:'
         message += '\npip install -r askbot_requirements.txt\n'
+        message += '\nType ^C to quit.'
         raise ImproperlyConfigured(message)
 
 def test_modules():
     """tests presence of required modules"""
-    try_import('akismet', 'akismet')
-    try_import('recaptcha_works', 'django-recaptcha-works')
+    from askbot import REQUIREMENTS
+    for module_name, pip_path in REQUIREMENTS.items():
+        try_import(module_name, pip_path)
 
 def test_postgres():
     """Checks for the postgres buggy driver, version 2.4.2"""
@@ -258,7 +260,7 @@ def run_startup_tests():
     test_encoding()
     test_modules()
     test_askbot_url()
-    test_postgres()
+    #test_postgres()
     test_middleware()
     test_celery()
     settings_tester = SettingsTester({
@@ -283,8 +285,14 @@ def run_startup_tests():
 @transaction.commit_manually
 def run():
     """runs all the startup procedures"""
-    run_startup_tests()
     try:
+        run_startup_tests()
+    except ImproperlyConfigured, error:
+        transaction.rollback()
+        print error
+        sys.exit(1)
+    try:
+        from askbot.models import badges
         badges.init_badges()
         transaction.commit()
     except Exception, error:

@@ -3,6 +3,7 @@
 *.log
 db
 rebuild-locales.pl
+/src
 cache/??
 run
 *.wsgi

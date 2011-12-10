@@ -8,5 +8,5 @@
       href="{% url questions %}?scope=favorite" title="{% trans %}see your followed questions{% endtrans %}">FOLLOWED</a>
     {% endif %}
 {% else %}
-    <div class="scope-selector ask-message">Please ask your question here</div>
+    <div class="scope-selector ask-message">{% trans %}Please ask your question here{% endtrans %}</div>
 {% endif %}

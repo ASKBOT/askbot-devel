@@ -7,7 +7,7 @@
     </span>
     <a href="{{ settings.LOGOUT_URL }}?next={{ settings.LOGOUT_REDIRECT_URL }}">{% trans %}logout{% endtrans %}</a>
 {% else %}
-    <a href="{{ settings.LOGIN_URL }}">{% trans %}login{% endtrans %}</a>
+    <a href="{{ settings.LOGIN_URL }}?next={{request.path|clean_login_url}}">{% trans %}login{% endtrans %}</a>
 {% endif %}
 
 {% if request.user.is_authenticated() and request.user.is_administrator() %}

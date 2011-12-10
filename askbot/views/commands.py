@@ -1,7 +1,7 @@
 """
 :synopsis: most ajax processors for askbot
 
-This module contains most (but not all) processors for Ajax requests. 
+This module contains most (but not all) processors for Ajax requests.
 Not so clear if this subdivision was necessary as separation of Ajax and non-ajax views
 is not always very clean.
 """
@@ -39,7 +39,7 @@ def process_vote(user = None, vote_direction = None, post = None):
         raise exceptions.PermissionDenied(_('anonymous users cannot vote'))
 
     user.assert_can_vote_for_post(
-                                    post = post, 
+                                    post = post,
                                     direction = vote_direction
                                 )
 
@@ -71,7 +71,7 @@ def process_vote(user = None, vote_direction = None, post = None):
         else:
             vote = user.downvote(post = post)
 
-        response_data['count'] = post.score 
+        response_data['count'] = post.score
         response_data['status'] = 0 #this means "not cancel", normal operation
 
     response_data['success'] = 1
@@ -217,7 +217,7 @@ def vote(request, id):
                 vote_direction = 'down'
 
             if vote_type in ('5', '6'):
-                #todo: fix this weirdness - why postId here 
+                #todo: fix this weirdness - why postId here
                 #and not with question?
                 id = request.POST.get('postId')
                 post = get_object_or_404(models.Answer, id=id)
@@ -245,9 +245,22 @@ def vote(request, id):
             response_data['count'] = post.offensive_flag_count
             response_data['success'] = 1
 
+        elif vote_type in ['7.5', '8.5']:
+            #flag question or answer
+            if vote_type == '7.5':
+                post = get_object_or_404(models.Question, id=id)
+            if vote_type == '8.5':
+                id = request.POST.get('postId')
+                post = get_object_or_404(models.Answer, id=id)
+
+            request.user.flag_post(post, cancel = True)
+
+            response_data['count'] = post.offensive_flag_count
+            response_data['success'] = 1
+
         elif vote_type in ['9', '10']:
             #delete question or answer
-            post = get_object_or_404(models.Question, id = id) 
+            post = get_object_or_404(models.Question, id = id)
             if vote_type == '10':
                 id = request.POST.get('postId')
                 post = get_object_or_404(models.Answer, id = id)
@@ -460,7 +473,7 @@ def set_tag_filter_strategy(request):
 @login_required
 @csrf.csrf_protect
 def close(request, id):#close question
-    """view to initiate and process 
+    """view to initiate and process
     question close
     """
     question = get_object_or_404(models.Question, id=id)
@@ -490,7 +503,7 @@ def close(request, id):#close question
 @login_required
 @csrf.csrf_protect
 def reopen(request, id):#re-open question
-    """view to initiate and process 
+    """view to initiate and process
     question close
 
     this is not an ajax view
@@ -512,7 +525,7 @@ def reopen(request, id):#re-open question
                 'closed_by_username': closed_by_username,
             }
             return render_into_skin('reopen.html', data, request)
-            
+
     except exceptions.PermissionDenied, e:
         request.user.message_set.create(message = unicode(e))
         return HttpResponseRedirect(question.get_absolute_url())

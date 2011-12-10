@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-22 12:16-0400\n"
+"POT-Creation-Date: 2011-11-27 01:59-0600\n"
 "PO-Revision-Date: 2011-09-28 08:02-0800\n"
 "Last-Translator: Rosandra Cuello <rosandra.cuello@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgstr "Создать аккаунт, защищенный паролем"
 msgid "loading..."
 msgstr "загрузка..."
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:857
+#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
 msgid "tags cannot be empty"
 msgstr "введите теги"
 
@@ -96,7 +96,7 @@ msgstr "содержание должно быть более %s символо�
 msgid "please enter title"
 msgstr "пожалуйста, введите заголовок"
 
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:983
+#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
 #, c-format
 msgid "%s title minchars"
 msgstr "заголовок должен быть более %s символов"
@@ -150,11 +150,11 @@ msgstr "восстановить сообщение"
 msgid "post deleted"
 msgstr "сообщение удалено"
 
-#: skins/common/media/js/post.js:537 skins/old/media/js/post.js:535
+#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
 msgid "Follow"
 msgstr "Добавить закладку"
 
-#: skins/common/media/js/post.js:546 skins/common/media/js/post.js.c:555
+#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
 #: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
 #, c-format
 msgid "%s follower"
@@ -163,53 +163,53 @@ msgstr[0] "%s закладка"
 msgstr[1] "%s закладки"
 msgstr[2] "%s закладок"
 
-#: skins/common/media/js/post.js:551 skins/old/media/js/post.js:549
+#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
 msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
 msgstr "<div>Есть закладка!</div><div class=\"unfollow\">Убрать закладку</div>"
 
-#: skins/common/media/js/post.js:613
+#: skins/common/media/js/post.js:615
 msgid "undelete"
 msgstr "восстановить"
 
-#: skins/common/media/js/post.js:618
+#: skins/common/media/js/post.js:620
 msgid "delete"
 msgstr "удалить"
 
-#: skins/common/media/js/post.js:955
+#: skins/common/media/js/post.js:957
 msgid "add comment"
 msgstr "добавить комментарий"
 
-#: skins/common/media/js/post.js:958
+#: skins/common/media/js/post.js:960
 msgid "save comment"
 msgstr "сохранить комментарий"
 
-#: skins/common/media/js/post.js:986
+#: skins/common/media/js/post.js:990
 #, c-format
 msgid "enter %s more characters"
 msgstr "недостаточно символов, пожалуйста, добавьте ещё %s"
 
-#: skins/common/media/js/post.js:991
+#: skins/common/media/js/post.js:995
 #, c-format
 msgid "%s characters left"
 msgstr "осталось место для %s символов"
 
-#: skins/common/media/js/post.js:1062
+#: skins/common/media/js/post.js:1066
 msgid "cancel"
 msgstr ""
 
-#: skins/common/media/js/post.js:1105
+#: skins/common/media/js/post.js:1109
 msgid "confirm abandon comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:1179
+#: skins/common/media/js/post.js:1183
 msgid "delete this comment"
 msgstr "удалить этот комментарий"
 
-#: skins/common/media/js/post.js:1383
+#: skins/common/media/js/post.js:1387
 msgid "confirm delete comment"
 msgstr "Удалить комментарий?"
 
-#: skins/common/media/js/post.js:1624 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
 msgid "Please enter question title (>10 characters)"
 msgstr "Пожалуйста, добавьте заглавие к вопросу (>10 букв)"
 

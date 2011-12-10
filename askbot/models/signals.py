@@ -19,13 +19,14 @@ delete_question_or_answer = django.dispatch.Signal(
                                     providing_args=['instance', 'deleted_by']
                                 )
 flag_offensive = django.dispatch.Signal(providing_args=['instance', 'mark_by'])
+remove_flag_offensive = django.dispatch.Signal(providing_args=['instance', 'mark_by'])
 user_updated = django.dispatch.Signal(providing_args=['instance', 'updated_by'])
 #todo: move this to authentication app
 user_logged_in = django.dispatch.Signal(providing_args=['session'])
 
 post_updated = django.dispatch.Signal(
                                 providing_args=[
-                                            'post', 
+                                            'post',
                                             'updated_by',
                                             'newly_mentioned_users'
                                         ]
@@ -61,6 +62,7 @@ def pop_all_db_signal_receivers():
         edit_question_or_answer,
         delete_question_or_answer,
         flag_offensive,
+        remove_flag_offensive,
         user_updated,
         user_logged_in,
         post_updated,
@@ -83,7 +85,7 @@ def pop_all_db_signal_receivers():
 
 def set_all_db_signal_receivers(receiver_data):
     """takes receiver data as an argument
-    where the argument is as returned by the 
+    where the argument is as returned by the
     pop_all_db_signal_receivers() call
     and sets the receivers back to the signals
     """

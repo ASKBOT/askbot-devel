@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-18 19:14+0100\n"
+"POT-Creation-Date: 2011-11-27 02:33-0600\n"
 "PO-Revision-Date: 2011-11-19 11:27\n"
 "Last-Translator: <tapion@pdp.linux.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,7 +106,9 @@ msgstr "usa-questi-caratteri-nei-tag"
 
 #: forms.py:233
 msgid "community wiki (karma is not awarded & many others can edit wiki post)"
-msgstr "wiki della comunità (il karma non è ricompensato & molti altri possono modificare le pagine del wiki)"
+msgstr ""
+"wiki della comunità (il karma non è ricompensato & molti altri possono "
+"modificare le pagine del wiki)"
 
 #: forms.py:234
 msgid ""
@@ -185,7 +187,9 @@ msgstr "Non è possibile cambiare il proprio stato ad amministratore"
 msgid ""
 "If you wish to change %(username)s's status, please make a meaningful "
 "selection."
-msgstr "Se desideri cambiare lo stato di %(username)s, per piacere fai una selezione sensata."
+msgstr ""
+"Se desideri cambiare lo stato di %(username)s, per piacere fai una selezione "
+"sensata."
 
 #: forms.py:449
 msgid "Subject line"
@@ -196,126 +200,139 @@ msgid "Message text"
 msgstr "Messaggio"
 
 #: forms.py:542
-msgid "Your name:"
+#, fuzzy
+msgid "Your name (optional):"
 msgstr "Il tuo nome:"
 
 #: forms.py:543
-msgid "Email (not shared with anyone):"
-msgstr "Email (non condivisa con altri):"
+#, fuzzy
+msgid "Email:"
+msgstr "e-mail:"
 
-#: forms.py:544
+#: forms.py:545
 msgid "Your message:"
 msgstr "Il tuo messaggio:"
 
-#: forms.py:581
+#: forms.py:550
+msgid "I don't want to give my email or receive a response:"
+msgstr ""
+
+#: forms.py:572
+msgid "Please mark \"I dont want to give my mail\" field."
+msgstr ""
+
+#: forms.py:611
 msgid "ask anonymously"
 msgstr "chiedi come utente anonimo"
 
-#: forms.py:583
+#: forms.py:613
 msgid "Check if you do not want to reveal your name when asking this question"
 msgstr "Controlla se non vuoi rivelare il tuo nome quando fai questa domanda"
 
-#: forms.py:743
+#: forms.py:773
 msgid ""
 "You have asked this question anonymously, if you decide to reveal your "
 "identity, please check this box."
-msgstr "Hai posto questa domanda in modo anonimo. se decidi di rivelare la tua "
+msgstr ""
+"Hai posto questa domanda in modo anonimo. se decidi di rivelare la tua "
 "identità, per favore seleziona questo campo."
 
-#: forms.py:747
+#: forms.py:777
 msgid "reveal identity"
 msgstr "rivela l'identità"
 
-#: forms.py:805
+#: forms.py:835
 msgid ""
 "Sorry, only owner of the anonymous question can reveal his or her identity, "
 "please uncheck the box"
-msgstr "Spiacenti, solo il proprietario della domanda anonima può rivelare la sua identità, "
-"per favore togli la spunta dal campo"
+msgstr ""
+"Spiacenti, solo il proprietario della domanda anonima può rivelare la sua "
+"identità, per favore togli la spunta dal campo"
 
-#: forms.py:818
+#: forms.py:848
 msgid ""
 "Sorry, apparently rules have just changed - it is no longer possible to ask "
 "anonymously. Please either check the \"reveal identity\" box or reload this "
 "page and try editing the question again."
-msgstr "Spiacenti, sembra che le regole siano cambiate e che non è più possibile "
-"porre domande anonime. Controlla il box \"rivela identità\" oppure ricarica questa "
-"pagina e prova a modificare la domanda ancora"
+msgstr ""
+"Spiacenti, sembra che le regole siano cambiate e che non è più possibile "
+"porre domande anonime. Controlla il box \"rivela identità\" oppure ricarica "
+"questa pagina e prova a modificare la domanda ancora"
 
-#: forms.py:856
+#: forms.py:886
 msgid "this email will be linked to gravatar"
 msgstr "questa email verrà linkata a gravatar"
 
-#: forms.py:863
+#: forms.py:893
 msgid "Real name"
 msgstr "Nome reale"
 
-#: forms.py:870
+#: forms.py:900
 msgid "Website"
 msgstr "Sito web"
 
-#: forms.py:877
+#: forms.py:907
 msgid "City"
 msgstr "Città"
 
-#: forms.py:886
+#: forms.py:916
 msgid "Show country"
 msgstr "Mostra paese"
 
-#: forms.py:891
+#: forms.py:921
 msgid "Date of birth"
 msgstr "Data di nascita"
 
-#: forms.py:892
+#: forms.py:922
 msgid "will not be shown, used to calculate age, format: YYYY-MM-DD"
 msgstr ""
 "non verrà mostrata, utilizzato per calcolare l'età, formato: YYYY-MM-DD"
 
-#: forms.py:898
+#: forms.py:928
 msgid "Profile"
 msgstr "Profilo"
 
-#: forms.py:907
+#: forms.py:937
 msgid "Screen name"
 msgstr "Nome utente"
 
-#: forms.py:938 forms.py:939
+#: forms.py:968 forms.py:969
 msgid "this email has already been registered, please use another one"
 msgstr "questa email è già stata registrata, per favore utilizzane un'altra"
 
-#: forms.py:946
+#: forms.py:976
 msgid "Choose email tag filter"
 msgstr "Scegli il tag filtro per l'email"
 
-#: forms.py:993
+#: forms.py:1023
 msgid "Asked by me"
 msgstr "Chiesto da me"
 
-#: forms.py:996
+#: forms.py:1026
 msgid "Answered by me"
 msgstr "Risposta fornita da me"
 
-#: forms.py:999
+#: forms.py:1029
 msgid "Individually selected"
 msgstr "Selezionato individualmente"
 
-#: forms.py:1002
+#: forms.py:1032
 msgid "Entire forum (tag filtered)"
 msgstr "Tutto il forum (tag filtrati)"
 
-#: forms.py:1006
+#: forms.py:1036
 msgid "Comments and posts mentioning me"
 msgstr "Commenti e post che mi citano"
 
-#: forms.py:1085
+#: forms.py:1115
 msgid "okay, let's try!"
 msgstr "okay, proviamo!"
 
-#: forms.py:1086
+#: forms.py:1116
 msgid "no community email please, thanks"
 msgstr "no askbot email please, thanks"
 
-#: forms.py:1090
+#: forms.py:1120
 msgid "please choose one of the options above"
 msgstr "per favore scegli una delle opzioni soprariportate"
 
@@ -416,9 +433,18 @@ msgstr "contatti/"
 msgid "question/"
 msgstr "domanda/"
 
-#: urls.py:307 setup_templates/settings.py:205
+#: urls.py:307 setup_templates/settings.py:206
 msgid "account/"
 msgstr "account/"
+
+#: conf/access_control.py:8
+#, fuzzy
+msgid "Access control settings"
+msgstr "Impostazioni base"
+
+#: conf/access_control.py:17
+msgid "Allow only registered user to access the forum"
+msgstr ""
 
 #: conf/badges.py:13
 msgid "Badge settings"
@@ -529,11 +555,13 @@ msgid "Prefix for the email subject line"
 msgstr "Prefisso per l'oggetto delle email"
 
 #: conf/email.py:26
+#, fuzzy
 msgid ""
 "This setting takes default from the django settingEMAIL_SUBJECT_PREFIX. A "
-"value entered here will override the default."
-msgstr "Questa impostazione vengono prese dalle impostazioni predefinite di django EMAIL_SUBJECT_PREFIX. A"
-"il valore inserito quà sovrascriverà il predefinito."
+"value entered here will overridethe default."
+msgstr ""
+"Questa impostazione vengono prese dalle impostazioni predefinite di django "
+"EMAIL_SUBJECT_PREFIX. Ail valore inserito quà sovrascriverà il predefinito."
 
 #: conf/email.py:38
 msgid "Maximum number of news entries in an email alert"
@@ -555,43 +583,52 @@ msgstr "Frequenza predefinita della notifica delle domande fatte dagli utenti"
 msgid ""
 "Option to define frequency of emailed updates for: Question asked by the "
 "user."
-msgstr "Opzione per definire la frequenza degli aggiornamenti per email per: Domande chieste dall'"
-"utente"
+msgstr ""
+"Opzione per definire la frequenza degli aggiornamenti per email per: Domande "
+"chieste dall'utente"
 
 #: conf/email.py:76
 msgid "Default notification frequency questions answered by the user"
-msgstr "Frequenza predefinita di invio delle notifiche per risposte date dall'utente"
+msgstr ""
+"Frequenza predefinita di invio delle notifiche per risposte date dall'utente"
 
 #: conf/email.py:78
 msgid ""
 "Option to define frequency of emailed updates for: Question answered by the "
 "user."
-msgstr "Opzione per definire la frequenza degli aggiornamenti email per: Domande risposte da "
-"utente."
+msgstr ""
+"Opzione per definire la frequenza degli aggiornamenti email per: Domande "
+"risposte da utente."
 
 #: conf/email.py:90
 msgid ""
 "Default notification frequency questions individually                        "
 "selected by the user"
-msgstr "Frequenza predefinita di aggiornamento per le domande selezionate individualmente dall'utente"
+msgstr ""
+"Frequenza predefinita di aggiornamento per le domande selezionate "
+"individualmente dall'utente"
 
 #: conf/email.py:93
 msgid ""
 "Option to define frequency of emailed updates for: Question individually "
 "selected by the user."
-msgstr "Opzione per definire la frequenza di aggiornamenti email per: Domande individuali, selezionati dall'utente."
+msgstr ""
+"Opzione per definire la frequenza di aggiornamenti email per: Domande "
+"individuali, selezionati dall'utente."
 
 #: conf/email.py:105
 msgid ""
 "Default notification frequency for mentions                        and "
 "comments"
-msgstr "Frequenza predefinita per le notifiche per menzionare          e"
-"commenti"
+msgstr ""
+"Frequenza predefinita per le notifiche per menzionare          ecommenti"
 
 #: conf/email.py:108
 msgid ""
 "Option to define frequency of emailed updates for: Mentions and comments."
-msgstr "Opzione per definire la frequenza degli aggiornamenti email per: Menzionati e commenti."
+msgstr ""
+"Opzione per definire la frequenza degli aggiornamenti email per: Menzionati "
+"e commenti."
 
 #: conf/email.py:119
 msgid "Send periodic reminders about unanswered questions"
@@ -606,17 +643,20 @@ msgstr ""
 
 #: conf/email.py:134
 msgid "Days before starting to send reminders about unanswered questions"
-msgstr "Giorni trascorsi prima di inviare promemoria riguardo domande non risposte"
+msgstr ""
+"Giorni trascorsi prima di inviare promemoria riguardo domande non risposte"
 
 #: conf/email.py:145
 msgid ""
 "How often to send unanswered question reminders (in days between the "
 "reminders sent)."
-msgstr "Quanto spesso inviare i promemoria riguardo alle domande senza risposta"
+msgstr ""
+"Quanto spesso inviare i promemoria riguardo alle domande senza risposta"
 
 #: conf/email.py:157
 msgid "Max. number of reminders to send about unanswered questions"
-msgstr "Numero massimo di promemoria da inviare riguardo alle domande non risposte"
+msgstr ""
+"Numero massimo di promemoria da inviare riguardo alle domande non risposte"
 
 #: conf/email.py:168
 msgid "Send periodic reminders to accept the best answer"
@@ -631,7 +671,8 @@ msgstr ""
 
 #: conf/email.py:183
 msgid "Days before starting to send reminders to accept an answer"
-msgstr "Giorni trascorsi prima di inviare un promemoria  per accettare una risposta"
+msgstr ""
+"Giorni trascorsi prima di inviare un promemoria  per accettare una risposta"
 
 #: conf/email.py:194
 msgid ""
@@ -641,7 +682,8 @@ msgstr "Quanto spesso "
 
 #: conf/email.py:206
 msgid "Max. number of reminders to send to accept the best answer"
-msgstr "Numero massimo di promemoria da inviare per accettare la miglior risposta"
+msgstr ""
+"Numero massimo di promemoria da inviare per accettare la miglior risposta"
 
 #: conf/email.py:218
 msgid "Require email verification before allowing to post"
@@ -675,8 +717,9 @@ msgstr "Consenti di inviare domande per email"
 msgid ""
 "Before enabling this setting - please fill out IMAP settings in the settings."
 "py file"
-msgstr "Prima di abilitare questa opzione, prima compila le impostazioni IMAP nelle impostazioni."
-"file py"
+msgstr ""
+"Prima di abilitare questa opzione, prima compila le impostazioni IMAP nelle "
+"impostazioni.file py"
 
 #: conf/email.py:260
 msgid "Replace space in emailed tags with dash"
@@ -686,8 +729,9 @@ msgstr "Sostituisci lo spazio nei tag delle email con un trattino"
 msgid ""
 "This setting applies to tags written in the subject line of questions asked "
 "by email"
-msgstr "Queste impostazioni si applicano ai tag scritti nel campo oggetto della domanda risolta"
-"per email"
+msgstr ""
+"Queste impostazioni si applicano ai tag scritti nel campo oggetto della "
+"domanda risoltaper email"
 
 #: conf/external_keys.py:11
 msgid "Keys for external services"
@@ -704,8 +748,8 @@ msgid ""
 "hl=%(lang)s\">google webmasters tools site</a>"
 msgstr ""
 "Questa chiave aiuta google ad indicizzare il tuo sito. Per favore ottienila "
-"presso gli <a href=\"%(url)s hl=%(lang)s\">strumenti per i "
-"webmaster di Google</a>"
+"presso gli <a href=\"%(url)s hl=%(lang)s\">strumenti per i webmaster di "
+"Google</a>"
 
 #: conf/external_keys.py:36
 msgid "Google Analytics key"
@@ -756,8 +800,7 @@ msgid ""
 msgstr ""
 "La Facebook API key ed il Facebook secret ti permettono di usare  Facebook "
 "Connect per i login al tuo sito. Per favore ottieni queste chiavi presso la "
-"pagina <a href=\"%(url)s\">facebook "
-"create app</a>"
+"pagina <a href=\"%(url)s\">facebook create app</a>"
 
 #: conf/external_keys.py:97
 msgid "Facebook secret key"
@@ -772,7 +815,9 @@ msgstr "Il codice utente di Twitter"
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">twitter applications site</"
 "a>"
-msgstr "Per favore registra il tuo form a <a href=\"%(url)s\">sito dell'applicazione twitter</a>" 
+msgstr ""
+"Per favore registra il tuo form a <a href=\"%(url)s\">sito dell'applicazione "
+"twitter</a>"
 
 #: conf/external_keys.py:118
 msgid "Twitter consumer secret"
@@ -787,7 +832,8 @@ msgstr "Il codice utente di LinkedIn"
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">LinkedIn developer site</a>"
 msgstr ""
-"Per favore, registra il tuo form a <a href=\"%(url)s\">sito di sviluppo di LinkedIn"
+"Per favore, registra il tuo form a <a href=\"%(url)s\">sito di sviluppo di "
+"LinkedIn"
 
 #: conf/external_keys.py:139
 msgid "LinkedIn consumer secret"
@@ -802,8 +848,7 @@ msgstr "codice utente di ident.ca"
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">Identi.ca applications "
 "site</a>"
-msgstr ""
-"Per favore registra il tuo forum a <a href\"%(url)s\">Identi.ca"
+msgstr "Per favore registra il tuo forum a <a href\"%(url)s\">Identi.ca"
 
 #: conf/external_keys.py:160
 msgid "ident.ca consumer secret"
@@ -875,8 +920,8 @@ msgid ""
 "Enable embedding videos. <em>Note: please read <a href=\"%(url)s>read this</"
 "a> first.</em>"
 msgstr ""
-"Abilita l'inserimento di video. <em>Nota: per favore leggi <a href=\"%(url)s>leggi questo</"
-"a> prima </em>"
+"Abilita l'inserimento di video. <em>Nota: per favore leggi <a href="
+"\"%(url)s>leggi questo</a> prima </em>"
 
 #: conf/forum_data_rules.py:33
 msgid "Check to enable community wiki feature"
@@ -903,10 +948,11 @@ msgid ""
 "to check for pending posts every time the user logs in. The builtin Askbot "
 "login system supports this feature."
 msgstr ""
-"Seleziona se vuoi permettere agli utenti di inserire domande o risposte prima "
-"di fare login. Questa impostazione richiede una modifica nel sistema dei login "
-"per verificare se ci sono inserimenti in attesa ogni volta che un utente accede."
-"Il sistema di login integrato in Askbot supporta questa funzionalità."
+"Seleziona se vuoi permettere agli utenti di inserire domande o risposte "
+"prima di fare login. Questa impostazione richiede una modifica nel sistema "
+"dei login per verificare se ci sono inserimenti in attesa ogni volta che un "
+"utente accede.Il sistema di login integrato in Askbot supporta questa "
+"funzionalità."
 
 #: conf/forum_data_rules.py:73
 msgid "Allow swapping answer with question"
@@ -917,8 +963,9 @@ msgid ""
 "This setting will help import data from other forums such as zendesk, when "
 "automatic data import fails to detect the original question correctly."
 msgstr ""
-"Questa impostazione aiuterà ad importare i dati da altri forum come zendesk, quando "
-"l'importazione automatica dei dati non riesce ad identificare correttamente la domanda originale."
+"Questa impostazione aiuterà ad importare i dati da altri forum come zendesk, "
+"quando l'importazione automatica dei dati non riesce ad identificare "
+"correttamente la domanda originale."
 
 #: conf/forum_data_rules.py:87
 msgid "Maximum length of tag (number of characters)"
@@ -934,7 +981,8 @@ msgid ""
 "question. A mandatory tag may be wildcard, if the wildcard tags are active."
 msgstr ""
 "Almeno uno di questi tag sarà richiesto per ogni domanda creata o modificata."
-"Il tag obbligatorio può essere anche un wildcard, se i tag wilcard sono attivi."
+"Il tag obbligatorio può essere anche un wildcard, se i tag wilcard sono "
+"attivi."
 
 #: conf/forum_data_rules.py:110
 msgid "Force lowercase the tags"
@@ -946,9 +994,9 @@ msgid ""
 "management command: <code>python manage.py fix_question_tags</code> to "
 "globally rename the tags"
 msgstr ""
-"Attenzione: dopo aver selezionato questa impostazione fai un backup del database "
-"ed esegui il comando <code>python manage.py fix_question_tags</code> per "
-"aggiornare i tag globalmente"
+"Attenzione: dopo aver selezionato questa impostazione fai un backup del "
+"database ed esegui il comando <code>python manage.py fix_question_tags</"
+"code> per aggiornare i tag globalmente"
 
 #: conf/forum_data_rules.py:126
 msgid "Format of tag list"
@@ -958,7 +1006,8 @@ msgstr "Formato della lista dei tag"
 msgid ""
 "Select the format to show tags in, either as a simple list, or as a tag cloud"
 msgstr ""
-"Seleziona il formato con cui mostrare i tag: lista semplice o come una nuvola di tag"
+"Seleziona il formato con cui mostrare i tag: lista semplice o come una "
+"nuvola di tag"
 
 #: conf/forum_data_rules.py:140
 msgid "Use wildcard tags"
@@ -969,8 +1018,8 @@ msgid ""
 "Wildcard tags can be used to follow or ignore many tags at once, a valid "
 "wildcard tag has a single wildcard at the very end"
 msgstr ""
-"I tag wildcards possono essere usati per selezionare o ignorare più tag insieme, un "
-"tag wildcard valido ha una wildcard singola alla fine"
+"I tag wildcards possono essere usati per selezionare o ignorare più tag "
+"insieme, un tag wildcard valido ha una wildcard singola alla fine"
 
 #: conf/forum_data_rules.py:155
 msgid "Default max number of comments to display under posts"
@@ -987,7 +1036,8 @@ msgstr "Limita il tempo per modificare i commenti"
 
 #: conf/forum_data_rules.py:178
 msgid "If unchecked, there will be no time limit to edit the comments"
-msgstr "Se non selezionato, non ci sarà un limite di tempo per modificare i commenti"
+msgstr ""
+"Se non selezionato, non ci sarà un limite di tempo per modificare i commenti"
 
 #: conf/forum_data_rules.py:189
 msgid "Minutes allowed to edit a comment"
@@ -1019,9 +1069,10 @@ msgid ""
 "useful if you want to move the search bar away from the default position or "
 "do not like the default sticky behavior of the text search query."
 msgstr ""
-"Seleziona per disabilitare il comportamento \"adesivo\" della barra di ricerca. Questo può "
-"essere utile se vuoi spostare la barra di ricerca dalla sua posizione predefinita o "
-"non ti piace il comportamento adesivo predefinito della barra di ricerca."
+"Seleziona per disabilitare il comportamento \"adesivo\" della barra di "
+"ricerca. Questo può essere utile se vuoi spostare la barra di ricerca dalla "
+"sua posizione predefinita o non ti piace il comportamento adesivo "
+"predefinito della barra di ricerca."
 
 #: conf/forum_data_rules.py:233
 msgid "Maximum number of tags per question"
@@ -1082,8 +1133,7 @@ msgstr "Impostazioni del login"
 #: conf/login_providers.py:22
 msgid ""
 "Show alternative login provider buttons on the password \"Sign Up\" page"
-msgstr ""
-"Mostra un bottone alternativo per il login nella pagina \"Iscriviti\""
+msgstr "Mostra un bottone alternativo per il login nella pagina \"Iscriviti\""
 
 #: conf/login_providers.py:31
 msgid "Always display local login form and hide \"Askbot\" button."
@@ -1098,23 +1148,24 @@ msgid ""
 "to activate this feature you must fill out the wordpress xml-rpc setting "
 "bellow"
 msgstr ""
-"per attivare questa funzione devi compilare le impostazioni xml-rpc di wordpress "
-"quà sotto"
+"per attivare questa funzione devi compilare le impostazioni xml-rpc di "
+"wordpress quà sotto"
 
 #: conf/login_providers.py:50
 msgid ""
 "Fill it with the wordpress url to the xml-rpc, normally http://mysite.com/"
 "xmlrpc.php"
 msgstr ""
-"Inserisci l'url dell'xml-rpc di wordpress, di solito questo è http://miosito.com/xmlrpc.php"
+"Inserisci l'url dell'xml-rpc di wordpress, di solito questo è http://miosito."
+"com/xmlrpc.php"
 
 #: conf/login_providers.py:51
 msgid ""
 "To enable, go to Settings->Writing->Remote Publishing and check the box for "
 "XML-RPC"
 msgstr ""
-"Per abilitarlo, vai in Impostazioni->Scrittura->Pubblicazione Remota e seleziona la casella per "
-"XML-RPC"
+"Per abilitarlo, vai in Impostazioni->Scrittura->Pubblicazione Remota e "
+"seleziona la casella per XML-RPC"
 
 #: conf/login_providers.py:62
 msgid "Upload your icon"
@@ -1131,8 +1182,8 @@ msgid ""
 "Note: to really enable %(provider)s login some additional parameters will "
 "need to be set in the \"External keys\" section"
 msgstr ""
-"Nota: per abilitare veramente il login per %(provider)s devi aggiungere dei paramentri "
-"nella sezione \"Chiavi esterne\""
+"Nota: per abilitare veramente il login per %(provider)s devi aggiungere dei "
+"paramentri nella sezione \"Chiavi esterne\""
 
 #: conf/markup.py:15
 msgid "Markup in posts"
@@ -1456,7 +1507,9 @@ msgstr "Mostra domande simili nella barra laterale"
 
 #: conf/sidebar_question.py:64
 msgid "Uncheck this if you want to hide the list of related questions. "
-msgstr "Non selezionare questa impostazione se vuoi nascondere la lista di domande collegate."
+msgstr ""
+"Non selezionare questa impostazione se vuoi nascondere la lista di domande "
+"collegate."
 
 #: conf/site_modes.py:64
 msgid "Bootstrap mode"
@@ -2161,7 +2214,7 @@ msgstr "[chiusa]"
 msgid "[deleted]"
 msgstr "[cancellata]"
 
-#: const/__init__.py:208 views/readers.py:578
+#: const/__init__.py:208 views/readers.py:589
 msgid "initial version"
 msgstr "versione iniziale"
 
@@ -2312,6 +2365,7 @@ msgid "i-names are not supported"
 msgstr "i-names non sono supportati"
 
 #: deps/django_authopenid/forms.py:233
+#, python-format
 msgid "Please enter your %(username_token)s"
 msgstr "Per favore inserisci il tuo %(username_token)s"
 
@@ -2361,7 +2415,7 @@ msgid "Incorrect username."
 msgstr "Mi spiace, questo username non esiste"
 
 #: deps/django_authopenid/urls.py:9 deps/django_authopenid/urls.py:12
-#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:205
+#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:206
 msgid "signin/"
 msgstr "signin/"
 
@@ -2394,6 +2448,7 @@ msgid "recover/"
 msgstr "recupera/"
 
 #: deps/django_authopenid/util.py:378
+#, python-format
 msgid "%(site)s user name and password"
 msgstr "Per favore inserisci username e password di %(site)s"
 
@@ -2450,6 +2505,7 @@ msgid "Verisign user name"
 msgstr "nome utente Verisign"
 
 #: deps/django_authopenid/util.py:608
+#, python-format
 msgid "Change your %(provider)s password"
 msgstr "Cambia password di %(provider)s"
 
@@ -2464,10 +2520,12 @@ msgid "Create password for %(provider)s"
 msgstr ""
 
 #: deps/django_authopenid/util.py:625
+#, python-format
 msgid "Connect your %(provider)s account to %(site_name)s"
 msgstr "Collega il tuo account %(provider)s per %(site_name)s"
 
 #: deps/django_authopenid/util.py:634
+#, fuzzy, python-format
 msgid "Signin with %(provider)s user name and password"
 msgstr "Per favore inserisci username e password"
 
@@ -2481,71 +2539,72 @@ msgstr ""
 msgid "OpenID %(openid_url)s is invalid"
 msgstr "L'OpenID %(openid_url)s non è valido"
 
-#: deps/django_authopenid/views.py:270 deps/django_authopenid/views.py:415
-#: deps/django_authopenid/views.py:443
+#: deps/django_authopenid/views.py:270 deps/django_authopenid/views.py:421
+#: deps/django_authopenid/views.py:449
 #, python-format
 msgid ""
 "Unfortunately, there was some problem when connecting to %(provider)s, "
 "please try again or use another provider"
 msgstr ""
 
-#: deps/django_authopenid/views.py:365
+#: deps/django_authopenid/views.py:371
 msgid "Your new password saved"
 msgstr "Nuova password salvata"
 
-#: deps/django_authopenid/views.py:469
+#: deps/django_authopenid/views.py:475
 msgid "The login password combination was not correct"
 msgstr ""
 
-#: deps/django_authopenid/views.py:573
+#: deps/django_authopenid/views.py:579
 msgid "Please click any of the icons below to sign in"
 msgstr ""
 
-#: deps/django_authopenid/views.py:575
+#: deps/django_authopenid/views.py:581
 msgid "Account recovery email sent"
 msgstr ""
 
-#: deps/django_authopenid/views.py:578
+#: deps/django_authopenid/views.py:584
 msgid "Please add one or more login methods."
 msgstr ""
 
-#: deps/django_authopenid/views.py:580
+#: deps/django_authopenid/views.py:586
 msgid "If you wish, please add, remove or re-validate your login methods"
 msgstr ""
 
-#: deps/django_authopenid/views.py:582
+#: deps/django_authopenid/views.py:588
 msgid "Please wait a second! Your account is recovered, but ..."
 msgstr ""
 
-#: deps/django_authopenid/views.py:584
+#: deps/django_authopenid/views.py:590
 msgid "Sorry, this account recovery key has expired or is invalid"
 msgstr ""
 
-#: deps/django_authopenid/views.py:657
+#: deps/django_authopenid/views.py:663
 #, python-format
 msgid "Login method %(provider_name)s does not exist"
 msgstr ""
 
-#: deps/django_authopenid/views.py:663
+#: deps/django_authopenid/views.py:669
 msgid "Oops, sorry - there was some error - please try again"
 msgstr "Oops! C'è stato un errore, per favore riprova"
 
-#: deps/django_authopenid/views.py:754
+#: deps/django_authopenid/views.py:760
 #, python-format
 msgid "Your %(provider)s login works fine"
 msgstr ""
 
-#: deps/django_authopenid/views.py:1065 deps/django_authopenid/views.py:1071
+#: deps/django_authopenid/views.py:1071 deps/django_authopenid/views.py:1077
 #, python-format
 msgid "your email needs to be validated see %(details_url)s"
 msgstr ""
 "Il tuo indirizzo e-mail dev'essere verificato &mdash; vedi %(details_url)s"
 
-#: deps/django_authopenid/views.py:1092
+#: deps/django_authopenid/views.py:1098
+#, python-format
 msgid "Recover your %(site)s account"
 msgstr "Recupera la password su %(site)s"
 
-#: deps/django_authopenid/views.py:1162
+#: deps/django_authopenid/views.py:1168
 msgid "Please check your email and visit the enclosed link."
 msgstr ""
 
@@ -2578,74 +2637,6 @@ msgstr "Valore predefinito: %s"
 #, python-format
 msgid "Allowed image file types are %(types)s"
 msgstr "I tipi di file immagine consentiti sono %(types)s"
-
-#: deps/livesettings/templates/livesettings/_admin_site_views.html:4
-msgid "Sites"
-msgstr "Siti"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Documentation"
-msgstr "Documentazione"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Change password"
-msgstr "Cambia password"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:11
-#: deps/livesettings/templates/livesettings/site_settings.html:23
-msgid "Log out"
-msgstr "Log out"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:14
-#: deps/livesettings/templates/livesettings/site_settings.html:26
-msgid "Home"
-msgstr "Home"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:15
-msgid "Edit Group Settings"
-msgstr "Modifica le impostazioni dei gruppi"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:22
-#: deps/livesettings/templates/livesettings/site_settings.html:50
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] "Per favore correggi l'errore sottostante"
-msgstr[1] "Per favore correggi gli errori sottostanti"
-
-#: deps/livesettings/templates/livesettings/group_settings.html:28
-#, python-format
-msgid "Settings included in %(name)s."
-msgstr "Impostazioni incluse in %(name)s."
-
-#: deps/livesettings/templates/livesettings/group_settings.html:62
-#: deps/livesettings/templates/livesettings/site_settings.html:97
-msgid "You don't have permission to edit values."
-msgstr "Non hai i permessi per modificare i valori."
-
-#: deps/livesettings/templates/livesettings/site_settings.html:27
-msgid "Edit Site Settings"
-msgstr "Modifica impostazioni del sito"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:43
-msgid "Livesettings are disabled for this site."
-msgstr "I Livesettings sono disabilitati per questo sito."
-
-#: deps/livesettings/templates/livesettings/site_settings.html:44
-msgid "All configuration options must be edited in the site settings.py file"
-msgstr ""
-"Tutte le opzioni di configurazione devono essere modificate nel file "
-"settings.py"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:66
-#, python-format
-msgid "Group settings: %(name)s"
-msgstr "Impostazioni per i gruppi: %(name)s"
-
-#: deps/livesettings/templates/livesettings/site_settings.html:93
-msgid "Uncollapse all"
-msgstr "Espandi tutti"
 
 #: importers/stackexchange/management/commands/load_stackexchange.py:141
 msgid "Congratulations, you are now an Administrator"
@@ -2783,6 +2774,11 @@ msgid_plural "%(question_count)d unanswered questions about %(topics)s"
 msgstr[0] ""
 msgstr[1] ""
 
+#: middleware/forum_mode.py:31
+#, fuzzy, python-format
+msgid "Please log in to use %s"
+msgstr "Accedi o registrati per inserire domande"
+
 #: models/__init__.py:317
 msgid ""
 "Sorry, you cannot accept or unaccept best answers because your account is "
@@ -2797,10 +2793,13 @@ msgid ""
 msgstr "Mi spiace, non puoi accettare risposte perché il tuo account è sospeso"
 
 #: models/__init__.py:334
+#, python-format
 msgid ""
 ">%(points)s points required to accept or unaccept  your own answer to your "
 "own question"
-msgstr "Ti servono più di %(points)s punti per accettare o negare la risposta alla tua stessa domanda"
+msgstr ""
+"Ti servono più di %(points)s punti per accettare o negare la risposta alla "
+"tua stessa domanda"
 
 #: models/__init__.py:353
 #, python-format
@@ -2809,11 +2808,13 @@ msgid ""
 msgstr ""
 
 #: models/__init__.py:361
+#, python-format
 msgid ""
 "Sorry, only moderators or original author of the question  - %(username)s - "
 "can accept or unaccept the best answer"
 msgstr ""
-"Mi spiace, solo il moderatore o l'autore della domanda, %(username)s, può accettare la risposta migliore"
+"Mi spiace, solo il moderatore o l'autore della domanda, %(username)s, può "
+"accettare la risposta migliore"
 
 #: models/__init__.py:389
 msgid "cannot vote for own posts"
@@ -2931,6 +2932,7 @@ msgstr ""
 "Mi spiace, puoi modificare solo i tuoi post perché il tuo account è sospeso"
 
 #: models/__init__.py:576
+#, python-format
 msgid ""
 "Sorry, to edit wiki posts, a minimum reputation of %(min_rep)s is required"
 msgstr ""
@@ -2938,6 +2940,7 @@ msgstr ""
 "%(min_rep)s punti reputazione"
 
 #: models/__init__.py:583
+#, python-format
 msgid ""
 "Sorry, to edit other people's posts, a minimum reputation of %(min_rep)s is "
 "required"
@@ -3119,12 +3122,14 @@ msgid "tomorrow"
 msgstr ""
 
 #: models/__init__.py:1345
+#, python-format
 msgid "in %(hr)d hour"
 msgid_plural "in %(hr)d hours"
 msgstr[0] "%(hr)d ora fa"
 msgstr[1] "%(hr)d ore fa"
 
 #: models/__init__.py:1347
+#, python-format
 msgid "in %(min)d min"
 msgid_plural "in %(min)d mins"
 msgstr[0] "%(min)d minuto fa"
@@ -3144,27 +3149,28 @@ msgid ""
 "post an answer %(left)s"
 msgstr ""
 
-#: models/__init__.py:1516
+#: models/__init__.py:1516 skins/default/templates/feedback_email.txt:9
+#: skins/old/templates/feedback_email.txt:9
 msgid "Anonymous"
 msgstr "utente non registrato"
 
-#: models/__init__.py:1612 views/users.py:368
+#: models/__init__.py:1612 views/users.py:371
 msgid "Site Adminstrator"
 msgstr "Amministratore del sito"
 
-#: models/__init__.py:1614 views/users.py:370
+#: models/__init__.py:1614 views/users.py:373
 msgid "Forum Moderator"
 msgstr "Moderatore del forum"
 
-#: models/__init__.py:1616 views/users.py:372
+#: models/__init__.py:1616 views/users.py:375
 msgid "Suspended User"
 msgstr "Utente sospeso"
 
-#: models/__init__.py:1618 views/users.py:374
+#: models/__init__.py:1618 views/users.py:377
 msgid "Blocked User"
 msgstr "Utente bloccato"
 
-#: models/__init__.py:1620 views/users.py:376
+#: models/__init__.py:1620 views/users.py:379
 msgid "Registered User"
 msgstr "Utente registrato"
 
@@ -3177,6 +3183,7 @@ msgid "Approved User"
 msgstr "Utente approvato"
 
 #: models/__init__.py:1733
+#, python-format
 msgid "%(username)s karma is %(reputation)s"
 msgstr "%(username)s ha %(reputation)s punti reputazione"
 
@@ -3234,16 +3241,6 @@ msgstr ""
 #: models/__init__.py:2565 views/commands.py:396
 msgid "Your tag subscription was saved, thanks!"
 msgstr ""
-
-#: models/answer.py:105
-msgid ""
-"Sorry, the answer you are looking for is no longer available, because the "
-"parent question has been removed"
-msgstr ""
-
-#: models/answer.py:112
-msgid "Sorry, this answer has been removed and is no longer accessible"
-msgstr "Mi spiace, questa domanda è stata cancellata e non è più accessibile"
 
 #: models/badges.py:129
 #, python-format
@@ -3397,7 +3394,8 @@ msgid ""
 "Answered a question more than %(days)s days later with at least %(votes)s "
 "votes"
 msgstr ""
-"Ha risposto a una domanda vecchia di almeno %(days)s giorni ottenendo almeno %(votes)s voti"
+"Ha risposto a una domanda vecchia di almeno %(days)s giorni ottenendo almeno "
+"%(votes)s voti"
 
 #: models/badges.py:525
 msgid "Necromancer"
@@ -3440,6 +3438,7 @@ msgid "Associate Editor"
 msgstr ""
 
 #: models/badges.py:627
+#, fuzzy, python-format
 msgid "Edited %(num)s entries"
 msgstr "Ha fatto almeno 100 revisioni"
 
@@ -3460,6 +3459,7 @@ msgid "Completed all user profile fields"
 msgstr "Ha completato tutti i campi del suo profilo utente"
 
 #: models/badges.py:663
+#, fuzzy, python-format
 msgid "Question favorited by %(num)s users"
 msgstr "Domanda inserita tra le \"preferite\" da almeno 25 utenti"
 
@@ -3485,6 +3485,7 @@ msgid "Commentator"
 msgstr "Commentatore"
 
 #: models/badges.py:736
+#, fuzzy, python-format
 msgid "Posted %(num_comments)s comments"
 msgstr "Inseriti (%(comment_count)s commenti"
 
@@ -3493,6 +3494,7 @@ msgid "Taxonomist"
 msgstr "Tassonomista"
 
 #: models/badges.py:756
+#, fuzzy, python-format
 msgid "Created a tag used by %(num)s questions"
 msgstr "Ha creato un tag usato da almeno 50 domande"
 
@@ -3503,6 +3505,20 @@ msgstr "Esperto"
 #: models/badges.py:779
 msgid "Very active in one tag"
 msgstr "Molto attivo in domande con lo stesso tag"
+
+#: models/content.py:549
+msgid "Sorry, this question has been deleted and is no longer accessible"
+msgstr "Mi spiace, questa domanda è stata cancellata e non è più accessibile"
+
+#: models/content.py:565
+msgid ""
+"Sorry, the answer you are looking for is no longer available, because the "
+"parent question has been removed"
+msgstr ""
+
+#: models/content.py:572
+msgid "Sorry, this answer has been removed and is no longer accessible"
+msgstr "Mi spiace, questa domanda è stata cancellata e non è più accessibile"
 
 #: models/meta.py:116
 msgid ""
@@ -3516,40 +3532,36 @@ msgid ""
 "parent answer has been removed"
 msgstr ""
 
-#: models/question.py:70
+#: models/question.py:63
 #, python-format
 msgid "\" and \"%s\""
 msgstr ""
 
-#: models/question.py:73
+#: models/question.py:66
 msgid "\" and more"
 msgstr "\" ed altro ancora"
 
-#: models/question.py:492
-msgid "Sorry, this question has been deleted and is no longer accessible"
-msgstr "Mi spiace, questa domanda è stata cancellata e non è più accessibile"
-
-#: models/question.py:948
+#: models/question.py:806
 #, python-format
 msgid "%(author)s modified the question"
 msgstr "%(author)s ha modificato la sua domanda"
 
-#: models/question.py:952
+#: models/question.py:810
 #, python-format
 msgid "%(people)s posted %(new_answer_count)s new answers"
 msgstr "%(people)s ha/hanno scritto %(new_answer_count)s nuova/e risposta/e"
 
-#: models/question.py:957
+#: models/question.py:815
 #, python-format
 msgid "%(people)s commented the question"
 msgstr "%(people)s ha/hanno commentato la domanda"
 
-#: models/question.py:962
+#: models/question.py:820
 #, python-format
 msgid "%(people)s commented answers"
 msgstr "%(people)s ha/hanno commentato alcune risposte"
 
-#: models/question.py:964
+#: models/question.py:822
 #, python-format
 msgid "%(people)s commented an answer"
 msgstr "%(people)s ha/hanno commentato una risposta"
@@ -3621,13 +3633,86 @@ msgstr "Ogni settimana"
 msgid "No email"
 msgstr "Mai"
 
-#: skins/old/templates/user_profile/user_info.html:90
-msgid "todays unused votes"
-msgstr "voti rimanenti per oggi"
+#: skins/common/templates/authopenid/confirm_email.txt:1
+#: skins/old/templates/authopenid/confirm_email.txt:1
+msgid "Thank you for registering at our Q&A forum!"
+msgstr "Grazie per esserti registrato sul nostro forum Q&A!"
 
-#: skins/old/templates/user_profile/user_info.html:91
-msgid "votes left"
-msgstr "voti rimanenti"
+#: skins/common/templates/authopenid/confirm_email.txt:3
+#: skins/old/templates/authopenid/confirm_email.txt:3
+msgid "Your account details are:"
+msgstr "Il tuo account è:"
+
+#: skins/common/templates/authopenid/confirm_email.txt:5
+#: skins/old/templates/authopenid/confirm_email.txt:5
+msgid "Username:"
+msgstr "Nome utente:"
+
+#: skins/common/templates/authopenid/confirm_email.txt:6
+#: skins/old/templates/authopenid/confirm_email.txt:6
+msgid "Password:"
+msgstr "Password:"
+
+#: skins/common/templates/authopenid/confirm_email.txt:8
+#: skins/old/templates/authopenid/confirm_email.txt:8
+msgid "Please sign in here:"
+msgstr "Puoi accedere al tuo account da qui:"
+
+#: skins/common/templates/authopenid/confirm_email.txt:11
+#: skins/common/templates/authopenid/email_validation.txt:13
+#: skins/old/templates/authopenid/confirm_email.txt:11
+#: skins/old/templates/authopenid/email_validation.txt:13
+msgid ""
+"Sincerely,\n"
+"Forum Administrator"
+msgstr ""
+"Cordialmente,\n"
+" l'Amministratore"
+
+#: skins/common/templates/authopenid/email_validation.txt:1
+#: skins/old/templates/authopenid/email_validation.txt:1
+msgid "Greetings from the Q&A forum"
+msgstr "Benvenuto sul forum Q&A"
+
+#: skins/common/templates/authopenid/email_validation.txt:3
+#: skins/old/templates/authopenid/email_validation.txt:3
+msgid "To make use of the Forum, please follow the link below:"
+msgstr "Per utilizzare il forum, clicca sul collegamento qui sotto:"
+
+#: skins/common/templates/authopenid/email_validation.txt:7
+#: skins/old/templates/authopenid/email_validation.txt:7
+msgid "Following the link above will help us verify your email address."
+msgstr ""
+"Cliccando sul collegamento qui sopra, verificherai il tuo indirizzo e-mail."
+
+#: skins/common/templates/authopenid/email_validation.txt:9
+msgid ""
+"If you beleive that this message was sent in mistake - \n"
+"no further action is needed. Just ingore this email, we apologize\n"
+"for any inconvenience"
+msgstr ""
+"Se hai ricevuto questo messaggio per errore, basta che tu ignori questa e-"
+"mail. Ci scusiamo per il problema."
+
+#: skins/default/templates/feedback_email.txt:2
+#: skins/old/templates/feedback_email.txt:2
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Hello, this is a %(site_title)s forum feedback message.\n"
+msgstr ""
+"\n"
+"Salve, questo è un messaggio di notifica del forum  %(site_title)s.\n"
+
+#: skins/old/templates/authopenid/email_validation.txt:9
+#, fuzzy
+msgid ""
+"If you believe that this message was sent in mistake - \n"
+"no further action is needed. Just ignore this email, we apologize\n"
+"for any inconvenience."
+msgstr ""
+"Se hai ricevuto questo messaggio per errore, basta che tu ignori questa e-"
+"mail. Ci scusiamo per il problema."
 
 #: templatetags/extra_filters.py:145 templatetags/extra_filters_jinja.py:240
 msgid "no items in counter"
@@ -3769,7 +3854,8 @@ msgstr "Puoi votare ancora %(votes_left)s volte oggi"
 
 #: views/commands.py:122
 msgid "Sorry, but anonymous users cannot access the inbox"
-msgstr "Spiacenti, gli utenti anonimi non possono accedere ai messaggi in arrivo"
+msgstr ""
+"Spiacenti, gli utenti anonimi non possono accedere ai messaggi in arrivo"
 
 #: views/commands.py:192
 msgid "Sorry, something is not right here..."
@@ -3798,6 +3884,7 @@ msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
 msgstr ""
 
 #: views/commands.py:409
+#, python-format
 msgid "Please sign in to subscribe for: %(tags)s"
 msgstr "Accedi per sottoscrivere i tag: %(tags)s"
 
@@ -3805,20 +3892,21 @@ msgstr "Accedi per sottoscrivere i tag: %(tags)s"
 msgid "Please sign in to vote"
 msgstr "Accedi per votare"
 
-#: views/meta.py:83
+#: views/meta.py:84
 msgid "Q&A forum feedback"
 msgstr "Contatti forum Q&A"
 
-#: views/meta.py:84
+#: views/meta.py:85
 msgid "Thanks for the feedback!"
 msgstr "Grazie per il tuo messaggio!"
 
-#: views/meta.py:92
+#: views/meta.py:94
 msgid "We look forward to hearing your feedback! Please, give it next time :)"
 msgstr ""
 "Siamo curiosi di sentire la tua opinione! Sarà per la prossima volta :)"
 
 #: views/readers.py:151
+#, python-format
 msgid "%(q_num)s question, tagged"
 msgid_plural "%(q_num)s questions, tagged"
 msgstr[0] "%(q_num)s domanda, taggata"
@@ -3838,81 +3926,81 @@ msgid_plural "%(badge_count)d %(badge_level)s badges"
 msgstr[0] "%(badge_count)d%(badge_level)s medaglia"
 msgstr[1] "%(badge_count)d%(badge_level)s medaglie"
 
-#: views/readers.py:407
+#: views/readers.py:415
 msgid ""
 "Sorry, the comment you are looking for has been deleted and is no longer "
 "accessible"
 msgstr "Mi spiace, questo commento è stata cancellato e non è più accessibile"
 
-#: views/users.py:227
+#: views/users.py:211
 msgid "moderate this user"
 msgstr "modera questo utente"
 
-#: views/users.py:228
+#: views/users.py:212
 msgid "moderate user"
 msgstr "modera utente"
 
-#: views/users.py:383
+#: views/users.py:386
 msgid "user profile"
 msgstr "profilo utente"
 
-#: views/users.py:384
+#: views/users.py:387
 msgid "user profile overview"
 msgstr "profilo"
 
-#: views/users.py:694
+#: views/users.py:698
 msgid "recent user activity"
 msgstr "attività recente"
 
-#: views/users.py:695
+#: views/users.py:699
 msgid "profile - recent activity"
 msgstr "profilo utente &mdash; attività recente"
 
-#: views/users.py:781
+#: views/users.py:785
 msgid "comments and answers to others questions"
 msgstr "commenti e risposte a domande"
 
-#: views/users.py:782
+#: views/users.py:786
 msgid "profile - responses"
 msgstr "profilo utente &mdash; risposte"
 
-#: views/users.py:856
+#: views/users.py:860
 msgid "user vote record"
 msgstr "elenco dei voti dati"
 
-#: views/users.py:857
+#: views/users.py:861
 msgid "profile - votes"
 msgstr "profilo utente &mdash; voti"
 
-#: views/users.py:892
+#: views/users.py:896
 msgid "user reputation in the community"
 msgstr "punti reputazione"
 
-#: views/users.py:893
+#: views/users.py:897
 msgid "profile - user reputation"
 msgstr "profilo utente &mdash; reputazione"
 
-#: views/users.py:920
+#: views/users.py:924
 msgid "users favorite questions"
 msgstr "domande preferite"
 
-#: views/users.py:921
+#: views/users.py:925
 msgid "profile - favorite questions"
 msgstr "profilo utente &mdash; domande preferite"
 
-#: views/users.py:941 views/users.py:945
+#: views/users.py:945 views/users.py:949
 msgid "changes saved"
 msgstr "i cambiamenti sono stati salvati"
 
-#: views/users.py:951
+#: views/users.py:955
 msgid "email updates canceled"
 msgstr "notifiche via e-mail cancellate"
 
-#: views/users.py:969
+#: views/users.py:973
 msgid "email subscription settings"
 msgstr "impostazioni notifiche via e-mail"
 
-#: views/users.py:970
+#: views/users.py:974
 msgid "profile - email subscriptions"
 msgstr "profilo utente &mdash; notifiche via e-mail"
 
@@ -3953,7 +4041,8 @@ msgstr ""
 
 #: views/writers.py:646
 msgid "Sorry, anonymous users cannot edit comments"
-msgstr "Mi spiace, gli utenti non registrati non possono modificare i commenti."
+msgstr ""
+"Mi spiace, gli utenti non registrati non possono modificare i commenti."
 
 #: views/writers.py:654
 #, python-format
@@ -3968,60 +4057,510 @@ msgstr ""
 msgid "sorry, we seem to have some technical difficulties"
 msgstr "Mi spiace, ci sono dei problemi tecnici"
 
-#~ msgid "Keys to connect the site with external services like Facebook, etc."
-#~ msgstr ""
-#~ "Chiavi per connettere il sito con servizi esterni come Facebook, ecc."
-
-#, fuzzy
-#~ msgid "License settings"
-#~ msgstr "Impostazioni base"
-
-#~ msgid "Minimum reputation required to perform actions"
-#~ msgstr "Reputazione minima per eseguire operazioni"
-
-#, fuzzy
-#~ msgid "Site modes"
+#~ msgid "Sites"
 #~ msgstr "Siti"
 
-#~ msgid "Q&A forum website parameters and urls"
-#~ msgstr "Parametri ed url per il Q&A forum"
+#~ msgid "Documentation"
+#~ msgstr "Documentazione"
 
-#~ msgid "Skin and User Interface settings"
-#~ msgstr "Impostazioni della skin e dell'interfaccia utente"
+#~ msgid "Change password"
+#~ msgstr "Cambia password"
 
-#~ msgid "Limits applicable to votes and moderation flags"
-#~ msgstr "Limiti riguardanti i voti e i post segnati come inappropriati"
+#~ msgid "Log out"
+#~ msgstr "Log out"
 
-#~ msgid "Setting groups"
-#~ msgstr "Gruppi di impostazioni"
+#~ msgid "Home"
+#~ msgstr "Home"
 
-#~ msgid "vote"
-#~ msgid_plural "votes"
-#~ msgstr[0] "voto"
-#~ msgstr[1] "voti"
+#~ msgid "Edit Group Settings"
+#~ msgstr "Modifica le impostazioni dei gruppi"
 
-#, fuzzy
-#~ msgid "answer"
-#~ msgid_plural "answers"
-#~ msgstr[0] "risposta"
-#~ msgstr[1] "risposta"
+#~ msgid "Please correct the error below."
+#~ msgid_plural "Please correct the errors below."
+#~ msgstr[0] "Per favore correggi l'errore sottostante"
+#~ msgstr[1] "Per favore correggi gli errori sottostanti"
 
-#~ msgid "view"
-#~ msgid_plural "views"
-#~ msgstr[0] "consultazione"
-#~ msgstr[1] "consultazioni"
+#~ msgid "Settings included in %(name)s."
+#~ msgstr "Impostazioni incluse in %(name)s."
+
+#~ msgid "You don't have permission to edit values."
+#~ msgstr "Non hai i permessi per modificare i valori."
+
+#~ msgid "Edit Site Settings"
+#~ msgstr "Modifica impostazioni del sito"
+
+#~ msgid "Livesettings are disabled for this site."
+#~ msgstr "I Livesettings sono disabilitati per questo sito."
 
 #~ msgid ""
-#~ "This option currently defines default frequency of emailed updates in the "
-#~ "following five categories: questions asked by user, answered by user, "
-#~ "individually selected, entire forum (per person tag filter applies) and "
-#~ "posts mentioning the user and comment responses"
+#~ "All configuration options must be edited in the site settings.py file"
 #~ msgstr ""
-#~ "Questa opzione attualmente definisce la frequenza di default degli update "
-#~ "via email nelle seguenti cinque categorie: domande poste dall'utente, "
-#~ "risposte dell'utente, domande selezionate individualmente, tutto il forum "
-#~ "(con filtri ai tag applicati individualmente), post che menzionano "
-#~ "l'utente e risposte ai commenti  "
+#~ "Tutte le opzioni di configurazione devono essere modificate nel file "
+#~ "settings.py"
+
+#~ msgid "Group settings: %(name)s"
+#~ msgstr "Impostazioni per i gruppi: %(name)s"
+
+#~ msgid "Uncollapse all"
+#~ msgstr "Espandi tutti"
+
+#, fuzzy
+#~ msgid "Please enter your <span>user name</span>, then sign in"
+#~ msgstr "Per favore inserisci username e password"
+
+#, fuzzy
+#~ msgid "(or select another login method above)"
+#~ msgstr "scegli una delle opzioni qui sopra"
+
+#, fuzzy
+#~ msgid "Sign in"
+#~ msgstr "signin/"
+
+#~ msgid "Change email"
+#~ msgstr "Cambia e-mail"
+
+#~ msgid "Save your email address"
+#~ msgstr "Salva il tuo indirizzo e-mail"
+
+#~ msgid "change %(email)s info"
+#~ msgstr ""
+#~ "Se vuoi usare un nuovo indirizzo per le<strong>e-mail di notifica</"
+#~ "strong>, \n"
+#~ "<span class=\"strong big\">inseriscilo qui sotto il nuovo indirizzo</"
+#~ "span>.<br>L'indirizzo corrente è <strong>%(email)s</strong>"
+
+#~ msgid "here is why email is required, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "<span class='strong big'>Inserisci il tuo indirizzo e-mail qui sotto</"
+#~ "span> &Egrave; obbligatorio inserire un indirizzo e-mail valido. Se lo "
+#~ "desideri, puoi ricevere <strong>messaggi di notifica</strong> sulle "
+#~ "domande che ti interessano o sull'intero forum. Inoltre, il tuo indirizzo "
+#~ "è usato per creare un'immagine <a href='%(gravatar_faq_url)"
+#~ "s'><strong>gravatar</strong></a> unica per il tuo account. Il tuo "
+#~ "indirizzo e-mail non sarà mai pubblicato o comunicato a terze parti."
+
+#~ msgid "Your new Email"
+#~ msgstr ""
+#~ "<strong>Il tuo nuovo indirizzo e-mail:</strong> (non verrà <strong>mai</"
+#~ "strong> rivelato agli altri utenti, deve essere valido)"
+
+#~ msgid "Your Email"
+#~ msgstr ""
+#~ "<strong>Il tuo indirizzo e-mail</strong> (<i>deve essere valido, non sarà "
+#~ "mai rivelato agli altri utenti</i>)"
+
+#~ msgid "Save Email"
+#~ msgstr "Salva e-mail"
+
+#~ msgid "Cancel"
+#~ msgstr "Annulla"
+
+#~ msgid "Validate email"
+#~ msgstr "Verifica e-mail"
+
+#~ msgid "validate %(email)s info or go to %(change_email_url)s"
+#~ msgstr ""
+#~ "<span class=\"strong big\">Un'e-mail di verifica è stata spedita a "
+#~ "%(email)s.</span> <strong>Clicca sul link contenuto nell'e-mail</strong> "
+#~ "per verificare il tuo indirizzo.  La verifica dell'e-mail è necessaria "
+#~ "per l'utilizzo del forum. Se preferisci usare <strong>un altro indirizzo</"
+#~ "strong>, puoi <a href='%(change_email_url)s'><strong>cambiarlo di nuovo</"
+#~ "strong></a>."
+
+#~ msgid "Email not changed"
+#~ msgstr "E-mail non modificata"
+
+#~ msgid "old %(email)s kept, if you like go to %(change_email_url)s"
+#~ msgstr ""
+#~ "<span class=\"strong big\">Il tuo indirizzo e-mail %(email)s non è stato "
+#~ "modificato.</span> Se decidi di cambiarlo, puoi farlo dal tuo profilo "
+#~ "utente o utilizzare di nuovo <a href='%(change_email_url)"
+#~ "s'><strong>questa pagina</strong></a>."
+
+#~ msgid "Email changed"
+#~ msgstr "E-mail modificata"
+
+#~ msgid "your current %(email)s can be used for this"
+#~ msgstr ""
+#~ "<span class='big strong'>Il tuo indirizzo e-mail è ora  %(email)s.</span> "
+#~ "Gli aggiornamenti sulle domande di tuo interesse saranno spediti a questo "
+#~ "indirizzo. Le e-mail di notifica vengono spedite solo in caso di "
+#~ "aggiornamenti, al massimo una volta al giorno."
+
+#~ msgid "Email verified"
+#~ msgstr "E-mail verificata"
+
+#~ msgid "thanks for verifying email"
+#~ msgstr ""
+#~ "<span class=\"big strong\">Grazie per aver verificato il tuo indirizzo e-"
+#~ "mail!</span> Ora puoi <strong>scrivere domande</strong> e "
+#~ "<strong>risposte</strong>. Puoi inoltre <strong>seguire gli sviluppi</"
+#~ "strong> delle domande che più ti interessano: quando ci sono novità, ti "
+#~ "sarà spedita un'e-mail di notifica <strong>una volta al giorno</strong> o "
+#~ "meno."
+
+#~ msgid "email key not sent"
+#~ msgstr "E-mail di verifica non spedita"
+
+#~ msgid "email key not sent %(email)s change email here %(change_link)s"
+#~ msgstr ""
+#~ "<span class='big strong'>Il tuo indirizzo %(email)s è già stato "
+#~ "verificato</span>, quindi l'e-mail non è stata spedita. Se necessario "
+#~ "puoi <a href='%(change_link)s'>cambiare</a> l'indirizzo usato per le "
+#~ "notifiche."
+
+#, fuzzy
+#~ msgid "Registration"
+#~ msgstr "Registrati"
+
+#~ msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "<p><span class=\"big strong\">&Egrave; la prima volta che accedi con il "
+#~ "tuo account OpenID %(provider)s.</span> Imposta il <strong>nome "
+#~ "visualizzato</strong> e il tuo <strong>indirizzo e-mail</strong>. Con "
+#~ "esso puoi <strong>ricevere aggiornamenti</strong> sulle domande che più "
+#~ "ti interessano; verrà inoltre usato per creare un'immagine unica "
+#~ "associata al tuo account, detta <a href='%(gravatar_faq_url)"
+#~ "s'><strong>gravatar</strong></a>.</p>"
+
+#~ msgid ""
+#~ "%(username)s already exists, choose another name for \n"
+#~ "                            %(provider)s. Email is required too, see "
+#~ "%(gravatar_faq_url)s\n"
+#~ "                        "
+#~ msgstr ""
+#~ "<p><span class='strong big'>Oops... l'utente %(username)s esiste già.</"
+#~ "span></p><p>Scegli un altro nome utente da visualizzare per il tuo "
+#~ "account OpenID %(provider)s. Inoltre, è necessario inserire  "
+#~ "<strong>indirizzo e-mail</strong>. Con esso puoi <strong>ricevere "
+#~ "aggiornamenti</strong> sulle domande che più ti interessano; verrà "
+#~ "inoltre usato per creare un'immagine unica associata al tuo account, "
+#~ "detta <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
+
+#~ msgid ""
+#~ "register new external %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "<p><p><span class=\"big strong\">&Egrave; la prima volta che accedi con "
+#~ "il tuo account OpenID %(provider)s.</span> </p><p>Puoi utilizzare il tuo "
+#~ "nome utente  %(provider)s come <strong>nome visualizzato</strong> oppure "
+#~ "sceglierne uno nuovo.</p><p>Inoltre, è necessario inserire un "
+#~ "<strong>indirizzo e-mail</strong> valido. Con esso puoi <strong>ricevere "
+#~ "aggiornamenti</strong> sulle domande che più ti interessano; verrà "
+#~ "inoltre usato per creare un'immagine unica associata al tuo account, "
+#~ "detta <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
+
+#~ msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "<p><span class=\"big strong\">&Egrave; la prima volta che accedi con il "
+#~ "tuo account Facebook.</span> Scegli il tuo <strong>nome visualizzato</"
+#~ "strong> e imposta il tuo <strong>indirizzo e-mail</strong>. Con esso puoi "
+#~ "<strong>ricevere aggiornamenti</strong> sulle domande che più ti "
+#~ "interessano; verrà inoltre usato per creare un'immagine unica associata "
+#~ "al tuo account, detta <a href='%(gravatar_faq_url)s'><strong>gravatar</"
+#~ "strong></a>.</p>"
+
+#~ msgid "This account already exists, please use another."
+#~ msgstr "Questo nome utente è già in uso, scegline un altro."
+
+#~ msgid "Screen name label"
+#~ msgstr ""
+#~ "<strong>Nome visualizzato</strong> (<i>verrà mostrato agli altri utenti</"
+#~ "i>)"
+
+#~ msgid "Email address label"
+#~ msgstr ""
+#~ "<strong>Indirizzo e-mail</strong> (<i><strong>non</strong> verrà mostrato "
+#~ "agli altri utenti, dev'essere valido</i>)"
+
+#~ msgid "receive updates motivational blurb"
+#~ msgstr ""
+#~ "<strong>Ricevi aggiornamenti via e-mail</strong> &mdash; questo aiuterà "
+#~ "la nostra comunità a crescere e diventare più utile.<br/>Normalmente "
+#~ "questo forum <span class='orange'>Q&amp;A</span> ti spedirà <strong>un'e-"
+#~ "mail a settimana</strong> con un riassunto delle novità (se ce ne sono)"
+#~ "<br/> Se lo desideri, modifica queste impostazioni."
+
+#~ msgid "please select one of the options above"
+#~ msgstr "scegli una delle opzioni qui sopra"
+
+#~ msgid "Tag filter tool will be your right panel, once you log in."
+#~ msgstr ""
+#~ "Quando accederai al sito, sulla destra troverai il pannello con i filtri "
+#~ "tag."
+
+#~ msgid "create account"
+#~ msgstr "registrati"
+
+#~ msgid "Logout"
+#~ msgstr "Logout"
+
+#~ msgid "User login"
+#~ msgstr "Accesso utente"
+
+#~ msgid ""
+#~ "\n"
+#~ "        Your answer to %(title)s %(summary)s will be posted once you log "
+#~ "in\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "<span class=\"strong big\">La tua risposta alla domanda </span> <i>"
+#~ "\"<strong>%(title)s</strong> %(summary)s...\"</i> <span class=\"strong big"
+#~ "\">è stata memorizzata e verrà pubblicata non appena ti registrerai.</"
+#~ "span>"
+
+#~ msgid ""
+#~ "Your question \n"
+#~ "        %(title)s %(summary)s will be posted once you log in\n"
+#~ "        "
+#~ msgstr ""
+#~ "<span class=\"strong big\">La tua domanda</span> <i>\"<strong>%(title)s</"
+#~ "strong> %(summary)s...\"</i> <span class=\"strong big\">è stata "
+#~ "memorizzata e verrà pubblicata non appena ti registrerai.</span>"
+
+#, fuzzy
+#~ msgid ""
+#~ "Please check your email and visit the enclosed link to re-connect to your "
+#~ "account"
+#~ msgstr "Per favore inserisci la tua password"
+
+#, fuzzy
+#~ msgid "Please enter your <span>user name and password</span>, then sign in"
+#~ msgstr "Per favore inserisci username e password"
+
+#, fuzzy
+#~ msgid "Login or email"
+#~ msgstr "mai"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Login"
+#~ msgstr "Accedi"
+
+#, fuzzy
+#~ msgid "New password"
+#~ msgstr "New password created"
+
+#, fuzzy
+#~ msgid "Please, retype"
+#~ msgstr "per favore, digita di nuovo la password"
+
+#, fuzzy
+#~ msgid "provider"
+#~ msgstr "Utente approvato"
+
+#, fuzzy
+#~ msgid "last used"
+#~ msgstr "ultimo accesso"
+
+#~ msgid "delete"
+#~ msgstr "cancella"
+
+#, fuzzy
+#~ msgid "cannot be deleted"
+#~ msgstr "Account eliminato."
+
+#, fuzzy
+#~ msgid "Still have trouble signing in?"
+#~ msgstr "Hai altre domande?"
+
+#, fuzzy
+#~ msgid "Please, enter your email address below and obtain a new key"
+#~ msgstr "Per favore inserisci la tua password"
+
+#, fuzzy
+#~ msgid "Please, enter your email address below to recover your account"
+#~ msgstr "Per favore inserisci la tua password"
+
+#, fuzzy
+#~ msgid "recover your account via email"
+#~ msgstr "Scegli una nuova password"
+
+#, fuzzy
+#~ msgid "Recover your account via email"
+#~ msgstr "Scegli una nuova password"
+
+#~ msgid "Why use OpenID?"
+#~ msgstr "Perché usare OpenID?"
+
+#~ msgid "with openid it is easier"
+#~ msgstr ""
+#~ "Con OpenID non devi creare un nome utente e una password per ogni sito "
+#~ "che utilizzi."
+
+#~ msgid "reuse openid"
+#~ msgstr ""
+#~ "Puoi riutilizzare in completa sicurezza le stesse credenziali per tutti i "
+#~ "siti abilitati."
+
+#~ msgid "openid is widely adopted"
+#~ msgstr ""
+#~ "Ci sono più di  160 milioni di account OpenID in uso. Più di 10.000 siti "
+#~ "utilizzano OpenID."
+
+#~ msgid "openid is supported open standard"
+#~ msgstr ""
+#~ "OpenID è basato su uno standard aperto, supportato da molte "
+#~ "organizzazioni."
+
+#~ msgid "Find out more"
+#~ msgstr "Scopri di più"
+
+#~ msgid "Get OpenID"
+#~ msgstr "Ottieni un OpenID"
+
+#~ msgid "Signup"
+#~ msgstr "Accedi"
+
+#, fuzzy
+#~ msgid "Please register by clicking on any of the icons below"
+#~ msgstr "scegli una delle opzioni qui sopra"
+
+#, fuzzy
+#~ msgid "or create a new user name and password here"
+#~ msgstr "Scegli nome utente e password"
+
+#~ msgid "Create login name and password"
+#~ msgstr "Scegli nome utente e password"
+
+#~ msgid "Traditional signup info"
+#~ msgstr ""
+#~ "<span class='strong big'>Se preferisci, puoi scegliere un nome utente e "
+#~ "una password per questo forum qui. Però</span>, considera che questo sito "
+#~ "supporta anche la registrazione via <strong>OpenID</strong>. Con "
+#~ "<strong>OpenID</strong> puoi riutilizzare il tuo account su uno dei "
+#~ "maggiori siti (per esempio Gmail o AOL), senza dover rivelare a noi né a "
+#~ "nessuno la tua password e senza doverne scegliere una nuova."
+
+#~ msgid ""
+#~ "Please read and type in the two words below to help us prevent automated "
+#~ "account creation."
+#~ msgstr ""
+#~ "Riscrivi le due parole che leggi qui sotto. Questo serve a impedire la "
+#~ "creazione automatizzata di nuovi account."
+
+#~ msgid "Create Account"
+#~ msgstr "Crea account"
+
+#~ msgid "or"
+#~ msgstr "oppure"
+
+#~ msgid "return to OpenID login"
+#~ msgstr "torna al login OpenID"
+
+#, fuzzy
+#~ msgid "add avatar"
+#~ msgstr ""
+#~ "Come cambio la mia immagine personale (gravatar)? Che cos'è il gravatar?"
+
+#, fuzzy
+#~ msgid "Change avatar"
+#~ msgstr "Cambia tag"
+
+#, fuzzy
+#~ msgid "Your current avatar: "
+#~ msgstr "Il tuo account è:"
+
+#, fuzzy
+#~ msgid "change avatar"
+#~ msgstr "i cambiamenti sono stati salvati"
+
+#, fuzzy
+#~ msgid "Upload"
+#~ msgstr "upload/"
+
+#, fuzzy
+#~ msgid "delete avatar"
+#~ msgstr "ha cancellato una risposta"
+
+#, fuzzy
+#~ msgid "Delete These"
+#~ msgstr "ha cancellato una risposta"
+
+#~ msgid "answer permanent link"
+#~ msgstr "link permanente alla risposta"
+
+#~ msgid "permanent link"
+#~ msgstr "link permanente"
+
+#~ msgid "edit"
+#~ msgstr "modifica"
+
+#~ msgid ""
+#~ "report as offensive (i.e containing spam, advertising, malicious text, "
+#~ "etc.)"
+#~ msgstr ""
+#~ "segnala questo messaggio come offensivo (spam, pubblicità, insulti...)"
+
+#~ msgid "flag offensive"
+#~ msgstr "segnala come offensivo"
+
+#~ msgid "undelete"
+#~ msgstr "riattiva domanda"
+
+#, fuzzy
+#~ msgid "swap with question"
+#~ msgstr "Rispondi alla domanda"
+
+#, fuzzy
+#~ msgid "mark this answer as correct (click again to undo)"
+#~ msgstr ""
+#~ "segna questa risposta tra le preferite (clicca una seconda volta per "
+#~ "annullare)"
+
+#~ msgid "%(question_author)s has selected this answer as correct"
+#~ msgstr "%(question_author)s ha scelto questa come risposta migliore"
+
+#, fuzzy
+#~ msgid ""
+#~ "The question has been closed for the following reason <b>\"%(close_reason)"
+#~ "s\"</b> <i>by"
+#~ msgstr ""
+#~ "Questa domanda è stata chiusa per il seguente motivo: \"%(close_reason)s"
+#~ "\" da"
+
+#~ msgid "close date %(closed_at)s"
+#~ msgstr "data di chiusura %(closed_at)s"
+
+#~ msgid "retag"
+#~ msgstr "modifica i tag"
+
+#~ msgid "reopen"
+#~ msgstr "riapri"
+
+#~ msgid "close"
+#~ msgstr "chiudi"
+
+#, fuzzy
+#~ msgid "one of these is required"
+#~ msgstr "campo obbligatorio"
+
+#~ msgid "(required)"
+#~ msgstr "(campo obbligatorio)"
+
+#~ msgid "Toggle the real time Markdown editor preview"
+#~ msgstr "attiva/disattiva l'anteprima del codice Markdown"
+
+#~ msgid "hide preview"
+#~ msgstr "nascondi anteprima"
+
+#~ msgid "Related tags"
+#~ msgstr "Tag"
+
+#~ msgid "Interesting tags"
+#~ msgstr "Tag preferiti"
+
+#, fuzzy
+#~ msgid "add"
+#~ msgstr "Aggiungi"
+
+#~ msgid "Ignored tags"
+#~ msgstr "Tag ignorati"
+
+#, fuzzy
+#~ msgid "Display tag filter"
+#~ msgstr "Scegli il tag filtro per l'email"
 
 #~ msgid "Sorry, could not find the page you requested."
 #~ msgstr "Pagina non trovata"
@@ -4088,12 +4627,6 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "Save edit"
 #~ msgstr "Salva modifica"
-
-#~ msgid "Cancel"
-#~ msgstr "Annulla"
-
-#~ msgid "hide preview"
-#~ msgstr "nascondi anteprima"
 
 #~ msgid "show preview"
 #~ msgstr "mostra anteprima"
@@ -4397,23 +4930,11 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ "<span class='big strong'>Caro visitatore</span>, ci interessa moltissimo "
 #~ "la tua opinione. Scrivi i tuoi commenti qui sotto."
 
-#, fuzzy
-#~ msgid "(please enter a valid email)"
-#~ msgstr "inserisci un indirizzo e-mail valido"
-
 #~ msgid "(this field is required)"
 #~ msgstr "(campo obbligatorio)"
 
 #~ msgid "Send Feedback"
 #~ msgstr "Invia"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Hello, this is a %(site_title)s forum feedback message.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Salve, questo è un messaggio di notifica del forum  %(site_title)s.\n"
 
 #~ msgid "<p>Dear %(receiving_user_name)s,</p>"
 #~ msgstr "<p>Caro %(receiving_user_name)s,</p>"
@@ -4498,27 +5019,23 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgstr "Riapri questa domanda"
 
 #, fuzzy
-#~ msgid "badges:"
-#~ msgstr "medaglie:"
+#~ msgid "i like this question (click again to cancel)"
+#~ msgstr "Mi piace questo messaggio (clicca una seconda volta per annullare)"
 
-#~ msgid "previous"
-#~ msgstr "precedente"
+#~ msgid "i like this answer (click again to cancel)"
+#~ msgstr "Mi piace questa risposta (clicca una seconda volta per annullare)"
 
-#~ msgid "current page"
-#~ msgstr "pagina corrente"
-
-#~ msgid "page number %(num)s"
-#~ msgstr "pagina %(num)s"
-
-#~ msgid "next page"
-#~ msgstr "pagina successiva"
-
-#~ msgid "posts per page"
-#~ msgstr "post per pagina"
+#~ msgid "current number of votes"
+#~ msgstr "numero attuale di voti"
 
 #, fuzzy
-#~ msgid "%(username)s's website is %(url)s"
-#~ msgstr "lo stato dell'utente %(username)s è \"%(status)s\""
+#~ msgid "i dont like this question (click again to cancel)"
+#~ msgstr ""
+#~ "Non mi piace questo messaggio (clicca una seconda volta per annullare)"
+
+#~ msgid "i dont like this answer (click again to cancel)"
+#~ msgstr ""
+#~ "Non mi piace questa risposta (clicca una seconda volta per annullare)"
 
 #, fuzzy
 #~ msgid "anonymous user"
@@ -4542,9 +5059,6 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgid "delete this comment"
 #~ msgstr "cancella questo commento"
 
-#~ msgid "edit"
-#~ msgstr "modifica"
-
 #~ msgid "add comment"
 #~ msgstr "aggiungi commento"
 
@@ -4562,14 +5076,23 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgstr[1] "visualizza <strong>%(counter)s</strong> commenti aggiuntivi"
 
 #, fuzzy
-#~ msgid "one of these is required"
-#~ msgstr "campo obbligatorio"
+#~ msgid "%(username)s's website is %(url)s"
+#~ msgstr "lo stato dell'utente %(username)s è \"%(status)s\""
 
-#~ msgid "(required)"
-#~ msgstr "(campo obbligatorio)"
+#~ msgid "previous"
+#~ msgstr "precedente"
 
-#~ msgid "Toggle the real time Markdown editor preview"
-#~ msgstr "attiva/disattiva l'anteprima del codice Markdown"
+#~ msgid "current page"
+#~ msgstr "pagina corrente"
+
+#~ msgid "page number %(num)s"
+#~ msgstr "pagina %(num)s"
+
+#~ msgid "next page"
+#~ msgstr "pagina successiva"
+
+#~ msgid "posts per page"
+#~ msgstr "post per pagina"
 
 #~ msgid "responses for %(username)s"
 #~ msgstr "risposte per %(username)s"
@@ -4584,6 +5107,10 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgstr "nessuna nuova risposta"
 
 #, fuzzy
+#~ msgid "%(new)s new flagged posts and %(seen)s previous"
+#~ msgstr "Ha segnalato un post come inappropriato"
+
+#, fuzzy
 #~ msgid "%(new)s new flagged posts"
 #~ msgstr "Ha segnalato un post come inappropriato"
 
@@ -4596,224 +5123,6 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "Privacy policy"
 #~ msgstr "Regole per la privacy"
-
-#~ msgid "i like this post (click again to cancel)"
-#~ msgstr "Mi piace questo messaggio (clicca una seconda volta per annullare)"
-
-#~ msgid "current number of votes"
-#~ msgstr "numero attuale di voti"
-
-#~ msgid "i dont like this post (click again to cancel)"
-#~ msgstr ""
-#~ "Non mi piace questo messaggio (clicca una seconda volta per annullare)"
-
-#~ msgid "retag"
-#~ msgstr "modifica i tag"
-
-#~ msgid "reopen"
-#~ msgstr "riapri"
-
-#~ msgid "close"
-#~ msgstr "chiudi"
-
-#~ msgid ""
-#~ "report as offensive (i.e containing spam, advertising, malicious text, "
-#~ "etc.)"
-#~ msgstr ""
-#~ "segnala questo messaggio come offensivo (spam, pubblicità, insulti...)"
-
-#~ msgid "flag offensive"
-#~ msgstr "segnala come offensivo"
-
-#~ msgid "undelete"
-#~ msgstr "riattiva domanda"
-
-#~ msgid "delete"
-#~ msgstr "cancella"
-
-#~ msgid ""
-#~ "The question has been closed for the following reason \"%(close_reason)s"
-#~ "\" by"
-#~ msgstr ""
-#~ "Questa domanda è stata chiusa per il seguente motivo: \"%(close_reason)s"
-#~ "\" da"
-
-#~ msgid "close date %(closed_at)s"
-#~ msgstr "data di chiusura %(closed_at)s"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "        %(counter)s Answer:\n"
-#~ "        "
-#~ msgid_plural ""
-#~ "\n"
-#~ "        %(counter)s Answers:\n"
-#~ "        "
-#~ msgstr[0] ""
-#~ "\n"
-#~ "%(counter)s Risposta:"
-#~ msgstr[1] ""
-#~ "\n"
-#~ "%(counter)s Risposte:"
-
-#~ msgid "oldest answers will be shown first"
-#~ msgstr "mostra prima le risposte più vecchie"
-
-#~ msgid "oldest answers"
-#~ msgstr "più vecchie"
-
-#~ msgid "newest answers will be shown first"
-#~ msgstr "mostra prima le risposte più nuove"
-
-#~ msgid "newest answers"
-#~ msgstr "più nuove"
-
-#~ msgid "most voted answers will be shown first"
-#~ msgstr "mostra prima le risposte più votate"
-
-#~ msgid "popular answers"
-#~ msgstr "più votate"
-
-#~ msgid "i like this answer (click again to cancel)"
-#~ msgstr "Mi piace questa risposta (clicca una seconda volta per annullare)"
-
-#~ msgid "i dont like this answer (click again to cancel)"
-#~ msgstr ""
-#~ "Non mi piace questa risposta (clicca una seconda volta per annullare)"
-
-#~ msgid "mark this answer as favorite (click again to undo)"
-#~ msgstr ""
-#~ "segna questa risposta tra le preferite (clicca una seconda volta per "
-#~ "annullare)"
-
-#~ msgid "%(question_author)s has selected this answer as correct"
-#~ msgstr "%(question_author)s ha scelto questa come risposta migliore"
-
-#~ msgid "answer permanent link"
-#~ msgstr "link permanente alla risposta"
-
-#~ msgid "permanent link"
-#~ msgstr "link permanente"
-
-#, fuzzy
-#~ msgid "swap with question"
-#~ msgstr "Rispondi alla domanda"
-
-#, fuzzy
-#~ msgid " or"
-#~ msgstr "oppure"
-
-#~ msgid "email"
-#~ msgstr "e-mail:"
-
-#~ msgid "Notify me once a day when there are any new answers"
-#~ msgstr ""
-#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
-#~ "giorno"
-
-#~ msgid "Notify me weekly when there are any new answers"
-#~ msgstr ""
-#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
-#~ "settimana"
-
-#, fuzzy
-#~ msgid "Notify me immediately when there are any new answers"
-#~ msgstr ""
-#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
-#~ "settimana"
-
-#~ msgid ""
-#~ "You can always adjust frequency of email updates from your %(profile_url)s"
-#~ msgstr ""
-#~ "(nota: puoi <strong><a href='%(profile_url)s?"
-#~ "sort=email_subscriptions'>modificare</a></strong> la frequenza con cui "
-#~ "ricevi gli aggiornamenti)"
-
-#~ msgid "once you sign in you will be able to subscribe for any updates here"
-#~ msgstr ""
-#~ "Se ti registri, potrai scegliere di ricevere periodicamente aggiornamenti "
-#~ "via e-mail sullo stato di questa domanda."
-
-#, fuzzy
-#~ msgid "Login/Signup to Answer"
-#~ msgstr "Accedi/registrati per scrivere la tua risposta"
-
-#~ msgid "Your answer"
-#~ msgstr "La tua risposta"
-
-#~ msgid "you can answer anonymously and then login"
-#~ msgstr ""
-#~ "<span class='strong big'>Comincia pure a rispondere </span> - la tua "
-#~ "risposta verrà memorizzata e pubblicata non appena accederai o "
-#~ "registrerai un nuovo account. Cerca di dare una <strong>vera risposta</"
-#~ "strong>, per eventuali discussioni <strong>utilizza i commenti</strong> e "
-#~ "<strong>ricordati di votare</strong> (non appena hai fatto il login)!"
-
-#~ msgid "answer your own question only to give an answer"
-#~ msgstr ""
-#~ "<span class='big strong'>Rispondi pure alla tua domanda</span>, ma cerca "
-#~ "di dare una <strong>vera risposta</strong>. Puoi sempre "
-#~ "<strong>modificare la tua domanda</strong>. <strong>Usa i commenti per "
-#~ "discutere</strong> e <strong>ricordati di votare :)</strong> per le "
-#~ "risposte migliori (e per quelle peggiori!)"
-
-#~ msgid "please only give an answer, no discussions"
-#~ msgstr ""
-#~ "<span class='big strong'>Cerca di dare una vera risposta</span>. Se vuoi "
-#~ "solo aggiungere un commento a una domanda/risposta, <strong>usa i "
-#~ "commenti</strong>. Ricorda che puoi <strong>modificare una vecchia "
-#~ "risposta</strong> invece di scriverne una nuova. Inoltre, "
-#~ "<strong>ricordati di votare</strong> &mdash; ci permette di individuare "
-#~ "facilmente le domande e risposte migliori!"
-
-#~ msgid "Login/Signup to Post Your Answer"
-#~ msgstr "Accedi/registrati per scrivere la tua risposta"
-
-#~ msgid "Answer Your Own Question"
-#~ msgstr "Rispondi alla tua domanda"
-
-#~ msgid "Answer the question"
-#~ msgstr "Rispondi alla domanda"
-
-#, fuzzy
-#~ msgid "Question tools"
-#~ msgstr "Tag"
-
-#, fuzzy
-#~ msgid "click to unfollow this question"
-#~ msgstr "clicca qui per vedere le domande con più risposte"
-
-#, fuzzy
-#~ msgid "click to follow this question"
-#~ msgstr "clicca qui per vedere le domande con più risposte"
-
-#, fuzzy
-#~ msgid "email the updates"
-#~ msgstr "notifiche via e-mail cancellate"
-
-#, fuzzy
-#~ msgid "subscribe to this question rss feed"
-#~ msgstr "sottoscrivi al feed delle domande"
-
-#, fuzzy
-#~ msgid "subsribe to rss feed"
-#~ msgstr "sottoscrivi al feed delle domande"
-
-#~ msgid "question asked"
-#~ msgstr "Chiesta il"
-
-#~ msgid "question was seen"
-#~ msgstr "domanda consultata"
-
-#~ msgid "times"
-#~ msgstr "volte"
-
-#~ msgid "last updated"
-#~ msgstr "Aggiornata l'ultima voltail"
-
-#~ msgid "Related questions"
-#~ msgstr "Domande simili"
 
 #~ msgid "Edit question"
 #~ msgstr "Modifica domanda"
@@ -4873,8 +5182,20 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgid "Subscribe for tags"
 #~ msgstr "usare i tag"
 
+#, fuzzy
+#~ msgid "Please, subscribe for the following tags:"
+#~ msgstr "Accedi per sottoscrivere i tag: %(tags)s"
+
+#, fuzzy
+#~ msgid "Subscribe"
+#~ msgstr "usare i tag"
+
 #~ msgid "Tag list"
 #~ msgstr "Lista dei tag"
+
+#, fuzzy
+#~ msgid "Sort by &raquo;"
+#~ msgstr "Ordina per:"
 
 #~ msgid "sorted alphabetically"
 #~ msgstr "ordina i tag alfabeticamente"
@@ -4908,569 +5229,6 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "Nothing found."
 #~ msgstr "Nessun utente trovato"
-
-#~ msgid "Change email"
-#~ msgstr "Cambia e-mail"
-
-#~ msgid "Save your email address"
-#~ msgstr "Salva il tuo indirizzo e-mail"
-
-#~ msgid "change %(email)s info"
-#~ msgstr ""
-#~ "Se vuoi usare un nuovo indirizzo per le<strong>e-mail di notifica</"
-#~ "strong>, \n"
-#~ "<span class=\"strong big\">inseriscilo qui sotto il nuovo indirizzo</"
-#~ "span>.<br>L'indirizzo corrente è <strong>%(email)s</strong>"
-
-#~ msgid "here is why email is required, see %(gravatar_faq_url)s"
-#~ msgstr ""
-#~ "<span class='strong big'>Inserisci il tuo indirizzo e-mail qui sotto</"
-#~ "span> &Egrave; obbligatorio inserire un indirizzo e-mail valido. Se lo "
-#~ "desideri, puoi ricevere <strong>messaggi di notifica</strong> sulle "
-#~ "domande che ti interessano o sull'intero forum. Inoltre, il tuo indirizzo "
-#~ "è usato per creare un'immagine <a href='%(gravatar_faq_url)"
-#~ "s'><strong>gravatar</strong></a> unica per il tuo account. Il tuo "
-#~ "indirizzo e-mail non sarà mai pubblicato o comunicato a terze parti."
-
-#~ msgid "Your new Email"
-#~ msgstr ""
-#~ "<strong>Il tuo nuovo indirizzo e-mail:</strong> (non verrà <strong>mai</"
-#~ "strong> rivelato agli altri utenti, deve essere valido)"
-
-#~ msgid "Your Email"
-#~ msgstr ""
-#~ "<strong>Il tuo indirizzo e-mail</strong> (<i>deve essere valido, non sarà "
-#~ "mai rivelato agli altri utenti</i>)"
-
-#~ msgid "Save Email"
-#~ msgstr "Salva e-mail"
-
-#~ msgid "Validate email"
-#~ msgstr "Verifica e-mail"
-
-#~ msgid "validate %(email)s info or go to %(change_email_url)s"
-#~ msgstr ""
-#~ "<span class=\"strong big\">Un'e-mail di verifica è stata spedita a "
-#~ "%(email)s.</span> <strong>Clicca sul link contenuto nell'e-mail</strong> "
-#~ "per verificare il tuo indirizzo.  La verifica dell'e-mail è necessaria "
-#~ "per l'utilizzo del forum. Se preferisci usare <strong>un altro indirizzo</"
-#~ "strong>, puoi <a href='%(change_email_url)s'><strong>cambiarlo di nuovo</"
-#~ "strong></a>."
-
-#~ msgid "Email not changed"
-#~ msgstr "E-mail non modificata"
-
-#~ msgid "old %(email)s kept, if you like go to %(change_email_url)s"
-#~ msgstr ""
-#~ "<span class=\"strong big\">Il tuo indirizzo e-mail %(email)s non è stato "
-#~ "modificato.</span> Se decidi di cambiarlo, puoi farlo dal tuo profilo "
-#~ "utente o utilizzare di nuovo <a href='%(change_email_url)"
-#~ "s'><strong>questa pagina</strong></a>."
-
-#~ msgid "Email changed"
-#~ msgstr "E-mail modificata"
-
-#~ msgid "your current %(email)s can be used for this"
-#~ msgstr ""
-#~ "<span class='big strong'>Il tuo indirizzo e-mail è ora  %(email)s.</span> "
-#~ "Gli aggiornamenti sulle domande di tuo interesse saranno spediti a questo "
-#~ "indirizzo. Le e-mail di notifica vengono spedite solo in caso di "
-#~ "aggiornamenti, al massimo una volta al giorno."
-
-#~ msgid "Email verified"
-#~ msgstr "E-mail verificata"
-
-#~ msgid "thanks for verifying email"
-#~ msgstr ""
-#~ "<span class=\"big strong\">Grazie per aver verificato il tuo indirizzo e-"
-#~ "mail!</span> Ora puoi <strong>scrivere domande</strong> e "
-#~ "<strong>risposte</strong>. Puoi inoltre <strong>seguire gli sviluppi</"
-#~ "strong> delle domande che più ti interessano: quando ci sono novità, ti "
-#~ "sarà spedita un'e-mail di notifica <strong>una volta al giorno</strong> o "
-#~ "meno."
-
-#~ msgid "email key not sent"
-#~ msgstr "E-mail di verifica non spedita"
-
-#~ msgid "email key not sent %(email)s change email here %(change_link)s"
-#~ msgstr ""
-#~ "<span class='big strong'>Il tuo indirizzo %(email)s è già stato "
-#~ "verificato</span>, quindi l'e-mail non è stata spedita. Se necessario "
-#~ "puoi <a href='%(change_link)s'>cambiare</a> l'indirizzo usato per le "
-#~ "notifiche."
-
-#, fuzzy
-#~ msgid "Registration"
-#~ msgstr "Registrati"
-
-#~ msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
-#~ msgstr ""
-#~ "<p><span class=\"big strong\">&Egrave; la prima volta che accedi con il "
-#~ "tuo account OpenID %(provider)s.</span> Imposta il <strong>nome "
-#~ "visualizzato</strong> e il tuo <strong>indirizzo e-mail</strong>. Con "
-#~ "esso puoi <strong>ricevere aggiornamenti</strong> sulle domande che più "
-#~ "ti interessano; verrà inoltre usato per creare un'immagine unica "
-#~ "associata al tuo account, detta <a href='%(gravatar_faq_url)"
-#~ "s'><strong>gravatar</strong></a>.</p>"
-
-#~ msgid ""
-#~ "%(username)s already exists, choose another name for \n"
-#~ "                            %(provider)s. Email is required too, see "
-#~ "%(gravatar_faq_url)s\n"
-#~ "                        "
-#~ msgstr ""
-#~ "<p><span class='strong big'>Oops... l'utente %(username)s esiste già.</"
-#~ "span></p><p>Scegli un altro nome utente da visualizzare per il tuo "
-#~ "account OpenID %(provider)s. Inoltre, è necessario inserire  "
-#~ "<strong>indirizzo e-mail</strong>. Con esso puoi <strong>ricevere "
-#~ "aggiornamenti</strong> sulle domande che più ti interessano; verrà "
-#~ "inoltre usato per creare un'immagine unica associata al tuo account, "
-#~ "detta <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
-
-#~ msgid ""
-#~ "register new external %(provider)s account info, see %(gravatar_faq_url)s"
-#~ msgstr ""
-#~ "<p><p><span class=\"big strong\">&Egrave; la prima volta che accedi con "
-#~ "il tuo account OpenID %(provider)s.</span> </p><p>Puoi utilizzare il tuo "
-#~ "nome utente  %(provider)s come <strong>nome visualizzato</strong> oppure "
-#~ "sceglierne uno nuovo.</p><p>Inoltre, è necessario inserire un "
-#~ "<strong>indirizzo e-mail</strong> valido. Con esso puoi <strong>ricevere "
-#~ "aggiornamenti</strong> sulle domande che più ti interessano; verrà "
-#~ "inoltre usato per creare un'immagine unica associata al tuo account, "
-#~ "detta <a href='%(gravatar_faq_url)s'><strong>gravatar</strong></a>.</p>"
-
-#~ msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
-#~ msgstr ""
-#~ "<p><span class=\"big strong\">&Egrave; la prima volta che accedi con il "
-#~ "tuo account Facebook.</span> Scegli il tuo <strong>nome visualizzato</"
-#~ "strong> e imposta il tuo <strong>indirizzo e-mail</strong>. Con esso puoi "
-#~ "<strong>ricevere aggiornamenti</strong> sulle domande che più ti "
-#~ "interessano; verrà inoltre usato per creare un'immagine unica associata "
-#~ "al tuo account, detta <a href='%(gravatar_faq_url)s'><strong>gravatar</"
-#~ "strong></a>.</p>"
-
-#~ msgid "This account already exists, please use another."
-#~ msgstr "Questo nome utente è già in uso, scegline un altro."
-
-#~ msgid "Screen name label"
-#~ msgstr ""
-#~ "<strong>Nome visualizzato</strong> (<i>verrà mostrato agli altri utenti</"
-#~ "i>)"
-
-#~ msgid "Email address label"
-#~ msgstr ""
-#~ "<strong>Indirizzo e-mail</strong> (<i><strong>non</strong> verrà mostrato "
-#~ "agli altri utenti, dev'essere valido</i>)"
-
-#~ msgid "receive updates motivational blurb"
-#~ msgstr ""
-#~ "<strong>Ricevi aggiornamenti via e-mail</strong> &mdash; questo aiuterà "
-#~ "la nostra comunità a crescere e diventare più utile.<br/>Normalmente "
-#~ "questo forum <span class='orange'>Q&amp;A</span> ti spedirà <strong>un'e-"
-#~ "mail a settimana</strong> con un riassunto delle novità (se ce ne sono)"
-#~ "<br/> Se lo desideri, modifica queste impostazioni."
-
-#~ msgid "please select one of the options above"
-#~ msgstr "scegli una delle opzioni qui sopra"
-
-#~ msgid "Tag filter tool will be your right panel, once you log in."
-#~ msgstr ""
-#~ "Quando accederai al sito, sulla destra troverai il pannello con i filtri "
-#~ "tag."
-
-#~ msgid "create account"
-#~ msgstr "registrati"
-
-#~ msgid "Thank you for registering at our Q&A forum!"
-#~ msgstr "Grazie per esserti registrato sul nostro forum Q&A!"
-
-#~ msgid "Your account details are:"
-#~ msgstr "Il tuo account è:"
-
-#~ msgid "Username:"
-#~ msgstr "Nome utente:"
-
-#~ msgid "Password:"
-#~ msgstr "Password:"
-
-#~ msgid "Please sign in here:"
-#~ msgstr "Puoi accedere al tuo account da qui:"
-
-#~ msgid ""
-#~ "Sincerely,\n"
-#~ "Forum Administrator"
-#~ msgstr ""
-#~ "Cordialmente,\n"
-#~ " l'Amministratore"
-
-#~ msgid "Greetings from the Q&A forum"
-#~ msgstr "Benvenuto sul forum Q&A"
-
-#~ msgid "To make use of the Forum, please follow the link below:"
-#~ msgstr "Per utilizzare il forum, clicca sul collegamento qui sotto:"
-
-#~ msgid "Following the link above will help us verify your email address."
-#~ msgstr ""
-#~ "Cliccando sul collegamento qui sopra, verificherai il tuo indirizzo e-"
-#~ "mail."
-
-#~ msgid ""
-#~ "If you beleive that this message was sent in mistake - \n"
-#~ "no further action is needed. Just ingore this email, we apologize\n"
-#~ "for any inconvenience"
-#~ msgstr ""
-#~ "Se hai ricevuto questo messaggio per errore, basta che tu ignori questa e-"
-#~ "mail. Ci scusiamo per il problema."
-
-#~ msgid "Logout"
-#~ msgstr "Logout"
-
-#, fuzzy
-#~ msgid "(or select another login method above)"
-#~ msgstr "scegli una delle opzioni qui sopra"
-
-#, fuzzy
-#~ msgid "Sign in"
-#~ msgstr "signin/"
-
-#~ msgid "User login"
-#~ msgstr "Accesso utente"
-
-#~ msgid ""
-#~ "\n"
-#~ "        Your answer to %(title)s %(summary)s will be posted once you log "
-#~ "in\n"
-#~ "        "
-#~ msgstr ""
-#~ "\n"
-#~ "<span class=\"strong big\">La tua risposta alla domanda </span> <i>"
-#~ "\"<strong>%(title)s</strong> %(summary)s...\"</i> <span class=\"strong big"
-#~ "\">è stata memorizzata e verrà pubblicata non appena ti registrerai.</"
-#~ "span>"
-
-#~ msgid ""
-#~ "Your question \n"
-#~ "        %(title)s %(summary)s will be posted once you log in\n"
-#~ "        "
-#~ msgstr ""
-#~ "<span class=\"strong big\">La tua domanda</span> <i>\"<strong>%(title)s</"
-#~ "strong> %(summary)s...\"</i> <span class=\"strong big\">è stata "
-#~ "memorizzata e verrà pubblicata non appena ti registrerai.</span>"
-
-#, fuzzy
-#~ msgid "Please enter your <span>user name and password</span>, then sign in"
-#~ msgstr "Per favore inserisci username e password"
-
-#, fuzzy
-#~ msgid "Login or email"
-#~ msgstr "mai"
-
-#~ msgid "Password"
-#~ msgstr "Password"
-
-#~ msgid "Login"
-#~ msgstr "Accedi"
-
-#, fuzzy
-#~ msgid "New password"
-#~ msgstr "New password created"
-
-#, fuzzy
-#~ msgid "Please, retype"
-#~ msgstr "per favore, digita di nuovo la password"
-
-#, fuzzy
-#~ msgid "provider"
-#~ msgstr "Utente approvato"
-
-#, fuzzy
-#~ msgid "last used"
-#~ msgstr "ultimo accesso"
-
-#, fuzzy
-#~ msgid "cannot be deleted"
-#~ msgstr "Account eliminato."
-
-#, fuzzy
-#~ msgid "Still have trouble signing in?"
-#~ msgstr "Hai altre domande?"
-
-#, fuzzy
-#~ msgid "Please, enter your email address below and obtain a new key"
-#~ msgstr "Per favore inserisci la tua password"
-
-#, fuzzy
-#~ msgid "Please, enter your email address below to recover your account"
-#~ msgstr "Per favore inserisci la tua password"
-
-#, fuzzy
-#~ msgid "recover your account via email"
-#~ msgstr "Scegli una nuova password"
-
-#, fuzzy
-#~ msgid "Recover your account via email"
-#~ msgstr "Scegli una nuova password"
-
-#~ msgid "Why use OpenID?"
-#~ msgstr "Perché usare OpenID?"
-
-#~ msgid "with openid it is easier"
-#~ msgstr ""
-#~ "Con OpenID non devi creare un nome utente e una password per ogni sito "
-#~ "che utilizzi."
-
-#~ msgid "reuse openid"
-#~ msgstr ""
-#~ "Puoi riutilizzare in completa sicurezza le stesse credenziali per tutti i "
-#~ "siti abilitati."
-
-#~ msgid "openid is widely adopted"
-#~ msgstr ""
-#~ "Ci sono più di  160 milioni di account OpenID in uso. Più di 10.000 siti "
-#~ "utilizzano OpenID."
-
-#~ msgid "openid is supported open standard"
-#~ msgstr ""
-#~ "OpenID è basato su uno standard aperto, supportato da molte "
-#~ "organizzazioni."
-
-#~ msgid "Find out more"
-#~ msgstr "Scopri di più"
-
-#~ msgid "Get OpenID"
-#~ msgstr "Ottieni un OpenID"
-
-#~ msgid "Signup"
-#~ msgstr "Accedi"
-
-#, fuzzy
-#~ msgid "Please register by clicking on any of the icons below"
-#~ msgstr "scegli una delle opzioni qui sopra"
-
-#, fuzzy
-#~ msgid "or create a new user name and password here"
-#~ msgstr "Scegli nome utente e password"
-
-#~ msgid "Create login name and password"
-#~ msgstr "Scegli nome utente e password"
-
-#~ msgid "Traditional signup info"
-#~ msgstr ""
-#~ "<span class='strong big'>Se preferisci, puoi scegliere un nome utente e "
-#~ "una password per questo forum qui. Però</span>, considera che questo sito "
-#~ "supporta anche la registrazione via <strong>OpenID</strong>. Con "
-#~ "<strong>OpenID</strong> puoi riutilizzare il tuo account su uno dei "
-#~ "maggiori siti (per esempio Gmail o AOL), senza dover rivelare a noi né a "
-#~ "nessuno la tua password e senza doverne scegliere una nuova."
-
-#~ msgid ""
-#~ "Please read and type in the two words below to help us prevent automated "
-#~ "account creation."
-#~ msgstr ""
-#~ "Riscrivi le due parole che leggi qui sotto. Questo serve a impedire la "
-#~ "creazione automatizzata di nuovi account."
-
-#~ msgid "Create Account"
-#~ msgstr "Crea account"
-
-#~ msgid "or"
-#~ msgstr "oppure"
-
-#~ msgid "return to OpenID login"
-#~ msgstr "torna al login OpenID"
-
-#, fuzzy
-#~ msgid "add avatar"
-#~ msgstr ""
-#~ "Come cambio la mia immagine personale (gravatar)? Che cos'è il gravatar?"
-
-#, fuzzy
-#~ msgid "Change avatar"
-#~ msgstr "Cambia tag"
-
-#, fuzzy
-#~ msgid "Your current avatar: "
-#~ msgstr "Il tuo account è:"
-
-#, fuzzy
-#~ msgid "change avatar"
-#~ msgstr "i cambiamenti sono stati salvati"
-
-#, fuzzy
-#~ msgid "Upload"
-#~ msgstr "upload/"
-
-#, fuzzy
-#~ msgid "delete avatar"
-#~ msgstr "ha cancellato una risposta"
-
-#, fuzzy
-#~ msgid "Delete These"
-#~ msgstr "ha cancellato una risposta"
-
-#~ msgid "answer tips"
-#~ msgstr "consigli per le risposte"
-
-#~ msgid "please make your answer relevant to this community"
-#~ msgstr "fai in modo che la tua risposta sia interessante per la comunità"
-
-#~ msgid "try to give an answer, rather than engage into a discussion"
-#~ msgstr "cerca di dare una risposta, non di iniziare una discussione"
-
-#~ msgid "please try to provide details"
-#~ msgstr "includi tutti i dettagli necessari"
-
-#~ msgid "be clear and concise"
-#~ msgstr "sii chiaro e conciso"
-
-#~ msgid "see frequently asked questions"
-#~ msgstr "vedi le domande frequenti"
-
-#~ msgid "Markdown tips"
-#~ msgstr "sintassi Markdown"
-
-#, fuzzy
-#~ msgid "*italic* or _italic_"
-#~ msgstr "*corsivo* o _corsivo_"
-
-#~ msgid "**bold** or __bold__"
-#~ msgstr "**grassetto** o __grassetto__"
-
-#~ msgid "link"
-#~ msgstr "collegamento"
-
-#~ msgid "text"
-#~ msgstr "testo"
-
-#~ msgid "image"
-#~ msgstr "immagine"
-
-#~ msgid "numbered list:"
-#~ msgstr "lista numerata:"
-
-#~ msgid "basic HTML tags are also supported"
-#~ msgstr "sono supportati anche alcuni semplici tag HTML"
-
-#~ msgid "learn more about Markdown"
-#~ msgstr "informazioni su Markdown"
-
-#~ msgid "login to post question info"
-#~ msgstr ""
-#~ "<span class=\"strong big\">Puoi cominciare ora a scrivere la tua domanda "
-#~ "come utente non registrato</span>. Quando avrai finito, sarai "
-#~ "reindirizzato alla pagina di accesso/registrazione. La tua domanda sarà "
-#~ "salvata e pubblicata non appena ti sarai registrato. Accedere al proprio "
-#~ "account richiede circa 30 secondi, registrarne uno nuovo meno di un "
-#~ "minuto."
-
-#~ msgid ""
-#~ "must have valid %(email)s to post, \n"
-#~ "                            see %(email_validation_faq_url)s\n"
-#~ "                            "
-#~ msgstr ""
-#~ "<span class='strong big'>Il tuo indirizzo e-mail %(email)s non è stato "
-#~ "ancora verificato</span> Prima di pubblicare messaggi devi verificare il "
-#~ "tuo indirizzo; maggiori dettagli <a href='%(email_validation_faq_url)"
-#~ "s'>qui</a>.<br>Puoi porre la tua domanda ora e verificare la tua e-mail "
-#~ "in un secondo momento; la tua domanda nel frattempo rimarrà in attesa."
-
-#~ msgid "Login/signup to post your question"
-#~ msgstr "Accedi/Registrati per porre una domanda"
-
-#~ msgid "Ask your question"
-#~ msgstr "Chiedi"
-
-#, fuzzy
-#~ msgid "each tag must be shorter that %(max_chars)s character"
-#~ msgid_plural "each tag must be shorter than %(max_chars)s characters"
-#~ msgstr[0] "ogni tag deve essere più corto di %(max_chars)d carattere"
-#~ msgstr[1] "ogni tag deve essere più corto di %(max_chars)d caratteri"
-
-#, fuzzy
-#~ msgid "please use %(tag_count)s tag"
-#~ msgid_plural "please use %(tag_count)s tags or less"
-#~ msgstr[0] "per favore usa un numero uguale o inferiore a %(tag_count)d tag"
-#~ msgstr[1] "per favore usa un numero uguale o inferiore a %(tag_count)d tags"
-
-#, fuzzy
-#~ msgid ""
-#~ "please use up to %(tag_count)s tags, less than %(max_chars)s characters "
-#~ "each"
-#~ msgstr "fino a 5 tag, ognuno lungo al massimo 20 caratteri"
-
-#~ msgid "about"
-#~ msgstr "informazioni su Askbot"
-
-#~ msgid "privacy policy"
-#~ msgstr "privacy"
-
-#~ msgid "give feedback"
-#~ msgstr "contatti"
-
-#~ msgid "back to home page"
-#~ msgstr "torna alla home page"
-
-#, fuzzy
-#~ msgid "%(site)s logo"
-#~ msgstr "Logo del forum Q&A"
-
-#~ msgid "questions"
-#~ msgstr "domande"
-
-#~ msgid "users"
-#~ msgstr "utenti"
-
-#~ msgid "badges"
-#~ msgstr "medaglie"
-
-#~ msgid "ask a question"
-#~ msgstr "chiedi"
-
-#~ msgid "logout"
-#~ msgstr "logout"
-
-#~ msgid "login"
-#~ msgstr "login"
-
-#~ msgid "settings"
-#~ msgstr "impostazioni"
-
-#~ msgid "search"
-#~ msgstr "cerca"
-
-#~ msgid "question tips"
-#~ msgstr "Suggerimenti"
-
-#~ msgid "please ask a relevant question"
-#~ msgstr "poni una domanda interessante per gli altri"
-
-#~ msgid "please try provide enough details"
-#~ msgstr "sii sufficientemente dettagliato"
-
-#~ msgid "Interesting tags"
-#~ msgstr "Tag preferiti"
-
-#~ msgid "Add"
-#~ msgstr "Aggiungi"
-
-#~ msgid "Ignored tags"
-#~ msgstr "Tag ignorati"
-
-#, fuzzy
-#~ msgid "Display tag filter"
-#~ msgstr "Scegli il tag filtro per l'email"
-
-#~ msgid "Did not find what you were looking for?"
-#~ msgstr "Non hai trovato quello che cercavi?"
-
-#~ msgid "Please, post your question!"
-#~ msgstr "Poni tu stesso la domanda!"
-
-#~ msgid "subscribe to the questions feed"
-#~ msgstr "sottoscrivi al feed delle domande"
-
-#~ msgid "rss feed"
-#~ msgstr "feed RSS"
 
 #~ msgid "with %(author_name)s's contributions"
 #~ msgstr "contenenti messaggi di %(author_name)s"
@@ -5510,7 +5268,7 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgstr "Non ci sono domande preferite"
 
 #, fuzzy
-#~ msgid "Please star (bookmark) some questions or follow some users."
+#~ msgid "Please follow some questions or follow some users."
 #~ msgstr "Aggiungi qualche domanda alla tua lista di domande preferite"
 
 #~ msgid "You can expand your search by "
@@ -5528,24 +5286,185 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgid "Please always feel free to ask your question!"
 #~ msgstr "Ricorda, puoi sempre porre tu stesso una domanda!"
 
-#~ msgid "Contributors"
-#~ msgstr "Utenti attivi"
+#~ msgid "Did not find what you were looking for?"
+#~ msgstr "Non hai trovato quello che cercavi?"
 
-#~ msgid "Related tags"
-#~ msgstr "Tag"
+#~ msgid "Please, post your question!"
+#~ msgstr "Poni tu stesso la domanda!"
 
-#~ msgid "In:"
-#~ msgstr "In:"
-
-#~ msgid "see unanswered questions"
-#~ msgstr "vedi domande senza risposta"
+#~ msgid "subscribe to the questions feed"
+#~ msgstr "sottoscrivi al feed delle domande"
 
 #, fuzzy
-#~ msgid "see your followed questions"
-#~ msgstr "vedi le tue domande preferite"
+#~ msgid "each tag must be shorter that %(max_chars)s character"
+#~ msgid_plural "each tag must be shorter than %(max_chars)s characters"
+#~ msgstr[0] "ogni tag deve essere più corto di %(max_chars)d carattere"
+#~ msgstr[1] "ogni tag deve essere più corto di %(max_chars)d caratteri"
 
-#~ msgid "Sort by:"
-#~ msgstr "Ordina per:"
+#, fuzzy
+#~ msgid "please use %(tag_count)s tag"
+#~ msgid_plural "please use %(tag_count)s tags or less"
+#~ msgstr[0] "per favore usa un numero uguale o inferiore a %(tag_count)d tag"
+#~ msgstr[1] "per favore usa un numero uguale o inferiore a %(tag_count)d tags"
+
+#, fuzzy
+#~ msgid ""
+#~ "please use up to %(tag_count)s tags, less than %(max_chars)s characters "
+#~ "each"
+#~ msgstr "fino a 5 tag, ognuno lungo al massimo 20 caratteri"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "        %(counter)s Answer\n"
+#~ "        "
+#~ msgid_plural ""
+#~ "\n"
+#~ "        %(counter)s Answers\n"
+#~ "        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%(counter)s Risposta:"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "%(counter)s Risposte:"
+
+#~ msgid "oldest answers will be shown first"
+#~ msgstr "mostra prima le risposte più vecchie"
+
+#~ msgid "oldest answers"
+#~ msgstr "più vecchie"
+
+#~ msgid "newest answers will be shown first"
+#~ msgstr "mostra prima le risposte più nuove"
+
+#~ msgid "newest answers"
+#~ msgstr "più nuove"
+
+#~ msgid "most voted answers will be shown first"
+#~ msgstr "mostra prima le risposte più votate"
+
+#~ msgid "popular answers"
+#~ msgstr "più votate"
+
+#~ msgid "Answer Your Own Question"
+#~ msgstr "Rispondi alla tua domanda"
+
+#, fuzzy
+#~ msgid "Login/Signup to Answer"
+#~ msgstr "Accedi/registrati per scrivere la tua risposta"
+
+#~ msgid "Your answer"
+#~ msgstr "La tua risposta"
+
+#, fuzzy
+#~ msgid "Be the first one to answer this question!"
+#~ msgstr "Per favore accetta la migliore risposta per questa domanda:"
+
+#~ msgid "you can answer anonymously and then login"
+#~ msgstr ""
+#~ "<span class='strong big'>Comincia pure a rispondere </span> - la tua "
+#~ "risposta verrà memorizzata e pubblicata non appena accederai o "
+#~ "registrerai un nuovo account. Cerca di dare una <strong>vera risposta</"
+#~ "strong>, per eventuali discussioni <strong>utilizza i commenti</strong> e "
+#~ "<strong>ricordati di votare</strong> (non appena hai fatto il login)!"
+
+#~ msgid "answer your own question only to give an answer"
+#~ msgstr ""
+#~ "<span class='big strong'>Rispondi pure alla tua domanda</span>, ma cerca "
+#~ "di dare una <strong>vera risposta</strong>. Puoi sempre "
+#~ "<strong>modificare la tua domanda</strong>. <strong>Usa i commenti per "
+#~ "discutere</strong> e <strong>ricordati di votare :)</strong> per le "
+#~ "risposte migliori (e per quelle peggiori!)"
+
+#~ msgid "please only give an answer, no discussions"
+#~ msgstr ""
+#~ "<span class='big strong'>Cerca di dare una vera risposta</span>. Se vuoi "
+#~ "solo aggiungere un commento a una domanda/risposta, <strong>usa i "
+#~ "commenti</strong>. Ricorda che puoi <strong>modificare una vecchia "
+#~ "risposta</strong> invece di scriverne una nuova. Inoltre, "
+#~ "<strong>ricordati di votare</strong> &mdash; ci permette di individuare "
+#~ "facilmente le domande e risposte migliori!"
+
+#~ msgid "Login/Signup to Post Your Answer"
+#~ msgstr "Accedi/registrati per scrivere la tua risposta"
+
+#~ msgid "Answer the question"
+#~ msgstr "Rispondi alla domanda"
+
+#, fuzzy
+#~ msgid " or"
+#~ msgstr "oppure"
+
+#~ msgid "email"
+#~ msgstr "e-mail:"
+
+#, fuzzy
+#~ msgid "Question tools"
+#~ msgstr "Tag"
+
+#, fuzzy
+#~ msgid "click to unfollow this question"
+#~ msgstr "clicca qui per vedere le domande con più risposte"
+
+#, fuzzy
+#~ msgid "click to follow this question"
+#~ msgstr "clicca qui per vedere le domande con più risposte"
+
+#, fuzzy
+#~ msgid "email the updates"
+#~ msgstr "notifiche via e-mail cancellate"
+
+#, fuzzy
+#~ msgid "subscribe to this question rss feed"
+#~ msgstr "sottoscrivi al feed delle domande"
+
+#, fuzzy
+#~ msgid "subsribe to rss feed"
+#~ msgstr "sottoscrivi al feed delle domande"
+
+#~ msgid "question asked"
+#~ msgstr "Chiesta il"
+
+#~ msgid "question was seen"
+#~ msgstr "domanda consultata"
+
+#~ msgid "times"
+#~ msgstr "volte"
+
+#~ msgid "last updated"
+#~ msgstr "Aggiornata l'ultima voltail"
+
+#~ msgid "Related questions"
+#~ msgstr "Domande simili"
+
+#~ msgid "Notify me once a day when there are any new answers"
+#~ msgstr ""
+#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
+#~ "giorno"
+
+#~ msgid "Notify me weekly when there are any new answers"
+#~ msgstr ""
+#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
+#~ "settimana"
+
+#, fuzzy
+#~ msgid "Notify me immediately when there are any new answers"
+#~ msgstr ""
+#~ "<strong>Segnalami</strong> nuove risposte o aggiornamenti via e-mail ogni "
+#~ "settimana"
+
+#~ msgid ""
+#~ "You can always adjust frequency of email updates from your %(profile_url)s"
+#~ msgstr ""
+#~ "(nota: puoi <strong><a href='%(profile_url)s?"
+#~ "sort=email_subscriptions'>modificare</a></strong> la frequenza con cui "
+#~ "ricevi gli aggiornamenti)"
+
+#~ msgid "once you sign in you will be able to subscribe for any updates here"
+#~ msgstr ""
+#~ "Se ti registri, potrai scegliere di ricevere periodicamente aggiornamenti "
+#~ "via e-mail sullo stato di questa domanda."
 
 #~ msgid "%(username)s's profile"
 #~ msgstr "profilo dell'utente %(username)s"
@@ -5594,6 +5513,10 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgstr "domande"
 
 #, fuzzy
+#~ msgid "flagged items (%(flag_count)s)"
+#~ msgstr "per favore usa un numero uguale o inferiore a %(tag_count)d tag"
+
+#, fuzzy
 #~ msgid "select:"
 #~ msgstr "cancella"
 
@@ -5620,6 +5543,10 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgid "update profile"
 #~ msgstr "aggiorna profilo"
 
+#, fuzzy
+#~ msgid "manage login methods"
+#~ msgstr "Accedi o registrati per inserire domande"
+
 #~ msgid "real name"
 #~ msgstr "nome vero"
 
@@ -5640,6 +5567,12 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "age unit"
 #~ msgstr "anni"
+
+#~ msgid "todays unused votes"
+#~ msgstr "voti rimanenti per oggi"
+
+#~ msgid "votes left"
+#~ msgstr "voti rimanenti"
 
 #~ msgid "moderation"
 #~ msgstr "modera"
@@ -5664,6 +5597,9 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "Subtract"
 #~ msgstr "Sottrai"
+
+#~ msgid "Add"
+#~ msgstr "Aggiungi"
 
 #~ msgid "Send message to %(username)s"
 #~ msgstr "Spedisci messaggio a %(username)s"
@@ -5756,6 +5692,10 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 #~ msgid "Answer to:"
 #~ msgstr "consigli per le risposte"
 
+#, fuzzy
+#~ msgid "User profile"
+#~ msgstr "profilo utente"
+
 #~ msgid "graph of user reputation"
 #~ msgstr "registro dei punti reputazione"
 
@@ -5774,6 +5714,255 @@ msgstr "Mi spiace, ci sono dei problemi tecnici"
 
 #~ msgid "votes"
 #~ msgstr "voti"
+
+#~ msgid "answer tips"
+#~ msgstr "consigli per le risposte"
+
+#~ msgid "please make your answer relevant to this community"
+#~ msgstr "fai in modo che la tua risposta sia interessante per la comunità"
+
+#~ msgid "try to give an answer, rather than engage into a discussion"
+#~ msgstr "cerca di dare una risposta, non di iniziare una discussione"
+
+#~ msgid "please try to provide details"
+#~ msgstr "includi tutti i dettagli necessari"
+
+#~ msgid "be clear and concise"
+#~ msgstr "sii chiaro e conciso"
+
+#~ msgid "see frequently asked questions"
+#~ msgstr "vedi le domande frequenti"
+
+#~ msgid "Markdown tips"
+#~ msgstr "sintassi Markdown"
+
+#, fuzzy
+#~ msgid "*italic* or _italic_"
+#~ msgstr "*corsivo* o _corsivo_"
+
+#~ msgid "**bold** or __bold__"
+#~ msgstr "**grassetto** o __grassetto__"
+
+#~ msgid "link"
+#~ msgstr "collegamento"
+
+#~ msgid "text"
+#~ msgstr "testo"
+
+#~ msgid "image"
+#~ msgstr "immagine"
+
+#~ msgid "numbered list:"
+#~ msgstr "lista numerata:"
+
+#~ msgid "basic HTML tags are also supported"
+#~ msgstr "sono supportati anche alcuni semplici tag HTML"
+
+#~ msgid "learn more about Markdown"
+#~ msgstr "informazioni su Markdown"
+
+#~ msgid "ask a question"
+#~ msgstr "chiedi"
+
+#~ msgid "login to post question info"
+#~ msgstr ""
+#~ "<span class=\"strong big\">Puoi cominciare ora a scrivere la tua domanda "
+#~ "come utente non registrato</span>. Quando avrai finito, sarai "
+#~ "reindirizzato alla pagina di accesso/registrazione. La tua domanda sarà "
+#~ "salvata e pubblicata non appena ti sarai registrato. Accedere al proprio "
+#~ "account richiede circa 30 secondi, registrarne uno nuovo meno di un "
+#~ "minuto."
+
+#~ msgid ""
+#~ "must have valid %(email)s to post, \n"
+#~ "                            see %(email_validation_faq_url)s\n"
+#~ "                            "
+#~ msgstr ""
+#~ "<span class='strong big'>Il tuo indirizzo e-mail %(email)s non è stato "
+#~ "ancora verificato</span> Prima di pubblicare messaggi devi verificare il "
+#~ "tuo indirizzo; maggiori dettagli <a href='%(email_validation_faq_url)"
+#~ "s'>qui</a>.<br>Puoi porre la tua domanda ora e verificare la tua e-mail "
+#~ "in un secondo momento; la tua domanda nel frattempo rimarrà in attesa."
+
+#~ msgid "Login/signup to post your question"
+#~ msgstr "Accedi/Registrati per porre una domanda"
+
+#~ msgid "Ask your question"
+#~ msgstr "Chiedi"
+
+#~ msgid "Contributors"
+#~ msgstr "Utenti attivi"
+
+#~ msgid "about"
+#~ msgstr "informazioni su Askbot"
+
+#~ msgid "privacy policy"
+#~ msgstr "privacy"
+
+#~ msgid "give feedback"
+#~ msgstr "contatti"
+
+#~ msgid "back to home page"
+#~ msgstr "torna alla home page"
+
+#, fuzzy
+#~ msgid "%(site)s logo"
+#~ msgstr "Logo del forum Q&A"
+
+#~ msgid "users"
+#~ msgstr "utenti"
+
+#~ msgid "badges"
+#~ msgstr "medaglie"
+
+#~ msgid "question tips"
+#~ msgstr "Suggerimenti"
+
+#~ msgid "please ask a relevant question"
+#~ msgstr "poni una domanda interessante per gli altri"
+
+#~ msgid "please try provide enough details"
+#~ msgstr "sii sufficientemente dettagliato"
+
+#~ msgid "view"
+#~ msgid_plural "views"
+#~ msgstr[0] "consultazione"
+#~ msgstr[1] "consultazioni"
+
+#, fuzzy
+#~ msgid "answer"
+#~ msgid_plural "answers"
+#~ msgstr[0] "risposta"
+#~ msgstr[1] "risposta"
+
+#~ msgid "vote"
+#~ msgid_plural "votes"
+#~ msgstr[0] "voto"
+#~ msgstr[1] "voti"
+
+#~ msgid "see unanswered questions"
+#~ msgstr "vedi domande senza risposta"
+
+#, fuzzy
+#~ msgid "see your followed questions"
+#~ msgstr "vedi le tue domande preferite"
+
+#, fuzzy
+#~ msgid "badges:"
+#~ msgstr "medaglie:"
+
+#~ msgid "logout"
+#~ msgstr "logout"
+
+#~ msgid "login"
+#~ msgstr "login"
+
+#~ msgid "settings"
+#~ msgstr "impostazioni"
+
+#, fuzzy
+#~ msgid "(please enter a valid email)"
+#~ msgstr "inserisci un indirizzo e-mail valido"
+
+#~ msgid "i like this post (click again to cancel)"
+#~ msgstr "Mi piace questo messaggio (clicca una seconda volta per annullare)"
+
+#~ msgid "i dont like this post (click again to cancel)"
+#~ msgstr ""
+#~ "Non mi piace questo messaggio (clicca una seconda volta per annullare)"
+
+#~ msgid ""
+#~ "The question has been closed for the following reason \"%(close_reason)s"
+#~ "\" by"
+#~ msgstr ""
+#~ "Questa domanda è stata chiusa per il seguente motivo: \"%(close_reason)s"
+#~ "\" da"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "        %(counter)s Answer:\n"
+#~ "        "
+#~ msgid_plural ""
+#~ "\n"
+#~ "        %(counter)s Answers:\n"
+#~ "        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "%(counter)s Risposta:"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "%(counter)s Risposte:"
+
+#~ msgid "mark this answer as favorite (click again to undo)"
+#~ msgstr ""
+#~ "segna questa risposta tra le preferite (clicca una seconda volta per "
+#~ "annullare)"
+
+#, fuzzy
+#~ msgid "Question tags"
+#~ msgstr "Domande"
+
+#~ msgid "questions"
+#~ msgstr "domande"
+
+#~ msgid "search"
+#~ msgstr "cerca"
+
+#~ msgid "rss feed"
+#~ msgstr "feed RSS"
+
+#, fuzzy
+#~ msgid "Please star (bookmark) some questions or follow some users."
+#~ msgstr "Aggiungi qualche domanda alla tua lista di domande preferite"
+
+#~ msgid "In:"
+#~ msgstr "In:"
+
+#, fuzzy
+#~ msgid "followed"
+#~ msgstr "Chiudi domanda"
+
+#~ msgid "Sort by:"
+#~ msgstr "Ordina per:"
+
+#~ msgid "Email (not shared with anyone):"
+#~ msgstr "Email (non condivisa con altri):"
+
+#~ msgid "Keys to connect the site with external services like Facebook, etc."
+#~ msgstr ""
+#~ "Chiavi per connettere il sito con servizi esterni come Facebook, ecc."
+
+#~ msgid "Minimum reputation required to perform actions"
+#~ msgstr "Reputazione minima per eseguire operazioni"
+
+#, fuzzy
+#~ msgid "Site modes"
+#~ msgstr "Siti"
+
+#~ msgid "Q&A forum website parameters and urls"
+#~ msgstr "Parametri ed url per il Q&A forum"
+
+#~ msgid "Skin and User Interface settings"
+#~ msgstr "Impostazioni della skin e dell'interfaccia utente"
+
+#~ msgid "Limits applicable to votes and moderation flags"
+#~ msgstr "Limiti riguardanti i voti e i post segnati come inappropriati"
+
+#~ msgid "Setting groups"
+#~ msgstr "Gruppi di impostazioni"
+
+#~ msgid ""
+#~ "This option currently defines default frequency of emailed updates in the "
+#~ "following five categories: questions asked by user, answered by user, "
+#~ "individually selected, entire forum (per person tag filter applies) and "
+#~ "posts mentioning the user and comment responses"
+#~ msgstr ""
+#~ "Questa opzione attualmente definisce la frequenza di default degli update "
+#~ "via email nelle seguenti cinque categorie: domande poste dall'utente, "
+#~ "risposte dell'utente, domande selezionate individualmente, tutto il forum "
+#~ "(con filtri ai tag applicati individualmente), post che menzionano "
+#~ "l'utente e risposte ai commenti  "
 
 #~ msgid "community wiki"
 #~ msgstr "domanda comunitaria"

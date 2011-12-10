@@ -117,6 +117,10 @@ then it is not very convinient to tweak the skin,
 as the file path may be long and files may be writable only
 by from the root account.
 
+**IMPORTANT:** Do not edit file style.css manually, instead edit the
+source style.less, written in the `lesscss <http://lesscss.org>`_ format.
+See also: :ref:`customizing-style-css-file-in-askbot`.
+
 Create a custom skin in a new directory
 ---------------------------------------
 This is technically possible, but not advisable

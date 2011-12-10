@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-08 02:27-0500\n"
+"POT-Creation-Date: 2011-11-27 01:59-0600\n"
 "PO-Revision-Date: 2011-11-19 06:41+0100\n"
 "Last-Translator: Luca Ferroni <luca@befair.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr ""
 msgid "loading..."
 msgstr "Caricamento..."
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:857
+#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
 msgid "tags cannot be empty"
 msgstr "Il campo Tags non può essere vuoto"
 
@@ -92,7 +92,7 @@ msgstr "per favore inserisci più di %s caratteri"
 msgid "please enter title"
 msgstr "Per favore inserisci il titolo"
 
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:983
+#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
 #, c-format
 msgid "%s title minchars"
 msgstr "per favore inserisci almeno %s caratteri"
@@ -149,11 +149,11 @@ msgstr "Post recuperato"
 msgid "post deleted"
 msgstr "Post eliminato"
 
-#: skins/common/media/js/post.js:537 skins/old/media/js/post.js:535
+#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
 msgid "Follow"
 msgstr "Segui"
 
-#: skins/common/media/js/post.js:546 skins/common/media/js/post.js.c:555
+#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
 #: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
 #, c-format
 msgid "%s follower"
@@ -161,53 +161,53 @@ msgid_plural "%s followers"
 msgstr[0] "seguito da %s persona"
 msgstr[1] "seguito da %s persone"
 
-#: skins/common/media/js/post.js:551 skins/old/media/js/post.js:549
+#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
 msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
 msgstr "<div>Segui</div><div class=\"unfollow\">Non seguire</div>"
 
-#: skins/common/media/js/post.js:613
+#: skins/common/media/js/post.js:615
 msgid "undelete"
 msgstr "elimina"
 
-#: skins/common/media/js/post.js:618
+#: skins/common/media/js/post.js:620
 msgid "delete"
 msgstr "elimina"
 
-#: skins/common/media/js/post.js:955
+#: skins/common/media/js/post.js:957
 msgid "add comment"
 msgstr "OK"
 
-#: skins/common/media/js/post.js:958
+#: skins/common/media/js/post.js:960
 msgid "save comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:986
+#: skins/common/media/js/post.js:990
 #, c-format
 msgid "enter %s more characters"
 msgstr "%s caratteri rimanenti"
 
-#: skins/common/media/js/post.js:991
+#: skins/common/media/js/post.js:995
 #, c-format
 msgid "%s characters left"
 msgstr "%s caratteri rimanenti"
 
-#: skins/common/media/js/post.js:1062
+#: skins/common/media/js/post.js:1066
 msgid "cancel"
 msgstr ""
 
-#: skins/common/media/js/post.js:1105
+#: skins/common/media/js/post.js:1109
 msgid "confirm abandon comment"
 msgstr ""
 
-#: skins/common/media/js/post.js:1179
+#: skins/common/media/js/post.js:1183
 msgid "delete this comment"
 msgstr "Elimina questo commento"
 
-#: skins/common/media/js/post.js:1383
+#: skins/common/media/js/post.js:1387
 msgid "confirm delete comment"
 msgstr "Vuoi davvero cancellare il commento?"
 
-#: skins/common/media/js/post.js:1624 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
 msgid "Please enter question title (>10 characters)"
 msgstr "Per piacere inserisce un titolo per la tua domanda (>10 caratteri)"
 

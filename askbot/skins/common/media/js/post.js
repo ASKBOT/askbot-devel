@@ -38,8 +38,8 @@ function removeLoader() {
     $("img.ajax-loader").remove();
 }
 
-function setSubmitButtonDisabled(form, isDisabled) { 
-    form.find("input[type='submit']").attr("disabled", isDisabled ? "true" : "");    
+function setSubmitButtonDisabled(form, isDisabled) {
+    form.find("input[type='submit']").attr("disabled", isDisabled ? "true" : "");
 }
 
 function enableSubmitButton(form) {
@@ -72,10 +72,10 @@ function setupFormValidation(form, validationRules, validationMessages, onSubmit
         },
         submitHandler: function(form_dom) {
             disableSubmitButton($(form_dom));
-            
+
             if (onSubmitCallback){
                 onSubmitCallback();
-            } 
+            }
             else{
                 form_dom.submit();
             }
@@ -110,7 +110,7 @@ var CPValidator = function(){
                     maxlength: 105,
                     limit_tag_count: true,
                     limit_tag_length: true
-                },  
+                },
                 text: {
                     required: true,
                     minlength: 10
@@ -132,11 +132,11 @@ var CPValidator = function(){
                 },
                 text: {
                     required: " " + gettext('content cannot be empty'),
-                    minlength: interpolate(gettext('%s content minchars'), [chars]) 
+                    minlength: interpolate(gettext('%s content minchars'), [chars])
                 },
                 title: {
                     required: " " + gettext('please enter title'),
-                    minlength: interpolate(gettext('%s title minchars'), [chars]) 
+                    minlength: interpolate(gettext('%s title minchars'), [chars])
                 }
             };
         }
@@ -146,7 +146,7 @@ var CPValidator = function(){
 /**
  * @constructor
  * @extends {SimpleControl}
- * @param {Comment} comment to upvote 
+ * @param {Comment} comment to upvote
  */
 var CommentVoteButton = function(comment){
     SimpleControl.call(this);
@@ -271,14 +271,18 @@ var Vote = function(){
     var commentLinkIdPrefix = 'comment-';
     var voteNumberClass = "vote-number";
     var offensiveIdPrefixQuestionFlag = 'question-offensive-flag-';
+    var removeOffensiveIdPrefixQuestionFlag = 'question-offensive-flag-remove-';
+    var removeAllOffensiveIdPrefixQuestionFlag = 'question-offensive-flag-remove-all-';
     var offensiveIdPrefixAnswerFlag = 'answer-offensive-flag-';
+    var removeOffensiveIdPrefixAnswerFlag = 'answer-offensive-flag-remove-';
+    var removeAllOffensiveIdPrefixAnswerFlag = 'answer-offensive-flag-remove-all';
     var offensiveClassFlag = 'offensive-flag';
     var questionControlsId = 'question-controls';
     var removeQuestionLinkIdPrefix = 'question-delete-link-';
     var removeAnswerLinkIdPrefix = 'answer-delete-link-';
     var questionSubscribeUpdates = 'question-subscribe-updates';
     var questionSubscribeSidebar= 'question-subscribe-sidebar';
-    
+
     var acceptAnonymousMessage = gettext('insufficient privilege');
     var acceptOwnAnswerMessage = gettext('cannot pick own answer as best');
 
@@ -292,12 +296,13 @@ var Vote = function(){
     var voteAnonymousMessage = gettext('anonymous users cannot vote') + pleaseLogin;
     //there were a couple of more messages...
     var offensiveConfirmation = gettext('please confirm offensive');
+    var removeOffensiveConfirmation = gettext('please confirm removal of offensive flag');
     var offensiveAnonymousMessage = gettext('anonymous users cannot flag offensive posts') + pleaseLogin;
     var removeConfirmation = gettext('confirm delete');
     var removeAnonymousMessage = gettext('anonymous users cannot delete/undelete') + pleaseLogin;
     var recoveredMessage = gettext('post recovered');
     var deletedMessage = gettext('post deleted');
-    
+
     var VoteType = {
         acceptAnswer : 0,
         questionUpVote : 1,
@@ -306,7 +311,11 @@ var Vote = function(){
         answerUpVote: 5,
         answerDownVote:6,
         offensiveQuestion : 7,
+        removeOffensiveQuestion : 7.5,
+        removeAllOffensiveQuestion : 7.6,
         offensiveAnswer:8,
+        removeOffensiveAnswer:8.5,
+        removeAllOffensiveAnswer:8.6,
         removeQuestion: 9,
         removeAnswer:10,
         questionSubscribeUpdates:11,
@@ -346,17 +355,37 @@ var Vote = function(){
         var answerVoteDownButton = 'div.'+ voteContainerId +' div[id='+ imgIdPrefixAnswerVotedown + id + ']';
         return $(answerVoteDownButton);
     };
-    
+
     var getOffensiveQuestionFlag = function(){
-        var offensiveQuestionFlag = '#question-table span[class='+ offensiveClassFlag +']';
+        var offensiveQuestionFlag = '#question-table span[id^="'+ offensiveIdPrefixQuestionFlag +'"]';
         return $(offensiveQuestionFlag);
     };
-    
+
+    var getRemoveOffensiveQuestionFlag = function(){
+        var removeOffensiveQuestionFlag = '#question-table span[id^="'+ removeOffensiveIdPrefixQuestionFlag +'"]';
+        return $(removeOffensiveQuestionFlag);
+    };
+
+    var getRemoveAllOffensiveQuestionFlag = function(){
+        var removeAllOffensiveQuestionFlag = '#question-table span[id^="'+ removeAllOffensiveIdPrefixQuestionFlag +'"]';
+        return $(removeAllOffensiveQuestionFlag);
+    };
+
     var getOffensiveAnswerFlags = function(){
-        var offensiveQuestionFlag = 'div.answer span[class='+ offensiveClassFlag +']';
+        var offensiveQuestionFlag = 'div.answer span[id^="'+ offensiveIdPrefixAnswerFlag +'"]';
         return $(offensiveQuestionFlag);
     };
-    
+
+    var getRemoveOffensiveAnswerFlag = function(){
+        var removeOffensiveAnswerFlag = 'div.answer span[id^="'+ removeOffensiveIdPrefixAnswerFlag +'"]';
+        return $(removeOffensiveAnswerFlag);
+    };
+
+    var getRemoveAllOffensiveAnswerFlag = function(){
+        var removeAllOffensiveAnswerFlag = 'div.answer span[id^="'+ removeAllOffensiveIdPrefixAnswerFlag +'"]';
+        return $(removeAllOffensiveAnswerFlag);
+    };
+
     var getremoveQuestionLink = function(){
         var removeQuestionLink = 'div#question-controls a[id^='+ removeQuestionLinkIdPrefix +']';
         return $(removeQuestionLink);
@@ -369,12 +398,12 @@ var Vote = function(){
     var getquestionSubscribeSidebarCheckbox= function(){
         return $('#' + questionSubscribeSidebar);
     };
-    
+
     var getremoveAnswersLinks = function(){
         var removeAnswerLinks = 'div.answer-controls a[id^='+ removeAnswerLinkIdPrefix +']';
         return $(removeAnswerLinks);
     };
-   
+
     var setVoteImage = function(voteType, undo, object){
         var flag = undo ? false : true;
         if (object.hasClass("on")) {
@@ -382,7 +411,7 @@ var Vote = function(){
         }else{
           object.addClass("on");
         }
-        
+
         if(undo){
             if(voteType == VoteType.questionUpVote || voteType == VoteType.questionDownVote){
                 $(getQuestionVoteUpButton()).removeClass("on");
@@ -394,56 +423,70 @@ var Vote = function(){
             }
         }
     };
-    
+
     var setVoteNumber = function(object, number){
         var voteNumber = object.parent('div.'+ voteContainerId).find('div.'+ voteNumberClass);
         $(voteNumber).text(number);
     };
-    
+
     var bindEvents = function(){
         // accept answers
-        if(questionAuthorId == currentUserId){
-            var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
-            $(acceptedButtons).unbind('click').click(function(event){
-               Vote.accept($(event.target));
-            });
-        }
+        var acceptedButtons = 'div.'+ voteContainerId +' img[id^='+ imgIdPrefixAccept +']';
+        $(acceptedButtons).unbind('click').click(function(event){
+           Vote.accept($(event.target));
+        });
         // set favorite question
         var favoriteButton = getFavoriteButton();
         favoriteButton.unbind('click').click(function(event){
            //Vote.favorite($(event.target));
            Vote.favorite(favoriteButton);
         });
-    
+
         // question vote up
         var questionVoteUpButton = getQuestionVoteUpButton();
         questionVoteUpButton.unbind('click').click(function(event){
            Vote.vote($(event.target), VoteType.questionUpVote);
         });
-    
+
         var questionVoteDownButton = getQuestionVoteDownButton();
         questionVoteDownButton.unbind('click').click(function(event){
            Vote.vote($(event.target), VoteType.questionDownVote);
         });
-    
+
         var answerVoteUpButton = getAnswerVoteUpButtons();
         answerVoteUpButton.unbind('click').click(function(event){
            Vote.vote($(event.target), VoteType.answerUpVote);
         });
-        
+
         var answerVoteDownButton = getAnswerVoteDownButtons();
         answerVoteDownButton.unbind('click').click(function(event){
            Vote.vote($(event.target), VoteType.answerDownVote);
         });
-    
+
         getOffensiveQuestionFlag().unbind('click').click(function(event){
            Vote.offensive(this, VoteType.offensiveQuestion);
         });
-    
+
+        getRemoveOffensiveQuestionFlag().unbind('click').click(function(event){
+           Vote.remove_offensive(this, VoteType.removeOffensiveQuestion);
+        });
+
+        getRemoveAllOffensiveQuestionFlag().unbind('click').click(function(event){
+           Vote.remove_offensive(this, VoteType.removeAllOffensiveQuestion);
+        });
+
         getOffensiveAnswerFlags().unbind('click').click(function(event){
            Vote.offensive(this, VoteType.offensiveAnswer);
         });
-    
+
+        getRemoveOffensiveAnswerFlag().unbind('click').click(function(event){
+           Vote.remove_offensive(this, VoteType.removeOffensiveAnswer);
+        });
+
+        getRemoveAllOffensiveAnswerFlag().unbind('click').click(function(event){
+           Vote.remove_offensive(this, VoteType.removeAllOffensiveAnswer);
+        });
+
         getremoveQuestionLink().unbind('click').click(function(event){
             Vote.remove(this, VoteType.removeQuestion);
         });
@@ -475,7 +518,7 @@ var Vote = function(){
             Vote.remove(this, VoteType.removeAnswer);
         });
     };
-    
+
     var submit = function(object, voteType, callback) {
         //this function submits votes
         $.ajax({
@@ -488,7 +531,7 @@ var Vote = function(){
             success: function(data){callback(object, voteType, data);}
             });
     };
-    
+
     var handleFail = function(xhr, msg){
         alert("Callback invoke error: " + msg);
     };
@@ -513,7 +556,7 @@ var Vote = function(){
             $(answers).removeClass("accepted-answer");
             var commentLinks = ("div[id^="+answerContainerIdPrefix +"] div[id^="+ commentLinkIdPrefix +"]");
             $(commentLinks).removeClass("comment-link-accepted");
-            
+
             object.attr("src", mediaUrl("media/images/vote-accepted-on.png"));
             $("#"+answerContainerIdPrefix+postId).addClass("accepted-answer");
             $("#"+commentLinkIdPrefix+postId).addClass("comment-link-accepted");
@@ -526,12 +569,12 @@ var Vote = function(){
     var callback_favorite = function(object, voteType, data){
         if(data.allowed == "0" && data.success == "0"){
             showMessage(
-                object, 
+                object,
                 favoriteAnonymousMessage.replace(
-                        '{{QuestionID}}', 
+                        '{{QuestionID}}',
                         questionId).replace(
                         '{{questionSlug}}',
-                        '' 
+                        ''
                     )
             );
         }
@@ -562,7 +605,7 @@ var Vote = function(){
             showMessage(object, data.message);
         }
     };
-        
+
     var callback_vote = function(object, voteType, data){
         if (data.success == '0'){
             showMessage(object, data.message);
@@ -585,7 +628,7 @@ var Vote = function(){
         if (data.status == "1"){
             setVoteImage(voteType, true, object);
             setVoteNumber(object, data.count);
-        }     
+        }
         else if (data.success == "1"){
             setVoteImage(voteType, false, object);
             setVoteNumber(object, data.count);
@@ -594,20 +637,64 @@ var Vote = function(){
             }
         }
     };
-        
+
     var callback_offensive = function(object, voteType, data){
         //todo: transfer proper translations of these from i18n.js
         //to django.po files
         //_('anonymous users cannot flag offensive posts') + pleaseLogin;
         if (data.success == "1"){
-            $(object).children('span[class=darkred]').text("("+ data.count +")");
+            if(data.count > 0)
+                $(object).children('span[class=darkred]').text("("+ data.count +")");
+            else
+                $(object).children('span[class=darkred]').text("");
+
+            // Change the link text and rebind events
+            $(object).find("a.question-flag").html(gettext("remove flag"));
+            var obj_id = $(object).attr("id");
+            $(object).attr("id", obj_id.replace("flag-", "flag-remove-"));
+
+            getRemoveOffensiveQuestionFlag().unbind('click').click(function(event){
+               Vote.remove_offensive(this, VoteType.removeOffensiveQuestion);
+            });
+
+            getRemoveOffensiveAnswerFlag().unbind('click').click(function(event){
+               Vote.remove_offensive(this, VoteType.removeOffensiveAnswer);
+            });
         }
         else {
             object = $(object);
             showMessage(object, data.message)
         }
     };
-        
+
+    var callback_remove_offensive = function(object, voteType, data){
+        //todo: transfer proper translations of these from i18n.js
+        //to django.po files
+        //_('anonymous users cannot flag offensive posts') + pleaseLogin;
+        if (data.success == "1"){
+            if(data.count > 0)
+                $(object).children('span[class=darkred]').text("("+ data.count +")");
+            else
+                $(object).children('span[class=darkred]').text("");
+            // Change the link text and rebind events
+            $(object).find("a.question-flag").html(gettext("flag offensive"));
+            var obj_id = $(object).attr("id");
+            $(object).attr("id", obj_id.replace("flag-remove-", "flag-"));
+
+             getOffensiveQuestionFlag().unbind('click').click(function(event){
+               Vote.offensive(this, VoteType.offensiveQuestion);
+            });
+
+            getOffensiveAnswerFlags().unbind('click').click(function(event){
+               Vote.offensive(this, VoteType.offensiveAnswer);
+            });
+        }
+        else {
+            object = $(object);
+            showMessage(object, data.message)
+        }
+    };
+
     var callback_remove = function(object, voteType, data){
         if (data.success == "1"){
             if (removeActionType == 'delete'){
@@ -625,7 +712,7 @@ var Vote = function(){
             showMessage(object, data.message)
         }
     };
-        
+
     return {
         init : function(qId, qSlug, questionAuthor, userId){
             questionId = qId;
@@ -634,7 +721,7 @@ var Vote = function(){
             currentUserId = userId;
             bindEvents();
         },
-        
+
         //accept answer
         accept: function(object){
             postId = object.attr("id").substring(imgIdPrefixAccept.length);
@@ -644,7 +731,7 @@ var Vote = function(){
         favorite: function(object){
             if (!currentUserId || currentUserId.toUpperCase() == "NONE"){
                 showMessage(
-                    object, 
+                    object,
                     favoriteAnonymousMessage.replace(
                             "{{QuestionID}}",
                             questionId
@@ -657,7 +744,7 @@ var Vote = function(){
             }
             submit(object, VoteType.favorite, callback_favorite);
         },
-            
+
         vote: function(object, voteType){
             if (!currentUserId || currentUserId.toUpperCase() == "NONE"){
                 if (voteType == VoteType.questionSubscribeUpdates || voteType == VoteType.questionUnsubscribeUpdates){
@@ -685,7 +772,7 @@ var Vote = function(){
             else if (voteType == VoteType.answerDownVote){
                 postId = object.attr("id").substring(imgIdPrefixAnswerVotedown.length);
             }
-            
+
             submit(object, voteType, callback_vote);
         },
         //flag offensive
@@ -701,11 +788,31 @@ var Vote = function(){
                             questionSlug
                         )
                 );
-                return false;   
+                return false;
             }
             if (confirm(offensiveConfirmation)){
                 postId = object.id.substr(object.id.lastIndexOf('-') + 1);
                 submit(object, voteType, callback_offensive);
+            }
+        },
+        //remove flag offensive
+        remove_offensive: function(object, voteType){
+            if (!currentUserId || currentUserId.toUpperCase() == "NONE"){
+                showMessage(
+                    $(object),
+                    offensiveAnonymousMessage.replace(
+                            "{{QuestionID}}",
+                            questionId
+                        ).replace(
+                            '{{questionSlug}}',
+                            questionSlug
+                        )
+                );
+                return false;
+            }
+            if (confirm(removeOffensiveConfirmation)){
+                postId = object.id.substr(object.id.lastIndexOf('-') + 1);
+                submit(object, voteType, callback_remove_offensive);
             }
         },
         //delete question or answer (comments are deleted separately)
@@ -721,13 +828,13 @@ var Vote = function(){
                             questionSlug
                         )
                     );
-                return false;   
+                return false;
             }
             bits = object.id.split('-');
             postId = bits.pop();/* this seems to be used within submit! */
             postType = bits.shift();
 
-            var do_proceed = false; 
+            var do_proceed = false;
             if (postType == 'answer'){
                 postNode = $('#answer-container-' + postId);
             }
@@ -978,7 +1085,7 @@ EditCommentForm.prototype.getCounterUpdater = function(){
         if (length2 < 0){
             length2 = Math.round(0.9*maxCommentLength);
         }
-        
+
         //todo:
         //1) use class instead of color - move color def to css
         var color = 'maroon';
@@ -1019,7 +1126,7 @@ EditCommentForm.prototype.getCancelHandler = function(){
     return function(){
         if (form.canCancel()){
             form.detach();
-        } 
+        }
         return false;
     };
 };
@@ -1049,7 +1156,7 @@ EditCommentForm.prototype.createDom = function(){
 
     /*
     this._help_text = $('<span></span>').attr('class', 'help-text');
-    this._help_text.html(gettext('Markdown is allowed in the comments')); 
+    this._help_text.html(gettext('Markdown is allowed in the comments'));
     div.append(this._help_text);
 
     this._help_text = $('<div></div>').attr('class', 'clearfix');
@@ -1259,7 +1366,7 @@ Comment.prototype.setContent = function(data){
 
     var votes = this.makeElement('div');
     votes.addClass('comment-votes');
-    
+
     var vote = new CommentVoteButton(this);
     if (this._data['upvoted_by_user']){
         vote.setVoted(true);
@@ -1276,7 +1383,7 @@ Comment.prototype.setContent = function(data){
         this._comment_delete.append(this._delete_icon.getElement());
     }
     this._element.append(this._comment_delete);
-    
+
     this._comment_body = $('<div class="comment-body"></div>');
     this._comment_body.html(this._data['html']);
     //this._comment_body.append(' &ndash; ');
@@ -1298,7 +1405,7 @@ Comment.prototype.setContent = function(data){
         this._comment_body.append(this._edit_link.getElement());
     }
     this._element.append(this._comment_body);
-    
+
     this._blank = false;
 };
 
@@ -1308,7 +1415,7 @@ Comment.prototype.dispose = function(){
     }
     if (this._comment_delete){
         this._comment_delete.remove();
-    }    
+    }
     if (this._user_link){
         this._user_link.remove();
     }
@@ -1388,11 +1495,11 @@ Comment.prototype.getDeleteHandler = function(){
             comment.getElement().hide();
             $.ajax({
                 type: 'POST',
-                url: askbot['urls']['deleteComment'], 
-                data: { comment_id: comment.getId() }, 
+                url: askbot['urls']['deleteComment'],
+                data: { comment_id: comment.getId() },
                 success: function(json, textStatus, xhr) {
                     comment.dispose();
-                }, 
+                },
                 error: function(xhr, textStatus, exception) {
                     comment.getElement().show()
                     showMessage(del_icon.getElement(), xhr.responseText);
@@ -1602,7 +1709,7 @@ var socialSharing = function(){
             setupButtonEventHandlers(ica, function(){share_page("identica")});
         }
     }
-}(); 
+}();
 
 /**
  * @constructor
@@ -1637,7 +1744,7 @@ QASwapper.prototype.startSwapping = function(){
                 success: function(data){
                     var url_template = askbot['urls']['question_url_template'];
                     new_question_url = url_template.replace(
-                        '{{QuestionID}}', 
+                        '{{QuestionID}}',
                         data['id']
                     ).replace(
                         '{{questionSlug}}',

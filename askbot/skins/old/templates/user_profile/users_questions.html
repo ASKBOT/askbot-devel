@@ -1,8 +1,0 @@
-<!-- users_questions.html -->
-{% import "macros.html" as macros %}
-<div class="user-stats-table">
-    {% for question in questions %}
-    {{macros.question_summary(question, extra_class='narrow')}}
-    {% endfor %}
-</div>
-<!-- end users_questions.html -->

@@ -12,6 +12,7 @@ from askbot.tests.utils import AskbotTestCase
 from askbot.conf import settings as askbot_settings
 from askbot.tests.utils import skipIf
 import sys
+import os
 
 
 def patch_jinja2():
@@ -35,6 +36,8 @@ if CMAJOR == 0 and CMINOR == 3 and CMICRO < 4:
 
 
 class PageLoadTestCase(AskbotTestCase):
+    fixtures = [ os.path.join(os.path.dirname(__file__), 'test_data.json'),]
+
     def try_url(
             self,
             url_name, status_code=200, template=None,
@@ -80,29 +83,6 @@ class PageLoadTestCase(AskbotTestCase):
                 self.assertEqual(r.template[0].name, template)
             else:
                 raise Exception('unexpected error while runnig test')
-
-    def setUp(self):
-        self.u1 = self.create_user(username='user1')
-        self.u2 = self.create_user(username='user2')
-        self.u3 = self.create_user(username='user3')
-
-        self.question = self.post_question(user=self.u1)
-
-        self.answer = self.post_answer(user=self.u1, question=self.question)
-        self.answer.id = 38 # one of the tests tries this id
-        self.answer.save()
-
-        self.question2 = self.post_question(user=self.u2)
-        self.question2.id = 2
-        self.question2.save()
-
-        self.question3 = self.post_question(user=self.u3)
-        self.question3.id = 3
-        self.question3.save()
-
-        self.question17 = self.post_question(user=self.u1)
-        self.question17.id = 17
-        self.question17.save()
 
 
     def test_index(self):
@@ -169,7 +149,7 @@ class PageLoadTestCase(AskbotTestCase):
                 'answer_revisions',
                 status_code=status_code,
                 template='revisions.html',
-                kwargs={'id':38}
+                kwargs={'id': 20}
             )
         #todo: test different sort methods and scopes
         self.try_url(
@@ -267,12 +247,19 @@ class PageLoadTestCase(AskbotTestCase):
         self.try_url(
                 'question_revisions',
                 status_code=status_code,
-                kwargs={'id':17},
+                kwargs={'id':40},
                 template='revisions.html'
             )
         self.try_url('users',
                 status_code=status_code,
-                template='users.html')
+                template='users.html'
+            )
+        self.try_url(
+                'widget_questions',
+                status_code = status_code,
+                data={'tags': 'tag-1-0'},
+                template='question_widget.html',
+            )
         #todo: really odd naming conventions for sort methods
         self.try_url(
                 'users',

@@ -12,6 +12,7 @@ import urllib
 import operator
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.conf import settings as django_settings
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template import Context
 from django.utils.http import urlencode
@@ -626,3 +627,20 @@ def get_question_body(request):
 
     return {'questions-titles': questions_dict}
     return {'questions-titles': questions_dict}
+
+def widget_questions(request):
+    """Returns the first x questions based on certain tags.
+    @returns template with those questions listed."""
+    # make sure this is a GET request with the correct parameters.
+    if request.method != 'GET':
+        raise Http404
+    questions = models.Question.objects.all()
+    tags_input = request.GET.get('tags','').strip()
+    if len(tags_input) > 0:
+        tags = [tag.strip() for tag in tags_input.split(',')]
+        questions = questions.filter(tags__name__in = tags)
+    data = {
+        'questions': questions[:askbot_settings.QUESTIONS_WIDGET_MAX_QUESTIONS]
+    }
+    return render_into_skin('question_widget.html', data, request) 
+    

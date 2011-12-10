@@ -1,8 +1,29 @@
 Changes in Askbot
 =================
 
-Development version (not yet published)
----------------------------------------
+0.7.33 (Current Version)
+------------------------
+* Made on log in redirect to the forum index page by default
+  and to the question page, if user was reading the question
+  it is still possible to override the ``next`` url parameter
+  or just rely on django's ``LOGIN_REDIRECT_URL`` (Evgeny)
+* Implemented retraction of offensive flags (Dejan Noveski)
+* Made automatic dependency checking more complete (Evgeny)
+
+0.7.32
+------
+* Bugfixes in English locale (Evgeny)
+
+0.7.31 
+------
+* Added ``askbot_create_test_fixture`` management command (Dejan Noveski)
+* Integrated new test fixture into the page load test cases (Dejan Noveski)
+* Added an embeddable widget for the questions list matching tags (Daniel Mican, Evgeny Fadeev, Dejan Noveski)
+
+0.7.30
+------
+Note: some of these features were added in one of the three previous versions.
+
 * Context-sensitive RSS url (`Dejan Noveski <http://www.atomidata.com/>`_)
 * Implemented new version of skin (Byron Corrales)
 * Show unused vote count (Tomasz Zielinski)
@@ -22,9 +43,14 @@ Development version (not yet published)
 * Updated Italian localization (Luca Ferroni)
 * Added Catalan localization (Jordi Bofill)
 * Added management command ``askbot_add_test_content`` (Dejan Noveski)
+* Continued work on refactoring the database schema (Tomasz Zielinski)
 
-0.7.26 (Current Version)
-------------------------
+0.7.27 - 0.7.29
+---------------
+For these versions we did not keep consistent record of features.
+
+0.7.26
+------
 * Added settings for email subscription defaults (Adolfo)
 * Resolved `bug #102<http://bugs.askbot.org/issues/102>`_ - duplicate notifications on posts with mentions (Evegeny)
 * Added color-animated transitions when urls with hash tags are visited (Adolfo)

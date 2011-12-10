@@ -39,6 +39,10 @@ input, select {
     margin-left:0px;
 }
 
+iframe {
+    border: none;
+}
+
 p {
     font-size: 14px;
     line-height: 140%;
@@ -225,9 +229,6 @@ body.user-messages {
 
 #userToolsNav {/* Navigation bar containing login link or user information, check widgets/user_navigation.html*/
     height: 20px;
-    position:absolute;
-    bottom: 0;
-    right:0px;
     padding-bottom:5px;
 
     a {
@@ -263,7 +264,7 @@ body.user-messages {
 }
 
 #metaNav {/* Top Navigation bar containing links for tags, people and badges, check widgets/header.html */
-    float:right;
+    float: right;/* for #header.with-logo it is modified */
 
     a {
         color: #e2e2ae;
@@ -310,6 +311,21 @@ body.user-messages {
     #navBadges{
         .sprites(-210px,-5px)
     }
+}
+
+#header.with-logo #userToolsNav {
+    position:absolute;
+    bottom: 0;
+    right:0px;
+}
+
+#header.without-logo #userToolsNav {
+    float:left;
+    margin-top: 7px;
+}
+
+#header.without-logo #metaNav {
+    margin-bottom: 7px;
 }
 
 #secondaryHeader{ /* Div containing Home button, scope navigation, search form and ask button, check blocks/secondary_header.html */
@@ -368,8 +384,7 @@ body.user-messages {
     height:42px;
     margin:6px 0px 0px 15px;
 
-    .searchInput, .searchInputCancelable,
-    .searchInputAuth, .searchInputCancelableAuth {
+    .searchInput, .searchInputCancelable {
         font-size: 30px;
         height: 40px;
         font-weight:300;
@@ -381,20 +396,12 @@ body.user-messages {
         vertical-align: middle;
     }
 
-    .searchInput, .searchInputCancelable {
+    .searchInput {
         width: 352px;
     }
 
     .searchInputCancelable {
         width: 317px;
-    }
-
-    .searchInputAuth{
-        width: 340px; 
-    }
-
-    .searchInputCancelableAuth {
-        width: 310px; /*FIXME byron */
     }
 
     .logoutsearch {
@@ -436,6 +443,20 @@ body.user-messages {
         color: #d84040;
     }
 }
+
+body.anon {
+    #searchBar {
+        width: 500px;
+        .searchInput {
+            width: 440px;
+        }
+
+        .searchInputCancelable {
+            width: 405px;
+        }
+    }
+}
+
 
 #askButton{ /* check blocks/secondary_header.html and widgets/ask_button.html*/
     background: url(../images/bigbutton.png) repeat-x bottom;
@@ -738,6 +759,10 @@ body.user-messages {
     margin-right:5px;
 }
 
+.main-page .tabsA .label {
+    margin-left: 8px;
+}
+
 .tabsB a {
     background: #eee;
     border: 1px solid #eee;
@@ -757,7 +782,7 @@ body.user-messages {
     color: #f57900;
     margin: 5px 0px 3px 7px;
     width:52px;
-    padding-left: 16px;
+    padding-left: 2px;
     padding-top:3px;
     background:#fff url(../images/feed-icon-small.png) no-repeat center right;
     float:right;
@@ -984,6 +1009,7 @@ ul#searchTags {
 .paginator {
     padding: 5px 0 10px 0;
     font-size:13px;
+    margin-bottom:10px;
 
     .prev a, .prev a:visited,
     .next a, .next a:visited {
@@ -1490,7 +1516,7 @@ span.delete-icon:hover {
 
     #question-table,
     .answer-table {
-        margin: 6px 0 0px 0;
+        margin: 6px 0 6px 0;
         border-spacing: 0px;
         width: 680px;
         padding-right:3px;
@@ -1776,7 +1802,7 @@ span.delete-icon:hover {
             font-family:@body-font;
             font-size:11px;
             min-height: 25px;
-            background:url(../images/comment-background.png) bottom repeat-x;
+            background:#fff url(../images/comment-background.png) bottom repeat-x;
             .rounded-corners(5px);
         }
         div.comment:hover {
@@ -1938,10 +1964,6 @@ span.delete-icon:hover {
         color:#444444;
     }
     
-    .accepted-answer .comments {
-        background-color: #f1f6d4;
-    }
-
     .answered {
         background: #CCC;
         color: #999;
@@ -2038,6 +2060,7 @@ span.delete-icon:hover {
 .openid-signin,
 .meta,
 .users-page,
+.user-profile-edit-page,
 {
     font-size:13px;
     line-height:1.3;
@@ -2055,12 +2078,16 @@ span.delete-icon:hover {
         padding-left:0px;
         font-size:16px;
     }
-    #id_email,#id_name,#id_username,#id_password1,#id_password2{
+    input[type="text"],input[type="password"],select{
         border:#cce6ec 3px solid;
         height:25px;
         padding-left:5px;
         width:395px;
         font-size:14px;
+    }
+    select{
+        width:405px;
+        height:30px;
     }
     textarea{
         border:#cce6ec 3px solid;
