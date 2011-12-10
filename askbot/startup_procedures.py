@@ -176,18 +176,18 @@ def test_tracking():
     """tests whether the necessary peices of the
     `django-tracking` app are registered in the `settings.py`
     """
-    if 'askbot.deps.tracking.middleware.BannedIPMiddleware' not in \
+    if 'tracking.middleware.BannedIPMiddleware' not in \
             django_settings.MIDDLEWARE_CLASSES:
         raise ImproperlyConfigured(PREAMBLE + 
                 "\nplease add line\n"
-                "'askbot.deps.tracking.middleware.BannedIPMiddleware',\n"
+                "'tracking.middleware.BannedIPMiddleware',\n"
                 "to the beginning of MIDDLEWARE_CLASSES in your "
                 "settings.py file"
             )
-    if 'askbot.deps.tracking' not in django_settings.INSTALLED_APPS:
+    if 'tracking' not in django_settings.INSTALLED_APPS:
         raise ImproperlyConfigured(PREAMBLE +
                 "\nplease add line\n"
-                "'askbot.deps.tracking',\n"
+                "'tracking',\n"
                 "to your settings.py file"
             )
 
