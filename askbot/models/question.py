@@ -80,8 +80,7 @@ class QuestionQuerySet(models.query.QuerySet):
                 wiki = False,
                 is_anonymous = False,
                 tagnames = None,
-                text = None,
-                ip_addr=None,
+                text = None
             ):
         #todo: some work from this method will go to thread
         #and some - merged with the Answer.objects.create_new
@@ -97,7 +96,6 @@ class QuestionQuerySet(models.query.QuerySet):
             #html field is denormalized in .save() call
             text = text,
             #summary field is denormalized in .save() call
-            ip_addr = ip_addr,
         )
         if question.wiki:
             #DATED COMMENT
@@ -498,7 +496,6 @@ class Question(content.Content):
     #the reason is that the title and tags belong to thread,
     #but the question body to Post
     is_anonymous = models.BooleanField(default=False) 
-    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = QuestionManager()
 

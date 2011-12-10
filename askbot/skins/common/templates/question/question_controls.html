@@ -29,16 +29,3 @@
 {% if request.user|can_delete_post(question) %}{{ pipe() }}
     <a id="question-delete-link-{{question.id}}" class="question-delete">{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
 {% endif %}
-{% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}{{ pipe() }}
-    {% if question.ip_addr not in bannedIPs %}
-    <span class="moderate-ip block {{question.ip_addr}}" 
-            title="{% trans %}block IP {% endtrans %} {{question.ip_addr}}">
-            <a>{% trans %}block IP {% endtrans %}</a>
-        </span>
-    {% else %}
-    <span class="moderate-ip unblock {{question.ip_addr}}" 
-            title="{% trans %}unblock IP {% endtrans %} {{question.ip_addr}}">
-            <a>{% trans %}unblock IP {% endtrans %}</a>
-        </span>
-    {% endif %}
-{% endif %}

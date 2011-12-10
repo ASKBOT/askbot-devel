@@ -59,7 +59,7 @@
     {% endif %}
 {%- endmacro -%}
 
-{%- macro post_contributor_info(post, contributor_type, is_wiki, wiki_min_rep, user=None) -%}
+{%- macro post_contributor_info(post, contributor_type, is_wiki, wiki_min_rep) -%}
 {# there is a whole bunch of trickery here, probably indicative of 
 poor design of the data or methods on data objects #}
 {% if contributor_type=="original_author" %}
@@ -97,12 +97,7 @@ poor design of the data or methods on data objects #}
             {% else %}
                 <strong>{{post.added_at|diff_date}}</strong>
             {% endif %}
-            </p>
-        {% if user and user.is_authenticated() and user.is_administrator_or_moderator() %}
-          <p>
-          from {{post.ip_addr}}
-          </p>
-        {% endif %}
+        </p>
         {{ post_contributor_avatar_and_credentials(post, post.author) }}
     {% endif %}
     </div>
@@ -135,14 +130,13 @@ poor design of the data or methods on data objects #}
 {% endif %}
 {%- endmacro -%}
 
-{%- macro post_last_updater_and_creator_info(post, min_rep_to_edit_wiki, user=None) -%}
+{%- macro post_last_updater_and_creator_info(post, min_rep_to_edit_wiki) -%}
     {{ 
        post_contributor_info(
             post,
             "original_author",
             post.wiki,
-            min_rep_to_edit_wiki,
-            user
+            min_rep_to_edit_wiki
         )
     }}
     {{ 
@@ -151,7 +145,6 @@ poor design of the data or methods on data objects #}
             "last_updater",
             post.wiki,
             min_rep_to_edit_wiki,
-            user
         )
     }}
 {%- endmacro -%}
@@ -291,7 +284,7 @@ for the purposes of the AJAX comment editor #}
                 class="author" 
                 href="{{comment.user.get_profile_url()}}"
             >{{comment.user.username}}</a>
-          <span class="age">&nbsp;({{comment.added_at|diff_date}}{% if user and user.is_authenticated() and user.is_administrator_or_moderator() %} from {{comment.ip_addr}}{% endif %})</span>
+            <span class="age">&nbsp;({{comment.added_at|diff_date}})</span>
             {% if user|can_edit_comment(comment) %}
                 &nbsp;<a class="edit">{% trans %}edit{% endtrans %}</a>
             {% endif %}

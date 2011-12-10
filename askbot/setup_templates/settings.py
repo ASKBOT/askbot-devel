@@ -92,7 +92,6 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
-    'tracking.middleware.BannedIPMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.cache.UpdateCacheMiddleware',
@@ -167,7 +166,6 @@ INSTALLED_APPS = (
     'djcelery',
     'djkombu',
     'followit',
-    'tracking',
     #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
     #requires setting of MEDIA_ROOT and MEDIA_URL
 )

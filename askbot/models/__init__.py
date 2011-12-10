@@ -883,7 +883,6 @@ def user_post_comment(
                     parent_post = None,
                     body_text = None,
                     timestamp = None,
-                    ip_addr = None,
                 ):
     """post a comment on behalf of the user
     to parent_post
@@ -902,7 +901,6 @@ def user_post_comment(
                     user = self,
                     comment = body_text,
                     added_at = timestamp,
-                    ip_addr = ip_addr,
                 )
     award_badges_signal.send(None,
         event = 'post_comment',
@@ -912,7 +910,7 @@ def user_post_comment(
     )
     return comment
 
-def user_post_anonymous_askbot_content(user, session_key, ip_addr=None):
+def user_post_anonymous_askbot_content(user, session_key):
     """posts any posts added just before logging in 
     the posts are identified by the session key, thus the second argument
 
@@ -938,9 +936,9 @@ def user_post_anonymous_askbot_content(user, session_key, ip_addr=None):
             user.message_set.create(message = msg)
         else:
             for aq in aq_list:
-                aq.publish(user, ip_addr)
+                aq.publish(user)
             for aa in aa_list:
-                aa.publish(user, ip_addr)
+                aa.publish(user)
 
 
 def user_mark_tags(
@@ -1216,8 +1214,7 @@ def user_post_question(
                     tags = None,
                     wiki = False,
                     is_anonymous = False,
-                    timestamp = None,
-                    ip_addr=None,
+                    timestamp = None
                 ):
     """makes an assertion whether user can post the question
     then posts it and returns the question object"""
@@ -1241,7 +1238,6 @@ def user_post_question(
                                     added_at = timestamp,
                                     wiki = wiki,
                                     is_anonymous = is_anonymous,
-                                    ip_addr = ip_addr
                                 )
     return question
 
@@ -1318,8 +1314,7 @@ def user_post_answer(
                     body_text = None,
                     follow = False,
                     wiki = False,
-                    timestamp = None,
-                    ip_addr = None
+                    timestamp = None
                 ):
 
     if self == question.author and not self.is_administrator():
@@ -1372,8 +1367,7 @@ def user_post_answer(
                                     text = body_text,
                                     added_at = timestamp,
                                     email_notify = follow,
-                                    wiki = wiki,
-                                    ip_addr=ip_addr
+                                    wiki = wiki
                                 )
     award_badges_signal.send(None,
         event = 'post_answer',
