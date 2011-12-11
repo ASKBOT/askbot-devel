@@ -165,6 +165,27 @@ def test_encoding():
                 'to the terminal or log files'
             )
 
+def test_tracking():
+    """tests whether the necessary peices of the
+    `django-tracking` app are registered in the `settings.py`
+    """
+    if 'tracking.middleware.BannedIPMiddleware' not in \
+            django_settings.MIDDLEWARE_CLASSES:
+        raise ImproperlyConfigured(PREAMBLE +
+                "\nplease add line\n"
+                "'tracking.middleware.BannedIPMiddleware',\n"
+                "to the beginning of MIDDLEWARE_CLASSES in your "
+                "settings.py file"
+            )
+    if 'tracking' not in django_settings.INSTALLED_APPS:
+        raise ImproperlyConfigured(PREAMBLE +
+                "\nplease add line\n"
+                "'tracking',\n"
+                "to your settings.py file"
+            )
+
+
+
 def test_template_loader():
     """Sends a warning if you have an old style template
     loader that used to send a warning"""
@@ -262,6 +283,7 @@ def run_startup_tests():
     test_askbot_url()
     #test_postgres()
     test_middleware()
+    test_tracking()
     test_celery()
     settings_tester = SettingsTester({
         'CACHE_MIDDLEWARE_ANONYMOUS_ONLY': {

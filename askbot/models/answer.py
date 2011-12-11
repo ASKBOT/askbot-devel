@@ -12,7 +12,8 @@ class AnswerManager(models.Manager):
                 added_at=None, 
                 wiki=False, 
                 text='', 
-                email_notify=False
+                email_notify=False,
+                ip_addr=None
             ):
 
         answer = Answer(
@@ -22,6 +23,7 @@ class AnswerManager(models.Manager):
             wiki = wiki,
             text = text,
             #.html field is denormalized by the save() call
+            ip_addr = ip_addr,
         )
         if answer.wiki:
             answer.last_edited_by = answer.author
@@ -78,6 +80,7 @@ class Answer(content.Content):
     accepted    = models.BooleanField(default=False)
     accepted_at = models.DateTimeField(null=True, blank=True)
     #todo: we'll need to add "accepted_by" b/c sometimes non-askers can accept
+    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = AnswerManager()
 
@@ -90,9 +93,9 @@ class Answer(content.Content):
 class AnonymousAnswer(AnonymousContent):
     question = models.ForeignKey('Question', related_name='anonymous_answers')
 
-    def publish(self,user):
+    def publish(self,user, ip_addr=None):
         added_at = datetime.datetime.now()
         Answer.objects.create_new(question=self.question,wiki=self.wiki,
                             added_at=added_at,text=self.text,
-                            author=user)
+                            author=user, ip_addr=ip_addr)
         self.delete()

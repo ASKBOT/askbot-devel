@@ -292,6 +292,11 @@ urlpatterns = patterns('',
         {'domain': 'djangojs','packages': ('askbot',)},
         name = 'askbot_jsi18n'
     ),
+    url(
+    r'^moderate_ip/$',
+    views.readers.moderate_ip,
+    name='moderate_ip'
+    ),
 )
 
 if getattr(settings, 'ASKBOT_USE_STACKEXCHANGE_URLS', False):
