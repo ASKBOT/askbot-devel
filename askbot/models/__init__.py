@@ -19,6 +19,7 @@ import askbot
 from askbot import exceptions as askbot_exceptions
 from askbot import const
 from askbot.conf import settings as askbot_settings
+from askbot.skins import utils as skin_utils
 from askbot.models.question import Question
 from askbot.models.question import QuestionView, AnonymousQuestion
 from askbot.models.question import FavoriteQuestion
@@ -121,6 +122,11 @@ def user_get_gravatar_url(self, size):
                 'size': size,
             }
 
+def user_get_default_avatar_url(self, size):
+    """returns default avatar url
+    """
+    return skin_utils.get_media_url(askbot_settings.DEFAULT_AVATAR_URL)
+
 def user_get_avatar_url(self, size):
     """returns avatar url - by default - gravatar,
     but if application django-avatar is installed
@@ -129,10 +135,10 @@ def user_get_avatar_url(self, size):
     if 'avatar' in django_settings.INSTALLED_APPS:
         if self.avatar_type == 'n':
             import avatar
-            if avatar.settings.AVATAR_GRAVATAR_BACKUP:
-                return self.get_gravatar_url(size)
+            if askbot_settings.DISABLE_GRAVATAR: #avatar.settings.AVATAR_GRAVATAR_BACKUP:
+                return self.get_default_avatar_url(size)
             else:
-                return avatar.utils.get_default_avatar_url()
+                return self.get_gravatar_url(size)
         elif self.avatar_type == 'a':
             kwargs = {'user_id': self.id, 'size': size}
             try:
@@ -2044,6 +2050,7 @@ User.add_to_class(
 )
 User.add_to_class('get_absolute_url', user_get_absolute_url)
 User.add_to_class('get_avatar_url', user_get_avatar_url)
+User.add_to_class('get_default_avatar_url', user_get_default_avatar_url)
 User.add_to_class('get_gravatar_url', user_get_gravatar_url)
 User.add_to_class('get_anonymous_name', user_get_anonymous_name)
 User.add_to_class('update_avatar_type', user_update_avatar_type)

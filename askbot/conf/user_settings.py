@@ -4,6 +4,8 @@ User policy settings
 from askbot.conf.settings_wrapper import settings
 from askbot.conf.super_groups import LOGIN_USERS_COMMUNICATION
 from askbot.deps import livesettings
+from django.conf import settings as django_settings
+from askbot.skins import utils as skin_utils
 from django.utils.translation import ugettext as _
 from askbot import const
 
@@ -47,6 +49,34 @@ settings.register(
         hidden=True,
         default=1,
         description=_('Minimum allowed length for screen name')
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        USER_SETTINGS,
+        'DISABLE_GRAVATAR',
+        default = False,
+        description = _('Disable use of gravatar.com'),
+        help_text=_(
+                    'Check this option if you want to disallow the use of gravatar.com for avatars. You will have to enable uploaded avatars. For more information, please visit <a href="http://askbot.org/doc/optional-modules.html#uploaded-avatars">this page</a>.'
+                    ) 
+    )
+)
+
+settings.register(
+    livesettings.ImageValue(
+        USER_SETTINGS,
+        'DEFAULT_AVATAR_URL',
+        description = _('Default avatar for users'),
+        help_text = _(
+                        'To change the avatar image, select new file, '
+                        'then submit this whole form.'
+                    ),
+        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
+        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
+        default = '/images/nophoto.png',
+        url_resolver = skin_utils.get_media_url
     )
 )
 
