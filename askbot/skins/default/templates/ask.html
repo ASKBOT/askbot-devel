@@ -10,7 +10,7 @@
 {% include "widgets/question_edit_tips.html" %}
 {% endblock %}
 {% block content %}
-        {% include "widgets/ask_form.html" %}
+    {% include "widgets/ask_form.html" %}
 {% endblock %}
 {% block endjs %}
     <script type='text/javascript' src='{{"/js/editor.js"|media}}'></script>
@@ -42,6 +42,21 @@
             //highlight code synctax when editor has new text
             $("#editor").typeWatch({highlight: false, wait: 3000,
                              captureLength: 5, callback: lanai.highlightSyntax});
+
+            // make the entire "extended question details" area toggle-able
+            {% if editor_toggle %}
+                {% if editor_toggle == 'off' %}
+                    var shown = false;
+                {% else %}
+                    var shown = true;
+                {% endif %}
+                $('#shown-collapse').bind('click', function(){
+                    var shown_txt = shown ? "[{% trans %}add question details{% endtrans %}]" : "[{% trans %}hide question details{% endtrans %}]";
+                    shown = !shown;
+                    $('#explain-area').toggle(shown);
+                    $('#shown-collapse').text(shown_txt);
+                });
+            {% endif %}
 
             //toggle preview of editor
             //todo remove copy-paste

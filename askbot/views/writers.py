@@ -284,6 +284,7 @@ def ask(request):#view used to ask a new question
         'form' : form,
         'mandatory_tags': models.tag.get_mandatory_tags(),
         'email_validation_faq_url':reverse('faq') + '#validate',
+        'editor_toggle': 'off', # enable "toggle editor area" switch, and hide the area by default
     }
     return render_into_skin('ask.html', data, request)
 
