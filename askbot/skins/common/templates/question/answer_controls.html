@@ -50,3 +50,16 @@
         <a id="swap-question-with-answer-{{answer.id}}">{% trans %}swap with question{% endtrans %}</a>
     </span>
 {% endif %}
+{% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}{{ pipe() }}
+    {% if answer.ip_addr not in bannedIPs %}
+    <span class="moderate-ip block {{answer.ip_addr}}" 
+            title="{% trans %}block IP {% endtrans %} {{answer.ip_addr}}">
+            <a>{% trans %}block IP {% endtrans %}</a>
+        </span>
+    {% else %}
+    <span class="moderate-ip unblock {{answer.ip_addr}}" 
+            title="{% trans %}unblock IP {% endtrans %} {{answer.ip_addr}}">
+            <a>{% trans %}unblock IP {% endtrans %}</a>
+        </span>
+    {% endif %}
+{% endif %}
