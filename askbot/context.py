@@ -15,6 +15,7 @@ def application_settings(request):
     my_settings = askbot_settings.as_dict()
     my_settings['LANGUAGE_CODE'] = getattr(request, 'LANGUAGE_CODE', settings.LANGUAGE_CODE)
     my_settings['ASKBOT_URL'] = settings.ASKBOT_URL
+    my_settings['STATIC_URL'] = settings.STATIC_URL
     my_settings['ASKBOT_CSS_DEVEL'] = getattr(settings, 'ASKBOT_CSS_DEVEL', False)
     my_settings['DEBUG'] = settings.DEBUG
     my_settings['ASKBOT_VERSION'] = askbot.get_version()

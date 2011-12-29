@@ -37,11 +37,6 @@ urlpatterns = patterns('',
         name='sitemap'
     ),
     url(
-        r'^m/(?P<skin>[^/]+)/media/(?P<resource>.*)$', 
-        views.meta.media,
-        name='askbot_media',
-    ),
-    url(
         r'^%s(?P<path>.*)$' % settings.ASKBOT_UPLOADED_FILES_URL, 
         'django.views.static.serve',
         {'document_root': os.path.join(

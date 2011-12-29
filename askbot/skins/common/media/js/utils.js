@@ -1,6 +1,6 @@
 //var $, scriptUrl, askbotSkin
 var mediaUrl = function(resource){
-    return scriptUrl + 'm/' + askbotSkin + '/' + resource;
+    return askbot['settings']['static_url'] + askbotSkin + '/' + resource;
 };
 
 var cleanUrl = function(url){

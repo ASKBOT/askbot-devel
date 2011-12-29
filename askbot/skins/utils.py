@@ -149,13 +149,8 @@ def get_media_url(url, ignore_missing = False):
             logging.critical(log_message)
         return None
 
-    url = use_skin + '/media/' + url
-    url = '///' + django_settings.ASKBOT_URL + 'm/' + url
-    url = os.path.normpath(url).replace(
-                                    '\\', '/'
-                                ).replace(
-                                    '///', '/'
-                                )
+    url = django_settings.STATIC_URL + use_skin + '/media/' + url
+    url = os.path.normpath(url).replace('\\', '/')
     
     if resource_revision:
         url +=  '?v=%d' % resource_revision
