@@ -7,4 +7,6 @@
     askbot['messages']['maxTagsPerPost'] = '{% trans tag_count = settings.MAX_TAGS_PER_POST %}please use {{tag_count}} tag{% pluralize %}please use {{tag_count}} tags or less{% endtrans %}';
     askbot['messages']['tagLimits'] = '{% trans tag_count=settings.MAX_TAGS_PER_POST, max_chars=settings.MAX_TAG_LENGTH %}please use up to {{tag_count}} tags, less than {{max_chars}} characters each{% endtrans %}'; 
     askbot['urls']['upload'] = '{% url "upload" %}';
+    askbot['settings']['minTitleLength'] = {{settings.MIN_TITLE_LENGTH}}
+    askbot['settings']['minEditorLength'] = {{settings.MIN_EDITOR_LENGTH}}
 </script>

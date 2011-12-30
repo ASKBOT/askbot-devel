@@ -106,8 +106,9 @@ class TitleField(forms.CharField):
         self.initial = ''
 
     def clean(self, value):
-        if len(value) < 10:
-            raise forms.ValidationError(_('title must be > 10 characters'))
+        if len(value) < askbot_settings.MIN_TITLE_LENGTH:
+            msg = _('title must be > %d characters') % askbot_settings.MIN_TITLE_LENGTH
+            raise forms.ValidationError(msg)
 
         return value
 
@@ -121,8 +122,9 @@ class EditorField(forms.CharField):
         self.initial = ''
 
     def clean(self, value):
-        if len(value) < 10:
-            raise forms.ValidationError(_('question content must be > 10 characters'))
+        if len(value) < askbot_settings.MIN_EDITOR_LENGTH:
+            msg = _('question content must be > %d characters') % askbot_settings.MIN_EDITOR_LENGTH
+            raise forms.ValidationError(msg)
         return value
 
 class TagNamesField(forms.CharField):
