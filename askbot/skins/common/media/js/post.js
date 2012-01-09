@@ -1785,7 +1785,7 @@ var socialSharing = function(){
     return {
         init: function(){
             URL = window.location.href;
-            TEXT = escape($('h1 > a').html());
+            TEXT = escape($('h1 > a').attr('title'));
             var fb = $('a.facebook-share')
             var tw = $('a.twitter-share');
             var ln = $('a.linkedin-share');

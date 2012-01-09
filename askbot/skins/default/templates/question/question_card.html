@@ -4,7 +4,9 @@
 </div>
 <div class="question-content">
 
-    <h1><a href="{{ question.get_absolute_url() }}">{{ question.get_question_title() }}</a></h1>
+    <h1><a href="{{ question.get_absolute_url() }}"
+        {% if settings.SHARING_SUFFIX_TEXT %}title="{{question.get_question_title()}} {{ settings.SHARING_SUFFIX_TEXT }}{% endif %}"
+    >{{ question.get_question_title() }}</a></h1>
     {% include "question/question_tags.html" %}
     <div id="question-table" {% if question.deleted %}class="deleted"{%endif%}>
         <div class="question-body">
