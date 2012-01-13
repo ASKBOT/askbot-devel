@@ -1,3 +1,4 @@
+*.db
 *.pyc
 *.swp
 *.log

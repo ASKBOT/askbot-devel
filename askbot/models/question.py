@@ -254,6 +254,7 @@ class QuestionQuerySet(models.query.QuerySet):
                                     user_selections__user=request_user,
                                     user_selections__reason='good'
                                 )
+
             ignored_tags = Tag.objects.filter(
                                     user_selections__user=request_user,
                                     user_selections__reason='bad'
