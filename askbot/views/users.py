@@ -355,6 +355,15 @@ def user_stats(request, user, context):
     question_id_set.update([q.id for q in questions])
     question_id_set.update([q['id'] for q in answered_questions])
     user_tags = models.Tag.objects.filter(questions__id__in = question_id_set)
+    interesting_tags = models.Tag.objects.filter(
+				    user_selections__user=user,
+                                    user_selections__reason='good'
+                                )
+
+    ignored_tags = models.Tag.objects.filter(
+				    user_selections__user=user,
+				    user_selections__reason='bad'
+				)
 
     badges = models.BadgeData.objects.filter(
                             award_badge__user=user
@@ -393,6 +402,8 @@ def user_stats(request, user, context):
         'answer_type' : ContentType.objects.get_for_model(models.Answer),
         'favorited_myself': favorited_myself,
         'answered_questions' : answered_questions,
+        'interesting_tags' : interesting_tags,
+        'ignored_tags' : ignored_tags,
         'up_votes' : up_votes,
         'down_votes' : down_votes,
         'total_votes': up_votes + down_votes,
