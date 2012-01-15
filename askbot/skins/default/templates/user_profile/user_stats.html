@@ -109,7 +109,8 @@
                                 tag.name,
                                 html_tag = 'div',
                                 url_params = 
-                                    "start_over=true",
+                                    "author=" ~ view_user.id ~
+                                    "&start_over=true",
                                 extra_content = 
                                     '<span class="tag-number">' ~
                                     tag.user_tag_usage_count|intcomma ~
@@ -144,7 +145,8 @@
                                 tag.name,
                                 html_tag = 'div',
                                 url_params = 
-                                    "start_over=true",
+                                    "author=" ~ view_user.id ~
+                                    "&start_over=true",
                                 extra_content = 
                                     '<span class="tag-number"> ' ~
                                     tag.user_tag_usage_count|intcomma ~
