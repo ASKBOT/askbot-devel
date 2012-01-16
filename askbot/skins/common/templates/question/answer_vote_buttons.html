@@ -21,7 +21,7 @@
             src="{{'/images/vote-accepted.png'|media}}"
         {% endif %}
         alt="{% trans question_author=question.author.username %}{{question_author}} has selected this answer as correct{% endtrans %}"
-        title="{% trans questsion_author=question.author.username%}{{question_author}} has selected this answer as correct{% endtrans %}"
+        title="{% trans question_author=question.author.username%}{{question_author}} has selected this answer as correct{% endtrans %}"
     />
     {% endif %}
 {% endif %}
