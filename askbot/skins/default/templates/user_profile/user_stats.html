@@ -94,6 +94,76 @@
                 </tr>
             </table>
         </div>
+<a name="tags"></a>
+        {% spaceless %}
+            <h2>{% trans counter=interesting_tags|length %}<span class="count">{{counter}}</span> Interesting Tag{% pluralize %}<span class="count">{{counter}}</span> Interesting Tags{% endtrans %}</h2>
+        {% endspaceless %}
+        <div class="user-stats-table">
+            <table class="tags">
+                <tr>
+                    <td valign="top">
+                        <ul id="ab-user-tags" class="tags">
+                        {% for tag in interesting_tags %}
+                            <li>
+                            {{ macros.tag_widget(
+                                tag.name,
+                                html_tag = 'div',
+                                url_params = 
+                                    "start_over=true",
+                                extra_content = 
+                                    '<span class="tag-number">' ~
+                                    tag.user_tag_usage_count|intcomma ~
+                                    '</span>'
+                               )
+                            }}
+                            </li>
+                            {#
+                            {% if loop.index is divisibleby 10 %}
+                                </td>
+                                <td width="180"  valign="top">
+                            {% endif %}
+                            #}
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+		<a name="tags"></a>
+        {% spaceless %}
+            <h2>{% trans counter=ignored_tags|length %}<span class="count">{{counter}}</span> Ignored Tag{% pluralize %}<span class="count">{{counter}}</span> Ignored Tags{% endtrans %}</h2>
+        {% endspaceless %}
+        <div class="user-stats-table">
+            <table class="tags">
+                <tr>
+                    <td valign="top">
+                        <ul id="ab-user-tags" class="tags">
+                        {% for tag in ignored_tags %}
+                            <li>
+                            {{ macros.tag_widget(
+                                tag.name,
+                                html_tag = 'div',
+                                url_params = 
+                                    "start_over=true",
+                                extra_content = 
+                                    '<span class="tag-number"> ' ~
+                                    tag.user_tag_usage_count|intcomma ~
+                                    '</span>'
+                               )
+                            }}
+                            </li>
+                            {#
+                            {% if loop.index is divisibleby 10 %}
+                                </td>
+                                <td width="180"  valign="top">
+                            {% endif %}
+                            #}
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <a name="badges"></a>
         {% spaceless %}
         <h2>{% trans counter=total_awards %}<span class="count">{{counter}}</span> Badge{% pluralize %}<span class="count">{{counter}}</span> Badges{% endtrans %}</h2>

@@ -311,7 +311,7 @@ class Content(models.Model):
         * global subscribers (any personalized tag filters are applied)
         * author of the question who subscribe to instant updates 
           on questions that they asked
-        * authors or any answers who subsribe to instant updates
+        * authors or any answers who subscribe to instant updates
           on the questions which they answered
         """
         #print '------------------'
