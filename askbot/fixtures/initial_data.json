@@ -1,0 +1,8 @@
+[{
+	"model": "djchart.Chart",
+	"pk": 1,
+	"fields": {
+		"options": "{ title: 'User registrations last month', axesDefaults: { tickRenderer: $.jqplot.CanvasAxisTickRenderer, tickOptions: { angle: -30, fontSize: '8pt' }}, axes: { xaxis: { renderer: $.jqplot.CategoryAxisRenderer }}}",
+		"data_provider": "djchart.views.user_registrations"
+  }
+}]
