@@ -6,8 +6,6 @@
         <title>{% block title %}{% endblock %} - {{ settings.APP_TITLE|escape }}</title>
         {% include "meta/html_head_meta.html" %}
         <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
-        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="{{ "/js/excanvas.js"|media }}"></script><![endif]-->
-        <script language="javascript" type="text/javascript" src="{{ "/js/jquery.min.js"|media }}"></script>
         {% include "meta/html_head_stylesheets.html" %}
         {% block forestyle %}{% endblock %}
         {% include "meta/html_head_javascript.html" %}
