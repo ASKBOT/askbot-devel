@@ -27,6 +27,15 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         USER_SETTINGS,
+        'EDITABLE_EMAIL',
+        default = True,
+        description = _('Allow users change own email addresses')
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        USER_SETTINGS,
         'ALLOW_ACCOUNT_RECOVERY_BY_EMAIL',
         default = True,
         description = _('Allow account recovery by email')
@@ -61,8 +70,6 @@ settings.register(
                         'To change the avatar image, select new file, '
                         'then submit this whole form.'
                     ),
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
-        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
         default = '/images/nophoto.png',
         url_resolver = skin_utils.get_media_url
     )

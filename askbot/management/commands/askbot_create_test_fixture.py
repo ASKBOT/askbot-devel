@@ -18,6 +18,7 @@ EXCLUDE_APPS = ['contenttypes',
                 'askbot.activity',
                 'askbot.activityauditstatus',
                 'askbot.badgedata',
+                'askbot.Post',
                 'askbot.EmailFeedSetting',
                 'auth.Message']
 

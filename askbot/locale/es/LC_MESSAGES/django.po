@@ -22,7 +22,7 @@ msgstr ""
 #: exceptions.py:13
 #, fuzzy
 msgid "Sorry, but anonymous visitors cannot access this function"
-msgstr "usuarios anónimos no pueden votar"
+msgstr "Lo sentimos pero los usuarios anónimos no pueden acceder a esta función"
 
 #: feed.py:26 feed.py:100
 msgid " - "
@@ -40,16 +40,16 @@ msgstr "últimas preguntas"
 #: forms.py:74
 #, fuzzy
 msgid "select country"
-msgstr "Eliminar cuenta"
+msgstr "seleccione país"
 
 #: forms.py:83
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: forms.py:91
 #, fuzzy
 msgid "Country field is required"
-msgstr "este campo es requerido"
+msgstr "El campo País es requerido"
 
 #: forms.py:104 skins/default/templates/widgets/answer_edit_tips.html:45
 #: skins/default/templates/widgets/answer_edit_tips.html:49
@@ -66,8 +66,8 @@ msgstr "por favor ingrese un título descriptivo para su pregunta"
 #, fuzzy, python-format
 msgid "title must be > %d character"
 msgid_plural "title must be > %d characters"
-msgstr[0] "el título debe contener más de 10 carácteres"
-msgstr[1] "el título debe contener más de 10 carácteres"
+msgstr[0] "el título debe contener más de %d carácter"
+msgstr[1] "el título debe contener más de %d carácteres"
 
 #: forms.py:131
 msgid "content"
@@ -88,10 +88,10 @@ msgid_plural ""
 "Tags are short keywords, with no spaces within. Up to %(max_tags)d tags can "
 "be used."
 msgstr[0] ""
-"Las etiquetas son claves cortas, con o sin espacios. Puedes usar más de 5 "
-"etiquetas."
+"Las etiquetas son claves cortas, sin espacios. Puedes usar hasta %(max_tags)d "
+"etiqueta."
 msgstr[1] ""
-"Las etiquetas son claves cortas, con o sin espacios. Puedes usar más de 5 "
+"Las etiquetas son claves cortas, sin espacios. Puedes usar hasta %(max_tags)d "
 "etiquetas."
 
 #: forms.py:201 skins/default/templates/question_retag.html:58
@@ -102,35 +102,35 @@ msgstr "etiquetas requeridas"
 #, fuzzy, python-format
 msgid "please use %(tag_count)d tag or less"
 msgid_plural "please use %(tag_count)d tags or less"
-msgstr[0] "por favor, use 5 etiquetas o menos"
-msgstr[1] "por favor, use 5 etiquetas o menos"
+msgstr[0] "por favor, use %(tag_count)d etiqueta o menos"
+msgstr[1] "por favor, use %(tag_count)d etiquetas o menos"
 
 #: forms.py:218
 #, python-format
 msgid "At least one of the following tags is required : %(tags)s"
-msgstr ""
+msgstr "Al menos una de las siguientes etiquetas se requieren : %(tags)s"
 
 #: forms.py:227
 #, fuzzy, python-format
 msgid "each tag must be shorter than %(max_chars)d character"
 msgid_plural "each tag must be shorter than %(max_chars)d characters"
-msgstr[0] "las etiquetas deben contener menos de 20 carácteres"
-msgstr[1] "las etiquetas deben contener menos de 20 carácteres"
+msgstr[0] "las etiquetas deben contener menos de %(max_chars)d carácter"
+msgstr[1] "las etiquetas deben contener menos de %(max_chars)d carácteres"
 
 #: forms.py:235
 msgid "use-these-chars-in-tags"
-msgstr ""
+msgstr "usa-estos-caracteres-en-las-etiquetas"
 
 #: forms.py:270
 msgid "community wiki (karma is not awarded & many others can edit wiki post)"
-msgstr ""
+msgstr "wiki comunitaria (no se premia karma y cualquiera puede editar la publicación wiki)"
 
 #: forms.py:271
 msgid ""
 "if you choose community wiki option, the question and answer do not generate "
 "points and name of author will not be shown"
 msgstr ""
-"si marcas la opción Wiki,  la pregunta y las respuestas no generan puntos y "
+"si marcas la opción Wiki comunitaria,la pregunta y las respuestas no generan puntos y "
 "el nombre del autor no se muestra"
 
 #: forms.py:287
@@ -147,7 +147,7 @@ msgstr ""
 
 #: forms.py:364
 msgid "Enter number of points to add or subtract"
-msgstr ""
+msgstr "Ingrese el número de puntos a añadir o quitar"
 
 #: forms.py:378 const/__init__.py:250
 msgid "approved"
@@ -160,7 +160,7 @@ msgstr "visto"
 #: forms.py:380 const/__init__.py:252
 #, fuzzy
 msgid "suspended"
-msgstr "actualizado"
+msgstr "pausado"
 
 #: forms.py:381 const/__init__.py:253
 msgid "blocked"
@@ -169,26 +169,26 @@ msgstr "bloqueado"
 #: forms.py:383
 #, fuzzy
 msgid "administrator"
-msgstr "administración"
+msgstr "administrador"
 
 #: forms.py:384 const/__init__.py:249
 #, fuzzy
 msgid "moderator"
-msgstr "moderar-usuario/"
+msgstr "moderador"
 
 #: forms.py:404
 #, fuzzy
 msgid "Change status to"
-msgstr "Cambiar etiquetas"
+msgstr "Cambiar estado a"
 
 #: forms.py:431
 msgid "which one?"
-msgstr ""
+msgstr "Cuál?"
 
 #: forms.py:452
 #, fuzzy
 msgid "Cannot change own status"
-msgstr "no se puede votar por sus propias publicaciones"
+msgstr "No puede cambiar su propio estado"
 
 #: forms.py:458
 msgid "Cannot turn other user to moderator"
@@ -201,62 +201,64 @@ msgstr "No tiene permitido cambiar el estado de otro moderador"
 #: forms.py:471
 #, fuzzy
 msgid "Cannot change status to admin"
-msgstr "no se puede votar por sus propias publicaciones"
+msgstr "No puede cambiar el estado a admin"
 
 #: forms.py:477
 #, python-format
 msgid ""
 "If you wish to change %(username)s's status, please make a meaningful "
 "selection."
-msgstr ""
+msgstr "Si desea cambiar el estado de %(username), por favor, haga una selección "
+"apropiada."
 
 #: forms.py:486
 msgid "Subject line"
-msgstr "Sujeto"
+msgstr "Línea del tema"
 
 #: forms.py:493
 msgid "Message text"
-msgstr "Mensaje de Texto"
+msgstr "Texto del mensaje"
 
 #: forms.py:579
 #, fuzzy
 msgid "Your name (optional):"
-msgstr "Tu nombre:"
+msgstr "Su nombre (opcional):"
 
 #: forms.py:580
 #, fuzzy
 msgid "Email:"
-msgstr "no enviar emails"
+msgstr "Correo electrónico:"
 
 #: forms.py:582
 msgid "Your message:"
-msgstr "Tu mensaje:"
+msgstr "Su mensaje:"
 
 #: forms.py:587
 msgid "I don't want to give my email or receive a response:"
-msgstr ""
+msgstr "No deseo dar mi correo electrónico o recibir una respuesta:"
 
 #: forms.py:609
 msgid "Please mark \"I dont want to give my mail\" field."
-msgstr ""
+msgstr "Por favor, marque el campo \"No deseo dar mi correo electrónico\"."
 
 #: forms.py:648
 msgid "ask anonymously"
-msgstr ""
+msgstr "pregunte anónimamente"
 
 #: forms.py:650
 msgid "Check if you do not want to reveal your name when asking this question"
-msgstr ""
+msgstr "Compruebe si no desea revelar su nombre cuando realice esta pregunta"
 
 #: forms.py:810
 msgid ""
 "You have asked this question anonymously, if you decide to reveal your "
 "identity, please check this box."
-msgstr ""
+msgstr "Ha solicitado realizar esta pregunta anónimamente, si decide revelar su "
+"identidad, por favor marque esta caja."
 
 #: forms.py:814
 msgid "reveal identity"
-msgstr ""
+msgstr "revelar identidad"
 
 #: forms.py:872
 msgid ""

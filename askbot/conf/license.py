@@ -76,8 +76,6 @@ settings.register(
         LICENSE_SETTINGS,
         'LICENSE_LOGO_URL',
         description = _('License logo image'),
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
-        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
         default = '/images/cc-by-sa.png',
         url_resolver = skin_utils.get_media_url
     )

@@ -6,18 +6,30 @@ Deploying Askbot
 
 Deploying askbot (assuming that it is already installed) entails:
 
+* collecting static media files
 * setting correct file access permissions
 * configuring the webserver to work with your application
 
 This document currently explains the configuration under Apache and mod_wsgi_.
+
+Collecting static media files
+-----------------------------
+Static media must be collected into a single location with a command::
+
+    python manage.py collectstatic
+
+There are several options on where to put the static files - the simplest is 
+a local directory, but it is also possible to use a dedicated static files
+storage or a CDN, for more information see django documentation about
+serving static files.
 
 Setting up file access permissions
 ----------------------------------
 
 Webserver process must be able to write to the following locations within your project::
 
- log/
- askbot/upfiles
+    log/
+    askbot/upfiles
 
 If you know user name or the group name under which the webserver runs,
 you can make those directories writable by setting the permissons
@@ -26,11 +38,11 @@ accordingly:
 For example, if you are using Linux installation of apache webserver running under
 group name 'apache' you could do the following::
 
- cd /path/to/django-project
- cd .. #go one level up
- chown -R yourlogin:apache django-project 
- chmod -R g+w django-project/askbot/upfiles
- chmod -R g+w django-project/log
+    cd /path/to/django-project
+    cd .. #go one level up
+    chown -R yourlogin:apache django-project 
+    chmod -R g+w django-project/askbot/upfiles
+    chmod -R g+w django-project/log
 
 If your account somehow limits you from running such commands - please consult your
 system administrator.
@@ -71,9 +83,8 @@ Settings below are not perfect but may be a good starting point::
 
          #aliases to serve static media directly
          #will probably need adjustment
-         Alias /m/ /usr/local/lib/python2.6/site-packages/askbot/skins/
+         Alias /static/ /path/to/django-project/static/
          Alias /upfiles/ /path/to/django-project/askbot/upfiles/
-         Alias /admin/media/ /usr/local/lib/python2.6/site-packages/django/contrib/admin/media/
          <DirectoryMatch "/path/to/django-project/askbot/skins/([^/]+)/media">
             Order deny,allow
             Allow from all

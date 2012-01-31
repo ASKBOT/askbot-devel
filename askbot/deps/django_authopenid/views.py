@@ -48,6 +48,7 @@ from django.utils.safestring import mark_safe
 from django.core.mail import send_mail
 from recaptcha_works.decorators import fix_recaptcha_remote_ip
 from askbot.skins.loaders import render_into_skin, get_template
+from urlparse import urlparse
 
 from openid.consumer.consumer import Consumer, \
     SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
@@ -83,20 +84,13 @@ def login(request,user):
     from django.contrib.auth import login as _login
     from askbot.models import signals
 
-    #1) get old session key
+    # get old session key
     session_key = request.session.session_key
-    #2) get old search state
-    search_state = None
-    if 'search_state' in request.session:
-        search_state = request.session['search_state']
 
-    #3) login and get new session key
+    # login and get new session key
     _login(request,user)
-    #4) transfer search_state to new session if found
-    if search_state:
-        search_state.set_logged_in()
-        request.session['search_state'] = search_state
-    #5) send signal with old session key as argument
+
+    # send signal with old session key as argument
     logging.debug('logged in user %s with session key %s' % (user.username, session_key))
     #todo: move to auth app
     signals.user_logged_in.send(
@@ -109,9 +103,6 @@ def login(request,user):
 #todo: uncouple this from askbot
 def logout(request):
     from django.contrib.auth import logout as _logout#for login I've added wrapper below - called login
-    if 'search_state' in request.session:
-        request.session['search_state'].set_logged_out()
-        request.session.modified = True
     _logout(request)
 
 def logout_page(request):
@@ -1094,8 +1085,10 @@ def _send_email_key(user):
     to user's email address
     """
     subject = _("Recover your %(site)s account") % {'site': askbot_settings.APP_SHORT_NAME}
+
+    url = urlparse(askbot_settings.APP_URL)
     data = {
-        'validation_link': askbot_settings.APP_URL + \
+        'validation_link': url.scheme + '://' + url.netloc + \
                             reverse(
                                     'user_account_recover',
                                     kwargs={'key':user.email_key}

@@ -121,7 +121,7 @@ or repost a bug, if that does not help"""
             print "%d questions match." % question_count
             print "First 10 are:"
         for question in questions[:10]:
-            print '* %s' % question.title.strip()
+            print '* %s' % question.thread.title.strip()
 
         from_tag_names = format_tag_name_list(from_tags)
         to_tag_names = format_tag_name_list(to_tags)

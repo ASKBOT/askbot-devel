@@ -1,4 +1,4 @@
-{% cache 0 "tags" tags search_tags scope sort query context.page context.page_size language_code %}
+{% cache 0 "tags" tags search_tags scope sort query context.page language_code %}
   <div class="box">
     <h2>{% trans %}Related tags{% endtrans %}</h2>
     {% if tag_list_type == 'list' %}
@@ -9,7 +9,8 @@
               tag.name,
               html_tag = 'div',
               extra_content = '<span class="tag-number">&#215; ' ~
-              tag.local_used_count|intcomma ~ '</span>'
+              tag.local_used_count|intcomma ~ '</span>',
+              search_state = search_state
         )}}
         </li>
         {% endfor %}

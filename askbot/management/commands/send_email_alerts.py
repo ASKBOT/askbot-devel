@@ -3,10 +3,8 @@ from django.core.management.base import NoArgsCommand
 from django.core.urlresolvers import reverse
 from django.db import connection
 from django.db.models import Q, F
-from askbot.models import User, Question, Answer, Tag, PostRevision
+from askbot.models import User, Post, PostRevision, Thread
 from askbot.models import Activity, EmailFeedSetting
-from askbot.models import Comment
-from askbot.models.question import get_tag_summary_from_questions
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.conf import settings as django_settings
@@ -128,17 +126,17 @@ class Command(NoArgsCommand):
         #base question query set for this user
         #basic things - not deleted, not closed, not too old
         #not last edited by the same user
-        base_qs = Question.objects.exclude(
-                                last_activity_by=user
+        base_qs = Post.objects.get_questions().exclude(
+                                thread__last_activity_by=user
                             ).exclude(
-                                last_activity_at__lt=user.date_joined#exclude old stuff
+                                thread__last_activity_at__lt=user.date_joined#exclude old stuff
                             ).exclude(
                                 deleted=True
                             ).exclude(
-                                closed=True
-                            ).order_by('-last_activity_at')
+                                thread__closed=True
+                            ).order_by('-thread__last_activity_at')
         #todo: for some reason filter on did not work as expected ~Q(viewed__who=user) | 
-        #      Q(viewed__who=user,viewed__when__lt=F('last_activity_at'))
+        #      Q(viewed__who=user,viewed__when__lt=F('thread__last_activity_at'))
         #returns way more questions than you might think it should
         #so because of that I've created separate query sets Q_set2 and Q_set3
         #plus two separate queries run faster!
@@ -151,7 +149,7 @@ class Command(NoArgsCommand):
         seen_before_last_mod_qs = base_qs.filter(
                                     Q(
                                         viewed__who=user,
-                                        viewed__when__lt=F('last_activity_at')
+                                        viewed__when__lt=F('thread__last_activity_at')
                                     )
                                 )
 
@@ -180,9 +178,9 @@ class Command(NoArgsCommand):
                 cutoff_time = feed.get_previous_report_cutoff_time() 
 
                 if feed.feed_type == 'q_sel':
-                    q_sel_A = Q_set_A.filter(followed_by=user)
+                    q_sel_A = Q_set_A.filter(thread__followed_by=user)
                     q_sel_A.cutoff_time = cutoff_time #store cutoff time per query set
-                    q_sel_B = Q_set_B.filter(followed_by=user)
+                    q_sel_B = Q_set_B.filter(thread__followed_by=user)
                     q_sel_B.cutoff_time = cutoff_time #store cutoff time per query set
 
                 elif feed.feed_type == 'q_ask':
@@ -192,11 +190,11 @@ class Command(NoArgsCommand):
                     q_ask_B.cutoff_time = cutoff_time
 
                 elif feed.feed_type == 'q_ans':
-                    q_ans_A = Q_set_A.filter(answers__author=user)
+                    q_ans_A = Q_set_A.filter(thread__posts__author=user, thread__posts__post_type='answer')
                     q_ans_A = q_ans_A[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_ans_A.cutoff_time = cutoff_time
 
-                    q_ans_B = Q_set_B.filter(answers__author=user)
+                    q_ans_B = Q_set_B.filter(thread__posts__author=user, thread__posts__post_type='answer')
                     q_ans_B = q_ans_B[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_ans_B.cutoff_time = cutoff_time
 
@@ -226,14 +224,14 @@ class Command(NoArgsCommand):
             feed = user_feeds.get(feed_type='m_and_c')
             if feed.should_send_now():
                 cutoff_time = feed.get_previous_report_cutoff_time()
-                comments = Comment.objects.filter(
+                comments = Post.objects.get_comments().filter(
                                             added_at__lt = cutoff_time,
                                         ).exclude(
-                                            user = user
+                                            author = user
                                         )
                 q_commented = list() 
                 for c in comments:
-                    post = c.content_object
+                    post = c.parent
                     if post.author != user:
                         continue
 
@@ -286,7 +284,7 @@ class Command(NoArgsCommand):
             extend_question_list(q_all_A, q_list, limit=True)
             extend_question_list(q_all_B, q_list, limit=True)
 
-        ctype = ContentType.objects.get_for_model(Question)
+        ctype = ContentType.objects.get_for_model(Post)
         EMAIL_UPDATE_ACTIVITY = const.TYPE_ACTIVITY_EMAIL_UPDATE_SENT
 
         #up to this point we still don't know if emails about
@@ -330,14 +328,14 @@ class Command(NoArgsCommand):
             #skip question if we need to wait longer because
             #the delay before the next email has not yet elapsed
             #or if last email was sent after the most recent modification
-            if emailed_at > cutoff_time or emailed_at > q.last_activity_at:
+            if emailed_at > cutoff_time or emailed_at > q.thread.last_activity_at:
                 meta_data['skip'] = True
                 continue
 
             #collect info on all sorts of news that happened after
             #the most recent emailing to the user about this question
             q_rev = PostRevision.objects.question_revisions().filter(
-                                                question=q,
+                                                post=q,
                                                 revised_at__gt=emailed_at
                                             )
 
@@ -351,8 +349,8 @@ class Command(NoArgsCommand):
             else:
                 meta_data['new_q'] = False
                 
-            new_ans = Answer.objects.filter(
-                                            question=q,
+            new_ans = Post.objects.get_answers().filter(
+                                            thread=q.thread,
                                             added_at__gt=emailed_at,
                                             deleted=False,
                                         )
@@ -360,10 +358,12 @@ class Command(NoArgsCommand):
             new_ans = new_ans.exclude(author=user)
             meta_data['new_ans'] = len(new_ans)
             ans_rev = PostRevision.objects.answer_revisions().filter(
-                                            answer__question = q,
-                                            answer__deleted = False,
+                                            # answer__question = q
+                                            post__thread=q.thread,
+
+                                            post__deleted = False,
                                             revised_at__gt = emailed_at
-                                        )
+                                        ).distinct()
             ans_rev = ans_rev.exclude(author=user)
             meta_data['ans_rev'] = len(ans_rev)
 
@@ -404,7 +404,9 @@ class Command(NoArgsCommand):
             if num_q > 0:
                 url_prefix = askbot_settings.APP_URL
 
-                tag_summary = get_tag_summary_from_questions(q_list.keys())
+                threads = Thread.objects.filter(id__in=[qq.thread_id for qq in q_list.keys()])
+                tag_summary = Thread.objects.get_tag_summary_from_threads(threads)
+
                 question_count = len(q_list.keys())
 
                 subject_line = ungettext(
@@ -441,7 +443,7 @@ class Command(NoArgsCommand):
                         format_action_count('%(num)d ans rev',meta_data['ans_rev'],act_list)
                         act_token = ', '.join(act_list)
                         text += '<li><a href="%s?sort=latest">%s</a> <font color="#777777">(%s)</font></li>' \
-                                    % (url_prefix + q.get_absolute_url(), q.title, act_token)
+                                    % (url_prefix + q.get_absolute_url(), q.thread.title, act_token)
                 text += '</ul>'
                 text += '<p></p>'
                 #if len(q_list.keys()) >= askbot_settings.MAX_ALERTS_PER_EMAIL:
@@ -450,33 +452,6 @@ class Command(NoArgsCommand):
                 #                'abridged for your convinience. Please visit '
                 #                'the askbot and see what\'s new!<br>'
                 #              )
-
-                text += _(
-                            'Please visit the askbot and see what\'s new! '
-                            'Could you spread the word about it - '
-                            'can somebody you know help answering those questions or '
-                            'benefit from posting one?'
-                        )
-
-                feeds = EmailFeedSetting.objects.filter(subscriber = user)
-                feed_freq = [feed.frequency for feed in feeds]
-                text += '<p></p>'
-                if 'd' in feed_freq:
-                    text += _('Your most frequent subscription setting is \'daily\' '
-                               'on selected questions. If you are receiving more than one '
-                               'email per day'
-                               'please tell about this issue to the askbot administrator.'
-                               )
-                elif 'w' in feed_freq:
-                    text += _('Your most frequent subscription setting is \'weekly\' '
-                               'if you are receiving this email more than once a week '
-                               'please report this issue to the askbot administrator.'
-                               )
-                text += ' '
-                text += _(
-                            'There is a chance that you may be receiving links seen '
-                            'before - due to a technicality that will eventually go away. '
-                        )
 
                 link = url_prefix + reverse(
                                         'user_subscriptions', 

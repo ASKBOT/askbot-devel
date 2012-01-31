@@ -10,9 +10,9 @@
     {{settings.QUESTIONS_WIDGET_HEADER|safe}}
     <div id="container">
         <ul>
-            {% for question in questions %}
-                <li><a href="{{settings.APP_URL}}{{ question.get_absolute_url() }}">
-                  {{ question.title }}</a></li>
+            {% for thread in threads %}
+                <li><a href="{{settings.APP_URL}}{{ thread.get_absolute_url() }}">
+                  {{ thread.title|escape }}</a></li>
             {% endfor %}
         </ul>
     </div> 

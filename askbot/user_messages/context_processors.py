@@ -4,6 +4,7 @@ Context processor for lightweight session messages.
 Time-stamp: <2008-07-19 23:16:19 carljm context_processors.py>
 
 """
+from django.conf import settings as django_settings
 from django.utils.encoding import StrAndUnicode
 
 from askbot.user_messages import get_and_delete_messages
@@ -13,6 +14,10 @@ def user_messages (request):
     Returns session messages for the current session.
 
     """
+    if not request.path.startswith('/' + django_settings.ASKBOT_URL):
+        #todo: a hack, for real we need to remove this middleware
+        #and switch to the new-style session messages
+        return {}
     messages = request.user.get_and_delete_messages()
     #if request.user.is_authenticated():
     #else:

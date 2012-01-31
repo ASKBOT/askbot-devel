@@ -17,11 +17,18 @@ That is the reason for having two types of methods here:
 * celery tasks - shells that reconstitute the necessary ORM
   objects and call the base methods
 """
+import sys
+import traceback
+
 from django.contrib.contenttypes.models import ContentType
 from celery.decorators import task
 from askbot.models import Activity
 from askbot.models import User
 from askbot.models import send_instant_notifications_about_activity_in_post
+
+# TODO: Make exceptions raised inside record_post_update_celery_task() ...
+#       ... propagate upwards to test runner, if only CELERY_ALWAYS_EAGER = True
+#       (i.e. if Celery tasks are not deferred but executed straight away)
 
 @task(ignore_results = True)
 def record_post_update_celery_task(
@@ -40,15 +47,21 @@ def record_post_update_celery_task(
     newly_mentioned_users = User.objects.filter(
                                 id__in = newly_mentioned_user_id_list
                             )
-
-    record_post_update(
-        post = post,
-        updated_by = updated_by,
-        newly_mentioned_users = newly_mentioned_users,
-        timestamp = timestamp,
-        created = created,
-        diff = diff
-    )
+    try:
+        record_post_update(
+            post = post,
+            updated_by = updated_by,
+            newly_mentioned_users = newly_mentioned_users,
+            timestamp = timestamp,
+            created = created,
+            diff = diff
+        )
+    except Exception:
+        if 'test' in sys.argv:
+            # HACK: exceptions from Celery job don;t propagate upwards to Django test runner
+            # so at least le't sprint tracebacks
+            print >>sys.stderr, traceback.format_exc()
+        raise
 
 def record_post_update(
         post = None,
@@ -73,12 +86,12 @@ def record_post_update(
     #todo: take into account created == True case
     (activity_type, update_object) = post.get_updated_activity_data(created)
 
-    if post.post_type != 'comment':
+    if post.is_comment():
+        #it's just a comment!
+        summary = post.text
+    else:
         #summary = post.get_latest_revision().summary
         summary = diff
-    else:
-        #it's just a comment!
-        summary = post.comment
 
     update_activity = Activity(
                     user = updated_by,
@@ -97,6 +110,7 @@ def record_post_update(
     recipients = post.get_response_receivers(
                                 exclude_list = [updated_by, ]
                             )
+
     update_activity.add_recipients(recipients)
 
     #create new mentions

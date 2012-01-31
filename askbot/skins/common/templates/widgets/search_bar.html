@@ -8,7 +8,7 @@
         {% elif active_tab == "users" %}
             action="{% url users %}" 
         {% else %}
-            action="{% url questions %}" 
+            action="{% url questions %}" id="searchForm"
         {% endif %}
         method="get">
             <input type="submit" value="" name="search" class="searchBtn" />
@@ -30,16 +30,16 @@
                 autocomplete="off"
                 value="{{ query|default_if_none('') }}" 
                 name="query" 
-                id="keywords"/>
-            {% if query %}{# query is only defined by questions view #}
+                id="keywords"
+            />
             <input type="button"
                 value="X"
                 name="reset_query"
-                {# todo - make sure it works on Enter keypress #}
-                onclick="window.location.href='{% url questions %}?reset_query=true'"
-                class="cancelSearchBtn"/>
-            {% endif %}
-
+                class="cancelSearchBtn"
+                {% if not query %}{# query is only defined by questions view (active_tab) #}
+                    style="display: none;"
+                {% endif %}
+            />
     </form>
 </div>
 {% endspaceless %}

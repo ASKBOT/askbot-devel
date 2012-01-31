@@ -12,7 +12,11 @@
 {% block content %}
     {% include "main_page/tab_bar.html" %}
     {% include "main_page/headline.html" %}
-    {% include "main_page/content.html" %}
+    {# ==== BEGIN: main_page/content.html === #}
+    <div id="question-list">
+        {% include "main_page/questions_loop.html" %}
+    </div>
+    {# ==== END: main_page/content.html === #}
     {% include "main_page/paginator.html" %}
 {% endblock %}
 {% block sidebar %}

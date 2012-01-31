@@ -3,12 +3,12 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from askbot.tests.utils import AskbotTestCase
 
+
 class CacheTests(AskbotTestCase):
     def setUp(self):
-        self.create_user()
-        self.create_user('other_user')
-        self.question = self.post_question()
-        self.post_answer(question = self.question)
+        user = self.create_user('other_user')
+        self.question = self.post_question(user=user)
+        self.post_answer(user=user, question=self.question)
         settings.DEBUG = True  # because it's forsed to False
 
     def visit_question(self):

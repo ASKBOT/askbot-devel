@@ -1,6 +1,6 @@
 //var $, scriptUrl, askbotSkin
 var mediaUrl = function(resource){
-    return scriptUrl + 'm/' + askbotSkin + '/' + resource;
+    return askbot['settings']['static_url'] + askbotSkin + '/' + resource;
 };
 
 var cleanUrl = function(url){
@@ -129,6 +129,95 @@ var notify = function() {
         isVisible: function() { return visible; }     
     };
 } ();
+
+/* **************************************************** */
+// Search query-string manipulation utils
+/* **************************************************** */
+
+var QSutils = QSutils || {};  // TODO: unit-test me
+
+QSutils.TAG_SEP = ','; // should match const.TAG_SEP; TODO: maybe prepopulate this in javascript.html ?
+
+QSutils.get_query_string_selector_value = function (query_string, selector) {
+    var params = query_string.split('/');
+    for(var i=0; i<params.length; i++) {
+        var param_split = params[i].split(':');
+        if(param_split[0] === selector) {
+            return param_split[1];
+        }
+    }
+    return undefined;
+};
+
+QSutils.patch_query_string = function (query_string, patch, remove) {
+    var params = query_string.split('/');
+    var patch_split = patch.split(':');
+
+    var new_query_string = '';
+    var mapping = {};
+
+    if(!remove) {
+        mapping[patch_split[0]] = patch_split[1]; // prepopulate the patched selector if it's not meant to be removed
+    }
+
+    for (var i = 0; i < params.length; i++) {
+        var param_split = params[i].split(':');
+        if(param_split[0] !== patch_split[0] && param_split[1]) {
+            mapping[param_split[0]] = param_split[1];
+        }
+    }
+
+    var add_selector = function(name) {
+        if(name in mapping) {
+            new_query_string += name + ':' + mapping[name] + '/';
+        }
+    };
+
+    /* The order of selectors should match the Django URL */
+    add_selector('scope');
+    add_selector('sort');
+    add_selector('query');
+    add_selector('tags');
+    add_selector('author');
+    add_selector('page');
+
+    return new_query_string;
+};
+
+QSutils.remove_search_tag = function(query_string, tag){
+    var tag_string = this.get_query_string_selector_value(query_string, 'tags');
+    if(!tag_string) {
+        return query_string;
+    }
+
+    var tags = tag_string.split(this.TAG_SEP);
+
+    var pos = $.inArray(encodeURIComponent(tag), tags);
+    if(pos > -1) {
+        tags.splice(pos, 1); /* array.splice() works in-place */
+    }
+
+    if(tags.length === 0) {
+        return this.patch_query_string(query_string, 'tags:', true);
+    } else {
+        return this.patch_query_string(query_string, 'tags:' + tags.join(this.TAG_SEP));
+    }
+};
+
+QSutils.add_search_tag = function(query_string, tag){
+    var tag_string = this.get_query_string_selector_value(query_string, 'tags');
+    tag = encodeURIComponent(tag);
+    if(!tag_string) {
+        tag_string = tag;
+    } else {
+        tag_string = [tag_string, tag].join(this.TAG_SEP);
+    }
+
+    return this.patch_query_string(query_string, 'tags:' + tag_string);
+};
+
+
+/* **************************************************** */
 
 /* some google closure-like code for the ui elements */
 var inherits = function(childCtor, parentCtor) {
@@ -356,9 +445,10 @@ Tag.prototype.createDom = function(){
     this._inner_element = this.makeElement(this._inner_html_tag);
     if (this.isLinkable()){
         var url = askbot['urls']['questions'];
-        url += '?tags=' + escape(this.getName());
-        if (this._url_params !== null){
-            url += escape('&' + this._url_params);
+        var flag = false
+        var author = ''
+        if (this._url_params){
+            url += QSutils.add_search_tag(this._url_params, this.getName());
         }
         this._inner_element.attr('href', url);
     }
@@ -366,7 +456,7 @@ Tag.prototype.createDom = function(){
     this._inner_element.attr('rel', 'tag');
     if (this._title === null){
         this.setTitle(
-			interpolate(gettext("see questions tagged '%s'"), [this.getName()])
+            interpolate(gettext("see questions tagged '%s'"), [this.getName()])
         );
     }
     this._inner_element.attr('title', this._title);
@@ -384,7 +474,9 @@ Tag.prototype.createDom = function(){
         if (this._delete_icon_title !== null){
             this._delete_icon.setTitle(this._delete_icon_title);
         }
-        this._element.append(this._delete_icon.getElement());
+        var del_icon_elem = this._delete_icon.getElement();
+        del_icon_elem.text('x'); // HACK by Tomasz
+        this._element.append(del_icon_elem);
     }
 };
 

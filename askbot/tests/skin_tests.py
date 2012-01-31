@@ -41,13 +41,9 @@ class SkinTests(TestCase):
     def assert_default_logo_in_skin(self, skin_name):
         url = skin_utils.get_media_url(askbot_settings.SITE_LOGO_URL)
         self.assertTrue('/' + skin_name + '/' in url)
-        response = self.client.get(url)
-        self.assertTrue(response.status_code == 200)
 
     def test_default_skin_logo(self):
-        """make sure that default logo
-        is where it is expected
-        """
+        """make sure that default logo is where it is expected"""
         self.assert_default_logo_in_skin('default')
 
     def test_switch_to_custom_skin_logo(self):
@@ -65,11 +61,6 @@ class SkinTests(TestCase):
         new_logo = UploadedFile(file = logo_file)
         askbot_settings.update('SITE_LOGO_URL', new_logo)
         logo_url = askbot_settings.SITE_LOGO_URL
-        self.assertTrue(
-            logo_url.startswith(
-                django_settings.ASKBOT_URL + \
-                '/' + django_settings.ASKBOT_UPLOADED_FILES_URL
-            )
-        )
+        self.assertTrue(logo_url.startswith(django_settings.MEDIA_URL))
         response = self.client.get(logo_url)
         self.assertTrue(response.status_code == 200)

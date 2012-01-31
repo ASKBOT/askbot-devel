@@ -25,8 +25,6 @@ settings.register(
                         'To change the logo, select new file, '
                         'then submit this whole form.'
                     ),
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
-        upload_url = django_settings.ASKBOT_URL + '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
         default = '/images/logo.gif',
         url_resolver = skin_utils.get_media_url
     )
@@ -58,9 +56,7 @@ settings.register(
                         'about favicon '
                         'at <a href="%(favicon_info_url)s">this page</a>.'
                     ) % {'favicon_info_url': const.DEPENDENCY_URLS['favicon']},
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
         allowed_file_extensions = ('ico',),#only allow .ico files
-        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
         default = '/images/favicon.gif',
         url_resolver = skin_utils.get_media_url
     )
@@ -75,8 +71,6 @@ settings.register(
                         'An 88x38 pixel image that is used on the login screen '
                         'for the password login button.'
                     ),
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
-        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
         default = '/images/pw-login.gif',
         url_resolver = skin_utils.get_media_url
     )

@@ -82,56 +82,6 @@ def tag_font_size(max_size, min_size, current_size):
         
     return int(MIN_FONTSIZE + round((MAX_FONTSIZE - MIN_FONTSIZE) * weight))
 
-#todo: this function may need to be removed to simplify the paginator functionality
-LEADING_PAGE_RANGE_DISPLAYED = TRAILING_PAGE_RANGE_DISPLAYED = 5
-LEADING_PAGE_RANGE = TRAILING_PAGE_RANGE = 4
-NUM_PAGES_OUTSIDE_RANGE = 1
-ADJACENT_PAGES = 2
-@register.inclusion_tag("paginator.html")
-def cnprog_paginator(context):
-    """
-    custom paginator tag
-    Inspired from http://blog.localkinegrinds.com/2007/09/06/digg-style-pagination-in-django/
-    """
-    if (context["is_paginated"]):
-        " Initialize variables "
-        in_leading_range = in_trailing_range = False
-        pages_outside_leading_range = pages_outside_trailing_range = range(0)
-
-        if (context["pages"] <= LEADING_PAGE_RANGE_DISPLAYED):
-            in_leading_range = in_trailing_range = True
-            page_numbers = [n for n in range(1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
-        elif (context["page"] <= LEADING_PAGE_RANGE):
-            in_leading_range = True
-            page_numbers = [n for n in range(1, LEADING_PAGE_RANGE_DISPLAYED + 1) if n > 0 and n <= context["pages"]]
-            pages_outside_leading_range = [n + context["pages"] for n in range(0, -NUM_PAGES_OUTSIDE_RANGE, -1)]
-        elif (context["page"] > context["pages"] - TRAILING_PAGE_RANGE):
-            in_trailing_range = True
-            page_numbers = [n for n in range(context["pages"] - TRAILING_PAGE_RANGE_DISPLAYED + 1, context["pages"] + 1) if n > 0 and n <= context["pages"]]
-            pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
-        else:
-            page_numbers = [n for n in range(context["page"] - ADJACENT_PAGES, context["page"] + ADJACENT_PAGES + 1) if n > 0 and n <= context["pages"]]
-            pages_outside_leading_range = [n + context["pages"] for n in range(0, -NUM_PAGES_OUTSIDE_RANGE, -1)]
-            pages_outside_trailing_range = [n + 1 for n in range(0, NUM_PAGES_OUTSIDE_RANGE)]
-
-        extend_url = context.get('extend_url', '')
-        return {
-            "base_url": context["base_url"],
-            "is_paginated": context["is_paginated"],
-            "previous": context["previous"],
-            "has_previous": context["has_previous"],
-            "next": context["next"],
-            "has_next": context["has_next"],
-            "page": context["page"],
-            "pages": context["pages"],
-            "page_numbers": page_numbers,
-            "in_leading_range" : in_leading_range,
-            "in_trailing_range" : in_trailing_range,
-            "pages_outside_leading_range": pages_outside_leading_range,
-            "pages_outside_trailing_range": pages_outside_trailing_range,
-            "extend_url" : extend_url
-        }
-
 
 class IncludeJinja(template.Node):
     """http://www.mellowmorning.com/2010/08/24/"""
@@ -162,3 +112,4 @@ def include_jinja(parser, token):
         raise template.TemplateSyntaxError('file name must be quoted')
 
     return IncludeJinja(filename, request_var)
+

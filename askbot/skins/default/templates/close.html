@@ -4,7 +4,7 @@
 {% block content %}
 <h1>{% trans %}Close question{% endtrans %}</h1>
     <p>{% trans %}Close the question{% endtrans %}: <a href="{{ question.get_absolute_url() }}">
-    <strong>{{ question.get_question_title() }}</strong></a>
+    <strong>{{ question.get_question_title()|escape }}</strong></a>
     </p>
     <form id="fmclose" action="{% url close question.id %}" method="post" >{% csrf_token %}
         <p>

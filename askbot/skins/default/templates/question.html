@@ -1,16 +1,18 @@
 {% extends "two_column_body.html" %}
 <!-- question.html -->
-{% block title %}{% spaceless %}{{ question.get_question_title() }}{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{{ question.get_question_title()|escape }}{% endspaceless %}{% endblock %}
 {% block meta_description %}
         <meta name="description" content="{{question.summary|striptags|escape}}" />
 {% endblock %}
-{% block keywords %}{{question.tagname_meta_generator()}}{% endblock %}
+{% block keywords %}{{thread.tagname_meta_generator()}}{% endblock %}
 {% block forestyle %}
     <link rel="canonical" href="{{settings.APP_URL}}{{question.get_absolute_url()}}" />
     <link rel="stylesheet" type="text/css" href="{{'/js/wmd/wmd.css'|media}}" />
 {% endblock %}
 {% block content %}
-    {%include "question/content.html" %}
+    {# ==== BEGIN: question/content.html ==== #}
+    {% include "question/content.html" %}
+    {# ==== END: question/content.html ==== #}
 {% endblock %}
 {% block sidebar %}
     {%include "question/sidebar.html" %}

@@ -28,6 +28,7 @@
     askbot['urls']['follow_user'] = '/followit/follow/user/{{'{{'}}userId{{'}}'}}/';
     askbot['urls']['unfollow_user'] = '/followit/unfollow/user/{{'{{'}}userId{{'}}'}}/';
     askbot['urls']['user_signin'] = '{{ settings.LOGIN_URL }}';
+    askbot['settings']['static_url'] = '{{ settings.STATIC_URL }}';
 </script>
 <script 
     type="text/javascript"
@@ -37,6 +38,8 @@
         src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"
     {% endif %}
 ></script>
+<!-- History.js --> 
+<script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
 <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 {% if settings.ENABLE_MATHJAX %}
@@ -50,17 +53,24 @@
 {% endif %}
 <script type="text/javascript">
 {% if active_tab != "tags" and active_tab != "users" %}
-{# start asking question with title from search query #}
     $(document).ready(function(){
-        $('#nav_ask').click(
-            function(){
-                var starting_title = $('#keywords').attr('value');
-                var new_url = $(this).attr('href') + '?title=' + encodeURIComponent(starting_title);
-                window.location.href = new_url;
-                return false;
-            }
-        );
-        //{# focus input on the search bar endcomment #}
+        if (Modernizr.history) {
+          // history management works!
+        } else {
+          // no history support :(
+          //hash = unescape(window.location.hash).replace('#','').split("?")[0]
+          hash = History.unescapeHash(window.location.hash).replace('#','').split("?")[0]
+          if (hash.substring(0,11)==askbot['urls']['questions']){
+            url = hash
+          }else{
+            url = askbot['urls']['questions']+hash
+          }
+          if (hash !== ''){
+              window.location = 'http://'+window.location.host+url
+          }
+        }
+
+        // focus input on the search bar endcomment
         {% if active_tab != "ask" %}
             $('#keywords').focus();
         {% else %}
@@ -76,7 +86,7 @@
 </script>
 {% if settings.USE_CUSTOM_JS %}
 <script 
-    src="{% url "custom_js"%}?{{ settings.MEDIA_RESOURCE_REVISION }}"
+    src="{% url "custom_js"%}?v={{ settings.MEDIA_RESOURCE_REVISION }}"
     type="text/javascript"
 ></script>
 {% endif %}

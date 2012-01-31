@@ -1,6 +1,14 @@
 from django.core.management.base import CommandError, BaseCommand
 from askbot.models import User
 
+# TODO: this command is broken - doesn't take into account UNIQUE constraints
+#       and therefore causes db errors:
+# In SQLite: "Warning: columns feed_type, subscriber_id are not unique"
+# In MySQL: "Warning: (1062, "Duplicate entry 'm_and_c-2' for key 'askbot_emailfeedsetting_feed_type_6da6fdcd_uniq'")"
+# In PostgreSQL: "Warning: duplicate key value violates unique constraint "askbot_emailfeedsetting_feed_type_6da6fdcd_uniq"
+#                "DETAIL:  Key (feed_type, subscriber_id)=(m_and_c, 619) already exists."
+#                (followed by series of "current transaction is aborted, commands ignored until end of transaction block" warnings)
+
 class MergeUsersBaseCommand(BaseCommand):
     args = '<from_user_id> <to_user_id>'
     help = 'Merge an account and all information from a <user_id> to a <user_id>, deleting the <from_user>'

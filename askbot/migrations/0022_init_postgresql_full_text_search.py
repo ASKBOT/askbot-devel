@@ -1,4 +1,5 @@
 # encoding: utf-8
+import os
 import datetime
 import askbot
 from south.db import db
@@ -6,13 +7,20 @@ from south.v2 import DataMigration
 from django.db import models
 from django.core import management
 from django.conf import settings
+from askbot.search.postgresql import setup_full_text_search
 
 class Migration(DataMigration):
     
     def forwards(self, orm):
         "Write your forwards methods here."
         if 'postgresql_psycopg2' in askbot.get_database_engine_name():
-            management.call_command('init_postgresql_full_text_search')
+            script_path = os.path.join(
+                                askbot.get_install_directory(),
+                                'search',
+                                'postgresql',
+                                'question_answer_comment_models.plsql'
+                            )
+            setup_full_text_search(script_path)
     
     def backwards(self, orm):
         "Write your backwards methods here."

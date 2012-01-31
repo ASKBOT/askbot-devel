@@ -30,11 +30,16 @@
                 <td width="200px" style="vertical-align:middle">
                     {% if revision.summary %}
                         <div class="summary">
-                            <span>{{ revision.summary }}</span>
+                            <span>{{ revision.summary|escape }}</span>
                         </div>
                     {% endif %}
                     {% if request.user|can_edit_post(post) %}
-                    <a href="{% url edit_answer post.id %}?revision={{ revision.revision }}">{% trans %}edit{% endtrans %}</a>
+                        {% if post.post_type == 'answer' %}
+                            <a href="{% url edit_answer post.id %}?revision={{ revision.revision }}">{% trans %}edit{% endtrans %}</a>
+                        {% endif %}
+                        {% if post.post_type == 'question' %}
+                            <a href="{% url edit_question post.id %}?revision={{ revision.revision }}">{% trans %}edit{% endtrans %}</a>
+                        {% endif %}
                     {% endif %}
                 </td>
                 <td align="right">

@@ -76,7 +76,8 @@ class Command(NoArgsCommand):
         active_question = None
         last_vote = False
         # Each user posts a question
-        for user in users[:NUM_QUESTIONS]:
+        for i in range(NUM_QUESTIONS):
+            user = users[i]
             # Downvote/upvote the questions - It's reproducible, yet
             # gives good randomized data
             if not active_question is None:
@@ -94,13 +95,15 @@ class Command(NoArgsCommand):
 
             # len(TAGS_TEMPLATE) tags per question - each tag is different
             tags = " ".join([t%user.id for t in TAGS_TEMPLATE])
+            if i < NUM_QUESTIONS/2:
+                tags += ' one-tag'
             active_question = user.post_question(
                         title = TITLE_TEMPLATE % user.id,
                         body_text = CONTENT_TEMPLATE,
                         tags = tags,
                     )
             self.print_if_verbose("Created Question '%s' with tags: '%s'" % (
-                                                active_question.title, tags,)
+                                                active_question.thread.title, tags,)
                                             )
         return active_question
 
@@ -227,14 +230,14 @@ class Command(NoArgsCommand):
                         )
         self.print_if_verbose("User has edited the active answer")
 
-        active_answer_comment.user.edit_comment(
-                            comment = active_answer_comment,
+        active_answer_comment.author.edit_comment(
+                            comment_post = active_answer_comment,
                             body_text = ANSWER_TEMPLATE
                         )
         self.print_if_verbose("User has edited the active answer comment")
 
-        active_question_comment.user.edit_comment(
-                            comment = active_question_comment,
+        active_question_comment.author.edit_comment(
+                            comment_post = active_question_comment,
                             body_text = ANSWER_TEMPLATE
                         )
         self.print_if_verbose("User has edited the active question comment")

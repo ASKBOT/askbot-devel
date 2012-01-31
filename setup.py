@@ -123,7 +123,7 @@ print """**************************************************************
 *                                                            *
 *  Thanks for installing Askbot.                             *
 *                                                            *
-*  To start deploying type: >askbot-setup                    *
+*  To start deploying type: askbot-setup                     *
 *  Please take a look at the manual askbot/doc/INSTALL       *
 *  And please do not hesitate to ask your questions at       *
 *  at http://askbot.org                                      *

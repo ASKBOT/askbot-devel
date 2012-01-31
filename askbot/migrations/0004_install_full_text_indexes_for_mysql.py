@@ -35,7 +35,7 @@ class Migration(DataMigration):
         and will probably fail otherwise
         """
         if db.backend_name == 'mysql':
-            if mysql.supports_full_text_search():
+            if mysql.supports_full_text_search_migr0004():
                 #todo: extract column names by introspection
                 question_index_sql = get_create_full_text_index_sql(
                                                 Q_INDEX_NAME,

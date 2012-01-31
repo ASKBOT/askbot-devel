@@ -42,17 +42,24 @@
                     {{ form.username }}
                     <span class="form-error"></span> {{ form.username.errors }} </td>
                 {% else %}
-                    {{ request.user.username }}
+                    {{ view_user.username }}
                 {% endif %}
                 </td>
                 </tr>
                 <tr>
-                    <td>{{ form.email.label_tag() }}:</td>
-                    <td>{{ form.email }} <span class="form-error"></span> {{ form.email.errors }} </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td class="title-desc">{{ form.email.help_text }}</td>
+                    <td>
+                        {{ form.email.label_tag() }}:
+                    </td>
+                    <td>
+                        {% if settings.EDITABLE_EMAIL %}
+                            {{ form.email }}
+                            <span class="form-error"></span>
+                            {{ form.email.errors }}
+                        {% else %}
+                            {{ view_user.email }}
+                            {% trans %}(cannot be changed){% endtrans %}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>{{ form.realname.label_tag() }}:</td>

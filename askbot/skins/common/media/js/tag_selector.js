@@ -143,7 +143,7 @@ function pickedTags(){
                 'remove',
                 function(){
                     deleteTagLocally();
-                    liveSearch().refresh();
+                    liveSearch.refresh();
                 }
             );
         }
@@ -274,7 +274,7 @@ function pickedTags(){
                         to_tag_container
                     );
                     $(input_sel).val('');
-                    liveSearch().refresh();
+                    liveSearch.refresh();
                 }
             );
         }
@@ -328,7 +328,7 @@ function pickedTags(){
                     filter_value: $(this).val()
                 },
                 success: function(){
-                    liveSearch().refresh();
+                    liveSearch.refresh();
                 }
             });
         });

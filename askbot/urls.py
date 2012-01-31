@@ -14,7 +14,7 @@ from askbot.skins.utils import update_media_revision
 admin.autodiscover()
 update_media_revision()#needs to be run once, so put it here
 
-if hasattr(settings, "ASKBOT_TRANSLATE_URL") and settings.ASKBOT_TRANSLATE_URL:
+if getattr(settings, "ASKBOT_TRANSLATE_URL", False):
     from django.utils.translation import ugettext as _
 else:
     _ = lambda s:s
@@ -36,22 +36,12 @@ urlpatterns = patterns('',
         {'sitemaps': sitemaps}, 
         name='sitemap'
     ),
-    url(
-        r'^m/(?P<skin>[^/]+)/media/(?P<resource>.*)$', 
-        views.meta.media,
-        name='askbot_media',
-    ),
-    url( # TODO: replace with django.conf.urls.static ?
-        r'^%s(?P<path>.*)$' % settings.ASKBOT_UPLOADED_FILES_URL, 
-        'django.views.static.serve',
-        {'document_root': settings.ASKBOT_FILE_UPLOAD_DIR.replace('\\','/')},
-        name='uploaded_file',
-    ),
     #no translation for this url!!
     url(r'import-data/$', views.writers.import_data, name='import_data'),
     url(r'^%s$' % _('about/'), views.meta.about, name='about'),
     url(r'^%s$' % _('faq/'), views.meta.faq, name='faq'),
     url(r'^%s$' % _('privacy/'), views.meta.privacy, name='privacy'),
+    url(r'^%s$' % _('help/'), views.meta.help, name='help'),
     url(
         r'^%s(?P<id>\d+)/%s$' % (_('answers/'), _('edit/')), 
         views.writers.edit_answer, 
@@ -63,11 +53,26 @@ urlpatterns = patterns('',
         kwargs = {'object_name': 'Answer'},
         name='answer_revisions'
     ),
-    url(#this url works both normally and through ajax
-        r'^%s$' % _('questions/'), 
+
+    # BEGIN Questions (main page) urls. All this urls work both normally and through ajax
+
+    url(
+        # Note that all parameters, even if optional, are provided to the view. Non-present ones have None value.
+        (r'^%s' % _('questions') +
+            r'(%s)?' % r'/scope:(?P<scope>\w+)' +
+            r'(%s)?' % r'/sort:(?P<sort>[\w\-]+)' +
+            r'(%s)?' % r'/query:(?P<query>[^/]+)' +  # INFO: question string cannot contain slash (/), which is a section terminator
+            r'(%s)?' % r'/tags:(?P<tags>[\w+.#,-]+)' + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
+            r'(%s)?' % r'/author:(?P<author>\d+)' +
+            r'(%s)?' % r'/page:(?P<page>\d+)' +
+        r'/$'),
+
         views.readers.questions, 
         name='questions'
     ),
+
+    # END main page urls
+    
     url(
         r'^api/get_questions/',
         views.commands.api_get_questions,
@@ -143,11 +148,6 @@ urlpatterns = patterns('',
         r'^comment/get_text/$',
         views.readers.get_comment, 
         name='get_comment'
-    ),
-    url(#ajax only
-        r'^question/get_body/$',
-        views.readers.get_question_body, 
-        name='get_question_body'
     ),
     url(
         r'^%s$' % _('tags/'), 

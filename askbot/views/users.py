@@ -7,10 +7,13 @@ and other views showing profile-related information.
 Also this module includes the view listing all forum users.
 """
 import calendar
+import collections
 import functools
 import datetime
 import logging
-from django.db.models import Count
+import operator
+
+from django.db.models import Count, Q
 from django.conf import settings as django_settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -22,10 +25,12 @@ from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.views.decorators import csrf
+
 from askbot.utils.slug import slugify
 from askbot.utils.html import sanitize_html
 from askbot.utils.mail import send_mail
 from askbot.utils.http import get_request_info
+from askbot.utils import functions
 from askbot import forms
 from askbot import const
 from askbot.conf import settings as askbot_settings
@@ -34,19 +39,8 @@ from askbot import exceptions
 from askbot.models.badges import award_badges_signal
 from askbot.skins.loaders import render_into_skin
 from askbot.templatetags import extra_tags
+from askbot.search.state_manager import SearchState
 
-
-#todo: queries in the user activity summary view must be redone
-def get_related_object_type_name(content_type_id, object_id):
-    if content_type_id == ContentType.objects.get_for_model(models.Question).id:
-        return 'question'
-    elif content_type_id == ContentType.objects.get_for_model(models.Answer).id:
-        return 'answer'
-    elif content_type_id == ContentType.objects.get_for_model(models.PostRevision).id:
-        post_revision = models.PostRevision.objects.get(id=object_id)
-        return post_revision.revision_type_str()
-
-    return None
 
 def owner_or_moderator_required(f):
     @functools.wraps(f)
@@ -115,7 +109,7 @@ def users(request):
         'next': users_page.next_page_number(),
         'base_url' : base_url
     }
-    paginator_context = extra_tags.cnprog_paginator(paginator_data)
+    paginator_context = functions.setup_paginator(paginator_data) #
     data = {
         'active_tab': 'users',
         'page_class': 'users-page',
@@ -277,107 +271,99 @@ def edit_user(request, id):
     return render_into_skin('user_profile/user_edit.html', data, request)
 
 def user_stats(request, user, context):
-
-    question_filter = {'author': user}
+    question_filter = {}
     if request.user != user:
         question_filter['is_anonymous'] = False
 
-    questions = models.Question.objects.filter(
-                                    **question_filter
-                                ).order_by(
-                                    '-score', '-last_activity_at'
-                                ).select_related(
-                                    'last_activity_by__id',
-                                    'last_activity_by__username',
-                                    'last_activity_by__reputation',
-                                    'last_activity_by__gold',
-                                    'last_activity_by__silver',
-                                    'last_activity_by__bronze'
-                                )[:100]
-
-    questions = list(questions)
+    #
+    # Questions
+    #
+    questions = user.posts.get_questions().filter(**question_filter).\
+                    order_by('-score', '-thread__last_activity_at').\
+                    select_related('thread', 'thread__last_activity_by')[:100]
 
     #added this if to avoid another query if questions is less than 100
     if len(questions) < 100:
         question_count = len(questions)
     else:
-        question_count = models.Question.objects.filter(
-                                        **question_filter
-                                    ).order_by(
-                                        '-score', '-last_activity_at'
-                                    ).select_related(
-                                        'last_activity_by__id',
-                                        'last_activity_by__username',
-                                        'last_activity_by__reputation',
-                                        'last_activity_by__gold',
-                                        'last_activity_by__silver',
-                                        'last_activity_by__bronze'
-                                    ).count()
+        question_count = user.posts.get_questions().filter(**question_filter).count()
 
-    favorited_myself = models.FavoriteQuestion.objects.filter(
-                                    question__in = questions,
-                                    user = user
-                                ).values_list('question__id', flat=True)
+    #
+    # Top answers
+    #
+    top_answers = user.posts.get_answers().filter(
+        deleted=False,
+        thread__posts__deleted=False,
+        thread__posts__post_type='question',
+    ).select_related('thread').order_by('-score', '-added_at')[:100]
 
-    #this is meant for the questions answered by the user (or where answers were edited by him/her?)
-    answered_questions = models.Question.objects.extra(
-        select={
-            'vote_up_count' : 'answer.vote_up_count',
-            'vote_down_count' : 'answer.vote_down_count',
-            'answer_id' : 'answer.id',
-            'answer_accepted' : 'answer.accepted',
-            'answer_score' : 'answer.score',
-            'comment_count' : 'answer.comment_count'
-            },
-        tables=['question', 'answer'],
-        where=['NOT answer.deleted AND NOT question.deleted AND answer.author_id=%s AND answer.question_id=question.id'],
-        params=[user.id],
-        order_by=['-answer_score', '-answer_id'],
-        select_params=[user.id]
-    ).distinct().values('comment_count',
-                        'id',
-                        'answer_id',
-                        'title',
-                        'author_id',
-                        'answer_accepted',
-                        'answer_score',
-                        'answer_count',
-                        'vote_up_count',
-                        'vote_down_count')[:100]
+    top_answer_count = len(top_answers)
 
+    #
+    # Votes
+    #
     up_votes = models.Vote.objects.get_up_vote_count_from_user(user)
     down_votes = models.Vote.objects.get_down_vote_count_from_user(user)
     votes_today = models.Vote.objects.get_votes_count_today_from_user(user)
     votes_total = askbot_settings.MAX_VOTES_PER_USER_PER_DAY
 
-    question_id_set = set()
-    #todo: there may be a better way to do these queries
-    question_id_set.update([q.id for q in questions])
-    question_id_set.update([q['id'] for q in answered_questions])
-    user_tags = models.Tag.objects.filter(questions__id__in = question_id_set)
+    #
+    # Tags
+    #
+    # INFO: There's bug in Django that makes the following query kind of broken (GROUP BY clause is problematic):
+    #       http://stackoverflow.com/questions/7973461/django-aggregation-does-excessive-group-by-clauses
+    #       Fortunately it looks like it returns correct results for the test data
+    user_tags = models.Tag.objects.filter(threads__posts__author=user).distinct().\
+                    annotate(user_tag_usage_count=Count('threads')).\
+                    order_by('-user_tag_usage_count')[:const.USER_VIEW_DATA_SIZE]
+    user_tags = list(user_tags) # evaluate
 
-    badges = models.BadgeData.objects.filter(
-                            award_badge__user=user
-                        )
-    total_awards = badges.count()
-    badges = badges.order_by('-slug').distinct()
+#    tags = models.Post.objects.filter(author=user).values('id', 'thread', 'thread__tags')
+#    post_ids = set()
+#    thread_ids = set()
+#    tag_ids = set()
+#    for t in tags:
+#        post_ids.add(t['id'])
+#        thread_ids.add(t['thread'])
+#        tag_ids.add(t['thread__tags'])
+#        if t['thread__tags'] == 11:
+#            print t['thread'], t['id']
+#    import ipdb; ipdb.set_trace()
 
-    user_tags = user_tags.annotate(
-                            user_tag_usage_count=Count('name')
-                        ).order_by(
-                            '-user_tag_usage_count'
-                        )
+    #
+    # Badges/Awards (TODO: refactor into Managers/QuerySets when a pattern emerges; Simplify when we get rid of Question&Answer models)
+    #
+    post_type = ContentType.objects.get_for_model(models.Post)
 
-    if user.is_administrator():
-        user_status = _('Site Adminstrator')
-    elif user.is_moderator():
-        user_status = _('Forum Moderator')
-    elif user.is_suspended():
-        user_status = _('Suspended User')
-    elif user.is_blocked():
-        user_status = _('Blocked User')
-    else:
-        user_status = _('Registered User')
+    user_awards = models.Award.objects.filter(user=user).select_related('badge')
+
+    awarded_post_ids = []
+    for award in user_awards:
+        if award.content_type_id == post_type.id:
+            awarded_post_ids.append(award.object_id)
+
+    awarded_posts = models.Post.objects.filter(id__in=awarded_post_ids)\
+                    .select_related('thread') # select related to avoid additional queries in Post.get_absolute_url()
+
+    awarded_posts_map = {}
+    for post in awarded_posts:
+        awarded_posts_map[post.id] = post
+
+    badges_dict = collections.defaultdict(list)
+
+    for award in user_awards:
+        # Fetch content object
+        if award.content_type_id == post_type.id:
+            award.content_object = awarded_posts_map[award.object_id]
+            award.content_object_is_post = True
+        else:
+            award.content_object_is_post = False
+
+        # "Assign" to its Badge
+        badges_dict[award.badge].append(award)
+
+    badges = badges_dict.items()
+    badges.sort(key=operator.itemgetter(1), reverse=True)
 
     data = {
         'active_tab':'users',
@@ -389,20 +375,23 @@ def user_stats(request, user, context):
         'user_status_for_display': user.get_status_display(soft = True),
         'questions' : questions,
         'question_count': question_count,
-        'question_type' : ContentType.objects.get_for_model(models.Question),
-        'answer_type' : ContentType.objects.get_for_model(models.Answer),
-        'favorited_myself': favorited_myself,
-        'answered_questions' : answered_questions,
+
+        'top_answers': top_answers,
+        'top_answer_count': top_answer_count,
+
         'up_votes' : up_votes,
         'down_votes' : down_votes,
         'total_votes': up_votes + down_votes,
-        'votes_today_left': votes_total-votes_today,
+        'votes_today_left': votes_total - votes_today,
         'votes_total_per_day': votes_total,
-        'user_tags' : user_tags[:const.USER_VIEW_DATA_SIZE],
+
+        'user_tags' : user_tags,
+
         'badges': badges,
-        'total_awards' : total_awards,
+        'total_badges' : len(badges),
     }
     context.update(data)
+
     return render_into_skin('user_profile/user_stats.html', context, request)
 
 def user_recent(request, user, context):
@@ -412,7 +401,7 @@ def user_recent(request, user, context):
             if type_id in item:
                 return item[1]
 
-    class Event:
+    class Event(object):
         is_badge = False
         def __init__(self, time, type, title, summary, answer_id, question_id):
             self.time = time
@@ -428,271 +417,126 @@ def user_recent(request, user, context):
             if int(answer_id) > 0:
                 self.title_link += '#%s' % answer_id
 
-    class AwardEvent:
+    class AwardEvent(object):
         is_badge = True
-        def __init__(self, time, obj, cont, type, id, related_object_type = None):
+        def __init__(self, time, type, content_object, badge):
             self.time = time
-            self.obj = obj
-            self.cont = cont
             self.type = get_type_name(type)
-            self.type_id = type
-            self.badge = get_object_or_404(models.BadgeData, id=id)
-            self.related_object_type = related_object_type
+            self.content_object = content_object
+            self.badge = badge
 
     activities = []
-    # ask questions
-    questions = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'summary' : 'question.summary',
-            'active_at' : 'activity.active_at',
-            'activity_type' : 'activity.activity_type'
-            },
-        tables=['activity', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = ' +
-            'question.id AND activity.user_id = %s AND activity.activity_type = %s AND NOT question.deleted'],
-        params=[ContentType.objects.get_for_model(models.Question).id, user.id, const.TYPE_ACTIVITY_ASK_QUESTION],
-        order_by=['-activity.active_at']
-    ).values(
-            'title',
-            'question_id',
-            'summary',
-            'active_at',
-            'activity_type'
-            )
 
-    for q in questions:
-        q_event = Event(
-                    q['active_at'],
-                    q['activity_type'],
-                    q['title'],
-                    '',
-                    '0',
-                    q['question_id']
-                )
-        activities.append(q_event)
+    # TODO: Don't process all activities here for the user, only a subset ([:const.USER_VIEW_DATA_SIZE])
+    for activity in models.Activity.objects.filter(user=user):
 
-    # answers
-    answers = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'summary' : 'question.summary',
-            'answer_id' : 'answer.id',
-            'active_at' : 'activity.active_at',
-            'activity_type' : 'activity.activity_type'
-            },
-        tables=['activity', 'answer', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND ' +
-            'answer.question_id=question.id AND NOT answer.deleted AND activity.user_id=%s AND '+
-            'activity.activity_type=%s AND NOT question.deleted'],
-        params=[ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_ANSWER],
-        order_by=['-activity.active_at']
-    ).values(
-            'title',
-            'question_id',
-            'summary',
-            'answer_id',
-            'active_at',
-            'activity_type'
-            )
-    if len(answers) > 0:
-        answer_activities = [(Event(q['active_at'], q['activity_type'], q['title'], '', q['answer_id'], \
-                    q['question_id'])) for q in answers]
-        activities.extend(answer_activities)
+        # TODO: multi-if means that we have here a construct for which a design pattern should be used
 
-    # question comments
-    comments = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'comment.object_id',
-            'added_at' : 'comment.added_at',
-            'activity_type' : 'activity.activity_type'
-            },
-        tables=['activity', 'question', 'comment'],
+        # ask questions
+        if activity.activity_type == const.TYPE_ACTIVITY_ASK_QUESTION:
+            q = activity.content_object
+            if q.deleted:
+                activities.append(Event(
+                    time=activity.active_at,
+                    type=activity.activity_type,
+                    title=q.thread.title,
+                    summary='', #q.summary,  # TODO: was set to '' before, but that was probably wrong
+                    answer_id=0,
+                    question_id=q.id
+                ))
 
-        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND '+
-            'activity.user_id = comment.user_id AND comment.object_id=question.id AND '+
-            'comment.content_type_id=%s AND activity.user_id = %s AND activity.activity_type=%s AND ' +
-            'NOT question.deleted'],
-        params=[ContentType.objects.get_for_model(models.Comment).id, ContentType.objects.get_for_model(models.Question).id, user.id, const.TYPE_ACTIVITY_COMMENT_QUESTION],
-        order_by=['-comment.added_at']
-    ).values(
-            'title',
-            'question_id',
-            'added_at',
-            'activity_type'
-            )
+        elif activity.activity_type == const.TYPE_ACTIVITY_ANSWER:
+            ans = activity.content_object
+            question = ans.thread._question_post()
+            if not ans.deleted and not question.deleted:
+                activities.append(Event(
+                    time=activity.active_at,
+                    type=activity.activity_type,
+                    title=ans.thread.title,
+                    summary=question.summary,
+                    answer_id=ans.id,
+                    question_id=question.id
+                ))
 
-    if len(comments) > 0:
-        comments = [(Event(q['added_at'], q['activity_type'], q['title'], '', '0', \
-                     q['question_id'])) for q in comments]
-        activities.extend(comments)
+        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_QUESTION:
+            cm = activity.content_object
+            q = cm.parent
+            assert q.is_question()
+            if not q.deleted:
+                activities.append(Event(
+                    time=cm.added_at,
+                    type=activity.activity_type,
+                    title=q.thread.title,
+                    summary='',
+                    answer_id=0,
+                    question_id=q.id
+                ))
 
-    # answer comments
-    comments = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'answer_id' : 'answer.id',
-            'added_at' : 'comment.added_at',
-            'activity_type' : 'activity.activity_type'
-            },
-        tables=['activity', 'question', 'answer', 'comment'],
+        elif activity.activity_type == const.TYPE_ACTIVITY_COMMENT_ANSWER:
+            cm = activity.content_object
+            ans = cm.parent
+            assert ans.is_answer()
+            question = ans.thread._question_post()
+            if not ans.deleted and not question.deleted:
+                activities.append(Event(
+                    time=cm.added_at,
+                    type=activity.activity_type,
+                    title=ans.thread.title,
+                    summary='',
+                    answer_id=ans.id,
+                    question_id=question.id
+                ))
 
-        where=['activity.content_type_id = %s AND activity.object_id = comment.id AND '+
-            'activity.user_id = comment.user_id AND comment.object_id=answer.id AND '+
-            'comment.content_type_id=%s AND question.id = answer.question_id AND '+
-            'activity.user_id = %s AND activity.activity_type=%s AND '+
-            'NOT answer.deleted AND NOT question.deleted'],
-        params=[ContentType.objects.get_for_model(models.Comment).id, ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_COMMENT_ANSWER],
-        order_by=['-comment.added_at']
-    ).values(
-            'title',
-            'question_id',
-            'answer_id',
-            'added_at',
-            'activity_type'
-            )
+        elif activity.activity_type == const.TYPE_ACTIVITY_UPDATE_QUESTION:
+            q = activity.content_object
+            if not q.deleted:
+                activities.append(Event(
+                    time=activity.active_at,
+                    type=activity.activity_type,
+                    title=q.thread.title,
+                    summary=q.summary,
+                    answer_id=0,
+                    question_id=q.id
+                ))
 
-    if len(comments) > 0:
-        comments = [(Event(q['added_at'], q['activity_type'], q['title'], '', q['answer_id'], \
-                     q['question_id'])) for q in comments]
-        activities.extend(comments)
+        elif activity.activity_type == const.TYPE_ACTIVITY_UPDATE_ANSWER:
+            ans = activity.content_object
+            question = ans.thread._question_post()
+            if not ans.deleted and not question.deleted:
+                activities.append(Event(
+                    time=activity.active_at,
+                    type=activity.activity_type,
+                    title=ans.thread.title,
+                    summary=ans.summary,
+                    answer_id=ans.id,
+                    question_id=question.id
+                ))
 
-    # question revisions
-    revisions = models.Activity.objects.extra(
-        select={
-            'title' : 'askbot_postrevision.title',
-            'question_id' : 'askbot_postrevision.question_id',
-            'added_at' : 'activity.active_at',
-            'activity_type' : 'activity.activity_type',
-            'summary' : 'askbot_postrevision.summary'
-            },
-        tables=['activity', 'askbot_postrevision', 'question'],
-        where=['''
-            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
-            askbot_postrevision.question_id=question.id AND askbot_postrevision.revision_type=%s AND NOT question.deleted AND
-            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
-            activity.activity_type=%s
-        '''],
-        params=[ContentType.objects.get_for_model(models.PostRevision).id, models.PostRevision.QUESTION_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_QUESTION],
-        order_by=['-activity.active_at']
-    ).values(
-            'title',
-            'question_id',
-            'added_at',
-            'activity_type',
-            'summary'
-            )
+        elif activity.activity_type == const.TYPE_ACTIVITY_MARK_ANSWER:
+            ans = activity.content_object
+            question = ans.thread._question_post()
+            if not ans.deleted and not question.deleted:
+                activities.append(Event(
+                    time=activity.active_at,
+                    type=activity.activity_type,
+                    title=ans.thread.title,
+                    summary='',
+                    answer_id=0,
+                    question_id=question.id
+                ))
 
-    if len(revisions) > 0:
-        revisions = [(Event(q['added_at'], q['activity_type'], q['title'], q['summary'], '0', \
-                      q['question_id'])) for q in revisions]
-        activities.extend(revisions)
+        elif activity.activity_type == const.TYPE_ACTIVITY_PRIZE:
+            award = activity.content_object
+            activities.append(AwardEvent(
+                time=award.awarded_at,
+                type=activity.activity_type,
+                content_object=award.content_object,
+                badge=award.badge,
+            ))
 
-    # answer revisions
-    revisions = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'answer_id' : 'answer.id',
-            'added_at' : 'activity.active_at',
-            'activity_type' : 'activity.activity_type',
-            'summary' : 'askbot_postrevision.summary'
-            },
-        tables=['activity', 'askbot_postrevision', 'question', 'answer'],
-        where=['''
-            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
-            askbot_postrevision.answer_id=answer.id AND askbot_postrevision.revision_type=%s AND
-            answer.question_id=question.id AND NOT question.deleted AND NOT answer.deleted AND
-            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
-            activity.activity_type=%s
-        '''],
-        params=[ContentType.objects.get_for_model(models.PostRevision).id, models.PostRevision.ANSWER_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_ANSWER],
-        order_by=['-activity.active_at']
-    ).values(
-            'title',
-            'question_id',
-            'added_at',
-            'answer_id',
-            'activity_type',
-            'summary'
-            )
-
-    if len(revisions) > 0:
-        revisions = [(Event(q['added_at'], q['activity_type'], q['title'], q['summary'], \
-                      q['answer_id'], q['question_id'])) for q in revisions]
-        activities.extend(revisions)
-
-    # accepted answers
-    accept_answers = models.Activity.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'added_at' : 'activity.active_at',
-            'activity_type' : 'activity.activity_type',
-            },
-        tables=['activity', 'answer', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND '+
-            'activity.user_id = question.author_id AND activity.user_id = %s AND '+
-            'NOT answer.deleted AND NOT question.deleted AND '+
-            'answer.question_id=question.id AND activity.activity_type=%s'],
-        params=[ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_MARK_ANSWER],
-        order_by=['-activity.active_at']
-    ).values(
-            'title',
-            'question_id',
-            'added_at',
-            'activity_type',
-            )
-    if len(accept_answers) > 0:
-        accept_answers = [(Event(q['added_at'], q['activity_type'], q['title'], '', '0', \
-            q['question_id'])) for q in accept_answers]
-        activities.extend(accept_answers)
-    #award history
-    awards = models.Activity.objects.extra(
-        select={
-            'badge_id' : 'askbot_badgedata.id',
-            'awarded_at': 'award.awarded_at',
-            'object_id': 'award.object_id',
-            'content_type_id': 'award.content_type_id',
-            'activity_type' : 'activity.activity_type'
-            },
-        tables=['activity', 'award', 'askbot_badgedata'],
-        where=['activity.user_id = award.user_id AND activity.user_id = %s AND '+
-            'award.badge_id=askbot_badgedata.id AND activity.object_id=award.id AND activity.activity_type=%s'],
-        params=[user.id, const.TYPE_ACTIVITY_PRIZE],
-        order_by=['-activity.active_at']
-    ).values(
-            'badge_id',
-            'awarded_at',
-            'object_id',
-            'content_type_id',
-            'activity_type'
-            )
-    for award in awards:
-        related_object_type = get_related_object_type_name(
-            content_type_id=award['content_type_id'],
-            object_id=award['object_id']
-        )
-        activities.append(
-            AwardEvent(
-                award['awarded_at'],
-                award['object_id'],
-                award['content_type_id'],
-                award['activity_type'],
-                award['badge_id'],
-                related_object_type = related_object_type
-            )
-        )
-
-    activities.sort(lambda x,y: cmp(y.time, x.time))
+    activities.sort(key=operator.attrgetter('time'), reverse=True)
 
     data = {
-        'answers': answers,
-        'questions': questions,
         'active_tab': 'users',
         'page_class': 'user-profile-page',
         'tab_name' : 'recent',
@@ -729,12 +573,10 @@ def user_responses(request, user, context):
                     user = request.user,
                     activity__activity_type__in = activity_types
                 ).select_related(
-                    'activity__active_at',
-                    'activity__object_id',
+                    'activity',
                     'activity__content_type',
-                    'activity__question__title',
-                    'activity__user__username',
-                    'activity__user__id',
+                    'activity__question__thread',
+                    'activity__user',
                     'activity__user__gravatar',
                 ).order_by(
                     '-activity__active_at'
@@ -751,7 +593,7 @@ def user_responses(request, user, context):
             'is_new': memo.is_new(),
             'response_url': memo.activity.get_absolute_url(),
             'response_snippet': memo.activity.get_preview(),
-            'response_title': memo.activity.question.title,
+            'response_title': memo.activity.question.thread.title,
             'response_type': memo.activity.get_activity_type_display(),
             'response_id': memo.activity.question.id,
             'nested_responses': [],
@@ -803,56 +645,22 @@ def user_network(request, user, context):
 
 @owner_or_moderator_required
 def user_votes(request, user, context):
-
+    all_votes = list(models.Vote.objects.filter(user=user))
     votes = []
-    question_votes = models.Vote.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'answer_id' : 0,
-            'voted_at' : 'vote.voted_at',
-            'vote' : 'vote',
-            },
-        select_params=[user.id],
-        tables=['vote', 'question', 'auth_user'],
-        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = question.id '+
-            'AND vote.user_id=auth_user.id'],
-        params=[ContentType.objects.get_for_model(models.Question).id, user.id],
-        order_by=['-vote.id']
-    ).values(
-            'title',
-            'question_id',
-            'answer_id',
-            'voted_at',
-            'vote',
-            )
-    if(len(question_votes) > 0):
-        votes.extend(question_votes)
+    for vote in all_votes:
+        post = vote.voted_post
+        if post.is_question():
+            vote.title = post.thread.title
+            vote.question_id = post.id
+            vote.answer_id = 0
+            votes.append(vote)
+        elif post.is_answer():
+            vote.title = post.thread.title
+            vote.question_id = post.thread._question_post().id
+            vote.answer_id = post.id
+            votes.append(vote)
 
-    answer_votes = models.Vote.objects.extra(
-        select={
-            'title' : 'question.title',
-            'question_id' : 'question.id',
-            'answer_id' : 'answer.id',
-            'voted_at' : 'vote.voted_at',
-            'vote' : 'vote',
-            },
-        select_params=[user.id],
-        tables=['vote', 'answer', 'question', 'auth_user'],
-        where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = answer.id '+
-            'AND answer.question_id = question.id AND vote.user_id=auth_user.id'],
-        params=[ContentType.objects.get_for_model(models.Answer).id, user.id],
-        order_by=['-vote.id']
-    ).values(
-            'title',
-            'question_id',
-            'answer_id',
-            'voted_at',
-            'vote',
-            )
-    if(len(answer_votes) > 0):
-        votes.extend(answer_votes)
-    votes.sort(lambda x,y: cmp(y['voted_at'], x['voted_at']))
+    votes.sort(key=operator.attrgetter('id'), reverse=True)
 
     data = {
         'active_tab':'users',
@@ -865,28 +673,14 @@ def user_votes(request, user, context):
     context.update(data)
     return render_into_skin('user_profile/user_votes.html', context, request)
 
+
 def user_reputation(request, user, context):
-    reputes = models.Repute.objects.filter(user=user).order_by('-reputed_at')
-    #select_related() adds stuff needed for the query
-    reputes = reputes.select_related(
-                            'question__title',
-                            'question__id',
-                            'user__username'
-                        )
-    #prepare data for the graph
-    rep_list = []
-    #last values go in first
-    rep_list.append('[%s,%s]' % (
-                            calendar.timegm(
-                                        datetime.datetime.now().timetuple()
-                                    ) * 1000,
-                            user.reputation
-                        )
-                    )
-    #ret remaining values in
+    reputes = models.Repute.objects.filter(user=user).select_related('question', 'question__thread', 'user').order_by('-reputed_at')
+
+    # prepare data for the graph - last values go in first
+    rep_list = ['[%s,%s]' % (calendar.timegm(datetime.datetime.now().timetuple()) * 1000, user.reputation)]
     for rep in reputes:
-        dic = '[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation)
-        rep_list.append(dic)
+        rep_list.append('[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation))
     reps = ','.join(rep_list)
     reps = '[%s]' % reps
 
@@ -902,22 +696,13 @@ def user_reputation(request, user, context):
     context.update(data)
     return render_into_skin('user_profile/user_reputation.html', context, request)
 
+
 def user_favorites(request, user, context):
-    favorited_q_id_list= models.FavoriteQuestion.objects.filter(
-                                    user = user
-                                ).values_list('question__id', flat=True)
-    questions = models.Question.objects.filter(
-                                    id__in=favorited_q_id_list
-                                ).order_by(
-                                    '-score', '-last_activity_at'
-                                ).select_related(
-                                    'last_activity_by__id',
-                                    'last_activity_by__username',
-                                    'last_activity_by__reputation',
-                                    'last_activity_by__gold',
-                                    'last_activity_by__silver',
-                                    'last_activity_by__bronze'
-                                )[:const.USER_VIEW_DATA_SIZE]
+    favorite_threads = user.user_favorite_questions.values_list('thread', flat=True)
+    questions = models.Post.objects.filter(post_type='question', thread__in=favorite_threads)\
+                    .select_related('thread', 'thread__last_activity_by')\
+                    .order_by('-score', '-thread__last_activity_at')[:const.USER_VIEW_DATA_SIZE]
+
     data = {
         'active_tab':'users',
         'page_class': 'user-profile-page',
@@ -925,10 +710,10 @@ def user_favorites(request, user, context):
         'tab_description' : _('users favorite questions'),
         'page_title' : _('profile - favorite questions'),
         'questions' : questions,
-        'favorited_myself': favorited_q_id_list,
     }
     context.update(data)
     return render_into_skin('user_profile/user_favorites.html', context, request)
+
 
 @owner_or_moderator_required
 @csrf.csrf_protect
@@ -984,7 +769,7 @@ def user_email_subscriptions(request, user, context):
         request
     )
 
-user_view_call_table = {
+USER_VIEW_CALL_TABLE = {
     'stats': user_stats,
     'recent': user_recent,
     'inbox': user_responses,
@@ -1006,19 +791,24 @@ def user(request, id, slug=None, tab_name=None):
     """
     profile_owner = get_object_or_404(models.User, id = id)
 
-    if tab_name is None:
-        #sort CGI parameter tells us which tab in the user
-        #profile to show, the default one is 'stats'
+    if not tab_name:
         tab_name = request.GET.get('sort', 'stats')
 
-    if tab_name in user_view_call_table:
-        #get the actual view function
-        user_view_func = user_view_call_table[tab_name]
-    else:
-        user_view_func = user_stats
+    user_view_func = USER_VIEW_CALL_TABLE.get(tab_name, user_stats)
+
+    search_state = SearchState( # Non-default SearchState with user data set
+        scope=None,
+        sort=None,
+        query=None,
+        tags=None,
+        author=profile_owner.id,
+        page=None,
+        user_logged_in=profile_owner.is_authenticated(),
+    )
 
     context = {
         'view_user': profile_owner,
+        'search_state': search_state,
         'user_follow_feature_on': ('followit' in django_settings.INSTALLED_APPS),
     }
     return user_view_func(request, profile_owner, context)

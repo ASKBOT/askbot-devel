@@ -44,8 +44,8 @@ class ManagementCommandTests(AskbotTestCase):
         # Check that the first user was deleted
         self.assertEqual(models.User.objects.filter(pk=user_one.id).count(), 0)
         # Explicitly check that the values assigned to user_one are now user_two's
-        self.assertEqual(user_two.questions.filter(pk=question.id).count(), 1)  
-        self.assertEqual(user_two.comments.filter(pk=comment.id).count(), 1)  
+        self.assertEqual(user_two.posts.get_questions().filter(pk=question.id).count(), 1)
+        self.assertEqual(user_two.posts.get_comments().filter(pk=comment.id).count(), 1)
         user_two = models.User.objects.get(pk=2)
         self.assertEqual(user_two.gold, number_of_gold) 
         self.assertEqual(user_two.reputation, reputation)

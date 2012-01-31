@@ -17,6 +17,11 @@ urlpatterns = patterns('',
     url(r'^analytics/', 'djchart.views.site_analytics', name='site_analytics'),
     url(r'^chart/(?P<chart_pk>\d+)/data.json', 'djchart.views.chart_data',
 		name='chart_data'),
+    url( # TODO: replace with django.conf.urls.static ?
+        r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 
+        'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT.replace('\\','/')},
+    ),
 )
 
 if 'rosetta' in settings.INSTALLED_APPS:

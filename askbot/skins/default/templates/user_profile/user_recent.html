@@ -13,25 +13,23 @@
                 </div>
                 <div style="float:left;overflow:hidden;">
                     {% if act.is_badge %}
-                    <a href="{{act.badge.get_absolute_url()}}" title="{{ act.badge.get_type_display() }} : {% trans description=act.badge.description %}{{description}}{% endtrans %}" class="medal"><span class="{{ act.badge.css_class }}">&#9679;</span>&nbsp;{% trans name=act.badge.name %}{{name}}{% endtrans %}</a>
-                        {% if act.related_object_type == 'question' %}{# question #}
-                            {% for question in questions %}{# could also create a new dict #}
-                                {% if question.question_id == act.obj %}
-                                    (<a title="{{question.summary|collapse}}" 
-                                      href="{% url question question.question_id %}{{question.title|slugify}}">{% trans %}source{% endtrans %}</a>)
-                                {% endif %}   
-                            {% endfor %}   
-                        {% elif act.related_object_type == 'answer' %}{# answer #}
-                            {% for answer in answers %}{# could also create a new dict #}
-                                {% if answer.answer_id == act.obj %}
-                                        (<a title="{{answer.text|collapse}}" 
-                                            href="{% url question answer.question_id %}{{answer.question_title|slugify}}#{{answer.answer_id}}">{% trans %}source{% endtrans %}</a>)
-                                {% endif %}   
-                            {% endfor %}
-                        {% endif %} 
+                        <a href="{{act.badge.get_absolute_url()}}"
+                           title="{{ act.badge.get_type_display() }} : {% trans description=act.badge.description %}{{description}}{% endtrans %}"
+                           class="medal">
+                            <span class="{{ act.badge.css_class }}">&#9679;</span>&nbsp;{% trans name=act.badge.name %}{{name}}{% endtrans %}
+                        </a>
+                        {% if act.content_object.post_type == 'question' %}
+                            {% set question=act.content_object %}
+                            (<a title="{{question.summary|collapse|escape}}"
+                                href="{% url question question.id %}{{question.thread.title|slugify}}">{% trans %}source{% endtrans %}</a>)
+                        {% elif act.content_object.post_type == 'answer' %}
+                            {% set answer=act.content_object %}
+                            (<a title="{{answer.text|collapse|escape}}"
+                                href="{% url question answer.thread._question_post().id %}{{answer.thread.title|slugify}}#{{answer.id}}">{% trans %}source{% endtrans %}</a>)
+                        {% endif %}
                     {% else %}
-                    <span class="post-type-{{ act.type_id }}"><a href="{{ act.title_link }}">{{ act.title|escape }}</a></span>
-                    {% if act.summary %}<span class="revision-summary">{{ act.summary|escape }}</span>{% endif %}
+                        <span class="post-type-{{ act.type_id }}"><a href="{{ act.title_link }}">{{ act.title|escape }}</a></span>
+                        {% if act.summary %}<span class="revision-summary">{{ act.summary|escape }}</span>{% endif %}
                     {% endif %}
                     <div style="height:5px"></div>
                 </div>

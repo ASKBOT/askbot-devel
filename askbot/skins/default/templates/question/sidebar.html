@@ -16,7 +16,7 @@
     {% endif %}
     <div class="clearfix"></div>
     <div id="favorite-number" class="favorite-number{% if favorited %} my-favorite-number{% endif %}">
-        {% set follower_count = question.favourite_count %}
+        {% set follower_count = thread.favourite_count %}
         {% if follower_count > 0 %}
             {% trans count=follower_count %}{{count}} follower{% pluralize %}{{count}} followers{% endtrans %}
         {% endif %}
@@ -48,23 +48,23 @@
         {% trans %}question asked{% endtrans %}: <strong title="{{ question.added_at }}">{{question.added_at|diff_date}}</strong>
     </p>
     <p> 
-        {% trans %}question was seen{% endtrans %}: <strong>{{ question.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
+        {% trans %}question was seen{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
     </p>
     <p>
-        {% trans %}last updated{% endtrans %}: <strong title="{{ question.last_activity_at }}">{{question.last_activity_at|diff_date}}</strong>
+        {% trans %}last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>
     </p>
 </div>
 {% endif %}
 {% endcache %}
 
-{% if similar_questions.data and settings.SIDEBAR_QUESTION_SHOW_RELATED %}
+{% if similar_threads.data and settings.SIDEBAR_QUESTION_SHOW_RELATED %}
     {#% cache 1800 "related_questions" related_questions question.id language_code %#}
     <div class="box">
         <h2>{% trans %}Related questions{% endtrans %}</h2>
         <div class="questions-related">
-            {% for question in similar_questions.data() %}
+            {% for thread_dict in similar_threads.data() %}
             <p>
-                <a href="{{ question.get_absolute_url() }}">{{ question.get_question_title() }}</a>
+                <a href="{{ thread_dict.url }}">{{ thread_dict.title|escape }}</a>
             </p>
             {% endfor %}
         </div>

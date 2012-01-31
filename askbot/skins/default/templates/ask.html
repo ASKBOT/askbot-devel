@@ -22,7 +22,7 @@
         var sortMethod = undefined;//need for live_search
         var minSearchWordLength = {{settings.MIN_SEARCH_WORD_LENGTH}};
     </script>
-    <script type='text/javascript' src='{{"/js/live_search.js"|media}}'></script>
+    <script type='text/javascript' src='{{"/js/live_search_new_thread.js"|media}}'></script>
     {% include "meta/editor_data.html" %}
     {% if mandatory_tags %}
         {% include "meta/mandatory_tags_js.html" %}
@@ -35,7 +35,7 @@
             var codeFriendlyMarkdown = false;
         {% endif %}
         $().ready(function(){
-            liveSearch().init('ask_page');
+            liveSearchNewThreadInit();
             //set current module button style
             $('#editor').TextAreaResizer();
 

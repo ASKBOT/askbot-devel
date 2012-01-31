@@ -11,6 +11,7 @@ Programming and documentation
 * Mike Chen & Sailing Cai - original authors of CNPROG forum
 * Evgeny Fadeev - founder of askbot
 * `Adolfo Fitoria <http://fitoria.net>`_
+* `Tomasz Zielinski <http://pyconsultant.eu/>`_
 * `Sayan Chowdhury <http://fosswithme.wordpress.com>`_
 * Andy Knotts
 * Benoit Lavine (with Windriver Software, Inc.)
@@ -27,7 +28,6 @@ Programming and documentation
 * `Arun SAG  <http://zer0c00l.in/>`_
 * `Rag Sagar <https://github.com/ragsagar>`_
 * `Alex Robbins <https://github.com/alexrobbins>`_
-* `Tomasz Zielinski <http://pyconsultant.eu/>`_
 * `Tomasz Szynalski <http://antimoon.com>`_
 * `Raghu Udiyar <http://raags.tumblr.com/>`_
 * `Alexander Werner <https://twitter.com/#!/bundeswerner>`_
@@ -39,7 +39,7 @@ Programming and documentation
 Translations
 ------------
 * Mike Chen, Sailing Cai, suyu8776 - Chinese
-* Bruno Sarlo, Adolfo Fitoria - Spanish
+* Bruno Sarlo, Adolfo Fitoria, Francisco Espinoza - Spanish
 * Evgeny Kalinin - Russian
 * Evgeny Fadeev - English
 * Oktay Yildiz, Onur Mat, Cemre - Turkish

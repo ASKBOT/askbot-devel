@@ -18,9 +18,20 @@
     {% endspaceless %}
     <body class="{% block body_class %}{% endblock %}{% if user_messages %} user-messages{% endif %}{% if page_class %} {{page_class}}{% endif %}{% if request.user.is_anonymous() %} anon{% endif %} lang-{{settings.LANGUAGE_CODE}}">
         {% include "widgets/system_messages.html" %}
+        {% include "debug_header.html" %}
         {% include "custom_header.html" ignore missing %}
+        {% if settings.CUSTOM_HEADER|trim != '' %}
+        <div id="custom-header">
+            {{settings.CUSTOM_HEADER}}
+        </div>
+        {% endif %}
         {% include "widgets/header.html" %} {# Logo, user tool navigation and meta navitation #}
         {% include "widgets/secondary_header.html" %} {# Scope selector, search input and ask button #}
+        {% if settings.ENABLE_LEADING_SIDEBAR %}
+        <div id="leading-sidebar">
+            {{ settings.LEADING_SIDEBAR }}
+        </div>
+        {% endif %}
         <div class="content-wrapper">
             {% block body %}
             {% endblock %}

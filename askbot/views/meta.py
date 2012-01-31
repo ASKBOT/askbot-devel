@@ -29,11 +29,17 @@ def config_variable(request, variable_name = None, mimetype = None):
     """Print value from the configuration settings
     as response content. All parameters are required.
     """
+    #todo add http header-based caching here!!!
     output = getattr(askbot_settings, variable_name, '')
     return HttpResponse(output, mimetype = mimetype)
 
 def about(request, template='about.html'):
-    return generic_view(request, template = template, page_class = 'meta')
+    title = _('About %(site)s') % {'site': askbot_settings.APP_SHORT_NAME}
+    data = {
+        'title': title,
+        'content': askbot_settings.FORUM_ABOUT
+    }
+    return render_into_skin('static_page.html', data, request)
 
 def page_not_found(request, template='404.html'):
     return generic_view(request, template)
@@ -41,31 +47,27 @@ def page_not_found(request, template='404.html'):
 def server_error(request, template='500.html'):
     return generic_view(request, template)
 
+def help(request):
+    data = {
+        'app_name': askbot_settings.APP_SHORT_NAME,
+        'page_class': 'meta'
+    }
+    return render_into_skin('help.html', data, request)
+
 def faq(request):
-    if getattr(askbot_settings, 'FORUM_FAQ',''):
-        text = _(getattr(askbot_settings, 'FORUM_FAQ',''))
+    if askbot_settings.FORUM_FAQ.strip() != '':
+        return render_into_skin(
+            'static_page.html',
+            {'title': _('FAQ'), 'content': askbot_settings.FORUM_FAQ},
+            request
+        )
+    else:
         data = {
             'gravatar_faq_url': reverse('faq') + '#gravatar',
-            #'send_email_key_url': reverse('send_email_key'),
             'ask_question_url': reverse('ask'),
             'page_class': 'meta',
         }
-        forum_faq = render_text_into_skin(text, data, request)
-        data_out = {
-            'gravatar_faq_url': reverse('faq') + '#gravatar',
-            #'send_email_key_url': reverse('send_email_key'),
-            'ask_question_url': reverse('ask'),
-            'page_class': 'meta',
-            'forum_faq' : forum_faq,
-        }
-        return render_into_skin('faq.html', data_out, request)
-    data = {
-        'gravatar_faq_url': reverse('faq') + '#gravatar',
-        #'send_email_key_url': reverse('send_email_key'),
-        'ask_question_url': reverse('ask'),
-        'page_class': 'meta',
-    }
-    return render_into_skin('faq_static.html', data, request)
+        return render_into_skin('faq_static.html', data, request)
 
 @csrf.csrf_protect
 def feedback(request):
@@ -94,7 +96,11 @@ def feedback(request):
 feedback.CANCEL_MESSAGE=_('We look forward to hearing your feedback! Please, give it next time :)')
 
 def privacy(request):
-    return render_into_skin('privacy.html', {'page_class': 'meta'}, request)
+    data = {
+        'title': _('Privacy policy'),
+        'content': askbot_settings.FORUM_PRIVACY
+    }
+    return render_into_skin('static_page.html', data, request)
 
 def badges(request):#user status/reputation system
     #todo: supplement database data with the stuff from badges.py
@@ -137,14 +143,3 @@ def badge(request, id):
         'page_class': 'meta',
     }
     return render_into_skin('badge.html', data, request)
-
-def media(request, skin, resource):
-    """view that serves static media from any skin
-    uses django static serve view, where document root is
-    adjusted according to the current skin selection
-
-    in production this views should be by-passed via server configuration
-    for the better efficiency of serving static files
-    """
-    dir = skins.utils.get_path_to_skin(skin)
-    return static.serve(request, '/media/' + resource, document_root = dir)

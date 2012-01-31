@@ -4,6 +4,9 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from askbot.migrations import houston_do_we_have_a_problem
+
+
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
@@ -12,6 +15,10 @@ class Migration(SchemaMigration):
         db.add_column('django_authopenid_userassociation', 'provider_name', self.gf('django.db.models.fields.CharField')(default='unknown', max_length=64), keep_default=False)
 
         # Removing unique constraint on 'UserAssociation', fields ['user']
+        if houston_do_we_have_a_problem('django_authopenid_userassociation'):
+            # In MySQL+InnoDB Foreign keys have to have some index on them,
+            # therefore before deleting the UNIQUE index we have to create an "ordinary" one
+            db.create_index('django_authopenid_userassociation', ['user_id'])
         db.delete_unique('django_authopenid_userassociation', ['user_id'])
 
         # Adding unique constraint on 'UserAssociation', fields ['provider_name', 'user']

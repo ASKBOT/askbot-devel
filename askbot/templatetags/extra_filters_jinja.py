@@ -1,6 +1,7 @@
 import datetime
 import re
 import time
+import urllib
 from coffin import template as coffin_template
 from django.core import exceptions as django_exceptions
 from django.utils.translation import ugettext as _
@@ -9,8 +10,8 @@ from django.template import defaultfilters
 from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from askbot import exceptions as askbot_exceptions
-from askbot import auth
 from askbot.conf import settings as askbot_settings
+from django.conf import settings as django_settings
 from askbot.skins import utils as skin_utils
 from askbot.utils import functions
 from askbot.utils.slug import slugify
@@ -46,6 +47,21 @@ def clean_login_url(url):
     return reverse('index')
 
 @register.filter
+def transurl(url):
+    """translate url, when appropriate and percent-
+    escape it, that's important, othervise it won't match
+    the urlconf"""
+    try:
+        url.decode('ascii')
+    except UnicodeError:
+        raise ValueError(
+            u'string %s is not good for url - must be ascii' % url
+        )
+    if getattr(django_settings, 'ASKBOT_TRANSLATE_URL', False):
+        return urllib.quote(_(url).encode('utf-8'))
+    return url
+
+@register.filter
 def country_display_name(country_code):
     country_dict = dict(countries.COUNTRIES)
     return country_dict[country_code]
@@ -58,6 +74,7 @@ def country_flag_url(country_code):
 def collapse(input):
     input = unicode(input)
     return ' '.join(input.split())
+
 
 @register.filter
 def split(string, separator):
@@ -165,6 +182,7 @@ def can_moderate_user(user, other_user):
 can_flag_offensive = make_template_filter_from_permission_assertion(
                         assertion_name = 'assert_can_flag_offensive',
                         filter_name = 'can_flag_offensive',
+                        allowed_exception = askbot_exceptions.DuplicateCommand
                     )
 
 can_remove_flag_offensive = make_template_filter_from_permission_assertion(
@@ -223,7 +241,6 @@ can_accept_best_answer = make_template_filter_from_permission_assertion(
                         filter_name = 'can_accept_best_answer'
                     )
 
-@register.filter
 def can_see_offensive_flags(user, post):
     """Determines if a User can view offensive flag counts.
     there is no assertion like this User.assert_can...
@@ -246,17 +263,9 @@ def can_see_offensive_flags(user, post):
             return False
     else:
         return False
-
-@register.filter
-def cnprog_intword(number):
-    try:
-        if 1000 <= number < 10000:
-            string = str(number)[0:1]
-            return '<span class="thousand">%sk</span>' % string
-        else:
-            return number
-    except:
-        return number
+# Manual Jinja filter registration this leaves can_see_offensive_flags() untouched (unwrapped by decorator),
+# which is needed by some tests
+register.filter('can_see_offensive_flags', can_see_offensive_flags)
 
 @register.filter
 def humanize_counter(number):
@@ -272,6 +281,12 @@ def humanize_counter(number):
     else:
         return str(number)
 
+
 @register.filter
 def absolute_value(number):
     return abs(number)
+
+@register.filter
+def get_empty_search_state(unused):
+    from askbot.search.state_manager import SearchState
+    return SearchState.get_empty()

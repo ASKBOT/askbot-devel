@@ -2,7 +2,7 @@
 {% import "macros.html" as macros %}
 <div class="user-stats-table">
     {% for question in questions %}
-    {{macros.question_summary(question, extra_class='narrow')}}
+    {{macros.question_summary(question.thread, question, extra_class='narrow', search_state=search_state)}}
     {% endfor %}
 </div>
 <!-- end users_questions.html -->

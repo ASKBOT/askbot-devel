@@ -1,9 +1,11 @@
 *.pyc
 *.swp
 *.log
+*~
 db
 rebuild-locales.pl
 /src
+/static
 cache/??
 run
 *.wsgi
@@ -14,6 +16,7 @@ settings.py
 *.iml
 lint
 env
+/static
 django
 django/*
 nbproject
@@ -24,6 +27,7 @@ tmp/*
 /manage.py
 /urls.py
 /log
+/prof
 load
 askbot/skins/default/media/js/flot
 askbot/skins/common/media/js/closure/google-closure
@@ -40,3 +44,5 @@ askbot/skins/common/media/mathjax/
 *.tar.tz
 run
 recaptcha
+/.ve
+/db.sq3

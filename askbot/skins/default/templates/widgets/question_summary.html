@@ -2,21 +2,21 @@
 <div class="short-summary{% if extra_class %} {{extra_class}}{% endif %}" id="question-{{question.id}}">
     <div class="counts">
         <div class="views
-             {% if question.view_count == 0 -%}
+             {% if thread.view_count == 0 -%}
                 no-views
              {% else -%}
                 some-views
              {%- endif -%}">
-             <span class="item-count">{{question.view_count|humanize_counter}}</span>
+             <span class="item-count">{{thread.view_count|humanize_counter}}</span>
             <div>
-            {% trans cnt=question.view_count %}view{% pluralize %}views{% endtrans %}
+            {% trans cnt=thread.view_count %}view{% pluralize %}views{% endtrans %}
             </div>
         </div>
         <div class="answers
-                {% if question.answer_count == 0 -%}
+                {% if thread.answer_count == 0 -%}
                     no-answers
                 {% else -%}
-                    {%- if question.answer_accepted -%}
+                    {%- if thread.accepted_answer_id -%}  {# INFO: Use _id to not fetch the whole answer post #}
                         accepted
                     {%- else -%}
                         some-answers
@@ -24,9 +24,9 @@
                 {%- endif -%}"> 
             <span 
                 class="item-count"
-            >{{question.answer_count|humanize_counter}}{% if question.answer_accepted%}{% endif %}</span>
+            >{{thread.answer_count|humanize_counter}}{% if thread.accepted_answer_id %}{% endif %}</span>
             <div>
-            {% trans cnt=question.answer_count %}answer{% pluralize %}answers{% endtrans %}
+            {% trans cnt=thread.answer_count %}answer{% pluralize %}answers{% endtrans %}
             </div>
         </div>
         <div class="votes 
@@ -40,19 +40,19 @@
             {% trans cnt=question.score %}vote{% pluralize %}votes{% endtrans %}
             </div>
         </div>
-        
         <div style="clear:both"></div>
         <div class="userinfo">
-            <span class="relativetime" title="{{question.last_activity_at}}">{{ question.last_activity_at|diff_date }}</span>
+            {# We have to kill microseconds below because InnoDB doesn't support them and all kinds of funny things happen in unit tests #}
+            <span class="relativetime" title="{{thread.last_activity_at.replace(microsecond=0)}}">{{ thread.last_activity_at|diff_date }}</span>
             {% if question.is_anonymous %}
-                <span class="anonymous">{{ question.last_activity_by.get_anonymous_name() }}</span>
+                <span class="anonymous">{{ thread.last_activity_by.get_anonymous_name() }}</span>
             {% else %}
-                <a href="{% url user_profile question.last_activity_by.id, question.last_activity_by.username|slugify %}">{{question.last_activity_by.username}}</a>{{ user_country_flag(question.last_activity_by) }}
-            {#{user_score_and_badge_summary(question.last_activity_by)}#}
+                <a href="{% url user_profile thread.last_activity_by.id, thread.last_activity_by.username|slugify %}">{{thread.last_activity_by.username}}</a> {{ user_country_flag(thread.last_activity_by) }}
+                {#{user_score_and_badge_summary(thread.last_activity_by)}#}
             {% endif %}
         </div>
     </div>
-    <h2><a title="{{question.summary|escape}}" href="{{ question.get_absolute_url() }}">{{question.get_question_title()|escape}}</a></h2>
-    {{ tag_list_widget(question.get_tag_names()) }}
+    <h2><a title="{{question.summary|escape}}" href="{{ question.get_absolute_url(thread=thread) }}">{{thread.get_title(question)|escape}}</a></h2>
+    {{ tag_list_widget(thread.get_tag_names(), search_state=search_state) }}
 </div>
 

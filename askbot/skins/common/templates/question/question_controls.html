@@ -8,43 +8,32 @@
         var retagUrl = "{% url retag_question question.id %}";
     </script>
 {% endif %}
-{% if question.closed %}
+{% if thread.closed %}
     {% if request.user|can_reopen_question(question) %}{{ pipe() }}
-    <a  class="question-close" href="{% url reopen question.id %}">{% trans %}reopen{% endtrans %}</a>
+        <a  class="question-close" href="{% url reopen question.id %}">{% trans %}reopen{% endtrans %}</a>
     {% endif %}
 {% else %}
     {% if request.user|can_close_question(question) %}{{ pipe() }}
-    <a class="question-close" href="{% url close question.id %}">{% trans %}close{% endtrans %}</a>
+        <a class="question-close" href="{% url close question.id %}">{% trans %}close{% endtrans %}</a>
     {% endif %}
 {% endif %}
-
-{% if request.user|can_remove_all_flags_offensive(question)%}{{ pipe() }}
-<span id="question-offensive-remove-all-flag-{{ question.id }}" class="offensive-flag"
-    title="{% trans %}remove all flags{% endtrans %}">
-    <a class="question-flag">{% trans %}remove all flags{% endtrans %}</a>
-</span>
-{%endif%}
-
 {% if request.user|can_flag_offensive(question) %}{{ pipe() }}
-<span id="question-offensive-flag-{{ question.id }}" class="offensive-flag"
-    title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
-    <a class="question-flag">{% trans %}flag offensive{% endtrans %}
-    {% if request.user|can_see_offensive_flags(question) %}
-        <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
-    {% endif %}</a>
-</span>
-
-{% elif request.user|can_remove_flag_offensive(question)%}{{ pipe() }}
-<span id="question-offensive-remove-flag-{{ question.id }}" class="offensive-flag"
-    title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
-    <a class="question-flag">{% trans %}remove flag{% endtrans %}
-    {% if request.user|can_see_offensive_flags(question) %}
-        <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
-    {% endif %}</a>
-</span>
-
+    <span id="question-offensive-flag-{{ question.id }}" class="offensive-flag"
+          title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
+                                    <a class="question-flag">{% trans %}flag offensive{% endtrans %}</a>
+        {% if request.user|can_see_offensive_flags(question) %}
+            <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
+        {% endif %}
+                                </span>
+    {% elif request.user|can_remove_flag_offensive(question)%}{{ pipe() }}
+    <span id="question-offensive-flag-remove-{{ question.id }}" class="offensive-flag"
+          title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}">
+                                    <a class="question-flag">{% trans %}remove flag{% endtrans %}</a>
+        {% if request.user|can_see_offensive_flags(question) %}
+            <span class="darkred">{% if question.offensive_flag_count > 0 %}({{ question.offensive_flag_count }}){% endif %}</span>
+        {% endif %}
+                                </span>
 {% endif %}
-
 {% if request.user|can_delete_post(question) %}{{ pipe() }}
     <a id="question-delete-link-{{question.id}}" class="question-delete">{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
 {% endif %}

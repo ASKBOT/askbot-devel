@@ -5,7 +5,7 @@ from askbot.conf import settings as askbot_settings
 from django.utils.translation import ungettext
 from askbot.utils import mail
 from askbot.utils.classes import ReminderSchedule
-from askbot.models.question import get_tag_summary_from_questions
+from askbot.models.question import Thread
 
 DEBUG_THIS_COMMAND = False
 
@@ -24,15 +24,15 @@ class Command(NoArgsCommand):
             max_reminders = askbot_settings.MAX_UNANSWERED_REMINDERS
         )
 
-        questions = models.Question.objects.exclude(
-                                        closed = True
+        questions = models.Post.objects.get_questions().exclude(
+                                        thread__closed = True
                                     ).exclude(
                                         deleted = True
                                     ).added_between(
                                         start = schedule.start_cutoff_date,
                                         end = schedule.end_cutoff_date
                                     ).filter(
-                                        answer_count = 0
+                                        thread__answer_count = 0
                                     ).order_by('-added_at')
         #for all users, excluding blocked
         #for each user, select a tag filtered subset
@@ -51,7 +51,9 @@ class Command(NoArgsCommand):
             if question_count == 0:
                 continue
 
-            tag_summary = get_tag_summary_from_questions(final_question_list)
+            threads = Thread.objects.filter(id__in=[qq.thread_id for qq in final_question_list])
+            tag_summary = Thread.objects.get_tag_summary_from_threads(threads)
+
             subject_line = ungettext(
                 '%(question_count)d unanswered question about %(topics)s',
                 '%(question_count)d unanswered questions about %(topics)s',
@@ -67,7 +69,7 @@ class Command(NoArgsCommand):
                             % (
                                 askbot_settings.APP_URL,
                                 question.get_absolute_url(),
-                                question.title
+                                question.thread.title
                             )
             body_text += '</ul>'
 

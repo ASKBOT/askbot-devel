@@ -523,12 +523,9 @@ class Command(BaseCommand):
         """p,u,t - post, user, timestamp
         """
         if isinstance(p, askbot.Question):
-            p.last_activity_by = u
-            p.last_activity_at = t
+            p.thread.set_last_activity(last_activity_by=u, last_activity_at=t)
         elif isinstance(p, askbot.Answer):
-            p.question.last_activity_by = u
-            p.question.last_activity_at = t
-            p.question.save()
+            p.question.thread.set_last_activity(last_activity_by=u, last_activity_at=t)
 
     def _process_post_rollback_revision_group(self, rev_group):
         #todo: don't know what to do here as there were no
@@ -572,15 +569,9 @@ class Command(BaseCommand):
                 if p is None:
                     return
                 if rev_type == 'Post Closed':
-                    p.closed = True
-                    p.closed_at = t
-                    p.closed_by = u
-                    p.close_reason = X.get_close_reason(rev.comment)
+                    p.thread.set_closed_status(closed=True, closed_at=t, closed_by=u, close_reason=X.get_close_reason(rev.comment))
                 elif rev_type == 'Post Reopened':
-                    p.closed = False 
-                    p.closed_at = None
-                    p.closed_by = None
-                    p.close_reason = None
+                    p.thread.set_closed_status(closed=False, closed_at=None, closed_by=None, close_reason=None)
                 self.mark_activity(p,u,t)
                 p.save()
                 return
@@ -756,8 +747,8 @@ class Command(BaseCommand):
             q = X.get_post(se_q)
             if q is None:
                 continue
-            q.view_count = se_q.view_count
-            q.save()
+            q.thread.view_count = se_q.view_count
+            q.thread.save()
 
 
     def transfer_QA_votes(self):

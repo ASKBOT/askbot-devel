@@ -24,15 +24,15 @@ class Migration(SchemaMigration):
         # Deleting model 'Mention'
         db.delete_table(u'mention')
 
-        # Deleting model 'Book'
-        db.delete_table(u'book')
-
         # Removing M2M table for field questions on 'Book'
         db.delete_table('book_question')
 
         # Deleting model 'BookAuthorRss'
         db.delete_table(u'book_author_rss')
-    
+
+        # Deleting model 'Book'
+        db.delete_table(u'book')
+
     
     def backwards(self, orm):
         

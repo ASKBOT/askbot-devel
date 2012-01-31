@@ -2,7 +2,8 @@ akismet
 django>=1.1.2
 Jinja2
 Coffin>=0.3
--e git+https://github.com/matthiask/south.git#egg=south
+South>=0.7.1
+#-e git+https://github.com/matthiask/south.git#egg=south
 oauth2
 markdown2
 html5lib

@@ -114,7 +114,7 @@ class TitleField(forms.CharField):
             ) % askbot_settings.MIN_TITLE_LENGTH
             raise forms.ValidationError(msg)
 
-        return value
+        return value.strip() # TODO: test me
 
 class EditorField(forms.CharField):
     """EditorField is subclassed by the 
@@ -334,13 +334,11 @@ class ShowQuestionForm(forms.Form):
         in_data = self.get_pruned_data()
         out_data = dict()
         if ('answer' in in_data) ^ ('comment' in in_data):
-            out_data['is_permalink'] = True
             out_data['show_page'] = None
             out_data['answer_sort_method'] = 'votes'
             out_data['show_comment'] = in_data.get('comment', None)
             out_data['show_answer'] = in_data.get('answer', None)
         else:
-            out_data['is_permalink'] = False
             out_data['show_page'] = in_data.get('page', 1)
             out_data['answer_sort_method'] = in_data.get(
                                                     'sort',
@@ -497,77 +495,6 @@ class SendMessageForm(forms.Form):
                                         )
                         )
 
-
-class AdvancedSearchForm(forms.Form):
-    """nothing must be required in this form
-    it is used by the main questions view for input validation only
-    """
-    scope = forms.ChoiceField(choices=const.POST_SCOPE_LIST, required=False)
-    sort = forms.ChoiceField(choices=const.POST_SORT_METHODS, required=False)
-    query = forms.CharField(max_length=256, required=False)
-    #search field is actually a button, used to detect manual button click
-    search = forms.CharField(max_length=16, required=False)
-    reset_tags = forms.BooleanField(required=False)
-    reset_author = forms.BooleanField(required=False)
-    reset_query = forms.BooleanField(required=False)
-    start_over = forms.BooleanField(required=False)
-    tags = forms.CharField(max_length=256, required=False)
-    remove_tag = forms.CharField(max_length=256, required=False)
-    author = forms.IntegerField(required=False)
-    page_size = forms.ChoiceField(choices=const.PAGE_SIZE_CHOICES, required=False)
-    page = forms.IntegerField(required=False)
-
-    def clean_tags(self):
-        if 'tags' in self.cleaned_data:
-            tags_input = self.cleaned_data['tags'].strip()
-            split_re = re.compile(const.TAG_SPLIT_REGEX)
-            tag_strings = split_re.split(tags_input)
-            tagname_re = re.compile(const.TAG_REGEX, re.UNICODE)
-            out = set()
-            for s in tag_strings:
-                if tagname_re.search(s):
-                    out.add(s)
-            if len(out) > 0:
-                self.cleaned_data['tags'] = out
-            else:
-                self.cleaned_data['tags'] = None
-            return self.cleaned_data['tags']
-
-    def clean_query(self):
-        if 'query' in self.cleaned_data:
-            q = self.cleaned_data['query'].strip()
-            if q == '':
-                q = None
-            self.cleaned_data['query'] = q
-            return self.cleaned_data['query']
-
-    def clean_page_size(self):
-        if 'page_size' in self.cleaned_data:
-            if self.cleaned_data['page_size'] == '':
-                self.cleaned_data['page_size'] = None
-            else:
-                page_size = self.cleaned_data['page_size']
-                #by this time it is guaranteed to be castable as int
-                self.cleaned_data['page_size'] = int(page_size)
-            return self.cleaned_data['page_size']
-
-    def clean(self):
-        #todo rewrite
-        data = self.cleaned_data
-        cleanup_dict(data, 'scope', '')
-        cleanup_dict(data, 'tags', None)
-        cleanup_dict(data, 'sort', '')
-        cleanup_dict(data, 'query', None)
-        cleanup_dict(data, 'search', '')
-        cleanup_dict(data, 'reset_tags', False)
-        cleanup_dict(data, 'reset_author', False)
-        cleanup_dict(data, 'reset_query', False)
-        cleanup_dict(data, 'remove_tag', '')
-        cleanup_dict(data, 'start_over', False)
-        cleanup_dict(data, 'author', None)
-        cleanup_dict(data, 'page', None)
-        cleanup_dict(data, 'page_size', None)
-        return data
 
 class NotARobotForm(forms.Form):
     recaptcha = RecaptchaField(
@@ -749,7 +676,7 @@ class AnswerForm(forms.Form):
         if question.wiki and askbot_settings.WIKI_ON:
             self.fields['wiki'].initial = True
         if user.is_authenticated():
-            if user in question.followed_by.all():
+            if user in question.thread.followed_by.all():
                 self.fields['email_notify'].initial = True
                 return
         self.fields['email_notify'].initial = False
@@ -781,7 +708,7 @@ class RetagQuestionForm(forms.Form):
     # initialize the default values
     def __init__(self, question, *args, **kwargs):
         super(RetagQuestionForm, self).__init__(*args, **kwargs)
-        self.fields['tags'].initial = question.tagnames
+        self.fields['tags'].initial = question.thread.tagnames
 
 class RevisionForm(forms.Form):
     """
@@ -791,7 +718,7 @@ class RevisionForm(forms.Form):
 
     def __init__(self, post, latest_revision, *args, **kwargs):
         super(RevisionForm, self).__init__(*args, **kwargs)
-        revisions = post.revisions.all().values_list(
+        revisions = post.revisions.values_list(
             'revision', 'author__username', 'revised_at', 'summary')
         date_format = '%c'
         self.fields['revision'].choices = [
@@ -920,7 +847,6 @@ class EditAnswerForm(forms.Form):
 class EditUserForm(forms.Form):
     email = forms.EmailField(
                     label=u'Email',
-                    help_text=_('this email will be linked to gravatar'),
                     required=True,
                     max_length=255,
                     widget=forms.TextInput(attrs={'size' : 35})
@@ -1143,8 +1069,7 @@ class EditUserEmailFeedsForm(forms.Form):
                 if created:
                     s.save()
             if form_field == 'individually_selected':
-                feed_type = ContentType.objects.get_for_model(models.Question)
-                user.followed_questions.clear()
+                user.followed_threads.clear()
         return changed
 
 class SimpleEmailSubscribeForm(forms.Form):

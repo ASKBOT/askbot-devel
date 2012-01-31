@@ -42,11 +42,11 @@ function ajaxFileUpload(imageUrl, startUploadHandler)
             url: askbot['urls']['upload'],
               secureuri:false,
               fileElementId:'file-upload',
-              dataType: 'xml',
+              dataType: 'json',
               success: function (data, status)
               {
-                  var fileURL = $(data).find('file_url').text();
-                  var error = $(data).find('error').text();
+                  var fileURL = data['file_url'];
+                  var error = data['error'];
                   if(error != ''){
                       alert(error);
                       if (startUploadHandler){
@@ -57,7 +57,6 @@ function ajaxFileUpload(imageUrl, startUploadHandler)
                   }else{
                     imageUrl.attr('value', fileURL);
                   }
-
               },
               error: function (data, status, e)
               {

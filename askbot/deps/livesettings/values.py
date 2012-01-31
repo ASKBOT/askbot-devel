@@ -4,6 +4,7 @@ http://code.google.com/p/django-values/
 """
 from decimal import Decimal
 from django import forms
+from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import simplejson
 from django.utils.datastructures import SortedDict
@@ -600,8 +601,14 @@ class ImageValue(StringValue):
             'allowed_file_extensions',
             ('jpg', 'gif', 'png')
         )
-        self.upload_directory = kwargs.pop('upload_directory')
-        self.upload_url = kwargs.pop('upload_url')
+        self.upload_directory = kwargs.pop(
+                                    'upload_directory',
+                                    django_settings.MEDIA_ROOT
+                                )
+        self.upload_url = kwargs.pop(
+                                    'upload_url',
+                                    django_settings.MEDIA_URL
+                                )
         self.url_resolver = kwargs.pop('url_resolver', None)
         super(ImageValue, self).__init__(*args, **kwargs)
 
@@ -632,13 +639,20 @@ class ImageValue(StringValue):
         """uploaded_file is an instance of
         django UploadedFile object
         """
+        #0) initialize file storage
+        file_storage_class = storage.get_storage_class()
+
+        storage_settings = {}
+        if django_settings.DEFAULT_FILE_STORAGE == \
+            'django.core.files.storage.FileSystemStorage':
+            storage_settings = {
+                'location': self.upload_directory,
+                'base_url': self.upload_url
+            }
+
+        file_storage = file_storage_class(**storage_settings)
+
         #1) come up with a file name
-
-        file_storage = storage.FileSystemStorage(
-                                    location = self.upload_directory,
-                                    base_url = self.upload_url
-                                )
-
         #todo: need better function here to calc name
         file_name = file_storage.get_available_name(uploaded_file.name)
         file_storage.save(file_name, uploaded_file)

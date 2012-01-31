@@ -6,7 +6,8 @@
         macros.tag_list_widget(
             interesting_tag_names,
             deletable = True,
-            css_class = 'interesting marked-tags'
+            css_class = 'interesting marked-tags',
+            search_state = search_state
         )
     }}
     {# todo - add this via js
@@ -22,7 +23,8 @@
         macros.tag_list_widget(
             ignored_tag_names,
             deletable = True,
-            css_class = 'ignored marked-tags'
+            css_class = 'ignored marked-tags',
+            search_state = search_state
         )
     }}
     {# todo: add this via javascript 

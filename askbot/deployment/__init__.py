@@ -3,6 +3,7 @@ module for deploying askbot
 """
 import os.path
 import sys
+import django
 from optparse import OptionParser
 from askbot.utils import console
 from askbot.deployment import messages
@@ -125,6 +126,12 @@ def deploy_askbot(directory, options):
         create_new_project = True
 
     path_utils.create_path(directory)
+
+    if django.VERSION[0] == 1 and django.VERSION[1] < 3:
+        #force people install the django-staticfiles app
+        context['staticfiles_app'] = ''
+    else:
+        context['staticfiles_app'] = "'django.contrib.staticfiles',"
 
     path_utils.deploy_into(
         directory,

@@ -29,7 +29,7 @@ try:
 except:
     from yadis import xri
 
-import time, base64, hashlib, operator, logging
+import time, base64, hmac, hashlib, operator, logging
 from models import Association, Nonce
 
 __all__ = ['OpenID', 'DjangoOpenIDStore', 'from_openid_response', 'clean_next']
@@ -787,30 +787,54 @@ class FacebookError(Exception):
     """
     pass
 
+def urlsafe_b64decode(input):
+    length = len(input)
+    return base64.urlsafe_b64decode(
+        input.ljust(length + length % 4, '=')
+    )
+
+def parse_signed_facebook_request(signed_request, secret):
+    """
+    Parse signed_request given by Facebook (usually via POST),
+    decrypt with app secret.
+
+    Arguments:
+    signed_request -- Facebook's signed request given through POST
+    secret -- Application's app_secret required to decrpyt signed_request
+
+    slightly edited copy from https://gist.github.com/1190267
+    """
+
+    if "." in signed_request:
+        esig, payload = signed_request.split(".")
+    else:
+        return {}
+
+    sig = urlsafe_b64decode(str(esig))
+    data = simplejson.loads(urlsafe_b64decode(str(payload)))
+
+    if not isinstance(data, dict):
+        raise ValueError("Pyload is not a json string!")
+        return {}
+
+    if data["algorithm"].upper() == "HMAC-SHA256":
+        if hmac.new(str(secret), str(payload), hashlib.sha256).digest() == sig:
+            return data
+    else:
+        raise ValueError("Not HMAC-SHA256 encrypted!")
+
+    return {}
+
 def get_facebook_user_id(request):
     try:
         key = askbot_settings.FACEBOOK_KEY
+        fb_cookie = request.COOKIES['fbsr_%s' % key]
+        if not fb_cookie:
+            raise ValueError('cannot access facebook cookie')
+
         secret = askbot_settings.FACEBOOK_SECRET
-
-        fb_cookie = request.COOKIES['fbs_%s' % key]
-        fb_response = dict(cgi.parse_qsl(fb_cookie))
-
-        signature = None
-        payload = ''
-        for key in sorted(fb_response.keys()):
-            if key != 'sig':
-                payload += '%s=%s' % (key, fb_response[key])
-
-        if 'sig' in fb_response:
-            if md5(payload + secret).hexdigest() != fb_response['sig']:
-                raise ValueError('signature does not match')
-        else:
-            raise ValueError('no signature in facebook response')
-
-        if 'uid' not in fb_response:
-            raise ValueError('no user id in facebook response')
-
-        return fb_response['uid'] 
+        response = parse_signed_facebook_request(fb_cookie, secret)
+        return response['user_id']
     except Exception, e:
         raise FacebookError(e)
 

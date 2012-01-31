@@ -8,6 +8,7 @@ added to the :class:`AnonymousUser` so that user could be pickled.
 
 Secondly, it sends greeting message to anonymous users.
 """
+from django.conf import settings as django_settings
 from askbot.user_messages import create_message, get_and_delete_messages
 from askbot.conf import settings as askbot_settings
 
@@ -42,6 +43,10 @@ class ConnectToSessionMessagesMiddleware(object):
         """Enables anonymous users to receive messages
         the same way as authenticated users, and sets
         the anonymous user greeting, if it should be shown"""
+        if not request.path.startswith('/' + django_settings.ASKBOT_URL):
+            #todo: a hack, for real we need to remove this middleware
+            #and switch to the new-style session messages
+            return
         if request.user.is_anonymous():
             #1) Attach the ability to receive messages
             #plug on deepcopy which may be called by django db "driver"
@@ -63,6 +68,10 @@ class ConnectToSessionMessagesMiddleware(object):
         """Adds the ``'askbot_visitor'``key to cookie if user ever
         authenticates so that the anonymous user message won't
         be shown after the user logs out"""
+        if not request.path.startswith('/' + django_settings.ASKBOT_URL):
+            #todo: a hack, for real we need to remove this middleware
+            #and switch to the new-style session messages
+            return response
         if hasattr(request, 'user') and \
                 request.user.is_authenticated() and \
                 'askbot_visitor' not in request.COOKIES :

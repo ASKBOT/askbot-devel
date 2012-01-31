@@ -13,7 +13,7 @@ class Command(NoArgsCommand):
         total = tags.count()
         deleted_tags = list()
         for tag in tags:
-            if tag.questions.all().count() == 0:
+            if not tag.threads.exists():
                 deleted_tags.append(tag.name)
                 tag.delete()
             transaction.commit()

@@ -4,11 +4,11 @@
 Create database for Askbot
 ==========================
 
-Askbot has been successfully tested with `MySQL` and `PostgresQL` databases.
+Askbot has been successfully tested with `MySQL` and `PostgreSQL` databases.
 
-PostgresQL
+PostgreSQL
 ----------
-PostgresQL is the preferred database for Askbot - because it offers great
+PostgreSQL is the preferred database for Askbot - because it offers great
 full text search functionality and supports transactions at the same time.
 
 To use postgresql - install it (please see documentation elsewhere).

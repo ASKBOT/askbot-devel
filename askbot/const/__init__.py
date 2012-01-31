@@ -67,12 +67,7 @@ TAG_LIST_FORMAT_CHOICES = (
 
 PAGE_SIZE_CHOICES = (('10', '10',), ('30', '30',), ('50', '50',),)
 ANSWERS_PAGE_SIZE = 10
-#todo: remove this duplication
-QUESTIONS_PER_PAGE_USER_CHOICES = (
-   (10, u'10'),
-   (30, u'30'),
-   (50, u'50'),
-)
+QUESTIONS_PER_PAGE_USER_CHOICES = ((10, u'10'), (30, u'30'), (50, u'50'),)
 
 UNANSWERED_QUESTION_MEANING_CHOICES = (
     ('NO_ANSWERS', _('Question has no answers')),
@@ -88,9 +83,11 @@ UNANSWERED_QUESTION_MEANING_CHOICES = (
 #however it will be hard to expect that people will type
 #correct regexes - plus this must be an anchored regex
 #to do full string match
-TAG_CHARS = '\w\+\.\-#'
-TAG_REGEX = r'^[%s]+$' % TAG_CHARS
+TAG_CHARS = r'\w+.#-'
+TAG_REGEX_BARE = r'[%s]+' % TAG_CHARS
+TAG_REGEX = r'^%s$' % TAG_REGEX_BARE
 TAG_SPLIT_REGEX = r'[ ,]+'
+TAG_SEP = ',' # has to be valid TAG_SPLIT_REGEX char and MUST NOT be in const.TAG_CHARS
 EMAIL_REGEX = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b', re.I)
 
 TYPE_ACTIVITY_ASK_QUESTION = 1

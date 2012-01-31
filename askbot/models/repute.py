@@ -109,8 +109,7 @@ class Repute(models.Model):
     #todo: combine positive and negative to one value
     positive = models.SmallIntegerField(default=0)
     negative = models.SmallIntegerField(default=0)
-    #FK must be to Post() - in the future
-    question = models.ForeignKey('Question', null=True, blank=True)
+    question = models.ForeignKey('Post', null=True, blank=True)
     reputed_at = models.DateTimeField(default=datetime.datetime.now)
     reputation_type = models.SmallIntegerField(choices=const.TYPE_REPUTATION)
     reputation = models.IntegerField(default=1)
@@ -146,7 +145,7 @@ class Repute(models.Model):
             link_title_data = {
                                 'points': abs(delta),
                                 'username': self.user.username,
-                                'question_title': self.question.title
+                                'question_title': self.question.thread.title
                             }
             if delta > 0:
                 link_title = _(
@@ -162,6 +161,6 @@ class Repute(models.Model):
             return '<a href="%(url)s" title="%(link_title)s">%(question_title)s</a>' \
                             % {
                                'url': self.question.get_absolute_url(), 
-                               'question_title': self.question.title,
+                               'question_title': self.question.thread.title,
                                'link_title': link_title
                             }

@@ -1,7 +1,8 @@
-{{ macros.tag_list_widget(
-        tags = question.get_tag_names(),
+{{
+    macros.tag_list_widget(
+        tags = thread.get_tag_names(),
         id = 'question-tags',
         css_class = 'post-tags tags',
-        tag_css_class = 'post-tag',
+        tag_css_class = 'post-tag'
     )
 }}

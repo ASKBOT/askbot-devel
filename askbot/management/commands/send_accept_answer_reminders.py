@@ -24,15 +24,15 @@ class Command(NoArgsCommand):
             askbot_settings.MAX_ACCEPT_ANSWER_REMINDERS
         )
 
-        questions = models.Question.objects.exclude(
+        questions = models.Post.objects.get_questions().exclude(
                                         deleted = True
                                     ).added_between(
                                         start = schedule.start_cutoff_date,
                                         end = schedule.end_cutoff_date
                                     ).filter(
-                                        answer_count__gt = 0
+                                        thread__answer_count__gt = 0
                                     ).filter(
-                                        answer_accepted = False
+                                        thread__accepted_answer__isnull=True #answer_accepted = False
                                     ).order_by('-added_at')
         #for all users, excluding blocked
         #for each user, select a tag filtered subset
@@ -52,7 +52,6 @@ class Command(NoArgsCommand):
             if question_count == 0:
                 continue
 
-            #tag_summary = get_tag_summary_from_questions(final_question_list)
             subject_line = _(
                 'Accept the best answer for %(question_count)d of your questions'
             ) % {'question_count': question_count}
@@ -69,7 +68,7 @@ class Command(NoArgsCommand):
                             % (
                                 askbot_settings.APP_URL,
                                 question.get_absolute_url(),
-                                question.title
+                                question.thread.title
                             )
             body_text += '</ul>'
 

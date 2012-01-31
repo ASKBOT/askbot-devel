@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
 <h1 class="section-title">
-    {% trans %}Edit answer{% endtrans %} [<a href="{{ answer.question.get_absolute_url() }}#{{ answer.id }}">{% trans %}back{% endtrans %}</a>]
+    {% trans %}Edit answer{% endtrans %} [<a href="{{ answer.thread._question_post().get_absolute_url() }}#{{ answer.id }}">{% trans %}back{% endtrans %}</a>]
 </h1>
 <div id="main-body" class="ask-body">
     <form id="fmedit" action="{% url edit_answer answer.id %}" method="post" >{% csrf_token %}

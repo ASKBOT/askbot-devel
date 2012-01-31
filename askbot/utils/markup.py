@@ -11,15 +11,11 @@ from markdown2 import Markdown
 #url taken from http://regexlib.com/REDetails.aspx?regexp_id=501 by Brian Bothwell
 URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))")
 
-LINK_PATTERNS = [
-    (URL_RE, r'\1'),
-]
-
-
 def get_parser():
     """returns an instance of configured ``markdown2`` parser
     """
     extras = ['link-patterns', 'video']  
+
     if askbot_settings.ENABLE_MATHJAX or \
         askbot_settings.MARKUP_CODE_FRIENDLY:
         extras.append('code-friendly')
@@ -30,12 +26,17 @@ def get_parser():
         #pip install -e git+git://github.com/andryuha/python-markdown2.git
         extras.append('video')
 
+    link_patterns = [
+        (URL_RE, r'\1'),
+    ]
     if askbot_settings.ENABLE_AUTO_LINKING:
         pattern_list = askbot_settings.AUTO_LINK_PATTERNS.split('\n')
         url_list = askbot_settings.AUTO_LINK_URLS.split('\n')
         pairs = zip(pattern_list, url_list)#always takes equal number of items 
         for item in pairs:
-            LINK_PATTERNS.append(
+            if item[0].strip() =='' or item[1].strip() == '':
+                continue
+            link_patterns.append(
                 (
                     re.compile(item[0].strip()),
                     item[1].strip()
@@ -57,7 +58,7 @@ def get_parser():
     return Markdown(
                 html4tags=True,
                 extras=extras,
-                link_patterns = LINK_PATTERNS
+                link_patterns = link_patterns
             )
 
 

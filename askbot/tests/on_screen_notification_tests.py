@@ -98,7 +98,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         #users 1x work on question, 2x and 3x on the answers
         #users x4 do not do anyting in the setup code
 
-        self.question = models.Question.objects.create_new(
+        self.thread = models.Thread.objects.create_new(
                             title = 'test question',
                             author = self.u11,
                             added_at = datetime.datetime.now(),
@@ -106,6 +106,7 @@ class OnScreenUpdateNotificationTests(TestCase):
                             tagnames = 'test', 
                             text = 'hey listen up',
                         )
+        self.question = self.thread._question_post()
         self.comment12 = self.question.add_comment(
                             user = self.u12,
                             comment = 'comment12'
@@ -114,8 +115,8 @@ class OnScreenUpdateNotificationTests(TestCase):
                             user = self.u13,
                             comment = 'comment13'
                         )
-        self.answer1 = models.Answer.objects.create_new(
-                            question = self.question,
+        self.answer1 = models.Post.objects.create_new_answer(
+                            thread = self.thread,
                             author = self.u21,
                             added_at = datetime.datetime.now(),
                             text = 'answer1'
@@ -128,8 +129,8 @@ class OnScreenUpdateNotificationTests(TestCase):
                             user = self.u23,
                             comment = 'comment23'
                         )
-        self.answer2 = models.Answer.objects.create_new(
-                            question = self.question,
+        self.answer2 = models.Post.objects.create_new_answer(
+                            thread = self.thread,
                             author = self.u31,
                             added_at = datetime.datetime.now(),
                             text = 'answer2'
@@ -567,8 +568,8 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.reset_response_counts()
         time.sleep(1)
         timestamp = datetime.datetime.now()
-        self.answer3 = models.Answer.objects.create_new(
-                            question = self.question,
+        self.answer3 = models.Post.objects.create_new_answer(
+                            thread = self.thread,
                             author = self.u11,
                             added_at = timestamp,
                             text = 'answer3'
@@ -595,8 +596,8 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.reset_response_counts()
         time.sleep(1)
         timestamp = datetime.datetime.now()
-        self.answer3 = models.Answer.objects.create_new(
-                            question = self.question,
+        self.answer3 = models.Post.objects.create_new_answer(
+                            thread = self.thread,
                             author = self.u31,
                             added_at = timestamp,
                             text = 'answer4'

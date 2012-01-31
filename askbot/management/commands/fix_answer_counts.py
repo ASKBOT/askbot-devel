@@ -25,4 +25,4 @@ class Command(NoArgsCommand):
         self.remove_save_signals()
         questions = models.Question.objects.all()
         for question in questions:
-            question.update_answer_count()
+            question.thread.update_answer_count()

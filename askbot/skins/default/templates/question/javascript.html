@@ -1,4 +1,4 @@
-{% if not question.closed %}
+{% if not thread.closed %}
     <script type='text/javascript' src='{{"/js/editor.js"|media}}'></script>
     <script type='text/javascript'>
         {% if settings.ENABLE_MATHJAX or settings.MARKUP_CODE_FRIENDLY %}
@@ -11,13 +11,8 @@
         askbot['urls']['editComment'] = '{% url edit_comment %}';
         askbot['urls']['deleteComment'] = '{% url delete_comment %}';
         askbot['urls']['getComment'] = '{% url get_comment %}';
-        {%if settings.ASKBOT_TRANSLATE_URL %}
-        askbot['urls']['question_url_template'] = scriptUrl + '{% trans %}question/{% endtrans %}{{ "{{QuestionID}}/{{questionSlug}}" }}';{# yes it needs to be that whacky #}
-        askbot['urls']['vote_url_template'] = scriptUrl + '{% trans %}questions/{% endtrans %}{{ "{{QuestionID}}/" }}{% trans %}vote/{% endtrans %}';
-        {%else%}
-        askbot['urls']['question_url_template'] = scriptUrl + '{% trans %}question/{% endtrans %}{{ "{{QuestionID}}/{{questionSlug}}" }}';{# yes it needs to be that whacky #}
-        askbot['urls']['vote_url_template'] = scriptUrl + '{% trans %}questions/{% endtrans %}{{ "{{QuestionID}}/" }}vote/';
-        {%endif%}
+        askbot['urls']['question_url_template'] = scriptUrl + '{{ 'question/'|transurl }}{{ "{{QuestionID}}/{{questionSlug}}" }}';{# yes it needs to be that whacky #}
+        askbot['urls']['vote_url_template'] = scriptUrl + '{{ 'questions/'|transurl }}{{ "{{QuestionID}}/" }}{{ 'vote/'|transurl }}';
         askbot['urls']['user_signin'] = '{{ settings.LOGIN_URL }}';
         askbot['urls']['swap_question_with_answer'] = '{% url swap_question_with_answer %}';
         askbot['urls']['upvote_comment'] = '{% url upvote_comment %}';
@@ -46,9 +41,9 @@
         var answer_sort_tab = "{{ tab_id }}";
         $("#" + answer_sort_tab).attr('className',"on");
         
-        Vote.init({{ question.id }}, '{{ question.title|slugify }}', '{{ question.author.id }}','{{ request.user.id }}');
+        Vote.init({{ question.id }}, '{{ thread.title|slugify }}', '{{ question.author.id }}','{{ request.user.id }}');
         
-        {% if not question.closed and request.user.is_authenticated %}initEditor();{% endif %}
+        {% if not thread.closed and request.user.is_authenticated %}initEditor();{% endif %}
         
         lanai.highlightSyntax();
         $('#btLogin').bind('click', function(){window.location.href='{{ settings.LOGIN_URL }}'; } )

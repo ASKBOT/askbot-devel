@@ -45,9 +45,9 @@ class Command(NoArgsCommand):
         total_count = questions.count()
         print "Searching for questions with inconsistent tag records:",
         for question in questions:
-            tags = question.tags.all()
+            tags = question.thread.tags.all()
             denorm_tag_set = set(question.get_tag_names())
-            norm_tag_set = set(question.tags.values_list('name', flat=True))
+            norm_tag_set = set(question.thread.tags.values_list('name', flat=True))
             if norm_tag_set != denorm_tag_set:
 
                 if question.last_edited_by:
@@ -59,13 +59,13 @@ class Command(NoArgsCommand):
 
                 tagnames = forms.TagNamesField().clean(question.tagnames)
 
-                question.update_tags(
+                question.thread.update_tags(
                     tagnames = tagnames,
                     user = user,
                     timestamp = timestamp
                 )
-                question.tagnames = tagnames
-                question.save()
+                question.thread.tagnames = tagnames
+                question.thread.save()
                 found_count += 1
 
             transaction.commit()
