@@ -33,6 +33,7 @@ REQUIREMENTS = {
     'recaptcha_works': 'django-recaptcha-works',
     'openid': 'python-openid',
     'pystache': 'pystache==0.3.1',
+    'djchart': 'djchart>=0.1.2',
 }
 
 #necessary for interoperability of django and coffin
