@@ -14,8 +14,8 @@ urlpatterns = patterns('',
     (r'^settings/', include('askbot.deps.livesettings.urls')),
     (r'^followit/', include('followit.urls')),
     (r'^robots.txt$', include('robots.urls')),
-    url(r'^analytics/', 'chart.views.site_analytics', name='site_analytics'),
-    url(r'^chart/(?P<chart_pk>\d+)/data.json', 'chart.views.chart_data',
+    url(r'^analytics/', 'djchart.views.site_analytics', name='site_analytics'),
+    url(r'^chart/(?P<chart_pk>\d+)/data.json', 'djchart.views.chart_data',
 		name='chart_data'),
 )
 
