@@ -163,45 +163,45 @@ msgstr "<div>Seguint</div><div class=\"unfollow\">Deixar de seguir</div>"
 
 #: skins/common/media/js/post.js:615
 msgid "undelete"
-msgstr ""
+msgstr "recuperar"
 
 #: skins/common/media/js/post.js:620
 msgid "delete"
-msgstr ""
+msgstr "eliminar"
 
 #: skins/common/media/js/post.js:957
 msgid "add comment"
-msgstr ""
+msgstr "afegir comentari"
 
 #: skins/common/media/js/post.js:960
 msgid "save comment"
-msgstr ""
+msgstr "desar comentari"
 
 #: skins/common/media/js/post.js:990
 #, c-format
 msgid "enter %s more characters"
-msgstr ""
+msgstr "introduir %s caràcters més"
 
 #: skins/common/media/js/post.js:995
 #, c-format
 msgid "%s characters left"
-msgstr ""
+msgstr "queden %s caràcters"
 
 #: skins/common/media/js/post.js:1066
 msgid "cancel"
-msgstr ""
+msgstr "anul·lar"
 
 #: skins/common/media/js/post.js:1109
 msgid "confirm abandon comment"
-msgstr ""
+msgstr "confirmar abandó del commenari"
 
 #: skins/common/media/js/post.js:1183
 msgid "delete this comment"
-msgstr ""
+msgstr "eliminar aquest comentari"
 
 #: skins/common/media/js/post.js:1387
 msgid "confirm delete comment"
-msgstr ""
+msgstr "conformar eliminar comentari"
 
 #: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
 msgid "Please enter question title (>10 characters)"
@@ -220,13 +220,13 @@ msgstr "i %s més què no es mostren ..."
 
 #: skins/common/media/js/user.js:14
 msgid "Please select at least one item"
-msgstr ""
+msgstr "Seleccinar com a mínim un ítem"
 
 #: skins/common/media/js/user.js:58
 msgid "Delete this notification?"
 msgid_plural "Delete these notifications?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eliminar aquesta notificació?"
+msgstr[1] "Eliminar aquestes notificacions"
 
 #: skins/common/media/js/user.js:125 skins/old/media/js/user.js:129
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
@@ -249,93 +249,93 @@ msgstr "seguir a %s"
 
 #: skins/common/media/js/utils.js:43
 msgid "click to close"
-msgstr ""
+msgstr "clicar per tancar"
 
 #: skins/common/media/js/utils.js:214
 msgid "click to edit this comment"
-msgstr ""
+msgstr "clicar per modificar aquest comentari"
 
 #: skins/common/media/js/utils.js:215
 msgid "edit"
-msgstr ""
+msgstr "modificar"
 
 #: skins/common/media/js/utils.js:369
 #, c-format
 msgid "see questions tagged '%s'"
-msgstr ""
+msgstr "veure preguntes etiquetades '%s'"
 
 #: skins/common/media/js/wmd/wmd.js:30
 msgid "bold"
-msgstr ""
+msgstr "negreta"
 
 #: skins/common/media/js/wmd/wmd.js:31
 msgid "italic"
-msgstr ""
+msgstr "cursiva"
 
 #: skins/common/media/js/wmd/wmd.js:32
 msgid "link"
-msgstr ""
+msgstr "enllaç"
 
 #: skins/common/media/js/wmd/wmd.js:33
 msgid "quote"
-msgstr ""
+msgstr "citar"
 
 #: skins/common/media/js/wmd/wmd.js:34
 msgid "preformatted text"
-msgstr ""
+msgstr "format predefinit "
 
 #: skins/common/media/js/wmd/wmd.js:35
 msgid "image"
-msgstr ""
+msgstr "imatge"
 
 #: skins/common/media/js/wmd/wmd.js:36
 msgid "attachment"
-msgstr ""
+msgstr "adjunt"
 
 #: skins/common/media/js/wmd/wmd.js:37
 msgid "numbered list"
-msgstr ""
+msgstr "llista numerada"
 
 #: skins/common/media/js/wmd/wmd.js:38
 msgid "bulleted list"
-msgstr ""
+msgstr "llista de pics"
 
 #: skins/common/media/js/wmd/wmd.js:39
 msgid "heading"
-msgstr ""
+msgstr "encapçalament"
 
 #: skins/common/media/js/wmd/wmd.js:40
 msgid "horizontal bar"
-msgstr ""
+msgstr "barra horitzontal"
 
 #: skins/common/media/js/wmd/wmd.js:41
 msgid "undo"
-msgstr ""
+msgstr "desfer"
 
 #: skins/common/media/js/wmd/wmd.js:42 skins/common/media/js/wmd/wmd.js:1116
 msgid "redo"
-msgstr ""
+msgstr "refer"
 
 #: skins/common/media/js/wmd/wmd.js:53
 msgid "enter image url"
-msgstr ""
+msgstr "entrar url de la imatge"
 
 #: skins/common/media/js/wmd/wmd.js:54
 msgid "enter url"
-msgstr ""
+msgstr "entrar l'url"
 
 #: skins/common/media/js/wmd/wmd.js:55
 msgid "upload file attachment"
-msgstr ""
+msgstr "pujar arxiu adjunt"
 
 #: skins/common/media/js/wmd/wmd.js:1778
 msgid "image description"
-msgstr ""
+msgstr "descripció de la imatge"
 
 #: skins/common/media/js/wmd/wmd.js:1781
 msgid "file name"
-msgstr ""
+msgstr "nom del fitxer"
 
 #: skins/common/media/js/wmd/wmd.js:1785
 msgid "link text"
-msgstr ""
+msgstr "text de l'enllaç"
