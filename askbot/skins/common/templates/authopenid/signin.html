@@ -117,6 +117,8 @@
                         <td><label for="id_new_password">{% trans %}New password{% endtrans %}</label></td>
                         <td>
                             {{login_form.new_password}}
+                        </td>
+                        <td>
                             <span class="error">{{login_form.new_password.errors[0]}}</span>
                         </td>
                     </tr>
@@ -124,6 +126,8 @@
                         <td><label for="id_new_password_retyped">{% trans %}Please, retype{% endtrans %}</label></td>
                         <td>
                             {{login_form.new_password_retyped}}
+                        </td>
+                        <td>
                             <span class="error">{{login_form.new_password_retyped.errors[0]}}</span>
                         </td>
                     </tr>

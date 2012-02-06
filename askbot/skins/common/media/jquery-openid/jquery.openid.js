@@ -193,7 +193,6 @@ $.fn.authenticator = function() {
             password_input_fields.hide();
         }
         reset_password_input_fields();
-        $('.error').remove();
         if (userIsAuthenticated === false){
             email_input_fields.hide();
             account_recovery_heading.hide();
@@ -210,13 +209,18 @@ $.fn.authenticator = function() {
         }
     };
 
+    var reset_form_and_errors = function(){
+        reset_form();
+        $('.error').remove();
+    }
+
     var set_provider_name = function(element){
         var provider_name = element.attr('name');
         provider_name_input.val(provider_name);
     };
 
     var show_openid_input_fields = function(provider_name){
-        reset_form();
+        reset_form_and_errors();
         var token_name = extra_token_name[provider_name]
         if (userIsAuthenticated){
             $('#openid-heading').html(
@@ -290,7 +294,7 @@ $.fn.authenticator = function() {
 
     var start_password_login_or_change = function(){
         //called upon clicking on one of the password login buttons 
-        reset_form();
+        reset_form_and_errors();
         set_provider_name($(this));
         var provider_name = $(this).attr('name');
         return setup_password_login_or_change(provider_name);
@@ -370,7 +374,7 @@ $.fn.authenticator = function() {
     };
 
     var start_account_recovery = function(){
-        reset_form();
+        reset_form_and_errors();
         account_recovery_hint.hide(); 
         account_recovery_heading.css('margin-bottom', '0px');
         account_recovery_heading.html(account_recovery_prompt_text).show();
