@@ -1,0 +1,27 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_modify config_tags chart_tags %}
+{% block extrahead %}
+<script language="javascript" type="text/javascript" src="{{ "/js/jquery.min.js"|media }}"></script>
+<script language="javascript" type="text/javascript" src="{{ "/js/jqplot/jquery.jqplot.min.js"|media }}"></script>
+<script type="text/javascript" src="{{ "/js/jqplot/plugins/jqplot.dateAxisRenderer.min.js"|media }}"></script>
+<script type="text/javascript" src="{{ "/js/jqplot/plugins/jqplot.canvasTextRenderer.min.js"|media }}"></script>
+<script type="text/javascript" src="{{ "/js/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"|media }}"></script>
+<script type="text/javascript" src="{{ "/js/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"|media }}"></script>
+<script type="text/javascript" src="{{ "/js/jqplot/plugins/jqplot.barRenderer.min.js"|media }}"></script>
+<script type="text/javascript" language="javascript" src="{{ "/js/chart.js"|media }}"></script>
+{% endblock %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{{ "/style/jqplot/jquery.jqplot.min.css"|media }}" />
+{% endblock %}
+{% block userlinks %}<a href="/admin/doc/">{% trans 'Documentation' %}</a> / <a href="/admin/password_change/">{% trans 'Change password' %}</a> / <a href="/admin/logout/">{% trans 'Log out' %}</a>{% endblock %}
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+     <a href="/admin/">{% trans "Home" %}</a> &rsaquo;
+     {% trans "Site Analytics" %}
+</div>
+{% endif %}{% endblock %}
+{% block content %}
+<div id="chart"></div>
+{% insert_chart 1 "chart" 1 %}
+{% endblock %}

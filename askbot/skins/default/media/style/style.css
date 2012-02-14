@@ -247,6 +247,20 @@ body.user-messages {
   margin: 0;
   text-decoration: none;
 }
+#userToolsNav ul#settingsDropDownMenu {
+  position:relative;
+  width:25%;
+  left:63%;
+  z-index:3;
+  background-color:#000;
+  padding:8px;
+  border-radius:5px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+#userToolsNav ul#settingsDropDownMenu li {
+  list-style-type:none;
+}
 #metaNav {
   /* Top Navigation bar containing links for tags, people and badges, check widgets/header.html */
 
@@ -3153,3 +3167,4 @@ pre.prettyprint {
 #leading-sidebar {
   float: left;
 }
+>>>>>>> 0f84818c1daa7c6c8c07f3da544a5844a7c7b434

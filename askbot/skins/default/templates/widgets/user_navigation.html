@@ -12,6 +12,14 @@
     <a href="{{ settings.LOGIN_URL }}?next={{request.path|clean_login_url}}">{% trans %}login{% endtrans %}</a>
 {% endif %}
 {% if request.user.is_authenticated() and request.user.is_administrator() %}
-    <a href="{% url site_settings %}">{% trans %}settings{% endtrans %}</a>
+	<a href="javascript:void(0)" onclick="$('#settingsDropDownMenu').toggle()">{% trans %}settings{% endtrans %} &darr;</a>
+	<ul id="settingsDropDownMenu">
+		<li><a href="{% url site_settings %}">{% trans %}settings{% endtrans %}</a></li>
+		<li><a href="{% url site_analytics %}">{% trans %}analytics{% endtrans %}</a></li>
+	</ul>
+	<script type="text/javascript" language="javascript">//<![CDATA[
+		$('#settingsDropDownMenu').hide();
+	//]]></script>
 {% endif %}
     <a href="{% url "help" %}" title="{% trans %}help{% endtrans %}">{% trans %}help{% endtrans %}</a>
+

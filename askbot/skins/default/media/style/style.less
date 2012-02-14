@@ -231,6 +231,12 @@ body.user-messages {
     float: left;
 }
 
+.border-radius (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
 #userToolsNav {/* Navigation bar containing login link or user information, check widgets/user_navigation.html*/
     height: 20px;
     padding-bottom:5px;
@@ -265,6 +271,21 @@ body.user-messages {
         margin: 0;
         text-decoration: none;
     }
+    
+    
+	ul#settingsDropDownMenu {
+		position: relative;
+		width: 25%;
+		left: 63%;
+		z-index: 3;
+		background-color: #000;
+		padding: 8px;
+		.border-radius;
+		
+		li {
+			list-style-type: none;
+		}
+	}
 }
 
 #metaNav {/* Top Navigation bar containing links for tags, people and badges, check widgets/header.html */
@@ -2077,7 +2098,7 @@ ul#related-tags li {
 
 .facebook-share.icon:hover, .twitter-share.icon:hover, .linkedin-share.icon:hover, .identica-share.icon:hover{
     opacity:0.8;
-    filter: alpha(opacity=80);
+    filter: ~"alpha(opacity=80)";
 }
 
 .facebook-share.icon {
