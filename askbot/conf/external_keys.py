@@ -53,6 +53,8 @@ settings.register(
     )
 )
 
+
+
 settings.register(
     livesettings.StringValue(
         EXTERNAL_KEYS,
@@ -170,26 +172,78 @@ settings.register(
     )
 )
 
-settings.register(
-    livesettings.StringValue(
-        EXTERNAL_KEYS,
-        'LDAP_PROVIDER_NAME',
-        description=_('LDAP service provider name')
-    )
-)
+
 
 settings.register(
     livesettings.StringValue(
         EXTERNAL_KEYS,
         'LDAP_URL',
-        description=_('URL for the LDAP service')
+        description=_('LDAP URL'),
+        default="ldap://<host>:<port>"
+    )
+)
+
+
+settings.register(
+    livesettings.StringValue(
+        EXTERNAL_KEYS,
+        'LDAP_BASEDN',
+        description=_('LDAP BASE DN')
     )
 )
 
 settings.register(
-    livesettings.LongStringValue(
+    livesettings.StringValue(
         EXTERNAL_KEYS,
-        'HOW_TO_CHANGE_LDAP_PASSWORD',
-        description=_('Explain how to change LDAP password')
+        'LDAP_SEARCH_SCOPE',
+        description=_('LDAP Search Scope'),
+        default="subs"
     )
 )
+
+settings.register(
+    livesettings.StringValue(
+        EXTERNAL_KEYS,
+        'LDAP_USERID_FIELD',
+        description=_('LDAP Server USERID field name'),
+        default="uid" 
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EXTERNAL_KEYS,
+        'LDAP_COMMONNAME_FIELD',
+        description=_('LDAP Server "Common Name" field name'),
+        default="cn"
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EXTERNAL_KEYS,
+        'LDAP_EMAIL_FIELD',
+        description=_('LDAP Server EMAIL field name'),
+        default="mail"
+    )
+)
+
+# May be necessary, but not handled properly.
+# --> Commenting out until handled properly in backends.ldap_authenticate()
+#settings.register(
+#    livesettings.StringValue(
+#        EXTERNAL_KEYS,
+#        'LDAP_PROXYDN',
+#        description=_('LDAP PROXY DN'),
+#        default=""
+#    )
+#)
+#
+#settings.register(
+#    livesettings.StringValue(
+#        EXTERNAL_KEYS,
+#        'LDAP_PROXYDN_PASSWORD',
+#        description=_('LDAP PROXY DN Password'),
+#        defalut="",
+#    )
+#)

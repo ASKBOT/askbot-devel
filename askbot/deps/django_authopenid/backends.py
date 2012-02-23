@@ -9,6 +9,84 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext as _
 from askbot.deps.django_authopenid.models import UserAssociation
 from askbot.deps.django_authopenid import util
+from askbot.conf import settings as askbot_settings
+
+log = logging.getLogger('configuration')
+
+
+def ldap_authenticate(username, password):
+    """
+    Authenticate using ldap
+    
+    python-ldap must be installed
+    http://pypi.python.org/pypi/python-ldap/2.4.6
+    """
+    import ldap
+    user_information = None
+    try:
+        ldap_session = ldap.initialize(askbot_settings.LDAP_URL)
+        ldap_session.protocol_version = ldap.VERSION3
+        user_filter = "({0}={1})".format(askbot_settings.LDAP_USERID_FIELD, 
+                                         username)
+        # search ldap directory for user
+        res = ldap_session.search_s(askbot_settings.LDAP_BASEDN, ldap.SCOPE_SUBTREE, user_filter, None)
+        if res: # User found in LDAP Directory
+            user_dn = res[0][0]
+            user_information = res[0][1]
+            ldap_session.simple_bind_s(user_dn, password) # <-- will throw  ldap.INVALID_CREDENTIALS if fails
+            ldap_session.unbind_s()
+            
+            exact_username = user_information[askbot_settings.LDAP_USERID_FIELD][0]
+            
+            # Assuming last, first order
+            # --> may be different
+            last_name, first_name = user_information[askbot_settings.LDAP_COMMONNAME_FIELD][0].rsplit(" ", 1)
+            email = user_information[askbot_settings.LDAP_EMAIL_FIELD][0]
+            try:
+                user = User.objects.get(username__exact=exact_username)
+                # always update user profile to synchronize with ldap server
+                user.set_password(password)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.save()
+            except User.DoesNotExist:
+                # create new user in local db
+                user = User()
+                user.username = exact_username
+                user.set_password(password)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.is_staff = False
+                user.is_superuser = False
+                user.is_active = True
+                user.save()
+
+                log.info('Created New User : [{0}]'.format(exact_username))
+            return user
+        else:
+            # Maybe a user created internally (django admin user)
+            try:
+                user = User.objects.get(username__exact=username)
+                if user.check_password(password):
+                    return user
+                else:
+                    return None
+            except User.DoesNotExist:
+                return None 
+
+    except ldap.INVALID_CREDENTIALS, e:
+        return None # Will fail login on return of None
+    except ldap.LDAPError, e:
+        log.error("LDAPError Exception")
+        log.exception(e)
+        return None
+    except Exception, e:
+        log.error("Unexpected Exception Occurred")
+        log.exception(e)
+        return None
+
 
 class AuthBackend(object):
     """Authenticator's authentication backend class
@@ -22,15 +100,14 @@ class AuthBackend(object):
 
     def authenticate(
                 self,
-                username = None,#for 'password'
-                password = None,#for 'password'
+                username = None,#for 'password' and 'ldap'
+                password = None,#for 'password' and 'ldap'
                 user_id = None,#for 'force'
                 provider_name = None,#required with all except email_key
                 openid_url = None,
                 email_key = None,
                 oauth_user_id = None,#used with oauth
                 facebook_user_id = None,#user with facebook
-                ldap_user_id = None,#for ldap
                 wordpress_url = None, # required for self hosted wordpress
                 wp_user_id = None, # required for self hosted wordpress
                 method = None,#requried parameter
@@ -40,6 +117,7 @@ class AuthBackend(object):
         from the signature of the function call
         """
         login_providers = util.get_enabled_login_providers()
+        assoc = None # UserAssociation not needed for ldap
         if method == 'password':
             if login_providers[provider_name]['type'] != 'password':
                 raise ImproperlyConfigured('login provider must use password')
@@ -156,14 +234,7 @@ class AuthBackend(object):
                 return None
 
         elif method == 'ldap':
-            try:
-                assoc = UserAssociation.objects.get(
-                                            openid_url = ldap_user_id,
-                                            provider_name = provider_name
-                                        )
-                user = assoc.user
-            except UserAssociation.DoesNotExist:
-                return None
+            user = ldap_authenticate(username, password)
 
         elif method == 'wordpress_site':
             try:
@@ -180,9 +251,10 @@ class AuthBackend(object):
         else:
             raise TypeError('only openid and password supported')
 
-        #update last used time
-        assoc.last_used_timestamp = datetime.datetime.now()
-        assoc.save()
+        if assoc:
+            #update last used time
+            assoc.last_used_timestamp = datetime.datetime.now()
+            assoc.save()
         return user
 
     def get_user(self, user_id):

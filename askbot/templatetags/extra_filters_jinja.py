@@ -275,9 +275,7 @@ register.filter('can_see_offensive_flags', can_see_offensive_flags)
 
 @register.filter
 def humanize_counter(number):
-    if number == 0:
-        return _('no items in counter')
-    elif number >= 1000:
+    if number >= 1000:
         number = number/1000
         s = '%.1f' % number
         if s.endswith('.0'):

@@ -310,30 +310,26 @@ def signin(request):
                 password_action = login_form.cleaned_data['password_action']
                 if askbot_settings.USE_LDAP_FOR_PASSWORD_LOGIN:
                     assert(password_action == 'login')
-                    ldap_provider_name = askbot_settings.LDAP_PROVIDER_NAME
                     username = login_form.cleaned_data['username']
-                    if util.ldap_check_password(
-                                username,
-                                login_form.cleaned_data['password']
-                            ):
-                        user = authenticate(
-                                        ldap_user_id = username,
-                                        provider_name = ldap_provider_name,
-                                        method = 'ldap'
-                                    )
-                        if user is not None:
-                            login(request, user)
-                            return HttpResponseRedirect(next_url)
-                        else:
-                            return finalize_generic_signin(
-                                    request = request,
-                                    user = user,
-                                    user_identifier = username,
-                                    login_provider_name = ldap_provider_name,
-                                    redirect_url = next_url
+                    password = login_form.cleaned_data['password']
+                    # will be None if authentication fails
+                    user = authenticate(
+                                    username=username,
+                                    password=password,
+                                    method = 'ldap'
                                 )
+                    if user is not None:
+                        login(request, user)
+                        return HttpResponseRedirect(next_url)
                     else:
-                        login_form.set_password_login_error() 
+                        return finalize_generic_signin(
+                                request = request,
+                                user = user,
+                                user_identifier = username,
+                                login_provider_name = ldap_provider_name,
+                                redirect_url = next_url
+                            )
+
                 else:
                     if password_action == 'login':
                         user = authenticate(
