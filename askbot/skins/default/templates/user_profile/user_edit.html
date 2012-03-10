@@ -40,7 +40,7 @@
                 <td>
                 {% if settings.EDITABLE_SCREEN_NAME %}
                     {{ form.username }}
-                    <span class="form-error"></span> {{ form.username.errors }} </td>
+                    <span class="form-error"> {{ form.username.errors }} </span></td>
                 {% else %}
                     {{ view_user.username }}
                 {% endif %}
@@ -53,8 +53,7 @@
                     <td>
                         {% if settings.EDITABLE_EMAIL %}
                             {{ form.email }}
-                            <span class="form-error"></span>
-                            {{ form.email.errors }}
+                            <span class="form-error">{{ form.email.errors }}</span>
                         {% else %}
                             {{ view_user.email }}
                             {% trans %}(cannot be changed){% endtrans %}
@@ -63,27 +62,27 @@
                 </tr>
                 <tr>
                     <td>{{ form.realname.label_tag() }}:</td>
-                    <td>{{ form.realname }} <span class="form-error"></span> {{ form.realname.errors }} </td>
+                    <td>{{ form.realname }} <span class="form-error"> {{ form.realname.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.website.label_tag() }}:</td>
-                    <td>{{ form.website }} <span class="form-error"></span> {{ form.website.errors }} </td>
+                    <td>{{ form.website }} <span class="form-error"> {{ form.website.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.city.label_tag() }}:</td>
-                    <td>{{ form.city }} <span class="form-error"></span> {{ form.city.errors }} </td>
+                    <td>{{ form.city }} <span class="form-error"> {{ form.city.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.country.label_tag() }}:</td>
-                    <td>{{ form.country }} <span class="form-error"></span> {{ form.country.errors }} </td>
+                    <td>{{ form.country }} <span class="form-error"> {{ form.country.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.show_country.label_tag() }}:</td>
-                    <td>{{ form.show_country }} <span class="form-error"></span> {{ form.show_country.errors }} </td>
+                    <td>{{ form.show_country }} <span class="form-error"> {{ form.show_country.errors }} </span></td>
                 </tr>
                 <tr>
                     <td>{{ form.birthday.label_tag() }}:</td>
-                    <td>{{ form.birthday }} <span class="form-error"></span> {{ form.birthday.errors }} </td>
+                    <td>{{ form.birthday }} <span class="form-error"> {{ form.birthday.errors }} </span></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -95,7 +94,7 @@
                 </tr>
                 <tr>
                     <td style="vertical-align:top">{{ form.about.label_tag() }}:</td>
-                    <td>{{ form.about }} <span class="form-error"></span> {{ form.about.errors }} </td>
+                    <td>{{ form.about }} <span class="form-error"> {{ form.about.errors }} </span></td>
                 </tr>
             </table>
             <div style="margin:30px 0 60px 0">
