@@ -356,7 +356,11 @@ def test_staticfiles():
 
     askbot_root = os.path.dirname(askbot.__file__)
     skin_dir = os.path.abspath(os.path.join(askbot_root, 'skins'))
-    if skin_dir not in map(os.path.abspath, django_settings.STATICFILES_DIRS):
+
+    # django_settings.STATICFILES_DIRS can have strings or tuples
+    staticfiles_dirs = [d[1] if isinstance(d, tuple) else d
+                        for d in django_settings.STATICFILES_DIRS]
+    if skin_dir not in map(os.path.abspath, staticfiles_dirs):
         errors.append(
             'Add to STATICFILES_DIRS list of your settings.py file:\n'
             "    '%s'," % skin_dir
@@ -368,7 +372,7 @@ def test_staticfiles():
                 'Directory specified with settning ASKBOT_EXTRA_SKINS_DIR '
                 'must exist and contain your custom skins for askbot.'
             )
-        if extra_skins_dir not in django_settings.STATICFILES_DIRS:
+        if extra_skins_dir not in staticfiles_dirs:
             errors.append(
                 'Add ASKBOT_EXTRA_SKINS_DIR to STATICFILES_DIRS entry in '
                 'your settings.py file.\n'
