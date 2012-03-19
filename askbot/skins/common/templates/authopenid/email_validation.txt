@@ -7,7 +7,7 @@
 {% trans %}Following the link above will help us verify your email address.{% endtrans %}
 
 {% trans %}If you believe that this message was sent in mistake - 
-no further action is needed. Just ingore this email, we apologize
+no further action is needed. Just ignore this email, we apologize
 for any inconvenience{% endtrans %}
 
 {% trans %}Sincerely,
