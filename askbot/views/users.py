@@ -40,7 +40,7 @@ from askbot.models.badges import award_badges_signal
 from askbot.skins.loaders import render_into_skin
 from askbot.templatetags import extra_tags
 from askbot.search.state_manager import SearchState
-
+from askbot.utils import url_utils
 
 def owner_or_moderator_required(f):
     @functools.wraps(f)
@@ -51,7 +51,7 @@ def owner_or_moderator_required(f):
             pass
         else:
             params = '?next=%s' % request.path
-            return HttpResponseRedirect(reverse('user_signin') + params)
+            return HttpResponseRedirect(url_utils.get_login_url() + params)
         return f(request, profile_owner, context)
     return wrapped_func
 
