@@ -10,7 +10,7 @@ from django.conf import settings as django_settings
 
 LICENSE_SETTINGS = livesettings.ConfigurationGroup(
                         'LICENSE_SETTINGS',
-                        _('Content LicensContent License'),
+                        _('Content License'),
                         super_group = CONTENT_AND_UI
                     )
 
