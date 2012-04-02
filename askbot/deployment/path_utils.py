@@ -205,6 +205,7 @@ def deploy_into(directory, new_project = False, verbosity = 1, context = None):
     if verbosity >= 1:
         print ''
     app_dir = os.path.join(directory, 'askbot')
+    create_path(app_dir)
 
     copy_dirs = ('doc', 'cron', 'upfiles')
     dirs_copied = 0
@@ -214,7 +215,7 @@ def deploy_into(directory, new_project = False, verbosity = 1, context = None):
         if os.path.abspath(src) != os.path.abspath(dst):
             if dirs_copied == 0:
                 if verbosity >= 1:
-                    print 'copying directories: ',
+                    print 'copying directories: '
             if verbosity >= 1:
                 print '* ' + dir_name
             if os.path.exists(dst):
