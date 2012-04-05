@@ -392,7 +392,7 @@ class AccountRecoveryForm(forms.Form):
         if 'email' in self.cleaned_data:
             email = self.cleaned_data['email']
             try:
-                user = User.objects.get(email=email)
+                user = User.objects.get(email__iexact=email)
                 self.cleaned_data['user'] = user
             except User.DoesNotExist:
                 del self.cleaned_data['email']
