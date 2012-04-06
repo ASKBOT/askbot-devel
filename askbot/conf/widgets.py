@@ -93,7 +93,7 @@ settings.register(
     href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300,400,700'
     rel='stylesheet'
     type='text/css'
->
+/>
 """
     )
 )
