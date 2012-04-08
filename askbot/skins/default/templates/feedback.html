@@ -44,8 +44,8 @@
         <label>{{form.message.label}}
         {% if form.errors.message %}
         <span class="error">{% trans %}(this field is required){% endtrans %}</span>
-        </label>
         {% endif %}
+        </label>
         <br/>
         {{form.message}}
     </div>
@@ -53,7 +53,6 @@
     <div class="form-row">
         {% if form.errors.recaptcha%}
         <span class="error">{% trans %}(Please solve the captcha){% endtrans %}</span>
-        </label>
         {% endif %}
       {{form.recaptcha}}
     </div>

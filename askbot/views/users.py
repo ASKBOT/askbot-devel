@@ -81,7 +81,7 @@ def users(request):
                                             ),
                             const.USERS_PAGE_SIZE
                         )
-        base_url = reverse('users') + '?sort=%s&' % sortby
+        base_url = reverse('users') + '?sort=%s&amp;' % sortby
     else:
         sortby = "reputation"
         objects_list = Paginator(
@@ -92,7 +92,7 @@ def users(request):
                                             ),
                             const.USERS_PAGE_SIZE
                         )
-        base_url = reverse('users') + '?name=%s&sort=%s&' % (suser, sortby)
+        base_url = reverse('users') + '?name=%s&amp;sort=%s&amp;' % (suser, sortby)
 
     try:
         users_page = objects_list.page(page)

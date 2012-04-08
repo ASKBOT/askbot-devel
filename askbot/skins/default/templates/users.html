@@ -24,7 +24,7 @@
             href="{% url users %}?sort=last"
             {% if tab_id == 'last' %}class="on"{% endif %}
             class="off" title="{% trans %}see people who joined the site first{% endtrans %}"
-        ><span>{% trans %}oldest{% endtrans %}<span></a>
+        ><span>{% trans %}oldest{% endtrans %}</span></a>
         <a 
             id="sort_user"
             href="{% url users %}?sort=user"
