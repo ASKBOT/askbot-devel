@@ -1,8 +1,8 @@
-{% extends "one_column_body.html" %}
+{% extends "two_column_body.html" %}
 <!-- privacy.html -->
 {% block title %}{% spaceless %}{% trans %}Privacy policy{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
-<h1>{% trans %}Privacy policy{% endtrans %}</h1>
+<h1 class="section-title">{% trans %}Privacy policy{% endtrans %}</h1>
 {{settings.FORUM_PRIVACY}}
 {% endblock %}
 <!-- end privacy.html -->

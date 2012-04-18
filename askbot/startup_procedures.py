@@ -8,10 +8,10 @@ question: why not run these from askbot/__init__.py?
 the main function is run_startup_tests
 """
 import sys
+import os
 from django.db import transaction
 from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
-from askbot.models import badges
 from askbot.utils.loading import load_module
 
 PREAMBLE = """\n
@@ -34,7 +34,7 @@ def format_as_text_tuple_entries(items):
 #
 # *validate emails in settings.py
 def test_askbot_url():
-    """Tests the ASKBOT_URL setting for the 
+    """Tests the ASKBOT_URL setting for the
     well-formedness and raises the ImproperlyConfigured
     exception, if the setting is not good.
     """
@@ -76,6 +76,7 @@ def test_middleware():
         'django.middleware.common.CommonMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
+        'askbot.middleware.forum_mode.ForumModeMiddleware',
         'askbot.middleware.pagesize.QuestionsPageSizeMiddleware',
         'askbot.middleware.cancel.CancelActionMiddleware',
         'django.middleware.transaction.TransactionMiddleware',
@@ -91,8 +92,8 @@ def test_middleware():
 
     if missing_middleware_set:
         error_message = """\n\nPlease add the following middleware (listed after this message)
-to the MIDDLEWARE_CLASSES variable in your site settings.py file. 
-The order the middleware records may be important, please take a look at the example in 
+to the MIDDLEWARE_CLASSES variable in your site settings.py file.
+The order the middleware records may be important, please take a look at the example in
 https://github.com/ASKBOT/askbot-devel/blob/master/askbot/setup_templates/settings.py:\n\n"""
         middleware_text = format_as_text_tuple_entries(missing_middleware_set)
         raise ImproperlyConfigured(PREAMBLE + error_message + middleware_text)
@@ -112,32 +113,24 @@ the list of MIDDLEWARE_CLASSES in your settings.py - these are not used any more
         middleware_text = format_as_text_tuple_entries(remove_middleware_set)
         raise ImproperlyConfigured(PREAMBLE + error_message + middleware_text)
 
-            
-
-def test_i18n():
-    """askbot requires use of USE_I18N setting"""
-    if getattr(django_settings, 'USE_I18N', False) == False:
-        raise ImproperlyConfigured(
-            'Please set USE_I18N = True in settings.py and '
-            'set the LANGUAGE_CODE parameter correctly '
-            'it is very important for askbot.'
-        )
-
 def try_import(module_name, pypi_package_name):
-    """tries importing a module and advises to install 
+    """tries importing a module and advises to install
     A corresponding Python package in the case import fails"""
     try:
         load_module(module_name)
     except ImportError, error:
-        message = unicode(error) + ' run\npip install %s' % pypi_package_name
-        message += '\nTo install all the dependencies at once, type:'
+        message = 'Error: ' + unicode(error) 
+        message += '\n\nPlease run: >pip install %s' % pypi_package_name
+        message += '\n\nTo install all the dependencies at once, type:'
         message += '\npip install -r askbot_requirements.txt\n'
+        message += '\nType ^C to quit.'
         raise ImproperlyConfigured(message)
 
 def test_modules():
     """tests presence of required modules"""
-    try_import('akismet', 'akismet')
-    try_import('recaptcha_works', 'django-recaptcha-works')
+    from askbot import REQUIREMENTS
+    for module_name, pip_path in REQUIREMENTS.items():
+        try_import(module_name, pip_path)
 
 def test_postgres():
     """Checks for the postgres buggy driver, version 2.4.2"""
@@ -176,19 +169,106 @@ def test_tracking():
     """tests whether the necessary peices of the
     `django-tracking` app are registered in the `settings.py`
     """
-    if 'askbot.deps.tracking.middleware.BannedIPMiddleware' not in \
+    if 'tracking.middleware.BannedIPMiddleware' not in \
             django_settings.MIDDLEWARE_CLASSES:
-        raise ImproperlyConfigured(PREAMBLE + 
+        raise ImproperlyConfigured(PREAMBLE +
                 "\nplease add line\n"
-                "'askbot.deps.tracking.middleware.BannedIPMiddleware',\n"
+                "'tracking.middleware.BannedIPMiddleware',\n"
                 "to the beginning of MIDDLEWARE_CLASSES in your "
                 "settings.py file"
             )
-    if 'askbot.deps.tracking' not in django_settings.INSTALLED_APPS:
+    if 'tracking' not in django_settings.INSTALLED_APPS:
         raise ImproperlyConfigured(PREAMBLE +
                 "\nplease add line\n"
-                "'askbot.deps.tracking',\n"
+                "'tracking',\n"
                 "to your settings.py file"
+            )
+
+
+
+def test_template_loader():
+    """Sends a warning if you have an old style template
+    loader that used to send a warning"""
+    old_template_loader = 'askbot.skins.loaders.load_template_source'
+    if old_template_loader in django_settings.TEMPLATE_LOADERS:
+        raise ImproperlyConfigured(PREAMBLE + \
+                "\nPlease change: \n"
+                "'askbot.skins.loaders.load_template_source', to\n"
+                "'askbot.skins.loaders.filesystem_load_template_source',\n"
+                "in the TEMPLATE_LOADERS of your settings.py file"
+        )
+
+def test_celery():
+    """Tests celery settings
+    todo: we are testing two things here
+    that correct name is used for the setting
+    and that a valid value is chosen
+    """
+    broker_backend = getattr(django_settings, 'BROKER_BACKEND', None)
+    broker_transport = getattr(django_settings, 'BROKER_TRANSPORT', None)
+
+    if broker_backend is None:
+        if broker_transport is None:
+            raise ImproperlyConfigured(PREAMBLE + \
+                "\nPlease add\n"
+                'BROKER_TRANSPORT = "djkombu.transport.DatabaseTransport"\n'
+                "or other valid value to your settings.py file"
+            )
+        else:
+            #todo: check that broker transport setting is valid
+            return
+
+    if broker_backend != broker_transport:
+        raise ImproperlyConfigured(PREAMBLE + \
+            "\nPlease rename setting BROKER_BACKEND to BROKER_TRANSPORT\n"
+            "in your settings.py file\n"
+            "If you have both in your settings.py - then\n"
+            "delete the BROKER_BACKEND setting and leave the BROKER_TRANSPORT"
+        )
+
+    if hasattr(django_settings, 'BROKER_BACKEND') and not hasattr(django_settings, 'BROKER_TRANSPORT'):
+        raise ImproperlyConfigured(PREAMBLE + \
+            "\nPlease rename setting BROKER_BACKEND to BROKER_TRANSPORT\n"
+            "in your settings.py file"
+        )
+
+class SettingsTester(object):
+    """class to test contents of the settings.py file"""
+
+    def __init__(self, requirements = None):
+        """loads the settings module and inits some variables
+        parameter `requirements` is a dictionary with keys
+        as setting names and values - another dictionary, which
+        has keys (optional, if noted and required otherwise)::
+
+        * required_value (optional)
+        * error_message
+        """
+        self.settings = load_module(os.environ['DJANGO_SETTINGS_MODULE'])
+        self.messages = list()
+        self.requirements = requirements
+
+
+    def test_setting(self, name, value = None, message = None):
+        """if setting does is not present or if the value != required_value,
+        adds an error message
+        """
+        if not hasattr(self.settings, name):
+            self.messages.append(message)
+        elif value and getattr(self.settings, name) != value:
+            self.messages.append(message)
+
+    def run(self):
+        for setting_name in self.requirements:
+            self.test_setting(
+                setting_name,
+                **self.requirements[setting_name]
+            )
+        if len(self.messages) != 0:
+            raise ImproperlyConfigured(
+                PREAMBLE + 
+                '\n\nTime to do some maintenance of your settings.py:\n\n* ' + 
+                '\n\n* '.join(self.messages)
             )
 
 def run_startup_tests():
@@ -197,19 +277,44 @@ def run_startup_tests():
     """
 
     #todo: refactor this when another test arrives
+    test_template_loader()
     test_encoding()
     test_modules()
     test_askbot_url()
-    test_i18n()
-    test_postgres()
+    #test_postgres()
     test_middleware()
     test_tracking()
+    test_celery()
+    settings_tester = SettingsTester({
+        'CACHE_MIDDLEWARE_ANONYMOUS_ONLY': {
+            'value': True,
+            'message': "add line CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True"
+        },
+        'USE_I18N': {
+            'value': True,
+            'message': 'Please set USE_I18N = True and\n'
+                'set the LANGUAGE_CODE parameter correctly'
+        },
+        'LOGIN_REDIRECT_URL': {
+            'message': 'add setting LOGIN_REDIRECT_URL - an url\n'
+                'where you want to send users after they log in\n'
+                'a reasonable default is\n'
+                'LOGIN_REDIRECT_URL = ASKBOT_URL'
+        }
+    })
+    settings_tester.run()
 
 @transaction.commit_manually
 def run():
     """runs all the startup procedures"""
-    run_startup_tests()
     try:
+        run_startup_tests()
+    except ImproperlyConfigured, error:
+        transaction.rollback()
+        print error
+        sys.exit(1)
+    try:
+        from askbot.models import badges
         badges.init_badges()
         transaction.commit()
     except Exception, error:

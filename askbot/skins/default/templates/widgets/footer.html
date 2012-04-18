@@ -1,0 +1,61 @@
+<!-- template footer.html -->
+<div id="ground">
+    <div class="content-wrapper">
+        {% if settings.USE_LICENSE %}{# could be factored out into separate template #}
+            {% if settings.LICENSE_USE_URL %}
+            <div class="copyright">
+                {% if settings.LICENSE_USE_LOGO %}
+                <a href="{{ settings.LICENSE_URL}}">
+                        <img
+                            class="license-logo"
+                            src="{{settings.LICENSE_LOGO_URL|media }}"
+                            title="{{settings.LICENSE_ACRONYM}}"
+                            alt="{{settings.LICENSE_ACRONYM}}"
+                        />
+                </a>
+                {% endif %}
+                {{settings.APP_COPYRIGHT}} {% trans 
+                    license_title=settings.LICENSE_TITLE,
+                    license_url=settings.LICENSE_URL
+                %}Content on this site is licensed under a <a href="{{license_url}}">{{license_title}}</a> license.{% endtrans %}
+
+            </div>
+            {% else %}
+            <div class="copyright">
+                {% if settings.LICENSE_USE_LOGO %}
+                <img 
+                    class="license-logo"
+                    src="{{settings.LICENSE_LOGO_URL|media }}"
+                    title="{{settings.LICENSE_ACRONYM}}"
+                    alt="{{settings.LICENSE_ACRONYM}}"
+                />
+                {% endif %}
+                {{settings.APP_COPYRIGHT}} {% trans license=settings.LICENSE_TITLE %}Content on this site is licensed under a {{license}}{% endtrans %}
+            </div>
+            {% endif %}
+        {% endif %}
+        <div class="footer-links" >
+            <a href="{% url about %}">{% trans %}about{% endtrans %}</a><span class="link-separator"> |</span>
+            <a href="{% url faq %}">{% trans %}faq{% endtrans %}</a><span class="link-separator"> |</span>
+            <a href="{% url privacy %}">{% trans %}privacy policy{% endtrans %}</a><span class="link-separator"> |</span>
+            {% spaceless %}
+            <a href=
+                        {% if settings.FEEDBACK_SITE_URL %}
+                            "{{settings.FEEDBACK_SITE_URL}}"
+                            target="_blank">
+                        {% else %}
+                            "{% url feedback %}?next={{request.path}}">
+                        {% endif %}
+                        {% trans %}give feedback{% endtrans %}
+                    </a>
+                    {% endspaceless %}
+        </div>
+        <div class="powered-link">
+            <a href="http://askbot.org" target="_blank">
+                Powered by Askbot version {{settings.ASKBOT_VERSION}}
+            </a>
+        </div>
+        <div class="clean"></div>
+    </div>
+</div>
+<!-- end template footer.html -->

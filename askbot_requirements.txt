@@ -17,3 +17,4 @@ django-followit
 django-recaptcha-works
 python-openid
 django-tracking
+pystache==0.3.1

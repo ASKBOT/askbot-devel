@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{"/js/wmd/wmd.css"|media}}" />
 {% endblock %}
 {% block content %}
-<h1>{% trans %}Edit question{% endtrans %} [<a href="{{ question.get_absolute_url() }}">{% trans %}back{% endtrans %}</a>]</h1>
+<div class="section-title">{% trans %}Edit question{% endtrans %} [<a href="{{ question.get_absolute_url() }}">{% trans %}back{% endtrans %}</a>]</div>
 <form id="fmedit" action="{% url edit_question question.id %}" method="post" >{% csrf_token %}
 
     {% if revision_form.revision.errors %}{{ revision_form.revision.errors.as_ul() }}{% endif %}
@@ -24,8 +24,6 @@
                 )
     }}
     <div class="after-editor">
-        <input type="submit" value="{% trans %}Save edit{% endtrans %}" class="submit" />&nbsp;
-        <input type="button" value="{% trans %}Cancel{% endtrans %}" class="submit" onclick="history.back(-1);" />
         <div class="question-options">
             {% if settings.WIKI_ON and question.wiki == False %}
                 {{ macros.checkbox_in_div(form.wiki) }}
@@ -34,19 +32,22 @@
                 {{ macros.checkbox_in_div(form.reveal_identity) }}
             {% endif %}
         </div>
+        <input type="submit" value="{% trans %}Save edit{% endtrans %}" class="submit" />&nbsp;
+        <input type="button" value="{% trans %}Cancel{% endtrans %}" class="submit" onclick="history.back(-1);" />
+
     </div>
 </form>
 {% endblock %}
 
 {% block sidebar %}
-{% include "blocks/question_edit_tips.html" %}
+{% include "widgets/question_edit_tips.html" %}
 {% endblock %}
 
 {% block endjs %}
-    {% include "blocks/editor_data.html" %}
+    {% include "meta/editor_data.html" %}
     <script type='text/javascript' src='{{"/js/editor.js"|media }}'></script>
     {% if mandatory_tags %}
-        {% include "blocks/mandatory_tags_js.html" %}
+        {% include "meta/mandatory_tags_js.html" %}
     {% endif %}
     <script type='text/javascript' src='{{"/js/jquery.validate.min.js"|media}}'></script>
     <script type='text/javascript' src='{{"/js/post.js"|media}}'></script>

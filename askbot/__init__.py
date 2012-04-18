@@ -9,7 +9,31 @@ import smtplib
 import sys
 import logging
 
-VERSION = (0, 7, 23)
+VERSION = (0, 7, 34)
+
+#keys are module names used by python imports,
+#values - the package qualifier to use for pip
+REQUIREMENTS = {
+    'akismet': 'akismet',
+    'django': 'django>=1.1.2',
+    'jinja2': 'Jinja2',
+    'coffin': 'Coffin>=0.3',
+    'south': 'South>=0.7.1',
+    'oauth2': 'oauth2',
+    'markdown2': 'markdown2',
+    'html5lib': 'html5lib',
+    'keyedcache': 'django-keyedcache',
+    'threaded_multihost': 'django-threaded-multihost',
+    'robots': 'django-robots',
+    'unidecode': 'unidecode',
+    'django_countries': 'django-countries==1.0.5',
+    'djcelery': 'django-celery==2.2.7',
+    'djkombu': 'django-kombu==0.9.2',
+    'followit': 'django-followit',
+    'recaptcha_works': 'django-recaptcha-works',
+    'openid': 'python-openid',
+    'pystache': 'pystache==0.3.1',
+}
 
 #necessary for interoperability of django and coffin
 try:

@@ -22,9 +22,11 @@ template.add_to_builtins('askbot.templatetags.extra_filters_jinja')
 #here it is ignored because it is assumed that we won't use unicode paths
 ASKBOT_SKIN_COLLECTION_DIR = os.path.dirname(__file__)
 
-def load_template_source(name, dirs=None):
+#changed the name from load_template_source
+def filesystem_load_template_source(name, dirs=None):
     """Django template loader
     """
+
     if dirs is None:
         dirs = (ASKBOT_SKIN_COLLECTION_DIR, )
     else:
@@ -37,7 +39,9 @@ def load_template_source(name, dirs=None):
     except:
         tname = os.path.join('default','templates',name)
         return filesystem.load_template_source(tname,dirs)
-load_template_source.is_usable = True
+filesystem_load_template_source.is_usable = True
+#added this for backward compatbility
+load_template_source = filesystem_load_template_source
 
 class SkinEnvironment(CoffinEnvironment):
     """Jinja template environment
@@ -104,9 +108,11 @@ def get_template(template, request = None):
     request variable will be used in the future to set
     template according to the user preference or admins preference
 
-    at this point request variable is not used though
+    request variable is used to localize the skin if possible
     """
     skin = get_skin(request)
+    if hasattr(request,'LANGUAGE_CODE'):
+        skin.set_language(request.LANGUAGE_CODE)
     return skin.get_template(template)
 
 def render_into_skin(template, data, request, mimetype = 'text/html'):

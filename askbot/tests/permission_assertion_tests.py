@@ -1,10 +1,15 @@
 import datetime
+from django.test.client import Client
+from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.test import TestCase
 from django.core import exceptions
 from askbot.tests import utils
 from askbot.conf import settings as askbot_settings
 from askbot import models
 from askbot.templatetags import extra_filters as template_filters
+from askbot.tests.utils import skipIf
+
 
 class PermissionAssertionTestCase(TestCase):
     """base TestCase class for permission
@@ -1368,29 +1373,51 @@ class AcceptBestAnswerPermissionAssertionTests(utils.AskbotTestCase):
         self.third_user.reputation = 1000000
         self.assert_user_cannot(user = self.third_user)
 
-    def test_moderator_cannot_accept_others_answer(self):
-        self.other_post_answer()
-        self.create_user(username = 'third_user')
-        self.third_user.set_status('m')
-        self.assert_user_cannot(user = self.third_user)
-
     def test_moderator_cannot_accept_own_answer(self):
         self.other_post_answer()
         self.other_user.set_status('m')
         self.assert_user_cannot(user = self.other_user)
 
-    def test_admin_cannot_accept_others_answer(self):
+    def test_moderator_cannot_accept_others_answer_today(self):
         self.other_post_answer()
+        self.create_user(username = 'third_user')
+        self.third_user.set_status('m')
+        self.assert_user_cannot(user = self.third_user)
+
+    def test_moderator_can_accept_others_old_answer(self):
+        self.other_post_answer()
+        self.answer.added_at -= datetime.timedelta(
+            days = askbot_settings.MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER + 1
+        )
+        self.answer.save()
         self.create_user(username = 'third_user')
         self.third_user.set_admin_status()
         self.third_user.save()
-        self.assert_user_cannot(user = self.third_user)
+        self.assert_user_can(user = self.third_user)
 
     def test_admin_cannot_accept_own_answer(self):
         self.other_post_answer()
         self.other_user.set_admin_status()
         self.other_user.save()
         self.assert_user_cannot(user = self.other_user)
+
+    def test_admin_cannot_accept_others_answer_today(self):
+        self.other_post_answer()
+        self.create_user(username = 'third_user')
+        self.third_user.set_admin_status()
+        self.third_user.save()
+        self.assert_user_cannot(user = self.third_user)
+
+    def test_admin_can_accept_others_old_answer(self):
+        self.other_post_answer()
+        self.answer.added_at -= datetime.timedelta(
+            days = askbot_settings.MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER + 1
+        )
+        self.answer.save()
+        self.create_user(username = 'third_user')
+        self.third_user.set_admin_status()
+        self.third_user.save()
+        self.assert_user_can(user = self.third_user)
 
 class VotePermissionAssertionTests(PermissionAssertionTestCase):
     """Tests permission for voting
@@ -1551,3 +1578,43 @@ class UploadPermissionAssertionTests(PermissionAssertionTestCase):
             self.user.assert_can_upload_file()
         except exceptions.PermissionDenied:
             self.fail('high rep user must be able to upload')
+
+class ClosedForumTests(utils.AskbotTestCase):
+    def setUp(self):
+        self.password = '123'
+        self.create_user()
+        self.create_user(username = 'other_user')
+        self.other_user.set_password(self.password)
+        self.other_user.save()
+        self.question = self.post_question()
+        self.test_url = self.question.get_absolute_url()
+        self.redirect_to = settings.LOGIN_URL
+        self.client = Client()
+        askbot_settings.ASKBOT_CLOSED_FORUM_MODE = True
+
+    @skipIf('askbot.middleware.forum_mode.ForumModeMiddleware' \
+        not in settings.MIDDLEWARE_CLASSES,
+        'no ForumModeMiddleware set')
+    def test_login_page_accessable(self):
+        # futher see in page_load_tests.py
+        response = self.client.get(reverse('user_signin'))
+        self.assertEquals(response.status_code, 200)
+
+    @skipIf('askbot.middleware.forum_mode.ForumModeMiddleware' \
+        not in settings.MIDDLEWARE_CLASSES,
+        'no ForumModeMiddleware set')
+    def test_anonymous_access(self):
+        response = self.client.get(self.test_url)
+        self.assertEquals(response.status_code, 302)
+        self.assertTrue(self.redirect_to in response['Location'])
+
+    @skipIf('askbot.middleware.forum_mode.ForumModeMiddleware' \
+        not in settings.MIDDLEWARE_CLASSES,
+        'no ForumModeMiddleware set')
+    def test_authenticated_access(self):
+        self.client.login(username=self.other_user.username, password=self.password)
+        response = self.client.get(self.test_url)
+        self.assertEquals(response.status_code, 200)
+
+    def tearDown(self):
+        askbot_settings.ASKBOT_CLOSED_FORUM_MODE = False

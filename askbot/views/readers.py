@@ -11,8 +11,8 @@ import logging
 import urllib
 import operator
 from django.shortcuts import get_object_or_404
-from django.http import (HttpResponseRedirect, HttpResponse, Http404,
-                    HttpResponseBadRequest, HttpResponseForbidden)
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.conf import settings as django_settings
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template import Context
 from django.utils.http import urlencode
@@ -24,6 +24,8 @@ from django.views.decorators import csrf
 from django.core.urlresolvers import reverse
 from django.core import exceptions as django_exceptions
 from django.contrib.humanize.templatetags import humanize
+from django.views.decorators.cache import cache_page
+from django.http import QueryDict
 
 import askbot
 from askbot import exceptions
@@ -42,7 +44,7 @@ import askbot.conf
 from askbot.conf import settings as askbot_settings
 from askbot.skins.loaders import render_into_skin, get_template#jinja2 template loading enviroment
 
-from askbot.deps.tracking.models import BannedIP
+from tracking.models import BannedIP
 
 # used in index page
 #todo: - take these out of const or settings
@@ -98,13 +100,13 @@ def questions(request):
                                         )
 
     tag_list_type = askbot_settings.TAG_LIST_FORMAT
-    
+
     #force cloud to sort by name
     if tag_list_type == 'cloud':
         related_tags = sorted(related_tags, key = operator.attrgetter('name'))
 
     font_size = extra_tags.get_tag_font_size(related_tags)
-    
+
     paginator = Paginator(qs, search_state.page_size)
 
     if paginator.num_pages < search_state.page:
@@ -125,6 +127,24 @@ def questions(request):
         'base_url' : request.path + '?sort=%s&amp;' % search_state.sort,#todo in T sort=>sort_method
         'page_size' : search_state.page_size,#todo in T pagesize -> page_size
     }
+
+    # We need to pass the rss feed url based
+    # on the search state to the template.
+    # We use QueryDict to get a querystring
+    # from dicts and arrays. Much cleaner
+    # than parsing and string formating.
+    rss_query_dict = QueryDict("").copy()
+    if search_state.query:
+        # We have search string in session - pass it to
+        # the QueryDict
+        rss_query_dict.update({"q": search_state.query})
+    if search_state.tags:
+        # We have tags in session - pass it to the
+        # QueryDict but as a list - we want tags+
+        rss_query_dict.setlist("tags", search_state.tags)
+    
+    # Format the url with the QueryDict
+    context_feed_url = '/feeds/rss/?%s' % rss_query_dict.urlencode()
 
     if request.is_ajax():
 
@@ -147,11 +167,12 @@ def questions(request):
                                 }
 
         if q_count > search_state.page_size:
-            paginator_tpl = get_template('blocks/paginator.html', request)
+            paginator_tpl = get_template('main_page/paginator.html', request)
             #todo: remove this patch on context after all templates are moved to jinja
             paginator_context['base_url'] = request.path + '?sort=%s&' % search_state.sort
             data = {
-                'paginator_context': extra_tags.cnprog_paginator(paginator_context)
+                'context': extra_tags.cnprog_paginator(paginator_context),
+                'questions_count': q_count
             }
             paginator_html = paginator_tpl.render(Context(data))
         else:
@@ -171,7 +192,8 @@ def questions(request):
             'question_counter': question_counter,
             'questions': list(),
             'related_tags': list(),
-            'faces': list()
+            'faces': list(),
+            'feed_url': context_feed_url,
         }
 
         badge_levels = dict(const.BADGE_TYPE_CHOICES)
@@ -181,7 +203,7 @@ def questions(request):
                 '%(badge_count)d %(badge_level)s badges',
                 count
             ) % {
-                'badge_count': count, 
+                'badge_count': count,
                 'badge_level': badge_levels[level]
             }
 
@@ -198,79 +220,20 @@ def questions(request):
 
         for contributor in contributors:
             ajax_data['faces'].append(extra_tags.gravatar(contributor, 48))
+        #we render the template
+        #from django.template import RequestContext
+        questions_tpl = get_template('main_page/questions_loop.html', request)
+        #todo: remove this patch on context after all templates are moved to jinja
+        data = {
+            'questions': page,
+            'questions_count': q_count,
+            'context': paginator_context,
+            'language_code': translation.get_language(),
+            'query': search_state.query,
+        }
 
-        for question in page.object_list:
-            timestamp = question.last_activity_at
-            author = question.last_activity_by
-
-            if question.score == 0:
-                votes_class = 'no-votes'
-            else:
-                votes_class = 'some-votes'
-
-            if question.answer_count == 0:
-                answers_class = 'no-answers'
-            elif question.answer_accepted:
-                answers_class = 'accepted'
-            else:
-                answers_class = 'some-answers'
-
-            if question.view_count == 0:
-                views_class = 'no-views'
-            else:
-                views_class = 'some-views'
-
-            country_code = None
-            if author.country and author.show_country:
-                country_code = author.country.code
-
-            question_data = {
-                'title': question.title,
-                'summary': question.summary,
-                'id': question.id,
-                'tags': question.get_tag_names(),
-                'tag_list_type': tag_list_type,
-                'font_size': font_size,
-                'votes': extra_filters.humanize_counter(question.score),
-                'votes_class': votes_class,
-                'votes_word': ungettext('vote', 'votes', question.score),
-                'answers': extra_filters.humanize_counter(question.answer_count),
-                'answers_class': answers_class,
-                'answers_word': ungettext('answer', 'answers', question.answer_count),
-                'views': extra_filters.humanize_counter(question.view_count),
-                'views_class': views_class,
-                'views_word': ungettext('view', 'views', question.view_count),
-                'timestamp': unicode(timestamp),
-                'timesince': functions.diff_date(timestamp),
-                'u_id': author.id,
-                'u_name': author.username,
-                'u_rep': author.reputation,
-                'u_gold': author.gold,
-                'u_gold_title': pluralize_badge_count(
-                                                author.gold,
-                                                const.GOLD_BADGE
-                                            ),
-                'u_gold_badge_symbol': const.BADGE_DISPLAY_SYMBOL,
-                'u_gold_css_class': gold_badge_css_class,
-                'u_silver': author.silver,
-                'u_silver_title': pluralize_badge_count(
-                                            author.silver,
-                                            const.SILVER_BADGE
-                                        ),
-                'u_silver_badge_symbol': const.BADGE_DISPLAY_SYMBOL,
-                'u_silver_css_class': silver_badge_css_class,
-                'u_bronze': author.bronze,
-                'u_bronze_title': pluralize_badge_count(
-                                            author.bronze,
-                                            const.BRONZE_BADGE
-                                        ),
-                'u_bronze_badge_symbol': const.BADGE_DISPLAY_SYMBOL,
-                'u_bronze_css_class': bronze_badge_css_class,
-                'u_country_code': country_code,
-                'u_is_anonymous': question.is_anonymous,
-            }
-            ajax_data['questions'].append(question_data)
-
+        questions_html = questions_tpl.render(Context(data))
+        ajax_data['questions'] = questions_html.replace('\n','')
         return HttpResponse(
                     simplejson.dumps(ajax_data),
                     mimetype = 'application/json'
@@ -283,6 +246,7 @@ def questions(request):
         reset_method_count += 1
     if meta_data.get('author_name',None):
         reset_method_count += 1
+    
 
     template_data = {
         'active_tab': 'questions',
@@ -291,7 +255,7 @@ def questions(request):
         'context' : paginator_context,
         'is_unanswered' : False,#remove this from template
         'interesting_tag_names': meta_data.get('interesting_tag_names',None),
-        'ignored_tag_names': meta_data.get('ignored_tag_names',None), 
+        'ignored_tag_names': meta_data.get('ignored_tag_names',None),
         'language_code': translation.get_language(),
         'name_of_anonymous_user' : models.get_name_of_anonymous_user(),
         'page_class': 'main-page',
@@ -309,6 +273,7 @@ def questions(request):
         'font_size' : font_size,
         'tag_filter_strategy_choices': const.TAG_FILTER_STRATEGY_CHOICES,
         'update_avatar_data': schedules.should_update_avatar_data(request),
+        'feed_url': context_feed_url,
     }
 
     assert(request.is_ajax() == False)
@@ -323,7 +288,7 @@ def questions(request):
 def tags(request):#view showing a listing of available tags - plain list
 
     tag_list_type = askbot_settings.TAG_LIST_FORMAT
-    
+
     if tag_list_type == 'list':
 
         stag = ""
@@ -372,15 +337,15 @@ def tags(request):#view showing a listing of available tags - plain list
             'active_tab': 'tags',
             'page_class': 'tags-page',
             'tags' : tags,
-            'tag_list_type' : tag_list_type, 
+            'tag_list_type' : tag_list_type,
             'stag' : stag,
             'tab_id' : sortby,
             'keywords' : stag,
             'paginator_context' : paginator_context
         }
-        
+
     else:
-    
+
         stag = ""
         sortby = request.GET.get('sort', 'name')
 
@@ -400,20 +365,22 @@ def tags(request):#view showing a listing of available tags - plain list
             'active_tab': 'tags',
             'page_class': 'tags-page',
             'tags' : tags,
-            'tag_list_type' : tag_list_type, 
+            'tag_list_type' : tag_list_type,
             'font_size' : font_size,
             'stag' : stag,
             'tab_id' : sortby,
             'keywords' : stag,
         }
-    
+
     return render_into_skin('tags.html', data, request)
 
 @csrf.csrf_protect
+#@cache_page(60 * 5)
 def question(request, id):#refactor - long subroutine. display question body, answers and comments
-    """view that displays body of the question and 
+    """view that displays body of the question and
     all answers to it
     """
+    #process url parameters
     #todo: fix inheritance of sort method from questions
     default_sort_method = request.session.get('questions_sort_method', 'votes')
     form = ShowQuestionForm(request.GET, default_sort_method)
@@ -432,7 +399,14 @@ def question(request, id):#refactor - long subroutine. display question body, an
     #redirect also happens if id of the object's origin post != requested id
     show_post = None #used for permalinks
     if show_comment is not None:
-        #comments
+        #if url calls for display of a specific comment,
+        #check that comment exists, that it belongs to
+        #the current question
+        #if it is an answer comment and the answer is hidden -
+        #redirect to the default view of the question
+        #if the question is hidden - redirect to the main page
+        #in addition - if url points to a comment and the comment
+        #is for the answer - we need the answer object
         try:
             show_comment = models.Comment.objects.get(id = show_comment)
             if str(show_comment.get_origin_post().id) != id:
@@ -455,7 +429,10 @@ def question(request, id):#refactor - long subroutine. display question body, an
             return HttpResponseRedirect(reverse('index'))
 
     elif show_answer is not None:
-        #answers
+        #if the url calls to view a particular answer to 
+        #question - we must check whether the question exists
+        #whether answer is actually corresponding to the current question
+        #and that the visitor is allowed to see it
         try:
             show_post = get_object_or_404(models.Answer, id = show_answer)
             if str(show_post.question.id) != id:
@@ -489,13 +466,11 @@ def question(request, id):#refactor - long subroutine. display question body, an
     answers = answers.select_related(depth=1)
 
     user_answer_votes = {}
-    for answer in answers:
-        vote = answer.get_user_vote(request.user)
-        if vote is not None and not user_answer_votes.has_key(answer.id):
-            vote_value = -1
-            if vote.is_upvote():
-                vote_value = 1
-            user_answer_votes[answer.id] = vote_value
+    if request.user.is_authenticated():
+        for answer in answers:
+            vote = answer.get_user_vote(request.user)
+            if vote is not None and not answer.id in user_answer_votes:
+                user_answer_votes[answer.id] = int(vote)
 
     view_dic = {"latest":"-added_at", "oldest":"added_at", "votes":"-score" }
     orderby = view_dic[answer_sort_method]
@@ -511,10 +486,10 @@ def question(request, id):#refactor - long subroutine. display question body, an
             filtered_answers.append(answer)
 
     #resolve page number and comment number for permalinks
-    comment_order_number = None
+    show_comment_position = None
     if show_comment:
         show_page = show_comment.get_page_number(answers = filtered_answers)
-        comment_order_number = show_comment.get_order_number()
+        show_comment_position = show_comment.get_order_number()
     elif show_answer:
         show_page = show_post.get_page_number(answers = filtered_answers)
 
@@ -538,7 +513,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         if updated_who != request.user:
             if last_seen:
                 if last_seen < updated_when:
-                    update_view_count = True 
+                    update_view_count = True
             else:
                 update_view_count = True
 
@@ -555,7 +530,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
             request.user.visit_question(question)
 
         #3) send award badges signal for any badges
-        #that are awarded for question views 
+        #that are awarded for question views
         award_badges_signal.send(None,
                         event = 'view_question',
                         actor = request.user,
@@ -576,32 +551,28 @@ def question(request, id):#refactor - long subroutine. display question body, an
     paginator_context = extra_tags.cnprog_paginator(paginator_data)
 
     favorited = question.has_favorite_by_user(request.user)
+    user_question_vote = 0
     if request.user.is_authenticated():
-        question_vote = question.votes.select_related().filter(user=request.user)
-    else:
-        question_vote = None #is this correct?
-    if question_vote is not None and question_vote.count() > 0:
-        question_vote = question_vote[0]
+        votes = question.votes.select_related().filter(user=request.user)
+        if votes.count() > 0:
+            user_question_vote = int(votes[0])
+        else:
+            user_question_vote = 0
 
-    ips = set([question.ip_addr])
+    ips = Set([question.ip_addr])
     for comment in question.comments.all():
         ips.add(comment.ip_addr)
     for answer in page_objects.object_list:
         ips.add(answer.ip_addr)
         for comment in answer.comments.all():
             ips.add(comment.ip_addr)
-    bannedIPs = BannedIP.objects.filter(
-                        ip_address__in = ips
-                    ).values_list(
-                        'ip_address',
-                        flat = True
-                    )
+    bannedIPs = [i[0] for i in BannedIP.objects.filter(ip_address__in = ips).values_list('ip_address')]
 
     data = {
         'page_class': 'question-page',
         'active_tab': 'questions',
         'question' : question,
-        'question_vote' : question_vote,
+        'user_question_vote' : user_question_vote,
         'question_comment_count':question.comments.count(),
         'answer' : AnswerForm(question,request.user),
         'answers' : page_objects.object_list,
@@ -614,7 +585,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'paginator_context' : paginator_context,
         'show_post': show_post,
         'show_comment': show_comment,
-        'comment_order_number': comment_order_number,
+        'show_comment_position': show_comment_position,
         'bannedIPs': bannedIPs,
     }
     return render_into_skin('question.html', data, request)
@@ -652,7 +623,6 @@ def get_comment(request):
     request.user.assert_can_edit_comment(comment)
     return {'text': comment.comment}
 
-#todo: this view must be moved to writers where POST handlers belong
 @anonymous_forbidden
 def moderate_ip(request):
     """
@@ -679,3 +649,38 @@ def moderate_ip(request):
         return HttpResponse(content='success', status=200)
     except Exception, e:
         return HttpResponseBadRequest(unicode(e))
+
+
+@ajax_only
+@get_only
+def get_question_body(request):
+    search_state = request.session.get('search_state', SearchState())
+    view_log = request.session['view_log']
+    (qs, meta_data, related_tags) = models.Question.objects.run_advanced_search(
+                                            request_user = request.user,
+                                            search_state = search_state)
+    paginator = Paginator(qs, search_state.page_size)
+    page = paginator.page(search_state.page)
+    questions_dict = {}
+    for question in page.object_list:
+        questions_dict['question-%s' % question.id] = question.summary
+
+    return {'questions-titles': questions_dict}
+    return {'questions-titles': questions_dict}
+
+def widget_questions(request):
+    """Returns the first x questions based on certain tags.
+    @returns template with those questions listed."""
+    # make sure this is a GET request with the correct parameters.
+    if request.method != 'GET':
+        raise Http404
+    questions = models.Question.objects.all()
+    tags_input = request.GET.get('tags','').strip()
+    if len(tags_input) > 0:
+        tags = [tag.strip() for tag in tags_input.split(',')]
+        questions = questions.filter(tags__name__in = tags)
+    data = {
+        'questions': questions[:askbot_settings.QUESTIONS_WIDGET_MAX_QUESTIONS]
+    }
+    return render_into_skin('question_widget.html', data, request) 
+    

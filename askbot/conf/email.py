@@ -2,6 +2,7 @@
 Email related settings
 """
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import LOGIN_USERS_COMMUNICATION
 from askbot.deps import livesettings
 from askbot import const
 from django.utils.translation import ugettext as _
@@ -12,6 +13,7 @@ EMAIL_SUBJECT_PREFIX = getattr(django_settings, 'EMAIL_SUBJECT_PREFIX', '')
 EMAIL = livesettings.ConfigurationGroup(
             'EMAIL',
             _('Email and email alert settings'), 
+            super_group = LOGIN_USERS_COMMUNICATION
         )
 
 settings.register(
@@ -40,16 +42,71 @@ settings.register(
 settings.register(
     livesettings.StringValue(
         EMAIL,
-        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE',
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ALL',
         default='w',
         choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
-        description=_('Default news notification frequency'),
+        description=_('Default notification frequency all questions'),
         help_text=_(
-                    'This option currently defines default frequency '
-                    'of emailed updates in the following five categories: '
-                    'questions asked by user, answered by user, individually '
-                    'selected, entire forum (per person tag filter applies) '
-                    'and posts mentioning the user and comment responses'
+                    'Option to define frequency of emailed updates for: '
+                    'all questions.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ASK',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions asked by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question asked by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_ANS',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions answered by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question answered by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_Q_SEL',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency questions individually \
+                       selected by the user'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Question individually selected by the user.'
+                    )
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        EMAIL,
+        'DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE_M_AND_C',
+        default='w',
+        choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        description=_('Default notification frequency for mentions \
+                       and comments'),
+        help_text=_(
+                    'Option to define frequency of emailed updates for: '
+                    'Mentions and comments.'
                     )
     )
 )
@@ -64,7 +121,6 @@ settings.register(
             'NOTE: in order to use this feature, it is necessary to '
             'run the management command "send_unanswered_question_reminders" '
             '(for example, via a cron job - with an appropriate frequency) '
-            'and an IMAP server with a dedicated inbox must be configured '
         )
     )
 )
@@ -100,6 +156,55 @@ settings.register(
         description = _(
             'Max. number of reminders to send '
             'about unanswered questions'
+        )
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        EMAIL,
+        'ENABLE_ACCEPT_ANSWER_REMINDERS',
+        default = False,
+        description = _('Send periodic reminders to accept the best answer'),
+        help_text = _(
+            'NOTE: in order to use this feature, it is necessary to '
+            'run the management command "send_accept_answer_reminders" '
+            '(for example, via a cron job - with an appropriate frequency) '
+        )
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'DAYS_BEFORE_SENDING_ACCEPT_ANSWER_REMINDER',
+        default = 3,
+        description = _(
+            'Days before starting to send reminders to accept an answer'
+        ),
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'ACCEPT_ANSWER_REMINDER_FREQUENCY',
+        default = 3,
+        description = _(
+            'How often to send accept answer reminders '
+            '(in days between the reminders sent).'
+        )
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        EMAIL,
+        'MAX_ACCEPT_ANSWER_REMINDERS',
+        default = 5,
+        description = _(
+            'Max. number of reminders to send '
+            'to accept the best answer'
         )
     )
 )

@@ -1,25 +1,3 @@
-{%- macro user_score_and_badge_summary(user) -%}
-    <span class="reputation-score"
-          title="{{user.get_karma_summary}}"
-    >{{user.reputation}}</span>
-    {% if user.gold or user.silver or user.bronze %}
-    <span title="{{user.get_badge_summary}}">
-        {% if user.gold %}
-        <span class='badge1'>&#9679;</span>
-        <span class="badgecount">{{user.gold}}</span>
-        {% endif %}
-        {% if user.silver %}
-        <span class='badge2'>&#9679;</span>
-        <span class="badgecount">{{user.silver}}</span>
-        {% endif %}
-        {% if user.bronze %}
-        <span class='badge3'>&#9679;</span>
-        <span class="badgecount">{{user.bronze}}</span>
-        {% endif %}
-    </span>
-    {% endif %}
-{%- endmacro -%}
-
 {%- macro share(site = None, site_label = None, icon = False) -%}
     <a class="{{ site }}-share{% if icon == True %} icon{% endif %}"
         title="{% trans %}Share this question on {{site}}{% endtrans %}"
@@ -43,188 +21,30 @@
     </div>
 {%- endmacro -%}
 
-{%- macro follow_user_toggle(visitor = None, subject = None) -%}
-    {% if visitor.is_anonymous() %}
-        {{ follow_toggle(True, 'user', subject.username, subject.id) }}
+{%- macro post_vote_buttons(post = None, visitor_vote = None) -%}
+<div
+    id="{{post.post_type}}-img-upvote-{{ post.id }}"
+    class="{{post.post_type}}-img-upvote post-vote{% if visitor_vote == 1 %} on{% endif %}" 
+    {% if post.post_type == 'question' %}
+        title="{% trans %}i like this question (click again to cancel){% endtrans %}"
     {% else %}
-        {% if visitor != subject %}
-            {% if visitor.is_following(subject) %}
-                {{ follow_toggle(False, 'user', subject.username, subject.id) }}
-            {% else %}
-                {{ follow_toggle(True, 'user', subject.username, subject.id) }}
-            {% endif %}
-        {% endif %}
+        title="{% trans %}i like this answer (click again to cancel){% endtrans %}"
     {% endif %}
-{%- endmacro -%}
-
-{%- macro user_long_score_and_badge_summary(user) -%}
-    <a class="user-micro-info" 
-       href="{{user.get_absolute_url()}}?sort=reputation"
-    >{% trans %}karma:{% endtrans %} {{user.reputation}}</a>
-    {%- if user.gold or user.silver or user.bronze %}
-    <a class="user-micro-info"
-       href="{{user.get_absolute_url()}}#badges"
-    ><span title="{{user.get_badge_summary}}">{% trans %}badges:{% endtrans %}
-        {% if user.gold %}
-        <span class='badge1'>&#9679;</span>
-        <span class="badgecount">{{user.gold}}</span>
-        {% endif %}
-        {% if user.silver %}
-        <span class='badge2'>&#9679;</span>
-        <span class="badgecount">{{user.silver}}</span>
-        {% endif %}
-        {% if user.bronze %}
-        <span class='badge3'>&#9679;</span>
-        <span class="badgecount">{{user.bronze}}</span>
-        {%- endif -%}
-    </span></a>
-    {%- endif -%}
-{%- endmacro -%}
-
-{%- macro user_country_flag(user) -%}
-    {% if user.country and user.show_country %}
-        <img class="flag" 
-            src="{{ ('/images/flags/' ~ user.country.code|lower ~ '.gif')|media }}"
-            alt="{% trans 
-                    country=user.country.name 
-                    %}flag of {{country}}{% 
-                endtrans %}"
-            title="{% trans 
-                    country=user.country.name, 
-                    person=user.username %}{{person}} is from {{country}}{%
-                 endtrans %}"
-        />
+/></div>
+<div 
+    id="{{post.post_type}}-vote-number-{{ post.id }}"
+    class="vote-number"
+    title="{% trans %}current number of votes{% endtrans %}"
+>{{ post.score }}</div>
+<div
+    id="{{post.post_type}}-img-downvote-{{ post.id }}"
+    class="{{post.post_type}}-img-downvote post-vote{% if visitor_vote == -1 %} on{% endif %}" 
+    {% if post.post_type == 'question' %}
+        title="{% trans %}i dont like this question (click again to cancel){% endtrans %}" 
+    {% else %}
+        title="{% trans %}i dont like this answer (click again to cancel){% endtrans %}" 
     {% endif %}
-{%- endmacro -%}
-
-{%- macro user_country_name_and_flag(user) -%}
-    {% if user.country and user.show_country %}
-        {{ user.country.name }}
-        {{ user_country_flag(user) }}
-    {% endif %}
-{%- endmacro -%}
-
-{%- macro user_full_location(user) -%}
-    {% if user.location %}
-        {{ user.location }},
-    {% endif %}
-    {{ user_country_name_and_flag(user) }}
-{%- endmacro -%}
-
-{%- macro user_list(users, profile_section = None) -%}
-<div class="userList">
-    <table class="list-table">
-        <tr>
-            <td class="list-td">
-                {% for user in users %}
-                <div class="user">
-                    <ul>
-                            <li class="thumb">{{ gravatar(user, 32) }}</li>
-                            <li><a href="{% url user_profile user.id, user.username|slugify %}{% if profile_section %}?sort={{profile_section}}{% endif %}">{{user.username}}</a>{{ user_country_flag(user) }}</li>
-                            <li>{{ user_score_and_badge_summary(user) }}</li>
-                        </ul>
-                </div>
-                    {% if loop.index is divisibleby 7 %}
-            </td>
-            <td>
-                    {% endif %}
-                {% endfor %}
-            </td>
-        </tr>   
-    </table>
-</div>
-{%- endmacro -%}
-
-{%- macro paginator(p, position='left') -%}{# p is paginator context dictionary #}
-{% spaceless %}
-    {% if p.is_paginated %}
-        <div class="paginator" style="float:{{position}}">
-        {% if p.has_previous %}
-            <span class="prev"><a href="{{p.base_url}}page={{ p.previous }}{{ p.extend_url }}" title="{% trans %}previous{% endtrans %}">
-        &laquo; {% trans %}previous{% endtrans %}</a></span>
-        {% endif %}
-        {% if not p.in_leading_range %}
-            {% for num in p.pages_outside_trailing_range %}
-                <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" >{{ num }}</a></span>
-            {% endfor %}
-        ...
-        {% endif %}
-         
-        {% for num in p.page_numbers %}
-          {% if num == p.page and p.pages != 1%}
-            <span class="curr" title="{% trans %}current page{% endtrans %}">{{ num }}</span>
-          {% else %}
-            <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" title="{% trans %}page number {{num}}{% endtrans %}">{{ num }}</a></span>
-          {% endif %}
-        {% endfor %}
-         
-        {% if not p.in_trailing_range %}
-            ...
-            {% for num in p.pages_outside_leading_range|reverse %}
-                <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" title="{% trans %}page number {{ num }}{% endtrans %}">{{ num }}</a></span>
-            {% endfor %}
-        {% endif %}
-        {% if p.has_next %}
-            <span class="next"><a href="{{p.base_url}}page={{ p.next }}{{ p.extend_url }}" title="{% trans %}next page{% endtrans %}">{% trans %}next page{% endtrans %} &raquo;</a></span>
-        {% endif %}
-        </div>
-    {% endif %}
-{% endspaceless %}
-{%- endmacro -%}
-
-{%- macro pagesize_switch(p, position='left') -%}{# p is paginator context #}
-{% spaceless %}
-{% if p.is_paginated %}
-    <div class="paginator" style="float:{{position}}">
-        <span class="text">{% trans %}posts per page{% endtrans %}</span>
-        {% if p.page_size == 10 %}
-            <span class="curr">10</span>
-        {% else %}
-            <span class="page"><a href="{{p.base_url}}page_size=10">10</a></span>
-        {% endif %}
-        
-        {% if p.page_size == 30 %}
-            <span class="curr">30</span>
-        {% else %}
-            <span class="page"><a href="{{p.base_url}}page_size=30">30</a></span>
-        {% endif %}
-        
-        {% if p.page_size == 50 %}
-            <span class="curr">50</span>
-        {% else %}
-            <span class="page"><a href="{{p.base_url}}page_size=50">50</a></span>
-        {% endif %}
-    </div> 
-{% endif %}
-{% endspaceless %}
-{%- endmacro -%}
-
-{#todo: rename this to avatar #}
-{%- macro gravatar(user, size) -%}
-{% spaceless %}
-<a style="text-decoration:none"
-    href="{{ user.get_absolute_url() }}"
-><img class="gravatar" 
-    width="{{size}}" height="{{size}}"
-    src="{{ user.get_avatar_url(size) }}"
-    title="{{user.username}}" 
-    alt="{% trans username=user.username %}{{username}} gravatar image{% endtrans %}" 
-/></a>
-{% endspaceless %}
-{%- endmacro -%}
-
-{%- macro user_website_link(user, max_display_length=25) -%}
-    {% if user.website %}
-        <a 
-            href="{{user.website}}"
-            title="{% trans username=user.username|escape, url=user.website %}{{username}}'s website is {{url}}{% endtrans %}"
-            {% if user.can_have_strong_url() == False %}
-            rel="nofollow"
-            {% endif %}
-        >
-        {{user.website|truncate(length=max_display_length, killwords=True, end='...')}}
-        </a>
-    {% endif %}
+/></div>
 {%- endmacro -%}
 
 {%- macro post_contributor_avatar_and_credentials(post, user) -%}
@@ -255,7 +75,7 @@ poor design of the data or methods on data objects #}
            {% endif %}
            <strong>{{post.added_at|diff_date}}</strong>
         </p>
-        <img 
+        <img width="35" height="35"
             src="{{'/images/wiki.png'|media}}"
             alt="{% trans %}this post is marked as community wiki{% endtrans %}"
             style="float:left"
@@ -272,12 +92,12 @@ poor design of the data or methods on data objects #}
             {% else %}
                 {% trans %}posted{% endtrans %}
             {% endif %}
-            {% if post.__class__.__name__ in ('QuestionRevision', 'AnswerRevision') %}
+            {% if post.__class__.__name__ == 'PostRevision' %}
                 <strong>{{post.revised_at|diff_date}}</strong>
             {% else %}
                 <strong>{{post.added_at|diff_date}}</strong>
             {% endif %}
-            </p>
+        </p>
         {% if user and user.is_authenticated() and user.is_administrator_or_moderator() %}
           <p>
           from {{post.ip_addr}}
@@ -287,11 +107,11 @@ poor design of the data or methods on data objects #}
     {% endif %}
     </div>
 {% elif contributor_type=="last_updater" %}
-    {% if post.post_type in ('Question', 'Answer') %}
+    {% if post.post_type in ('question', 'answer') %}
         {% set last_edited_at = post.last_edited_at %}
         {% set original_author = post.author %}
         {% set update_author = post.last_edited_by %}
-    {% elif post.post_type in ('QuestionRevision', 'AnswerRevision') %}
+    {% elif post.__class__.__name__ == 'PostRevision' %}
         {% set last_edited_at = post.revised_at %}
         {% set original_author = None %}{# fake value to force display widget in the revision views #}
         {% set update_author = post.author %}
@@ -300,7 +120,7 @@ poor design of the data or methods on data objects #}
     <div class='post-update-info'>
         <p style="line-height:12px;">
             <a 
-        {% if post.post_type == 'Question' %}
+        {% if post.post_type == 'question' %}
             href="{% url question_revisions post.id %}"
         {% else %}
             href="{% url answer_revisions post.id %}"
@@ -313,6 +133,27 @@ poor design of the data or methods on data objects #}
     </div>
     {% endif %}
 {% endif %}
+{%- endmacro -%}
+
+{%- macro post_last_updater_and_creator_info(post, min_rep_to_edit_wiki, user=None) -%}
+    {{ 
+       post_contributor_info(
+            post,
+            "original_author",
+            post.wiki,
+            min_rep_to_edit_wiki,
+            user
+        )
+    }}
+    {{ 
+        post_contributor_info(
+            post,
+            "last_updater",
+            post.wiki,
+            min_rep_to_edit_wiki,
+            user
+        )
+    }}
 {%- endmacro -%}
 
 {%- macro if_else(condition, if_true, if_false) -%}
@@ -332,13 +173,15 @@ poor design of the data or methods on data objects #}
 {%- endmacro -%}
 
 {%- macro tag_list_widget(
-            tags,
-            id = None,
-            deletable = False,
-            make_links = True,
-            url_params = None,
-            css_class = None
-        )
+        tags,
+        id = None,
+        deletable = False,
+        make_links = True,
+        url_params = None,
+        css_class = None,
+        tag_css_class = None,
+        tag_html_tag = 'li'
+    )
 -%}
 <ul {% if id %}id="{{ id }}"{% endif %}
     class="tags{% if css_class %} {{css_class}}{% endif %}"
@@ -347,10 +190,11 @@ poor design of the data or methods on data objects #}
         {% for tag in tags %}
             {{ tag_widget(
                 tag,
+                css_class = tag_css_class,
                 deletable = deletable,
                 is_link = make_links,
                 url_params = url_params,
-                html_tag = 'li'
+                html_tag = tag_html_tag 
             )}}
         {% endfor %}
     {% endif %}
@@ -384,7 +228,7 @@ poor design of the data or methods on data objects #}
             title="{% trans %}see questions tagged '{{ tag }}'{% endtrans %}"
             {% endif %}
             rel="tag"
-        >{{ tag|replace('*', '&#10045;') }}</{% if not is_link or tag[-1] == '*' %}span{% else %}a{% endif %}>
+        >{{ tag|replace('*', '&#10045;')|truncate(20,True)}}</{% if not is_link or tag[-1] == '*' %}span{% else %}a{% endif %}>
         {% if deletable %}
             <span class="delete-icon"
                 {% if delete_link_title %}
@@ -416,62 +260,7 @@ poor design of the data or methods on data objects #}
 {%- endmacro -%}
 
 {%- macro question_summary(question, extra_class=None) -%}
-    <div class="short-summary{% if extra_class %} {{extra_class}}{% endif %}">
-        <div class="counts">
-            <div class="views
-                 {% if question.view_count == 0 -%}
-                    no-views
-                 {% else -%}
-                    some-views
-                 {%- endif -%}">
-                 <span class="item-count">{{question.view_count|humanize_counter}}</span>
-                <div>
-                {% trans cnt=question.view_count %}view{% pluralize %}views{% endtrans %}
-                </div>
-            </div>
-            <div class="answers
-                    {% if question.answer_count == 0 -%}
-                        no-answers
-                    {% else -%}
-                        {%- if question.answer_accepted -%}
-                            accepted
-                        {%- else -%}
-                            some-answers
-                        {%- endif -%}
-                    {%- endif -%}"> 
-                <span 
-                    class="item-count"
-                >{{question.answer_count|humanize_counter}}{% if question.answer_accepted%}&#10003;{% endif %}</span>
-                <div>
-                {% trans cnt=question.answer_count %}answer{% pluralize %}answers{% endtrans %}
-                </div>
-            </div>
-            <div class="votes 
-                        {% if question.score == 0 -%}
-                            no-votes
-                        {% else -%}
-                            some-votes
-                        {%- endif -%}">
-                <span class="item-count">{{question.score|humanize_counter}}</span>
-                <div>
-                {% trans cnt=question.score %}vote{% pluralize %}votes{% endtrans %}
-                </div>
-            </div>
-            
-            <div style="clear:both"></div>
-            <div class="userinfo">
-                <span class="relativetime" title="{{question.last_activity_at}}">{{ question.last_activity_at|diff_date }}</span>
-                {% if question.is_anonymous %}
-                    <span class="anonymous">{{ question.last_activity_by.get_anonymous_name() }}</span>
-                {% else %}
-                    <a href="{% url user_profile question.last_activity_by.id, question.last_activity_by.username|slugify %}">{{question.last_activity_by.username}}</a>{{ user_country_flag(question.last_activity_by) }}
-                {#{user_score_and_badge_summary(question.last_activity_by)}#}
-                {% endif %}
-            </div>
-        </div>
-        <h2><a title="{{question.summary|escape}}" href="{{ question.get_absolute_url() }}">{{question.get_question_title()|escape}}</a></h2>
-        {{ tag_list_widget(question.get_tag_names()) }}
-    </div>
+{%include "widgets/question_summary.html" %}
 {%- endmacro -%}
 
 {%- macro comment_votes(comment = None) -%}
@@ -502,9 +291,9 @@ for the purposes of the AJAX comment editor #}
                 class="author" 
                 href="{{comment.user.get_profile_url()}}"
             >{{comment.user.username}}</a>
-          <span class="age">&nbsp;({{comment.added_at|diff_date}}{% if user and user.is_authenticated() and user.is_administrator_or_moderator() %} from {{comment.ip_addr}}{% endif %})</span>
+            <span class="age">&nbsp;({{comment.added_at|diff_date}}{% if user and user.is_authenticated() and user.is_administrator_or_moderator() %} from {{comment.ip_addr}}{% endif %})</span>
             {% if user|can_edit_comment(comment) %}
-                <a class="edit">{% trans %}edit{% endtrans %}</a>
+                &nbsp;<a class="edit">{% trans %}edit{% endtrans %}</a>
             {% endif %}
         </div>
     </div>
@@ -534,14 +323,25 @@ for the purposes of the AJAX comment editor #}
     {% endif %}
 {%- endmacro -%}
 
-{%- macro post_comments_widget(post=None, show_post = None, show_comment = None, comment_order_number = None, user=None, max_comments=None) -%}
+{%- macro post_comments_widget(
+        post=None,
+        show_post = None,
+        show_comment = None,
+        show_comment_position = None,
+        user=None,
+        max_comments=None
+    )
+-%}
     {% spaceless %}
+    {% if post.comment_count > 0 %}
+        <h2 id="comment-title">Comments</h2>
+    {% endif %}
     {% set widget_id = 'comments-for-' + post.post_type + '-' + post.id|string %}
     <div class="comments" id="{{widget_id}}">
         <div class="content">
             {% if show_post == post and show_comment %}
-                {% if comment_order_number > max_comments %}
-                    {% set comments = post.get_comments(visitor = user)[:comment_order_number] %}
+                {% if show_comment_position > max_comments %}
+                    {% set comments = post.get_comments(visitor = user)[:show_comment_position] %}
                     {{ comment_list(comments = comments, user = user) }}
                 {% else %}
                     {% set comments = post.get_comments(visitor = user)[:max_comments] %}
@@ -555,12 +355,12 @@ for the purposes of the AJAX comment editor #}
         <div class="controls">
             {% set can_post = user|can_post_comment(post) %}
             {% if show_post == post and show_comment %}
-                {% if comment_order_number > max_comments %}
+                {% if show_comment_position > max_comments %}
                     {{
                         add_or_show_comments_button(
                                             post = post,
                                             can_post = can_post,
-                                            max_comments = comment_order_number,
+                                            max_comments = show_comment_position,
                                             widget_id = widget_id
                                         )
                     }}
@@ -643,67 +443,189 @@ for the purposes of the AJAX comment editor #}
                 edit_title = False
             )
 -%}
-    {% if edit_title %}
-        <div class="form-item">
-            <label for="id_title" ><strong>{{ post_form.title.label_tag() }}:</strong></label> <span class="form-error"></span><br/>
-            {{ post_form.title }} {{ post_form.title.errors }}
-            <div class="title-desc">
-                {{ post_form.title.help_text }}
-            </div>
+{%include "widgets/edit_post.html" %}
+{%- endmacro -%}
+
+{%- macro tag_autocomplete_js(id = '#id_tags') -%}
+    var tagAc = new AutoCompleter({
+            url: '{% url "get_tag_list" %}',
+            preloadData: true,
+            minChars: 1,
+            useCache: true,
+            matchInside: true,
+            maxCacheLength: 100,
+            delay: 10
+    });
+    tagAc.decorate($("{{ id }}"));
+{%- endmacro -%}
+
+{%- macro answer_classes(answer, question) -%}
+answer {% if answer.accepted %}accepted-answer{% endif %} {% if answer.author_id==question.author_id %} answered-by-owner{% endif %} {% if answer.deleted %}deleted{% endif -%}
+{%- endmacro -%}
+
+{%- macro user_score_and_badge_summary(user) -%}
+  {%include "widgets/user_score_and_badge_summary.html"%}
+{%- endmacro -%}
+
+{%- macro follow_toggle(follow, name, alias, id) -%}
+    {# follow - boolean; name - object type name; alias - e.g. users name; id - object id #}
+    <div 
+        class="follow-toggle" 
+        id="follow-{{ name }}-{{ id }}"
+    >
+        {% if follow %}
+        <div class="follow">{% trans %}follow {{alias}}{% endtrans %}</div>
+        {% else %}
+        <div class="unfollow">
+          <div class="unfollow-red">{% trans %}unfollow {{alias}}{% endtrans %}</div>
+          <div class="unfollow-green">{% trans %}following {{alias}}{% endtrans %}</div>
         </div>
-    {% endif %}
-    <div id="wmd-button-bar" class="wmd-panel"></div>
-    <div class="form-item">
-        {{ post_form.text }}{# this element is resizable and will be wrapped by js #}
-        <label for="editor" class="form-error">{{ post_form.text.errors }}</label>
+        {% endif %}
     </div>
-    {# need label element for resizable input, b/c form validation won't find span #}
-    {% if post_type == 'question' %}
-        <div class="form-item">
-            {% if mandatory_tags  %}
-                <label for="id_tags">
-                    <strong>{% trans %}tags{% endtrans %},</strong>
-                    {% trans %}one of these is required{% endtrans %}
-                </label>
-                {{
-                    tag_list_widget(
-                        mandatory_tags,
-                        make_links = False,
-                        css_class = 'clearfix'
-                    )
-                }}
+{%- endmacro -%}
+
+{%- macro follow_user_toggle(visitor = None, subject = None) -%}
+    {% if visitor.is_anonymous() %}
+        {{ follow_toggle(True, 'user', subject.username, subject.id) }}
+    {% else %}
+        {% if visitor != subject %}
+            {% if visitor.is_following(subject) %}
+                {{ follow_toggle(False, 'user', subject.username, subject.id) }}
             {% else %}
-                <label for="id_tags">
-                    <strong>{% trans %}tags{% endtrans %}:</strong>
-                    {% trans %}(required){% endtrans %}
-                </label>
+                {{ follow_toggle(True, 'user', subject.username, subject.id) }}
             {% endif %}
-            <span class="form-error">{{ post_form.tags.errors }}</span><br/>
-            {{ post_form.tags }}
-            <div class="title-desc">
-                {{ post_form.tags.help_text }}
-            </div>
-        </div>
+        {% endif %}
     {% endif %}
-    {% if 'summary' in post_form['fields'] %}
-        <div class="form-item">
-            <strong>{{ post_form.summary.label_tag() }}</strong> <br/>
-            {{ post_form.summary }}
-            <div class="title-desc">
-                {{ post_form.summary.help_text }}
-            </div>
-            <div class="form-error" >{{ post_form.summary.errors }}</div>
-        </div>
+{%- endmacro -%}
+
+{%- macro user_long_score_and_badge_summary(user) -%}
+  {% include "widgets/user_long_score_and_badge_summary.html" %}
+{%- endmacro -%}
+
+{%- macro user_country_flag(user) -%}
+    {% if user.country and user.show_country %}
+        <img class="flag" 
+            src="{{ ('/images/flags/' ~ user.country.code|lower ~ '.gif')|media }}"
+            alt="{% trans 
+                    country=user.country.name 
+                    %}flag of {{country}}{% 
+                endtrans %}"
+            title="{% trans 
+                    country=user.country.name, 
+                    person=user.username %}{{person}} is from {{country}}{%
+                 endtrans %}"
+        />
     {% endif %}
-    <div class="preview-toggle">
-        <span 
-            id="pre-collapse" 
-            title="{% trans %}Toggle the real time Markdown editor preview{% endtrans %}"
+{%- endmacro -%}
+
+{%- macro user_country_name_and_flag(user) -%}
+    {% if user.country and user.show_country %}
+        {{ user.country.name }}
+        {{ user_country_flag(user) }}
+    {% endif %}
+{%- endmacro -%}
+
+{%- macro user_full_location(user) -%}
+    {% if user.location %}
+        {{ user.location }},
+    {% endif %}
+    {{ user_country_name_and_flag(user) }}
+{%- endmacro -%}
+
+{%- macro user_list(users, profile_section = None) -%}
+{% include "widgets/user_list.html"%}
+{%- endmacro -%}
+
+{#todo: rename this to avatar #}
+{%- macro gravatar(user, size) -%}
+{% spaceless %}
+<a style="text-decoration:none"
+    href="{{ user.get_absolute_url() }}"
+><img class="gravatar" 
+    width="{{size}}" height="{{size}}"
+    src="{{ user.get_avatar_url(size) }}"
+    title="{{user.username}}" 
+    alt="{% trans username=user.username %}{{username}} gravatar image{% endtrans %}" 
+/></a>
+{% endspaceless %}
+{%- endmacro -%}
+
+{%- macro user_website_link(user, max_display_length=25) -%}
+    {% if user.website %}
+        <a 
+            href="{{user.website}}"
+            title="{% trans username=user.username|escape, url=user.website %}{{username}}'s website is {{url}}{% endtrans %}"
+            {% if user.can_have_strong_url() == False %}
+            rel="nofollow"
+            {% endif %}
         >
-            [{% trans %}hide preview{% endtrans %}]
-        </span>
-    </div>
-    <div id="previewer" class="wmd-preview"></div>
+        {{user.website|truncate(length=max_display_length, killwords=True, end='...')}}
+        </a>
+    {% endif %}
+{%- endmacro -%}
+
+{%- macro paginator(p, position='left') -%}{# p is paginator context dictionary #}
+{% spaceless %}
+    {% if p.is_paginated %}
+        <div class="paginator" style="float:{{position}}">
+        {% if p.has_previous %}
+            <span class="prev"><a href="{{p.base_url}}page={{ p.previous }}{{ p.extend_url }}" title="{% trans %}previous{% endtrans %}">
+        &laquo; {% trans %}previous{% endtrans %}</a></span>
+        {% endif %}
+        {% if not p.in_leading_range %}
+            {% for num in p.pages_outside_trailing_range %}
+                <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" >{{ num }}</a></span>
+            {% endfor %}
+        ...
+        {% endif %}
+         
+        {% for num in p.page_numbers %}
+          {% if num == p.page and p.pages != 1%}
+            <span class="curr" title="{% trans %}current page{% endtrans %}">{{ num }}</span>
+          {% else %}
+            <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" title="{% trans %}page number {{num}}{% endtrans %}">{{ num }}</a></span>
+          {% endif %}
+        {% endfor %}
+         
+        {% if not p.in_trailing_range %}
+            ...
+            {% for num in p.pages_outside_leading_range|reverse %}
+                <span class="page"><a href="{{p.base_url}}page={{ num }}{{ p.extend_url }}" title="{% trans %}page number {{ num }}{% endtrans %}">{{ num }}</a></span>
+            {% endfor %}
+        {% endif %}
+        {% if p.has_next %}
+            <span class="next"><a href="{{p.base_url}}page={{ p.next }}{{ p.extend_url }}" title="{% trans %}next page{% endtrans %}">{% trans %}next page{% endtrans %} &raquo;</a></span>
+        {% endif %}
+        </div>
+    {% endif %}
+{% endspaceless %}
+{%- endmacro -%}
+
+{%- macro pagesize_switch(p, position='left') -%}{# p is paginator context #}
+{% spaceless %}
+{% if p.is_paginated %}
+    <div class="paginator" style="float:{{position}}">
+        <span class="text">{% trans %}posts per page{% endtrans %}</span>
+        {% if p.page_size == 10 %}
+            <span class="curr">10</span>
+        {% else %}
+            <span class="page"><a href="{{p.base_url}}page_size=10">10</a></span>
+        {% endif %}
+        
+        {% if p.page_size == 30 %}
+            <span class="curr">30</span>
+        {% else %}
+            <span class="page"><a href="{{p.base_url}}page_size=30">30</a></span>
+        {% endif %}
+        
+        {% if p.page_size == 50 %}
+            <span class="curr">50</span>
+        {% else %}
+            <span class="page"><a href="{{p.base_url}}page_size=50">50</a></span>
+        {% endif %}
+    </div> 
+{% endif %}
+{% endspaceless %}
 {%- endmacro -%}
 
 {%- macro inbox_link(user) -%}
@@ -746,17 +668,4 @@ for the purposes of the AJAX comment editor #}
         {% endif %}
         </a>
     {% endif %}
-{%- endmacro -%}
-
-{%- macro tag_autocomplete_js(id = '#id_tags') -%}
-    var tagAc = new AutoCompleter({
-            url: '{% url "get_tag_list" %}',
-            preloadData: true,
-            minChars: 1,
-            useCache: true,
-            matchInside: true,
-            maxCacheLength: 100,
-            delay: 10
-    });
-    tagAc.decorate($("{{ id }}"));
 {%- endmacro -%}

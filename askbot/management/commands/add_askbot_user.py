@@ -40,7 +40,7 @@ class Command(BaseCommand):
             action = 'store',
             type = 'str',
             dest = 'frequency',
-            default = 'w',
+            default = None,
             help = 'email subscription frequency (n - never, i - '
                     'instant, d - daily, w - weekly, default - w)'
         ),
@@ -62,21 +62,12 @@ class Command(BaseCommand):
         username = options['username']
         frequency = options['frequency']
 
-        if frequency not in ('i', 'd', 'w', 'n'):
-            raise CommandError(
-                        'value of --frequency must be one of: '
-                        'i, d, w, n'
-                    )
-        
         user = models.User.objects.create_user(username, email)
         if password:
             user.set_password(password)
             user.save()
         subscription = {'subscribe': 'y'}
-        email_feeds_form = forms.SimpleEmailSubscribeForm(
-                                                subscription,
-                                                frequency = frequency
-                                            )
+        email_feeds_form = forms.SimpleEmailSubscribeForm(subscription)
         if email_feeds_form.is_valid():
             email_feeds_form.save(user)
         else:

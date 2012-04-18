@@ -62,20 +62,24 @@
     <p>{% trans "You don't have permission to edit values." %}</p>
 {% endif %}
 </div>
-{% if all_groups %}
-<div id="content-related">
-    <div class="module">
-        <h2>{% trans "Setting groups" %}</h2>
-        <ul>
-        {% for g in all_groups %}
-            {% ifequal g.key group.key %}
-                <li><b>{{g.name}}</b></li>
-            {% else %}
-                <li><a href="{% url group_settings g.key %}">{{g.name}}</a></li>
-            {% endifequal %}
-        {% endfor %}
-        </ul>
+{% if all_super_groups %}
+    <div id="content-related">
+    {% for super_group in all_super_groups %}
+        <div class="module">
+            <h2>{{ super_group.name }}</h2>
+            <ul>
+            {% for g in super_group.groups %}
+                {% if g.keys|length %}
+                    {% ifequal g.key group.key %}
+                        <li><b>{{g.name}}</b></li>
+                    {% else %}
+                        <li><a href="{% url group_settings g.key %}">{{g.name}}</a></li>
+                    {% endifequal %}
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
     </div>
-</div>
 {% endif %}
 {% endblock %}

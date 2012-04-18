@@ -2,13 +2,15 @@
 User policy settings
 """
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import LOGIN_USERS_COMMUNICATION
 from askbot.deps import livesettings
 from django.utils.translation import ugettext as _
 from askbot import const
 
 USER_SETTINGS = livesettings.ConfigurationGroup(
                     'USER_SETTINGS',
-                    _('User settings')
+                    _('User settings'),
+                    super_group = LOGIN_USERS_COMMUNICATION
                 )
 
 settings.register(

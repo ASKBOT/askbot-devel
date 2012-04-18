@@ -14,13 +14,33 @@
             $.getJSON('{% url user_update_has_custom_avatar %}?t=' + today.getTime());
         {% endif %}
     });
+
+    askbot['data']['questions-titles'] = {};
+    function load_question_body(element, question_id){
+      var key = 'question-' + question_id;
+      if ( askbot['data']['questions-titles'][key] == null){
+        $.getJSON('{% url get_question_body %}', function(data){
+          askbot['data']['questions-titles'] = data['questions-titles'];
+          console.debug(data);
+          element.title = askbot['data']['questions-titles'][key];//repeated due to async
+        });
+      } else {
+        element.title = askbot['data']['questions-titles'][key];
+      }
+    }
+
     askbot['urls']['mark_interesting_tag'] = scriptUrl + '{% url mark_interesting_tag %}';
     askbot['urls']['mark_ignored_tag'] = scriptUrl + '{% url mark_ignored_tag %}';
     askbot['urls']['unmark_tag'] = scriptUrl + '{% url unmark_tag %}';
     askbot['urls']['set_tag_filter_strategy'] = '{% url "set_tag_filter_strategy" %}';
     askbot['urls']['questions'] = '{% url "questions" %}';
+    {% if settings.ASKBOT_TRANSLATE_URL %}
     askbot['urls']['question_url_template'] = scriptUrl + '{% trans %}question/{% endtrans %}{{ "{{QuestionID}}/" }}';
     askbot['urls']['user_url_template'] = scriptUrl + '{% trans %}users/{% endtrans %}{{ "{{user_id}}" }}/{{ "{{slug}}" }}/';
+    {% else %}
+    askbot['urls']['question_url_template'] = scriptUrl + 'question/{{ "{{QuestionID}}/" }}';
+    askbot['urls']['user_url_template'] = scriptUrl + 'users/{{ "{{user_id}}" }}/{{ "{{slug}}" }}/';
+    {% endif %}
     askbot['messages']['name_of_anonymous_user'] = '{{ name_of_anonymous_user }}';
 </script>
 <script type='text/javascript' src='{{"/js/editor.js"|media}}'></script>

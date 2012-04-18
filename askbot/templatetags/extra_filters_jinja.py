@@ -6,12 +6,15 @@ from django.core import exceptions as django_exceptions
 from django.utils.translation import ugettext as _
 from django.contrib.humanize.templatetags import humanize
 from django.template import defaultfilters
+from django.core.urlresolvers import reverse, resolve
+from django.http import Http404
 from askbot import exceptions as askbot_exceptions
 from askbot import auth
 from askbot.conf import settings as askbot_settings
 from askbot.skins import utils as skin_utils
 from askbot.utils import functions
 from askbot.utils.slug import slugify
+from askbot.shims.django_shims import ResolverMatch
 
 from django_countries import countries
 from django_countries import settings as countries_settings
@@ -29,6 +32,18 @@ def absolutize_urls_func(text):
     text = url_re3.sub(replacement, text)
     return url_re4.sub(replacement, text)
 absolutize_urls = register.filter(absolutize_urls_func)
+
+@register.filter
+def clean_login_url(url):
+    """pass through, unless user was originally on the logout page"""
+    try:
+        resolver_match = ResolverMatch(resolve(url))
+        from askbot.views.readers import question
+        if resolver_match.func == question:
+            return url
+    except Http404:
+        pass
+    return reverse('index')
 
 @register.filter
 def country_display_name(country_code):
@@ -150,7 +165,16 @@ def can_moderate_user(user, other_user):
 can_flag_offensive = make_template_filter_from_permission_assertion(
                         assertion_name = 'assert_can_flag_offensive',
                         filter_name = 'can_flag_offensive',
-                        allowed_exception = askbot_exceptions.DuplicateCommand
+                    )
+
+can_remove_flag_offensive = make_template_filter_from_permission_assertion(
+                        assertion_name = 'assert_can_remove_flag_offensive',
+                        filter_name = 'can_remove_flag_offensive',
+                    )
+
+can_remove_all_flags_offensive = make_template_filter_from_permission_assertion(
+                        assertion_name = 'assert_can_remove_all_flags_offensive',
+                        filter_name = 'can_remove_all_flags_offensive',
                     )
 
 can_post_comment = make_template_filter_from_permission_assertion(

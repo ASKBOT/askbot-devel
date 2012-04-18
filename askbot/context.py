@@ -13,8 +13,9 @@ from askbot.utils import url_utils
 def application_settings(request):
     """The context processor function"""
     my_settings = askbot_settings.as_dict()
-    my_settings['LANGUAGE_CODE'] = settings.LANGUAGE_CODE
+    my_settings['LANGUAGE_CODE'] = getattr(request, 'LANGUAGE_CODE', settings.LANGUAGE_CODE)
     my_settings['ASKBOT_URL'] = settings.ASKBOT_URL
+    my_settings['ASKBOT_CSS_DEVEL'] = getattr(settings, 'ASKBOT_CSS_DEVEL', False)
     my_settings['DEBUG'] = settings.DEBUG
     my_settings['ASKBOT_VERSION'] = askbot.get_version()
     my_settings['LOGIN_URL'] = url_utils.get_login_url()

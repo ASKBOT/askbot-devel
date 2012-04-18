@@ -4,60 +4,32 @@
     {% spaceless %}
     <head>
         <title>{% block title %}{% endblock %} - {{ settings.APP_TITLE|escape }}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        {% block meta_description %}
-        <meta name="description" content="{{settings.APP_DESCRIPTION|escape}}" />
-        {% endblock %}
-        <meta name="keywords" content="{%block keywords%}{%endblock%},{{settings.APP_KEYWORDS|escape}}" />
-        {% if settings.GOOGLE_SITEMAP_CODE %}
-        <meta name="google-site-verification" content="{{settings.GOOGLE_SITEMAP_CODE}}" />
-        {% endif %}
+        {% include "meta/html_head_meta.html" %}
         <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
-        <link href="{{"/style/style.css"|media }}" rel="stylesheet" type="text/css" />
-        {{ skin.get_extra_css_link() }}
-        {% if settings.USE_CUSTOM_CSS %}
-            <link 
-                href="{% url "custom_css" %}?v={{settings.MEDIA_RESOURCE_REVISION}}"
-                rel="stylesheet"
-                type="text/css"
-            />
-        {% endif %}
+        {% include "meta/html_head_stylesheets.html" %}
         {% block forestyle %}{% endblock %}
-        {% if user_messages %}
-        <style type="text/css">
-            body { margin-top:2.4em; }
-        </style>
-        {% endif %}
+        {% include "meta/html_head_javascript.html" %}
         {% if settings.USE_CUSTOM_HTML_HEAD %}
             {{ settings.CUSTOM_HTML_HEAD }}
         {% endif %}
-        <script type="text/javascript">
-            var askbot = {};
-            askbot['data'] = {};
-            askbot['urls'] = {};
-            askbot['settings'] = {};
-            askbot['messages'] = {};
-        </script>
-        {% block forejs %}
-        {% endblock %}
-        {# avoid adding javascript here so that pages load faster #}
     </head>
     {% endspaceless %}
-    <body class="{% block body_class %}{% endblock %}{% if page_class %} {{page_class}}{% endif %}">
-        {% include "blocks/system_messages.html" %}
+    <body class="{% block body_class %}{% endblock %}{% if user_messages %} user-messages{% endif %}{% if page_class %} {{page_class}}{% endif %}{% if request.user.is_anonymous() %} anon{% endif %} lang-{{settings.LANGUAGE_CODE}}">
+        {% include "widgets/system_messages.html" %}
         {% include "custom_header.html" ignore missing %}
-        {% include "blocks/header.html" %}
+        {% include "widgets/header.html" %} {# Logo, user tool navigation and meta navitation #}
+        {% include "widgets/secondary_header.html" %} {# Scope selector, search input and ask button #}
         <div class="content-wrapper">
             {% block body %}
             {% endblock %}
         </div>
         {% if settings.FOOTER_MODE == 'default' %}
-            {% include "blocks/footer.html" %}
+            {% include "widgets/footer.html" %}
         {% elif settings.FOOTER_MODE == 'customize' %}
             {{ settings.CUSTOM_FOOTER }}
         {% endif %}
         {% include "custom_footer.html" ignore missing %}
-        {% include "blocks/bottom_scripts.html" %}
+        {% include "meta/bottom_scripts.html" %}
         {% block endjs %}
         {% endblock %}
         <script type="text/javascript">

@@ -42,20 +42,21 @@ def get_available_skins(selected=None):
     stock_dir = os.path.normpath(os.path.dirname(__file__))
     stock_skins = get_skins_from_dir(stock_dir)
     default_dir = stock_skins.pop('default')
+    common_dir = stock_skins.pop('common')
 
     skins.update(stock_skins)
-
     if selected:
         if selected in skins:
             selected_dir = skins[selected]
             skins.clear()
             skins[selected] = selected_dir
         else:
-            assert(selected == 'default')
+            assert(selected == 'default' or selected == 'common')
             skins = SortedDict()
 
     #re-insert default as a last item
     skins['default'] = default_dir
+    skins['common'] = common_dir 
     return skins
 
 

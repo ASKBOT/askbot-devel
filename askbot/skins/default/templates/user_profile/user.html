@@ -1,4 +1,4 @@
-{% extends "two_column_body.html" %}
+{% extends "one_column_body.html" %}
 <!-- user.html -->
 {% block title %}{% spaceless %}{{ page_title }}{% endspaceless %}{% endblock %}
 {% block forestyle%}
@@ -7,15 +7,13 @@
 </style>
 {% endblock %}
 {% block content %}
-    <h1>
+    <h1 class="section-title">
         {% spaceless %}
-        <a href="{% url user_profile view_user.id, view_user.username|slugify %}">
         {% trans username=view_user.username %}{{username}}'s profile{% endtrans %} - {% block profilesection %}{% endblock %}
-        </a>
         {% endspaceless %}
     </h1>
-    <div style="margin-left: 5px;">
-        {% include "user_profile/user_tabs.html" %}
+    {% include "user_profile/user_tabs.html" %}
+    <div>
         {% block usercontent %}
         {% endblock %}
     </div>

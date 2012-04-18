@@ -1,0 +1,21 @@
+{% import "macros.html" as macros %}
+{% include "question/question_card.html" %}
+{% if question.closed %}
+    {% include "question/closed_question_info.html" %}
+{% endif %}
+{% if answers %}
+    {% include "question/answer_tab_bar.html" %}
+    {{ macros.paginator(paginator_context) }}
+    <div class="clean"></div>
+    {% for answer in answers %}
+        {% include "question/answer_card.html" %}
+    {% endfor %}
+    {{ macros.paginator(paginator_context) }}
+    <div class="clean"></div>
+{% else %}
+    {% include "question/sharing_prompt_phrase.html" %}
+{% endif %}
+    {% include "question/new_answer_form.html" %}
+    {% if request.user == question.author %}{# this is outside the form on purpose #}
+        <input type="button" class="submit after-editor" id="fmanswer_button"  value="{% trans %}Answer Your Own Question{% endtrans %}"/>
+    {%endif%}

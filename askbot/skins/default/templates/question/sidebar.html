@@ -1,0 +1,75 @@
+{% import "macros.html" as macros %}
+{{ settings.SIDEBAR_QUESTION_HEADER }}
+<div class="box vote-buttons">
+    <h2 >{% trans %}Question tools{% endtrans %}</h2>
+    {% if favorited %}
+        <a class="button followed" 
+            alt="{% trans %}click to unfollow this question{% endtrans %}">
+            <div>{% trans %}Following{% endtrans %}</div>
+            <div class='unfollow'>{% trans %}Unfollow{% endtrans %}</div>
+        </a>
+    {% else %}
+        <a class="button followed"
+            alt="{% trans %}click to follow this question{% endtrans %}">
+            {%trans %}Follow{%endtrans%}
+        </a>
+    {% endif %}
+    <div class="clearfix"></div>
+    <div id="favorite-number" class="favorite-number{% if favorited %} my-favorite-number{% endif %}">
+        {% set follower_count = question.favourite_count %}
+        {% if follower_count > 0 %}
+            {% trans count=follower_count %}{{count}} follower{% pluralize %}{{count}} followers{% endtrans %}
+        {% endif %}
+    </div>
+    <div class="notify-sidebar">
+        {%if request.user.is_authenticated() %}
+        <input type="checkbox" id="question-subscribe-sidebar"/>
+        <label for="question-subscribe-sidebar">{% trans %}email the updates{% endtrans %}</label>
+        {%else%}
+        <input type="checkbox" id="question-subscribe-sidebar"/>
+        <label for="question-subscribe-sidebar">{% trans %}<strong>Here</strong> (once you log in) you will be able to sign up for the periodic email updates about this question.{% endtrans %}</label>
+        {%endif%}
+        <p class="rss">
+            <a
+                href="{{settings.APP_URL}}/feeds/question/{{ question.id }}"
+                title="{% trans %}subscribe to this question rss feed{% endtrans %}"
+                >{% trans %}subscribe to rss feed{% endtrans %}</a>
+        </p>
+    </div> 
+</div>
+{% cache 0 "questions_tags" questions_tags question.id language_code %}
+
+
+{% if settings.SIDEBAR_QUESTION_SHOW_META %}
+<div class="box statsWidget">
+    <div class="clearfix"></div>
+    <h2>{% trans %}Stats{% endtrans %}</h2>
+    <p>
+        {% trans %}question asked{% endtrans %}: <strong title="{{ question.added_at }}">{{question.added_at|diff_date}}</strong>
+    </p>
+    <p> 
+        {% trans %}question was seen{% endtrans %}: <strong>{{ question.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
+    </p>
+    <p>
+        {% trans %}last updated{% endtrans %}: <strong title="{{ question.last_activity_at }}">{{question.last_activity_at|diff_date}}</strong>
+    </p>
+</div>
+{% endif %}
+{% endcache %}
+
+{% if similar_questions.data and settings.SIDEBAR_QUESTION_SHOW_RELATED %}
+    {#% cache 1800 "related_questions" related_questions question.id language_code %#}
+    <div class="box">
+        <h2>{% trans %}Related questions{% endtrans %}</h2>
+        <div class="questions-related">
+            {% for question in similar_questions.data() %}
+            <p>
+                <a href="{{ question.get_absolute_url() }}">{{ question.get_question_title() }}</a>
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+    {#% endcache %#}
+{% endif %}
+
+{{ settings.SIDEBAR_QUESTION_FOOTER }}

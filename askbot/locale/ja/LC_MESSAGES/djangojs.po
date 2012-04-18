@@ -1,0 +1,340 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-27 01:59-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: skins/common/media/jquery-openid/jquery.openid.js:73
+#, c-format
+msgid "Are you sure you want to remove your %s login?"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:90
+msgid "Please add one or more login methods."
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:93
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:135
+msgid "passwords do not match"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:162
+msgid "Show/change current login methods"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:223
+#, c-format
+msgid "Please enter your %s, then proceed"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:225
+msgid "Connect your %(provider_name)s account to %(site)s"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:319
+#, c-format
+msgid "Change your %s password"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:320
+msgid "Change password"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:323
+#, c-format
+msgid "Create a password for %s"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:324
+msgid "Create password"
+msgstr ""
+
+#: skins/common/media/jquery-openid/jquery.openid.js:340
+msgid "Create a password-protected account"
+msgstr ""
+
+#: skins/common/media/js/post.js:28
+msgid "loading..."
+msgstr ""
+
+#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
+msgid "tags cannot be empty"
+msgstr ""
+
+#: skins/common/media/js/post.js:134
+msgid "content cannot be empty"
+msgstr ""
+
+#: skins/common/media/js/post.js:135
+#, c-format
+msgid "%s content minchars"
+msgstr ""
+
+#: skins/common/media/js/post.js:138
+msgid "please enter title"
+msgstr ""
+
+#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
+#, c-format
+msgid "%s title minchars"
+msgstr ""
+
+#: skins/common/media/js/post.js:282
+msgid "insufficient privilege"
+msgstr ""
+
+#: skins/common/media/js/post.js:283
+msgid "cannot pick own answer as best"
+msgstr ""
+
+#: skins/common/media/js/post.js:288
+msgid "please login"
+msgstr ""
+
+#: skins/common/media/js/post.js:290
+msgid "anonymous users cannot follow questions"
+msgstr ""
+
+#: skins/common/media/js/post.js:291
+msgid "anonymous users cannot subscribe to questions"
+msgstr ""
+
+#: skins/common/media/js/post.js:292
+msgid "anonymous users cannot vote"
+msgstr ""
+
+#: skins/common/media/js/post.js:294
+msgid "please confirm offensive"
+msgstr ""
+
+#: skins/common/media/js/post.js:295
+msgid "anonymous users cannot flag offensive posts"
+msgstr ""
+
+#: skins/common/media/js/post.js:296
+msgid "confirm delete"
+msgstr ""
+
+#: skins/common/media/js/post.js:297
+msgid "anonymous users cannot delete/undelete"
+msgstr ""
+
+#: skins/common/media/js/post.js:298
+msgid "post recovered"
+msgstr ""
+
+#: skins/common/media/js/post.js:299
+msgid "post deleted"
+msgstr ""
+
+#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
+msgid "Follow"
+msgstr ""
+
+#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
+#: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
+#, c-format
+msgid "%s follower"
+msgid_plural "%s followers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
+msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+msgstr ""
+
+#: skins/common/media/js/post.js:615
+msgid "undelete"
+msgstr ""
+
+#: skins/common/media/js/post.js:620
+msgid "delete"
+msgstr ""
+
+#: skins/common/media/js/post.js:957
+msgid "add comment"
+msgstr ""
+
+#: skins/common/media/js/post.js:960
+msgid "save comment"
+msgstr ""
+
+#: skins/common/media/js/post.js:990
+#, c-format
+msgid "enter %s more characters"
+msgstr ""
+
+#: skins/common/media/js/post.js:995
+#, c-format
+msgid "%s characters left"
+msgstr ""
+
+#: skins/common/media/js/post.js:1066
+msgid "cancel"
+msgstr ""
+
+#: skins/common/media/js/post.js:1109
+msgid "confirm abandon comment"
+msgstr ""
+
+#: skins/common/media/js/post.js:1183
+msgid "delete this comment"
+msgstr ""
+
+#: skins/common/media/js/post.js:1387
+msgid "confirm delete comment"
+msgstr ""
+
+#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
+msgid "Please enter question title (>10 characters)"
+msgstr ""
+
+#: skins/common/media/js/tag_selector.js:15
+#: skins/old/media/js/tag_selector.js:15
+msgid "Tag \"<span></span>\" matches:"
+msgstr ""
+
+#: skins/common/media/js/tag_selector.js:84
+#: skins/old/media/js/tag_selector.js:84
+#, c-format
+msgid "and %s more, not shown..."
+msgstr ""
+
+#: skins/common/media/js/user.js:14
+msgid "Please select at least one item"
+msgstr ""
+
+#: skins/common/media/js/user.js:58
+msgid "Delete this notification?"
+msgid_plural "Delete these notifications?"
+msgstr[0] ""
+
+#: skins/common/media/js/user.js:125 skins/old/media/js/user.js:129
+msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
+msgstr ""
+
+#: skins/common/media/js/user.js:157 skins/old/media/js/user.js:161
+#, c-format
+msgid "unfollow %s"
+msgstr ""
+
+#: skins/common/media/js/user.js:160 skins/old/media/js/user.js:164
+#, c-format
+msgid "following %s"
+msgstr ""
+
+#: skins/common/media/js/user.js:166 skins/old/media/js/user.js:170
+#, c-format
+msgid "follow %s"
+msgstr ""
+
+#: skins/common/media/js/utils.js:43
+msgid "click to close"
+msgstr ""
+
+#: skins/common/media/js/utils.js:214
+msgid "click to edit this comment"
+msgstr ""
+
+#: skins/common/media/js/utils.js:215
+msgid "edit"
+msgstr ""
+
+#: skins/common/media/js/utils.js:369
+#, c-format
+msgid "see questions tagged '%s'"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:30
+msgid "bold"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:31
+msgid "italic"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:32
+msgid "link"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:33
+msgid "quote"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:34
+msgid "preformatted text"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:35
+msgid "image"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:36
+msgid "attachment"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:37
+msgid "numbered list"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:38
+msgid "bulleted list"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:39
+msgid "heading"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:40
+msgid "horizontal bar"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:41
+msgid "undo"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:42 skins/common/media/js/wmd/wmd.js:1116
+msgid "redo"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:53
+msgid "enter image url"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:54
+msgid "enter url"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:55
+msgid "upload file attachment"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:1778
+msgid "image description"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:1781
+msgid "file name"
+msgstr ""
+
+#: skins/common/media/js/wmd/wmd.js:1785
+msgid "link text"
+msgstr ""

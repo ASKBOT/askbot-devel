@@ -19,9 +19,10 @@ import logging
 import signals
 import os
 
-__all__ = ['BASE_GROUP', 'ConfigurationGroup', 'Value', 'BooleanValue', 'DecimalValue', 'DurationValue',
+__all__ = ['BASE_GROUP', 'BASE_SUPER_GROUP', 'ConfigurationGroup', 'Value', 'BooleanValue', 
+      'DecimalValue', 'DurationValue',
       'FloatValue', 'IntegerValue', 'ModuleValue', 'PercentValue', 'PositiveIntegerValue', 'SortedDotDict',
-      'StringValue', 'ImageValue', 'LongStringValue', 'MultipleStringValue', 'URLValue']
+      'StringValue', 'SuperGroup', 'ImageValue', 'LongStringValue', 'MultipleStringValue', 'URLValue']
 
 _WARN = {}
 
@@ -48,6 +49,24 @@ class SortedDotDict(SortedDict):
         vals.sort()
         return vals
 
+class SuperGroup(object):
+    """Aggregates ConfigurationGroup's into super-groups
+    that are used only for the presentation in the UI"""
+    def __init__(self, name, ordering = 0):
+        self.name = name
+        self.ordering = ordering
+        self.groups = list()
+
+    def append(self, group):
+        """adds instance of :class:`ConfigurationGroup`
+        to the super group
+        """
+        if group not in self.groups:
+            self.groups.append(group)
+
+
+BASE_SUPER_GROUP = SuperGroup(_('Main'))
+
 class ConfigurationGroup(SortedDotDict):
     """A simple wrapper for a group of configuration values"""
     def __init__(self, key, name, *args, **kwargs):
@@ -66,6 +85,8 @@ class ConfigurationGroup(SortedDotDict):
         self.name = name
         self.ordering = kwargs.pop('ordering', 1)
         self.requires = kwargs.pop('requires', None)
+        self.super_group = kwargs.pop('super_group', BASE_SUPER_GROUP)
+        self.super_group.append(self)
         if self.requires:
             reqval = kwargs.pop('requiresvalue', key)
             if not is_list_or_tuple(reqval):

@@ -49,6 +49,10 @@ class Vote(base.MetaContent, base.UserContent):
     def __unicode__(self):
         return '[%s] voted at %s: %s' %(self.user, self.voted_at, self.vote)
 
+    def __int__(self):
+        """1 if upvote -1 if downvote"""
+        return self.vote
+
     def is_upvote(self):
         return self.vote == self.VOTE_UP
 

@@ -13,7 +13,7 @@ log = logging.getLogger('configuration.views')
 
 def group_settings(request, group, template='livesettings/group_settings.html'):
     # Determine what set of settings this editor is used for
-    
+
     use_db, overrides = get_overrides();
     
     mgr = ConfigurationSettings()
@@ -56,7 +56,7 @@ def group_settings(request, group, template='livesettings/group_settings.html'):
         form = None
 
     return render_to_response(template, {
-        'all_groups': mgr.groups(),
+        'all_super_groups': mgr.get_super_groups(),
         'title': title,
         'group' : settings,
         'form': form,

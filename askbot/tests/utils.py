@@ -1,6 +1,7 @@
 """utility functions used by Askbot test cases
 """
 from django.test import TestCase
+from functools import wraps
 from askbot import models
 
 def create_user(
@@ -94,6 +95,20 @@ class AskbotTestCase(TestCase):
 
         return user_object
 
+    def assertRaisesRegexp(self, *args, **kwargs):
+        """a shim for python < 2.7"""
+        try:
+            #run assertRaisesRegex, if available
+            super(AskbotTestCase, self).assertRaisesRegexp(*args, **kwargs)
+        except AttributeError:
+            #in this case lose testing for the error text
+            #second argument is the regex that is supposed
+            #to match the error text
+            args_list = list(args)#conv tuple to list
+            args_list.pop(1)#so we can remove an item
+            self.assertRaises(*args_list, **kwargs)
+
+
     def post_question(
                     self, 
                     user = None,
@@ -176,3 +191,46 @@ class AskbotTestCase(TestCase):
                     )
 
         return comment
+
+"""
+Some test decorators, taken from Django-1.3
+"""
+
+
+class SkipTest(Exception):
+    """
+    Raise this exception in a test to skip it.
+
+    Usually you can use TestResult.skip() or one of the skipping decorators
+    instead of raising this directly.
+    """
+
+
+def _id(obj):
+    return obj
+
+
+def skip(reason):
+    """
+    Unconditionally skip a test.
+    """
+    def decorator(test_item):
+        if not (isinstance(test_item, type) and issubclass(test_item, TestCase)):
+            @wraps(test_item)
+            def skip_wrapper(*args, **kwargs):
+                raise SkipTest(reason)
+            test_item = skip_wrapper
+
+        test_item.__unittest_skip__ = True
+        test_item.__unittest_skip_why__ = reason
+        return test_item
+    return decorator
+
+
+def skipIf(condition, reason):
+    """
+    Skip a test if the condition is true.
+    """
+    if condition:
+        return skip(reason)
+    return _id

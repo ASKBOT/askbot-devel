@@ -4,6 +4,9 @@ functions that happen on behalf of users
 e.g. ``some_user.do_something(...)``
 """
 from django.core import exceptions
+from django.core.urlresolvers import reverse
+from django.test.client import Client
+from django.conf import settings
 from askbot.tests.utils import AskbotTestCase
 from askbot import models
 from askbot import const

@@ -2,7 +2,7 @@
 <!-- template about.html -->
 {% block title %}{% spaceless %}{% trans site_name=settings.APP_SHORT_NAME %}About {{site_name}}{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
-<h1>{% trans site_name=settings.APP_SHORT_NAME %}About {{site_name}}{% endtrans %}</h1>
+<h1 class="section-title">{% trans site_name=settings.APP_SHORT_NAME %}About {{site_name}}{% endtrans %}</h1>
 <div class="content">
     {{settings.FORUM_ABOUT}}
 </div>

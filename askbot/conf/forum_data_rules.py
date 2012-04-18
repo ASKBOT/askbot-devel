@@ -3,12 +3,14 @@ Settings for askbot data display and entry
 """
 from askbot.conf.settings_wrapper import settings
 from askbot.deps import livesettings
-from django.utils.translation import ugettext as _
 from askbot import const
+from askbot.conf.super_groups import DATA_AND_FORMATTING
+from django.utils.translation import ugettext as _
 
 FORUM_DATA_RULES = livesettings.ConfigurationGroup(
                         'FORUM_DATA_RULES',
-                        _('Data entry and display')
+                        _('Data entry and display rules'),
+                        super_group = DATA_AND_FORMATTING
                     )
 
 settings.register(

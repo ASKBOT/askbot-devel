@@ -49,6 +49,14 @@ class ConfigSettings(object):
         """
         return getattr(self.__instance, key).value
 
+    def get_default(self, key):
+        """return the defalut value for the setting"""
+        return getattr(self.__instance, key).default
+
+    def reset(self, key):
+        """returns setting to the default value"""
+        self.update(key, self.get_default(key))
+
     def update(self, key, value):
         setting = config_get(self.__group_map[key], key) 
         setting.update(value)

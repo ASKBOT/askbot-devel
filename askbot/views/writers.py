@@ -268,6 +268,17 @@ def ask(request):#view used to ask a new question
                 query = search_state.query
                 form.initial['title'] = query
 
+        if 'tags' in request.GET:
+            #pre-populate tags.
+            clean_tags = request.GET['tags'].replace(',', ' ')
+            form.initial['tags'] = clean_tags
+        else:
+            #attemp to get tags from search state
+            search_state = request.session.get('search_state', None)
+            if search_state and search_state.tags:
+                tags = ' '.join(search_state.tags)
+                form.initial['tags'] = tags
+
     data = {
         'active_tab': 'ask',
         'page_class': 'ask-page',
@@ -353,7 +364,7 @@ def edit_question(request, id):
                 if revision_form.is_valid():
                     # Replace with those from the selected revision
                     rev_id = revision_form.cleaned_data['revision']
-                    selected_revision = models.QuestionRevision.objects.get(
+                    selected_revision = models.PostRevision.objects.question_revisions().get(
                                                         question = question,
                                                         revision = rev_id
                                                     )
@@ -438,7 +449,7 @@ def edit_answer(request, id):
                 if revision_form.is_valid():
                     # Replace with those from the selected revision
                     rev = revision_form.cleaned_data['revision']
-                    selected_revision = models.AnswerRevision.objects.get(
+                    selected_revision = models.PostRevision.objects.answer_revisions().get(
                                                             answer = answer,
                                                             revision = rev
                                                         )
@@ -608,7 +619,7 @@ def post_comments(request):#generic ajax handler to load comments to an object
         raise Http404
 
 @decorators.ajax_only
-@decorators.check_spam('text')
+@decorators.check_spam('comment')
 def edit_comment(request):
     if request.user.is_authenticated():
         comment_id = int(request.POST['comment_id'])

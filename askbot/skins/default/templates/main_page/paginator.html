@@ -3,5 +3,6 @@
     <div id="pager" class="pager">
         {{ macros.paginator(context|setup_paginator, position='left') }}
         {{ macros.pagesize_switch(context, position='right') }}
+        <div class="clean"></div>
     </div>
 {% endif %}

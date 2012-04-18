@@ -8,10 +8,12 @@ from django.utils.translation import ugettext as _
 from django.conf import settings as django_settings
 from askbot.skins import utils as skin_utils
 from askbot import const
+from askbot.conf.super_groups import CONTENT_AND_UI
 
 GENERAL_SKIN_SETTINGS = ConfigurationGroup(
                     'GENERAL_SKIN_SETTINGS',
-                    _('Skin and User Interface settings'),
+                    _('Logos and HTML <head> parts'),
+                    super_group = CONTENT_AND_UI
                 )
 
 settings.register(

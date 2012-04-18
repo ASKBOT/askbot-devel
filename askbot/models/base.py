@@ -1,17 +1,20 @@
 import datetime
 import cgi
+import logging
+
 from django.db import models
 from django.utils.html import strip_tags
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sitemaps import ping_google
+
 #todo: maybe merge askbot.utils.markup and forum.utils.html
 from askbot.utils import markup
 from askbot.utils.diff import textDiff as htmldiff
 from askbot.utils.html import sanitize_html
 from django.utils import html
-import logging
+
 
 #todo: following methods belong to a future common post class
 def parse_post_text(post):
@@ -134,16 +137,6 @@ def parse_and_save_post(post, author = None, **kwargs):
 
     timestamp = post.get_time_of_last_edit()
 
-    #create new mentions
-    for u in newly_mentioned_users:
-        from askbot.models.user import Activity
-        Activity.objects.create_new_mention(
-                                mentioned_whom = u,
-                                mentioned_in = post,
-                                mentioned_by = author,
-                                mentioned_at = timestamp
-                            )
-
     #todo: this is handled in signal because models for posts
     #are too spread out
     from askbot.models import signals
@@ -223,30 +216,6 @@ class DeletableContent(models.Model):
     class Meta:
         abstract = True
         app_label = 'askbot'
-
-
-class ContentRevision(models.Model):
-    """
-        Base class for QuestionRevision and AnswerRevision
-    """
-    revision   = models.PositiveIntegerField()
-    author     = models.ForeignKey(User, related_name='%(class)ss')
-    revised_at = models.DateTimeField()
-    summary    = models.CharField(max_length=300, blank=True)
-    text       = models.TextField()
-
-    class Meta:
-        abstract = True
-        app_label = 'askbot'
-
-    def as_html(self, **kwargs):
-        """should return html representation of
-        the revision
-        """
-        raise NotImplementedError()
-
-    def get_snipet(self):
-        pass
 
 
 class AnonymousContent(models.Model):

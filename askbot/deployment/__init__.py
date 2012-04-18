@@ -2,8 +2,11 @@
 module for deploying askbot
 """
 import os.path
+import sys
+from optparse import OptionParser
 from askbot.utils import console
 from askbot.deployment import messages
+from askbot.deployment.messages import print_message
 from askbot.deployment import path_utils
 
 def askbot_setup():
@@ -13,91 +16,130 @@ def askbot_setup():
     or gives hints on how to add askbot to an existing
     Django project
     """
-    #ask 
-    print messages.DEPLOY_PREAMBLE
+    parser = OptionParser(usage = "%prog [options]")
 
-    directory = None #directory where to put stuff
-    create_new = False #create new django project or not
-    where_to_deploy_msg = messages.WHERE_TO_DEPLOY
-    while directory is None:
+    parser.add_option(
+                "-v", "--verbose",
+                dest = "verbosity",
+                type = "int",
+                default = 1,
+                help = "verbosity level available values 0, 1, 2."
+            )
 
-        directory = raw_input(where_to_deploy_msg + ' ')
+    parser.add_option(
+                "-n", "--dir-name",
+                dest = "dir_name",
+                default = None,
+                help = "Directory where you want to install."
+            )
 
-        where_to_deploy_msg = messages.WHERE_TO_DEPLOY_QUIT
+    parser.add_option(
+                "-d", "--db-name",
+                dest = "database_name",
+                default = None,
+                help = "The database name"
+            )
 
-        directory = os.path.normpath(directory)
-        directory = os.path.abspath(directory)
+    parser.add_option(
+                "-u", "--db-user",
+                dest = "database_user",
+                default = None,
+                help = "The database user"
+            )
 
-        if os.path.isfile(directory):
-            print messages.CANT_INSTALL_INTO_FILE % {'path':directory}
-            directory = None
-            continue
+    parser.add_option(
+                "-p", "--db-password",
+                dest = "database_password",
+                default = None,
+                help = "the database password"
+            )
 
-        if path_utils.can_create_path(directory):
-            if os.path.exists(directory):
-                if path_utils.path_is_clean_for_django(directory):
-                    if path_utils.has_existing_django_project(directory):
-                        message = messages.SHOULD_ADD_APP_HERE % \
-                                                        {
-                                                            'path': directory 
-                                                        }
-                        should_add_app = console.choice_dialog(
-                                                message,
-                                                choices = ['yes','no'],
-                                                invalid_phrase = messages.INVALID_INPUT
-                                            )
-                        if should_add_app == 'yes':
-                            assert(create_new == False)
-                            if path_utils.dir_name_acceptable(directory):
-                                break
-                            else:
-                                print messages.format_msg_bad_dir_name(directory)
-                                directory = None
-                                continue
-                        else:
-                            directory = None
-                            continue
-                    else:
-                        assert(directory != None)
-                        if path_utils.dir_name_acceptable(directory):
-                            create_new = True
-                            break
-                        else:
-                            print messages.format_msg_bad_dir_name(directory)
-                            directory = None
-                            continue
-                else:
-                    print messages.format_msg_dir_unclean_django(directory)
-                    directory = None
-                    continue
-            else:
-                message = messages.format_msg_create(directory) 
-                should_create_new = console.choice_dialog(
-                                    message, 
-                                    choices = ['yes','no'],
-                                    invalid_phrase = messages.INVALID_INPUT
-                                )
-                if should_create_new == 'yes':
-                    if path_utils.dir_name_acceptable(directory):
-                        create_new = True
-                        break
-                    else:
-                        print messages.format_msg_bad_dir_name(directory)
-                        directory = None
-                        continue
-                else:
-                    directory = None
-                    continue
-        else:
-            print messages.format_msg_dir_not_writable(directory)
-            directory = None
-            continue
+    parser.add_option(
+                "--domain",
+                dest = "domain_name",
+                default = None,
+                help = "the domain name of the instance"
+            )
+
+    parser.add_option(
+                "--append-settings",
+                dest = "local_settings",
+                default = '',
+                help = "Extra settings file to append custom settings"
+            )
+
+    parser.add_option(
+                "--force",
+                dest = "force",
+                action = 'store_true',
+                help = "Force overwrite settings.py file"
+            )
+
+    try:
+        options = parser.parse_args()[0]
+        #ask
+        if options.verbosity >= 1:
+            print messages.DEPLOY_PREAMBLE
+
+        directory = path_utils.clean_directory(options.dir_name)
+        while directory is None:
+            directory = path_utils.get_install_directory(force = options.force)
+
+        deploy_askbot(directory, options)
+    except KeyboardInterrupt:
+        print "\n\nAborted."
+        sys.exit(1)
+
+
+#separated all the directory creation process to make it more useful
+
+def deploy_askbot(directory, options):
+    """function that creates django project files,
+    all the neccessary directories for askbot,
+    and the log file
+    """
 
     help_file = path_utils.get_path_to_help_file()
-    if create_new:
-        path_utils.create_path(directory)
-        path_utils.deploy_into(directory, new_project = True)
-        print messages.HOW_TO_DEPLOY_NEW % {'help_file': help_file}
+    context = {
+        'database_name': options.database_name,
+        'database_password': options.database_password,
+        'database_user': options.database_user,
+        'domain_name': options.domain_name,
+        'local_settings': options.local_settings,
+    }
+    if not options.force:
+        for key in context.keys():
+            if context[key] == None:
+                input_message = 'Please enter a value for %s:' \
+                    % (key.replace('_', ' '))
+                new_value = raw_input(input_message)
+                context[key] = new_value
+
+    create_new_project = False
+    if os.path.exists(directory):
+        if path_utils.has_existing_django_project(directory):
+            create_new_project = bool(options.force)
+        else:
+            create_new_project = True
     else:
-        path_utils.deploy_into(directory, new_project = False)
-        print messages.HOW_TO_ADD_ASKBOT_TO_DJANGO % {'help_file': help_file}
+        create_new_project = True
+
+    path_utils.create_path(directory)
+
+    path_utils.deploy_into(
+        directory,
+        new_project = create_new_project,
+        verbosity = options.verbosity,
+        context = context
+    )
+
+    if create_new_project:
+        print_message(
+            messages.HOW_TO_DEPLOY_NEW % {'help_file': help_file},
+            options.verbosity
+        )
+    else:
+        print_message(
+            messages.HOW_TO_ADD_ASKBOT_TO_DJANGO % {'help_file': help_file},
+            options.verbosity
+        )

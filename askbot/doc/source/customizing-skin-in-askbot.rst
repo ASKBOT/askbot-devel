@@ -117,6 +117,10 @@ then it is not very convinient to tweak the skin,
 as the file path may be long and files may be writable only
 by from the root account.
 
+**IMPORTANT:** Do not edit file style.css manually, instead edit the
+source style.less, written in the `lesscss <http://lesscss.org>`_ format.
+See also: :ref:`customizing-style-css-file-in-askbot`.
+
 Create a custom skin in a new directory
 ---------------------------------------
 This is technically possible, but not advisable
@@ -198,3 +202,148 @@ These are not set in stone yet.
 | /faq/                      |                        |
 | /feedback/                 |                        |
 +----------------------------+------------------------+
+
+Template Distrubution.
+======================
+
+Layouts
+-------
+
+The general template layout is controlled by a few files described below:
+
++------------------------------------+------------------------------------------------------+
+| Template File                      | Description                                          |
++====================================+======================================================+
+| base.html                          | This is the base template, a container to call all   |
+|                                    | the template files required.                         |
++------------------------------------+------------------------------------------------------+
+| one_column_body.html               | This is a base layout for one column style pages.    |
++------------------------------------+------------------------------------------------------+
+| two_column_body.html               | This is a base layout for two column style pages.    |
++------------------------------------+------------------------------------------------------+
+| widgets/answer_edit_tips.html      | Contains text displayed as "Answer Edit Tips" in the |
+|                                    | answer edit page.                                    |
++------------------------------------+------------------------------------------------------+
+| widgets/ask_form.html              | Contains the form to ask a question.                 |
++------------------------------------+------------------------------------------------------+
+| widgets/bottom_scripts.html        | Contains javascript calls and some javascript        |
+|                                    | functions needed for askbot this is included at the  |
+|                                    | bottom of every page.                                |
++------------------------------------+------------------------------------------------------+
+| widgets/editor_data.html           | Contains data necessary for the post editor this is  |
+|                                    | included in block endjs.                             |
++------------------------------------+------------------------------------------------------+
+| widgets/footer.html                | Contains the html displayed on the footer.           |
++------------------------------------+------------------------------------------------------+
+| widgets/header.html                | Contains the header section of the web. Normaly      |
+|                                    | includes the site logo and navitation tools.         |
++------------------------------------+------------------------------------------------------+
+| widgets/mandatory_tags_js.html     | Javascript functions for mandatory tags.             |
++------------------------------------+------------------------------------------------------+
+| widgets/paginator.html             | Renders the paginator in the main page.              |
++------------------------------------+------------------------------------------------------+
+| widgets/question_edit_tips.html    | Contains text displayed as "Question Edit Tips" in   |
+|                                    | the question edit page.                              |
++------------------------------------+------------------------------------------------------+
+| widgets/secondary_header.html      | Containter for the search bar section.               |
++------------------------------------+------------------------------------------------------+
+| widgets/system_messages.html       | Containter for notification messages in the top of   |
+|                                    | the page.                                            |
++------------------------------------+------------------------------------------------------+
+| widgets/user_navigation.html       | User links to login/logout.                          |
++------------------------------------+------------------------------------------------------+
+
+Widgets
+-------
+
+Widgets are pieces of html code separated to be easily modified, they are located in the 
+widgets folder and are called from several places in the templates.
+
++----------------------------+------------------------------+--------------------------------+
+| Widget name                | Used in                      | Description                    |
++============================+==============================+================================+
+| ask_button.html            | widgets/secondary_header.html | Just the "ask a question"      | 
+|                            |                              | button                         |
++----------------------------+------------------------------+--------------------------------+
+| answer_controls.html       | question.html                | Answer operation links, edit   | 
+|                            |                              | report as spam and more.       |
++----------------------------+------------------------------+--------------------------------+
+| contributors.html          | main_page/sidebar.html       | Widget to display contributors | 
+|                            |                              | avatars.                       |
++----------------------------+------------------------------+--------------------------------+
+| logo.html                  | widgets/header.html          | Contains the site logo.        | 
++----------------------------+------------------------------+--------------------------------+
+| main_menu.html             | widgets/secondary_header.html| Contains the main menu html    | 
++----------------------------+------------------------------+--------------------------------+
+| meta_nav.html              | widgets/header.html          | Widget for the me logo.        | 
++----------------------------+------------------------------+--------------------------------+
+| question_controls.html     | question.html                | Question operation links, edit | 
+|                            |                              | report as spam and more.       |
++----------------------------+------------------------------+--------------------------------+
+| question_vote_buttons.html | question.html                | Vote buttons used in question  | 
++----------------------------+------------------------------+--------------------------------+
+| related_tags.html          | main_page/sidebar.html       | Question operation links, edit | 
+|                            |                              | report as spam and more.       |
++----------------------------+------------------------------+--------------------------------+
+| search_bar.html            | widgets/secondary_header.html| Contains the search bar.       | 
++----------------------------+------------------------------+--------------------------------+
+| share_buttons.html         | question.html                | Widget to show the social      | 
+|                            |                              | sharing buttons.               |
++----------------------------+------------------------------+--------------------------------+
+| tag_selector.html          | main_page/sidebar.html       | Contains the tag selector for  | 
+|                            |                              | search.                        |
++----------------------------+------------------------------+--------------------------------+
+| user_navigation.html       | widgets/header.html          | User navigation links like     | 
+|                            |                              | login, logout.                 |
++----------------------------+------------------------------+--------------------------------+
+
+Template per URL
+----------------
+
+According to the URL some template files are called, the detail on 
+which file is called is in the following table.
+
++----------------------------+-----------------------------+--------------------------------+
+| Page url                   | Template file               | Macros used                    |
++============================+=============================+================================+
+| /questions/                | main_page.html              |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /questions/ask/            | ask.html                    |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /tags                      | tags.html                   | tag_widget, paginator,         | 
+|                            |                             | tag_cloud                      |
++----------------------------+-----------------------------+--------------------------------+
+| /question/<id>/<slug>      | question.html               | tag_widget, edit_post          |
+|                            |                             | checkbox_in_div, share         |
++----------------------------+-----------------------------+--------------------------------+
+| /questions/<id>/revisions  | revisions.html              | post_contributor_info          |
++----------------------------+-----------------------------+--------------------------------+
+| /questions/<id>/edit       | question-edit.html          | tag_autocomplete_js,           |
+|                            |                             | checkbox_in_div,               |
+|                            |                             | edit_post                      |
++----------------------------+-----------------------------+--------------------------------+
+| /answers/<id>/revisions    | revisions.html              | post_contributor_info          |
++----------------------------+-----------------------------+--------------------------------+
+| /users/                    | users.html                  | users_list, paginator          |
++----------------------------+-----------------------------+--------------------------------+
+| /users/<id>/slug           | user_profile/user.html      |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /users/<id>/edit (bug!)    | user_profile/user_edit.html | gravatar                       |
++----------------------------+-----------------------------+--------------------------------+
+| /account/signin/           | authopenid/signin.html      | provider_buttons               |
+|                            |                             | (from authopenid/macros)       |
++----------------------------+-----------------------------+--------------------------------+
+| /avatar/change/            | avatar/change.html          | gravatar                       |
++----------------------------+-----------------------------+--------------------------------+
+| /about/                    | about.html                  |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /badges/                   | badges.html                 |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /badges/<id>/              | badge.html                  | user_score_and_badge_summary   |
++----------------------------+-----------------------------+--------------------------------+
+| /account/logout/           | authopenid/logout.html      |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /faq/                      | faq.html                    |                                |
++----------------------------+-----------------------------+--------------------------------+
+| /feedback/                 | feedback.html               |                                |
++----------------------------+-----------------------------+--------------------------------+

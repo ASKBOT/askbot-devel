@@ -244,6 +244,8 @@ class OnScreenUpdateNotificationTests(TestCase):
         )
 
     def test_self_comments(self):
+        """poster of the question or answer adds a comment
+        under the corresponding question or answer"""
         self.reset_response_counts()
         time.sleep(1)
         timestamp = datetime.datetime.now()

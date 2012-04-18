@@ -3,7 +3,7 @@
 <!-- user_edit.html -->
 {% block title %}{% spaceless %}{% trans %}Edit user profile{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
-<h1>
+<h1 class="section-title">
     {{ request.user.username }} - {% trans %}edit profile{% endtrans %}
 </h1>
 <div id="main-body" style="width:100%;padding-top:10px">
@@ -14,7 +14,7 @@
             {% else %}
                 <img src="{{"/images/nophoto.png"|media}}">
             {% endif %}
-            <h1><a href="{% url faq %}#gravatar">{% trans %}change picture{% endtrans %}</a><h1>
+            <br><a href="{% url faq %}#gravatar">{% trans %}change picture{% endtrans %}</a>
         </div>
         <div style="float:right;width:750px;text-align:left;">
             <h2>{% trans %}Registered user{% endtrans %}</h2>

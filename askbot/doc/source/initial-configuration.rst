@@ -29,18 +29,44 @@ There may be an error message; ignore it.
 
     `askbot-setup` adds those files to the directory you select (and some more things specific to Askbot).
 
+.. versionadded:: 0.7.24
+    `askbot-setup` also have command line arguments such as folder name(name), database name, database password and database user also added verbosity support. 
+    You can also specify a local settings file to append it's contents to the deployment settings file.
+
+    +----------------------------------+------------------------------------------------------------+
+    | Parameter                        | Purpose                                                    |
+    +==================================+============================================================+
+    | -n <NAME>                        | Name of the instance, this is the name that the            |
+    |                                  | folder will use.                                           |
+    +----------------------------------+------------------------------------------------------------+
+    | -d <DATABASE_NAME>               | The database name that the instance will use.              |
+    +----------------------------------+------------------------------------------------------------+
+    | -u <DATABASE_USER>               | The database user that the instance will use.              |
+    +----------------------------------+------------------------------------------------------------+
+    | -p <DATABASE_PASSWORD>           | The database password for the user.                        |
+    +----------------------------------+------------------------------------------------------------+
+    | --domain=<DOMAIN_NAME>           | Domain name for the application.                           |
+    +----------------------------------+------------------------------------------------------------+
+    | --append-settings=<SETTINGS_FILE>| Allows to append a setting file content to the             |
+    |                                  | settings file, the parameter is the file to use.           |
+    +----------------------------------+------------------------------------------------------------+
+
+
+.. note::
+
+    `askbot-setup` command line arguments detail parameter is available when you type: askbot-setup --h.
 
 Note that if you already have a Django site you will not want to use `askbot-setup`, because you don't want to just overwrite your existing settings.py. See below for instructions.
 
-Another thing you have to do if you are creating a brand new Django project is edit the file `settings.py`_. At the very minimum, you will need to provide the correct values to::
+Another thing you have to do if you are creating a brand new Django project is edit the file `settings.py`_. At the very minimum, you will need to provide the correct values to some settings.
+
+All values must be enclosed in single quotes, as shown below::
 
     DATABASE_ENGINE = '' #e.g. 'mysql'
     DATABASE_NAME = '' #name of the database you created, e.g. 'askbot'.
     DATABASE_USER = '' #name of the database user, e.g. 'askbotuser'.
     DATABASE_PASSWORD = '' #password to the database
     CSRF_COOKIE_DOMAIN = ''#e.g. 'example.com' or 'askbot.example.com' (localhost/IP address for tests)
-
-All values must be enclosed in single quotes, as shown above.
 
 .. note::
 

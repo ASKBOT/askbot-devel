@@ -3,10 +3,12 @@ from django.utils.translation import ugettext as _
 from askbot import const
 from askbot.deps import livesettings
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import EXTERNAL_SERVICES
 
 SPAM_AND_MODERATION = livesettings.ConfigurationGroup(
                     'SPAM_AND_MODERATION',
-                    _('Spam control and content moderation')
+                    _('Akismet spam protection'),
+                    super_group = EXTERNAL_SERVICES
                 )
 
 settings.register(
@@ -29,4 +31,3 @@ settings.register(
         description=_('Akismet key for spam detection')
     )
 )
-

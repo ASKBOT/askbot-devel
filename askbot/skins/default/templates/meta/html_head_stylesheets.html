@@ -1,0 +1,15 @@
+{% if settings.ASKBOT_CSS_DEVEL == False %}
+<link href="{{"/style/style.css"|media }}" rel="stylesheet" type="text/css" />
+{% else %}
+<link href="{{"/style/style.less"|media }}" rel="stylesheet/less" type="text/css" />
+<script type="text/javascript" src="{{"/js/less.min.js"|media}}"></script>
+{% endif %}
+<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:300,400,700' rel='stylesheet' type='text/css'>
+{{ skin.get_extra_css_link() }}
+{% if settings.USE_CUSTOM_CSS %}
+    <link 
+        href="{% url "custom_css" %}?v={{settings.MEDIA_RESOURCE_REVISION}}"
+        rel="stylesheet"
+        type="text/css"
+    />
+{% endif %}

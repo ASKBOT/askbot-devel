@@ -33,13 +33,13 @@ def config_variable(request, variable_name = None, mimetype = None):
     return HttpResponse(output, mimetype = mimetype)
 
 def about(request, template='about.html'):
-    return generic_view(request, template = template, page_class = 'meta') 
+    return generic_view(request, template = template, page_class = 'meta')
 
 def page_not_found(request, template='404.html'):
-    return generic_view(request, template) 
+    return generic_view(request, template)
 
 def server_error(request, template='500.html'):
-    return generic_view(request, template) 
+    return generic_view(request, template)
 
 def faq(request):
     if getattr(askbot_settings, 'FORUM_FAQ',''):
@@ -64,7 +64,7 @@ def faq(request):
         #'send_email_key_url': reverse('send_email_key'),
         'ask_question_url': reverse('ask'),
         'page_class': 'meta',
-    }   
+    }
     return render_into_skin('faq_static.html', data, request)
 
 @csrf.csrf_protect
@@ -72,9 +72,10 @@ def feedback(request):
     data = {'page_class': 'meta'}
     form = None
     if request.method == "POST":
-        form = FeedbackForm(request.POST)
+        form = FeedbackForm(is_auth = request.user.is_authenticated(),
+                            data = request.POST)
         if form.is_valid():
-            if not request.user.is_authenticated:
+            if not request.user.is_authenticated():
                 data['email'] = form.cleaned_data.get('email',None)
             data['message'] = form.cleaned_data['message']
             data['name'] = form.cleaned_data.get('name',None)
@@ -85,7 +86,8 @@ def feedback(request):
             request.user.message_set.create(message=msg)
             return HttpResponseRedirect(get_next_url(request))
     else:
-        form = FeedbackForm(initial={'next':get_next_url(request)})
+        form = FeedbackForm(is_auth = request.user.is_authenticated(),
+                            initial={'next':get_next_url(request)})
 
     data['form'] = form
     return render_into_skin('feedback.html', data, request)
@@ -96,7 +98,7 @@ def privacy(request):
 
 def badges(request):#user status/reputation system
     #todo: supplement database data with the stuff from badges.py
-    known_badges = badge_data.BADGES.keys() 
+    known_badges = badge_data.BADGES.keys()
     badges = BadgeData.objects.filter(slug__in = known_badges).order_by('slug')
     my_badges = []
     if request.user.is_authenticated():

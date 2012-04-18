@@ -1,0 +1,24 @@
+<div class="tabBar tabBar-answer">
+    <h2 id="questionCount">
+        {% trans counter=answers|length %}
+        {{counter}} Answer
+        {% pluralize %}
+        {{counter}} Answers
+        {% endtrans %}
+    </h2>
+    <div class="tabsA">
+        <span class="label">
+        Sort by »
+        </span>
+        <a id="oldest" href="{{ question.get_absolute_url() }}?sort=oldest#sort-top" 
+            title="{% trans %}oldest answers will be shown first{% endtrans %}"
+        ><span>{% trans %}oldest answers{% endtrans %}</span></a>
+        <a id="latest" href="{{ question.get_absolute_url() }}?sort=latest#sort-top" 
+            title="{% trans %}newest answers will be shown first{% endtrans %}"
+        ><span>{% trans %}newest answers{% endtrans %}</span></a>
+        <a id="votes" href="{{ question.get_absolute_url() }}?sort=votes#sort-top" 
+            title="{% trans %}most voted answers will be shown first{% endtrans %}"
+        ><span>{% trans %}popular answers{% endtrans %}</span></a>   
+    </div>
+</div>
+<div class="clean"></div>

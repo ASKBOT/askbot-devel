@@ -289,7 +289,13 @@ def signin(request):
     on_failure = signin_failure
     email_feeds_form = askbot_forms.SimpleEmailSubscribeForm()
 
-    next_url = get_next_url(request)
+    #we need a special priority on where to redirect on successful login
+    #here:
+    #1) url parameter "next" - if explicitly set
+    #2) url from django setting LOGIN_REDIRECT_URL
+    #3) home page of the forum
+    login_redirect_url = getattr(settings, 'LOGIN_REDIRECT_URL', None)
+    next_url = get_next_url(request, default = login_redirect_url)
     logging.debug('next url is %s' % next_url)
 
     if askbot_settings.ALLOW_ADD_REMOVE_LOGIN_METHODS == False \
@@ -548,15 +554,23 @@ def show_signin_view(
         #annotate objects with extra data
         providers = util.get_enabled_login_providers()
         for login_method in existing_login_methods:
-            if login_method.provider_name == 'facebook':
-                continue#it is disabled
-            provider_data = providers[login_method.provider_name]
-            if provider_data['type'] == 'password':
-                #only external password logins will not be deletable
-                #this is because users with those can lose access to their accounts permanently
-                login_method.is_deletable = provider_data.get('password_changeable', False)
-            else:
-                login_method.is_deletable = True
+            try:
+                provider_data = providers[login_method.provider_name]
+                if provider_data['type'] == 'password':
+                    #only external password logins will not be deletable
+                    #this is because users with those can lose access to their accounts permanently
+                    login_method.is_deletable = provider_data.get('password_changeable', False)
+                else:
+                    login_method.is_deletable = True
+            except KeyError:
+                logging.critical(
+                    'login method %s is no longer available '
+                    'please delete records for this login method '
+                    'from the UserAssociation table',
+                    login_method.provider_name
+                )
+                continue
+
 
 
     if view_subtype == 'default':

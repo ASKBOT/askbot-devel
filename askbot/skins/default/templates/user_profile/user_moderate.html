@@ -15,6 +15,8 @@
         <table class="form-as-table">
         {{ change_user_status_form.as_table() }}
         </table>
+        <p id="id_user_status_info">
+        </p>
         <input type="submit" class="submit" name="change_status" value="{% trans %}Save{% endtrans %}" />
     </form>
 {% endif %}
@@ -63,4 +65,30 @@
     <input type="submit" class="submit" name="send_message" value="{% trans %}Send message{% endtrans %}" />
 </form>
 {% endif %}
+{% endblock %}
+{% block endjs %}
+    <script type="text/javascript" >
+        $("#id_user_status_info").hide();
+        $("#id_user_status").change(function () {
+            var optionValue = $(this).attr('value');
+            if (optionValue == "d") {
+                $('#id_user_status_info').html("{% trans %}Administrators have privileges of normal users, but in addition they can assign/revoke any status to any user, and are exempt from the reputation limits.{% endtrans %}");
+                $('#id_user_status_info').show('slow');
+            } else if (optionValue == "m"){
+                $('#id_user_status_info').html("{% trans %}Moderators have the same privileges as administrators, but cannot add or remove user status of 'moderator' or 'administrator'.{% endtrans %}");
+                $('#id_user_status_info').show('slow');
+            } else if (optionValue == "a"){
+                $('#id_user_status_info').html("{% trans %}'Approved' status means the same as regular user.{% endtrans %}");
+                $('#id_user_status_info').show('slow');
+            } else if (optionValue == "s"){
+                $('#id_user_status_info').html("{% trans %}Suspended users can only edit or delete their own posts.{% endtrans %}");
+                $('#id_user_status_info').show('slow');
+            } else if (optionValue == "b"){
+                $('#id_user_status_info').html("{% trans %}Blocked users can only login and send feedback to the site administrators.{% endtrans %}");
+                $('#id_user_status_info').show('slow');
+            } else {
+                $('#id_user_status_info').hide('slow');
+            }
+        })
+    </script>
 {% endblock %}

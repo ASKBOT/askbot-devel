@@ -3,17 +3,36 @@ Settings that modify processing of user text input
 """
 
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import DATA_AND_FORMATTING
 from askbot.deps.livesettings import ConfigurationGroup
-from askbot.deps.livesettings import BooleanValue, StringValue
-from django.utils.translation import ugettext as _
-import askbot
+from askbot.deps.livesettings import BooleanValue, StringValue, LongStringValue
 from askbot import const
-import os
+from django.utils.translation import ugettext as _
+import re
 
 MARKUP = ConfigurationGroup(
                     'MARKUP',
-                    _('Markup formatting')
+                    _('Markup in posts'),
+                    super_group = DATA_AND_FORMATTING
                 )
+
+def regex_settings_validation(*args):
+    """
+    Validate the regular expressions
+    """
+    try:
+
+        new_value = args[1]
+        regex_list = new_value.split('\n')
+        
+        for i in range(0, len(regex_list)):
+            re.compile(regex_list[i].strip())
+        return args[1]
+    
+    except Exception:
+        # The regex is invalid, so we overwrite it with empty string
+        return ""
+
 
 settings.register(
     BooleanValue(
@@ -60,6 +79,63 @@ settings.register(
                     'pointing to the "mathjax" directory '
                     '(for example: http://mysite.com/mathjax)'
                     ),
+        default = ''
+    )
+)
+
+
+settings.register(
+    BooleanValue(
+        MARKUP,
+        'ENABLE_AUTO_LINKING',
+        description=_('Enable autolinking with specific patterns'),
+        help_text=_(
+            'If you enable this feature, '
+            'the application  will be able to '
+            'detect patterns and auto link to URLs'        
+        ),
+        default = False
+    )
+)
+
+
+settings.register(
+    LongStringValue(
+        MARKUP,
+        'AUTO_LINK_PATTERNS',
+        description=_('Regexes to detect the link patterns'),
+        help_text=_(
+            'Enter valid regular expressions for the patters,'
+            ' one per line.'
+            ' For example to'
+            ' detect a bug pattern like #bug123,'
+            ' use the following regex: #bug(\d+). The numbers'
+            ' captured by the pattern in the parentheses will'
+            ' be transferred to the link url template.'
+            ' Please look up more information about regular'
+            ' expressions elsewhere.'
+        ),
+        update_callback=regex_settings_validation,
+        default = ''
+        )
+    )
+
+settings.register(
+    LongStringValue(
+        MARKUP,
+        'AUTO_LINK_URLS',
+        description=_('URLs for autolinking'),
+        help_text=_(
+            'Here, please enter url templates for the patterns'
+            ' entered in the previous setting, also one entry per line.'
+            ' <strong>Make sure that number of lines in this setting'
+            ' and the previous one are the same</strong>'
+            ' For example template'
+            ' https://bugzilla.redhat.com/show_bug.cgi?id=\\1'
+            ' together with the pattern shown above'
+            ' and the entry in the post #123'
+            ' will produce link to the bug 123 in the redhat bug tracker.'
+        ),
         default = ''
     )
 )

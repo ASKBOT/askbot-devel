@@ -2,6 +2,7 @@
 External service key settings
 """
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import LOGIN_USERS_COMMUNICATION
 from askbot.deps import livesettings
 from django.utils.translation import ugettext as _
 from django.conf import settings as django_settings
@@ -9,7 +10,8 @@ from askbot.skins import utils as skin_utils
 
 LOGIN_PROVIDERS = livesettings.ConfigurationGroup(
                     'LOGIN_PROVIDERS',
-                    _('Login provider setings')
+                    _('Login provider setings'),
+                    super_group = LOGIN_USERS_COMMUNICATION
                 )
 
 settings.register(
@@ -54,11 +56,11 @@ settings.register(
     livesettings.ImageValue(
         LOGIN_PROVIDERS,
         'WORDPRESS_SITE_ICON',
-        upload_directory = django_settings.ASKBOT_FILE_UPLOAD_DIR,
-        upload_url = '/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
-        default = '/images/logo.gif',
-        description = _('Upload your icon'),
-        url_resolver = skin_utils.get_media_url
+        upload_directory=django_settings.ASKBOT_FILE_UPLOAD_DIR,
+        upload_url='/' + django_settings.ASKBOT_UPLOADED_FILES_URL,
+        default='/images/logo.gif',
+        description=_('Upload your icon'),
+        url_resolver=skin_utils.get_media_url
     )
 )
 

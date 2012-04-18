@@ -3,8 +3,8 @@ from django.core.management.base import NoArgsCommand
 from django.core.urlresolvers import reverse
 from django.db import connection
 from django.db.models import Q, F
-from askbot.models import User, Question, Answer, Tag, QuestionRevision
-from askbot.models import AnswerRevision, Activity, EmailFeedSetting
+from askbot.models import User, Question, Answer, Tag, PostRevision
+from askbot.models import Activity, EmailFeedSetting
 from askbot.models import Comment
 from askbot.models.question import get_tag_summary_from_questions
 from django.utils.translation import ugettext as _
@@ -336,7 +336,7 @@ class Command(NoArgsCommand):
 
             #collect info on all sorts of news that happened after
             #the most recent emailing to the user about this question
-            q_rev = QuestionRevision.objects.filter(
+            q_rev = PostRevision.objects.question_revisions().filter(
                                                 question=q,
                                                 revised_at__gt=emailed_at
                                             )
@@ -359,7 +359,7 @@ class Command(NoArgsCommand):
 
             new_ans = new_ans.exclude(author=user)
             meta_data['new_ans'] = len(new_ans)
-            ans_rev = AnswerRevision.objects.filter(
+            ans_rev = PostRevision.objects.answer_revisions().filter(
                                             answer__question = q,
                                             answer__deleted = False,
                                             revised_at__gt = emailed_at

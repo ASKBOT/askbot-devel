@@ -4,13 +4,15 @@ user in response to various actions by the same
 users or others
 """
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import REP_AND_BADGES
 from askbot.deps.livesettings import ConfigurationGroup, IntegerValue
 from django.utils.translation import ugettext as _
 
 BADGES = ConfigurationGroup(
                     'BADGES',
                     _('Badge settings'),
-                    ordering=2
+                    ordering=2,
+                    super_group = REP_AND_BADGES
                 )
 
 settings.register(

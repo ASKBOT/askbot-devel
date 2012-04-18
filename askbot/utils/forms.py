@@ -11,19 +11,19 @@ import logging
 import urllib
 
 DEFAULT_NEXT = '/' + getattr(settings, 'ASKBOT_URL')
-def clean_next(next):
-    if next is None:
-        return DEFAULT_NEXT
+def clean_next(next, default = None):
+    if next is None or not next.startswith('/'):
+        if default:
+            return default
+        else:
+            return DEFAULT_NEXT
     next = str_to_unicode(urllib.unquote(next), 'utf-8')
     next = next.strip()
-    if next.startswith('/'):
-        logging.debug('next url is %s' % next)
-        return next
-    logging.debug('next url is %s' % DEFAULT_NEXT)
-    return DEFAULT_NEXT
+    logging.debug('next url is %s' % next)
+    return next
 
-def get_next_url(request):
-    return clean_next(request.REQUEST.get('next'))
+def get_next_url(request, default = None):
+    return clean_next(request.REQUEST.get('next'), default)
 
 class StrippedNonEmptyCharField(forms.CharField):
     def clean(self,value):

@@ -11,11 +11,13 @@ recursive-exclude .git
 prune dist
 prune tmp
 prune build
+exclude db
 exclude lint
 exclude settings.py
 exclude manage.py
 exclude __init__.py
 exclude urls.py
+exclude rebuild-locales.pl
 exclude askbot/upfiles/*.*
 exclude askbot/upfiles/avatars/*
 recursive-exclude askbot/doc/build/*
@@ -26,4 +28,3 @@ recursive-exclude categories *
 recursive-exclude follow *
 recursive-exclude env *
 recursive-exclude .tox
-exclude db

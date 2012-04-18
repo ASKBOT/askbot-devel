@@ -5,10 +5,11 @@ from askbot.conf.settings_wrapper import settings
 from askbot.deps.livesettings import ConfigurationGroup
 from askbot.deps.livesettings import values
 from django.utils.translation import ugettext as _
-
+from askbot.conf.super_groups import CONTENT_AND_UI
 SIDEBAR_QUESTION = ConfigurationGroup(
                     'SIDEBAR_QUESTION',
-                    _('Sidebar widget settings - question page'),
+                    _('Question page sidebar'),
+                    super_group = CONTENT_AND_UI
                 )
 
 settings.register(

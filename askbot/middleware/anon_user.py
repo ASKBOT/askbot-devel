@@ -21,6 +21,8 @@ class AnonymousMessageManager(object):
         create_message(self.request, message)  
 
     def get_and_delete(self):
+        """returns messages sent to the anonymous user
+        via session, and removes messages from the session"""
         messages = get_and_delete_messages(self.request)
         return messages
 
@@ -31,9 +33,17 @@ def dummy_deepcopy(*arg):
     return None
 
 class ConnectToSessionMessagesMiddleware(object):
-    """middleware that attaches messages to anonymous users"""
+    """Middleware that attaches messages to anonymous users, and
+    makes sure that anonymous user greeting is shown just once.
+    Middleware does not do anything if the anonymous user greeting
+    is disabled.
+    """
     def process_request(self, request):
-        if not request.user.is_authenticated():
+        """Enables anonymous users to receive messages
+        the same way as authenticated users, and sets
+        the anonymous user greeting, if it should be shown"""
+        if request.user.is_anonymous():
+            #1) Attach the ability to receive messages
             #plug on deepcopy which may be called by django db "driver"
             request.user.__deepcopy__ = dummy_deepcopy
             #here request is linked to anon user
@@ -41,17 +51,20 @@ class ConnectToSessionMessagesMiddleware(object):
             request.user.get_and_delete_messages = \
                             request.user.message_set.get_and_delete
 
-            #also set the first greeting one time per session only
+            #2) set the first greeting one time per session only
             if 'greeting_set' not in request.session and \
-                    'askbot_visitor' not in request.COOKIES:
+                    'askbot_visitor' not in request.COOKIES and \
+			        askbot_settings.ENABLE_GREETING_FOR_ANON_USER:
                 request.session['greeting_set'] = True
                 msg = askbot_settings.GREETING_FOR_ANONYMOUS_USER
                 request.user.message_set.create(message=msg)
 
     def process_response(self, request, response):
-        """ Adds the ``'askbot_visitor'``key to cookie if user ever authenticates so
-        that the anonymous user message won't be shown. """
-        if request.user.is_authenticated() and \
+        """Adds the ``'askbot_visitor'``key to cookie if user ever
+        authenticates so that the anonymous user message won't
+        be shown after the user logs out"""
+        if hasattr(request, 'user') and \
+                request.user.is_authenticated() and \
                 'askbot_visitor' not in request.COOKIES :
             #import datetime
             #max_age = 365*24*60*60
@@ -61,4 +74,3 @@ class ConnectToSessionMessagesMiddleware(object):
             #                        "%a, %d-%b-%Y %H:%M:%S GMT")
             response.set_cookie('askbot_visitor', False)
         return response
-

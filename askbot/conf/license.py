@@ -2,6 +2,7 @@
 clause used in askbot instances"""
 from askbot import const
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import CONTENT_AND_UI
 from askbot.deps import livesettings
 from askbot.skins import utils as skin_utils
 from django.utils.translation import ugettext as _
@@ -9,7 +10,8 @@ from django.conf import settings as django_settings
 
 LICENSE_SETTINGS = livesettings.ConfigurationGroup(
                         'LICENSE_SETTINGS',
-                        _('License settings')
+                        _('Content LicensContent License'),
+                        super_group = CONTENT_AND_UI
                     )
 
 settings.register(

@@ -40,7 +40,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #go to the site's live settings and enable the feature
 #"Email settings" -> "allow asking by email"
 #
-#   WARNING: command post_emailed_questions DELETES all 
+#   WARNING: command post_emailed_questions DELETES all
 #            emails from the mailbox each time
 #            do not use your personal mail box here!!!
 #
@@ -78,20 +78,21 @@ PROJECT_ROOT = os.path.dirname(__file__)
 ADMIN_MEDIA_PREFIX = '/admin/media/'
 
 # Make up some unique string, and don't share it with anybody.
-SECRET_KEY = 'sdljdfjkldsflsdjkhsjkldgjlsdgfs s ' 
+SECRET_KEY = 'sdljdfjkldsflsdjkhsjkldgjlsdgfs s '
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
     #below is askbot stuff for this tuple
-    'askbot.skins.loaders.load_template_source',
+    #'askbot.skins.loaders.load_template_source', #changed due to bug 97
+    'askbot.skins.loaders.filesystem_load_template_source',
     #'django.template.loaders.eggs.load_template_source',
 )
 
 
 MIDDLEWARE_CLASSES = (
-    'askbot.deps.tracking.middleware.BannedIPMiddleware',
+    'tracking.middleware.BannedIPMiddleware',
     #'django.middleware.gzip.GZipMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.cache.UpdateCacheMiddleware',
@@ -102,6 +103,7 @@ MIDDLEWARE_CLASSES = (
 
     #below is askbot stuff for this tuple
     'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
+    'askbot.middleware.forum_mode.ForumModeMiddleware',
     'askbot.middleware.pagesize.QuestionsPageSizeMiddleware',
     'askbot.middleware.cancel.CancelActionMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
@@ -116,7 +118,7 @@ ROOT_URLCONF = os.path.basename(os.path.dirname(__file__)) + '.urls'
 
 #UPLOAD SETTINGS
 FILE_UPLOAD_TEMP_DIR = os.path.join(
-                                os.path.dirname(__file__), 
+                                os.path.dirname(__file__),
                                 'tmp'
                             ).replace('\\','/')
 
@@ -165,9 +167,11 @@ INSTALLED_APPS = (
     'djcelery',
     'djkombu',
     'followit',
-    'askbot.deps.tracking',
+    'tracking',
     #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
     #requires setting of MEDIA_ROOT and MEDIA_URL
+    #values of which can be the same as ASKBOT_FILE_UPLOAD_DIR and ASKBOT_UPLOADED_FILES_URL,
+    #respectively
 )
 
 
@@ -177,6 +181,7 @@ CACHE_BACKEND = 'locmem://'
 #needed for django-keyedcache
 CACHE_TIMEOUT = 6000
 CACHE_PREFIX = 'askbot' #make this unique
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cache_db'
 
@@ -200,8 +205,10 @@ logging.basicConfig(
 #   ASKBOT_URL = 'forum/'
 #
 ASKBOT_URL = '' #no leading slash, default = '' empty string
+ASKBOT_TRANSLATE_URL = True #translate specific URLs
 _ = lambda v:v #fake translation function for the login url
 LOGIN_URL = '/%s%s%s' % (ASKBOT_URL,_('account/'),_('signin/'))
+LOGIN_REDIRECT_URL = ASKBOT_URL #adjust if needed
 #note - it is important that upload dir url is NOT translated!!!
 #also, this url must not have the leading slash
 ASKBOT_UPLOADED_FILES_URL = '%s%s' % (ASKBOT_URL, 'upfiles/')
@@ -209,11 +216,11 @@ ALLOW_UNICODE_SLUGS = False
 ASKBOT_USE_STACKEXCHANGE_URLS = False #mimic url scheme of stackexchange
 
 #Celery Settings
-BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+BROKER_TRANSPORT = "djkombu.transport.DatabaseTransport"
 CELERY_ALWAYS_EAGER = True
 
 import djcelery
 djcelery.setup_loader()
 
-CSRF_COOKIE_NAME = 'askbot_scrf'
+CSRF_COOKIE_NAME = 'askbot_csrf'
 CSRF_COOKIE_DOMAIN = ''#enter domain name here - e.g. example.com

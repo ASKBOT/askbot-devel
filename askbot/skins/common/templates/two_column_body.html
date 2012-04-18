@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_class %}two-col{% endblock %}
+{% block body %}
+<div id="ContentLeft">
+    {% block content%}
+    {% endblock%}
+</div>
+<div id="ContentRight">
+    {% block sidebar%}
+    {% endblock%}
+</div>
+{% endblock %}

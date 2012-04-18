@@ -4,8 +4,11 @@
 .acResults {
 	padding: 0px;
 	border: 1px solid WindowFrame;
-	background-color: Window;
+	background-color: #fff;
 	overflow: hidden;
+    -webkit-box-shadow:  0px  1px 1px #A7A7A7;
+    -moz-box-shadow:  0px  1px 1px #BFBFBF;
+    box-shadow: 0px  1px 1px #BFBFBF;
 }
 
 .acResults ul {
@@ -23,7 +26,7 @@
 	display: block;
 	width: 100%;
 	font: menu;
-	font-size: 12px;
+	font-size: 14px;
 	overflow: hidden;
 }
 

@@ -1,0 +1,58 @@
+{% from "macros.html" import user_country_flag, tag_list_widget %}
+<div class="short-summary{% if extra_class %} {{extra_class}}{% endif %}" id="question-{{question.id}}">
+    <div class="counts">
+        <div class="views
+             {% if question.view_count == 0 -%}
+                no-views
+             {% else -%}
+                some-views
+             {%- endif -%}">
+             <span class="item-count">{{question.view_count|humanize_counter}}</span>
+            <div>
+            {% trans cnt=question.view_count %}view{% pluralize %}views{% endtrans %}
+            </div>
+        </div>
+        <div class="answers
+                {% if question.answer_count == 0 -%}
+                    no-answers
+                {% else -%}
+                    {%- if question.answer_accepted -%}
+                        accepted
+                    {%- else -%}
+                        some-answers
+                    {%- endif -%}
+                {%- endif -%}"> 
+            <span 
+                class="item-count"
+            >{{question.answer_count|humanize_counter}}{% if question.answer_accepted%}{% endif %}</span>
+            <div>
+            {% trans cnt=question.answer_count %}answer{% pluralize %}answers{% endtrans %}
+            </div>
+        </div>
+        <div class="votes 
+                    {% if question.score == 0 -%}
+                        no-votes
+                    {% else -%}
+                        some-votes
+                    {%- endif -%}">
+            <span class="item-count">{{question.score|humanize_counter}}</span>
+            <div>
+            {% trans cnt=question.score %}vote{% pluralize %}votes{% endtrans %}
+            </div>
+        </div>
+        
+        <div style="clear:both"></div>
+        <div class="userinfo">
+            <span class="relativetime" title="{{question.last_activity_at}}">{{ question.last_activity_at|diff_date }}</span>
+            {% if question.is_anonymous %}
+                <span class="anonymous">{{ question.last_activity_by.get_anonymous_name() }}</span>
+            {% else %}
+                <a href="{% url user_profile question.last_activity_by.id, question.last_activity_by.username|slugify %}">{{question.last_activity_by.username}}</a>{{ user_country_flag(question.last_activity_by) }}
+            {#{user_score_and_badge_summary(question.last_activity_by)}#}
+            {% endif %}
+        </div>
+    </div>
+    <h2><a title="{{question.summary|escape}}" href="{{ question.get_absolute_url() }}">{{question.get_question_title()|escape}}</a></h2>
+    {{ tag_list_widget(question.get_tag_names()) }}
+</div>
+

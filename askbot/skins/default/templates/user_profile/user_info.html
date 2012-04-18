@@ -76,23 +76,19 @@
                     <td>{{ macros.user_full_location(view_user) }}</td>
                 </tr>
                 {% endif %}
-                {% if view_user.date_of_birth%}
+                {% if view_user.date_of_birth %}
                 <tr>
                 <!--todo  - redo this with whole sentence translation -->
                     <td>{% trans %}age{% endtrans %}</td>
                     <td>{{view_user.date_of_birth|get_age}} {% trans %}age unit{% endtrans %}</td>
                 </tr>
                 {% endif %}
-                {#
-        <!--
                 {% if votes_today_left %}
                 <tr>
-                    <td>{% trans "todays unused votes" %}</td>
-                    <td><strong class="darkred">{{ votes_today_left }}</strong> {% trans "votes left" %}</td>
+                    <td>{% trans %}todays unused votes{% endtrans %}</td>
+                    <td><strong class="darkred">{{ votes_today_left }}</strong> {% trans %}votes left{% endtrans %}</td>
                 </tr>
                 {% endif %}
-        -->
-                #}
             </table>
         </td>
         <td width="380">

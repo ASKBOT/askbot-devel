@@ -113,6 +113,7 @@ TYPE_ACTIVITY_USER_FULL_UPDATED = 17
 TYPE_ACTIVITY_EMAIL_UPDATE_SENT = 18
 TYPE_ACTIVITY_MENTION = 19
 TYPE_ACTIVITY_UNANSWERED_REMINDER_SENT = 20
+TYPE_ACTIVITY_ACCEPT_ANSWER_REMINDER_SENT = 21
 #TYPE_ACTIVITY_EDIT_QUESTION = 17
 #TYPE_ACTIVITY_EDIT_ANSWER = 18
 
@@ -139,6 +140,10 @@ TYPE_ACTIVITY = (
     (
         TYPE_ACTIVITY_UNANSWERED_REMINDER_SENT,
         _('reminder about unanswered questions sent'),
+    ),
+    (
+        TYPE_ACTIVITY_ACCEPT_ANSWER_REMINDER_SENT,
+        _('reminder about accepting the best answer sent'),
     ),
     (TYPE_ACTIVITY_MENTION, _('mentioned in the post')),
 )
@@ -291,8 +296,8 @@ MIN_REPUTATION = 1
 
 AVATAR_STATUS_CHOICE = (
     ('n', _('None')),
-    ('g', _('Gravatar')),
-    ('a', _('Uploaded Avatar')),
+    ('g', _('Gravatar')),#only if user has real uploaded gravatar
+    ('a', _('Uploaded Avatar')),#avatar uploaded locally - with django-avatar app
 )
 
 #an exception import * because that file has only strings

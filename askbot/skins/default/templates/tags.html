@@ -4,14 +4,14 @@
 {% block title %}{% spaceless %}{% trans %}Tag list{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
 <!-- Tabs -->
-<div class="tabBar">
-    {% if stag %}
-        <h1>{% trans %}Tags, matching "{{ stag }}"{% endtrans %}</h1>
-    {% else %}
-        <h1>{% trans %}Tag list{% endtrans %}</h1>
-    {% endif %}
-
+{% if stag %}
+    <h1 class="section-title">{% trans %}Tags, matching "{{ stag }}"{% endtrans %}</h1>
+{% else %}
+    <h1 class="section-title">{% trans %}Tag list{% endtrans %}</h1>
+{% endif %}
+<div class="tabBar tabBar-tags">
     <div class="tabsA">
+        <span class="label">{% trans %}Sort by &raquo;{% endtrans %}</span>
         <a
             id="sort_name"
             href="{% url tags %}?sort=name"
@@ -46,6 +46,7 @@
             </li>
             {% endfor %}
         </ul>
+        <div class="clean"></div>
         <div class="pager">
             {{macros.paginator(paginator_context)}}
         </div>

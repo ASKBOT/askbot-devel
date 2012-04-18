@@ -6,34 +6,35 @@
     <link rel="stylesheet" type="text/css" href="{{"/js/wmd/wmd.css"|media}}" />
 {% endblock %}
 {% block content %}
-<h1>
+<h1 class="section-title">
     {% trans %}Edit answer{% endtrans %} [<a href="{{ answer.question.get_absolute_url() }}#{{ answer.id }}">{% trans %}back{% endtrans %}</a>]
 </h1>
 <div id="main-body" class="ask-body">
     <form id="fmedit" action="{% url edit_answer answer.id %}" method="post" >{% csrf_token %}
-        <label for="id_revision" ><strong>{% trans %}revision{% endtrans %}:</strong></label> <br/> 
+        <label for="id_revision" >{% trans %}revision{% endtrans %}:</label> <br/> 
         {% if revision_form.revision.errors %}{{ revision_form.revision.errors.as_ul() }}{% endif %}
         <div style="vertical-align:middle">
         {{ revision_form.revision }} <input type="submit" style="display:none" id="select_revision" name="select_revision" value="{% trans %}select revision{% endtrans %}">
         </div>
         {{ macros.edit_post(form) }}
+        {% if settings.WIKI_ON and answer.wiki == False %}
+            {{ macros.checkbox_in_div(form.wiki) }}
+        {% endif %}
         <div class="after-editor">
             <input type="submit" value="{% trans %}Save edit{% endtrans %}" class="submit" />&nbsp;
             <input type="button" value="{% trans %}Cancel{% endtrans %}" class="submit" onclick="history.back(-1);" />
         </div>
-        {% if settings.WIKI_ON and answer.wiki == False %}
-            {{ macros.checkbox_in_div(form.wiki) }}
-        {% endif %}
+
     </form>
 </div>
 {% endblock %}
 
 {% block sidebar %}
-    {% include "blocks/answer_edit_tips.html" %}
+    {% include "widgets/answer_edit_tips.html" %}
 {% endblock %}
 
 {% block endjs %}
-    {% include "blocks/editor_data.html" %}
+    {% include "meta/editor_data.html" %}
     <script type='text/javascript' src='{{"/js/editor.js"|media}}'></script>
     <script type='text/javascript' src='{{"/js/jquery.validate.min.js"|media}}'></script>
     <script type='text/javascript' src='{{"/js/post.js"|media}}'></script>

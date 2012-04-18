@@ -48,8 +48,8 @@ def onFlaggedItem(post, user, timestamp=None):
     reputation.save()
 
     signals.flag_offensive.send(
-        sender=post.__class__, 
-        instance=post, 
+        sender=post.__class__,
+        instance=post,
         mark_by=user
     )
 
@@ -100,6 +100,91 @@ def onFlaggedItem(post, user, timestamp=None):
         post.deleted = True
         #post.deleted_at = timestamp
         #post.deleted_by = Admin
+        post.save()
+
+
+@transaction.commit_on_success
+def onUnFlaggedItem(post, user, timestamp=None):
+    if timestamp is None:
+        timestamp = datetime.datetime.now()
+
+    post.offensive_flag_count = post.offensive_flag_count - 1
+    post.save()
+
+    if post.post_type == 'comment':#todo: fix this
+        flagged_user = post.user
+    else:
+        flagged_user = post.author
+
+    flagged_user.receive_reputation(
+        - askbot_settings.REP_LOSS_FOR_RECEIVING_FLAG
+    )
+    flagged_user.save()
+
+    question = post.get_origin_post()
+
+    reputation = Repute(
+                    user=flagged_user,
+                    positive=askbot_settings.REP_LOSS_FOR_RECEIVING_FLAG,
+                    question=question,
+                    reputed_at=timestamp,
+                    reputation_type=-4,#todo: clean up magic number
+                    reputation=flagged_user.reputation
+                )
+    reputation.save()
+
+    signals.remove_flag_offensive.send(
+        sender=post.__class__,
+        instance=post,
+        mark_by=user
+    )
+
+    if post.post_type == 'comment':
+        #do not hide or delete comments automatically yet,
+        #because there is no .deleted field in the comment model
+        return
+
+    #todo: These should be updated to work on same revisions.
+    # The post fell below HIDE treshold - unhide it.
+    if post.offensive_flag_count ==  askbot_settings.MIN_FLAGS_TO_HIDE_POST - 1:
+        #todo: strange - are we supposed to hide the post here or the name of
+        #setting is incorrect?
+        flagged_user.receive_reputation(
+            - askbot_settings.REP_LOSS_FOR_RECEIVING_THREE_FLAGS_PER_REVISION
+        )
+
+        flagged_user.save()
+
+        reputation = Repute(
+            user=flagged_user,
+            positive=\
+                askbot_settings.REP_LOSS_FOR_RECEIVING_THREE_FLAGS_PER_REVISION,
+            question=question,
+            reputed_at=timestamp,
+            reputation_type=-6,
+            reputation=flagged_user.reputation
+        )
+        reputation.save()
+    # The post fell below DELETE treshold, undelete it
+    elif post.offensive_flag_count == askbot_settings.MIN_FLAGS_TO_DELETE_POST-1 :
+        flagged_user.receive_reputation(
+            - askbot_settings.REP_LOSS_FOR_RECEIVING_FIVE_FLAGS_PER_REVISION
+        )
+
+        flagged_user.save()
+
+        reputation = Repute(
+            user=flagged_user,
+            positive =\
+                askbot_settings.REP_LOSS_FOR_RECEIVING_FIVE_FLAGS_PER_REVISION,
+            question=question,
+            reputed_at=timestamp,
+            reputation_type=-7,
+            reputation=flagged_user.reputation
+        )
+        reputation.save()
+
+        post.deleted = False
         post.save()
 
 @transaction.commit_on_success

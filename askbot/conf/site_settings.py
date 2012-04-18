@@ -3,12 +3,14 @@ Q&A website settings - title, desctiption, basic urls
 keywords
 """
 from askbot.conf.settings_wrapper import settings
+from askbot.conf.super_groups import CONTENT_AND_UI
 from askbot.deps import livesettings
 from django.utils.translation import ugettext as _
 
 QA_SITE_SETTINGS = livesettings.ConfigurationGroup(
                     'QA_SITE_SETTINGS',
-                    _('Q&A forum website parameters and urls')
+                    _('URLS, keywords & greetings'),
+                    super_group = CONTENT_AND_UI
                 )
 
 settings.register(
@@ -67,6 +69,15 @@ settings.register(
                 'http or https'
             ),
     )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        QA_SITE_SETTINGS,
+        'ENABLE_GREETING_FOR_ANON_USER',
+        default = True,
+        description = _('Check to enable greeting for anonymous user')
+   )
 )
 
 settings.register(

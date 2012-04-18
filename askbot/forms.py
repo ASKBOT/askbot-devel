@@ -43,7 +43,7 @@ def clean_marked_tagnames(tagnames):
                 wildcards.append(tagname)
         else:
             pure_tags.append(tagname)
-    
+
     return pure_tags, wildcards
 
 def filter_choices(remove_choices = None, from_choices = None):
@@ -75,7 +75,7 @@ COUNTRY_CHOICES = (('unknown',_('select country')),) + countries.COUNTRIES
 
 class CountryField(forms.ChoiceField):
     """this is better placed into the django_coutries app"""
-    
+
     def __init__(self, *args, **kwargs):
         """sets label and the country choices
         """
@@ -253,7 +253,7 @@ class SummaryField(forms.CharField):
 
 class DumpUploadForm(forms.Form):
     """This form handles importing
-    data into the forum. At the moment it only 
+    data into the forum. At the moment it only
     supports stackexchange import.
     """
     dump_file = forms.FileField()
@@ -397,7 +397,7 @@ class ChangeUserStatusForm(forms.Form):
         self.fields['user_status'].choices = user_status_choices
 
         #set prompt option as default
-        self.fields['user_status'].default = 'select' 
+        self.fields['user_status'].default = 'select'
         self.moderator = moderator
         self.subject = subject
 
@@ -539,10 +539,40 @@ class NotARobotForm(forms.Form):
                 )
 
 class FeedbackForm(forms.Form):
-    name = forms.CharField(label=_('Your name:'), required=False)
-    email = forms.EmailField(label=_('Email (not shared with anyone):'), required=False)
-    message = forms.CharField(label=_('Your message:'), max_length=800,widget=forms.Textarea(attrs={'cols':60}))
+    name = forms.CharField(label=_('Your name (optional):'), required=False)
+    email = forms.EmailField(label=_('Email:'), required=False)
+    message = forms.CharField(
+        label=_('Your message:'),
+        max_length=800,
+        widget=forms.Textarea(attrs={'cols':60})
+    )
+    no_email = forms.BooleanField(
+        label=_("I don't want to give my email or receive a response:"),
+        required=False
+    )
     next = NextUrlField()
+
+    def __init__(self, is_auth=False, *args, **kwargs):
+        super(FeedbackForm, self).__init__(*args, **kwargs)
+        self.is_auth = is_auth
+        if not is_auth:
+            if askbot_settings.USE_RECAPTCHA:
+                self._add_recaptcha_field()
+
+    def _add_recaptcha_field(self):
+        self.fields['recaptcha'] = RecaptchaField(
+                                private_key = askbot_settings.RECAPTCHA_SECRET,
+                                public_key = askbot_settings.RECAPTCHA_KEY
+                                )
+
+    def clean(self):
+        super(FeedbackForm, self).clean()
+        if not self.is_auth:
+            if not self.cleaned_data['no_email'] and not self.cleaned_data['email']:
+                msg = _('Please mark "I dont want to give my mail" field.')
+                self._errors['email'] = self.error_class([msg])
+
+        return self.cleaned_data
 
 class FormWithHideableFields(object):
     """allows to swap a field widget to HiddenInput() and back"""
@@ -567,7 +597,7 @@ class FormWithHideableFields(object):
 
 class AskForm(forms.Form, FormWithHideableFields):
     """the form used to askbot questions
-    field ask_anonymously is shown to the user if the 
+    field ask_anonymously is shown to the user if the
     if ALLOW_ASK_ANONYMOUSLY live setting is True
     however, for simplicity, the value will always be present
     in the cleaned data, and will evaluate to False if the
@@ -600,7 +630,7 @@ class AskForm(forms.Form, FormWithHideableFields):
         """
         if askbot_settings.ALLOW_ASK_ANONYMOUSLY == False:
             self.cleaned_data['ask_anonymously'] = False
-        return self.cleaned_data['ask_anonymously'] 
+        return self.cleaned_data['ask_anonymously']
 
 
 class AskByEmailForm(forms.Form):
@@ -860,16 +890,16 @@ class EditUserForm(forms.Form):
                 )
 
     realname = forms.CharField(
-                        label=_('Real name'), 
-                        required=False, 
-                        max_length=255, 
+                        label=_('Real name'),
+                        required=False,
+                        max_length=255,
                         widget=forms.TextInput(attrs={'size' : 35})
                     )
 
     website = forms.URLField(
-                        label=_('Website'), 
-                        required=False, 
-                        max_length=255, 
+                        label=_('Website'),
+                        required=False,
+                        max_length=255,
                         widget=forms.TextInput(attrs={'size' : 35})
                     )
 
@@ -957,12 +987,12 @@ class TagFilterSelectionForm(forms.ModelForm):
         if before != after:
             return True
         return False
-        
+
 
 class EmailFeedSettingField(forms.ChoiceField):
     def __init__(self, *arg, **kwarg):
         kwarg['choices'] = const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES
-        kwarg['initial'] = askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
+        #kwarg['initial'] = askbot_settings.DEFAULT_NOTIFICATION_DELIVERY_SCHEDULE
         kwarg['widget'] = forms.RadioSelect
         super(EmailFeedSettingField, self).__init__(*arg, **kwarg)
 
@@ -1086,13 +1116,12 @@ class SimpleEmailSubscribeForm(forms.Form):
         ('n',_('no community email please, thanks'))
     )
     subscribe = forms.ChoiceField(
-            widget=forms.widgets.RadioSelect, 
+            widget=forms.widgets.RadioSelect,
             error_messages={'required':_('please choose one of the options above')},
             choices=SIMPLE_SUBSCRIBE_CHOICES
         )
 
     def __init__(self, *args, **kwargs):
-        self.frequency = kwargs.pop('frequency', 'w') 
         super(SimpleEmailSubscribeForm, self).__init__(*args, **kwargs)
 
     def save(self, user=None):
@@ -1101,7 +1130,7 @@ class SimpleEmailSubscribeForm(forms.Form):
         #with the frequency variable - needs to be fixed
         if self.is_bound and self.cleaned_data['subscribe'] == 'y':
             email_settings_form = EFF()
-            email_settings_form.set_frequency(self.frequency)
+            email_settings_form.set_initial_values(user)
             logging.debug('%s wants to subscribe' % user.username)
         else:
             email_settings_form = EFF(initial=EFF.NO_EMAIL_INITIAL)

@@ -41,7 +41,6 @@ def record_post_update_celery_task(
                                 id__in = newly_mentioned_user_id_list
                             )
 
-
     record_post_update(
         post = post,
         updated_by = updated_by,
@@ -71,7 +70,6 @@ def record_post_update(
     * records "red envelope" recipients of the post
     * sends email alerts to all subscribers to the post
     """
-
     #todo: take into account created == True case
     (activity_type, update_object) = post.get_updated_activity_data(created)
 
@@ -99,8 +97,22 @@ def record_post_update(
     recipients = post.get_response_receivers(
                                 exclude_list = [updated_by, ]
                             )
-
     update_activity.add_recipients(recipients)
+
+    #create new mentions
+    for u in newly_mentioned_users:
+        #todo: a hack - some users will not have record of a mention
+        #may need to fix this in the future. Added this so that 
+        #recipients of the response who are mentioned as well would
+        #not get two notifications in the inbox for the same post
+        if u in recipients:
+            continue
+        Activity.objects.create_new_mention(
+                                mentioned_whom = u,
+                                mentioned_in = post,
+                                mentioned_by = updated_by,
+                                mentioned_at = timestamp
+                            )
 
     assert(updated_by not in recipients)
 

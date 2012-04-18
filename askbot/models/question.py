@@ -4,28 +4,19 @@ from django.conf import settings
 from django.utils.datastructures import SortedDict
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.http import urlquote as django_urlquote
-from django.core.urlresolvers import reverse
-from django.core import exceptions as django_exceptions
 from django.contrib.sitemaps import ping_google
 from django.utils.translation import ugettext as _
 import askbot
 import askbot.conf
-from askbot import exceptions
 from askbot.models.tag import Tag
 from askbot.models.base import AnonymousContent
-from askbot.models.base import DeletableContent
-from askbot.models.base import ContentRevision
+from askbot.models.post import PostRevision
 from askbot.models.base import BaseQuerySetManager
-from askbot.models.base import parse_post_text
-from askbot.models.base import parse_and_save_post
 from askbot.models import content
 from askbot.models import signals
 from askbot import const
 from askbot.utils.lists import LazyList
 from askbot.utils.slug import slugify
-from askbot.utils import markup
-from askbot.utils.html import sanitize_html
 from askbot.utils import mysql
 
 #todo: too bad keys are duplicated see const sort methods
@@ -80,6 +71,7 @@ def get_tag_summary_from_questions(questions):
 class QuestionQuerySet(models.query.QuerySet):
     """Custom query set subclass for :class:`~askbot.models.Question`
     """
+    #todo: becomes thread query set
     def create_new(
                 self,
                 title = None,
@@ -91,7 +83,8 @@ class QuestionQuerySet(models.query.QuerySet):
                 text = None,
                 ip_addr=None,
             ):
-
+        #todo: some work from this method will go to thread
+        #and some - merged with the Answer.objects.create_new
         question = Question(
             title = title,
             author = author,
@@ -103,7 +96,7 @@ class QuestionQuerySet(models.query.QuerySet):
             tagnames = tagnames,
             #html field is denormalized in .save() call
             text = text,
-            #summary field is denormalized in .save() call,
+            #summary field is denormalized in .save() call
             ip_addr = ip_addr,
         )
         if question.wiki:
@@ -131,6 +124,7 @@ class QuestionQuerySet(models.query.QuerySet):
         """returns a query set of questions, 
         matching the full text query
         """
+        #todo - goes to thread - we search whole threads
         if getattr(settings, 'USE_SPHINX_SEARCH', False):
             matching_questions = Question.sphinx_search.query(search_query)
             question_ids = [q.id for q in matching_questions] 
@@ -143,12 +137,12 @@ class QuestionQuerySet(models.query.QuerySet):
                        | models.Q(answers__text__search = search_query)
                     )
         elif 'postgresql_psycopg2' in askbot.get_database_engine_name():
-            rank_clause = "ts_rank(question.text_search_vector, to_tsquery(%s))";
+            rank_clause = "ts_rank(question.text_search_vector, plainto_tsquery(%s))";
             search_query = '&'.join(search_query.split())
             extra_params = (search_query,)
             extra_kwargs = {
                 'select': {'relevance': rank_clause},
-                'where': ['text_search_vector @@ to_tsquery(%s)'],
+                'where': ['text_search_vector @@ plainto_tsquery(%s)'],
                 'params': extra_params,
                 'select_params': extra_params,
             }
@@ -169,7 +163,7 @@ class QuestionQuerySet(models.query.QuerySet):
         however may not relate to database - in that case
         a relvant filter will be silently dropped
         """
-
+        #todo: same as for get_by_text_query - goes to Tread
         scope_selector = getattr(
                             search_state,
                             'scope',
@@ -362,10 +356,57 @@ class QuestionQuerySet(models.query.QuerySet):
             meta_data['ignored_tag_names'].extend(tagnames.split())
         return qs, meta_data, related_tags
 
+    def added_between(self, start, end):
+        """questions added between ``start`` and ``end`` timestamps"""
+        #todo: goes to thread
+        return self.filter(
+            added_at__gt = start
+        ).exclude(
+            added_at__gt = end
+        )
+
+    def get_questions_needing_reminder(self,
+                                    user = None,
+                                    activity_type = None,
+                                    recurrence_delay = None):
+        """returns list of questions that need a reminder,
+        corresponding the given ``activity_type``
+        ``user`` - is the user receiving the reminder
+        ``recurrence_delay`` - interval between sending the
+        reminders about the same question
+        """
+        #todo: goes to thread
+        from askbot.models import Activity#avoid circular import
+        question_list = list()
+        for question in self:
+            try:
+                activity = Activity.objects.get(
+                    user = user,
+                    question = question,
+                    activity_type = activity_type
+                )
+                now = datetime.datetime.now()
+                if now < activity.active_at + recurrence_delay:
+                    continue
+            except Activity.DoesNotExist:
+                activity = Activity(
+                    user = user,
+                    question = question,
+                    activity_type = activity_type,
+                    content_object = question,
+                )
+            activity.active_at = datetime.datetime.now()
+            activity.save()
+            question_list.append(question)
+        return question_list
+
     #todo: this function is similar to get_response_receivers
     #profile this function against the other one
     #todo: maybe this must be a query set method, not manager method
     def get_question_and_answer_contributors(self, question_list):
+        """returns query set of Thread contributors
+        """
+        #todo: goes to thread - queries will be simplified too
         answer_list = []
         #question_list = list(question_list)#important for MySQL, b/c it does not support
         from askbot.models.answer import Answer
@@ -376,6 +417,11 @@ class QuestionQuerySet(models.query.QuerySet):
                     set(Answer.objects.filter(id__in=a_id).values_list('author', flat=True))
                 )
 
+        #todo: this does not belong gere - here we select users with real faces
+        #first and limit the number of users in the result for display
+        #on the main page, we might also want to completely hide fake gravatars
+        #and show only real images and the visitors - even if he does not have
+        #a real image and try to prompt him/her to upload a picture
         from askbot.conf import settings as askbot_settings
         avatar_limit = askbot_settings.SIDEBAR_MAIN_AVATAR_LIMIT
         contributors = User.objects.filter(id__in=u_id).order_by('avatar_type', '?')[:avatar_limit]
@@ -392,6 +438,7 @@ class QuestionQuerySet(models.query.QuerySet):
         #todo: - this is duplication - answer manager also has this method
         #will be gone when models are consolidated
         #note that method get_question_and_answer_contributors is similar in function
+        #todo: goes to thread
         authors = set()
         for question in self:
             authors.update(question.get_author_list(**kwargs))
@@ -401,6 +448,7 @@ class QuestionQuerySet(models.query.QuerySet):
         """
         update counter+1 when user browse question page
         """
+        #todo: moves to thread
         self.filter(id=question.id).update(view_count = question.view_count + 1)
 
 
@@ -408,14 +456,19 @@ class QuestionManager(BaseQuerySetManager):
     """chainable custom query set manager for 
     questions
     """
+    #todo: becomes thread manager
     def get_query_set(self):
         return QuestionQuerySet(self.model)
 
 
-class Question(content.Content, DeletableContent):
+class Question(content.Content):
+    #todo: this really becomes thread,
+    #except property post_type goes to Post
     post_type = 'question'
     title    = models.CharField(max_length=300)
     tags     = models.ManyToManyField('Tag', related_name='questions')
+    #todo: answer accepted will be replaced with
+    #accepted_answer foreign key (nullable)
     answer_accepted = models.BooleanField(default=False)
     closed          = models.BooleanField(default=False)
     closed_by       = models.ForeignKey(User, null=True, blank=True, related_name='closed_questions')
@@ -437,7 +490,14 @@ class Question(content.Content, DeletableContent):
     summary              = models.CharField(max_length=180)
 
     favorited_by         = models.ManyToManyField(User, through='FavoriteQuestion', related_name='favorite_questions') 
-    is_anonymous = models.BooleanField(default=False)
+    #note: anonymity here applies to question only, but
+    #the field will still go to thread
+    #maybe we should rename it to is_question_anonymous
+    #we might have to duplicate the is_anonymous on the Post,
+    #if we are to allow anonymous answers
+    #the reason is that the title and tags belong to thread,
+    #but the question body to Post
+    is_anonymous = models.BooleanField(default=False) 
     ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = QuestionManager()
@@ -445,29 +505,13 @@ class Question(content.Content, DeletableContent):
     class Meta(content.Content.Meta):
         db_table = u'question'
 
-    parse = parse_post_text
-    parse_and_save = parse_and_save_post
-
-    def assert_is_visible_to(self, user):
-        """raises QuestionHidden"""
-        if self.deleted:
-            message = _(
-                    'Sorry, this question has been '
-                    'deleted and is no longer accessible'
-                )
-            if user.is_anonymous():
-                raise exceptions.QuestionHidden(message)
-            try:
-                user.assert_can_see_deleted_post(self)
-            except django_exceptions.PermissionDenied:
-                raise exceptions.QuestionHidden(message)
-
     def remove_author_anonymity(self):
         """removes anonymous flag from the question
         and all its revisions
         the function calls update method to make sure that
         signals are not called
         """
+        #note: see note for the is_anonymous field
         #it is important that update method is called - not save,
         #because we do not want the signals to fire here
         Question.objects.filter(id = self.id).update(is_anonymous = False)
@@ -477,6 +521,7 @@ class Question(content.Content, DeletableContent):
         """updates the denormalized field 'answer_count'
         on the question
         """
+        #todo: goes to thread
         self.answer_count = self.get_answers().count()
         if save: 
             self.save()
@@ -484,6 +529,7 @@ class Question(content.Content, DeletableContent):
     def update_favorite_count(self):
         """update favourite_count for given question
         """
+        #todo: goes to thread
         self.favourite_count = FavoriteQuestion.objects.filter(
                                                             question=self
                                                         ).count()
@@ -500,6 +546,7 @@ class Question(content.Content, DeletableContent):
         be very expensive - this function will benefit from
         some sort of optimization
         """
+        #todo: goes to thread
         #print datetime.datetime.now()
 
         def get_data():
@@ -526,13 +573,6 @@ class Question(content.Content, DeletableContent):
                 return similar_questions
 
         return LazyList(get_data)
-
-    def get_page_number(self, answers = None):
-        """question always appears on its own
-        first page by definition. The answers 
-        parameter is not used here. The extra parameter is necessary
-        to maintain generality of the function call signature"""
-        return 1
 
     def get_similarity(self, other_question = None):
         """return number of tags in the other question
@@ -629,6 +669,7 @@ class Question(content.Content, DeletableContent):
         """posts question as answer to another question,
         but does not delete the question,
         but moves all the comments to the new answer"""
+        #todo: goes to Thread.
         revisions = self.revisions.all().order_by('revised_at')
         rev0 = revisions[0]
         new_answer = rev0.author.post_answer(
@@ -675,35 +716,6 @@ class Question(content.Content, DeletableContent):
                                 | models.Q(deleted_by = user)
                             )
 
-    def get_updated_activity_data(self, created = False):
-        if created:
-            return const.TYPE_ACTIVITY_ASK_QUESTION, self
-        else:
-            latest_revision = self.get_latest_revision()
-            return const.TYPE_ACTIVITY_UPDATE_QUESTION, latest_revision
-
-    def get_response_receivers(self, exclude_list = None):
-        """returns list of users who might be interested
-        in the question update based on their participation 
-        in the question activity
-
-        exclude_list is mandatory - it normally should have the
-        author of the update so the he/she is not notified about the update
-        """
-        assert(exclude_list != None)
-        recipients = set()
-        recipients.update(
-                            self.get_author_list(
-                                    include_comments = True
-                                )
-                        )
-        #do not include answer commenters here
-        for a in self.answers.all():
-            recipients.update(a.get_author_list())
-
-        recipients -= set(exclude_list)
-        return recipients
-
     def retag(self, retagged_by=None, retagged_at=None, tagnames=None, silent=False):
         if None in (retagged_by, retagged_at, tagnames):
             raise Exception('arguments retagged_at, retagged_by and tagnames are required')
@@ -721,7 +733,7 @@ class Question(content.Content, DeletableContent):
 
         # Create a new revision
         latest_revision = self.get_latest_revision()
-        QuestionRevision.objects.create(
+        PostRevision.objects.create_question_revision(
             question   = self,
             title      = latest_revision.title,
             author     = retagged_by,
@@ -731,106 +743,12 @@ class Question(content.Content, DeletableContent):
             text       = latest_revision.text
         )
 
-    def get_origin_post(self):
-        return self
-
-    def apply_edit(self, edited_at=None, edited_by=None, title=None,\
-                    text=None, comment=None, tags=None, wiki=False, \
-                    edit_anonymously = False):
-
-        latest_revision = self.get_latest_revision()
-        #a hack to allow partial edits - important for SE loader
-        if title is None:
-            title = self.title
-        if text is None:
-            text = latest_revision.text
-        if tags is None:
-            tags = latest_revision.tagnames
-
-        if edited_by is None:
-            raise Exception('parameter edited_by is required')
-
-        if edited_at is None:
-            edited_at = datetime.datetime.now()
-
-        # Update the Question itself
-        self.title = title
-        self.last_edited_at = edited_at
-        self.last_activity_at = edited_at
-        self.last_edited_by = edited_by
-        self.last_activity_by = edited_by
-        self.tagnames = tags
-        self.text = text
-        self.is_anonymous = edit_anonymously
-
-        #wiki is an eternal trap whence there is no exit
-        if self.wiki == False and wiki == True:
-            self.wiki = True
-
-        # Update the Question tag associations
-        if latest_revision.tagnames != tags:
-            self.update_tags(tagnames = tags, user = edited_by, timestamp = edited_at)
-
-        # Create a new revision
-        self.add_revision(
-            author = edited_by,
-            text = text,
-            revised_at = edited_at,
-            is_anonymous = edit_anonymously,
-            comment = comment,
-        )
-
-        self.parse_and_save(author = edited_by)
-
-    def add_revision(
-                self,
-                author = None,
-                is_anonymous = False,
-                text = None,
-                comment = None,
-                revised_at = None
-            ):
-        if None in (author, text, comment):
-            raise Exception('author, text and comment are required arguments')
-        rev_no = self.revisions.all().count() + 1
-        if comment in (None, ''):
-            if rev_no == 1:
-                comment = const.POST_STATUS['default_version']
-            else:
-                comment = 'No.%s Revision' % rev_no
-            
-        return QuestionRevision.objects.create(
-            question   = self,
-            revision   = rev_no,
-            title      = self.title,
-            author     = author,
-            is_anonymous = is_anonymous,
-            revised_at = revised_at,
-            tagnames   = self.tagnames,
-            summary    = comment,
-            text       = text
-        )
-
-    def get_tag_names(self):
-        """Creates a list of Tag names from the ``tagnames`` attribute."""
-        return self.tagnames.split(u' ')
-
     def set_tag_names(self, tag_names):
         """expects some iterable of unicode string tag names
         joins the names with a space and assigns to self.tagnames
         does not save the object
         """
         self.tagnames = u' '.join(tag_names)
-
-    def tagname_meta_generator(self):
-        return u','.join([unicode(tag) for tag in self.get_tag_names()])
-
-    def get_absolute_url(self, no_slug = False):
-        url = reverse('question', args=[self.id])
-        if no_slug == True:
-            return url
-        else:
-            return url + django_urlquote(self.slug)
 
     def _get_slug(self):
         return slugify(self.title)
@@ -842,26 +760,6 @@ class Question(content.Content, DeletableContent):
             return False
 
         return FavoriteQuestion.objects.filter(question=self, user=user).count() > 0
-
-    def get_answer_count_by_user(self, user_id):
-        from askbot.models.answer import Answer
-        query_set = Answer.objects.filter(author__id=user_id)
-        return query_set.filter(question=self).count()
-
-    def get_question_title(self):
-        if self.closed:
-            attr = const.POST_STATUS['closed']
-        elif self.deleted:
-            attr = const.POST_STATUS['deleted']
-        else:
-            attr = None
-        if attr is not None:
-            return u'%s %s' % (self.title, attr)
-        else:
-            return self.title
-
-    def get_revision_url(self):
-        return reverse('question_revisions', args=[self.id])
 
     def get_last_update_info(self):
         when, who = self.post_get_last_update_info()
@@ -933,9 +831,6 @@ class Question(content.Content, DeletableContent):
         else:
             return None
 
-    def __unicode__(self):
-        return self.title
-
 if getattr(settings, 'USE_SPHINX_SEARCH', False):
     from djangosphinx.models import SphinxSearch
     Question.add_to_class(
@@ -968,54 +863,6 @@ class FavoriteQuestion(models.Model):
     def __unicode__(self):
         return '[%s] favorited at %s' %(self.user, self.added_at)
 
-QUESTION_REVISION_TEMPLATE = ('<h3>%(title)s</h3>\n'
-                              '<div class="text">%(html)s</div>\n'
-                              '<div class="tags">%(tags)s</div>')
-QUESTION_REVISION_TEMPLATE_NO_TAGS = ('<h3>%(title)s</h3>\n'
-                              '<div class="text">%(html)s</div>\n')
-class QuestionRevision(ContentRevision):
-    """A revision of a Question."""
-    question   = models.ForeignKey(Question, related_name='revisions')
-    title      = models.CharField(max_length=300)
-    tagnames   = models.CharField(max_length=125)
-    is_anonymous = models.BooleanField(default=False)
-
-    class Meta(ContentRevision.Meta):
-        db_table = u'question_revision'
-        ordering = ('-revision',)
-
-    def get_question_title(self):
-        return self.question.title
-
-    def get_absolute_url(self):
-        #print 'in QuestionRevision.get_absolute_url()'
-        return reverse('question_revisions', args=[self.question.id])
-
-    def as_html(self, include_tags=True):
-        markdowner = markup.get_parser()
-        if include_tags:
-            return QUESTION_REVISION_TEMPLATE % {
-                'title': self.title,
-                'html': sanitize_html(markdowner.convert(self.text)),
-                'tags': ' '.join(['<a class="post-tag">%s</a>' % tag
-                                  for tag in self.tagnames.split(' ')]),
-            }
-        else:
-            return QUESTION_REVISION_TEMPLATE_NO_TAGS % {
-                'title': self.title,
-                'html': sanitize_html(markdowner.convert(self.text))
-            }
-
-    def save(self, **kwargs):
-        """Looks up the next available revision number."""
-        if not self.revision:
-            self.revision = QuestionRevision.objects.filter(
-                question=self.question).values_list('revision',
-                                                    flat=True)[0] + 1
-        super(QuestionRevision, self).save(**kwargs)
-
-    def __unicode__(self):
-        return u'revision %s of %s' % (self.revision, self.title)
 
 class AnonymousQuestion(AnonymousContent):
     """question that was asked before logging in

@@ -1,0 +1,12 @@
+[main]
+host = https://www.transifex.net
+
+[askbot.askbot-translation-part1-main]
+file_filter = askbot/locale/<lang>/LC_MESSAGES/django.po
+source_file = askbot/locale/en/LC_MESSAGES/django.po
+source_lang = en
+
+[askbot.askbot-translation-part2-js]
+file_filter = askbot/locale/<lang>/LC_MESSAGES/djangojs.po
+source_file = askbot/locale/en/LC_MESSAGES/djangojs.po
+source_lang = en

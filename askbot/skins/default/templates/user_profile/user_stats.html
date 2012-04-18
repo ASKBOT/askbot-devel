@@ -8,7 +8,7 @@
         {% include "user_profile/user_info.html" %}
         <a name="questions"></a>
         {% spaceless %}
-            <h2>{% trans counter=questions|length %}<span class="count">{{counter}}</span> Question{% pluralize %}<span class="count">{{counter}}</span> Questions{% endtrans %}</h2>
+            <h2>{% trans counter=question_count %}<span class="count">{{counter}}</span> Question{% pluralize %}<span class="count">{{counter}}</span> Questions{% endtrans %}</h2>
         {% endspaceless %}
     {% include "user_profile/users_questions.html" %}
         <a name="answers"></a>

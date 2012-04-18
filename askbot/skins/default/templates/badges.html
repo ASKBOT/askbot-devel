@@ -2,7 +2,7 @@
 <!-- template badges.html -->
 {% block title %}{% spaceless %}{% trans %}Badges summary{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
-<h1>{% trans %}Badges{% endtrans %}</h1>
+<h1 class="section-title">{% trans %}Badges{% endtrans %}</h1>
 <p>
 {% trans %}Community gives you awards for your questions, answers and votes.{% endtrans %}<br/>
 {% trans %}Below is the list of available badges and number 
@@ -31,7 +31,7 @@ of times each type of badge has been awarded. Give us feedback at {{feedback_faq
 </div>
 {% endblock %}
 {% block sidebar %}
-<div class="boxC">
+<div class="box">
     <h2>{% trans %}Community badges{% endtrans %}</h2>
     <p>
         <a style="cursor:default;" title="{% trans %}gold badge: the highest honor and is very rare{% endtrans %}" class="medal"><span class="badge1">&#9679;</span>&nbsp;{% trans %}gold{% endtrans %}</a>

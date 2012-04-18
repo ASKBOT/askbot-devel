@@ -1,0 +1,16 @@
+{% import "macros.html" as macros %}
+{% cache 0 "questions" questions search_tags scope sort query context.page context.page_size language_code %}
+    {% for question in questions.object_list %}
+        {{macros.question_summary(question)}}
+    {% endfor %}
+{% endcache %}
+{# comment todo: fix css here #}
+{% if questions_count == 0 %}
+    {% include "main_page/nothing_found.html" %}
+{% else %}
+    <div class="evenMore">
+        {% trans %}Did not find what you were looking for?{% endtrans %} 
+        <a href="{% url ask %}">{% trans %}Please, post your question!{% endtrans %}</a>
+    </div>
+{% endif %}
+

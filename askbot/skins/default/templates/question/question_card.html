@@ -1,0 +1,22 @@
+<div class="vote-buttons">
+    {% include "question/question_vote_buttons.html"%} 
+    {% include "question/share_buttons.html"%} 
+</div>
+<div class="question-content">
+
+    <h1><a href="{{ question.get_absolute_url() }}">{{ question.get_question_title() }}</a></h1>
+    {% include "question/question_tags.html" %}
+    <div id="question-table" {% if question.deleted %}class="deleted"{%endif%}>
+        <div class="question-body">
+            <div class="post-update-info-container">
+                {% include "question/question_author_info.html" %}
+            </div>
+            {{question.html}}
+        </div>
+        <div id="question-controls" class="post-controls">
+            {% include "question/question_controls.html" %} 
+        </div>
+        {% include "question/question_comments.html" %}
+    </div>
+</div>
+<div class="clean"></div>

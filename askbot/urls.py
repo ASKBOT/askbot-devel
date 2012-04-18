@@ -6,17 +6,22 @@ from django.conf import settings
 from django.conf.urls.defaults import url, patterns, include
 from django.conf.urls.defaults import handler500, handler404
 from django.contrib import admin
-from django.utils.translation import ugettext as _
 from askbot import views
-from askbot.feed import RssLastestQuestionsFeed
+from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
 from askbot.skins.utils import update_media_revision
 
 admin.autodiscover()
 update_media_revision()#needs to be run once, so put it here
 
+if hasattr(settings, "ASKBOT_TRANSLATE_URL") and settings.ASKBOT_TRANSLATE_URL:
+    from django.utils.translation import ugettext as _
+else:
+    _ = lambda s:s
+
 feeds = {
-    'rss': RssLastestQuestionsFeed
+    'rss': RssLastestQuestionsFeed,
+    'question':RssIndividualQuestionFeed
 }
 sitemaps = {
     'questions': QuestionsSitemap
@@ -39,7 +44,12 @@ urlpatterns = patterns('',
     url(
         r'^%s(?P<path>.*)$' % settings.ASKBOT_UPLOADED_FILES_URL, 
         'django.views.static.serve',
-        {'document_root': os.path.join(settings.PROJECT_ROOT, 'askbot', 'upfiles').replace('\\','/')},
+        {'document_root': os.path.join(
+                settings.PROJECT_ROOT,
+                'askbot',
+                'upfiles'
+            ).replace('\\','/')
+        },
         name='uploaded_file',
     ),
     #no translation for this url!!
@@ -109,6 +119,11 @@ urlpatterns = patterns('',
         kwargs = {'object_name': 'Question'},
         name='question_revisions'
     ),
+    url(
+        r'^%s%s$' % (_('widgets/'), _('questions/')),
+        views.readers.widget_questions, 
+        name='widget_questions'
+    ),
     url(#ajax only
         r'^comment/upvote/$',
         views.commands.upvote_comment,
@@ -133,6 +148,11 @@ urlpatterns = patterns('',
         r'^comment/get_text/$',
         views.readers.get_comment, 
         name='get_comment'
+    ),
+    url(#ajax only
+        r'^question/get_body/$',
+        views.readers.get_question_body, 
+        name='get_question_body'
     ),
     url(
         r'^%s$' % _('tags/'), 
@@ -269,13 +289,13 @@ urlpatterns = patterns('',
     url(
         r'^jsi18n/$',
         'django.views.i18n.javascript_catalog',
-        {'packages': ('askbot',)},
+        {'domain': 'djangojs','packages': ('askbot',)},
         name = 'askbot_jsi18n'
     ),
     url(
-        r'^moderate_ip/$',
-        views.readers.moderate_ip,
-        name = 'moderate_ip'
+    r'^moderate_ip/$',
+    views.readers.moderate_ip,
+    name='moderate_ip'
     ),
 )
 
@@ -303,13 +323,19 @@ if 'avatar' in settings.INSTALLED_APPS:
     #use jinja2 templates
     urlpatterns += (
         url('^avatar/add/$', views.avatar_views.add, name='avatar_add'),
-        url('^avatar/change/$', views.avatar_views.change, name='avatar_change'),
-        url('^avatar/delete/$', views.avatar_views.delete, name='avatar_delete'),
+        url(
+            '^avatar/change/$',
+            views.avatar_views.change,
+            name='avatar_change'
+        ),
+        url(
+            '^avatar/delete/$',
+            views.avatar_views.delete,
+            name='avatar_delete'
+        ),
         url(#this urs we inherit from the original avatar app
             '^avatar/render_primary/(?P<user_id>[\+\d]+)/(?P<size>[\d]+)/$',
             views.avatar_views.render_primary,
             name='avatar_render_primary'
         ),
     )
-
-

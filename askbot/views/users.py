@@ -1,7 +1,7 @@
 """
 :synopsis: user-centric views for askbot
 
-This module includes all views that are specific to a given user - his or her profile, 
+This module includes all views that are specific to a given user - his or her profile,
 and other views showing profile-related information.
 
 Also this module includes the view listing all forum users.
@@ -35,30 +35,17 @@ from askbot.models.badges import award_badges_signal
 from askbot.skins.loaders import render_into_skin
 from askbot.templatetags import extra_tags
 
-question_type = ContentType.objects.get_for_model(models.Question)
-answer_type = ContentType.objects.get_for_model(models.Answer)
-comment_type = ContentType.objects.get_for_model(models.Comment)
-question_revision_type = ContentType.objects.get_for_model(
-                                                models.QuestionRevision
-                                            )
-
-answer_revision_type = ContentType.objects.get_for_model(
-                                            models.AnswerRevision
-                                        )
-repute_type = ContentType.objects.get_for_model(models.Repute)
-question_type_id = question_type.id
-answer_type_id = answer_type.id
-comment_type_id = comment_type.id
-question_revision_type_id = question_revision_type.id
-answer_revision_type_id = answer_revision_type.id
-repute_type_id = repute_type.id
 
 #todo: queries in the user activity summary view must be redone
-def get_related_object_type_name(content_type_id):
-    if content_type_id in (question_type_id, question_revision_type_id,):
+def get_related_object_type_name(content_type_id, object_id):
+    if content_type_id == ContentType.objects.get_for_model(models.Question).id:
         return 'question'
-    elif content_type_id in (answer_type_id, answer_revision_type_id,):
+    elif content_type_id == ContentType.objects.get_for_model(models.Answer).id:
         return 'answer'
+    elif content_type_id == ContentType.objects.get_for_model(models.PostRevision).id:
+        post_revision = models.PostRevision.objects.get(id=object_id)
+        return post_revision.revision_type_str()
+
     return None
 
 def owner_or_moderator_required(f):
@@ -72,7 +59,7 @@ def owner_or_moderator_required(f):
             params = '?next=%s' % request.path
             return HttpResponseRedirect(reverse('user_signin') + params)
         return f(request, profile_owner, context)
-    return wrapped_func 
+    return wrapped_func
 
 def users(request):
     is_paginated = True
@@ -97,7 +84,7 @@ def users(request):
         objects_list = Paginator(
                             models.User.objects.all().order_by(
                                                 order_by_parameter
-                                            ), 
+                                            ),
                             const.USERS_PAGE_SIZE
                         )
         base_url = reverse('users') + '?sort=%s&' % sortby
@@ -108,7 +95,7 @@ def users(request):
                                                 username__icontains = suser
                                             ).order_by(
                                                 '-reputation'
-                                            ), 
+                                            ),
                             const.USERS_PAGE_SIZE
                         )
         base_url = reverse('users') + '?name=%s&sort=%s&' % (suser, sortby)
@@ -142,7 +129,7 @@ def users(request):
 
 @csrf.csrf_protect
 def user_moderate(request, subject, context):
-    """user subview for moderation 
+    """user subview for moderation
     """
     moderator = request.user
 
@@ -171,7 +158,7 @@ def user_moderate(request, subject, context):
             if send_message_form.is_valid():
                 subject_line = send_message_form.cleaned_data['subject_line']
                 body_text = send_message_form.cleaned_data['body_text']
-                
+
                 try:
                     send_mail(
                             subject_line = subject_line,
@@ -241,7 +228,7 @@ def set_new_email(user, new_email, nomessage=False):
         user.email_isvalid = False
         user.save()
         #if askbot_settings.EMAIL_VALIDATION == True:
-        #    send_new_email_key(user,nomessage=nomessage)    
+        #    send_new_email_key(user,nomessage=nomessage)
 
 @login_required
 @csrf.csrf_protect
@@ -306,7 +293,26 @@ def user_stats(request, user, context):
                                     'last_activity_by__silver',
                                     'last_activity_by__bronze'
                                 )[:100]
+
     questions = list(questions)
+
+    #added this if to avoid another query if questions is less than 100
+    if len(questions) < 100:
+        question_count = len(questions)
+    else:
+        question_count = models.Question.objects.filter(
+                                        **question_filter
+                                    ).order_by(
+                                        '-score', '-last_activity_at'
+                                    ).select_related(
+                                        'last_activity_by__id',
+                                        'last_activity_by__username',
+                                        'last_activity_by__reputation',
+                                        'last_activity_by__gold',
+                                        'last_activity_by__silver',
+                                        'last_activity_by__bronze'
+                                    ).count()
+
     favorited_myself = models.FavoriteQuestion.objects.filter(
                                     question__in = questions,
                                     user = user
@@ -381,8 +387,9 @@ def user_stats(request, user, context):
         'page_title' : _('user profile overview'),
         'user_status_for_display': user.get_status_display(soft = True),
         'questions' : questions,
-        'question_type' : question_type,
-        'answer_type' : answer_type,
+        'question_count': question_count,
+        'question_type' : ContentType.objects.get_for_model(models.Question),
+        'answer_type' : ContentType.objects.get_for_model(models.Answer),
         'favorited_myself': favorited_myself,
         'answered_questions' : answered_questions,
         'up_votes' : up_votes,
@@ -414,7 +421,7 @@ def user_recent(request, user, context):
             self.summary = summary
             slug_title = slugify(title)
             self.title_link = reverse(
-                                'question', 
+                                'question',
                                 kwargs={'id':question_id}
                             ) + u'%s' % slug_title
             if int(answer_id) > 0:
@@ -444,7 +451,7 @@ def user_recent(request, user, context):
         tables=['activity', 'question'],
         where=['activity.content_type_id = %s AND activity.object_id = ' +
             'question.id AND activity.user_id = %s AND activity.activity_type = %s AND NOT question.deleted'],
-        params=[question_type_id, user.id, const.TYPE_ACTIVITY_ASK_QUESTION],
+        params=[ContentType.objects.get_for_model(models.Question).id, user.id, const.TYPE_ACTIVITY_ASK_QUESTION],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -456,11 +463,11 @@ def user_recent(request, user, context):
 
     for q in questions:
         q_event = Event(
-                    q['active_at'], 
-                    q['activity_type'], 
-                    q['title'], 
-                    '', 
-                    '0', 
+                    q['active_at'],
+                    q['activity_type'],
+                    q['title'],
+                    '',
+                    '0',
                     q['question_id']
                 )
         activities.append(q_event)
@@ -476,10 +483,10 @@ def user_recent(request, user, context):
             'activity_type' : 'activity.activity_type'
             },
         tables=['activity', 'answer', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND ' + 
-            'answer.question_id=question.id AND NOT answer.deleted AND activity.user_id=%s AND '+ 
+        where=['activity.content_type_id = %s AND activity.object_id = answer.id AND ' +
+            'answer.question_id=question.id AND NOT answer.deleted AND activity.user_id=%s AND '+
             'activity.activity_type=%s AND NOT question.deleted'],
-        params=[answer_type_id, user.id, const.TYPE_ACTIVITY_ANSWER],
+        params=[ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_ANSWER],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -508,7 +515,7 @@ def user_recent(request, user, context):
             'activity.user_id = comment.user_id AND comment.object_id=question.id AND '+
             'comment.content_type_id=%s AND activity.user_id = %s AND activity.activity_type=%s AND ' +
             'NOT question.deleted'],
-        params=[comment_type_id, question_type_id, user.id, const.TYPE_ACTIVITY_COMMENT_QUESTION],
+        params=[ContentType.objects.get_for_model(models.Comment).id, ContentType.objects.get_for_model(models.Question).id, user.id, const.TYPE_ACTIVITY_COMMENT_QUESTION],
         order_by=['-comment.added_at']
     ).values(
             'title',
@@ -538,7 +545,7 @@ def user_recent(request, user, context):
             'comment.content_type_id=%s AND question.id = answer.question_id AND '+
             'activity.user_id = %s AND activity.activity_type=%s AND '+
             'NOT answer.deleted AND NOT question.deleted'],
-        params=[comment_type_id, answer_type_id, user.id, const.TYPE_ACTIVITY_COMMENT_ANSWER],
+        params=[ContentType.objects.get_for_model(models.Comment).id, ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_COMMENT_ANSWER],
         order_by=['-comment.added_at']
     ).values(
             'title',
@@ -556,18 +563,20 @@ def user_recent(request, user, context):
     # question revisions
     revisions = models.Activity.objects.extra(
         select={
-            'title' : 'question_revision.title',
-            'question_id' : 'question_revision.question_id',
+            'title' : 'askbot_postrevision.title',
+            'question_id' : 'askbot_postrevision.question_id',
             'added_at' : 'activity.active_at',
             'activity_type' : 'activity.activity_type',
-            'summary' : 'question_revision.summary'
+            'summary' : 'askbot_postrevision.summary'
             },
-        tables=['activity', 'question_revision', 'question'],
-        where=['activity.content_type_id = %s AND activity.object_id = question_revision.id AND '+
-            'question_revision.id=question.id AND NOT question.deleted AND '+
-            'activity.user_id = question_revision.author_id AND activity.user_id = %s AND '+
-            'activity.activity_type=%s'],
-        params=[question_revision_type_id, user.id, const.TYPE_ACTIVITY_UPDATE_QUESTION],
+        tables=['activity', 'askbot_postrevision', 'question'],
+        where=['''
+            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
+            askbot_postrevision.question_id=question.id AND askbot_postrevision.revision_type=%s AND NOT question.deleted AND
+            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
+            activity.activity_type=%s
+        '''],
+        params=[ContentType.objects.get_for_model(models.PostRevision).id, models.PostRevision.QUESTION_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_QUESTION],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -590,16 +599,17 @@ def user_recent(request, user, context):
             'answer_id' : 'answer.id',
             'added_at' : 'activity.active_at',
             'activity_type' : 'activity.activity_type',
-            'summary' : 'answer_revision.summary'
+            'summary' : 'askbot_postrevision.summary'
             },
-        tables=['activity', 'answer_revision', 'question', 'answer'],
-
-        where=['activity.content_type_id = %s AND activity.object_id = answer_revision.id AND '+
-            'activity.user_id = answer_revision.author_id AND activity.user_id = %s AND '+
-            'answer_revision.answer_id=answer.id AND answer.question_id = question.id AND '+
-            'NOT question.deleted AND NOT answer.deleted AND '+
-            'activity.activity_type=%s'],
-        params=[answer_revision_type_id, user.id, const.TYPE_ACTIVITY_UPDATE_ANSWER],
+        tables=['activity', 'askbot_postrevision', 'question', 'answer'],
+        where=['''
+            activity.content_type_id=%s AND activity.object_id=askbot_postrevision.id AND
+            askbot_postrevision.answer_id=answer.id AND askbot_postrevision.revision_type=%s AND
+            answer.question_id=question.id AND NOT question.deleted AND NOT answer.deleted AND
+            activity.user_id=askbot_postrevision.author_id AND activity.user_id=%s AND
+            activity.activity_type=%s
+        '''],
+        params=[ContentType.objects.get_for_model(models.PostRevision).id, models.PostRevision.ANSWER_REVISION, user.id, const.TYPE_ACTIVITY_UPDATE_ANSWER],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -628,7 +638,7 @@ def user_recent(request, user, context):
             'activity.user_id = question.author_id AND activity.user_id = %s AND '+
             'NOT answer.deleted AND NOT question.deleted AND '+
             'answer.question_id=question.id AND activity.activity_type=%s'],
-        params=[answer_type_id, user.id, const.TYPE_ACTIVITY_MARK_ANSWER],
+        params=[ContentType.objects.get_for_model(models.Answer).id, user.id, const.TYPE_ACTIVITY_MARK_ANSWER],
         order_by=['-activity.active_at']
     ).values(
             'title',
@@ -662,7 +672,10 @@ def user_recent(request, user, context):
             'activity_type'
             )
     for award in awards:
-        related_object_type = get_related_object_type_name(award['content_type_id'])
+        related_object_type = get_related_object_type_name(
+            content_type_id=award['content_type_id'],
+            object_id=award['object_id']
+        )
         activities.append(
             AwardEvent(
                 award['awarded_at'],
@@ -692,7 +705,7 @@ def user_recent(request, user, context):
 @owner_or_moderator_required
 def user_responses(request, user, context):
     """
-    We list answers for question, comments, and 
+    We list answers for question, comments, and
     answer accepted by others for this user.
     as well as mentions of the user
 
@@ -753,7 +766,7 @@ def user_responses(request, user, context):
         #todo: agrupate users
         if response['response_id'] == last_response_id:
             original_response = dict.copy(filtered_response_list[len(filtered_response_list)-1])
-            original_response['nested_responses'].append(response) 
+            original_response['nested_responses'].append(response)
             filtered_response_list[len(filtered_response_list)-1] = original_response
         else:
             filtered_response_list.append(response)
@@ -803,7 +816,7 @@ def user_votes(request, user, context):
         tables=['vote', 'question', 'auth_user'],
         where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = question.id '+
             'AND vote.user_id=auth_user.id'],
-        params=[question_type_id, user.id],
+        params=[ContentType.objects.get_for_model(models.Question).id, user.id],
         order_by=['-vote.id']
     ).values(
             'title',
@@ -827,7 +840,7 @@ def user_votes(request, user, context):
         tables=['vote', 'answer', 'question', 'auth_user'],
         where=['vote.content_type_id = %s AND vote.user_id = %s AND vote.object_id = answer.id '+
             'AND answer.question_id = question.id AND vote.user_id=auth_user.id'],
-        params=[answer_type_id, user.id],
+        params=[ContentType.objects.get_for_model(models.Answer).id, user.id],
         order_by=['-vote.id']
     ).values(
             'title',
@@ -855,8 +868,8 @@ def user_reputation(request, user, context):
     reputes = models.Repute.objects.filter(user=user).order_by('-reputed_at')
     #select_related() adds stuff needed for the query
     reputes = reputes.select_related(
-                            'question__title', 
-                            'question__id', 
+                            'question__title',
+                            'question__id',
                             'user__username'
                         )
     #prepare data for the graph
