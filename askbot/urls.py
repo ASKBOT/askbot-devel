@@ -7,7 +7,7 @@ from django.conf.urls.defaults import url, patterns, include
 from django.conf.urls.defaults import handler500, handler404
 from django.contrib import admin
 from askbot import views
-from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
+from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed, RssUnansweredQuestionsFeed
 from askbot.sitemap import QuestionsSitemap
 from askbot.skins.utils import update_media_revision
 
@@ -21,7 +21,8 @@ else:
 
 feeds = {
     'rss': RssLastestQuestionsFeed,
-    'question':RssIndividualQuestionFeed
+    'question':RssIndividualQuestionFeed,
+    'unanswered': RssUnansweredQuestionsFeed
 }
 sitemaps = {
     'questions': QuestionsSitemap
