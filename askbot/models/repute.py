@@ -143,7 +143,7 @@ class Repute(models.Model):
             return  _('<em>Changed by moderator. Reason:</em> %(reason)s') \
                                                     % {'reason':self.comment}
         else:
-            delta = self.positive - self.negative
+            delta = self.positive + self.negative
             link_title_data = {
                                 'points': abs(delta),
                                 'username': self.user.username,
