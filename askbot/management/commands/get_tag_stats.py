@@ -1,7 +1,7 @@
 import sys
 import optparse
 from django.core.management.base import BaseCommand, CommandError
-from askbot import models
+from askbot import models, const
 
 def get_tag_lines(tag_marks, width = 25):
     output = list()
