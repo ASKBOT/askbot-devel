@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ubuntu-ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-02 11:20-0600\n"
+"POT-Creation-Date: 2012-04-18 18:56-0500\n"
 "PO-Revision-Date: 2011-04-10 19:43+0000\n"
 "Last-Translator: Adi Roiban <adi@roiban.ro>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -23,16 +23,16 @@ msgstr ""
 msgid "Sorry, but anonymous visitors cannot access this function"
 msgstr "Vizitatorii anonimi nu pot accesa această funcție"
 
-#: feed.py:26 feed.py:100
+#: feed.py:28 feed.py:90
 msgid " - "
 msgstr " - "
 
-#: feed.py:26
+#: feed.py:28
 #, fuzzy
 msgid "Individual question feed"
 msgstr "Întrebări selectate individual"
 
-#: feed.py:100
+#: feed.py:90
 msgid "latest questions"
 msgstr "ultimele întrebări"
 
@@ -59,7 +59,7 @@ msgstr "titlu"
 msgid "please enter a descriptive title for your question"
 msgstr "introduceți un titlu descriptiv pentru întrebare"
 
-#: forms.py:111
+#: forms.py:113
 #, fuzzy, python-format
 msgid "title must be > %d character"
 msgid_plural "title must be > %d characters"
@@ -67,17 +67,26 @@ msgstr[0] "titlul trebuie să fie mai lung decât 10 caractere"
 msgstr[1] "titlul trebuie să fie mai lung decât 10 caractere"
 msgstr[2] "titlul trebuie să fie mai lung decât 10 caractere"
 
-#: forms.py:131
+#: forms.py:123
+#, python-format
+msgid "The title is too long, maximum allowed size is %d characters"
+msgstr ""
+
+#: forms.py:130
+#, python-format
+msgid "The title is too long, maximum allowed size is %d bytes"
+msgstr ""
+
+#: forms.py:149
 msgid "content"
 msgstr "conținut"
 
-#: forms.py:165 skins/common/templates/widgets/edit_post.html:20
-#: skins/common/templates/widgets/edit_post.html:32
+#: forms.py:185 skins/common/templates/widgets/edit_post.html:21
 #: skins/default/templates/widgets/meta_nav.html:5
 msgid "tags"
 msgstr "etichete"
 
-#: forms.py:168
+#: forms.py:188
 #, fuzzy, python-format
 msgid ""
 "Tags are short keywords, with no spaces within. Up to %(max_tags)d tag can "
@@ -95,11 +104,11 @@ msgstr[2] ""
 "Etichetele sunt cuvinte cheie scurte, fără spații. Pot fi folosite până la "
 "cinci etichete."
 
-#: forms.py:201 skins/default/templates/question_retag.html:58
+#: forms.py:222 skins/default/templates/question_retag.html:58
 msgid "tags are required"
 msgstr "etichetele sunt obligatorii"
 
-#: forms.py:210
+#: forms.py:232
 #, python-format
 msgid "please use %(tag_count)d tag or less"
 msgid_plural "please use %(tag_count)d tags or less"
@@ -107,12 +116,12 @@ msgstr[0] "vă rugăm să folosiți %(tag_count)d etichetă sau mai puțin"
 msgstr[1] "vă rugăm să folosiți %(tag_count)d etichete sau mai puțin"
 msgstr[2] "vă rugăm să folosiți %(tag_count)d de etichete sau mai puțin"
 
-#: forms.py:218
+#: forms.py:240
 #, python-format
 msgid "At least one of the following tags is required : %(tags)s"
 msgstr ""
 
-#: forms.py:227
+#: forms.py:249
 #, python-format
 msgid "each tag must be shorter than %(max_chars)d character"
 msgid_plural "each tag must be shorter than %(max_chars)d characters"
@@ -123,17 +132,17 @@ msgstr[1] ""
 msgstr[2] ""
 "fiecare etichetă trebuie să fie mai scurtă de %(max_chars)d de caractere"
 
-#: forms.py:235
-msgid "use-these-chars-in-tags"
-msgstr "folositi-aceste-caractere-in-etichete"
+#: forms.py:258
+msgid "In tags, please use letters, numbers and characters \"-+.#\""
+msgstr ""
 
-#: forms.py:270
+#: forms.py:294
 msgid "community wiki (karma is not awarded & many others can edit wiki post)"
 msgstr ""
 "wiki al comunității (nu se primesc puncte de reputație și mesajul poate fi "
 "modificat de mai multe persoane)"
 
-#: forms.py:271
+#: forms.py:295
 msgid ""
 "if you choose community wiki option, the question and answer do not generate "
 "points and name of author will not be shown"
@@ -141,11 +150,11 @@ msgstr ""
 "dacă alegeți opțiunea wiki al comunității, întrebarea și răspunsul nu vor "
 "genera puncte iar numele autorului nu va fi afișat"
 
-#: forms.py:287
+#: forms.py:311
 msgid "update summary:"
 msgstr "sumar actualizare:"
 
-#: forms.py:288
+#: forms.py:312
 msgid ""
 "enter a brief summary of your revision (e.g. fixed spelling, grammar, "
 "improved style, this field is optional)"
@@ -153,108 +162,113 @@ msgstr ""
 "introduceți o descriere scurtă a reviziei (de ex. corectare ortografică, "
 "gramaticală, stil îmbunătățit, câmp opțional)"
 
-#: forms.py:364
+#: forms.py:386
 msgid "Enter number of points to add or subtract"
 msgstr "Introduceți numărul de puncte pentru a fi adăugate sau retrase"
 
-#: forms.py:378 const/__init__.py:250
+#: forms.py:400 const/__init__.py:253
 msgid "approved"
 msgstr "aprobat"
 
-#: forms.py:379 const/__init__.py:251
+#: forms.py:401 const/__init__.py:254
 msgid "watched"
 msgstr "urmărit"
 
-#: forms.py:380 const/__init__.py:252
+#: forms.py:402 const/__init__.py:255
 msgid "suspended"
 msgstr "suspendat"
 
-#: forms.py:381 const/__init__.py:253
+#: forms.py:403 const/__init__.py:256
 msgid "blocked"
 msgstr "blocat"
 
-#: forms.py:383
+#: forms.py:405
 #, fuzzy
 msgid "administrator"
 msgstr "Administrator"
 
-#: forms.py:384 const/__init__.py:249
+#: forms.py:406 const/__init__.py:252
 msgid "moderator"
 msgstr "moderator"
 
-#: forms.py:404
+#: forms.py:426
 msgid "Change status to"
 msgstr "Schimbă starea în"
 
-#: forms.py:431
+#: forms.py:453
 msgid "which one?"
 msgstr "care?"
 
-#: forms.py:452
+#: forms.py:474
 msgid "Cannot change own status"
 msgstr "Nu se poate schimba propria stare"
 
-#: forms.py:458
+#: forms.py:480
 msgid "Cannot turn other user to moderator"
 msgstr "Nu s-a putut schimba alt utilizator în moderator"
 
-#: forms.py:465
+#: forms.py:487
 msgid "Cannot change status of another moderator"
 msgstr "Nu se poate schimba starea altui utilizator"
 
-#: forms.py:471
+#: forms.py:493
 #, fuzzy
 msgid "Cannot change status to admin"
 msgstr "Nu se poate schimba propria stare"
 
-#: forms.py:477
+#: forms.py:499
 #, python-format
 msgid ""
 "If you wish to change %(username)s's status, please make a meaningful "
 "selection."
 msgstr "Dacă doriți să modificați statusul %(username)s alegeți ceva expresiv."
 
-#: forms.py:486
+#: forms.py:508
 msgid "Subject line"
 msgstr "Linie subiect"
 
-#: forms.py:493
+#: forms.py:515
 msgid "Message text"
 msgstr "Text mesaj"
 
-#: forms.py:579
+#: forms.py:530
 #, fuzzy
 msgid "Your name (optional):"
 msgstr "Nume:"
 
-#: forms.py:580
+#: forms.py:531
 #, fuzzy
 msgid "Email:"
 msgstr "email"
 
-#: forms.py:582
+#: forms.py:533
 msgid "Your message:"
 msgstr "Mesaj:"
 
-#: forms.py:587
+#: forms.py:538
 msgid "I don't want to give my email or receive a response:"
 msgstr ""
 
-#: forms.py:609
+#: forms.py:560
 msgid "Please mark \"I dont want to give my mail\" field."
 msgstr ""
 
-#: forms.py:648
+#: forms.py:599
 msgid "ask anonymously"
 msgstr "întreabă anonim"
 
-#: forms.py:650
+#: forms.py:601
 msgid "Check if you do not want to reveal your name when asking this question"
 msgstr ""
 "Bifați în cazul în care nu doriți să dezvăluiți numele vostru când puneți "
 "această întrebare"
 
-#: forms.py:810
+#: forms.py:624
+msgid ""
+"Subject line is expected in the format: [tag1, tag2, tag3,...] question title"
+msgstr ""
+
+#: forms.py:769
 msgid ""
 "You have asked this question anonymously, if you decide to reveal your "
 "identity, please check this box."
@@ -262,11 +276,11 @@ msgstr ""
 "Ați răspuns la această întrebare anonim, dacă decideți să vă arătați "
 "identitatea, marcați această căsuță."
 
-#: forms.py:814
+#: forms.py:773
 msgid "reveal identity"
 msgstr "arată identitatea"
 
-#: forms.py:872
+#: forms.py:831
 msgid ""
 "Sorry, only owner of the anonymous question can reveal his or her identity, "
 "please uncheck the box"
@@ -274,7 +288,7 @@ msgstr ""
 "Doar cel care a pus întrebarea anonimă poate dezvălui identitatea, debifați "
 "căsuța"
 
-#: forms.py:885
+#: forms.py:844
 msgid ""
 "Sorry, apparently rules have just changed - it is no longer possible to ask "
 "anonymously. Please either check the \"reveal identity\" box or reload this "
@@ -284,194 +298,209 @@ msgstr ""
 "rugăm să marcați căsuța „arată identitatea” sau să reîncărcați pagina pentru "
 "a încerca din nou să introduceți întrebarea."
 
-#: forms.py:923
-msgid "this email will be linked to gravatar"
-msgstr "această adresă de email va fi conectată cu gravatarul"
-
-#: forms.py:930
+#: forms.py:888
 msgid "Real name"
 msgstr "Nume real"
 
-#: forms.py:937
+#: forms.py:895
 msgid "Website"
 msgstr "Pagină web"
 
-#: forms.py:944
+#: forms.py:902
 msgid "City"
 msgstr "Oraș"
 
-#: forms.py:953
+#: forms.py:911
 msgid "Show country"
 msgstr "Arată țara"
 
-#: forms.py:958
+#: forms.py:916
 msgid "Date of birth"
 msgstr "Data nașterii"
 
-#: forms.py:959
+#: forms.py:917
 msgid "will not be shown, used to calculate age, format: YYYY-MM-DD"
 msgstr ""
 "nu va fi afișată, ci folosită doar pentru calcularea vârstei, format AAAA-LL-"
 "ZZ"
 
-#: forms.py:965
+#: forms.py:923
 msgid "Profile"
 msgstr "Profil"
 
-#: forms.py:974
+#: forms.py:932
 msgid "Screen name"
 msgstr "Nume afișat"
 
-#: forms.py:1005 forms.py:1006
+#: forms.py:963 forms.py:964
 msgid "this email has already been registered, please use another one"
 msgstr "acest email este deja înregistrat, utilizați altul"
 
-#: forms.py:1013
+#: forms.py:971
 msgid "Choose email tag filter"
 msgstr "Alegeți filtru email etichete"
 
-#: forms.py:1060
+#: forms.py:1018
 msgid "Asked by me"
 msgstr "Întrebate de mine"
 
-#: forms.py:1063
+#: forms.py:1021
 msgid "Answered by me"
 msgstr "Răspunse de mine"
 
-#: forms.py:1066
+#: forms.py:1024
 msgid "Individually selected"
 msgstr "Alese individual"
 
-#: forms.py:1069
+#: forms.py:1027
 msgid "Entire forum (tag filtered)"
 msgstr "Toate întrebările (filtrate pe tag)"
 
-#: forms.py:1073
+#: forms.py:1031
 msgid "Comments and posts mentioning me"
 msgstr "Comentarii și răspunsuri în care sunt menționat eu"
 
-#: forms.py:1152
-msgid "okay, let's try!"
-msgstr "Bine, să încercăm!"
-
-#: forms.py:1153
-msgid "no community email please, thanks"
-msgstr "fără emailuri de la comunitate, mulțumesc"
-
-#: forms.py:1157
+#: forms.py:1112
 msgid "please choose one of the options above"
 msgstr "alegeți una dintre opțiunile de mai sus"
 
-#: urls.py:52
+#: forms.py:1115
+msgid "okay, let's try!"
+msgstr "Bine, să încercăm!"
+
+#: forms.py:1118
+#, fuzzy, python-format
+msgid "no %(sitename)s email please, thanks"
+msgstr "fără emailuri de la comunitate, mulțumesc"
+
+#: lamson_handlers.py:126 tests/reply_by_email_tests.py:49
+msgid "======= Reply above this line. ====-=-="
+msgstr ""
+
+#: lamson_handlers.py:130
+msgid ""
+"Your message was malformed. Please make sure to qoute                 the "
+"original notification you received at the end of your reply."
+msgstr ""
+
+#: lamson_handlers.py:147
+msgid ""
+"You were replying to an email address         unknown to the system or you "
+"were replying from a different address from the one where you         "
+"received the notification."
+msgstr ""
+
+#: urls.py:41
 msgid "about/"
 msgstr "despre/"
 
-#: urls.py:53
+#: urls.py:42
 msgid "faq/"
 msgstr "intrebari-frecvente/"
 
-#: urls.py:54
+#: urls.py:43
 msgid "privacy/"
 msgstr "confidentialitate/"
 
-#: urls.py:56 urls.py:61
+#: urls.py:44
+msgid "help/"
+msgstr ""
+
+#: urls.py:46 urls.py:51
 msgid "answers/"
 msgstr "raspunsuri/"
 
-#: urls.py:56 urls.py:82 urls.py:207
+#: urls.py:46 urls.py:87 urls.py:212
 msgid "edit/"
 msgstr "edit/"
 
-#: urls.py:61 urls.py:112
+#: urls.py:51 urls.py:117
 msgid "revisions/"
 msgstr "revizii/"
 
-#: urls.py:67 urls.py:77 urls.py:82 urls.py:87 urls.py:92 urls.py:97
-#: urls.py:102 urls.py:107 urls.py:112 urls.py:118 urls.py:294
-#: skins/default/templates/question/javascript.html:16
-#: skins/default/templates/question/javascript.html:19
+#: urls.py:61
+msgid "questions"
+msgstr "întrebări"
+
+#: urls.py:82 urls.py:87 urls.py:92 urls.py:97 urls.py:102 urls.py:107
+#: urls.py:112 urls.py:117 urls.py:123 urls.py:299
 msgid "questions/"
 msgstr "intrebari/"
 
-#: urls.py:77
+#: urls.py:82
 msgid "ask/"
 msgstr "intreaba/"
 
-#: urls.py:87
+#: urls.py:92
 msgid "retag/"
 msgstr "retag/"
 
-#: urls.py:92
+#: urls.py:97
 msgid "close/"
 msgstr "inchide/"
 
-#: urls.py:97
+#: urls.py:102
 msgid "reopen/"
 msgstr "redeschide/"
 
-#: urls.py:102
+#: urls.py:107
 msgid "answer/"
 msgstr "raspuns/"
 
-#: urls.py:107 skins/default/templates/question/javascript.html:16
+#: urls.py:112
 msgid "vote/"
 msgstr "vot/"
 
-#: urls.py:118
+#: urls.py:123
 msgid "widgets/"
 msgstr ""
 
-#: urls.py:153
+#: urls.py:158
 msgid "tags/"
 msgstr "etichete/"
 
-#: urls.py:196
+#: urls.py:201
 msgid "subscribe-for-tags/"
 msgstr "abonare-etichete/"
 
-#: urls.py:201 urls.py:207 urls.py:213 urls.py:221
-#: skins/default/templates/main_page/javascript.html:39
-#: skins/default/templates/main_page/javascript.html:42
+#: urls.py:206 urls.py:212 urls.py:218 urls.py:226
 msgid "users/"
 msgstr "utilizatori/"
 
-#: urls.py:214
+#: urls.py:219
 #, fuzzy
 msgid "subscriptions/"
 msgstr "abonamente"
 
-#: urls.py:226
+#: urls.py:231
 msgid "users/update_has_custom_avatar/"
 msgstr ""
 
-#: urls.py:231 urls.py:236
+#: urls.py:236 urls.py:241
 msgid "badges/"
 msgstr "insigne/"
 
-#: urls.py:241
+#: urls.py:246
 msgid "messages/"
 msgstr "mesaje/"
 
-#: urls.py:241
+#: urls.py:246
 msgid "markread/"
 msgstr "macheaza-citit/"
 
-#: urls.py:257
+#: urls.py:262
 msgid "upload/"
 msgstr "incarca/"
 
-#: urls.py:258
+#: urls.py:263
 msgid "feedback/"
 msgstr "sugestii/"
 
-#: urls.py:300 skins/default/templates/main_page/javascript.html:38
-#: skins/default/templates/main_page/javascript.html:41
-#: skins/default/templates/question/javascript.html:15
-#: skins/default/templates/question/javascript.html:18
+#: urls.py:305
 msgid "question/"
 msgstr "intrebare/"
 
-#: urls.py:307 setup_templates/settings.py:208
+#: urls.py:312 setup_templates/settings.py:210
 #: skins/common/templates/authopenid/providers_javascript.html:7
 msgid "account/"
 msgstr "cont/"
@@ -600,157 +629,181 @@ msgid ""
 msgstr ""
 
 #: conf/email.py:38
+#, fuzzy
+msgid "Enable email alerts"
+msgstr "Configurări email și alerte"
+
+#: conf/email.py:47
 msgid "Maximum number of news entries in an email alert"
 msgstr "Număr maxim de intrări întrun email de alerte"
 
-#: conf/email.py:48
+#: conf/email.py:57
 #, fuzzy
 msgid "Default notification frequency all questions"
 msgstr "Frecvența implicită a notificărilor de noutăți"
 
-#: conf/email.py:50
+#: conf/email.py:59
 msgid "Option to define frequency of emailed updates for: all questions."
 msgstr ""
 
-#: conf/email.py:62
+#: conf/email.py:71
 #, fuzzy
 msgid "Default notification frequency questions asked by the user"
 msgstr "Frecvența implicită a notificărilor de noutăți"
 
-#: conf/email.py:64
+#: conf/email.py:73
 msgid ""
 "Option to define frequency of emailed updates for: Question asked by the "
 "user."
 msgstr ""
 
-#: conf/email.py:76
+#: conf/email.py:85
 #, fuzzy
 msgid "Default notification frequency questions answered by the user"
 msgstr "Frecvența implicită a notificărilor de noutăți"
 
-#: conf/email.py:78
+#: conf/email.py:87
 msgid ""
 "Option to define frequency of emailed updates for: Question answered by the "
 "user."
 msgstr ""
 
-#: conf/email.py:90
+#: conf/email.py:99
 msgid ""
 "Default notification frequency questions individually                        "
 "selected by the user"
 msgstr ""
 
-#: conf/email.py:93
+#: conf/email.py:102
 msgid ""
 "Option to define frequency of emailed updates for: Question individually "
 "selected by the user."
 msgstr ""
 
-#: conf/email.py:105
+#: conf/email.py:114
 msgid ""
 "Default notification frequency for mentions                        and "
 "comments"
 msgstr ""
 
-#: conf/email.py:108
+#: conf/email.py:117
 msgid ""
 "Option to define frequency of emailed updates for: Mentions and comments."
 msgstr ""
 
-#: conf/email.py:119
+#: conf/email.py:128
 #, fuzzy
 msgid "Send periodic reminders about unanswered questions"
 msgstr "vezi întrebările fără răspuns"
 
-#: conf/email.py:121
+#: conf/email.py:130
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_unanswered_question_reminders\" (for example, via a cron job "
 "- with an appropriate frequency) "
 msgstr ""
 
-#: conf/email.py:134
+#: conf/email.py:143
 msgid "Days before starting to send reminders about unanswered questions"
 msgstr ""
 
-#: conf/email.py:145
+#: conf/email.py:154
 msgid ""
 "How often to send unanswered question reminders (in days between the "
 "reminders sent)."
 msgstr ""
 
-#: conf/email.py:157
+#: conf/email.py:166
 #, fuzzy
 msgid "Max. number of reminders to send about unanswered questions"
 msgstr "efectuați clic pentru a vedea întrebările cu cele mai multe răspunsuri"
 
-#: conf/email.py:168
+#: conf/email.py:177
 #, fuzzy
 msgid "Send periodic reminders to accept the best answer"
 msgstr "vezi întrebările fără răspuns"
 
-#: conf/email.py:170
+#: conf/email.py:179
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_accept_answer_reminders\" (for example, via a cron job - with "
 "an appropriate frequency) "
 msgstr ""
 
-#: conf/email.py:183
+#: conf/email.py:192
 msgid "Days before starting to send reminders to accept an answer"
 msgstr ""
 
-#: conf/email.py:194
+#: conf/email.py:203
 msgid ""
 "How often to send accept answer reminders (in days between the reminders "
 "sent)."
 msgstr ""
 
-#: conf/email.py:206
+#: conf/email.py:215
 #, fuzzy
 msgid "Max. number of reminders to send to accept the best answer"
 msgstr "efectuați clic pentru a vedea întrebările cu cele mai multe răspunsuri"
 
-#: conf/email.py:218
+#: conf/email.py:227
 msgid "Require email verification before allowing to post"
 msgstr ""
 
-#: conf/email.py:219
+#: conf/email.py:228
 msgid ""
 "Active email verification is done by sending a verification key in email"
 msgstr ""
 
-#: conf/email.py:228
+#: conf/email.py:237
 msgid "Allow only one account per email address"
 msgstr ""
 
-#: conf/email.py:237
+#: conf/email.py:246
 msgid "Fake email for anonymous user"
 msgstr ""
 
-#: conf/email.py:238
+#: conf/email.py:247
 msgid "Use this setting to control gravatar for email-less user"
 msgstr ""
 
-#: conf/email.py:247
+#: conf/email.py:256
 #, fuzzy
 msgid "Allow posting questions by email"
 msgstr "autentificați-vă pentru a pune o întrebare"
 
-#: conf/email.py:249
+#: conf/email.py:258
 msgid ""
 "Before enabling this setting - please fill out IMAP settings in the settings."
 "py file"
 msgstr ""
 
-#: conf/email.py:260
+#: conf/email.py:269
 msgid "Replace space in emailed tags with dash"
 msgstr ""
 
-#: conf/email.py:262
+#: conf/email.py:271
 msgid ""
 "This setting applies to tags written in the subject line of questions asked "
 "by email"
+msgstr ""
+
+#: conf/email.py:284
+#, fuzzy
+msgid "Enable posting answers and comments by email"
+msgstr "autentificați-vă pentru a pune o întrebare"
+
+#: conf/email.py:287
+msgid "To enable this feature make sure lamson is running"
+msgstr ""
+
+#: conf/email.py:298
+msgid "Reply by email hostname"
+msgstr ""
+
+#: conf/email.py:311
+msgid ""
+"Email replies having fewer words than this number will be posted as comments "
+"instead of answers"
 msgstr ""
 
 #: conf/external_keys.py:11
@@ -783,15 +836,15 @@ msgstr ""
 msgid "Enable recaptcha (keys below are required)"
 msgstr ""
 
-#: conf/external_keys.py:60
+#: conf/external_keys.py:62
 msgid "Recaptcha public key"
 msgstr ""
 
-#: conf/external_keys.py:68
+#: conf/external_keys.py:70
 msgid "Recaptcha private key"
 msgstr ""
 
-#: conf/external_keys.py:70
+#: conf/external_keys.py:72
 #, python-format
 msgid ""
 "Recaptcha is a tool that helps distinguish real people from annoying spam "
@@ -799,11 +852,11 @@ msgid ""
 "a>"
 msgstr ""
 
-#: conf/external_keys.py:82
+#: conf/external_keys.py:84
 msgid "Facebook public API key"
 msgstr ""
 
-#: conf/external_keys.py:84
+#: conf/external_keys.py:86
 #, python-format
 msgid ""
 "Facebook API key and Facebook secret allow to use Facebook Connect login "
@@ -811,68 +864,52 @@ msgid ""
 "\">facebook create app</a> site"
 msgstr ""
 
-#: conf/external_keys.py:97
+#: conf/external_keys.py:99
 msgid "Facebook secret key"
 msgstr ""
 
-#: conf/external_keys.py:105
+#: conf/external_keys.py:107
 msgid "Twitter consumer key"
 msgstr ""
 
-#: conf/external_keys.py:107
+#: conf/external_keys.py:109
 #, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">twitter applications site</"
 "a>"
 msgstr ""
 
-#: conf/external_keys.py:118
+#: conf/external_keys.py:120
 msgid "Twitter consumer secret"
 msgstr ""
 
-#: conf/external_keys.py:126
+#: conf/external_keys.py:128
 msgid "LinkedIn consumer key"
 msgstr ""
 
-#: conf/external_keys.py:128
+#: conf/external_keys.py:130
 #, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">LinkedIn developer site</a>"
 msgstr ""
 
-#: conf/external_keys.py:139
+#: conf/external_keys.py:141
 msgid "LinkedIn consumer secret"
 msgstr ""
 
-#: conf/external_keys.py:147
+#: conf/external_keys.py:149
 msgid "ident.ca consumer key"
 msgstr ""
 
-#: conf/external_keys.py:149
+#: conf/external_keys.py:151
 #, python-format
 msgid ""
 "Please register your forum at <a href=\"%(url)s\">Identi.ca applications "
 "site</a>"
 msgstr ""
 
-#: conf/external_keys.py:160
+#: conf/external_keys.py:162
 msgid "ident.ca consumer secret"
-msgstr ""
-
-#: conf/external_keys.py:168
-msgid "Use LDAP authentication for the password login"
-msgstr ""
-
-#: conf/external_keys.py:177
-msgid "LDAP service provider name"
-msgstr ""
-
-#: conf/external_keys.py:185
-msgid "URL for the LDAP service"
-msgstr ""
-
-#: conf/external_keys.py:193
-msgid "Explain how to change LDAP password"
 msgstr ""
 
 #: conf/flatpages.py:11
@@ -914,11 +951,13 @@ msgstr ""
 msgid "Data entry and display rules"
 msgstr ""
 
-#: conf/forum_data_rules.py:22
+#: conf/forum_data_rules.py:21
+msgid "Enable embedding videos. "
+msgstr ""
+
+#: conf/forum_data_rules.py:23
 #, python-format
-msgid ""
-"Enable embedding videos. <em>Note: please read <a href=\"%(url)s>read this</"
-"a> first.</em>"
+msgid "<em>Note: please read <a href=\"%(url)s\">read this</a> first.</em>"
 msgstr ""
 
 #: conf/forum_data_rules.py:33
@@ -976,107 +1015,165 @@ msgstr ""
 
 #: conf/forum_data_rules.py:126
 #, fuzzy
+msgid "Are tags required?"
+msgstr "etichetele sunt obligatorii"
+
+#: conf/forum_data_rules.py:135
+#, fuzzy
 msgid "Mandatory tags"
 msgstr "etichete actualizate"
 
-#: conf/forum_data_rules.py:129
+#: conf/forum_data_rules.py:138
 msgid ""
 "At least one of these tags will be required for any new or newly edited "
 "question. A mandatory tag may be wildcard, if the wildcard tags are active."
 msgstr ""
 
-#: conf/forum_data_rules.py:141
+#: conf/forum_data_rules.py:150
 msgid "Force lowercase the tags"
 msgstr ""
 
-#: conf/forum_data_rules.py:143
+#: conf/forum_data_rules.py:152
 msgid ""
 "Attention: after checking this, please back up the database, and run a "
 "management command: <code>python manage.py fix_question_tags</code> to "
 "globally rename the tags"
 msgstr ""
 
-#: conf/forum_data_rules.py:157
+#: conf/forum_data_rules.py:166
 msgid "Format of tag list"
 msgstr ""
 
-#: conf/forum_data_rules.py:159
+#: conf/forum_data_rules.py:168
 msgid ""
 "Select the format to show tags in, either as a simple list, or as a tag cloud"
 msgstr ""
 
-#: conf/forum_data_rules.py:171
+#: conf/forum_data_rules.py:180
 msgid "Use wildcard tags"
 msgstr ""
 
-#: conf/forum_data_rules.py:173
+#: conf/forum_data_rules.py:182
 msgid ""
 "Wildcard tags can be used to follow or ignore many tags at once, a valid "
 "wildcard tag has a single wildcard at the very end"
 msgstr ""
 
-#: conf/forum_data_rules.py:186
+#: conf/forum_data_rules.py:195
 msgid "Default max number of comments to display under posts"
 msgstr ""
 
-#: conf/forum_data_rules.py:197
+#: conf/forum_data_rules.py:206
 #, python-format
 msgid "Maximum comment length, must be < %(max_len)s"
 msgstr ""
 
-#: conf/forum_data_rules.py:207
+#: conf/forum_data_rules.py:216
 msgid "Limit time to edit comments"
 msgstr ""
 
-#: conf/forum_data_rules.py:209
+#: conf/forum_data_rules.py:218
 msgid "If unchecked, there will be no time limit to edit the comments"
 msgstr ""
 
-#: conf/forum_data_rules.py:220
+#: conf/forum_data_rules.py:229
 msgid "Minutes allowed to edit a comment"
 msgstr ""
 
-#: conf/forum_data_rules.py:221
+#: conf/forum_data_rules.py:230
 msgid "To enable this setting, check the previous one"
 msgstr ""
 
-#: conf/forum_data_rules.py:230
+#: conf/forum_data_rules.py:239
 msgid "Save comment by pressing <Enter> key"
 msgstr ""
 
-#: conf/forum_data_rules.py:239
+#: conf/forum_data_rules.py:248
 msgid "Minimum length of search term for Ajax search"
 msgstr ""
 
-#: conf/forum_data_rules.py:240
+#: conf/forum_data_rules.py:249
 msgid "Must match the corresponding database backend setting"
 msgstr ""
 
-#: conf/forum_data_rules.py:249
+#: conf/forum_data_rules.py:258
 msgid "Do not make text query sticky in search"
 msgstr ""
 
-#: conf/forum_data_rules.py:251
+#: conf/forum_data_rules.py:260
 msgid ""
 "Check to disable the \"sticky\" behavior of the search query. This may be "
 "useful if you want to move the search bar away from the default position or "
 "do not like the default sticky behavior of the text search query."
 msgstr ""
 
-#: conf/forum_data_rules.py:264
+#: conf/forum_data_rules.py:273
 msgid "Maximum number of tags per question"
 msgstr ""
 
-#: conf/forum_data_rules.py:276
+#: conf/forum_data_rules.py:285
 msgid "Number of questions to list by default"
 msgstr ""
 
-#: conf/forum_data_rules.py:286
+#: conf/forum_data_rules.py:295
 msgid "What should \"unanswered question\" mean?"
 msgstr ""
 
+#: conf/ldap.py:9
+msgid "LDAP login configuration"
+msgstr ""
+
+#: conf/ldap.py:17
+msgid "Use LDAP authentication for the password login"
+msgstr ""
+
+#: conf/ldap.py:26
+msgid "LDAP URL"
+msgstr ""
+
+#: conf/ldap.py:35
+msgid "LDAP BASE DN"
+msgstr ""
+
+#: conf/ldap.py:43
+msgid "LDAP Search Scope"
+msgstr ""
+
+#: conf/ldap.py:52
+msgid "LDAP Server USERID field name"
+msgstr ""
+
+#: conf/ldap.py:61
+msgid "LDAP Server \"Common Name\" field name"
+msgstr ""
+
+#: conf/ldap.py:70
+msgid "LDAP Server EMAIL field name"
+msgstr ""
+
+#: conf/leading_sidebar.py:12
+#, fuzzy
+msgid "Common left sidebar"
+msgstr "Etichete întrebare"
+
+#: conf/leading_sidebar.py:20
+#, fuzzy
+msgid "Enable left sidebar"
+msgstr "Profil utilizator"
+
+#: conf/leading_sidebar.py:29
+msgid "HTML for the left sidebar"
+msgstr ""
+
+#: conf/leading_sidebar.py:32
+msgid ""
+"Use this area to enter content at the LEFT sidebarin HTML format.  When "
+"using this option, please use the HTML validation service to make sure that "
+"your input is valid and works well in all browsers."
+msgstr ""
+
 #: conf/license.py:13
-msgid "Content LicensContent License"
+msgid "Content License"
 msgstr ""
 
 #: conf/license.py:21
@@ -1152,16 +1249,16 @@ msgid ""
 "XML-RPC"
 msgstr ""
 
-#: conf/login_providers.py:62
+#: conf/login_providers.py:60
 msgid "Upload your icon"
 msgstr ""
 
-#: conf/login_providers.py:92
+#: conf/login_providers.py:90
 #, python-format
 msgid "Activate %(provider)s login"
 msgstr ""
 
-#: conf/login_providers.py:97
+#: conf/login_providers.py:95
 #, python-format
 msgid ""
 "Note: to really enable %(provider)s login some additional parameters will "
@@ -1325,6 +1422,10 @@ msgstr ""
 msgid ""
 "When a search engine crawler will see a rel=nofollow attribute on a link - "
 "the link will not count towards the rank of the users personal site."
+msgstr ""
+
+#: conf/minimum_reputation.py:190
+msgid "Post answers and comments by email"
 msgstr ""
 
 #: conf/reputation_changes.py:13
@@ -1528,27 +1629,27 @@ msgstr ""
 msgid "Short name for your Q&A forum"
 msgstr ""
 
-#: conf/site_settings.py:68
+#: conf/site_settings.py:67
 msgid "Base URL for your Q&A forum, must start with http or https"
 msgstr ""
 
-#: conf/site_settings.py:79
+#: conf/site_settings.py:78
 msgid "Check to enable greeting for anonymous user"
 msgstr ""
 
-#: conf/site_settings.py:90
+#: conf/site_settings.py:89
 msgid "Text shown in the greeting message shown to the anonymous user"
 msgstr ""
 
-#: conf/site_settings.py:94
+#: conf/site_settings.py:93
 msgid "Use HTML to format the message "
 msgstr ""
 
-#: conf/site_settings.py:103
+#: conf/site_settings.py:102
 msgid "Feedback site URL"
 msgstr "URL site pentru feedback"
 
-#: conf/site_settings.py:105
+#: conf/site_settings.py:104
 msgid "If left empty, a simple internal feedback form will be used instead"
 msgstr "Dacă este lăsat gol, se va folosi un formular intern de feedback"
 
@@ -1673,21 +1774,21 @@ msgstr ""
 msgid "To change the logo, select new file, then submit this whole form."
 msgstr ""
 
-#: conf/skin_general_settings.py:39
+#: conf/skin_general_settings.py:37
 msgid "Show logo"
 msgstr ""
 
-#: conf/skin_general_settings.py:41
+#: conf/skin_general_settings.py:39
 msgid ""
 "Check if you want to show logo in the forum header or uncheck in the case "
 "you do not want the logo to appear in the default location"
 msgstr ""
 
-#: conf/skin_general_settings.py:53
+#: conf/skin_general_settings.py:51
 msgid "Site favicon"
 msgstr ""
 
-#: conf/skin_general_settings.py:55
+#: conf/skin_general_settings.py:53
 #, python-format
 msgid ""
 "A small 16x16 or 32x32 pixel icon image used to distinguish your site in the "
@@ -1695,40 +1796,40 @@ msgid ""
 "href=\"%(favicon_info_url)s\">this page</a>."
 msgstr ""
 
-#: conf/skin_general_settings.py:73
+#: conf/skin_general_settings.py:69
 msgid "Password login button"
 msgstr ""
 
-#: conf/skin_general_settings.py:75
+#: conf/skin_general_settings.py:71
 msgid ""
 "An 88x38 pixel image that is used on the login screen for the password login "
 "button."
 msgstr ""
 
-#: conf/skin_general_settings.py:90
+#: conf/skin_general_settings.py:84
 msgid "Show all UI functions to all users"
 msgstr ""
 
-#: conf/skin_general_settings.py:92
+#: conf/skin_general_settings.py:86
 msgid ""
 "If checked, all forum functions will be shown to users, regardless of their "
 "reputation. However to use those functions, moderation rules, reputation and "
 "other limits will still apply."
 msgstr ""
 
-#: conf/skin_general_settings.py:107
+#: conf/skin_general_settings.py:101
 msgid "Select skin"
 msgstr ""
 
-#: conf/skin_general_settings.py:118
+#: conf/skin_general_settings.py:112
 msgid "Customize HTML <HEAD>"
 msgstr ""
 
-#: conf/skin_general_settings.py:127
+#: conf/skin_general_settings.py:121
 msgid "Custom portion of the HTML <HEAD>"
 msgstr ""
 
-#: conf/skin_general_settings.py:129
+#: conf/skin_general_settings.py:123
 msgid ""
 "<strong>To use this option</strong>, check \"Customize HTML &lt;HEAD&gt;\" "
 "above. Contents of this box will be inserted into the &lt;HEAD&gt; portion "
@@ -1740,11 +1841,11 @@ msgid ""
 "please test the site with the W3C HTML validator service."
 msgstr ""
 
-#: conf/skin_general_settings.py:151
+#: conf/skin_general_settings.py:145
 msgid "Custom header additions"
 msgstr ""
 
-#: conf/skin_general_settings.py:153
+#: conf/skin_general_settings.py:147
 msgid ""
 "Header is the bar at the top of the content that contains user info and site "
 "links, and is common to all pages. Use this area to enter contents of the "
@@ -1753,21 +1854,21 @@ msgid ""
 "sure that your input is valid and works well in all browsers."
 msgstr ""
 
-#: conf/skin_general_settings.py:168
+#: conf/skin_general_settings.py:162
 msgid "Site footer mode"
 msgstr ""
 
-#: conf/skin_general_settings.py:170
+#: conf/skin_general_settings.py:164
 msgid ""
 "Footer is the bottom portion of the content, which is common to all pages. "
 "You can disable, customize, or use the default footer."
 msgstr ""
 
-#: conf/skin_general_settings.py:187
+#: conf/skin_general_settings.py:181
 msgid "Custom footer (HTML format)"
 msgstr ""
 
-#: conf/skin_general_settings.py:189
+#: conf/skin_general_settings.py:183
 msgid ""
 "<strong>To enable this function</strong>, please select option 'customize' "
 "in the \"Site footer mode\" above. Use this area to enter contents of the "
@@ -1776,21 +1877,21 @@ msgid ""
 "that your input is valid and works well in all browsers."
 msgstr ""
 
-#: conf/skin_general_settings.py:204
+#: conf/skin_general_settings.py:198
 msgid "Apply custom style sheet (CSS)"
 msgstr ""
 
-#: conf/skin_general_settings.py:206
+#: conf/skin_general_settings.py:200
 msgid ""
 "Check if you want to change appearance of your form by adding custom style "
 "sheet rules (please see the next item)"
 msgstr ""
 
-#: conf/skin_general_settings.py:218
+#: conf/skin_general_settings.py:212
 msgid "Custom style sheet (CSS)"
 msgstr ""
 
-#: conf/skin_general_settings.py:220
+#: conf/skin_general_settings.py:214
 msgid ""
 "<strong>To use this function</strong>, check \"Apply custom style sheet\" "
 "option above. The CSS rules added in this window will be applied after the "
@@ -1799,19 +1900,19 @@ msgid ""
 "depends (default is empty string) on the url configuration in your urls.py."
 msgstr ""
 
-#: conf/skin_general_settings.py:236
+#: conf/skin_general_settings.py:230
 msgid "Add custom javascript"
 msgstr ""
 
-#: conf/skin_general_settings.py:239
+#: conf/skin_general_settings.py:233
 msgid "Check to enable javascript that you can enter in the next field"
 msgstr ""
 
-#: conf/skin_general_settings.py:249
+#: conf/skin_general_settings.py:243
 msgid "Custom javascript"
 msgstr ""
 
-#: conf/skin_general_settings.py:251
+#: conf/skin_general_settings.py:245
 msgid ""
 "Type or paste plain javascript that you would like to run on your site. Link "
 "to the script will be inserted at the bottom of the HTML output and will be "
@@ -1822,19 +1923,19 @@ msgid ""
 "above)."
 msgstr ""
 
-#: conf/skin_general_settings.py:269
+#: conf/skin_general_settings.py:263
 msgid "Skin media revision number"
 msgstr ""
 
-#: conf/skin_general_settings.py:271
+#: conf/skin_general_settings.py:265
 msgid "Will be set automatically but you can modify it if necessary."
 msgstr ""
 
-#: conf/skin_general_settings.py:282
+#: conf/skin_general_settings.py:276
 msgid "Hash to update the media revision number automatically."
 msgstr ""
 
-#: conf/skin_general_settings.py:286
+#: conf/skin_general_settings.py:280
 msgid "Will be set automatically, it is not necesary to modify manually."
 msgstr ""
 
@@ -1901,41 +2002,69 @@ msgstr ""
 msgid "Login, Users & Communication"
 msgstr ""
 
-#: conf/user_settings.py:12
+#: conf/user_settings.py:14
 #, fuzzy
 msgid "User settings"
 msgstr "Configurări de bază"
 
-#: conf/user_settings.py:21
+#: conf/user_settings.py:23
 msgid "Allow editing user screen name"
 msgstr ""
 
-#: conf/user_settings.py:30
+#: conf/user_settings.py:32
+#, fuzzy
+msgid "Allow users change own email addresses"
+msgstr "adresa de email"
+
+#: conf/user_settings.py:41
 #, fuzzy
 msgid "Allow account recovery by email"
 msgstr "E-mail-ul pentru recuperarea contului a fost trimis"
 
-#: conf/user_settings.py:39
+#: conf/user_settings.py:50
 #, fuzzy
 msgid "Allow adding and removing login methods"
 msgstr "Adăugați una sau mai multe metode de autentificare"
 
-#: conf/user_settings.py:49
+#: conf/user_settings.py:60
 msgid "Minimum allowed length for screen name"
 msgstr ""
 
-#: conf/user_settings.py:59
+#: conf/user_settings.py:68
+#, fuzzy
+msgid "Default avatar for users"
+msgstr "Valoare implicită: %s"
+
+#: conf/user_settings.py:70
+msgid ""
+"To change the avatar image, select new file, then submit this whole form."
+msgstr ""
+
+#: conf/user_settings.py:83
+msgid "Use automatic avatars from gravatar.com"
+msgstr ""
+
+#: conf/user_settings.py:85
+msgid ""
+"Check this option if you want to allow the use of gravatar.com for avatars. "
+"Please, note that this feature might take about 10 minutes to become fully "
+"effective. You will have to enable uploaded avatars as well. For more "
+"information, please visit <a href=\"http://askbot.org/doc/optional-modules."
+"html#uploaded-avatars\">this page</a>."
+msgstr ""
+
+#: conf/user_settings.py:97
 msgid "Default Gravatar icon type"
 msgstr ""
 
-#: conf/user_settings.py:61
+#: conf/user_settings.py:99
 msgid ""
 "This option allows you to set the default avatar type for email addresses "
 "without associated gravatar images.  For more information, please visit <a "
 "href=\"http://en.gravatar.com/site/implement/images/\">this page</a>."
 msgstr ""
 
-#: conf/user_settings.py:71
+#: conf/user_settings.py:109
 msgid "Name for the Anonymous user"
 msgstr ""
 
@@ -2046,332 +2175,345 @@ msgstr "spam sau reclamă"
 msgid "too localized"
 msgstr "prea localizată"
 
-#: const/__init__.py:41
+#: const/__init__.py:43
+#: skins/default/templates/question/answer_tab_bar.html:18
 msgid "newest"
 msgstr "cele mai noi"
 
-#: const/__init__.py:42 skins/default/templates/users.html:27
+#: const/__init__.py:44 skins/default/templates/users.html:27
+#: skins/default/templates/question/answer_tab_bar.html:15
 msgid "oldest"
 msgstr "mai vechi"
 
-#: const/__init__.py:43
+#: const/__init__.py:45
 msgid "active"
 msgstr "activ"
 
-#: const/__init__.py:44
+#: const/__init__.py:46
 msgid "inactive"
 msgstr "inactiv"
 
-#: const/__init__.py:45
+#: const/__init__.py:47
 msgid "hottest"
 msgstr "cele mai interesante"
 
-#: const/__init__.py:46
+#: const/__init__.py:48
 msgid "coldest"
 msgstr "mai reci"
 
-#: const/__init__.py:47
+#: const/__init__.py:49
+#: skins/default/templates/question/answer_tab_bar.html:21
 msgid "most voted"
 msgstr "cele mai votate"
 
-#: const/__init__.py:48
+#: const/__init__.py:50
 msgid "least voted"
 msgstr "cele mai puțin votate"
 
-#: const/__init__.py:49
+#: const/__init__.py:51
 msgid "relevance"
 msgstr "relevanță"
 
-#: const/__init__.py:57
+#: const/__init__.py:63
 #: skins/default/templates/user_profile/user_inbox.html:50
+#: skins/default/templates/user_profile/user_inbox.html:62
 msgid "all"
 msgstr "toate"
 
-#: const/__init__.py:58
+#: const/__init__.py:64
 msgid "unanswered"
 msgstr "fără răspuns"
 
-#: const/__init__.py:59
+#: const/__init__.py:65
 msgid "favorite"
 msgstr "favorite"
 
-#: const/__init__.py:64
+#: const/__init__.py:70
 #, fuzzy
 msgid "list"
 msgstr "Listă etichete"
 
-#: const/__init__.py:65
+#: const/__init__.py:71
 msgid "cloud"
 msgstr ""
 
-#: const/__init__.py:78
+#: const/__init__.py:79
 msgid "Question has no answers"
 msgstr "Întrebarea nu are răspuns"
 
-#: const/__init__.py:79
+#: const/__init__.py:80
 msgid "Question has no accepted answers"
 msgstr "Întrebarea nu are un răspuns acceptat"
 
-#: const/__init__.py:122
+#: const/__init__.py:125
 msgid "asked a question"
 msgstr "a pus o întrebare"
 
-#: const/__init__.py:123
+#: const/__init__.py:126
 msgid "answered a question"
 msgstr "a răspuns unei întrebări"
 
-#: const/__init__.py:124
+#: const/__init__.py:127 const/__init__.py:203
 msgid "commented question"
 msgstr "întrebare comentată"
 
-#: const/__init__.py:125
+#: const/__init__.py:128 const/__init__.py:204
 msgid "commented answer"
 msgstr "răspuns comentat"
 
-#: const/__init__.py:126
+#: const/__init__.py:129
 msgid "edited question"
 msgstr "întrebare editată"
 
-#: const/__init__.py:127
+#: const/__init__.py:130
 msgid "edited answer"
 msgstr "răspuns editat"
 
-#: const/__init__.py:128
-msgid "received award"
+#: const/__init__.py:131
+#, fuzzy
+msgid "received badge"
 msgstr "recompensă primită"
 
-#: const/__init__.py:129
+#: const/__init__.py:132
 msgid "marked best answer"
 msgstr "marcat ca cel mai bun răspuns"
 
-#: const/__init__.py:130
+#: const/__init__.py:133
 msgid "upvoted"
 msgstr "votat pozitiv"
 
-#: const/__init__.py:131
+#: const/__init__.py:134
 msgid "downvoted"
 msgstr "votat negativ"
 
-#: const/__init__.py:132
+#: const/__init__.py:135
 msgid "canceled vote"
 msgstr "vot anulat"
 
-#: const/__init__.py:133
+#: const/__init__.py:136
 msgid "deleted question"
 msgstr "întrebare ștearsă"
 
-#: const/__init__.py:134
+#: const/__init__.py:137
 msgid "deleted answer"
 msgstr "răspuns șters"
 
-#: const/__init__.py:135
+#: const/__init__.py:138
 msgid "marked offensive"
 msgstr "marcat ca ofensator"
 
-#: const/__init__.py:136
+#: const/__init__.py:139
 msgid "updated tags"
 msgstr "etichete actualizate"
 
-#: const/__init__.py:137
+#: const/__init__.py:140
 msgid "selected favorite"
 msgstr ""
 
-#: const/__init__.py:138
+#: const/__init__.py:141
 msgid "completed user profile"
 msgstr "profil utilizator complet"
 
-#: const/__init__.py:139
+#: const/__init__.py:142
 msgid "email update sent to user"
 msgstr "e-mail actualizat trimis utilizatorului"
 
-#: const/__init__.py:142
+#: const/__init__.py:145
 #, fuzzy
 msgid "reminder about unanswered questions sent"
 msgstr "vezi întrebările fără răspuns"
 
-#: const/__init__.py:146
+#: const/__init__.py:149
 #, fuzzy
 msgid "reminder about accepting the best answer sent"
 msgstr "vezi întrebările fără răspuns"
 
-#: const/__init__.py:148
+#: const/__init__.py:151
 msgid "mentioned in the post"
 msgstr "menționat în postare"
 
-#: const/__init__.py:199
-msgid "question_answered"
-msgstr "întrebare_cu_răspuns"
-
-#: const/__init__.py:200
-msgid "question_commented"
-msgstr "întrebare_comentată"
-
-#: const/__init__.py:201
-msgid "answer_commented"
-msgstr "răspuns_comentat"
-
 #: const/__init__.py:202
-msgid "answer_accepted"
-msgstr "răspuns_acceptat"
+#, fuzzy
+msgid "answered question"
+msgstr "a răspuns unei întrebări"
 
-#: const/__init__.py:206
+#: const/__init__.py:205
+#, fuzzy
+msgid "accepted answer"
+msgstr "răspuns editat"
+
+#: const/__init__.py:209
 msgid "[closed]"
 msgstr "[închis]"
 
-#: const/__init__.py:207
+#: const/__init__.py:210
 msgid "[deleted]"
 msgstr "[șters]"
 
-#: const/__init__.py:208 views/readers.py:590
+#: const/__init__.py:211 views/readers.py:566
 msgid "initial version"
 msgstr "versiune inițială"
 
-#: const/__init__.py:209
+#: const/__init__.py:212
 msgid "retagged"
 msgstr "reetichetat"
 
-#: const/__init__.py:217
+#: const/__init__.py:220
 msgid "off"
 msgstr "dezactivat"
 
-#: const/__init__.py:218
+#: const/__init__.py:221
 msgid "exclude ignored"
 msgstr "exclude cele ignorate"
 
-#: const/__init__.py:219
+#: const/__init__.py:222
 msgid "only selected"
 msgstr "doar cele selectate"
 
-#: const/__init__.py:223
+#: const/__init__.py:226
 msgid "instantly"
 msgstr "instant"
 
-#: const/__init__.py:224
+#: const/__init__.py:227
 msgid "daily"
 msgstr "zilnic"
 
-#: const/__init__.py:225
+#: const/__init__.py:228
 msgid "weekly"
 msgstr "săptămânal"
 
-#: const/__init__.py:226
+#: const/__init__.py:229
 msgid "no email"
 msgstr "fără e-mail"
 
-#: const/__init__.py:233
+#: const/__init__.py:236
 msgid "identicon"
 msgstr ""
 
-#: const/__init__.py:234
+#: const/__init__.py:237
 #, fuzzy
 msgid "mystery-man"
 msgstr "ieri"
 
-#: const/__init__.py:235
+#: const/__init__.py:238
 msgid "monsterid"
 msgstr ""
 
-#: const/__init__.py:236
+#: const/__init__.py:239
 #, fuzzy
 msgid "wavatar"
 msgstr "ce este gravatarul"
 
-#: const/__init__.py:237
+#: const/__init__.py:240
 msgid "retro"
 msgstr ""
 
-#: const/__init__.py:284 skins/default/templates/badges.html:37
+#: const/__init__.py:287 skins/default/templates/badges.html:38
 msgid "gold"
 msgstr "aur"
 
-#: const/__init__.py:285 skins/default/templates/badges.html:46
+#: const/__init__.py:288 skins/default/templates/badges.html:48
 msgid "silver"
 msgstr "argint"
 
-#: const/__init__.py:286 skins/default/templates/badges.html:53
+#: const/__init__.py:289 skins/default/templates/badges.html:55
 msgid "bronze"
 msgstr "bronz"
 
-#: const/__init__.py:298
+#: const/__init__.py:301
 msgid "None"
 msgstr ""
 
-#: const/__init__.py:299
+#: const/__init__.py:302
 msgid "Gravatar"
 msgstr ""
 
-#: const/__init__.py:300
+#: const/__init__.py:303
 msgid "Uploaded Avatar"
 msgstr ""
 
-#: const/message_keys.py:15
+#: const/message_keys.py:21
 msgid "most relevant questions"
 msgstr "cele mai relevante întrebări"
 
-#: const/message_keys.py:16
+#: const/message_keys.py:22
 msgid "click to see most relevant questions"
 msgstr "efectuați clic pentru a vedea cele mai relevante întrebări"
 
-#: const/message_keys.py:17
+#: const/message_keys.py:23
 msgid "by relevance"
 msgstr "după relevanță"
 
-#: const/message_keys.py:18
+#: const/message_keys.py:24
 msgid "click to see the oldest questions"
 msgstr "clic pentru a vedea cele mai vechi întrebări"
 
-#: const/message_keys.py:19
+#: const/message_keys.py:25
 msgid "by date"
 msgstr "după dată"
 
-#: const/message_keys.py:20
+#: const/message_keys.py:26
 msgid "click to see the newest questions"
 msgstr "efectuați clic pentru a vedea cele mai noi întrebări"
 
-#: const/message_keys.py:21
+#: const/message_keys.py:27
 msgid "click to see the least recently updated questions"
 msgstr "clic pentru a vedea cel mai puțin recent actualizate întrebări"
 
-#: const/message_keys.py:22
+#: const/message_keys.py:28
 msgid "by activity"
 msgstr "după activitate"
 
-#: const/message_keys.py:23
+#: const/message_keys.py:29
 msgid "click to see the most recently updated questions"
 msgstr "clic pentru a vedea cele mai recent actualizate întrebări"
 
-#: const/message_keys.py:24
+#: const/message_keys.py:30
 msgid "click to see the least answered questions"
 msgstr ""
 "efectuați clic pentru a vedea întrebările cu cele mai puține răspunsuri"
 
-#: const/message_keys.py:25
+#: const/message_keys.py:31
 msgid "by answers"
 msgstr "după răspunsuri"
 
-#: const/message_keys.py:26
+#: const/message_keys.py:32
 msgid "click to see the most answered questions"
 msgstr "efectuați clic pentru a vedea întrebările cu cele mai multe răspunsuri"
 
-#: const/message_keys.py:27
+#: const/message_keys.py:33
 msgid "click to see least voted questions"
 msgstr "efectuați clic pentru a vedea întrebările cu cele mai puține voturi"
 
-#: const/message_keys.py:28
+#: const/message_keys.py:34
 msgid "by votes"
 msgstr "după voturi"
 
-#: const/message_keys.py:29
+#: const/message_keys.py:35
 msgid "click to see most voted questions"
 msgstr "efectuați clic pentru a vedea întrebările cu cele mai multe voturi"
 
-#: deps/django_authopenid/backends.py:88
+#: const/message_keys.py:40
+msgid ""
+"Sorry, your account appears to be blocked and you cannot make new posts "
+"until this issue is resolved. Please contact the forum administrator to "
+"reach a resolution."
+msgstr ""
+
+#: const/message_keys.py:45 models/__init__.py:788
+msgid ""
+"Sorry, your account appears to be suspended and you cannot make new posts "
+"until this issue is resolved. You can, however edit your existing posts. "
+"Please contact the forum administrator to reach a resolution."
+msgstr ""
+
+#: deps/django_authopenid/backends.py:166
 msgid ""
 "Welcome! Please set email address (important!) in your profile and adjust "
 "screen name, if necessary."
 msgstr ""
 
-#: deps/django_authopenid/forms.py:110 deps/django_authopenid/views.py:151
+#: deps/django_authopenid/forms.py:110 deps/django_authopenid/views.py:142
 msgid "i-names are not supported"
 msgstr ""
 
@@ -2420,11 +2562,12 @@ msgid "Your user name (<i>required</i>)"
 msgstr "Numele de utilizator este (<i>obligatoriu</i>)"
 
 #: deps/django_authopenid/forms.py:450
-msgid "Incorrect username."
-msgstr "Nume de utilizator incorect"
+#, fuzzy
+msgid "sorry, there is no such user name"
+msgstr "ne pare rău, nu există nici un utilizator cu acest nume"
 
 #: deps/django_authopenid/urls.py:9 deps/django_authopenid/urls.py:12
-#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:208
+#: deps/django_authopenid/urls.py:15 setup_templates/settings.py:210
 msgid "signin/"
 msgstr "autentificare/"
 
@@ -2462,7 +2605,7 @@ msgid "%(site)s user name and password"
 msgstr ""
 
 #: deps/django_authopenid/util.py:384
-#: skins/common/templates/authopenid/signin.html:108
+#: skins/common/templates/authopenid/signin.html:115
 msgid "Create a password-protected account"
 msgstr "Creați un cont protejat prin parolă"
 
@@ -2546,13 +2689,13 @@ msgstr "Autentificați-vă cu numele de utilizator și parola %(provider)s"
 msgid "Sign in with your %(provider)s account"
 msgstr "Autentificați-vă cu contul de %(provider)s"
 
-#: deps/django_authopenid/views.py:158
+#: deps/django_authopenid/views.py:149
 #, python-format
 msgid "OpenID %(openid_url)s is invalid"
 msgstr "Legătura OpenID %(openid_url)s este nevalidă"
 
-#: deps/django_authopenid/views.py:270 deps/django_authopenid/views.py:421
-#: deps/django_authopenid/views.py:449
+#: deps/django_authopenid/views.py:261 deps/django_authopenid/views.py:408
+#: deps/django_authopenid/views.py:436
 #, python-format
 msgid ""
 "Unfortunately, there was some problem when connecting to %(provider)s, "
@@ -2561,68 +2704,68 @@ msgstr ""
 "Din păcate există o problemă la conectarea la %(provider)s, reîncercați sau "
 "utilizați un alt furnizor"
 
-#: deps/django_authopenid/views.py:371
+#: deps/django_authopenid/views.py:358
 msgid "Your new password saved"
 msgstr "Noua parolă a fost salvată"
 
-#: deps/django_authopenid/views.py:475
+#: deps/django_authopenid/views.py:462
 msgid "The login password combination was not correct"
 msgstr ""
 
-#: deps/django_authopenid/views.py:577
+#: deps/django_authopenid/views.py:564
 msgid "Please click any of the icons below to sign in"
 msgstr ""
 "Pentru a vă autentifica efectuați clic pe oricare din iconițele de mai jos"
 
-#: deps/django_authopenid/views.py:579
+#: deps/django_authopenid/views.py:566
 msgid "Account recovery email sent"
 msgstr "E-mail-ul pentru recuperarea contului a fost trimis"
 
-#: deps/django_authopenid/views.py:582
+#: deps/django_authopenid/views.py:569
 msgid "Please add one or more login methods."
 msgstr "Adăugați una sau mai multe metode de autentificare"
 
-#: deps/django_authopenid/views.py:584
+#: deps/django_authopenid/views.py:571
 msgid "If you wish, please add, remove or re-validate your login methods"
 msgstr ""
 "Dacă doriți, adăugați, ștergeți sau revalidați metodele de autentificare"
 
-#: deps/django_authopenid/views.py:586
+#: deps/django_authopenid/views.py:573
 msgid "Please wait a second! Your account is recovered, but ..."
 msgstr "Așteptați puțin! Contul dumneavoastră este recuperat, dar..."
 
-#: deps/django_authopenid/views.py:588
+#: deps/django_authopenid/views.py:575
 msgid "Sorry, this account recovery key has expired or is invalid"
 msgstr ""
 "Ne pare rău, cheia pentru recuperarea contului a expirat sau nu mai este "
 "validă"
 
-#: deps/django_authopenid/views.py:661
+#: deps/django_authopenid/views.py:648
 #, python-format
 msgid "Login method %(provider_name)s does not exist"
 msgstr "Metoda de autentificare pentru %(provider_name)s nu există"
 
-#: deps/django_authopenid/views.py:667
+#: deps/django_authopenid/views.py:654
 msgid "Oops, sorry - there was some error - please try again"
 msgstr "Oauu, scuze - a apărut o eroare - încercați mai târziu"
 
-#: deps/django_authopenid/views.py:758
+#: deps/django_authopenid/views.py:745
 #, python-format
 msgid "Your %(provider)s login works fine"
 msgstr "Autentificarea pentru %(provider)s este funcțională"
 
-#: deps/django_authopenid/views.py:1069 deps/django_authopenid/views.py:1075
+#: deps/django_authopenid/views.py:1056 deps/django_authopenid/views.py:1062
 #, python-format
 msgid "your email needs to be validated see %(details_url)s"
 msgstr ""
 "adresa dumneavoastră de e-mail trebuie validată, consultați %(details_url)s"
 
-#: deps/django_authopenid/views.py:1096
+#: deps/django_authopenid/views.py:1083
 #, python-format
 msgid "Recover your %(site)s account"
 msgstr "Recuperați contul %(site)s"
 
-#: deps/django_authopenid/views.py:1166
+#: deps/django_authopenid/views.py:1155
 msgid "Please check your email and visit the enclosed link."
 msgstr "Verificați-vă e-mail-ul și mergeți la legătura inclusă"
 
@@ -2630,28 +2773,28 @@ msgstr "Verificați-vă e-mail-ul și mergeți la legătura inclusă"
 msgid "Site"
 msgstr "Pagină web"
 
-#: deps/livesettings/values.py:68
+#: deps/livesettings/values.py:69
 msgid "Main"
 msgstr ""
 
-#: deps/livesettings/values.py:127
+#: deps/livesettings/values.py:128
 msgid "Base Settings"
 msgstr "Configurări de bază"
 
-#: deps/livesettings/values.py:234
+#: deps/livesettings/values.py:235
 msgid "Default value: \"\""
 msgstr "Valoare implicită: \"\""
 
-#: deps/livesettings/values.py:241
+#: deps/livesettings/values.py:242
 msgid "Default value: "
 msgstr "Valoare implicită: "
 
-#: deps/livesettings/values.py:244
+#: deps/livesettings/values.py:245
 #, python-format
 msgid "Default value: %s"
 msgstr "Valoare implicită: %s"
 
-#: deps/livesettings/values.py:622
+#: deps/livesettings/values.py:629
 #, python-format
 msgid "Allowed image file types are %(types)s"
 msgstr "Tipurile de fișiere imagine permise sunt %(types)s"
@@ -2667,7 +2810,7 @@ msgstr "Documentație"
 
 #: deps/livesettings/templates/livesettings/group_settings.html:11
 #: deps/livesettings/templates/livesettings/site_settings.html:23
-#: skins/common/templates/authopenid/signin.html:132
+#: skins/common/templates/authopenid/signin.html:143
 msgid "Change password"
 msgstr "Schimbă parola"
 
@@ -2730,63 +2873,23 @@ msgstr "Restrânge tot"
 msgid "Congratulations, you are now an Administrator"
 msgstr "Felicitări, de acum sunteți un administrator"
 
-#: management/commands/initialize_ldap_logins.py:51
-msgid ""
-"This command may help you migrate to LDAP password authentication by "
-"creating a record for LDAP association with each user account. There is an "
-"assumption that ldap user id's are the same as user names registered at the "
-"site. Before running this command it is necessary to set up LDAP parameters "
-"in the \"External keys\" section of the site settings."
-msgstr ""
-
-#: management/commands/post_emailed_questions.py:35
-msgid ""
-"<p>To ask by email, please:</p>\n"
-"<ul>\n"
-"    <li>Format the subject line as: [Tag1; Tag2] Question title</li>\n"
-"    <li>Type details of your question into the email body</li>\n"
-"</ul>\n"
-"<p>Note that tags may consist of more than one word, and tags\n"
-"may be separated by a semicolon or a comma</p>\n"
-msgstr ""
-
-#: management/commands/post_emailed_questions.py:55
-#, python-format
-msgid ""
-"<p>Sorry, there was an error posting your question please contact the "
-"%(site)s administrator</p>"
-msgstr ""
-
-#: management/commands/post_emailed_questions.py:61
-#, python-format
-msgid ""
-"<p>Sorry, in order to post questions on %(site)s by email, please <a href="
-"\"%(url)s\">register first</a></p>"
-msgstr ""
-
-#: management/commands/post_emailed_questions.py:69
-msgid ""
-"<p>Sorry, your question could not be posted due to insufficient privileges "
-"of your user account</p>"
-msgstr ""
-
-#: management/commands/send_accept_answer_reminders.py:57
+#: management/commands/send_accept_answer_reminders.py:58
 #, python-format
 msgid "Accept the best answer for %(question_count)d of your questions"
 msgstr ""
 
-#: management/commands/send_accept_answer_reminders.py:62
+#: management/commands/send_accept_answer_reminders.py:63
 #, fuzzy
 msgid "Please accept the best answer for this question:"
 msgstr "Fi primul care răspunde acestei întrebări!"
 
-#: management/commands/send_accept_answer_reminders.py:64
+#: management/commands/send_accept_answer_reminders.py:65
 #, fuzzy
 msgid "Please accept the best answer for these questions:"
 msgstr ""
 "efectuați clic pentru a vedea întrebările cu cele mai puține răspunsuri"
 
-#: management/commands/send_email_alerts.py:411
+#: management/commands/send_email_alerts.py:414
 #, python-format
 msgid "%(question_count)d updated question about %(topics)s"
 msgid_plural "%(question_count)d updated questions about %(topics)s"
@@ -2794,70 +2897,33 @@ msgstr[0] "%(question_count)d întrebare actualizată despre %(topics)s"
 msgstr[1] "%(question_count)d întrebări actualizate despre %(topics)s"
 msgstr[2] "%(question_count)d de întrebări actualizate despre %(topics)s"
 
-#: management/commands/send_email_alerts.py:421
+#: management/commands/send_email_alerts.py:425
 #, python-format
-msgid "%(name)s, this is an update message header for %(num)d question"
-msgid_plural "%(name)s, this is an update message header for %(num)d questions"
+msgid ""
+"<p>Dear %(name)s,</p><p>The following question has been updated "
+"%(sitename)s</p>"
+msgid_plural ""
+"<p>Dear %(name)s,</p><p>The following %(num)d questions have been updated on "
+"%(sitename)s:</p>"
 msgstr[0] ""
-"%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d întrebare"
 msgstr[1] ""
-"%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d întrebări"
 msgstr[2] ""
-"%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d de "
-"întrebări"
 
-#: management/commands/send_email_alerts.py:438
+#: management/commands/send_email_alerts.py:449
 msgid "new question"
 msgstr "întrebare nouă"
 
-#: management/commands/send_email_alerts.py:455
-msgid ""
-"Please visit the askbot and see what's new! Could you spread the word about "
-"it - can somebody you know help answering those questions or benefit from "
-"posting one?"
-msgstr ""
-"Vizitați pagina askbot pentru a afla noutățile! Puteți duce vestea mai "
-"departe - poate că cineva cunoscut are răspunsuri pentru aceste întrebări "
-"sau dorește să posteze o întrebare."
-
-#: management/commands/send_email_alerts.py:465
-msgid ""
-"Your most frequent subscription setting is 'daily' on selected questions. If "
-"you are receiving more than one email per dayplease tell about this issue to "
-"the askbot administrator."
-msgstr ""
-"Frecvența aleasă de dumneavoastră pentru a primi întrebările selectate este "
-"„zilnic”. Dacă primiți mai mult de un e-mail pe zi, adresați-vă "
-"administratorului paginii askbot pentru a raporta problema."
-
-#: management/commands/send_email_alerts.py:471
-msgid ""
-"Your most frequent subscription setting is 'weekly' if you are receiving "
-"this email more than once a week please report this issue to the askbot "
-"administrator."
-msgstr ""
-"Frecvența aleasă de dumneavoastră pentru a primi întrebările selectate este "
-"„săptămânal”. Dacă primiți mai mult de un e-mail pe săptămână, adresați-vă "
-"administratorului paginii askbot pentru a raporta problema."
-
-#: management/commands/send_email_alerts.py:477
-msgid ""
-"There is a chance that you may be receiving links seen before - due to a "
-"technicality that will eventually go away. "
-msgstr ""
-"Există posibilitatea unele legături pe care le-ați primit deja să vă fie din "
-"nou trimise - cauza este de natură tehnică și va fi remediată. "
-
-#: management/commands/send_email_alerts.py:490
+#: management/commands/send_email_alerts.py:474
 #, python-format
 msgid ""
-"go to %(email_settings_link)s to change frequency of email updates or "
-"%(admin_email)s administrator"
+"<p>Please remember that you can always <a hrefl\"%(email_settings_link)s"
+"\">adjust</a> frequency of the email updates or turn them off entirely.<br/"
+">If you believe that this message was sent in an error, please email about "
+"it the forum administrator at %(admin_email)s.</p><p>Sincerely,</p><p>Your "
+"friendly %(sitename)s server.</p>"
 msgstr ""
-"mergeți la %(email_settings_link)s pentru a modifica frecvența e-mail-urilor "
-"cu actualizări sau %(admin_email)s de administrare"
 
-#: management/commands/send_unanswered_question_reminders.py:56
+#: management/commands/send_unanswered_question_reminders.py:60
 #, fuzzy, python-format
 msgid "%(question_count)d unanswered question about %(topics)s"
 msgid_plural "%(question_count)d unanswered questions about %(topics)s"
@@ -2870,7 +2936,7 @@ msgstr[2] "%(question_count)d de întrebări actualizate despre %(topics)s"
 msgid "Please log in to use %s"
 msgstr "administrează metodele de autentificare"
 
-#: models/__init__.py:317
+#: models/__init__.py:320
 msgid ""
 "Sorry, you cannot accept or unaccept best answers because your account is "
 "blocked"
@@ -2878,7 +2944,7 @@ msgstr ""
 "Nu puteți accepta sau refuza cele mai  bune răspunsuri deoarece contul "
 "dumneavoastră este blocat"
 
-#: models/__init__.py:321
+#: models/__init__.py:324
 msgid ""
 "Sorry, you cannot accept or unaccept best answers because your account is "
 "suspended"
@@ -2886,7 +2952,7 @@ msgstr ""
 "Nu puteți accepta sau refuza cele mai  bune răspunsuri deoarece contul "
 "dumneavoastră este suspendat"
 
-#: models/__init__.py:334
+#: models/__init__.py:337
 #, fuzzy, python-format
 msgid ""
 ">%(points)s points required to accept or unaccept  your own answer to your "
@@ -2895,13 +2961,13 @@ msgstr ""
 "Nu se poate accepta sau revoca acceptarea pentru propriul răspuns la propria "
 "întrebare"
 
-#: models/__init__.py:356
+#: models/__init__.py:359
 #, python-format
 msgid ""
 "Sorry, you will be able to accept this answer only after %(will_be_able_at)s"
 msgstr ""
 
-#: models/__init__.py:364
+#: models/__init__.py:367
 #, fuzzy, python-format
 msgid ""
 "Sorry, only moderators or original author of the question  - %(username)s - "
@@ -2910,53 +2976,43 @@ msgstr ""
 "Numai autorul original al întrebării - %(username)s - poate accepta cel mai "
 "bun răspuns"
 
-#: models/__init__.py:392
-msgid "cannot vote for own posts"
+#: models/__init__.py:390
+#, fuzzy
+msgid "Sorry, you cannot vote for your own posts"
 msgstr "nu se pot vota mesajele proprii"
 
-#: models/__init__.py:395
+#: models/__init__.py:394
 msgid "Sorry your account appears to be blocked "
 msgstr "Contul dumneavoastră pare a fi blocat "
 
-#: models/__init__.py:400
+#: models/__init__.py:399
 msgid "Sorry your account appears to be suspended "
 msgstr "Contul dumneavoastră pare a fi suspendat "
 
-#: models/__init__.py:410
+#: models/__init__.py:409
 #, python-format
 msgid ">%(points)s points required to upvote"
 msgstr "Sunt necesare >%(points)s puncte pentru a vota pozitiv"
 
-#: models/__init__.py:416
+#: models/__init__.py:415
 #, python-format
 msgid ">%(points)s points required to downvote"
 msgstr "sunt necesare %(points)s puncte pentru a dezaprova"
 
-#: models/__init__.py:431
+#: models/__init__.py:430
 msgid "Sorry, blocked users cannot upload files"
 msgstr "Utilizatorii blocați nu pot încărca fișiere"
 
-#: models/__init__.py:432
+#: models/__init__.py:431
 msgid "Sorry, suspended users cannot upload files"
 msgstr "Utilizatorii suspendați nu pot încărca fișiere"
 
-#: models/__init__.py:434
+#: models/__init__.py:433
 #, python-format
-msgid ""
-"uploading images is limited to users with >%(min_rep)s reputation points"
+msgid "sorry, file uploading requires karma >%(min_rep)s"
 msgstr ""
-"încărcarea de imagini este limitată utilizatorilor cu mai mult de "
-"%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:453 models/__init__.py:520 models/__init__.py:986
-msgid "blocked users cannot post"
-msgstr "utilizatorii blocați nu pot introduce postări"
-
-#: models/__init__.py:454 models/__init__.py:989
-msgid "suspended users cannot post"
-msgstr "utilizatorii suspendați nu pot introduce postări"
-
-#: models/__init__.py:481
+#: models/__init__.py:482
 #, python-format
 msgid ""
 "Sorry, comments (except the last one) are editable only within %(minutes)s "
@@ -2974,19 +3030,19 @@ msgstr[2] ""
 "Comentariile (cu excepția ultimului) pot fi modificate numai într-un "
 "interval de %(minutes)s de minute de la postare"
 
-#: models/__init__.py:493
+#: models/__init__.py:494
 msgid "Sorry, but only post owners or moderators can edit comments"
 msgstr ""
 "Doar cel care a adăugat mesajul și moderatorii pot modifica comentariile"
 
-#: models/__init__.py:506
+#: models/__init__.py:519
 msgid ""
 "Sorry, since your account is suspended you can comment only your own posts"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, puteți comenta numai postările "
 "proprii"
 
-#: models/__init__.py:510
+#: models/__init__.py:523
 #, python-format
 msgid ""
 "Sorry, to comment any post a minimum reputation of %(min_rep)s points is "
@@ -2996,7 +3052,7 @@ msgstr ""
 "%(min_rep)s puncte de reputație. Puteți în continuare să comentați mesajele "
 "și răspunsurile pentru întrebările proprii"
 
-#: models/__init__.py:538
+#: models/__init__.py:553
 msgid ""
 "This post has been deleted and can be seen only by post owners, site "
 "administrators and moderators"
@@ -3004,7 +3060,7 @@ msgstr ""
 "Această postare a fost ștearsă și poate fi văzută numai de către "
 "proprietari, administratorii site-ului și moderatori"
 
-#: models/__init__.py:555
+#: models/__init__.py:570
 msgid ""
 "Sorry, only moderators, site administrators and post owners can edit deleted "
 "posts"
@@ -3012,18 +3068,18 @@ msgstr ""
 "Numai moderatorii, administratorii site-ului și proprietarii postării pot "
 "modifica postările șterse"
 
-#: models/__init__.py:570
+#: models/__init__.py:585
 msgid "Sorry, since your account is blocked you cannot edit posts"
 msgstr ""
 "Deoarece contul dumneavoastră este blocat, nu puteți modifica postările"
 
-#: models/__init__.py:574
+#: models/__init__.py:589
 msgid "Sorry, since your account is suspended you can edit only your own posts"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, puteți modifica numai "
 "postările proprii"
 
-#: models/__init__.py:579
+#: models/__init__.py:594
 #, python-format
 msgid ""
 "Sorry, to edit wiki posts, a minimum reputation of %(min_rep)s is required"
@@ -3031,7 +3087,7 @@ msgstr ""
 "Pentru a modifica wiki-ul, este necesar un minim de %(min_rep)s puncte de "
 "reputație"
 
-#: models/__init__.py:586
+#: models/__init__.py:601
 #, python-format
 msgid ""
 "Sorry, to edit other people's posts, a minimum reputation of %(min_rep)s is "
@@ -3040,7 +3096,7 @@ msgstr ""
 "Ne pare rău, pentru a modifica mesajele altor utilizatori este nevoie de un "
 "minim de %(min_rep)s puncte de reputație"
 
-#: models/__init__.py:649
+#: models/__init__.py:664
 msgid ""
 "Sorry, cannot delete your question since it has an upvoted answer posted by "
 "someone else"
@@ -3057,18 +3113,18 @@ msgstr[2] ""
 "Nu puteți șterge întrebarea deoarece beneficiază de răspunsuri votate "
 "pozitiv de alți utilizatori."
 
-#: models/__init__.py:664
+#: models/__init__.py:679
 msgid "Sorry, since your account is blocked you cannot delete posts"
 msgstr "Deoarece contul dumneavoastră este blocat, nu puteți șterge postări"
 
-#: models/__init__.py:668
+#: models/__init__.py:683
 msgid ""
 "Sorry, since your account is suspended you can delete only your own posts"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, puteți șterge numai postările "
 "proprii"
 
-#: models/__init__.py:672
+#: models/__init__.py:687
 #, python-format
 msgid ""
 "Sorry, to deleted other people' posts, a minimum reputation of %(min_rep)s "
@@ -3077,16 +3133,16 @@ msgstr ""
 "Ne pare rău, pentru a șterge mesajele altor utilizatori este nevoie de un "
 "minim de %(min_rep)s puncte de reputație"
 
-#: models/__init__.py:692
+#: models/__init__.py:707
 msgid "Sorry, since your account is blocked you cannot close questions"
 msgstr "Deoarece contul dumneavoastră este blocat, nu puteți închide întrebări"
 
-#: models/__init__.py:696
+#: models/__init__.py:711
 msgid "Sorry, since your account is suspended you cannot close questions"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, nu puteți închide întrebări"
 
-#: models/__init__.py:700
+#: models/__init__.py:715
 #, python-format
 msgid ""
 "Sorry, to close other people' posts, a minimum reputation of %(min_rep)s is "
@@ -3095,7 +3151,7 @@ msgstr ""
 "Ne pare rău, pentru a închide mesajele altor utilizatori este nevoie de un "
 "minim de %(min_rep)s puncte de reputație"
 
-#: models/__init__.py:709
+#: models/__init__.py:724
 #, python-format
 msgid ""
 "Sorry, to close own question a minimum reputation of %(min_rep)s is required"
@@ -3103,7 +3159,7 @@ msgstr ""
 "Ne pare rău, pentru a închide propria întrebare este nevoie de un minim de "
 "%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:733
+#: models/__init__.py:748
 #, python-format
 msgid ""
 "Sorry, only administrators, moderators or post owners with reputation > "
@@ -3113,7 +3169,7 @@ msgstr ""
 "o reputație de minim %(min_rep)s puncte de reputație pot redeschide "
 "întrebări."
 
-#: models/__init__.py:739
+#: models/__init__.py:754
 #, python-format
 msgid ""
 "Sorry, to reopen own question a minimum reputation of %(min_rep)s is required"
@@ -3121,64 +3177,71 @@ msgstr ""
 "Ne pare rău, pentru a redesche propria întrebare este nevoie de un minim de "
 "%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:759
-msgid "cannot flag message as offensive twice"
-msgstr "nu se poate marca ofensiv de mai multe ori"
-
-#: models/__init__.py:764
-msgid "blocked users cannot flag posts"
-msgstr "utilizatorii blocați nu pot marca postări"
-
-#: models/__init__.py:766
-msgid "suspended users cannot flag posts"
-msgstr "utilizatorii suspendați nu pot marca postări"
-
-#: models/__init__.py:768
-#, python-format
-msgid "need > %(min_rep)s points to flag spam"
+#: models/__init__.py:775
+msgid "You have flagged this question before and cannot do it more than once"
 msgstr ""
-"este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
 
-#: models/__init__.py:787
+#: models/__init__.py:783
+#, fuzzy
+msgid "Sorry, since your account is blocked you cannot flag posts as offensive"
+msgstr "Deoarece contul dumneavoastră este blocat, nu puteți șterge postări"
+
+#: models/__init__.py:794
+#, fuzzy, python-format
+msgid ""
+"Sorry, to flag posts as offensive a minimum reputation of %(min_rep)s is "
+"required"
+msgstr ""
+"Ne pare rău, pentru a reeticheta întrebări este nevoie de un minim de "
+"%(min_rep)s puncte de reputație"
+
+#: models/__init__.py:815
 #, python-format
-msgid "%(max_flags_per_day)s exceeded"
-msgstr "ați depășit %(max_flags_per_day)s"
+msgid ""
+"Sorry, you have exhausted the maximum number of %(max_flags_per_day)s "
+"offensive flags per day."
+msgstr ""
 
-#: models/__init__.py:798
+#: models/__init__.py:827
 msgid "cannot remove non-existing flag"
 msgstr ""
 
-#: models/__init__.py:803
+#: models/__init__.py:833
 #, fuzzy
-msgid "blocked users cannot remove flags"
-msgstr "utilizatorii blocați nu pot marca postări"
+msgid "Sorry, since your account is blocked you cannot remove flags"
+msgstr "Deoarece contul dumneavoastră este blocat, nu puteți șterge postări"
 
-#: models/__init__.py:805
-#, fuzzy
-msgid "suspended users cannot remove flags"
-msgstr "utilizatorii suspendați nu pot marca postări"
+#: models/__init__.py:837
+msgid ""
+"Sorry, your account appears to be suspended and you cannot remove flags. "
+"Please contact the forum administrator to reach a resolution."
+msgstr ""
 
-#: models/__init__.py:809
+#: models/__init__.py:843
 #, fuzzy, python-format
-msgid "need > %(min_rep)d point to remove flag"
-msgid_plural "need > %(min_rep)d points to remove flag"
+msgid "Sorry, to flag posts a minimum reputation of %(min_rep)d is required"
+msgid_plural ""
+"Sorry, to flag posts a minimum reputation of %(min_rep)d is required"
 msgstr[0] ""
-"este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+"Ne pare rău, pentru a reeticheta întrebări este nevoie de un minim de "
+"%(min_rep)s puncte de reputație"
 msgstr[1] ""
-"este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+"Ne pare rău, pentru a reeticheta întrebări este nevoie de un minim de "
+"%(min_rep)s puncte de reputație"
 msgstr[2] ""
-"este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+"Ne pare rău, pentru a reeticheta întrebări este nevoie de un minim de "
+"%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:828
+#: models/__init__.py:862
 #, fuzzy
 msgid "you don't have the permission to remove all flags"
 msgstr "Nu aveți permisiunea de a edita valorile"
 
-#: models/__init__.py:829
+#: models/__init__.py:863
 msgid "no flags for this entry"
 msgstr ""
 
-#: models/__init__.py:853
+#: models/__init__.py:887
 msgid ""
 "Sorry, only question owners, site administrators and moderators can retag "
 "deleted questions"
@@ -3186,19 +3249,19 @@ msgstr ""
 "Numai proprietarii întrebării, administratorii site-ului și moderatorii pot "
 "reeticheta întrebările șterse"
 
-#: models/__init__.py:860
+#: models/__init__.py:894
 msgid "Sorry, since your account is blocked you cannot retag questions"
 msgstr ""
 "Deoarece contul dumneavoastră este blocat, nu puteți reeticheta întrebări"
 
-#: models/__init__.py:864
+#: models/__init__.py:898
 msgid ""
 "Sorry, since your account is suspended you can retag only your own questions"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, puteți reeticheta numai "
 "întrebările proprii"
 
-#: models/__init__.py:868
+#: models/__init__.py:902
 #, python-format
 msgid ""
 "Sorry, to retag questions a minimum reputation of %(min_rep)s is required"
@@ -3206,42 +3269,42 @@ msgstr ""
 "Ne pare rău, pentru a reeticheta întrebări este nevoie de un minim de "
 "%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:887
+#: models/__init__.py:921
 msgid "Sorry, since your account is blocked you cannot delete comment"
 msgstr "Deoarece contul dumneavoastră este blocat, nu puteți șterge comentarii"
 
-#: models/__init__.py:891
+#: models/__init__.py:925
 msgid ""
 "Sorry, since your account is suspended you can delete only your own comments"
 msgstr ""
 "Deoarece contul dumneavoastră este suspendat, puteți șterge numai propriile "
 "comentarii"
 
-#: models/__init__.py:895
+#: models/__init__.py:929
 #, python-format
 msgid "Sorry, to delete comments reputation of %(min_rep)s is required"
 msgstr ""
 "Ne pare rău, pentru a șterge un comentariu este nevoie de un minim de "
 "%(min_rep)s puncte de reputație"
 
-#: models/__init__.py:918
-msgid "cannot revoke old vote"
-msgstr "voturile vechi nu pot fi revocate"
+#: models/__init__.py:953
+msgid "sorry, but older votes cannot be revoked"
+msgstr ""
 
-#: models/__init__.py:1395 utils/functions.py:70
+#: models/__init__.py:1469 utils/functions.py:78
 #, python-format
 msgid "on %(date)s"
 msgstr "în %(date)s"
 
-#: models/__init__.py:1397
+#: models/__init__.py:1471
 msgid "in two days"
 msgstr ""
 
-#: models/__init__.py:1399
+#: models/__init__.py:1473
 msgid "tomorrow"
 msgstr ""
 
-#: models/__init__.py:1401
+#: models/__init__.py:1475
 #, fuzzy, python-format
 msgid "in %(hr)d hour"
 msgid_plural "in %(hr)d hours"
@@ -3249,7 +3312,7 @@ msgstr[0] "acum %(hr)d oră"
 msgstr[1] "acum %(hr)d ore"
 msgstr[2] "acum %(hr)d de ore"
 
-#: models/__init__.py:1403
+#: models/__init__.py:1477
 #, fuzzy, python-format
 msgid "in %(min)d min"
 msgid_plural "in %(min)d mins"
@@ -3257,7 +3320,7 @@ msgstr[0] "acum %(min)d minut"
 msgstr[1] "acum %(min)d minute"
 msgstr[2] "acum %(min)d de minute"
 
-#: models/__init__.py:1404
+#: models/__init__.py:1478
 #, python-format
 msgid "%(days)d day"
 msgid_plural "%(days)d days"
@@ -3265,51 +3328,51 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: models/__init__.py:1406
+#: models/__init__.py:1480
 #, python-format
 msgid ""
 "New users must wait %(days)s before answering their own question.  You can "
 "post an answer %(left)s"
 msgstr ""
 
-#: models/__init__.py:1572 skins/default/templates/feedback_email.txt:9
+#: models/__init__.py:1653 skins/default/templates/feedback_email.txt:9
 msgid "Anonymous"
 msgstr "Anonim"
 
-#: models/__init__.py:1668 views/users.py:372
+#: models/__init__.py:1749
 msgid "Site Adminstrator"
 msgstr "Administrator"
 
-#: models/__init__.py:1670 views/users.py:374
+#: models/__init__.py:1751
 msgid "Forum Moderator"
 msgstr "Moderator"
 
-#: models/__init__.py:1672 views/users.py:376
+#: models/__init__.py:1753
 msgid "Suspended User"
 msgstr "Utilizator suspendat"
 
-#: models/__init__.py:1674 views/users.py:378
+#: models/__init__.py:1755
 msgid "Blocked User"
 msgstr "Utilizator blocat"
 
-#: models/__init__.py:1676 views/users.py:380
+#: models/__init__.py:1757
 msgid "Registered User"
 msgstr "Utilizator înregistrat"
 
-#: models/__init__.py:1678
+#: models/__init__.py:1759
 msgid "Watched User"
 msgstr "Utilizator urmărit"
 
-#: models/__init__.py:1680
+#: models/__init__.py:1761
 msgid "Approved User"
 msgstr "Utilizator aprobat"
 
-#: models/__init__.py:1789
+#: models/__init__.py:1870
 #, python-format
 msgid "%(username)s karma is %(reputation)s"
 msgstr "%(username)s are %(reputation)s puncte de reputație"
 
-#: models/__init__.py:1799
+#: models/__init__.py:1880
 #, python-format
 msgid "one gold badge"
 msgid_plural "%(count)d gold badges"
@@ -3317,7 +3380,7 @@ msgstr[0] "o insignă de aur"
 msgstr[1] "%(count)d insigne de aur"
 msgstr[2] "%(count)d de insigne de aur"
 
-#: models/__init__.py:1806
+#: models/__init__.py:1887
 #, python-format
 msgid "one silver badge"
 msgid_plural "%(count)d silver badges"
@@ -3325,7 +3388,7 @@ msgstr[0] "o insignă de argint"
 msgstr[1] "%(count)d insigne de argint"
 msgstr[2] "%(count)d de insigne de argint"
 
-#: models/__init__.py:1813
+#: models/__init__.py:1894
 #, python-format
 msgid "one bronze badge"
 msgid_plural "%(count)d bronze badges"
@@ -3333,22 +3396,22 @@ msgstr[0] "o insignă de bronz"
 msgstr[1] "%(count)d insigne de bronz"
 msgstr[2] "%(count)d de insigne de bronz"
 
-#: models/__init__.py:1824
+#: models/__init__.py:1905
 #, python-format
 msgid "%(item1)s and %(item2)s"
 msgstr "%(item1)s și %(item2)s"
 
-#: models/__init__.py:1828
+#: models/__init__.py:1909
 #, python-format
 msgid "%(user)s has %(badges)s"
 msgstr "%(user)s are %(badges)s"
 
-#: models/__init__.py:2305
+#: models/__init__.py:2389
 #, fuzzy, python-format
 msgid "\"%(title)s\""
 msgstr "Re: \"%(title)s\""
 
-#: models/__init__.py:2442
+#: models/__init__.py:2542
 #, python-format
 msgid ""
 "Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
@@ -3357,7 +3420,7 @@ msgstr ""
 "Felicitări, ați obținut o insignă „%(badge_name)s”. Verificați <a href="
 "\"%(user_profile)s\">profilul propriu</a>."
 
-#: models/__init__.py:2635 views/commands.py:429
+#: models/__init__.py:2745 views/commands.py:460
 msgid "Your tag subscription was saved, thanks!"
 msgstr "Abonarea la etichetă a fost salvată!"
 
@@ -3619,20 +3682,20 @@ msgstr "Taxonomist"
 msgid "Created a tag used by %(num)s questions"
 msgstr "A creat o etichetă folosită în %(num)s întrebări"
 
-#: models/badges.py:776
+#: models/badges.py:774
 msgid "Expert"
 msgstr "Expert"
 
-#: models/badges.py:779
+#: models/badges.py:777
 msgid "Very active in one tag"
 msgstr "Foarte activ pe o anumită etichetă"
 
-#: models/content.py:549
+#: models/post.py:1071
 msgid "Sorry, this question has been deleted and is no longer accessible"
 msgstr ""
 "Ne pare rău, această întrebare a fost ștearsă și nu mai este accesibilă"
 
-#: models/content.py:565
+#: models/post.py:1087
 msgid ""
 "Sorry, the answer you are looking for is no longer available, because the "
 "parent question has been removed"
@@ -3640,12 +3703,12 @@ msgstr ""
 "Ne pare rău, răspunsul pe care îl cautați nu mai etse disponibil deoarece "
 "întrebarea asociată a fost ștearsă"
 
-#: models/content.py:572
+#: models/post.py:1094
 msgid "Sorry, this answer has been removed and is no longer accessible"
 msgstr ""
 "Ne pară rău, această întrebarea a fost ștearsă și nu mai este accesibilă"
 
-#: models/meta.py:116
+#: models/post.py:1110
 msgid ""
 "Sorry, the comment you are looking for is no longer accessible, because the "
 "parent question has been removed"
@@ -3653,7 +3716,7 @@ msgstr ""
 "Ne pare rău, comentariu pe care îl cautați nu mai este accesibil deoarece "
 "întrebarea asociată a fost ștearsă"
 
-#: models/meta.py:123
+#: models/post.py:1117
 msgid ""
 "Sorry, the comment you are looking for is no longer accessible, because the "
 "parent answer has been removed"
@@ -3661,46 +3724,26 @@ msgstr ""
 "Ne pare rău, comentariul pe care îl cautați nu mai este accesibil deoarece "
 "răspunsul asociat a fost șters"
 
-#: models/question.py:63
+#: models/question.py:54
 #, python-format
 msgid "\" and \"%s\""
 msgstr "\" și \"%s\""
 
-#: models/question.py:66
+#: models/question.py:57
 msgid "\" and more"
 msgstr "\" și în plus"
 
-#: models/question.py:806
-#, python-format
-msgid "%(author)s modified the question"
-msgstr "%(author)s a modificat întrebarea"
+#: models/reply_by_email.py:71
+#, fuzzy
+msgid "edited by email"
+msgstr "Validează adresa de e-mail"
 
-#: models/question.py:810
-#, python-format
-msgid "%(people)s posted %(new_answer_count)s new answers"
-msgstr "%(people)s au adăugat %(new_answer_count)s întrebări noi"
-
-#: models/question.py:815
-#, python-format
-msgid "%(people)s commented the question"
-msgstr "%(people)s au comentat întrebările"
-
-#: models/question.py:820
-#, python-format
-msgid "%(people)s commented answers"
-msgstr "%(people)s au comentat răspunsurile"
-
-#: models/question.py:822
-#, python-format
-msgid "%(people)s commented an answer"
-msgstr "%(people)s au comentat un răspuns"
-
-#: models/repute.py:142
+#: models/repute.py:143
 #, python-format
 msgid "<em>Changed by moderator. Reason:</em> %(reason)s"
 msgstr "<em>Schimbat de moderator. Motiv:</em> %(reason)s"
 
-#: models/repute.py:153
+#: models/repute.py:154
 #, python-format
 msgid ""
 "%(points)s points were added for %(username)s's contribution to question "
@@ -3709,7 +3752,7 @@ msgstr ""
 "%(points)s puncte au fost adăugate pentru contribuția utilizatorului "
 "%(username)s la întrebarea %(question_title)s"
 
-#: models/repute.py:158
+#: models/repute.py:159
 #, python-format
 msgid ""
 "%(points)s points were subtracted for %(username)s's contribution to "
@@ -3718,69 +3761,71 @@ msgstr ""
 "%(points)s puncte au fost retrase pentru contribuția utilizatorului "
 "%(username)s la întrebarea %(question_title)s"
 
-#: models/tag.py:151
+#: models/tag.py:106
 msgid "interesting"
 msgstr "interesant"
 
-#: models/tag.py:151
+#: models/tag.py:106
 msgid "ignored"
 msgstr "ignorat"
 
-#: models/user.py:264
+#: models/user.py:266
 msgid "Entire forum"
 msgstr "Toate întrebările"
 
-#: models/user.py:265
+#: models/user.py:267
 msgid "Questions that I asked"
 msgstr "Întrebările pe care le-am pus"
 
-#: models/user.py:266
+#: models/user.py:268
 msgid "Questions that I answered"
 msgstr "Întrebările la care am răspuns"
 
-#: models/user.py:267
+#: models/user.py:269
 msgid "Individually selected questions"
 msgstr "Întrebări selectate individual"
 
-#: models/user.py:268
+#: models/user.py:270
 msgid "Mentions and comment responses"
 msgstr "Mențiuni și răspunsuri la comentarii"
 
-#: models/user.py:271
+#: models/user.py:273
 msgid "Instantly"
 msgstr "Imediat"
 
-#: models/user.py:272
+#: models/user.py:274
 msgid "Daily"
 msgstr "Zilnic"
 
-#: models/user.py:273
+#: models/user.py:275
 msgid "Weekly"
 msgstr "Săptămânal"
 
-#: models/user.py:274
+#: models/user.py:276
 msgid "No email"
 msgstr "Fără email"
 
-#: skins/common/templates/authopenid/authopenid_macros.html:53
+#: skins/common/templates/authopenid/authopenid_macros.html:63
 #, fuzzy
 msgid "Please enter your <span>user name</span>, then sign in"
 msgstr "Introduceți %(username_token)s"
 
-#: skins/common/templates/authopenid/authopenid_macros.html:54
-#: skins/common/templates/authopenid/signin.html:90
+#: skins/common/templates/authopenid/authopenid_macros.html:64
+#: skins/common/templates/authopenid/signin.html:97
 #, fuzzy
 msgid "(or select another login method above)"
 msgstr "alegeți una dintre opțiunile de mai sus"
 
-#: skins/common/templates/authopenid/authopenid_macros.html:56
+#: skins/common/templates/authopenid/authopenid_macros.html:66
+#: skins/common/templates/authopenid/signin.html:113
 msgid "Sign in"
 msgstr ""
 
 #: skins/common/templates/authopenid/changeemail.html:2
 #: skins/common/templates/authopenid/changeemail.html:8
-#: skins/common/templates/authopenid/changeemail.html:36
-msgid "Change email"
+#: skins/common/templates/authopenid/changeemail.html:49
+#, fuzzy
+msgid "Change Email"
 msgstr "Schimbare email"
 
 #: skins/common/templates/authopenid/changeemail.html:10
@@ -3789,29 +3834,38 @@ msgstr "Salvați adresa de email"
 
 #: skins/common/templates/authopenid/changeemail.html:15
 #, python-format
-msgid "change %(email)s info"
-msgstr "modifică informațiile despre %(email)s"
-
-#: skins/common/templates/authopenid/changeemail.html:17
-#, python-format
-msgid "here is why email is required, see %(gravatar_faq_url)s"
+msgid ""
+"<span class=\\\"strong big\\\">Enter your new email into the box below</"
+"span> if \n"
+"you'd like to use another email for <strong>update subscriptions</strong>.\n"
+"<br>Currently you are using <strong>%%(email)s</strong>"
 msgstr ""
-"pentru a afla de ce este necesară o adresă de e-mail, consultați "
-"%(gravatar_faq_url)s"
 
-#: skins/common/templates/authopenid/changeemail.html:29
-msgid "Your new Email"
-msgstr "Adresa nouă de e-mail"
+#: skins/common/templates/authopenid/changeemail.html:19
+#, python-format
+msgid ""
+"<span class='strong big'>Please enter your email address in the box below.</"
+"span>\n"
+"Valid email address is required on this Q&amp;A forum. If you like, \n"
+"you can <strong>receive updates</strong> on interesting questions or entire\n"
+"forum via email. Also, your email is used to create a unique \n"
+"<a href='%%(gravatar_faq_url)s'><strong>gravatar</strong></a> image for "
+"your\n"
+"account. Email addresses are never shown or otherwise shared with anybody\n"
+"else."
+msgstr ""
 
-#: skins/common/templates/authopenid/changeemail.html:29
-msgid "Your Email"
-msgstr "Adresa dumneavoastră de e-mail"
+#: skins/common/templates/authopenid/changeemail.html:38
+msgid ""
+"<strong>Your new Email:</strong> \n"
+"(will <strong>not</strong> be shown to anyone, must be valid)"
+msgstr ""
 
-#: skins/common/templates/authopenid/changeemail.html:36
+#: skins/common/templates/authopenid/changeemail.html:49
 msgid "Save Email"
 msgstr "Salvează adresa de e-mail"
 
-#: skins/common/templates/authopenid/changeemail.html:38
+#: skins/common/templates/authopenid/changeemail.html:51
 #: skins/default/templates/answer_edit.html:25
 #: skins/default/templates/close.html:16
 #: skins/default/templates/feedback.html:64
@@ -3819,131 +3873,113 @@ msgstr "Salvează adresa de e-mail"
 #: skins/default/templates/question_retag.html:22
 #: skins/default/templates/reopen.html:27
 #: skins/default/templates/subscribe_for_tags.html:16
-#: skins/default/templates/user_profile/user_edit.html:96
+#: skins/default/templates/user_profile/user_edit.html:102
 msgid "Cancel"
 msgstr "Anulează"
 
-#: skins/common/templates/authopenid/changeemail.html:45
+#: skins/common/templates/authopenid/changeemail.html:58
 msgid "Validate email"
 msgstr "Validează adresa de e-mail"
 
-#: skins/common/templates/authopenid/changeemail.html:48
+#: skins/common/templates/authopenid/changeemail.html:61
 #, python-format
-msgid "validate %(email)s info or go to %(change_email_url)s"
+msgid ""
+"<span class=\\\"strong big\\\">An email with a validation link has been sent "
+"to \n"
+"%%(email)s.</span> Please <strong>follow the emailed link</strong> with "
+"your \n"
+"web browser. Email validation is necessary to help insure the proper use "
+"of \n"
+"email on <span class=\\\"orange\\\">Q&amp;A</span>. If you would like to "
+"use \n"
+"<strong>another email</strong>, please <a \n"
+"href='%%(change_email_url)s'><strong>change it again</strong></a>."
 msgstr ""
-"validați informațiile despre %(email)s sau mergeți la %(change_email_url)s"
 
-#: skins/common/templates/authopenid/changeemail.html:52
+#: skins/common/templates/authopenid/changeemail.html:70
 msgid "Email not changed"
 msgstr "Adresa de e-mail nu a fost schimbată"
 
-#: skins/common/templates/authopenid/changeemail.html:55
+#: skins/common/templates/authopenid/changeemail.html:73
 #, python-format
-msgid "old %(email)s kept, if you like go to %(change_email_url)s"
+msgid ""
+"<span class=\\\"strong big\\\">Your email address %%(email)s has not been "
+"changed.\n"
+"</span> If you decide to change it later - you can always do it by editing \n"
+"it in your user profile or by using the <a \n"
+"href='%%(change_email_url)s'><strong>previous form</strong></a> again."
 msgstr ""
-"vechea adresă %(email)s a fost păstrată, puteți merge, dacă doriți, la "
-"%(change_email_url)s"
 
-#: skins/common/templates/authopenid/changeemail.html:59
+#: skins/common/templates/authopenid/changeemail.html:80
 msgid "Email changed"
 msgstr "Adresa de e-mail a fost schimbată"
 
-#: skins/common/templates/authopenid/changeemail.html:62
+#: skins/common/templates/authopenid/changeemail.html:83
 #, python-format
-msgid "your current %(email)s can be used for this"
-msgstr "adresa curentă %(email)s poate fi utilizată pentru acest lucru"
+msgid ""
+"\n"
+"<span class='big strong'>Your email address is now set to %%(email)s.</"
+"span> \n"
+"Updates on the questions that you like most will be sent to this address. \n"
+"Email notifications are sent once a day or less frequently - only when "
+"there \n"
+"are any news."
+msgstr ""
 
-#: skins/common/templates/authopenid/changeemail.html:66
+#: skins/common/templates/authopenid/changeemail.html:91
 msgid "Email verified"
 msgstr "Adresa de e-mail a fost verificată"
 
-#: skins/common/templates/authopenid/changeemail.html:69
-msgid "thanks for verifying email"
-msgstr "Mulțumim pentru verificarea adresei de e-mail"
-
-#: skins/common/templates/authopenid/changeemail.html:73
-msgid "email key not sent"
-msgstr "cheia pentru adresa de e-mail nu a fost trimisă"
-
-#: skins/common/templates/authopenid/changeemail.html:76
-#, python-format
-msgid "email key not sent %(email)s change email here %(change_link)s"
+#: skins/common/templates/authopenid/changeemail.html:94
+msgid ""
+"<span class=\\\"big strong\\\">Thank you for verifying your email!</span> "
+"Now \n"
+"you can <strong>ask</strong> and <strong>answer</strong> questions. Also "
+"if \n"
+"you find a very interesting question you can <strong>subscribe for the \n"
+"updates</strong> - then will be notified about changes <strong>once a day</"
+"strong>\n"
+"or less frequently."
 msgstr ""
-"cheia pentru adresa de e-mail nu a fost trimisă %(email)s modificați adresa "
-"de e-mail aici %(change_link)s"
+
+#: skins/common/templates/authopenid/changeemail.html:102
+#, fuzzy
+msgid "Validation email not sent"
+msgstr "Validează adresa de e-mail"
+
+#: skins/common/templates/authopenid/changeemail.html:105
+#, python-format
+msgid ""
+"<span class='big strong'>Your current email address %%(email)s has been \n"
+"validated before</span> so the new key was not sent. You can <a \n"
+"href='%%(change_link)s'>change</a> email used for update subscriptions if \n"
+"necessary."
+msgstr ""
 
 #: skins/common/templates/authopenid/complete.html:21
-#: skins/common/templates/authopenid/complete.html:23
 msgid "Registration"
 msgstr "Înregistrare"
 
-#: skins/common/templates/authopenid/complete.html:27
-#, python-format
-msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
-msgstr ""
-"înregistrați informații noi pentru contul %(provider)s, consultați "
-"%(gravatar_faq_url)s"
-
-#: skins/common/templates/authopenid/complete.html:30
-#, python-format
-msgid ""
-"%(username)s already exists, choose another name for \n"
-"                            %(provider)s. Email is required too, see "
-"%(gravatar_faq_url)s\n"
-"                        "
-msgstr ""
-"%(username)s există deja, alegeți un alt nume pentru \n"
-"                            %(provider)s. Este necesară și o adresă de e-"
-"mail, consultați %(gravatar_faq_url)s\n"
-"                        "
-
-#: skins/common/templates/authopenid/complete.html:34
-#, python-format
-msgid ""
-"register new external %(provider)s account info, see %(gravatar_faq_url)s"
-msgstr ""
-"înregistrați informații noi pentru contul %(provider)s extern, consultați "
-"%(gravatar_faq_url)s"
-
-#: skins/common/templates/authopenid/complete.html:37
-#, python-format
-msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
-msgstr ""
-"înregistrați informații noi pentru conectarea prin contul Facebook, "
-"consultați %(gravatar_faq_url)s"
-
-#: skins/common/templates/authopenid/complete.html:40
-msgid "This account already exists, please use another."
-msgstr "Acest cont există deja, vă rugăm să utilizați un altul."
-
-#: skins/common/templates/authopenid/complete.html:59
+#: skins/common/templates/authopenid/complete.html:23
 #, fuzzy
-msgid "Screen name label"
-msgstr "Nume afișat"
+msgid "User registration"
+msgstr "Înregistrare"
 
-#: skins/common/templates/authopenid/complete.html:66
-#, fuzzy
-msgid "Email address label"
-msgstr "adresa de email"
-
-#: skins/common/templates/authopenid/complete.html:72
-#: skins/common/templates/authopenid/signup_with_password.html:36
-msgid "receive updates motivational blurb"
+#: skins/common/templates/authopenid/complete.html:60
+msgid "<strong>Receive forum updates by email</strong>"
 msgstr ""
 
-#: skins/common/templates/authopenid/complete.html:76
-#: skins/common/templates/authopenid/signup_with_password.html:40
+#: skins/common/templates/authopenid/complete.html:64
+#: skins/common/templates/authopenid/signup_with_password.html:46
 #, fuzzy
 msgid "please select one of the options above"
 msgstr "alegeți una dintre opțiunile de mai sus"
 
-#: skins/common/templates/authopenid/complete.html:79
-msgid "Tag filter tool will be your right panel, once you log in."
+#: skins/common/templates/authopenid/complete.html:67
+#: skins/common/templates/authopenid/signup_with_password.html:4
+#: skins/common/templates/authopenid/signup_with_password.html:53
+msgid "Signup"
 msgstr ""
-
-#: skins/common/templates/authopenid/complete.html:80
-msgid "create account"
-msgstr "creaţi un cont"
 
 #: skins/common/templates/authopenid/confirm_email.txt:1
 msgid "Thank you for registering at our Q&A forum!"
@@ -3972,7 +4008,7 @@ msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
 #, fuzzy
 msgid ""
 "Sincerely,\n"
-"Forum Administrator"
+"Q&A Forum Administrator"
 msgstr "<p>Cu stimă,<br/>Administrator forum</p>"
 
 #: skins/common/templates/authopenid/email_validation.txt:1
@@ -3989,8 +4025,8 @@ msgstr ""
 
 #: skins/common/templates/authopenid/email_validation.txt:9
 msgid ""
-"If you beleive that this message was sent in mistake - \n"
-"no further action is needed. Just ingore this email, we apologize\n"
+"If you believe that this message was sent in mistake - \n"
+"no further action is needed. Just ignore this email, we apologize\n"
 "for any inconvenience"
 msgstr ""
 
@@ -4030,9 +4066,9 @@ msgstr ""
 
 #: skins/common/templates/authopenid/signin.html:28
 msgid ""
-"Take a pick of your favorite service below to sign in using secure OpenID or "
-"similar technology. Your external service password always stays confidential "
-"and you don't have to rememeber or create another one."
+"Choose your favorite service below to sign in using secure OpenID or similar "
+"technology. Your external service password always stays confidential and you "
+"don't have to rememeber or create another one."
 msgstr ""
 
 #: skins/common/templates/authopenid/signin.html:31
@@ -4067,134 +4103,99 @@ msgid ""
 "account"
 msgstr "Verificați-vă e-mail-ul și mergeți la legătura inclusă"
 
-#: skins/common/templates/authopenid/signin.html:87
+#: skins/common/templates/authopenid/signin.html:89
 #, fuzzy
-msgid "Please enter your <span>user name and password</span>, then sign in"
+msgid "or enter your <span>user name and password</span>, then sign in"
 msgstr "Introduceți %(username_token)s"
 
 #: skins/common/templates/authopenid/signin.html:93
+#, fuzzy
+msgid "Please, sign in"
+msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
+
+#: skins/common/templates/authopenid/signin.html:100
 msgid "Login failed, please try again"
 msgstr ""
 
-#: skins/common/templates/authopenid/signin.html:97
+#: skins/common/templates/authopenid/signin.html:104
 #, fuzzy
 msgid "Login or email"
 msgstr "fără e-mail"
 
-#: skins/common/templates/authopenid/signin.html:101
+#: skins/common/templates/authopenid/signin.html:108 utils/forms.py:169
 msgid "Password"
 msgstr "Parolă"
 
-#: skins/common/templates/authopenid/signin.html:106
-msgid "Login"
-msgstr "Autentificare"
-
-#: skins/common/templates/authopenid/signin.html:113
+#: skins/common/templates/authopenid/signin.html:120
 msgid "To change your password - please enter the new one twice, then submit"
 msgstr ""
 
-#: skins/common/templates/authopenid/signin.html:117
+#: skins/common/templates/authopenid/signin.html:124
 msgid "New password"
 msgstr "Parolă nouă"
 
-#: skins/common/templates/authopenid/signin.html:124
+#: skins/common/templates/authopenid/signin.html:133
 msgid "Please, retype"
 msgstr "introduceți din nou"
 
-#: skins/common/templates/authopenid/signin.html:146
+#: skins/common/templates/authopenid/signin.html:157
 #, fuzzy
 msgid "Here are your current login methods"
 msgstr "Adăugați una sau mai multe metode de autentificare"
 
-#: skins/common/templates/authopenid/signin.html:150
+#: skins/common/templates/authopenid/signin.html:161
 #, fuzzy
 msgid "provider"
 msgstr "Utilizator aprobat"
 
-#: skins/common/templates/authopenid/signin.html:151
+#: skins/common/templates/authopenid/signin.html:162
 #, fuzzy
 msgid "last used"
 msgstr "văzut ultima dată"
 
-#: skins/common/templates/authopenid/signin.html:152
+#: skins/common/templates/authopenid/signin.html:163
 msgid "delete, if you like"
 msgstr ""
 
-#: skins/common/templates/authopenid/signin.html:166
-#: skins/common/templates/question/answer_controls.html:44
-#: skins/common/templates/question/question_controls.html:49
+#: skins/common/templates/authopenid/signin.html:177
+#: skins/common/templates/question/answer_controls.html:13
+#: skins/common/templates/question/question_controls.html:4
 msgid "delete"
 msgstr "șterge"
 
-#: skins/common/templates/authopenid/signin.html:168
+#: skins/common/templates/authopenid/signin.html:179
 #, fuzzy
 msgid "cannot be deleted"
 msgstr "voturile vechi nu pot fi revocate"
 
-#: skins/common/templates/authopenid/signin.html:181
+#: skins/common/templates/authopenid/signin.html:192
 #, fuzzy
 msgid "Still have trouble signing in?"
 msgstr "Aveți și alte întrebări?"
 
-#: skins/common/templates/authopenid/signin.html:186
+#: skins/common/templates/authopenid/signin.html:197
 #, fuzzy
 msgid "Please, enter your email address below and obtain a new key"
 msgstr "Verificați-vă e-mail-ul și mergeți la legătura inclusă"
 
-#: skins/common/templates/authopenid/signin.html:188
+#: skins/common/templates/authopenid/signin.html:199
 #, fuzzy
 msgid "Please, enter your email address below to recover your account"
 msgstr "Verificați-vă e-mail-ul și mergeți la legătura inclusă"
 
-#: skins/common/templates/authopenid/signin.html:191
+#: skins/common/templates/authopenid/signin.html:202
 #, fuzzy
 msgid "recover your account via email"
 msgstr "Recuperați contul %(site)s"
 
-#: skins/common/templates/authopenid/signin.html:202
+#: skins/common/templates/authopenid/signin.html:213
 msgid "Send a new recovery key"
 msgstr ""
 
-#: skins/common/templates/authopenid/signin.html:204
+#: skins/common/templates/authopenid/signin.html:215
 #, fuzzy
 msgid "Recover your account via email"
 msgstr "Recuperați contul %(site)s"
-
-#: skins/common/templates/authopenid/signin.html:216
-#, fuzzy
-msgid "Why use OpenID?"
-msgstr "URL OpenID"
-
-#: skins/common/templates/authopenid/signin.html:219
-msgid "with openid it is easier"
-msgstr ""
-
-#: skins/common/templates/authopenid/signin.html:222
-#, fuzzy
-msgid "reuse openid"
-msgstr "redeschide"
-
-#: skins/common/templates/authopenid/signin.html:225
-msgid "openid is widely adopted"
-msgstr ""
-
-#: skins/common/templates/authopenid/signin.html:228
-msgid "openid is supported open standard"
-msgstr ""
-
-#: skins/common/templates/authopenid/signin.html:232
-#, fuzzy
-msgid "Find out more"
-msgstr "\" și în plus"
-
-#: skins/common/templates/authopenid/signin.html:233
-#, fuzzy
-msgid "Get OpenID"
-msgstr "URL OpenID"
-
-#: skins/common/templates/authopenid/signup_with_password.html:4
-msgid "Signup"
-msgstr ""
 
 #: skins/common/templates/authopenid/signup_with_password.html:10
 #, fuzzy
@@ -4213,25 +4214,29 @@ msgid "Create login name and password"
 msgstr "Autentificați-vă cu numele de utilizator și parola %(provider)s"
 
 #: skins/common/templates/authopenid/signup_with_password.html:26
-msgid "Traditional signup info"
+msgid ""
+"<span class='strong big'>If you prefer, create your forum login name and \n"
+"password here. However</span>, please keep in mind that we also support \n"
+"<strong>OpenID</strong> login method. With <strong>OpenID</strong> you can \n"
+"simply reuse your external login (e.g. Gmail or AOL) without ever sharing \n"
+"your login details with anyone and having to remember yet another password."
 msgstr ""
 
-#: skins/common/templates/authopenid/signup_with_password.html:44
+#: skins/common/templates/authopenid/signup_with_password.html:41
+msgid "<strong>Receive periodic updates by email</strong>"
+msgstr ""
+
+#: skins/common/templates/authopenid/signup_with_password.html:50
 msgid ""
 "Please read and type in the two words below to help us prevent automated "
 "account creation."
 msgstr ""
 
-#: skins/common/templates/authopenid/signup_with_password.html:47
-#, fuzzy
-msgid "Create Account"
-msgstr "creaţi un cont"
-
-#: skins/common/templates/authopenid/signup_with_password.html:49
+#: skins/common/templates/authopenid/signup_with_password.html:55
 msgid "or"
 msgstr "sau"
 
-#: skins/common/templates/authopenid/signup_with_password.html:50
+#: skins/common/templates/authopenid/signup_with_password.html:56
 msgid "return to OpenID login"
 msgstr ""
 
@@ -4293,72 +4298,73 @@ msgstr ""
 msgid "Delete These"
 msgstr "răspuns șters"
 
-#: skins/common/templates/question/answer_controls.html:5
-msgid "answer permanent link"
-msgstr "legătură permanentă întrebare"
+#: skins/common/templates/question/answer_controls.html:2
+#, fuzzy
+msgid "swap with question"
+msgstr "Răspunde întrebării"
 
-#: skins/common/templates/question/answer_controls.html:6
+#: skins/common/templates/question/answer_controls.html:7
 msgid "permanent link"
 msgstr "legătură permanentă"
 
-#: skins/common/templates/question/answer_controls.html:10
-#: skins/common/templates/question/question_controls.html:3
-#: skins/default/templates/macros.html:289
-#: skins/default/templates/revisions.html:37
-msgid "edit"
-msgstr "modifică"
+#: skins/common/templates/question/answer_controls.html:8
+#: skins/default/templates/widgets/answer_edit_tips.html:45
+#: skins/default/templates/widgets/question_edit_tips.html:40
+msgid "link"
+msgstr "legătură"
 
-#: skins/common/templates/question/answer_controls.html:15
-#: skins/common/templates/question/answer_controls.html:16
-#: skins/common/templates/question/question_controls.html:23
-#: skins/common/templates/question/question_controls.html:24
+#: skins/common/templates/question/answer_controls.html:13
+#: skins/common/templates/question/question_controls.html:4
+msgid "undelete"
+msgstr "recuperează"
+
+#: skins/common/templates/question/answer_controls.html:19
 #, fuzzy
-msgid "remove all flags"
-msgstr "vezi toate etichetele"
+msgid "remove offensive flag"
+msgstr "elimină"
 
-#: skins/common/templates/question/answer_controls.html:22
-#: skins/common/templates/question/answer_controls.html:32
-#: skins/common/templates/question/question_controls.html:30
-#: skins/common/templates/question/question_controls.html:39
+#: skins/common/templates/question/answer_controls.html:21
+#: skins/common/templates/question/question_controls.html:16
+#, fuzzy
+msgid "remove flag"
+msgstr "elimină"
+
+#: skins/common/templates/question/answer_controls.html:26
+#: skins/common/templates/question/answer_controls.html:35
+#: skins/common/templates/question/question_controls.html:14
+#: skins/common/templates/question/question_controls.html:20
+#: skins/common/templates/question/question_controls.html:27
 msgid ""
 "report as offensive (i.e containing spam, advertising, malicious text, etc.)"
 msgstr ""
 "raportează ca ofensatoare (de ex. conține spam, reclame, texte rău-voitoare, "
 "etc.)"
 
-#: skins/common/templates/question/answer_controls.html:23
-#: skins/common/templates/question/question_controls.html:31
+#: skins/common/templates/question/answer_controls.html:28
+#: skins/common/templates/question/answer_controls.html:37
+#: skins/common/templates/question/question_controls.html:22
+#: skins/common/templates/question/question_controls.html:29
 msgid "flag offensive"
 msgstr "marchează ofensiv"
 
-#: skins/common/templates/question/answer_controls.html:33
-#: skins/common/templates/question/question_controls.html:40
-#, fuzzy
-msgid "remove flag"
-msgstr "elimină"
+#: skins/common/templates/question/answer_controls.html:41
+#: skins/common/templates/question/question_controls.html:36
+#: skins/default/templates/macros.html:311
+#: skins/default/templates/revisions.html:38
+#: skins/default/templates/revisions.html:41
+msgid "edit"
+msgstr "modifică"
 
-#: skins/common/templates/question/answer_controls.html:44
-#: skins/common/templates/question/question_controls.html:49
-msgid "undelete"
-msgstr "recuperează"
+#: skins/common/templates/question/answer_vote_buttons.html:6
+#: skins/default/templates/user_profile/user_stats.html:24
+msgid "this answer has been selected as correct"
+msgstr "acest răspuns a fost ales drept corect"
 
-#: skins/common/templates/question/answer_controls.html:50
-#, fuzzy
-msgid "swap with question"
-msgstr "Răspunde întrebării"
-
-#: skins/common/templates/question/answer_vote_buttons.html:13
-#: skins/common/templates/question/answer_vote_buttons.html:14
+#: skins/common/templates/question/answer_vote_buttons.html:8
 #, fuzzy
 msgid "mark this answer as correct (click again to undo)"
 msgstr ""
 "marchează acest răspuns ca favorit (efectuați clic din nou pentru a anula)"
-
-#: skins/common/templates/question/answer_vote_buttons.html:23
-#: skins/common/templates/question/answer_vote_buttons.html:24
-#, python-format
-msgid "%(question_author)s has selected this answer as correct"
-msgstr "%(question_author)s a ales acest răspuns ca fiind cel corect"
 
 #: skins/common/templates/question/closed_question_info.html:2
 #, fuzzy, python-format
@@ -4375,60 +4381,68 @@ msgid "close date %(closed_at)s"
 msgstr "data închiderii %(closed_at)s"
 
 #: skins/common/templates/question/question_controls.html:6
-msgid "retag"
-msgstr "reetichetează"
-
-#: skins/common/templates/question/question_controls.html:13
 msgid "reopen"
 msgstr "redeschide"
 
-#: skins/common/templates/question/question_controls.html:17
+#: skins/common/templates/question/question_controls.html:8
+#: skins/default/templates/user_profile/user_inbox.html:67
 msgid "close"
 msgstr "închide"
 
-#: skins/common/templates/widgets/edit_post.html:21
+#: skins/common/templates/question/question_controls.html:35
+msgid "retag"
+msgstr "reetichetează"
+
+#: skins/common/templates/widgets/edit_post.html:22
 #, fuzzy
-msgid "one of these is required"
+msgid ", one of these is required"
 msgstr "acest câmp este obligatoriu"
 
-#: skins/common/templates/widgets/edit_post.html:33
+#: skins/common/templates/widgets/edit_post.html:31
+#: skins/common/templates/widgets/edit_post.html:36
+#, fuzzy
+msgid "tags:"
+msgstr "etichete"
+
+#: skins/common/templates/widgets/edit_post.html:32
 msgid "(required)"
 msgstr "(obligatoriu)"
 
-#: skins/common/templates/widgets/edit_post.html:56
+#: skins/common/templates/widgets/edit_post.html:58
 msgid "Toggle the real time Markdown editor preview"
 msgstr "Comută previzualizare în timp real pentru textul Markdown"
 
-#: skins/common/templates/widgets/edit_post.html:58
+#: skins/common/templates/widgets/edit_post.html:60
 #: skins/default/templates/answer_edit.html:61
 #: skins/default/templates/answer_edit.html:64
 #: skins/default/templates/ask.html:49 skins/default/templates/ask.html:52
 #: skins/default/templates/question_edit.html:73
 #: skins/default/templates/question_edit.html:76
-#: skins/default/templates/question/javascript.html:89
-#: skins/default/templates/question/javascript.html:92
+#: skins/default/templates/question/javascript.html:85
+#: skins/default/templates/question/javascript.html:88
 msgid "hide preview"
 msgstr "ascunde previzualizarea"
 
 #: skins/common/templates/widgets/related_tags.html:3
-msgid "Related tags"
-msgstr "Etichete asemămătoare"
+#: skins/default/templates/tags.html:4
+msgid "Tags"
+msgstr ""
 
 #: skins/common/templates/widgets/tag_selector.html:4
 msgid "Interesting tags"
 msgstr "Etichete interesante"
 
-#: skins/common/templates/widgets/tag_selector.html:18
-#: skins/common/templates/widgets/tag_selector.html:34
+#: skins/common/templates/widgets/tag_selector.html:19
+#: skins/common/templates/widgets/tag_selector.html:36
 #, fuzzy
 msgid "add"
 msgstr "Adaugă"
 
-#: skins/common/templates/widgets/tag_selector.html:20
+#: skins/common/templates/widgets/tag_selector.html:21
 msgid "Ignored tags"
 msgstr "Etichete ignorate"
 
-#: skins/common/templates/widgets/tag_selector.html:36
+#: skins/common/templates/widgets/tag_selector.html:38
 msgid "Display tag filter"
 msgstr "Afișare filtre etichete"
 
@@ -4482,7 +4496,7 @@ msgid "back to previous page"
 msgstr "mergeți înapoi la pagina anterioară"
 
 #: skins/default/templates/404.jinja.html:31
-#: skins/default/templates/widgets/scope_nav.html:3
+#: skins/default/templates/widgets/scope_nav.html:6
 msgid "see all questions"
 msgstr "vezi toate întrebările"
 
@@ -4510,11 +4524,6 @@ msgstr "vezi cele mai recente întrebări"
 #: skins/default/templates/500.jinja.html:13
 msgid "see tags"
 msgstr "vezi etichetele"
-
-#: skins/default/templates/about.html:3 skins/default/templates/about.html:5
-#, python-format
-msgid "About %(site_name)s"
-msgstr "Despre %(site_name)s"
 
 #: skins/default/templates/answer_edit.html:4
 #: skins/default/templates/answer_edit.html:10
@@ -4545,17 +4554,20 @@ msgstr "Salvează modificările"
 #: skins/default/templates/answer_edit.html:64
 #: skins/default/templates/ask.html:52
 #: skins/default/templates/question_edit.html:76
-#: skins/default/templates/question/javascript.html:92
+#: skins/default/templates/question/javascript.html:88
 msgid "show preview"
 msgstr "arată previzualizarea"
 
 #: skins/default/templates/ask.html:4
-msgid "Ask a question"
-msgstr "Puneți o întrebare"
+#: skins/default/templates/widgets/ask_button.html:5
+#: skins/default/templates/widgets/ask_form.html:43
+#, fuzzy
+msgid "Ask Your Question"
+msgstr "Puneți întrebarea"
 
 #: skins/default/templates/badge.html:5 skins/default/templates/badge.html:9
-#: skins/default/templates/user_profile/user_recent.html:16
-#: skins/default/templates/user_profile/user_stats.html:110
+#: skins/default/templates/user_profile/user_recent.html:19
+#: skins/default/templates/user_profile/user_stats.html:108
 #, python-format
 msgid "%(name)s"
 msgstr "%(name)s"
@@ -4570,8 +4582,8 @@ msgid "Badge \"%(name)s\""
 msgstr "Insigna „%(name)s”"
 
 #: skins/default/templates/badge.html:9
-#: skins/default/templates/user_profile/user_recent.html:16
-#: skins/default/templates/user_profile/user_stats.html:108
+#: skins/default/templates/user_profile/user_recent.html:17
+#: skins/default/templates/user_profile/user_stats.html:106
 #, python-format
 msgid "%(description)s"
 msgstr "%(description)s"
@@ -4583,11 +4595,7 @@ msgstr[0] "utilizator care a primit această insignă:"
 msgstr[1] "utilizatorii care au primit acestă insignă:"
 msgstr[2] "utilizatorii care au primit acestă insignă:"
 
-#: skins/default/templates/badges.html:3
-msgid "Badges summary"
-msgstr "Sumar insigne"
-
-#: skins/default/templates/badges.html:5
+#: skins/default/templates/badges.html:3 skins/default/templates/badges.html:5
 msgid "Badges"
 msgstr "Insigne"
 
@@ -4598,48 +4606,53 @@ msgstr ""
 "dumneavoastră."
 
 #: skins/default/templates/badges.html:8
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Below is the list of available badges and number \n"
-"of times each type of badge has been awarded. Give us feedback at "
-"%(feedback_faq_url)s.\n"
+"    of times each type of badge has been awarded. Have ideas about fun \n"
+"badges? Please, give us your <a href='%%(feedback_faq_url)s'>feedback</a>\n"
 msgstr ""
 "Mai jos este lista insignelor disponibile și numărul \n"
 "de ori fiecare dintre ele a fost obținuntă. Puteți trimite sugestiile "
 "voastre la %(feedback_faq_url)s.\n"
 
-#: skins/default/templates/badges.html:35
+#: skins/default/templates/badges.html:36
 msgid "Community badges"
 msgstr "Insigne ale comunității"
 
-#: skins/default/templates/badges.html:37
+#: skins/default/templates/badges.html:38
 msgid "gold badge: the highest honor and is very rare"
 msgstr "insignă de aur: cea mai înaltă onoare ... și foarte rară"
 
-#: skins/default/templates/badges.html:40
-msgid "gold badge description"
-msgstr "descriere insignă de aur"
+#: skins/default/templates/badges.html:41
+msgid ""
+"Gold badge is the highest award in this community. To obtain it have to "
+"show \n"
+"profound knowledge and ability in addition to your active participation."
+msgstr ""
 
-#: skins/default/templates/badges.html:45
+#: skins/default/templates/badges.html:47
 msgid ""
 "silver badge: occasionally awarded for the very high quality contributions"
 msgstr ""
 "insignă de argint: acordată ocazional pentru contribuții de cea mai bună "
 "calitate"
 
-#: skins/default/templates/badges.html:49
-msgid "silver badge description"
-msgstr "descriere insignă de argint"
+#: skins/default/templates/badges.html:51
+#, fuzzy
+msgid ""
+"msgid \"silver badge: occasionally awarded for the very high quality "
+"contributions"
+msgstr ""
+"insignă de argint: acordată ocazional pentru contribuții de cea mai bună "
+"calitate"
 
-#: skins/default/templates/badges.html:52
+#: skins/default/templates/badges.html:54
+#: skins/default/templates/badges.html:58
 msgid "bronze badge: often given as a special honor"
 msgstr ""
 "insignă de argint: acordată adesea pentru a onora pe cineva într-un mod "
 "special"
-
-#: skins/default/templates/badges.html:56
-msgid "bronze badge description"
-msgstr "descriere insignă de bronz"
 
 #: skins/default/templates/close.html:3 skins/default/templates/close.html:5
 msgid "Close question"
@@ -4657,11 +4670,10 @@ msgstr "Motive"
 msgid "OK to close"
 msgstr "Ok pentru închidere"
 
-#: skins/default/templates/faq.html:3
 #: skins/default/templates/faq_static.html:3
 #: skins/default/templates/faq_static.html:5
 #: skins/default/templates/widgets/answer_edit_tips.html:20
-#: skins/default/templates/widgets/question_edit_tips.html:16
+#: skins/default/templates/widgets/question_edit_tips.html:16 views/meta.py:61
 msgid "FAQ"
 msgstr "Întrebări frecvente"
 
@@ -4682,15 +4694,17 @@ msgstr ""
 "pentru această comunitate."
 
 #: skins/default/templates/faq_static.html:8
+#, fuzzy
 msgid ""
-"Before asking the question - please make sure to use search to see whether "
-"your question has alredy been answered."
+"Before you ask - please make sure to search for a similar question. You can "
+"search questions by their title or tags."
 msgstr ""
 "Înainte de a pune o întrebare vă rugăm să căutați acestă întrebare pentru a "
 "vă asigura că nu are deja un răspuns."
 
 #: skins/default/templates/faq_static.html:10
-msgid "What questions should I avoid asking?"
+#, fuzzy
+msgid "What kinds of questions should be avoided?"
 msgstr "Ce întrebări ar trebui să evit a pune?"
 
 #: skins/default/templates/faq_static.html:11
@@ -4707,13 +4721,11 @@ msgstr "Ce ar trebui să evit în răspunsurile mele?"
 
 #: skins/default/templates/faq_static.html:14
 msgid ""
-"is a Q&A site, not a discussion group. Therefore - please avoid having "
-"discussions in your answers, comment facility allows some space for brief "
-"discussions."
+"is a <strong>question and answer</strong> site - <strong>it is not a "
+"discussion group</strong>. Please avoid holding debates in your answers as "
+"they tend to dilute the essense of questions and answers. For the brief "
+"discussions please use commenting facility."
 msgstr ""
-"Este un site pentru întrebări și răspunsuri, nu un grup de discuții. De "
-"aceea evitați purtarea unor discuții în răspunsurile dumneavoastră, mai ales "
-"că funcția pentru comentarii permite ceva spațiu pentru discuții scurte."
 
 #: skins/default/templates/faq_static.html:15
 msgid "Who moderates this community?"
@@ -4728,20 +4740,26 @@ msgid "This website is moderated by the users."
 msgstr "Acest site web este moderat de utilizatori."
 
 #: skins/default/templates/faq_static.html:18
+#, fuzzy
 msgid ""
-"The reputation system allows users earn the authorization to perform a "
-"variety of moderation tasks."
+"Karma system allows users to earn rights to perform a variety of moderation "
+"tasks"
 msgstr ""
 "Sistemul de reputație permite utilizatorilor să câștige autoritate pe care o "
 "folosesc la realizarea mai multor sarcini de moderare."
 
 #: skins/default/templates/faq_static.html:20
-msgid "How does reputation system work?"
+#, fuzzy
+msgid "How does karma system work?"
 msgstr "Cum funcționează sistemul de reputație?"
 
 #: skins/default/templates/faq_static.html:21
-msgid "Rep system summary"
-msgstr "Sumar al sistemului de reputație"
+msgid ""
+"When a question or answer is upvoted, the user who posted them will gain "
+"some points, which are called \\\"karma points\\\". These points serve as a "
+"rough measure of the community trust to him/her. Various moderation tasks "
+"are gradually assigned to the users based on those points."
+msgstr ""
 
 #: skins/default/templates/faq_static.html:22
 #, python-format
@@ -4771,57 +4789,68 @@ msgstr ""
 msgid "upvote"
 msgstr "vot pozitiv"
 
-#: skins/default/templates/faq_static.html:37
-msgid "use tags"
-msgstr "utilizează etichete"
-
-#: skins/default/templates/faq_static.html:42
+#: skins/default/templates/faq_static.html:36
 msgid "add comments"
 msgstr "adaugă comentarii"
 
-#: skins/default/templates/faq_static.html:46
+#: skins/default/templates/faq_static.html:40
 #: skins/default/templates/user_profile/user_votes.html:15
 msgid "downvote"
 msgstr "vot negativ"
 
-#: skins/default/templates/faq_static.html:49
+#: skins/default/templates/faq_static.html:43
 #, fuzzy
 msgid " accept own answer to own questions"
 msgstr "comentarii și răspunsuri pentru întrebările altora"
 
-#: skins/default/templates/faq_static.html:53
+#: skins/default/templates/faq_static.html:47
 msgid "open and close own questions"
 msgstr "deschide și închide propriile întrebări"
 
-#: skins/default/templates/faq_static.html:57
+#: skins/default/templates/faq_static.html:51
 msgid "retag other's questions"
 msgstr "reetichetează întrebările altora"
 
-#: skins/default/templates/faq_static.html:62
+#: skins/default/templates/faq_static.html:56
 msgid "edit community wiki questions"
 msgstr "modifică întrebările wiki-ului comunității"
 
-#: skins/default/templates/faq_static.html:67
-msgid "\"edit any answer"
+#: skins/default/templates/faq_static.html:61
+#, fuzzy
+msgid "edit any answer"
 msgstr "\"modifică orice răspuns"
 
-#: skins/default/templates/faq_static.html:71
-msgid "\"delete any comment"
+#: skins/default/templates/faq_static.html:65
+#, fuzzy
+msgid "delete any comment"
 msgstr "\"șterge orice comentariu"
 
-#: skins/default/templates/faq_static.html:74
-msgid "what is gravatar"
-msgstr "ce este gravatarul"
+#: skins/default/templates/faq_static.html:69
+msgid "How to change my picture (gravatar) and what is gravatar?"
+msgstr ""
 
-#: skins/default/templates/faq_static.html:75
-msgid "gravatar faq info"
-msgstr "informații utile despre gravatar"
+#: skins/default/templates/faq_static.html:70
+msgid ""
+"<p>The picture that appears on the users profiles is called "
+"<strong>gravatar</strong> (which means <strong>g</strong>lobally <strong>r</"
+"strong>ecognized <strong>avatar</strong>).</p><p>Here is how it works: a "
+"<strong>cryptographic key</strong> (unbreakable code) is calculated from "
+"your email address. You upload your picture (or your favorite alter ego "
+"image) the website <a href='http://gravatar.com'><strong>gravatar.com</"
+"strong></a> from where we later retreive your image using the key.</"
+"p><p>This way all the websites you trust can show your image next to your "
+"posts and your email address remains private.</p><p>Please "
+"<strong>personalize your account</strong> with an image - just register at "
+"<a href='http://gravatar.com'><strong>gravatar.com</strong></a> (just please "
+"be sure to use the same email address that you used to register with us). "
+"Default image that looks like a kitchen tile is generated automatically.</p>"
+msgstr ""
 
-#: skins/default/templates/faq_static.html:76
+#: skins/default/templates/faq_static.html:71
 msgid "To register, do I need to create new password?"
 msgstr "Pentru a mă înregistra trebuie să creez o parolă nouă?"
 
-#: skins/default/templates/faq_static.html:77
+#: skins/default/templates/faq_static.html:72
 msgid ""
 "No, you don't have to. You can login through any service that supports "
 "OpenID, e.g. Google, Yahoo, AOL, etc.\""
@@ -4829,19 +4858,19 @@ msgstr ""
 "Nu, nu trebuie neapărat. Vă puteți autentifica prin orice serviciu care "
 "recunoaște OpenID, de ex. Google, Yahoo, AOL, etc.\""
 
-#: skins/default/templates/faq_static.html:78
+#: skins/default/templates/faq_static.html:73
 msgid "\"Login now!\""
 msgstr "\"Autentifică acum!\""
 
-#: skins/default/templates/faq_static.html:80
+#: skins/default/templates/faq_static.html:75
 msgid "Why other people can edit my questions/answers?"
 msgstr "De ce alții pot modifica întrebările/răspunsurile mele?"
 
-#: skins/default/templates/faq_static.html:81
+#: skins/default/templates/faq_static.html:76
 msgid "Goal of this site is..."
 msgstr "Scopul acestui site este..."
 
-#: skins/default/templates/faq_static.html:81
+#: skins/default/templates/faq_static.html:76
 msgid ""
 "So questions and answers can be edited like wiki pages by experienced users "
 "of this site and this improves the overall quality of the knowledge base "
@@ -4851,20 +4880,20 @@ msgstr ""
 "către utilizatori cu experineță în acest fel îmbunătățindu-se calitatea "
 "bazei de cunoștințe."
 
-#: skins/default/templates/faq_static.html:82
+#: skins/default/templates/faq_static.html:77
 msgid "If this approach is not for you, we respect your choice."
 msgstr ""
 "Dacă această abordare nu este pe placul dumneavoastră, vă respectăm alegerea."
 
-#: skins/default/templates/faq_static.html:84
+#: skins/default/templates/faq_static.html:79
 msgid "Still have questions?"
 msgstr "Aveți și alte întrebări?"
 
-#: skins/default/templates/faq_static.html:85
-#, python-format
+#: skins/default/templates/faq_static.html:80
+#, fuzzy, python-format
 msgid ""
-"Please ask your question at %(ask_question_url)s, help make our community "
-"better!"
+"Please <a href='%%(ask_question_url)s'>ask</a> your question, help make our "
+"community better!"
 msgstr ""
 "Răspundeți întrebărilor la %(ask_question_url)s, ajutând astfel comunitatea "
 "să devină mai bună!"
@@ -4931,6 +4960,68 @@ msgid ""
 msgstr ""
 "\n"
 "Salut, acesta este un mesaj de sugestii pentru %(site_title)s\n"
+
+#: skins/default/templates/help.html:2 skins/default/templates/help.html:4
+msgid "Help"
+msgstr ""
+
+#: skins/default/templates/help.html:7
+#, fuzzy, python-format
+msgid "Welcome %(username)s,"
+msgstr "răspunsuri pentru %(username)s"
+
+#: skins/default/templates/help.html:9
+msgid "Welcome,"
+msgstr ""
+
+#: skins/default/templates/help.html:13
+#, python-format
+msgid "Thank you for using %(app_name)s, here is how it works."
+msgstr ""
+
+#: skins/default/templates/help.html:16
+msgid ""
+"This site is for asking and answering questions, not for open-ended "
+"discussions."
+msgstr ""
+
+#: skins/default/templates/help.html:17
+msgid ""
+"We encourage everyone to use “question” space for asking and “answer” for "
+"answering."
+msgstr ""
+
+#: skins/default/templates/help.html:20
+msgid ""
+"Despite that, each question and answer can be commented – \n"
+"    the comments are good for the limited discussions."
+msgstr ""
+
+#: skins/default/templates/help.html:24
+#, python-format
+msgid ""
+"Voting in %(app_name)s helps to select best answers and thank most helpful "
+"users."
+msgstr ""
+
+#: skins/default/templates/help.html:26
+#, python-format
+msgid ""
+"Please vote when you find helpful information,\n"
+"    it really helps the %(app_name)s community."
+msgstr ""
+
+#: skins/default/templates/help.html:29
+msgid ""
+"Besides, you can @mention users anywhere in the text to point their "
+"attention,\n"
+"    follow users and conversations and report inappropriate content by "
+"flagging it."
+msgstr ""
+
+#: skins/default/templates/help.html:32
+msgid "Enjoy."
+msgstr ""
 
 #: skins/default/templates/import_data.html:2
 #: skins/default/templates/import_data.html:4
@@ -5067,60 +5158,59 @@ msgstr ""
 msgid "<p>Sincerely,<br/>Forum Administrator</p>"
 msgstr "<p>Cu stimă,<br/>Administrator forum</p>"
 
-#: skins/default/templates/macros.html:3
+#: skins/default/templates/instant_notification_reply_by_email.html:3
+msgid ""
+"\n"
+"\n"
+"======= Reply above this line. ====-=-=\n"
+msgstr ""
+
+#: skins/default/templates/instant_notification_reply_by_email.html:8
+#, python-format
+msgid ""
+"\n"
+"You can post an answer or a comment by replying to email notifications. To "
+"do that\n"
+"you need %(reply_by_email_karma_threshold)s karma, you have "
+"%(receiving_user_karma)s karma. \n"
+msgstr ""
+
+#: skins/default/templates/macros.html:5
 #, fuzzy, python-format
 msgid "Share this question on %(site)s"
 msgstr "Partajează această întrebare pe twitter"
 
-#: skins/default/templates/macros.html:14
-#: skins/default/templates/macros.html:471
+#: skins/default/templates/macros.html:16
+#: skins/default/templates/macros.html:436
 #, python-format
 msgid "follow %(alias)s"
 msgstr ""
 
-#: skins/default/templates/macros.html:17
-#: skins/default/templates/macros.html:474
+#: skins/default/templates/macros.html:19
+#: skins/default/templates/macros.html:439
 #, python-format
 msgid "unfollow %(alias)s"
 msgstr ""
 
-#: skins/default/templates/macros.html:18
-#: skins/default/templates/macros.html:475
+#: skins/default/templates/macros.html:20
+#: skins/default/templates/macros.html:440
 #, python-format
 msgid "following %(alias)s"
 msgstr ""
 
-#: skins/default/templates/macros.html:29
-#, fuzzy
-msgid "i like this question (click again to cancel)"
-msgstr "îmi place această postare (efectuați clic din nou pentru a anula)"
-
-#: skins/default/templates/macros.html:31
-msgid "i like this answer (click again to cancel)"
-msgstr "îmi place acest răspuns (efectuați clic din nou pentru a anula)"
-
-#: skins/default/templates/macros.html:37
+#: skins/default/templates/macros.html:33
 msgid "current number of votes"
 msgstr "număr actual de voturi"
 
-#: skins/default/templates/macros.html:43
-#, fuzzy
-msgid "i dont like this question (click again to cancel)"
-msgstr "nu îmi place această postare (efectuați clic din nou pentru a anula)"
-
-#: skins/default/templates/macros.html:45
-msgid "i dont like this answer (click again to cancel)"
-msgstr "nu îmi place acest răspuns (efectuați clic din nou pentru a anula)"
-
-#: skins/default/templates/macros.html:52
+#: skins/default/templates/macros.html:46
 msgid "anonymous user"
 msgstr "utilizator anonim"
 
-#: skins/default/templates/macros.html:80
+#: skins/default/templates/macros.html:79
 msgid "this post is marked as community wiki"
 msgstr "acest text este marca drep un wiki al comunității"
 
-#: skins/default/templates/macros.html:83
+#: skins/default/templates/macros.html:82
 #, python-format
 msgid ""
 "This post is a wiki.\n"
@@ -5130,119 +5220,97 @@ msgstr ""
 "       Oricine cu o reputație mai mare decât %(wiki_min_rep)s este binevenit "
 "să o imbunătățească."
 
-#: skins/default/templates/macros.html:89
+#: skins/default/templates/macros.html:88
 msgid "asked"
 msgstr "întrebat"
 
-#: skins/default/templates/macros.html:91
+#: skins/default/templates/macros.html:90
 msgid "answered"
 msgstr "răspuns"
 
-#: skins/default/templates/macros.html:93
+#: skins/default/templates/macros.html:92
 msgid "posted"
 msgstr "adăugat"
 
-#: skins/default/templates/macros.html:123
+#: skins/default/templates/macros.html:122
 msgid "updated"
 msgstr "actualizat"
 
-#: skins/default/templates/macros.html:221
+#: skins/default/templates/macros.html:202
 #, python-format
 msgid "see questions tagged '%(tag)s'"
 msgstr "afișează întrebările etichetate „%(tag)s”"
 
-#: skins/default/templates/macros.html:278
+#: skins/default/templates/macros.html:304
 msgid "delete this comment"
 msgstr "șterge acest comentariu"
 
-#: skins/default/templates/macros.html:307
-#: skins/default/templates/macros.html:315
-#: skins/default/templates/question/javascript.html:24
-msgid "add comment"
-msgstr "adaugă comentariu"
-
-#: skins/default/templates/macros.html:308
-#, python-format
-msgid "see <strong>%(counter)s</strong> more"
-msgid_plural "see <strong>%(counter)s</strong> more"
-msgstr[0] "afișează încă <strong>%(counter)s</strong>"
-msgstr[1] "afișează încă <strong>%(counter)s</strong>"
-msgstr[2] "afișează încă <strong>%(counter)s</strong>"
-
-#: skins/default/templates/macros.html:310
-#, python-format
-msgid "see <strong>%(counter)s</strong> more comment"
-msgid_plural ""
-"see <strong>%(counter)s</strong> more comments\n"
-"            "
-msgstr[0] "afișează încă <strong>%(counter)s</strong> comentariu"
-msgstr[1] "afișează încă <strong>%(counter)s</strong> comentarii"
-msgstr[2] "afișează încă <strong>%(counter)s</strong> de comentarii"
-
-#: skins/default/templates/macros.html:542 templatetags/extra_tags.py:43
+#: skins/default/templates/macros.html:507 templatetags/extra_tags.py:43
 #, python-format
 msgid "%(username)s gravatar image"
 msgstr "imagine gravatat %(username)s"
 
-#: skins/default/templates/macros.html:551
+#: skins/default/templates/macros.html:516
 #, python-format
 msgid "%(username)s's website is %(url)s"
 msgstr "Pagina web pentru %(username)s este %(url)s"
 
-#: skins/default/templates/macros.html:566
-#: skins/default/templates/macros.html:567
+#: skins/default/templates/macros.html:531
+#: skins/default/templates/macros.html:532
+#: skins/default/templates/macros.html:570
+#: skins/default/templates/macros.html:571
 msgid "previous"
 msgstr "precedentă"
 
-#: skins/default/templates/macros.html:578
+#: skins/default/templates/macros.html:543
+#: skins/default/templates/macros.html:582
 msgid "current page"
 msgstr "pagiona curentă"
 
-#: skins/default/templates/macros.html:580
-#: skins/default/templates/macros.html:587
-#, python-format
-msgid "page number %(num)s"
+#: skins/default/templates/macros.html:545
+#: skins/default/templates/macros.html:552
+#: skins/default/templates/macros.html:584
+#: skins/default/templates/macros.html:591
+#, fuzzy, python-format
+msgid "page %(num)s"
 msgstr "număr pagină %(num)s"
 
-#: skins/default/templates/macros.html:591
+#: skins/default/templates/macros.html:556
+#: skins/default/templates/macros.html:595
 msgid "next page"
 msgstr "pagina următoare"
 
-#: skins/default/templates/macros.html:602
-msgid "posts per page"
-msgstr "postări pe pagină"
-
-#: skins/default/templates/macros.html:629
+#: skins/default/templates/macros.html:607
 #, python-format
 msgid "responses for %(username)s"
 msgstr "răspunsuri pentru %(username)s"
 
-#: skins/default/templates/macros.html:632
-#, python-format
-msgid "you have a new response"
+#: skins/default/templates/macros.html:610
+#, fuzzy, python-format
+msgid "you have %(response_count)s new response"
 msgid_plural "you have %(response_count)s new responses"
 msgstr[0] "ai un răspuns nou"
 msgstr[1] "ai %(response_count)s răspunsuri noi"
 msgstr[2] "ai %(response_count)s de răspunsuri noi"
 
-#: skins/default/templates/macros.html:635
+#: skins/default/templates/macros.html:613
 msgid "no new responses yet"
 msgstr "încă nici un răspuns nou"
 
-#: skins/default/templates/macros.html:650
-#: skins/default/templates/macros.html:651
+#: skins/default/templates/macros.html:628
+#: skins/default/templates/macros.html:629
 #, python-format
 msgid "%(new)s new flagged posts and %(seen)s previous"
 msgstr "%(new)s postări noi marcate și %(seen)s anterioare"
 
-#: skins/default/templates/macros.html:653
-#: skins/default/templates/macros.html:654
+#: skins/default/templates/macros.html:631
+#: skins/default/templates/macros.html:632
 #, python-format
 msgid "%(new)s new flagged posts"
 msgstr "%(new)s postări noi marcate"
 
-#: skins/default/templates/macros.html:659
-#: skins/default/templates/macros.html:660
+#: skins/default/templates/macros.html:637
+#: skins/default/templates/macros.html:638
 #, python-format
 msgid "%(seen)s flagged posts"
 msgstr "%(seen)s (de) postări marcate"
@@ -5251,10 +5319,37 @@ msgstr "%(seen)s (de) postări marcate"
 msgid "Questions"
 msgstr "Întrebări"
 
-#: skins/default/templates/privacy.html:3
-#: skins/default/templates/privacy.html:5
-msgid "Privacy policy"
-msgstr "Politica de confidențialitate"
+#: skins/default/templates/question.html:110
+#, fuzzy
+msgid "post a comment / <strong>some</strong> more"
+msgstr "afișează încă <strong>%(counter)s</strong>"
+
+#: skins/default/templates/question.html:113
+#, fuzzy
+msgid "see <strong>some</strong> more"
+msgstr "afișează încă <strong>%(counter)s</strong>"
+
+#: skins/default/templates/question.html:117
+#: skins/default/templates/question/javascript.html:20
+#, fuzzy
+msgid "post a comment"
+msgstr "adaugă comentariu"
+
+#: skins/default/templates/question.html:135
+#: skins/default/templates/question/content.html:40
+msgid "Answer Your Own Question"
+msgstr "Răspunde propriei întrebări"
+
+#: skins/default/templates/question.html:140
+#, fuzzy
+msgid "Post Your Answer"
+msgstr "Răspunsul tău"
+
+#: skins/default/templates/question.html:146
+#: skins/default/templates/widgets/ask_form.html:41
+#, fuzzy
+msgid "Login/Signup to Post"
+msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
 
 #: skins/default/templates/question_edit.html:4
 #: skins/default/templates/question_edit.html:9
@@ -5263,8 +5358,9 @@ msgstr "Modifică întrebarea"
 
 #: skins/default/templates/question_retag.html:3
 #: skins/default/templates/question_retag.html:5
-msgid "Change tags"
-msgstr "Schimbă etichetele"
+#, fuzzy
+msgid "Retag question"
+msgstr "Întrebări similare"
 
 #: skins/default/templates/question_retag.html:21
 msgid "Retag"
@@ -5321,6 +5417,13 @@ msgstr "Redeschide această întrebare?"
 msgid "Reopen this question"
 msgstr "Redeschide această întrebare"
 
+#: skins/default/templates/reply_by_email_error.html:1
+msgid ""
+"\n"
+"<p>The system was unable to process your message successfully, the reason "
+"being:<p>\n"
+msgstr ""
+
 #: skins/default/templates/revisions.html:4
 #: skins/default/templates/revisions.html:7
 msgid "Revision history"
@@ -5348,17 +5451,17 @@ msgstr "Abonați-vă la următoarele etichete:"
 msgid "Subscribe"
 msgstr "Abonare"
 
-#: skins/default/templates/tags.html:4 skins/default/templates/tags.html:10
-msgid "Tag list"
-msgstr "Listă etichete"
-
 #: skins/default/templates/tags.html:8
 #, python-format
 msgid "Tags, matching \"%(stag)s\""
 msgstr ""
 
+#: skins/default/templates/tags.html:10
+msgid "Tag list"
+msgstr "Listă etichete"
+
 #: skins/default/templates/tags.html:14 skins/default/templates/users.html:9
-#: skins/default/templates/main_page/tab_bar.html:14
+#: skins/default/templates/main_page/tab_bar.html:15
 #, fuzzy
 msgid "Sort by &raquo;"
 msgstr "Ordonează după:"
@@ -5379,7 +5482,7 @@ msgstr "ordonate după frecvența folosirii etichetei"
 msgid "by popularity"
 msgstr "după popularitate"
 
-#: skins/default/templates/tags.html:31 skins/default/templates/tags.html:57
+#: skins/default/templates/tags.html:31 skins/default/templates/tags.html:56
 msgid "Nothing found"
 msgstr "Nu a fost găsit nimic"
 
@@ -5393,7 +5496,9 @@ msgstr ""
 
 #: skins/default/templates/users.html:15
 #: skins/default/templates/user_profile/user_info.html:25
-msgid "reputation"
+#: skins/default/templates/user_profile/user_reputation.html:4
+#: skins/default/templates/user_profile/user_tabs.html:23
+msgid "karma"
 msgstr "reputație"
 
 #: skins/default/templates/users.html:20
@@ -5425,7 +5530,7 @@ msgstr ""
 msgid "Nothing found."
 msgstr "Nu s-a găsit nimic."
 
-#: skins/default/templates/main_page/headline.html:4 views/readers.py:160
+#: skins/default/templates/main_page/headline.html:4 views/readers.py:135
 #, fuzzy, python-format
 msgid "%(q_num)s question"
 msgid_plural "%(q_num)s questions"
@@ -5447,42 +5552,42 @@ msgstr ""
 msgid "Tagged"
 msgstr "reetichetat"
 
-#: skins/default/templates/main_page/headline.html:23
+#: skins/default/templates/main_page/headline.html:24
 msgid "Search tips:"
 msgstr "Indicii de căutare:"
 
-#: skins/default/templates/main_page/headline.html:26
+#: skins/default/templates/main_page/headline.html:27
 #, fuzzy
 msgid "reset author"
 msgstr "resetare etichete"
 
-#: skins/default/templates/main_page/headline.html:28
-#: skins/default/templates/main_page/headline.html:31
+#: skins/default/templates/main_page/headline.html:29
+#: skins/default/templates/main_page/headline.html:32
 #: skins/default/templates/main_page/nothing_found.html:18
 #: skins/default/templates/main_page/nothing_found.html:21
 msgid " or "
 msgstr " sau "
 
-#: skins/default/templates/main_page/headline.html:29
+#: skins/default/templates/main_page/headline.html:30
 msgid "reset tags"
 msgstr "resetare etichete"
 
-#: skins/default/templates/main_page/headline.html:32
-#: skins/default/templates/main_page/headline.html:35
+#: skins/default/templates/main_page/headline.html:33
+#: skins/default/templates/main_page/headline.html:36
 msgid "start over"
 msgstr "începeți din nou"
 
-#: skins/default/templates/main_page/headline.html:37
+#: skins/default/templates/main_page/headline.html:38
 msgid " - to expand, or dig in by adding more tags and revising the query."
 msgstr ""
 " pentru a lărgi sau a filtra prin adăugarea mai multor etichete sau a "
 "textului de căutat."
 
-#: skins/default/templates/main_page/headline.html:40
+#: skins/default/templates/main_page/headline.html:41
 msgid "Search tip:"
 msgstr "Indiciu de căutare:"
 
-#: skins/default/templates/main_page/headline.html:40
+#: skins/default/templates/main_page/headline.html:41
 msgid "add tags and a query to focus your search"
 msgstr "adăugarea de etichete și a mai multe cuvinte cheie pentru căutare"
 
@@ -5525,19 +5630,19 @@ msgstr "începeți din nou"
 msgid "Please always feel free to ask your question!"
 msgstr "autentificați-vă pentru a pune o întrebare"
 
-#: skins/default/templates/main_page/questions_loop.html:12
+#: skins/default/templates/main_page/questions_loop.html:11
 msgid "Did not find what you were looking for?"
 msgstr "Nu ați găsit ceea ce căutați?"
 
-#: skins/default/templates/main_page/questions_loop.html:13
+#: skins/default/templates/main_page/questions_loop.html:12
 msgid "Please, post your question!"
 msgstr "Vă rugăm să puneți o întrebare!"
 
-#: skins/default/templates/main_page/tab_bar.html:9
+#: skins/default/templates/main_page/tab_bar.html:10
 msgid "subscribe to the questions feed"
 msgstr "abonarea la fluxul de întrebări"
 
-#: skins/default/templates/main_page/tab_bar.html:10
+#: skins/default/templates/main_page/tab_bar.html:11
 msgid "RSS"
 msgstr ""
 
@@ -5549,7 +5654,7 @@ msgid ""
 "a>"
 msgstr ""
 
-#: skins/default/templates/meta/editor_data.html:5
+#: skins/default/templates/meta/editor_data.html:7
 #, fuzzy, python-format
 msgid "each tag must be shorter that %(max_chars)s character"
 msgid_plural "each tag must be shorter than %(max_chars)s characters"
@@ -5560,7 +5665,7 @@ msgstr[1] ""
 msgstr[2] ""
 "fiecare etichetă trebuie să fie mai scurtă de %(max_chars)d de caractere"
 
-#: skins/default/templates/meta/editor_data.html:7
+#: skins/default/templates/meta/editor_data.html:9
 #, fuzzy, python-format
 msgid "please use %(tag_count)s tag"
 msgid_plural "please use %(tag_count)s tags or less"
@@ -5568,7 +5673,7 @@ msgstr[0] "vă rugăm să folosiți %(tag_count)d etichetă sau mai puțin"
 msgstr[1] "vă rugăm să folosiți %(tag_count)d etichete sau mai puțin"
 msgstr[2] "vă rugăm să folosiți %(tag_count)d de etichete sau mai puțin"
 
-#: skins/default/templates/meta/editor_data.html:8
+#: skins/default/templates/meta/editor_data.html:10
 #, fuzzy, python-format
 msgid ""
 "please use up to %(tag_count)s tags, less than %(max_chars)s characters each"
@@ -5578,11 +5683,11 @@ msgstr "până la 5 etichete, mai puțin de 20 de caractere pentru fiecare"
 #, fuzzy, python-format
 msgid ""
 "\n"
-"        %(counter)s Answer\n"
-"        "
+"            %(counter)s Answer\n"
+"            "
 msgid_plural ""
 "\n"
-"        %(counter)s Answers\n"
+"            %(counter)s Answers\n"
 "        "
 msgstr[0] ""
 "\n"
@@ -5597,67 +5702,64 @@ msgstr[2] ""
 "            %(counter)s de răspunsuri:\n"
 "            "
 
+#: skins/default/templates/question/answer_tab_bar.html:11
+#, fuzzy
+msgid "Sort by »"
+msgstr "Ordonează după:"
+
 #: skins/default/templates/question/answer_tab_bar.html:14
 msgid "oldest answers will be shown first"
 msgstr "răspunsurile mai vechi vor fi afișate întâi"
-
-#: skins/default/templates/question/answer_tab_bar.html:15
-msgid "oldest answers"
-msgstr "cele mai vechi întrebări"
 
 #: skins/default/templates/question/answer_tab_bar.html:17
 msgid "newest answers will be shown first"
 msgstr "răspunsurile mai noi vor fi afișate întâi"
 
-#: skins/default/templates/question/answer_tab_bar.html:18
-msgid "newest answers"
-msgstr "cele mai noi răspunsuri"
-
 #: skins/default/templates/question/answer_tab_bar.html:20
 msgid "most voted answers will be shown first"
 msgstr "cele mai votate răspunsuri vor fi afișate întâi"
 
-#: skins/default/templates/question/answer_tab_bar.html:21
-msgid "popular answers"
-msgstr "răspunsuri populare"
-
-#: skins/default/templates/question/content.html:20
-#: skins/default/templates/question/new_answer_form.html:46
-msgid "Answer Your Own Question"
-msgstr "Răspunde propriei întrebări"
-
-#: skins/default/templates/question/new_answer_form.html:14
+#: skins/default/templates/question/new_answer_form.html:16
 #, fuzzy
 msgid "Login/Signup to Answer"
 msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
 
-#: skins/default/templates/question/new_answer_form.html:22
+#: skins/default/templates/question/new_answer_form.html:24
 msgid "Your answer"
 msgstr "Răspunsul tău"
 
-#: skins/default/templates/question/new_answer_form.html:24
+#: skins/default/templates/question/new_answer_form.html:26
 msgid "Be the first one to answer this question!"
 msgstr "Fi primul care răspunde acestei întrebări!"
 
-#: skins/default/templates/question/new_answer_form.html:30
-msgid "you can answer anonymously and then login"
-msgstr "puteți răspunde anonim și vă puteți autentifica după aceea"
-
-#: skins/default/templates/question/new_answer_form.html:34
-msgid "answer your own question only to give an answer"
-msgstr "răspunde propriei întrebări doar pentru a oferi un răspuns"
+#: skins/default/templates/question/new_answer_form.html:32
+msgid ""
+"<span class='strong big'>Please start posting your answer anonymously</span> "
+"- your answer will be saved within the current session and published after "
+"you log in or create a new account. Please try to give a <strong>substantial "
+"answer</strong>, for discussions, <strong>please use comments</strong> and "
+"<strong>please do remember to vote</strong> (after you log in)!"
+msgstr ""
 
 #: skins/default/templates/question/new_answer_form.html:36
-msgid "please only give an answer, no discussions"
-msgstr "vă rugăm să dați doar răspunsul, fără discuții"
+msgid ""
+"<span class='big strong'>You are welcome to answer your own question</span>, "
+"but please make sure to give an <strong>answer</strong>. Remember that you "
+"can always <strong>revise your original question</strong>. Please "
+"<strong>use comments for discussions</strong>  and <strong>please don't "
+"forget to vote :)</strong> for the answers that you liked (or perhaps did "
+"not like)!"
+msgstr ""
 
-#: skins/default/templates/question/new_answer_form.html:43
-msgid "Login/Signup to Post Your Answer"
-msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
-
-#: skins/default/templates/question/new_answer_form.html:48
-msgid "Answer the question"
-msgstr "Răspunde întrebării"
+#: skins/default/templates/question/new_answer_form.html:38
+msgid ""
+"<span class='big strong'>Please try to give a substantial answer</span>. If "
+"you wanted to comment on the question or answer, just <strong>use the "
+"commenting tool</strong>. Please remember that you can always <strong>revise "
+"your answers</strong> - no need to answer the same question twice. Also, "
+"please <strong>don't forget to vote</strong> - it really helps to select the "
+"best questions and answers!"
+msgstr ""
 
 #: skins/default/templates/question/sharing_prompt_phrase.html:2
 #, python-format
@@ -5675,37 +5777,37 @@ msgstr " sau "
 msgid "email"
 msgstr "email"
 
-#: skins/default/templates/question/sidebar.html:4
+#: skins/default/templates/question/sidebar.html:6
 #, fuzzy
 msgid "Question tools"
 msgstr "Etichete întrebare"
 
-#: skins/default/templates/question/sidebar.html:7
+#: skins/default/templates/question/sidebar.html:9
 #, fuzzy
 msgid "click to unfollow this question"
 msgstr "clic pentru a vedea cele mai vechi întrebări"
 
-#: skins/default/templates/question/sidebar.html:8
+#: skins/default/templates/question/sidebar.html:10
 #, fuzzy
 msgid "Following"
 msgstr "Închide întrebarea"
 
-#: skins/default/templates/question/sidebar.html:9
+#: skins/default/templates/question/sidebar.html:11
 #, fuzzy
 msgid "Unfollow"
 msgstr "Închide întrebarea"
 
-#: skins/default/templates/question/sidebar.html:13
+#: skins/default/templates/question/sidebar.html:15
 #, fuzzy
 msgid "click to follow this question"
 msgstr "clic pentru a vedea cele mai vechi întrebări"
 
-#: skins/default/templates/question/sidebar.html:14
+#: skins/default/templates/question/sidebar.html:16
 #, fuzzy
 msgid "Follow"
 msgstr "Închide întrebarea"
 
-#: skins/default/templates/question/sidebar.html:21
+#: skins/default/templates/question/sidebar.html:23
 #, python-format
 msgid "%(count)s follower"
 msgid_plural "%(count)s followers"
@@ -5713,23 +5815,23 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: skins/default/templates/question/sidebar.html:27
+#: skins/default/templates/question/sidebar.html:29
 #, fuzzy
 msgid "email the updates"
 msgstr "actualizările email au fost anulate"
 
-#: skins/default/templates/question/sidebar.html:30
+#: skins/default/templates/question/sidebar.html:32
 msgid ""
 "<strong>Here</strong> (once you log in) you will be able to sign up for the "
 "periodic email updates about this question."
 msgstr ""
 
-#: skins/default/templates/question/sidebar.html:35
+#: skins/default/templates/question/sidebar.html:37
 #, fuzzy
 msgid "subscribe to this question rss feed"
 msgstr "abonarea la fluxul de întrebări"
 
-#: skins/default/templates/question/sidebar.html:36
+#: skins/default/templates/question/sidebar.html:38
 #, fuzzy
 msgid "subscribe to rss feed"
 msgstr "abonarea la fluxul de întrebări"
@@ -5739,50 +5841,42 @@ msgid "Stats"
 msgstr ""
 
 #: skins/default/templates/question/sidebar.html:48
-msgid "question asked"
-msgstr "întrebare cu răspuns"
+#, fuzzy
+msgid "Asked"
+msgstr "întrebat"
 
 #: skins/default/templates/question/sidebar.html:51
-msgid "question was seen"
-msgstr "întrebarea a fost văzută de"
+msgid "Seen"
+msgstr ""
 
 #: skins/default/templates/question/sidebar.html:51
 msgid "times"
 msgstr "ori"
 
 #: skins/default/templates/question/sidebar.html:54
-msgid "last updated"
+#, fuzzy
+msgid "Last updated"
 msgstr "ultima actualizare"
 
-#: skins/default/templates/question/sidebar.html:63
+#: skins/default/templates/question/sidebar.html:62
 msgid "Related questions"
 msgstr "Întrebări similare"
 
-#: skins/default/templates/question/subscribe_by_email_prompt.html:7
-#: skins/default/templates/question/subscribe_by_email_prompt.html:9
-msgid "Notify me once a day when there are any new answers"
-msgstr "Notifică-mă o dată pe zi când apar răspunsuri noi"
-
-#: skins/default/templates/question/subscribe_by_email_prompt.html:11
-msgid "Notify me weekly when there are any new answers"
+#: skins/default/templates/question/subscribe_by_email_prompt.html:5
+#, fuzzy
+msgid "Email me when there are any new answers"
 msgstr "Notifică-mă o dată pe săptămână când apar răspunsuri noi"
 
-#: skins/default/templates/question/subscribe_by_email_prompt.html:13
-msgid "Notify me immediately when there are any new answers"
-msgstr "Notifică-mă imediat ce apar răspunsuri noi"
-
-#: skins/default/templates/question/subscribe_by_email_prompt.html:16
-#, python-format
-msgid ""
-"You can always adjust frequency of email updates from your %(profile_url)s"
-msgstr ""
-"Puteți oricând să modificați frecvența notificărilor mergând la pagina "
-"%(profile_url)s"
-
-#: skins/default/templates/question/subscribe_by_email_prompt.html:21
+#: skins/default/templates/question/subscribe_by_email_prompt.html:11
 msgid "once you sign in you will be able to subscribe for any updates here"
 msgstr ""
 "odată ce vă veți autentifica, aici vă veți putea abona la orice actualizare"
+
+#: skins/default/templates/question/subscribe_by_email_prompt.html:12
+msgid ""
+"<span class='strong'>Here</span> (once you log in) you will be able to sign "
+"up for the periodic email updates about this question."
+msgstr ""
 
 #: skins/default/templates/user_profile/user.html:12
 #, python-format
@@ -5815,8 +5909,13 @@ msgstr "Utilizator înregistrat"
 msgid "Screen Name"
 msgstr "Nume afișat"
 
-#: skins/default/templates/user_profile/user_edit.html:95
-#: skins/default/templates/user_profile/user_email_subscriptions.html:21
+#: skins/default/templates/user_profile/user_edit.html:59
+#, fuzzy
+msgid "(cannot be changed)"
+msgstr "voturile vechi nu pot fi revocate"
+
+#: skins/default/templates/user_profile/user_edit.html:101
+#: skins/default/templates/user_profile/user_email_subscriptions.html:22
 msgid "Update"
 msgstr "Actualizează"
 
@@ -5829,13 +5928,19 @@ msgstr "abonamente"
 msgid "Email subscription settings"
 msgstr "Configurări abonamente email"
 
-#: skins/default/templates/user_profile/user_email_subscriptions.html:8
-msgid "email subscription settings info"
-msgstr "informații configurări abonamente email"
+#: skins/default/templates/user_profile/user_email_subscriptions.html:9
+msgid ""
+"<span class='big strong'>Adjust frequency of email updates.</span> Receive "
+"updates on interesting questions by email, <strong><br/>help the community</"
+"strong> by answering questions of your colleagues. If you do not wish to "
+"receive emails - select 'no email' on all items below.<br/>Updates are only "
+"sent when there is any new activity on selected items."
+msgstr ""
 
-#: skins/default/templates/user_profile/user_email_subscriptions.html:22
-msgid "Stop sending email"
-msgstr "Nu mai trimite emailuri"
+#: skins/default/templates/user_profile/user_email_subscriptions.html:23
+#, fuzzy
+msgid "Stop Email"
+msgstr "Adresa dumneavoastră de e-mail"
 
 #: skins/default/templates/user_profile/user_favorites.html:4
 #: skins/default/templates/user_profile/user_tabs.html:27
@@ -5863,18 +5968,22 @@ msgid "flagged items (%(flag_count)s)"
 msgstr "elemente marcate (%(flag_count)s)"
 
 #: skins/default/templates/user_profile/user_inbox.html:49
+#: skins/default/templates/user_profile/user_inbox.html:61
 msgid "select:"
 msgstr "selectează:"
 
 #: skins/default/templates/user_profile/user_inbox.html:51
+#: skins/default/templates/user_profile/user_inbox.html:63
 msgid "seen"
 msgstr "văzut"
 
 #: skins/default/templates/user_profile/user_inbox.html:52
+#: skins/default/templates/user_profile/user_inbox.html:64
 msgid "new"
 msgstr "nou"
 
 #: skins/default/templates/user_profile/user_inbox.html:53
+#: skins/default/templates/user_profile/user_inbox.html:65
 msgid "none"
 msgstr "niciunul"
 
@@ -5890,6 +5999,16 @@ msgstr "marcează ca nou"
 msgid "dismiss"
 msgstr ""
 
+#: skins/default/templates/user_profile/user_inbox.html:66
+#, fuzzy
+msgid "remove flags"
+msgstr "elimină"
+
+#: skins/default/templates/user_profile/user_inbox.html:68
+#, fuzzy
+msgid "delete post"
+msgstr "șterge"
+
 #: skins/default/templates/user_profile/user_info.html:36
 msgid "update profile"
 msgstr "actualizează profil"
@@ -5903,7 +6022,8 @@ msgid "real name"
 msgstr "nume real"
 
 #: skins/default/templates/user_profile/user_info.html:58
-msgid "member for"
+#, fuzzy
+msgid "member since"
 msgstr "membru de"
 
 #: skins/default/templates/user_profile/user_info.html:63
@@ -5911,8 +6031,9 @@ msgid "last seen"
 msgstr "văzut ultima dată"
 
 #: skins/default/templates/user_profile/user_info.html:69
-msgid "user website"
-msgstr "pagină web utilizator"
+#, fuzzy
+msgid "website"
+msgstr "Pagină web"
 
 #: skins/default/templates/user_profile/user_info.html:75
 msgid "location"
@@ -6055,18 +6176,15 @@ msgid "%(username)s's network is empty"
 msgstr "Profilul pentru %(username)s"
 
 #: skins/default/templates/user_profile/user_recent.html:4
+#: skins/default/templates/user_profile/user_tabs.html:29
 #: skins/default/templates/user_profile/user_tabs.html:31
 msgid "activity"
 msgstr "activitate"
 
-#: skins/default/templates/user_profile/user_recent.html:21
+#: skins/default/templates/user_profile/user_recent.html:24
 #: skins/default/templates/user_profile/user_recent.html:28
 msgid "source"
 msgstr ""
-
-#: skins/default/templates/user_profile/user_reputation.html:4
-msgid "karma"
-msgstr "reputație"
 
 #: skins/default/templates/user_profile/user_reputation.html:11
 msgid "Your karma change log."
@@ -6091,21 +6209,17 @@ msgstr[1] "<span class=\"count\">%(counter)s</span> întrebări"
 msgstr[2] "<span class=\"count\">%(counter)s</span> de întrebări"
 
 #: skins/default/templates/user_profile/user_stats.html:16
-#, python-format
-msgid "<span class=\"count\">%(counter)s</span> Answer"
-msgid_plural "<span class=\"count\">%(counter)s</span> Answers"
-msgstr[0] "<span class=\"count\">%(counter)s</span> răspuns"
-msgstr[1] "<span class=\"count\">%(counter)s</span> răspunsuri"
-msgstr[2] "<span class=\"count\">%(counter)s</span> de răspunsuri"
+#, fuzzy
+msgid "Answer"
+msgid_plural "Answers"
+msgstr[0] "răspuns"
+msgstr[1] "răspunsuri"
+msgstr[2] "de răspunsuri"
 
 #: skins/default/templates/user_profile/user_stats.html:24
 #, python-format
 msgid "the answer has been voted for %(answer_score)s times"
 msgstr "răspunsul a fost votat de %(answer_score)s de ori"
-
-#: skins/default/templates/user_profile/user_stats.html:24
-msgid "this answer has been selected as correct"
-msgstr "acest răspuns a fost ales drept corect"
 
 #: skins/default/templates/user_profile/user_stats.html:34
 #, python-format
@@ -6147,7 +6261,7 @@ msgstr[0] "<span class=\"count\">%(counter)s</span> etichetă"
 msgstr[1] "<span class=\"count\">%(counter)s</span> etichete"
 msgstr[2] "<span class=\"count\">%(counter)s</span> de etichete"
 
-#: skins/default/templates/user_profile/user_stats.html:99
+#: skins/default/templates/user_profile/user_stats.html:97
 #, python-format
 msgid "<span class=\"count\">%(counter)s</span> Badge"
 msgid_plural "<span class=\"count\">%(counter)s</span> Badges"
@@ -6155,7 +6269,7 @@ msgstr[0] "<span class=\"count\">%(counter)s</span> insignă"
 msgstr[1] "<span class=\"count\">%(counter)s</span> insigne"
 msgstr[2] "<span class=\"count\">%(counter)s</span> de insigne"
 
-#: skins/default/templates/user_profile/user_stats.html:122
+#: skins/default/templates/user_profile/user_stats.html:120
 #, fuzzy
 msgid "Answer to:"
 msgstr "indicații pentru răspunsuri"
@@ -6164,7 +6278,7 @@ msgstr "indicații pentru răspunsuri"
 msgid "User profile"
 msgstr "Profil utilizator"
 
-#: skins/default/templates/user_profile/user_tabs.html:10 views/users.py:786
+#: skins/default/templates/user_profile/user_tabs.html:10 views/users.py:638
 msgid "comments and answers to others questions"
 msgstr "comentarii și răspunsuri pentru întrebările altora"
 
@@ -6173,48 +6287,40 @@ msgid "followers and followed users"
 msgstr ""
 
 #: skins/default/templates/user_profile/user_tabs.html:21
-msgid "graph of user reputation"
+#, fuzzy
+msgid "Graph of user karma"
 msgstr "graficul reputației utilizatorului"
-
-#: skins/default/templates/user_profile/user_tabs.html:23
-msgid "reputation history"
-msgstr "istorie reputație"
 
 #: skins/default/templates/user_profile/user_tabs.html:25
 #, fuzzy
 msgid "questions that user is following"
 msgstr "întrebări pe care utilizatorul le-a ales ca fiind favorite"
 
-#: skins/default/templates/user_profile/user_tabs.html:29
-msgid "recent activity"
-msgstr "activitate recentă"
-
-#: skins/default/templates/user_profile/user_tabs.html:34 views/users.py:861
+#: skins/default/templates/user_profile/user_tabs.html:34 views/users.py:679
 msgid "user vote record"
 msgstr "istoria voturilor utilizatorului"
 
 #: skins/default/templates/user_profile/user_tabs.html:36
-msgid "casted votes"
-msgstr "voturi date"
-
-#: skins/default/templates/user_profile/user_tabs.html:40 views/users.py:974
-msgid "email subscription settings"
-msgstr "configurări abonament email"
-
-#: skins/default/templates/user_profile/user_tabs.html:46 views/users.py:211
-msgid "moderate this user"
-msgstr "moderează acest utilizator"
-
 #: skins/default/templates/user_profile/user_votes.html:4
 msgid "votes"
 msgstr "voturi"
 
+#: skins/default/templates/user_profile/user_tabs.html:40 views/users.py:769
+msgid "email subscription settings"
+msgstr "configurări abonament email"
+
+#: skins/default/templates/user_profile/user_tabs.html:46 views/users.py:205
+msgid "moderate this user"
+msgstr "moderează acest utilizator"
+
 #: skins/default/templates/widgets/answer_edit_tips.html:3
-msgid "answer tips"
-msgstr "indicații pentru răspunsuri"
+#: skins/default/templates/widgets/question_edit_tips.html:3
+msgid "Tips"
+msgstr ""
 
 #: skins/default/templates/widgets/answer_edit_tips.html:6
-msgid "please make your answer relevant to this community"
+#, fuzzy
+msgid "give an answer interesting to this community"
 msgstr "dați răspunsuri relevante pentru această comunitate"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:9
@@ -6222,8 +6328,10 @@ msgid "try to give an answer, rather than engage into a discussion"
 msgstr "încercați să oferiți un răspuns, nu să vă angajați într-o discuție"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:12
-msgid "please try to provide details"
-msgstr "încercați să furnizați detalii"
+#: skins/default/templates/widgets/question_edit_tips.html:8
+#, fuzzy
+msgid "provide enough details"
+msgstr "încercați să oferiți suficiente detalii"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:15
 #: skins/default/templates/widgets/question_edit_tips.html:11
@@ -6237,7 +6345,8 @@ msgstr "consultați secțiunea întrebărilor frecvente"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:27
 #: skins/default/templates/widgets/question_edit_tips.html:22
-msgid "Markdown tips"
+#, fuzzy
+msgid "Markdown basics"
 msgstr "indicii Markdown"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:31
@@ -6259,11 +6368,6 @@ msgstr "*înclinat* sau __înclinat__"
 #: skins/default/templates/widgets/question_edit_tips.html:36
 msgid "**bold** or __bold__"
 msgstr "**îngroșat** sau __îngroșat__"
-
-#: skins/default/templates/widgets/answer_edit_tips.html:45
-#: skins/default/templates/widgets/question_edit_tips.html:40
-msgid "link"
-msgstr "legătură"
 
 #: skins/default/templates/widgets/answer_edit_tips.html:45
 #: skins/default/templates/widgets/answer_edit_tips.html:49
@@ -6292,33 +6396,29 @@ msgstr "de asemenea sunt suportate tag-uri HTML simple"
 msgid "learn more about Markdown"
 msgstr "află mai multe despre Markdown"
 
-#: skins/default/templates/widgets/ask_button.html:2
-msgid "ask a question"
-msgstr "pune o întrebare"
-
 #: skins/default/templates/widgets/ask_form.html:6
 msgid "login to post question info"
 msgstr "autentificați-vă pentru a pune o întrebare"
 
-#: skins/default/templates/widgets/ask_form.html:10
-#, fuzzy, python-format
+#: skins/default/templates/widgets/ask_form.html:7
 msgid ""
-"must have valid %(email)s to post, \n"
-"                            see %(email_validation_faq_url)s\n"
-"                            "
+"<span class=\\\"strong big\\\">You are welcome to start submitting your "
+"question anonymously</span>. When you submit the post, you will be "
+"redirected to the login/signup page. Your question will be saved in the "
+"current session and will be published after you log in. Login/signup process "
+"is very simple. Login takes about 30 seconds, initial signup takes a minute "
+"or less."
 msgstr ""
-"este necesar %(email)s valid pentru a posta, \n"
-"                                vezi %(email_validation_faq_url)s\n"
-"                                "
 
-#: skins/default/templates/widgets/ask_form.html:42
-#, fuzzy
-msgid "Login/signup to post your question"
-msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
-
-#: skins/default/templates/widgets/ask_form.html:44
-msgid "Ask your question"
-msgstr "Puneți întrebarea"
+#: skins/default/templates/widgets/ask_form.html:11
+#, python-format
+msgid ""
+"<span class='strong big'>Looks like your email address, %%(email)s has not "
+"yet been validated.</span> To post messages you must verify your email, "
+"please see <a href='%%(email_validation_faq_url)s'>more details here</a>."
+"<br>You can submit your question now and validate email after that. Your "
+"question will saved as pending meanwhile."
+msgstr ""
 
 #: skins/default/templates/widgets/contributors.html:3
 msgid "Contributors"
@@ -6334,10 +6434,15 @@ msgid "about"
 msgstr "despre"
 
 #: skins/default/templates/widgets/footer.html:40
+#: skins/default/templates/widgets/user_navigation.html:17
+msgid "help"
+msgstr ""
+
+#: skins/default/templates/widgets/footer.html:42
 msgid "privacy policy"
 msgstr "politica de confidențialitate"
 
-#: skins/default/templates/widgets/footer.html:49
+#: skins/default/templates/widgets/footer.html:51
 msgid "give feedback"
 msgstr "oferă o sugestie"
 
@@ -6358,17 +6463,10 @@ msgstr "utilizatori"
 msgid "badges"
 msgstr "insigne"
 
-#: skins/default/templates/widgets/question_edit_tips.html:3
-msgid "question tips"
-msgstr "indicii căutare"
-
 #: skins/default/templates/widgets/question_edit_tips.html:5
-msgid "please ask a relevant question"
-msgstr "puneți o întrebare relevantă"
-
-#: skins/default/templates/widgets/question_edit_tips.html:8
-msgid "please try provide enough details"
-msgstr "încercați să oferiți suficiente detalii"
+#, fuzzy
+msgid "ask a question interesting to this community"
+msgstr "dați răspunsuri relevante pentru această comunitate"
 
 #: skins/default/templates/widgets/question_summary.html:12
 msgid "view"
@@ -6391,28 +6489,28 @@ msgstr[0] "vot"
 msgstr[1] "voturi"
 msgstr[2] "de voturi"
 
-#: skins/default/templates/widgets/scope_nav.html:3
+#: skins/default/templates/widgets/scope_nav.html:6
 msgid "ALL"
 msgstr ""
 
-#: skins/default/templates/widgets/scope_nav.html:5
+#: skins/default/templates/widgets/scope_nav.html:8
 msgid "see unanswered questions"
 msgstr "vezi întrebările fără răspuns"
 
-#: skins/default/templates/widgets/scope_nav.html:5
+#: skins/default/templates/widgets/scope_nav.html:8
 msgid "UNANSWERED"
 msgstr ""
 
-#: skins/default/templates/widgets/scope_nav.html:8
+#: skins/default/templates/widgets/scope_nav.html:11
 #, fuzzy
 msgid "see your followed questions"
 msgstr "vezi întrebările tale favorite"
 
-#: skins/default/templates/widgets/scope_nav.html:8
+#: skins/default/templates/widgets/scope_nav.html:11
 msgid "FOLLOWED"
 msgstr ""
 
-#: skins/default/templates/widgets/scope_nav.html:11
+#: skins/default/templates/widgets/scope_nav.html:14
 #, fuzzy
 msgid "Please ask your question here"
 msgstr "Vă rugăm să puneți o întrebare!"
@@ -6425,23 +6523,26 @@ msgstr "reputație:"
 msgid "badges:"
 msgstr "insigne:"
 
-#: skins/default/templates/widgets/user_navigation.html:8
-msgid "logout"
-msgstr "ieșire"
+#: skins/default/templates/widgets/user_navigation.html:9
+#, fuzzy
+msgid "sign out"
+msgstr "Ieșire"
 
-#: skins/default/templates/widgets/user_navigation.html:10
-msgid "login"
-msgstr "autentificare"
+#: skins/default/templates/widgets/user_navigation.html:12
+#, fuzzy
+msgid "Hi, there! Please sign in"
+msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
 
-#: skins/default/templates/widgets/user_navigation.html:14
+#: skins/default/templates/widgets/user_navigation.html:15
 msgid "settings"
 msgstr "configurări"
 
-#: templatetags/extra_filters.py:145 templatetags/extra_filters_jinja.py:264
-msgid "no items in counter"
-msgstr "nu sunt elemente în contor"
+#: templatetags/extra_filters_jinja.py:279
+#, fuzzy
+msgid "no"
+msgstr "niciunul"
 
-#: utils/decorators.py:90 views/commands.py:113 views/commands.py:133
+#: utils/decorators.py:90 views/commands.py:73 views/commands.py:93
 msgid "Oops, apologies - there was some error"
 msgstr "Oops, ne cerem scuze - a apărut o eroare"
 
@@ -6459,7 +6560,8 @@ msgid "this field is required"
 msgstr "acest câmp este obligatoriu"
 
 #: utils/forms.py:60
-msgid "choose a username"
+#, fuzzy
+msgid "Choose a screen name"
 msgstr "alegeți un nume de utilizator"
 
 #: utils/forms.py:69
@@ -6495,8 +6597,8 @@ msgid "please use at least some alphabetic characters in the user name"
 msgstr ""
 
 #: utils/forms.py:138
-msgid "your email address"
-msgstr "adresa de email"
+msgid "Your email <i>(never shared)</i>"
+msgstr ""
 
 #: utils/forms.py:139
 msgid "email address is required"
@@ -6512,17 +6614,13 @@ msgstr ""
 "această adresă de email este deja folosită de un alt utilizator, folosiți o "
 "altă adresă"
 
-#: utils/forms.py:169
-msgid "choose password"
-msgstr "alegeți parola"
-
 #: utils/forms.py:170
 msgid "password is required"
 msgstr "parola este obligatorie"
 
 #: utils/forms.py:173
-msgid "retype password"
-msgstr "retastați parola"
+msgid "Password <i>(please retype)</i>"
+msgstr ""
 
 #: utils/forms.py:174
 msgid "please, retype your password"
@@ -6532,15 +6630,15 @@ msgstr "retastați parola"
 msgid "sorry, entered passwords did not match, please try again"
 msgstr "ne pare rău, parolele tastate nu sunt identice, încercați din nou"
 
-#: utils/functions.py:74
+#: utils/functions.py:82
 msgid "2 days ago"
 msgstr "acum 2 zile"
 
-#: utils/functions.py:76
+#: utils/functions.py:84
 msgid "yesterday"
 msgstr "ieri"
 
-#: utils/functions.py:79
+#: utils/functions.py:87
 #, python-format
 msgid "%(hr)d hour ago"
 msgid_plural "%(hr)d hours ago"
@@ -6548,13 +6646,44 @@ msgstr[0] "acum %(hr)d oră"
 msgstr[1] "acum %(hr)d ore"
 msgstr[2] "acum %(hr)d de ore"
 
-#: utils/functions.py:85
+#: utils/functions.py:93
 #, python-format
 msgid "%(min)d min ago"
 msgid_plural "%(min)d mins ago"
 msgstr[0] "acum %(min)d minut"
 msgstr[1] "acum %(min)d minute"
 msgstr[2] "acum %(min)d de minute"
+
+#: utils/mail.py:147
+msgid ""
+"<p>To ask by email, please:</p>\n"
+"<ul>\n"
+"    <li>Format the subject line as: [Tag1; Tag2] Question title</li>\n"
+"    <li>Type details of your question into the email body</li>\n"
+"</ul>\n"
+"<p>Note that tags may consist of more than one word, and tags\n"
+"may be separated by a semicolon or a comma</p>\n"
+msgstr ""
+
+#: utils/mail.py:167
+#, python-format
+msgid ""
+"<p>Sorry, there was an error posting your question please contact the "
+"%(site)s administrator</p>"
+msgstr ""
+
+#: utils/mail.py:173
+#, python-format
+msgid ""
+"<p>Sorry, in order to post questions on %(site)s by email, please <a href="
+"\"%(url)s\">register first</a></p>"
+msgstr ""
+
+#: utils/mail.py:181
+msgid ""
+"<p>Sorry, your question could not be posted due to insufficient privileges "
+"of your user account</p>"
+msgstr ""
 
 #: views/avatar_views.py:99
 msgid "Successfully uploaded a new avatar."
@@ -6568,68 +6697,85 @@ msgstr "Ați actualizat cu succes propriul avatar."
 msgid "Successfully deleted the requested avatars."
 msgstr "Ați șters cu succes avatarele cerute."
 
-#: views/commands.py:39
-msgid "anonymous users cannot vote"
+#: views/commands.py:83
+msgid "Sorry, but anonymous users cannot access the inbox"
+msgstr "Ne pare rău dar utilizatorii anonimi nu pot accesa inboxul"
+
+#: views/commands.py:112
+#, fuzzy
+msgid "Sorry, anonymous users cannot vote"
 msgstr "utilizatorii anonimi nu pot vota"
 
-#: views/commands.py:59
+#: views/commands.py:129
 msgid "Sorry you ran out of votes for today"
 msgstr "Ne pare rău, dar nu mai aveți voturi pentru azi... și mâine este o zi"
 
-#: views/commands.py:65
+#: views/commands.py:135
 #, python-format
 msgid "You have %(votes_left)s votes left for today"
 msgstr "Mai ai %(votes_left)s voturi pentru azi"
 
-#: views/commands.py:123
-msgid "Sorry, but anonymous users cannot access the inbox"
-msgstr "Ne pare rău dar utilizatorii anonimi nu pot accesa inboxul"
-
-#: views/commands.py:198
+#: views/commands.py:210
 msgid "Sorry, something is not right here..."
 msgstr "Ne pare rău dar ceva nu este în regulă aici"
 
-#: views/commands.py:213
+#: views/commands.py:229
 msgid "Sorry, but anonymous users cannot accept answers"
 msgstr "Ne pare rău dar utilizatorii anonimi nu pot accepta răspunsuri"
 
-#: views/commands.py:320
-#, python-format
-msgid "subscription saved, %(email)s needs validation, see %(details_url)s"
+#: views/commands.py:339
+#, fuzzy, python-format
+msgid ""
+"Your subscription is saved, but email address %(email)s needs to be "
+"validated, please see <a href=\"%(details_url)s\">more details here</a>"
 msgstr "abonament salvat, %(email)s necesită validare, vezi %(details_url)s"
 
-#: views/commands.py:327
+#: views/commands.py:348
 msgid "email update frequency has been set to daily"
 msgstr "frecvența de actualizare a emailurilor a fost definită drept zilnic"
 
-#: views/commands.py:433
+#: views/commands.py:464
 #, python-format
 msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
 msgstr "Abonomanetul la etichetă a fost anulat (<a href=\"%(url)s\">refă</a>)."
 
-#: views/commands.py:442
+#: views/commands.py:473
 #, python-format
 msgid "Please sign in to subscribe for: %(tags)s"
 msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
 
-#: views/commands.py:578
+#: views/commands.py:600
 #, fuzzy
 msgid "Please sign in to vote"
 msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
 
-#: views/meta.py:84
+#: views/commands.py:620
+#, fuzzy
+msgid "Please sign in to delete/restore posts"
+msgstr "Vă rugăm să vă autentificați pentru a vă abona la: %(tags)s"
+
+#: views/meta.py:37
+#, fuzzy, python-format
+msgid "About %(site)s"
+msgstr "Despre %(site_name)s"
+
+#: views/meta.py:92
 msgid "Q&A forum feedback"
 msgstr "Sugestii pentru întrebări și răspunsuri"
 
-#: views/meta.py:85
+#: views/meta.py:93
 msgid "Thanks for the feedback!"
 msgstr "Vă mulțumim pentru sugestii!"
 
-#: views/meta.py:94
+#: views/meta.py:102
 msgid "We look forward to hearing your feedback! Please, give it next time :)"
 msgstr "Suntem interesați de sugestiile voastre!"
 
-#: views/readers.py:152
+#: views/meta.py:106
+msgid "Privacy policy"
+msgstr "Politica de confidențialitate"
+
+#: views/readers.py:133
 #, fuzzy, python-format
 msgid "%(q_num)s question, tagged"
 msgid_plural "%(q_num)s questions, tagged"
@@ -6641,15 +6787,7 @@ msgstr[1] ""
 "#-#-#-#-#  django.po (ubuntu-ro)  #-#-#-#-#\n"
 msgstr[2] "#-#-#-#-#  django.po (ubuntu-ro)  #-#-#-#-#\n"
 
-#: views/readers.py:200
-#, python-format
-msgid "%(badge_count)d %(badge_level)s badge"
-msgid_plural "%(badge_count)d %(badge_level)s badges"
-msgstr[0] "%(badge_count)d %(badge_level)s insignă"
-msgstr[1] "%(badge_count)d %(badge_level)s insigne"
-msgstr[2] "%(badge_count)d %(badge_level)s de insigne"
-
-#: views/readers.py:416
+#: views/readers.py:388
 msgid ""
 "Sorry, the comment you are looking for has been deleted and is no longer "
 "accessible"
@@ -6657,93 +6795,99 @@ msgstr ""
 "Ne pare rău, comentariul pe care îl căutați a fost șters nu mai este "
 "accesibil"
 
-#: views/users.py:212
+#: views/users.py:206
 msgid "moderate user"
 msgstr "moderează utilizator"
 
-#: views/users.py:387
+#: views/users.py:381
 msgid "user profile"
 msgstr "profil utilizator"
 
-#: views/users.py:388
+#: views/users.py:382
 msgid "user profile overview"
 msgstr "privire de ansamblu profil utilizator"
 
-#: views/users.py:699
+#: views/users.py:551
 msgid "recent user activity"
 msgstr "activitate recentă utilizator"
 
-#: views/users.py:700
+#: views/users.py:552
 msgid "profile - recent activity"
 msgstr "profil - activitate recentă"
 
-#: views/users.py:787
+#: views/users.py:639
 msgid "profile - responses"
 msgstr "profil - răspunsuri"
 
-#: views/users.py:862
+#: views/users.py:680
 msgid "profile - votes"
 msgstr "profil - voturi"
 
-#: views/users.py:897
-msgid "user reputation in the community"
-msgstr "reputația utilizatorului în comunitate"
+#: views/users.py:701
+#, fuzzy
+msgid "user karma"
+msgstr "reputație"
 
-#: views/users.py:898
-msgid "profile - user reputation"
+#: views/users.py:702
+#, fuzzy
+msgid "Profile - User's Karma"
 msgstr "profil - reputație utilizator"
 
-#: views/users.py:925
+#: views/users.py:720
 msgid "users favorite questions"
 msgstr "întrebările favorite ale utilizatorului"
 
-#: views/users.py:926
+#: views/users.py:721
 msgid "profile - favorite questions"
 msgstr "profile - întrebări favorite"
 
-#: views/users.py:946 views/users.py:950
+#: views/users.py:741 views/users.py:745
 msgid "changes saved"
 msgstr "schimbările au fost salvate"
 
-#: views/users.py:956
+#: views/users.py:751
 msgid "email updates canceled"
 msgstr "actualizările email au fost anulate"
 
-#: views/users.py:975
+#: views/users.py:770
 msgid "profile - email subscriptions"
 msgstr "profil - abonamente email"
 
-#: views/writers.py:59
+#: views/writers.py:60
 msgid "Sorry, anonymous users cannot upload files"
 msgstr "Utilizatorii anonimi nu pot încărca fișiere"
 
-#: views/writers.py:69
+#: views/writers.py:73
 #, python-format
 msgid "allowed file types are '%(file_types)s'"
 msgstr "tipurile de fișiere permise sunt „%(file_types)s”"
 
-#: views/writers.py:92
+#: views/writers.py:84
 #, python-format
 msgid "maximum upload file size is %(file_size)sK"
 msgstr "mărimea maximă a fișierului încărcat este %(file_size)sK"
 
-#: views/writers.py:100
+#: views/writers.py:92
 msgid "Error uploading file. Please contact the site administrator. Thank you."
 msgstr ""
 "Eroare la încărcarea fișierului. Vă rugăm să contactați administratorii "
 "siteului. Vă mulțumim."
 
-#: views/writers.py:192
-#, fuzzy
-msgid "Please log in to ask questions"
-msgstr "autentificați-vă pentru a pune o întrebare"
+#: views/writers.py:189
+msgid ""
+"<span class=\"strong big\">You are welcome to start submitting your question "
+"anonymously</span>. When you submit the post, you will be redirected to the "
+"login/signup page. Your question will be saved in the current session and "
+"will be published after you log in. Login/signup process is very simple. "
+"Login takes about 30 seconds, initial signup takes a minute or less."
+msgstr ""
 
-#: views/writers.py:493
+#: views/writers.py:466
 #, fuzzy
 msgid "Please log in to answer questions"
 msgstr "vezi întrebările fără răspuns"
 
-#: views/writers.py:600
+#: views/writers.py:572
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot post comments. Please <a href="
@@ -6752,11 +6896,11 @@ msgstr ""
 "Nu sunteți autentificat și nu puteți adăuga comentarii . Vă rugăm să vă <a "
 "href=\"%(sign_in_url)s\">autentificați</a>."
 
-#: views/writers.py:649
+#: views/writers.py:589
 msgid "Sorry, anonymous users cannot edit comments"
 msgstr "Utilizatorii anonimi nu pot modifica comentariile"
 
-#: views/writers.py:658
+#: views/writers.py:619
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot delete comments. Please <a "
@@ -6765,9 +6909,451 @@ msgstr ""
 "Nu sunteți autentificat și nu puteți șterge comentarii . Vă rugăm să vă <a "
 "href=\"%(sign_in_url)s\">autentificați</a>."
 
-#: views/writers.py:679
+#: views/writers.py:640
 msgid "sorry, we seem to have some technical difficulties"
 msgstr "ne pare rău dar se pare că avem unele dificultăți tehnice"
+
+#~ msgid "use-these-chars-in-tags"
+#~ msgstr "folositi-aceste-caractere-in-etichete"
+
+#~ msgid "this email will be linked to gravatar"
+#~ msgstr "această adresă de email va fi conectată cu gravatarul"
+
+#~ msgid "question_answered"
+#~ msgstr "întrebare_cu_răspuns"
+
+#~ msgid "question_commented"
+#~ msgstr "întrebare_comentată"
+
+#~ msgid "answer_commented"
+#~ msgstr "răspuns_comentat"
+
+#~ msgid "answer_accepted"
+#~ msgstr "răspuns_acceptat"
+
+#~ msgid "Incorrect username."
+#~ msgstr "Nume de utilizator incorect"
+
+#~ msgid "%(name)s, this is an update message header for %(num)d question"
+#~ msgid_plural ""
+#~ "%(name)s, this is an update message header for %(num)d questions"
+#~ msgstr[0] ""
+#~ "%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d "
+#~ "întrebare"
+#~ msgstr[1] ""
+#~ "%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d "
+#~ "întrebări"
+#~ msgstr[2] ""
+#~ "%(name)s, acesta este un antet de mesaj actualizat pentru %(num)d de "
+#~ "întrebări"
+
+#~ msgid ""
+#~ "Please visit the askbot and see what's new! Could you spread the word "
+#~ "about it - can somebody you know help answering those questions or "
+#~ "benefit from posting one?"
+#~ msgstr ""
+#~ "Vizitați pagina askbot pentru a afla noutățile! Puteți duce vestea mai "
+#~ "departe - poate că cineva cunoscut are răspunsuri pentru aceste întrebări "
+#~ "sau dorește să posteze o întrebare."
+
+#~ msgid ""
+#~ "Your most frequent subscription setting is 'daily' on selected questions. "
+#~ "If you are receiving more than one email per dayplease tell about this "
+#~ "issue to the askbot administrator."
+#~ msgstr ""
+#~ "Frecvența aleasă de dumneavoastră pentru a primi întrebările selectate "
+#~ "este „zilnic”. Dacă primiți mai mult de un e-mail pe zi, adresați-vă "
+#~ "administratorului paginii askbot pentru a raporta problema."
+
+#~ msgid ""
+#~ "Your most frequent subscription setting is 'weekly' if you are receiving "
+#~ "this email more than once a week please report this issue to the askbot "
+#~ "administrator."
+#~ msgstr ""
+#~ "Frecvența aleasă de dumneavoastră pentru a primi întrebările selectate "
+#~ "este „săptămânal”. Dacă primiți mai mult de un e-mail pe săptămână, "
+#~ "adresați-vă administratorului paginii askbot pentru a raporta problema."
+
+#~ msgid ""
+#~ "There is a chance that you may be receiving links seen before - due to a "
+#~ "technicality that will eventually go away. "
+#~ msgstr ""
+#~ "Există posibilitatea unele legături pe care le-ați primit deja să vă fie "
+#~ "din nou trimise - cauza este de natură tehnică și va fi remediată. "
+
+#~ msgid ""
+#~ "go to %(email_settings_link)s to change frequency of email updates or "
+#~ "%(admin_email)s administrator"
+#~ msgstr ""
+#~ "mergeți la %(email_settings_link)s pentru a modifica frecvența e-mail-"
+#~ "urilor cu actualizări sau %(admin_email)s de administrare"
+
+#~ msgid ""
+#~ "uploading images is limited to users with >%(min_rep)s reputation points"
+#~ msgstr ""
+#~ "încărcarea de imagini este limitată utilizatorilor cu mai mult de "
+#~ "%(min_rep)s puncte de reputație"
+
+#~ msgid "blocked users cannot post"
+#~ msgstr "utilizatorii blocați nu pot introduce postări"
+
+#~ msgid "suspended users cannot post"
+#~ msgstr "utilizatorii suspendați nu pot introduce postări"
+
+#~ msgid "cannot flag message as offensive twice"
+#~ msgstr "nu se poate marca ofensiv de mai multe ori"
+
+#~ msgid "blocked users cannot flag posts"
+#~ msgstr "utilizatorii blocați nu pot marca postări"
+
+#~ msgid "suspended users cannot flag posts"
+#~ msgstr "utilizatorii suspendați nu pot marca postări"
+
+#~ msgid "need > %(min_rep)s points to flag spam"
+#~ msgstr ""
+#~ "este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+
+#~ msgid "%(max_flags_per_day)s exceeded"
+#~ msgstr "ați depășit %(max_flags_per_day)s"
+
+#, fuzzy
+#~ msgid "blocked users cannot remove flags"
+#~ msgstr "utilizatorii blocați nu pot marca postări"
+
+#, fuzzy
+#~ msgid "suspended users cannot remove flags"
+#~ msgstr "utilizatorii suspendați nu pot marca postări"
+
+#, fuzzy
+#~ msgid "need > %(min_rep)d point to remove flag"
+#~ msgid_plural "need > %(min_rep)d points to remove flag"
+#~ msgstr[0] ""
+#~ "este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+#~ msgstr[1] ""
+#~ "este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+#~ msgstr[2] ""
+#~ "este nevoie de mai mult de %(min_rep)s puncte pentru a marca drept spam"
+
+#~ msgid "cannot revoke old vote"
+#~ msgstr "voturile vechi nu pot fi revocate"
+
+#~ msgid "%(author)s modified the question"
+#~ msgstr "%(author)s a modificat întrebarea"
+
+#~ msgid "%(people)s posted %(new_answer_count)s new answers"
+#~ msgstr "%(people)s au adăugat %(new_answer_count)s întrebări noi"
+
+#~ msgid "%(people)s commented the question"
+#~ msgstr "%(people)s au comentat întrebările"
+
+#~ msgid "%(people)s commented answers"
+#~ msgstr "%(people)s au comentat răspunsurile"
+
+#~ msgid "%(people)s commented an answer"
+#~ msgstr "%(people)s au comentat un răspuns"
+
+#~ msgid "change %(email)s info"
+#~ msgstr "modifică informațiile despre %(email)s"
+
+#~ msgid "here is why email is required, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "pentru a afla de ce este necesară o adresă de e-mail, consultați "
+#~ "%(gravatar_faq_url)s"
+
+#~ msgid "Your new Email"
+#~ msgstr "Adresa nouă de e-mail"
+
+#~ msgid "validate %(email)s info or go to %(change_email_url)s"
+#~ msgstr ""
+#~ "validați informațiile despre %(email)s sau mergeți la %(change_email_url)s"
+
+#~ msgid "old %(email)s kept, if you like go to %(change_email_url)s"
+#~ msgstr ""
+#~ "vechea adresă %(email)s a fost păstrată, puteți merge, dacă doriți, la "
+#~ "%(change_email_url)s"
+
+#~ msgid "your current %(email)s can be used for this"
+#~ msgstr "adresa curentă %(email)s poate fi utilizată pentru acest lucru"
+
+#~ msgid "thanks for verifying email"
+#~ msgstr "Mulțumim pentru verificarea adresei de e-mail"
+
+#~ msgid "email key not sent"
+#~ msgstr "cheia pentru adresa de e-mail nu a fost trimisă"
+
+#~ msgid "email key not sent %(email)s change email here %(change_link)s"
+#~ msgstr ""
+#~ "cheia pentru adresa de e-mail nu a fost trimisă %(email)s modificați "
+#~ "adresa de e-mail aici %(change_link)s"
+
+#~ msgid "register new %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "înregistrați informații noi pentru contul %(provider)s, consultați "
+#~ "%(gravatar_faq_url)s"
+
+#~ msgid ""
+#~ "%(username)s already exists, choose another name for \n"
+#~ "                            %(provider)s. Email is required too, see "
+#~ "%(gravatar_faq_url)s\n"
+#~ "                        "
+#~ msgstr ""
+#~ "%(username)s există deja, alegeți un alt nume pentru \n"
+#~ "                            %(provider)s. Este necesară și o adresă de e-"
+#~ "mail, consultați %(gravatar_faq_url)s\n"
+#~ "                        "
+
+#~ msgid ""
+#~ "register new external %(provider)s account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "înregistrați informații noi pentru contul %(provider)s extern, consultați "
+#~ "%(gravatar_faq_url)s"
+
+#~ msgid "register new Facebook connect account info, see %(gravatar_faq_url)s"
+#~ msgstr ""
+#~ "înregistrați informații noi pentru conectarea prin contul Facebook, "
+#~ "consultați %(gravatar_faq_url)s"
+
+#~ msgid "This account already exists, please use another."
+#~ msgstr "Acest cont există deja, vă rugăm să utilizați un altul."
+
+#, fuzzy
+#~ msgid "Screen name label"
+#~ msgstr "Nume afișat"
+
+#, fuzzy
+#~ msgid "Email address label"
+#~ msgstr "adresa de email"
+
+#~ msgid "create account"
+#~ msgstr "creaţi un cont"
+
+#~ msgid "Login"
+#~ msgstr "Autentificare"
+
+#, fuzzy
+#~ msgid "Why use OpenID?"
+#~ msgstr "URL OpenID"
+
+#, fuzzy
+#~ msgid "reuse openid"
+#~ msgstr "redeschide"
+
+#, fuzzy
+#~ msgid "Find out more"
+#~ msgstr "\" și în plus"
+
+#, fuzzy
+#~ msgid "Get OpenID"
+#~ msgstr "URL OpenID"
+
+#, fuzzy
+#~ msgid "Create Account"
+#~ msgstr "creaţi un cont"
+
+#~ msgid "answer permanent link"
+#~ msgstr "legătură permanentă întrebare"
+
+#, fuzzy
+#~ msgid "remove all flags"
+#~ msgstr "vezi toate etichetele"
+
+#~ msgid "%(question_author)s has selected this answer as correct"
+#~ msgstr "%(question_author)s a ales acest răspuns ca fiind cel corect"
+
+#~ msgid "Related tags"
+#~ msgstr "Etichete asemămătoare"
+
+#~ msgid "Ask a question"
+#~ msgstr "Puneți o întrebare"
+
+#~ msgid "Badges summary"
+#~ msgstr "Sumar insigne"
+
+#~ msgid "gold badge description"
+#~ msgstr "descriere insignă de aur"
+
+#~ msgid "silver badge description"
+#~ msgstr "descriere insignă de argint"
+
+#~ msgid "bronze badge description"
+#~ msgstr "descriere insignă de bronz"
+
+#~ msgid ""
+#~ "is a Q&A site, not a discussion group. Therefore - please avoid having "
+#~ "discussions in your answers, comment facility allows some space for brief "
+#~ "discussions."
+#~ msgstr ""
+#~ "Este un site pentru întrebări și răspunsuri, nu un grup de discuții. De "
+#~ "aceea evitați purtarea unor discuții în răspunsurile dumneavoastră, mai "
+#~ "ales că funcția pentru comentarii permite ceva spațiu pentru discuții "
+#~ "scurte."
+
+#~ msgid "Rep system summary"
+#~ msgstr "Sumar al sistemului de reputație"
+
+#~ msgid "use tags"
+#~ msgstr "utilizează etichete"
+
+#~ msgid "what is gravatar"
+#~ msgstr "ce este gravatarul"
+
+#~ msgid "gravatar faq info"
+#~ msgstr "informații utile despre gravatar"
+
+#, fuzzy
+#~ msgid "i like this question (click again to cancel)"
+#~ msgstr "îmi place această postare (efectuați clic din nou pentru a anula)"
+
+#~ msgid "i like this answer (click again to cancel)"
+#~ msgstr "îmi place acest răspuns (efectuați clic din nou pentru a anula)"
+
+#, fuzzy
+#~ msgid "i dont like this question (click again to cancel)"
+#~ msgstr ""
+#~ "nu îmi place această postare (efectuați clic din nou pentru a anula)"
+
+#~ msgid "i dont like this answer (click again to cancel)"
+#~ msgstr "nu îmi place acest răspuns (efectuați clic din nou pentru a anula)"
+
+#~ msgid "see <strong>%(counter)s</strong> more comment"
+#~ msgid_plural ""
+#~ "see <strong>%(counter)s</strong> more comments\n"
+#~ "            "
+#~ msgstr[0] "afișează încă <strong>%(counter)s</strong> comentariu"
+#~ msgstr[1] "afișează încă <strong>%(counter)s</strong> comentarii"
+#~ msgstr[2] "afișează încă <strong>%(counter)s</strong> de comentarii"
+
+#~ msgid "posts per page"
+#~ msgstr "postări pe pagină"
+
+#~ msgid "Change tags"
+#~ msgstr "Schimbă etichetele"
+
+#~ msgid "reputation"
+#~ msgstr "reputație"
+
+#~ msgid "oldest answers"
+#~ msgstr "cele mai vechi întrebări"
+
+#~ msgid "newest answers"
+#~ msgstr "cele mai noi răspunsuri"
+
+#~ msgid "popular answers"
+#~ msgstr "răspunsuri populare"
+
+#~ msgid "you can answer anonymously and then login"
+#~ msgstr "puteți răspunde anonim și vă puteți autentifica după aceea"
+
+#~ msgid "answer your own question only to give an answer"
+#~ msgstr "răspunde propriei întrebări doar pentru a oferi un răspuns"
+
+#~ msgid "please only give an answer, no discussions"
+#~ msgstr "vă rugăm să dați doar răspunsul, fără discuții"
+
+#~ msgid "Login/Signup to Post Your Answer"
+#~ msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
+
+#~ msgid "Answer the question"
+#~ msgstr "Răspunde întrebării"
+
+#~ msgid "question asked"
+#~ msgstr "întrebare cu răspuns"
+
+#~ msgid "question was seen"
+#~ msgstr "întrebarea a fost văzută de"
+
+#~ msgid "Notify me once a day when there are any new answers"
+#~ msgstr "Notifică-mă o dată pe zi când apar răspunsuri noi"
+
+#~ msgid "Notify me immediately when there are any new answers"
+#~ msgstr "Notifică-mă imediat ce apar răspunsuri noi"
+
+#~ msgid ""
+#~ "You can always adjust frequency of email updates from your %(profile_url)s"
+#~ msgstr ""
+#~ "Puteți oricând să modificați frecvența notificărilor mergând la pagina "
+#~ "%(profile_url)s"
+
+#~ msgid "email subscription settings info"
+#~ msgstr "informații configurări abonamente email"
+
+#~ msgid "Stop sending email"
+#~ msgstr "Nu mai trimite emailuri"
+
+#~ msgid "user website"
+#~ msgstr "pagină web utilizator"
+
+#~ msgid "<span class=\"count\">%(counter)s</span> Answer"
+#~ msgid_plural "<span class=\"count\">%(counter)s</span> Answers"
+#~ msgstr[0] "<span class=\"count\">%(counter)s</span> răspuns"
+#~ msgstr[1] "<span class=\"count\">%(counter)s</span> răspunsuri"
+#~ msgstr[2] "<span class=\"count\">%(counter)s</span> de răspunsuri"
+
+#~ msgid "reputation history"
+#~ msgstr "istorie reputație"
+
+#~ msgid "recent activity"
+#~ msgstr "activitate recentă"
+
+#~ msgid "casted votes"
+#~ msgstr "voturi date"
+
+#~ msgid "answer tips"
+#~ msgstr "indicații pentru răspunsuri"
+
+#~ msgid "please try to provide details"
+#~ msgstr "încercați să furnizați detalii"
+
+#~ msgid "ask a question"
+#~ msgstr "pune o întrebare"
+
+#, fuzzy
+#~ msgid ""
+#~ "must have valid %(email)s to post, \n"
+#~ "                            see %(email_validation_faq_url)s\n"
+#~ "                            "
+#~ msgstr ""
+#~ "este necesar %(email)s valid pentru a posta, \n"
+#~ "                                vezi %(email_validation_faq_url)s\n"
+#~ "                                "
+
+#, fuzzy
+#~ msgid "Login/signup to post your question"
+#~ msgstr "Autentifică-te / înregistrează-te pentru a adăuga răspunsul"
+
+#~ msgid "question tips"
+#~ msgstr "indicii căutare"
+
+#~ msgid "please ask a relevant question"
+#~ msgstr "puneți o întrebare relevantă"
+
+#~ msgid "logout"
+#~ msgstr "ieșire"
+
+#~ msgid "login"
+#~ msgstr "autentificare"
+
+#~ msgid "no items in counter"
+#~ msgstr "nu sunt elemente în contor"
+
+#~ msgid "choose password"
+#~ msgstr "alegeți parola"
+
+#~ msgid "retype password"
+#~ msgstr "retastați parola"
+
+#~ msgid "%(badge_count)d %(badge_level)s badge"
+#~ msgid_plural "%(badge_count)d %(badge_level)s badges"
+#~ msgstr[0] "%(badge_count)d %(badge_level)s insignă"
+#~ msgstr[1] "%(badge_count)d %(badge_level)s insigne"
+#~ msgstr[2] "%(badge_count)d %(badge_level)s de insigne"
+
+#~ msgid "user reputation in the community"
+#~ msgstr "reputația utilizatorului în comunitate"
+
+#, fuzzy
+#~ msgid "Please log in to ask questions"
+#~ msgstr "autentificați-vă pentru a pune o întrebare"
 
 #~ msgid "question content must be > 10 characters"
 #~ msgstr "conținutul întrebării trebuie să fie mai lung decât 10 caractere"
@@ -6821,9 +7407,6 @@ msgstr "ne pare rău dar se pare că avem unele dificultăți tehnice"
 #~ msgid "Question tags"
 #~ msgstr "Etichete întrebare"
 
-#~ msgid "questions"
-#~ msgstr "întrebări"
-
 #~ msgid "search"
 #~ msgstr "caută"
 
@@ -6832,9 +7415,6 @@ msgstr "ne pare rău dar se pare că avem unele dificultăți tehnice"
 
 #~ msgid "In:"
 #~ msgstr "În:"
-
-#~ msgid "Sort by:"
-#~ msgstr "Ordonează după:"
 
 #~ msgid "Email (not shared with anyone):"
 #~ msgstr "Email (nu este dezvăluit altor părți):"

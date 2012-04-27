@@ -9,7 +9,7 @@ import smtplib
 import sys
 import logging
 
-VERSION = (0, 7, 40)
+VERSION = (0, 7, 42)
 
 #keys are module names used by python imports,
 #values - the package qualifier to use for pip

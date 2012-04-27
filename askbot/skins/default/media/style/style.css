@@ -45,12 +45,14 @@ hr {
   border: none;
   border-top: 1px dashed #ccccce;
 }
-input, select {
+input,
+select {
   vertical-align: middle;
   font-family: Trebuchet MS, "segoe ui", Helvetica, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
   margin-left: 0px;
 }
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   outline: none;
 }
 iframe {
@@ -116,14 +118,17 @@ blockquote {
   background-color: #F5F5F5;
 }
 /* http://pathfindersoftware.com/2007/09/developers-note-2/ */
-* html .clearfix, * html .paginator {
+* html .clearfix,
+* html .paginator {
   height: 1;
   overflow: visible;
 }
-+ html .clearfix, + html .paginator {
++ html .clearfix,
++ html .paginator {
   min-height: 1%;
 }
-.clearfix:after, .paginator:after {
+.clearfix:after,
+.paginator:after {
   clear: both;
   content: ".";
   display: block;
@@ -236,7 +241,8 @@ body.user-messages {
 #userToolsNav a#ab-responses {
   margin-left: 3px;
 }
-#userToolsNav .user-info, #userToolsNav .user-micro-info {
+#userToolsNav .user-info,
+#userToolsNav .user-micro-info {
   color: #b5b593;
 }
 #userToolsNav a img {
@@ -357,7 +363,8 @@ body.user-messages {
   height: 42px;
   margin: 6px 0px 0px 15px;
 }
-#searchBar .searchInput, #searchBar .searchInputCancelable {
+#searchBar .searchInput,
+#searchBar .searchInputCancelable {
   font-size: 30px;
   height: 40px;
   font-weight: 300;
@@ -539,13 +546,15 @@ body.anon #searchBar .searchInputCancelable {
   color: #707070;
   font-size: 15px;
 }
-.box .inputs #interestingTagInput, .box .inputs #ignoredTagInput {
+.box .inputs #interestingTagInput,
+.box .inputs #ignoredTagInput {
   width: 153px;
   padding-left: 5px;
   border: #c9c9b5 1px solid;
   height: 25px;
 }
-.box .inputs #interestingTagAdd, .box .inputs #ignoredTagAdd {
+.box .inputs #interestingTagAdd,
+.box .inputs #ignoredTagAdd {
   background: url(../images/small-button-blue.png) repeat-x top;
   border: 0;
   color: #4a757f;
@@ -567,13 +576,15 @@ body.anon #searchBar .searchInputCancelable {
   -moz-box-shadow: 1px 1px 2px #808080;
   box-shadow: 1px 1px 2px #808080;
 }
-.box .inputs #interestingTagAdd:hover, .box .inputs #ignoredTagAdd:hover {
+.box .inputs #interestingTagAdd:hover,
+.box .inputs #ignoredTagAdd:hover {
   background: url(../images/small-button-blue.png) repeat-x bottom;
 }
 .box img.gravatar {
   margin: 1px;
 }
-.box a.followed, .box a.follow {
+.box a.followed,
+.box a.follow {
   background: url(../images/medium-button.png) top repeat-x;
   height: 34px;
   line-height: 34px;
@@ -598,7 +609,8 @@ body.anon #searchBar .searchInputCancelable {
   margin: 0 auto;
   padding: 0;
 }
-.box a.followed:hover, .box a.follow:hover {
+.box a.followed:hover,
+.box a.follow:hover {
   text-decoration: none;
   background: url(../images/medium-button.png) bottom repeat-x;
   text-shadow: 0px 1px 0px #c6d9dd;
@@ -683,7 +695,8 @@ body.anon #searchBar .searchInputCancelable {
 .tabBar h2 {
   float: left;
 }
-.tabsA, .tabsC {
+.tabsA,
+.tabsC {
   float: right;
   position: relative;
   display: block;
@@ -696,7 +709,8 @@ body.anon #searchBar .searchInputCancelable {
 .tabsC {
   float: left;
 }
-.tabsA a, .tabsC a {
+.tabsA a,
+.tabsC a {
   border-left: 1px solid #d0e1e4;
   color: #7ea9b3;
   display: block;
@@ -712,7 +726,8 @@ body.anon #searchBar .searchInputCancelable {
 .tabsC a:hover {
   color: #4a757f;
 }
-.tabsA .label, .tabsC .label {
+.tabsA .label,
+.tabsC .label {
   float: left;
   color: #646464;
   margin-top: 4px;
@@ -825,7 +840,8 @@ ul#searchTags {
   font-family: Arial;
   padding-right: 4px;
 }
-.short-summary .userinfo .relativetime, .short-summary span.anonymous {
+.short-summary .userinfo .relativetime,
+.short-summary span.anonymous {
   font-size: 11px;
   clear: both;
   font-weight: normal;
@@ -953,7 +969,9 @@ ul#searchTags {
 .paginator .next {
   margin-left: .5em;
 }
-.paginator .page a, .paginator .page a:visited, .paginator .curr {
+.paginator .page a,
+.paginator .page a:visited,
+.paginator .curr {
   padding: .25em;
   background-color: #fff;
   margin: 0em .25em;
@@ -964,7 +982,8 @@ ul#searchTags {
   color: #fff;
   font-weight: bold;
 }
-.paginator .next a, .paginator .prev a {
+.paginator .next a,
+.paginator .prev a {
   color: #7ea9b3;
 }
 .paginator .page a:hover,
@@ -1018,7 +1037,9 @@ ul#searchTags {
 .tag-size-10 {
   font-size: 21px;
 }
-ul.tags, ul.tags.marked-tags, ul#related-tags {
+ul.tags,
+ul.tags.marked-tags,
+ul#related-tags {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1035,7 +1056,8 @@ ul.tags li {
 .wildcard-tags {
   clear: both;
 }
-ul.tags.marked-tags li, .wildcard-tags ul.tags li {
+ul.tags.marked-tags li,
+.wildcard-tags ul.tags li {
   margin-bottom: 5px;
 }
 #tagSelector div.inputs {
@@ -1043,7 +1065,8 @@ ul.tags.marked-tags li, .wildcard-tags ul.tags li {
   float: none;
   margin-bottom: 10px;
 }
-.tags-page ul.tags li, ul#ab-user-tags li {
+.tags-page ul.tags li,
+ul#ab-user-tags li {
   width: 160px;
   margin: 5px;
 }
@@ -1095,14 +1118,16 @@ ul#related-tags li {
   -webkit-border-bottom-right-radius: 4px;
   -webkit-border-top-right-radius: 4px;
 }
-.tags a.tag-right, .tags span.tag-right {
+.tags a.tag-right,
+.tags span.tag-right {
   color: #585858;
   text-decoration: none;
 }
 .tags a:hover {
   color: #1A1A1A;
 }
-.users-page h1, .tags-page h1 {
+.users-page h1,
+.tags-page h1 {
   float: left;
 }
 .main-page h1 {
@@ -1176,16 +1201,19 @@ ul#related-tags li {
   border: #cce6ec 3px solid;
   width: 725px;
 }
-.ask-page div#question-list, .edit-question-page div#question-list {
+.ask-page div#question-list,
+.edit-question-page div#question-list {
   float: none;
   border-bottom: #f0f0ec 1px solid;
   float: left;
   margin-bottom: 10px;
 }
-.ask-page div#question-list a, .edit-question-page div#question-list a {
+.ask-page div#question-list a,
+.edit-question-page div#question-list a {
   line-height: 30px;
 }
-.ask-page div#question-list h2, .edit-question-page div#question-list h2 {
+.ask-page div#question-list h2,
+.edit-question-page div#question-list h2 {
   font-size: 13px;
   padding-bottom: 0;
   color: #1b79bd;
@@ -1195,7 +1223,8 @@ ul#related-tags li {
   line-height: 30px;
   font-weight: normal;
 }
-.ask-page div#question-list span, .edit-question-page div#question-list span {
+.ask-page div#question-list span,
+.edit-question-page div#question-list span {
   width: 28px;
   height: 26px;
   line-height: 26px;
@@ -1211,11 +1240,13 @@ ul#related-tags li {
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
 }
-.ask-page label, .edit-question-page label {
+.ask-page label,
+.edit-question-page label {
   color: #525252;
   font-size: 13px;
 }
-.ask-page #id_tags, .edit-question-page #id_tags {
+.ask-page #id_tags,
+.edit-question-page #id_tags {
   border: #cce6ec 3px solid;
   height: 25px;
   padding-left: 5px;
@@ -1226,7 +1257,9 @@ ul#related-tags li {
   color: #707070;
   font-size: 13px;
 }
-#fmanswer input.submit, .ask-page input.submit, .edit-question-page input.submit {
+#fmanswer input.submit,
+.ask-page input.submit,
+.edit-question-page input.submit {
   float: left;
   background: url(../images/medium-button.png) top repeat-x;
   height: 34px;
@@ -1246,7 +1279,9 @@ ul#related-tags li {
   box-shadow: 1px 1px 2px #636363;
   margin-right: 7px;
 }
-#fmanswer input.submit:hover, .ask-page input.submit:hover, .edit-question-page input.submit:hover {
+#fmanswer input.submit:hover,
+.ask-page input.submit:hover,
+.edit-question-page input.submit:hover {
   text-decoration: none;
   background: url(../images/medium-button.png) bottom repeat-x;
   text-shadow: 0px 1px 0px #c6d9dd;
@@ -1327,15 +1362,21 @@ ul#related-tags li {
   border-bottom: 1px dotted #D8D2A9;
   margin: 5px 0 5px 0;
 }
-.edit-question-page, #fmedit, .wmd-preview {
+.edit-question-page,
+#fmedit,
+.wmd-preview {
   color: #525252;
 }
-.edit-question-page #id_revision, #fmedit #id_revision, .wmd-preview #id_revision {
+.edit-question-page #id_revision,
+#fmedit #id_revision,
+.wmd-preview #id_revision {
   font-size: 14px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.edit-question-page #id_title, #fmedit #id_title, .wmd-preview #id_title {
+.edit-question-page #id_title,
+#fmedit #id_title,
+.wmd-preview #id_title {
   font-size: 24px;
   line-height: 24px;
   height: 36px;
@@ -1345,14 +1386,18 @@ ul#related-tags li {
   width: 725px;
   margin-bottom: 10px;
 }
-.edit-question-page #id_summary, #fmedit #id_summary, .wmd-preview #id_summary {
+.edit-question-page #id_summary,
+#fmedit #id_summary,
+.wmd-preview #id_summary {
   border: #cce6ec 3px solid;
   height: 25px;
   padding-left: 5px;
   width: 395px;
   font-size: 14px;
 }
-.edit-question-page .title-desc, #fmedit .title-desc, .wmd-preview .title-desc {
+.edit-question-page .title-desc,
+#fmedit .title-desc,
+.wmd-preview .title-desc {
   margin-bottom: 10px;
 }
 /* ----- Question template ----- */
@@ -1388,7 +1433,8 @@ ul#related-tags li {
   float: left;
   border-top: #f0f0f0 1px solid;
 }
-.question-page #question-table, .question-page .answer-table {
+.question-page #question-table,
+.question-page .answer-table {
   margin: 6px 0 6px 0;
   border-spacing: 0px;
   width: 670px;
@@ -1399,29 +1445,35 @@ ul#related-tags li {
   border-bottom: 1px solid #D4D4D4;
   float: right;
 }
-.question-page .answer-table td, .question-page #question-table td {
+.question-page .answer-table td,
+.question-page #question-table td {
   width: 20px;
   vertical-align: top;
 }
-.question-page .question-body, .question-page .answer-body {
+.question-page .question-body,
+.question-page .answer-body {
   overflow: auto;
   margin-top: 10px;
   font-family: Arial;
   color: #4b4b4b;
 }
-.question-page .question-body p, .question-page .answer-body p {
+.question-page .question-body p,
+.question-page .answer-body p {
   margin-bottom: 14px;
   line-height: 1.4;
   font-size: 14px;
   padding: 0px 5px 5px 0px;
 }
-.question-page .question-body a, .question-page .answer-body a {
+.question-page .question-body a,
+.question-page .answer-body a {
   color: #1b79bd;
 }
-.question-page .question-body li, .question-page .answer-body li {
+.question-page .question-body li,
+.question-page .answer-body li {
   margin-bottom: 7px;
 }
-.question-page .question-body IMG, .question-page .answer-body IMG {
+.question-page .question-body IMG,
+.question-page .answer-body IMG {
   max-width: 600px;
 }
 .question-page .post-update-info-container {
@@ -1477,7 +1529,7 @@ ul#related-tags li {
 }
 .question-page .post-controls a {
   color: #777;
-  padding: 0px 3px 3px 22px;
+  padding: 0px 7px 3px 18px;
   cursor: pointer;
   border: none;
   font-size: 12px;
@@ -1504,23 +1556,29 @@ ul#related-tags li {
   height: 18px;
   font-size: 18px;
 }
-.question-page .post-controls .question-delete, .question-page .answer-controls .question-delete {
+.question-page .post-controls .question-delete,
+.question-page .answer-controls .question-delete {
   background: url(../images/delete.png) no-repeat center left;
-  padding-left: 16px;
+  padding-left: 11px;
 }
-.question-page .post-controls .question-flag, .question-page .answer-controls .question-flag {
+.question-page .post-controls .question-flag,
+.question-page .answer-controls .question-flag {
   background: url(../images/flag.png) no-repeat center left;
 }
-.question-page .post-controls .question-edit, .question-page .answer-controls .question-edit {
+.question-page .post-controls .question-edit,
+.question-page .answer-controls .question-edit {
   background: url(../images/edit2.png) no-repeat center left;
 }
-.question-page .post-controls .question-retag, .question-page .answer-controls .question-retag {
+.question-page .post-controls .question-retag,
+.question-page .answer-controls .question-retag {
   background: url(../images/retag.png) no-repeat center left;
 }
-.question-page .post-controls .question-close, .question-page .answer-controls .question-close {
+.question-page .post-controls .question-close,
+.question-page .answer-controls .question-close {
   background: url(../images/close.png) no-repeat center left;
 }
-.question-page .post-controls .permant-link, .question-page .answer-controls .permant-link {
+.question-page .post-controls .permant-link,
+.question-page .answer-controls .permant-link {
   background: url(../images/link.png) no-repeat center left;
 }
 .question-page .tabBar {
@@ -1539,10 +1597,12 @@ ul#related-tags li {
   height: 20px;
   cursor: pointer;
 }
-.question-page .question-img-upvote, .question-page .answer-img-upvote {
+.question-page .question-img-upvote,
+.question-page .answer-img-upvote {
   background: url(../images/vote-arrow-up-new.png) no-repeat;
 }
-.question-page .question-img-downvote, .question-page .answer-img-downvote {
+.question-page .question-img-downvote,
+.question-page .answer-img-downvote {
   background: url(../images/vote-arrow-down-new.png) no-repeat;
 }
 .question-page .question-img-upvote:hover,
@@ -1628,8 +1688,8 @@ ul#related-tags li {
   padding-top: 3px;
   border: #cce6ec 3px solid;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  textarea {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .question-page .comments textarea {
     padding-left: 3px !important;
   }
 }
@@ -1867,6 +1927,12 @@ ul#related-tags li {
 .question-page .answered-by-owner .vote-buttons {
   margin-right: 10px;
 }
+.question-page .answer-img-accept {
+  background: url(../images/vote-accepted.png);
+  width: 23px;
+  height: 23px;
+}
+.question-page .accepted-answer .answer-img-accept,
 .question-page .answer-img-accept:hover {
   background: url(../images/vote-accepted-on.png);
 }
@@ -2233,7 +2299,8 @@ a:hover.medal {
 .user-about p {
   font-size: 13px;
 }
-.follow-toggle, .submit {
+.follow-toggle,
+.submit {
   border: 0 !important;
   color: #4a757f;
   font-weight: bold;
@@ -2257,7 +2324,8 @@ a:hover.medal {
   -moz-box-shadow: 1px 1px 2px #808080;
   box-shadow: 1px 1px 2px #808080;
 }
-.follow-toggle:hover, .submit:hover {
+.follow-toggle:hover,
+.submit:hover {
   background: url(../images/small-button-blue.png) repeat-x bottom;
   text-decoration: none !important;
 }
@@ -2443,10 +2511,13 @@ a:hover.medal {
   font-weight: bold;
   font-family: sans-serif;
 }
-del, del .post-tag {
+del,
+del .post-tag {
   color: #C34719;
 }
-ins .post-tag, ins p, ins {
+ins .post-tag,
+ins p,
+ins {
   background-color: #E6F0A2;
 }
 /* ----- Red Popup notification ----- */
@@ -2725,13 +2796,16 @@ span.form-error {
 .hilite3 {
   background-color: #0ff;
 }
-.gold, .badge1 {
+.gold,
+.badge1 {
   color: #FFCC00;
 }
-.silver, .badge2 {
+.silver,
+.badge2 {
   color: #CCCCCC;
 }
-.bronze, .badge3 {
+.bronze,
+.badge3 {
   color: #CC9933;
 }
 .score {
@@ -3153,13 +3227,22 @@ pre.prettyprint {
 #leading-sidebar {
   float: left;
 }
-
-a.re_expand{
-  color: #616161;
-  text-decoration:none;
+/* language-specific fixes */
+body.lang-es #searchBar {
+  width: 398px;
 }
-
-a.re_expand .re_content{
-  display:none;
-  margin-left:77px;
+body.lang-es #searchBar .searchInput {
+  width: 337px;
+}
+body.lang-es #searchBar .searchInputCancelable {
+  width: 302px;
+}
+body.anon.lang-es #searchBar {
+  width: 485px;
+}
+body.anon.lang-es #searchBar .searchInput {
+  width: 425px;
+}
+body.anon.lang-es #searchBar .searchInputCancelable {
+  width: 390px;
 }

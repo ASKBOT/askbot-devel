@@ -438,17 +438,7 @@ class Thread(models.Model):
                             )
 
     def invalidate_cached_thread_content_fragment(self):
-        """we do not precache the fragment here, as re-generating
-        the the fragment takes a lot of data, so we just
-        invalidate the cached item
-
-        Note: the cache key generation code is copy-pasted
-        from coffin/template/defaulttags.py no way around
-        that unfortunately
-        """
-        args_md5 = md5_constructor(str(self.id))
-        key = 'template.cache.%s.%s' % ('thread-content-html', args_md5.hexdigest())
-        cache.cache.delete(key)
+        cache.cache.delete(self.SUMMARY_CACHE_KEY_TPL % self.id)
 
     def get_post_data_cache_key(self, sort_method = None):
         return 'thread-data-%s-%s' % (self.id, sort_method)
@@ -463,7 +453,8 @@ class Thread(models.Model):
 
     def invalidate_cached_data(self):
         self.invalidate_cached_post_data()
-        self.invalidate_cached_thread_content_fragment()
+        #self.invalidate_cached_thread_content_fragment()
+        self.update_summary_html()
 
     def get_cached_post_data(self, sort_method = None):
         """returns cached post data, as calculated by
@@ -770,7 +761,10 @@ class Thread(models.Model):
         # use `<<<` and `>>>` because they cannot be confused with user input
         # - if user accidentialy types <<<tag-name>>> into question title or body,
         # then in html it'll become escaped like this: &lt;&lt;&lt;tag-name&gt;&gt;&gt;
-        regex = re.compile(r'<<<(%s)>>>' % const.TAG_REGEX_BARE)
+        regex = re.compile(
+            r'<<<(%s)>>>' % const.TAG_REGEX_BARE,
+            re.UNICODE
+        )
 
         while True:
             match = regex.search(html)

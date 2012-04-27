@@ -37,6 +37,7 @@ def about(request, template='about.html'):
     title = _('About %(site)s') % {'site': askbot_settings.APP_SHORT_NAME}
     data = {
         'title': title,
+        'page_class': 'meta',
         'content': askbot_settings.FORUM_ABOUT
     }
     return render_into_skin('static_page.html', data, request)
@@ -56,9 +57,14 @@ def help(request):
 
 def faq(request):
     if askbot_settings.FORUM_FAQ.strip() != '':
+        data = {
+            'title': _('FAQ'),
+            'content': askbot_settings.FORUM_FAQ,
+            'page_class': 'meta',
+        }
         return render_into_skin(
             'static_page.html',
-            {'title': _('FAQ'), 'content': askbot_settings.FORUM_FAQ},
+            data,
             request
         )
     else:
@@ -98,6 +104,7 @@ feedback.CANCEL_MESSAGE=_('We look forward to hearing your feedback! Please, giv
 def privacy(request):
     data = {
         'title': _('Privacy policy'),
+        'page_class': 'meta',
         'content': askbot_settings.FORUM_PRIVACY
     }
     return render_into_skin('static_page.html', data, request)

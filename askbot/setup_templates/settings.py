@@ -226,3 +226,5 @@ CSRF_COOKIE_NAME = 'askbot_csrf'
 #CSRF_COOKIE_DOMAIN = ''
 
 STATICFILES_DIRS = ( os.path.join(ASKBOT_ROOT, 'skins'),)
+
+RECAPTCHA_USE_SSL = True

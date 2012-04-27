@@ -19,7 +19,7 @@
                 <td width="20" style="vertical-align:middle">
                     <img 
                         id="rev-arrow-{{ revision.revision }}" 
-                        src="{{"/images/expander-arrow-show.gif"|media}}"
+                        src="{{"/images/expander-arrow-hide.gif"|media}}"
                         alt="{% trans %}click to hide/show revision{% endtrans %}"
                         />
                 </td>
@@ -50,7 +50,7 @@
                             {% set contributor_type = "last_updater" %}
                         {% endif %}
                         {{ macros.post_contributor_info(
-                                    revision,
+                                    revision.post,
                                     contributor_type,
                                     False,
                                     0

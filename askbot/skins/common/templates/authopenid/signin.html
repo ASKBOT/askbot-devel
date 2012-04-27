@@ -25,7 +25,7 @@
     {% endif %}
     <p id='login-intro'>
     {% if view_subtype == 'default' and have_buttons %}
-        {% trans %}Take a pick of your favorite service below to sign in using secure OpenID or similar technology. Your external service password always stays confidential and you don't have to rememeber or create another one.{% endtrans %}
+        {% trans %}Choose your favorite service below to sign in using secure OpenID or similar technology. Your external service password always stays confidential and you don't have to rememeber or create another one.{% endtrans %}
     {% elif view_subtype == 'add_openid' and have_buttons %}
         {% if existing_login_methods %}
             {% trans %}It's a good idea to make sure that your existing login methods still work, or add a new one. Please click any of the icons below to check/change or add new login methods.{% endtrans %}
@@ -61,7 +61,8 @@
                 minor_login_providers = minor_login_providers,
                 hide_local_login = settings.SIGNIN_ALWAYS_SHOW_LOCAL_LOGIN,
                 settings = settings,
-                logged_in = user.is_authenticated()
+                logged_in = user.is_authenticated(),
+                show_buttons = have_buttons
             )
         }}
           {% if use_password_login == True %}
@@ -83,9 +84,15 @@
         >
             {{login_form.password_action}}
             {% if user.is_anonymous() %}
-                <h2 id="password-heading">
-                    {% trans %}Please enter your <span>user name and password</span>, then sign in{% endtrans %}
-                </h2>
+                {% if have_buttons %}
+                    <h2 id="password-heading">
+                        {% trans %}or enter your <span>user name and password</span>, then sign in{% endtrans %}
+                    </h2>
+                {% else %}
+                    <h1 class="section-title">
+                        {% trans %}Please, sign in{% endtrans %}
+                    </h1>
+                {% endif %}
                 {% if have_buttons %}
                     <p class="hint">{% trans %}(or select another login method above){% endtrans %}</p>
                 {% endif %}

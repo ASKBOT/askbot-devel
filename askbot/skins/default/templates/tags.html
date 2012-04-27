@@ -55,7 +55,7 @@
     {% if not tags %}
         <span>{% trans %}Nothing found{% endtrans %}</span>
     {% endif %}
-    {{ macros.tag_cloud(tags = tags, font_sizes = font_size) }}
+    {{ macros.tag_cloud(tags = tags, font_sizes = font_size, search_state = search_state) }}
 {% endif %}
 
 {% endblock %}

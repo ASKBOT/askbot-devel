@@ -199,6 +199,11 @@ def onAnswerAccept(answer, user, timestamp=None):
                    reputation=answer.author.reputation)
         reputation.save()
 
+    if answer.author == question.author and user == question.author:
+        #a plug to prevent reputation gaming by posting a question
+        #then answering and accepting as best all by the same person
+        return
+
     user.receive_reputation(askbot_settings.REP_GAIN_FOR_ACCEPTING_ANSWER)
     user.save()
     reputation = Repute(user=user,
@@ -214,24 +219,29 @@ def onAnswerAcceptCanceled(answer, user, timestamp=None):
     if timestamp is None:
         timestamp = datetime.datetime.now()
     answer.thread.set_accepted_answer(answer=None, timestamp=None)
-
-    answer.author.receive_reputation(
-        askbot_settings.REP_LOSS_FOR_RECEIVING_CANCELATION_OF_ANSWER_ACCEPTANCE
-    )
-    answer.author.save()
-
     question = answer.thread._question_post()
 
-    reputation = Repute(
-        user=answer.author,
-        negative=\
-         askbot_settings.REP_LOSS_FOR_RECEIVING_CANCELATION_OF_ANSWER_ACCEPTANCE,
-        question=question,
-        reputed_at=timestamp,
-        reputation_type=-2,
-        reputation=answer.author.reputation
-    )
-    reputation.save()
+    if user != answer.author:
+        answer.author.receive_reputation(
+            askbot_settings.REP_LOSS_FOR_RECEIVING_CANCELATION_OF_ANSWER_ACCEPTANCE
+        )
+        answer.author.save()
+        reputation = Repute(
+            user=answer.author,
+            negative=\
+             askbot_settings.REP_LOSS_FOR_RECEIVING_CANCELATION_OF_ANSWER_ACCEPTANCE,
+            question=question,
+            reputed_at=timestamp,
+            reputation_type=-2,
+            reputation=answer.author.reputation
+        )
+        reputation.save()
+
+    if answer.author == question.author and user == question.author:
+        #a symmettric measure for the reputation gaming plug 
+        #as in the onAnswerAccept function
+        #here it protects the user from uwanted reputation loss
+        return
 
     user.receive_reputation(
         askbot_settings.REP_LOSS_FOR_CANCELING_ANSWER_ACCEPTANCE

@@ -23,4 +23,5 @@ class SpacelessMiddleware(object):
         """
         if 'text/html' in response['Content-Type']:
             response.content = reduce_spaces_between_tags(response.content)
+            response['Content-Length'] = str(len(response.content))
         return response

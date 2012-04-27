@@ -1,26 +1,27 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Hannu Sehm <hannu@kipax.fi>, 2012.
 # Otto Nuoranne <otto.nuoranne@hotmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
-"Report-Msgid-Bugs-To: http://askbot.org/\n"
-"POT-Creation-Date: 2011-11-27 01:58-0600\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-18 18:50-0500\n"
 "PO-Revision-Date: 2012-03-12 09:32+0000\n"
 "Last-Translator: Hannu Sehm <hannu@kipax.fi>\n"
-"Language-Team: Finnish (http://www.transifex.net/projects/p/askbot/language/fi/)\n"
+"Language-Team: Finnish (http://www.transifex.net/projects/p/askbot/language/"
+"fi/)\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:73
-#, c-format
+#, perl-format
 msgid "Are you sure you want to remove your %s login?"
 msgstr "Oletko varma että haluat poistaa %s:n sisäänkirjautumisen?"
 
@@ -32,44 +33,46 @@ msgstr "Lisää yksi tai useampi sisäänkirjautumistapa"
 msgid ""
 "You don't have a method to log in right now, please add one or more by "
 "clicking any of the icons below."
-msgstr "Sinulle i tällä hetkellä ole yhtäkään sisäänkirjautumistapaa, ole hyvä ja lisää yksi tai useampi klikkaamalla jotakin alla olevista kuvakkeista."
+msgstr ""
+"Sinulle i tällä hetkellä ole yhtäkään sisäänkirjautumistapaa, ole hyvä ja "
+"lisää yksi tai useampi klikkaamalla jotakin alla olevista kuvakkeista."
 
 #: skins/common/media/jquery-openid/jquery.openid.js:135
 msgid "passwords do not match"
 msgstr "salasanat eivät täsmää"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:162
+#: skins/common/media/jquery-openid/jquery.openid.js:161
 msgid "Show/change current login methods"
 msgstr "Näytä/muokkaa tämänhetkisiä sisäänkirjautumistapoja"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:223
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:226
+#, perl-format
 msgid "Please enter your %s, then proceed"
 msgstr "Kirjoita tähän %s ja jatka sitten"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:225
+#: skins/common/media/jquery-openid/jquery.openid.js:228
 msgid "Connect your %(provider_name)s account to %(site)s"
 msgstr "Yhdistä %(provider_name)s-tilisi sivuun %(site)s"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:319
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:322
+#, perl-format
 msgid "Change your %s password"
 msgstr "Vaihda %s-salasanaasi"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:320
+#: skins/common/media/jquery-openid/jquery.openid.js:323
 msgid "Change password"
 msgstr "Vaihda salasanaa"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:323
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:326
+#, perl-format
 msgid "Create a password for %s"
 msgstr "Luo salasana %s:lle"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:324
+#: skins/common/media/jquery-openid/jquery.openid.js:327
 msgid "Create password"
 msgstr "Luo salasana"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:340
+#: skins/common/media/jquery-openid/jquery.openid.js:343
 msgid "Create a password-protected account"
 msgstr "Luo salasanalla suojattu tili"
 
@@ -77,146 +80,79 @@ msgstr "Luo salasanalla suojattu tili"
 msgid "loading..."
 msgstr "ladataan..."
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
-msgid "tags cannot be empty"
-msgstr "anna vähintään yksi tagi"
-
-#: skins/common/media/js/post.js:134
-msgid "content cannot be empty"
-msgstr "ei voi jättää tyhjäksi"
-
-#: skins/common/media/js/post.js:135
-#, c-format
-msgid "%s content minchars"
-msgstr "syötä vähintään %s merkkiä"
-
-#: skins/common/media/js/post.js:138
-msgid "please enter title"
-msgstr "ole hyvä ja kirjoita otsikko"
-
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
-#, c-format
-msgid "%s title minchars"
-msgstr "syötä vähintään %s merkkiä"
-
-#: skins/common/media/js/post.js:282
+#: skins/common/media/js/post.js:318
 msgid "insufficient privilege"
 msgstr "ei käyttöoikeutta"
 
-#: skins/common/media/js/post.js:283
+#: skins/common/media/js/post.js:319
 msgid "cannot pick own answer as best"
 msgstr "et voi hyväksyä omaa vastaustasi parhaaksi"
 
-#: skins/common/media/js/post.js:288
+#: skins/common/media/js/post.js:324
 msgid "please login"
 msgstr "ole hyvä ja kirjaudu sisään"
 
-#: skins/common/media/js/post.js:290
+#: skins/common/media/js/post.js:326
 msgid "anonymous users cannot follow questions"
 msgstr "anonyymit käyttäjät eivät voi seurata kysymyksiä"
 
-#: skins/common/media/js/post.js:291
+#: skins/common/media/js/post.js:327
 msgid "anonymous users cannot subscribe to questions"
 msgstr "anonyymit käyttäjät eivät voi kirjoittautua kysymysten tilaajiksi"
 
-#: skins/common/media/js/post.js:292
+#: skins/common/media/js/post.js:328
 msgid "anonymous users cannot vote"
 msgstr "kirjaudu sisään, jotta voit käyttää tätä ominaisuutta "
 
-#: skins/common/media/js/post.js:294
+#: skins/common/media/js/post.js:330
 msgid "please confirm offensive"
-msgstr "oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
+msgstr ""
+"oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
 
-#: skins/common/media/js/post.js:295
+#: skins/common/media/js/post.js:331
+#, fuzzy
+msgid "please confirm removal of offensive flag"
+msgstr ""
+"oletko varma, että tämä on roskaposti, loukkaava tai muuta hyväksymätöntä?"
+
+#: skins/common/media/js/post.js:332
 msgid "anonymous users cannot flag offensive posts"
 msgstr "anonyymit käyttäjät eivät voi liputtaa merkintöjä loukkaaviksi"
 
-#: skins/common/media/js/post.js:296
+#: skins/common/media/js/post.js:333
 msgid "confirm delete"
 msgstr "oletko varma, että haluat poistaa tämän?"
 
-#: skins/common/media/js/post.js:297
+#: skins/common/media/js/post.js:334
 msgid "anonymous users cannot delete/undelete"
 msgstr "kirjaudu sisään, jotta voit käyttää tätä ominaisuutta"
 
-#: skins/common/media/js/post.js:298
+#: skins/common/media/js/post.js:335
 msgid "post recovered"
 msgstr "postauksesi on palautettu!"
 
-#: skins/common/media/js/post.js:299
+#: skins/common/media/js/post.js:336
 msgid "post deleted"
 msgstr "postauksesi on poistettu"
 
-#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
-msgid "Follow"
-msgstr "Seuraa"
-
-#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
-#: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
-#, c-format
-msgid "%s follower"
-msgid_plural "%s followers"
-msgstr[0] "%s seuraaja"
-msgstr[1] "%s seuraajaa"
-
-#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
-msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
-msgstr "<div>Seurataan</div><div class=\"unfollow\">Lopeta seuraaminen</div>"
-
-#: skins/common/media/js/post.js:615
-msgid "undelete"
-msgstr "peru poistaminen"
-
-#: skins/common/media/js/post.js:620
-msgid "delete"
-msgstr "poista"
-
-#: skins/common/media/js/post.js:957
+#: skins/common/media/js/post.js:1206
 msgid "add comment"
 msgstr "lisää kommentti"
 
-#: skins/common/media/js/post.js:960
+#: skins/common/media/js/post.js:1209
 msgid "save comment"
 msgstr "tallenna kommentti"
 
-#: skins/common/media/js/post.js:990
-#, c-format
-msgid "enter %s more characters"
-msgstr "%s merkkiä jäljellä"
-
-#: skins/common/media/js/post.js:995
-#, c-format
-msgid "%s characters left"
-msgstr "%s merkkiä jäljellä"
-
-#: skins/common/media/js/post.js:1066
-msgid "cancel"
-msgstr "peruuta"
-
-#: skins/common/media/js/post.js:1109
-msgid "confirm abandon comment"
-msgstr "Oletko varma, ettet halua julkaista tätä kommenttia?"
-
-#: skins/common/media/js/post.js:1183
-msgid "delete this comment"
-msgstr "poista kommentti"
-
-#: skins/common/media/js/post.js:1387
-msgid "confirm delete comment"
-msgstr "oletko varma, että haluat poistaa tämän kommentin?"
-
-#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1874
 msgid "Please enter question title (>10 characters)"
 msgstr "Kirjoita tähän kysymyksen otsikko (>10 merkkiä)"
 
 #: skins/common/media/js/tag_selector.js:15
-#: skins/old/media/js/tag_selector.js:15
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Tagi \"<span></span>\" yhteensopivuus:"
 
 #: skins/common/media/js/tag_selector.js:84
-#: skins/old/media/js/tag_selector.js:84
-#, c-format
+#, perl-format
 msgid "and %s more, not shown..."
 msgstr "ja %s tässä näkymätöntä lisää..."
 
@@ -230,114 +166,179 @@ msgid_plural "Delete these notifications?"
 msgstr[0] "Haluatko poistaa tämän huomautuksen?"
 msgstr[1] "Haluatko poistaa nämä huomautukset?"
 
-#: skins/common/media/js/user.js:125 skins/old/media/js/user.js:129
-msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
-msgstr "Ole hyvä ja <a href=\"%(signin_url)s\">kirjaudu sisään</a> seurataksesi käyttäjää %(username)s"
+#: skins/common/media/js/user.js:65
+#, fuzzy
+msgid "Close this entry?"
+msgid_plural "Close these entries?"
+msgstr[0] "poista kommentti"
+msgstr[1] "poista kommentti"
 
-#: skins/common/media/js/user.js:157 skins/old/media/js/user.js:161
-#, c-format
+#: skins/common/media/js/user.js:72
+msgid "Remove all flags on this entry?"
+msgid_plural "Remove all flags on these entries?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: skins/common/media/js/user.js:79
+#, fuzzy
+msgid "Delete this entry?"
+msgid_plural "Delete these entries?"
+msgstr[0] "poista kommentti"
+msgstr[1] "poista kommentti"
+
+#: skins/common/media/js/user.js:159
+msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
+msgstr ""
+"Ole hyvä ja <a href=\"%(signin_url)s\">kirjaudu sisään</a> seurataksesi "
+"käyttäjää %(username)s"
+
+#: skins/common/media/js/user.js:191
+#, perl-format
 msgid "unfollow %s"
 msgstr "lopeta %s:n seuraaminen"
 
-#: skins/common/media/js/user.js:160 skins/old/media/js/user.js:164
-#, c-format
+#: skins/common/media/js/user.js:194
+#, perl-format
 msgid "following %s"
 msgstr "seurataan %s"
 
-#: skins/common/media/js/user.js:166 skins/old/media/js/user.js:170
-#, c-format
+#: skins/common/media/js/user.js:200
+#, perl-format
 msgid "follow %s"
 msgstr "seuraa %s"
 
-#: skins/common/media/js/utils.js:43
+#: skins/common/media/js/utils.js:44
 msgid "click to close"
 msgstr "sulje klikkaamalla"
 
-#: skins/common/media/js/utils.js:214
-msgid "click to edit this comment"
-msgstr "muokkaa kommenttia klikkaamalla"
-
-#: skins/common/media/js/utils.js:215
-msgid "edit"
-msgstr "muokkaa"
-
-#: skins/common/media/js/utils.js:369
-#, c-format
-msgid "see questions tagged '%s'"
-msgstr "katso kysymyksiä, jotka on merkitty tagillä '%s'"
-
-#: skins/common/media/js/wmd/wmd.js:30
+#: skins/common/media/js/wmd/wmd.js:26
 msgid "bold"
 msgstr "lihavoitu"
 
-#: skins/common/media/js/wmd/wmd.js:31
+#: skins/common/media/js/wmd/wmd.js:27
 msgid "italic"
 msgstr "kursivoitu"
 
-#: skins/common/media/js/wmd/wmd.js:32
+#: skins/common/media/js/wmd/wmd.js:28
 msgid "link"
 msgstr "linkki"
 
-#: skins/common/media/js/wmd/wmd.js:33
+#: skins/common/media/js/wmd/wmd.js:29
 msgid "quote"
 msgstr "lainaus"
 
-#: skins/common/media/js/wmd/wmd.js:34
+#: skins/common/media/js/wmd/wmd.js:30
 msgid "preformatted text"
 msgstr "esimuotoiltu teksti"
 
-#: skins/common/media/js/wmd/wmd.js:35
+#: skins/common/media/js/wmd/wmd.js:31
 msgid "image"
 msgstr "kuva"
 
-#: skins/common/media/js/wmd/wmd.js:36
+#: skins/common/media/js/wmd/wmd.js:32
 msgid "attachment"
 msgstr "liite"
 
-#: skins/common/media/js/wmd/wmd.js:37
+#: skins/common/media/js/wmd/wmd.js:33
 msgid "numbered list"
 msgstr "numeroitu lista"
 
-#: skins/common/media/js/wmd/wmd.js:38
+#: skins/common/media/js/wmd/wmd.js:34
 msgid "bulleted list"
 msgstr "lista ranskalaisilla viivoilla"
 
-#: skins/common/media/js/wmd/wmd.js:39
+#: skins/common/media/js/wmd/wmd.js:35
 msgid "heading"
 msgstr "otsikko"
 
-#: skins/common/media/js/wmd/wmd.js:40
+#: skins/common/media/js/wmd/wmd.js:36
 msgid "horizontal bar"
 msgstr "vaakasuora palkki"
 
-#: skins/common/media/js/wmd/wmd.js:41
+#: skins/common/media/js/wmd/wmd.js:37
 msgid "undo"
 msgstr "peruuta"
 
-#: skins/common/media/js/wmd/wmd.js:42 skins/common/media/js/wmd/wmd.js:1116
+#: skins/common/media/js/wmd/wmd.js:38 skins/common/media/js/wmd/wmd.js:1053
 msgid "redo"
 msgstr "tee uudelleen"
 
-#: skins/common/media/js/wmd/wmd.js:53
+#: skins/common/media/js/wmd/wmd.js:47
 msgid "enter image url"
-msgstr "Anna kuvan URL-osoite, esim. http://www.example.com/image.jpg \"kuvan otsikko\""
+msgstr ""
+"Anna kuvan URL-osoite, esim. http://www.example.com/image.jpg \"kuvan otsikko"
+"\""
 
-#: skins/common/media/js/wmd/wmd.js:54
+#: skins/common/media/js/wmd/wmd.js:48
 msgid "enter url"
 msgstr "Anna URL-osoite, esim. http://www.example.com \"sivun otsikko\""
 
-#: skins/common/media/js/wmd/wmd.js:55
+#: skins/common/media/js/wmd/wmd.js:49
 msgid "upload file attachment"
 msgstr "Valitse ja lataa tiedosto:"
 
-#: skins/common/media/js/wmd/wmd.js:1778
-msgid "image description"
-msgstr "kuvaus"
+#~ msgid "tags cannot be empty"
+#~ msgstr "anna vähintään yksi tagi"
 
-#: skins/common/media/js/wmd/wmd.js:1781
-msgid "file name"
-msgstr "tiedostonimi"
+#~ msgid "content cannot be empty"
+#~ msgstr "ei voi jättää tyhjäksi"
 
-#: skins/common/media/js/wmd/wmd.js:1785
-msgid "link text"
-msgstr "linkin teksti"
+#~ msgid "%s content minchars"
+#~ msgstr "syötä vähintään %s merkkiä"
+
+#~ msgid "please enter title"
+#~ msgstr "ole hyvä ja kirjoita otsikko"
+
+#~ msgid "%s title minchars"
+#~ msgstr "syötä vähintään %s merkkiä"
+
+#~ msgid "Follow"
+#~ msgstr "Seuraa"
+
+#~ msgid "%s follower"
+#~ msgid_plural "%s followers"
+#~ msgstr[0] "%s seuraaja"
+#~ msgstr[1] "%s seuraajaa"
+
+#~ msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgstr ""
+#~ "<div>Seurataan</div><div class=\"unfollow\">Lopeta seuraaminen</div>"
+
+#~ msgid "undelete"
+#~ msgstr "peru poistaminen"
+
+#~ msgid "delete"
+#~ msgstr "poista"
+
+#~ msgid "enter %s more characters"
+#~ msgstr "%s merkkiä jäljellä"
+
+#~ msgid "%s characters left"
+#~ msgstr "%s merkkiä jäljellä"
+
+#~ msgid "cancel"
+#~ msgstr "peruuta"
+
+#~ msgid "confirm abandon comment"
+#~ msgstr "Oletko varma, ettet halua julkaista tätä kommenttia?"
+
+#~ msgid "confirm delete comment"
+#~ msgstr "oletko varma, että haluat poistaa tämän kommentin?"
+
+#~ msgid "click to edit this comment"
+#~ msgstr "muokkaa kommenttia klikkaamalla"
+
+#~ msgid "edit"
+#~ msgstr "muokkaa"
+
+#~ msgid "see questions tagged '%s'"
+#~ msgstr "katso kysymyksiä, jotka on merkitty tagillä '%s'"
+
+#~ msgid "image description"
+#~ msgstr "kuvaus"
+
+#~ msgid "file name"
+#~ msgstr "tiedostonimi"
+
+#~ msgid "link text"
+#~ msgstr "linkin teksti"

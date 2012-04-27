@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-11 22:21-0500\n"
+"POT-Creation-Date: 2012-04-18 18:49-0500\n"
 "PO-Revision-Date: 2012-03-09 09:38+0000\n"
 "Last-Translator: olloff <olloff@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.net/projects/p/askbot/language/"
@@ -138,15 +138,15 @@ msgstr "ваше сообщение восстановлено"
 msgid "post deleted"
 msgstr "ваше сообщение было удалено"
 
-#: skins/common/media/js/post.js:1202
+#: skins/common/media/js/post.js:1206
 msgid "add comment"
 msgstr "добавить комментарий"
 
-#: skins/common/media/js/post.js:1205
+#: skins/common/media/js/post.js:1209
 msgid "save comment"
 msgstr "сохранить комментарий"
 
-#: skins/common/media/js/post.js:1870
+#: skins/common/media/js/post.js:1874
 msgid "Please enter question title (>10 characters)"
 msgstr "Пожалуйста, введите заголовок вопроса (>10 символов)"
 

@@ -160,7 +160,7 @@ the list of MIDDLEWARE_CLASSES in your settings.py - these are not used any more
         middleware_text = format_as_text_tuple_entries(invalid_middleware)
         raise AskbotConfigError(error_message + middleware_text)
 
-def try_import(module_name, pypi_package_name):
+def try_import(module_name, pypi_package_name, short_message = False):
     """tries importing a module and advises to install
     A corresponding Python package in the case import fails"""
     try:
@@ -168,9 +168,10 @@ def try_import(module_name, pypi_package_name):
     except ImportError, error:
         message = 'Error: ' + unicode(error) 
         message += '\n\nPlease run: >pip install %s' % pypi_package_name
-        message += '\n\nTo install all the dependencies at once, type:'
-        message += '\npip install -r askbot_requirements.txt\n'
-        message += '\nType ^C to quit.'
+        if short_message == False:
+            message += '\n\nTo install all the dependencies at once, type:'
+            message += '\npip install -r askbot_requirements.txt'
+        message += '\n\nType ^C to quit.'
         raise AskbotConfigError(message)
 
 def test_modules():
@@ -466,6 +467,19 @@ def test_settings_for_test_runner():
             'from MIDDLEWARE_CLASSES'
         )
     print_errors(errors)
+
+
+def test_avatar():
+    """if "avatar" is in the installed apps,
+    checks that the module is actually installed"""
+    if 'avatar' in django_settings.INSTALLED_APPS:
+        try_import('Image', 'PIL', short_message = True)
+        try_import(
+            'avatar',
+            '-e git+git://github.com/ericflo/django-avatar.git#egg=avatar',
+            short_message = True
+        )
+        
     
 
 def run_startup_tests():
@@ -483,6 +497,7 @@ def run_startup_tests():
     test_celery()
     #test_csrf_cookie_domain()
     test_staticfiles()
+    test_avatar()
     settings_tester = SettingsTester({
         'CACHE_MIDDLEWARE_ANONYMOUS_ONLY': {
             'value': True,
@@ -508,6 +523,10 @@ def run_startup_tests():
             'test_for_absence': True,
             'message': 'Please replace setting ASKBOT_UPLOADED_FILES_URL ',
             'replace_hint': "with MEDIA_URL = '/%s'"
+        },
+        'RECAPTCHA_USE_SSL': {
+            'value': True,
+            'message': 'Please add: RECAPTCHA_USE_SSL = True'
         }
     })
     settings_tester.run()

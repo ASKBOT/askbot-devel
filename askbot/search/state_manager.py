@@ -241,8 +241,13 @@ class SearchState(object):
 
 
 class DummySearchState(object): # Used for caching question/thread summaries
+
     def add_tag(self, tag):
         self.tag = tag
         return self
+
+    def change_scope(self, new_scope):
+        return self
+
     def full_url(self):
         return '<<<%s>>>' % self.tag

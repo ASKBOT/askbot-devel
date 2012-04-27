@@ -137,10 +137,14 @@ poor design of the data or methods on data objects #}
     {%- endif -%}
 {%- endmacro -%}
 
-{%- macro tag_cloud(tags = None, font_sizes = None) -%}
+{%- macro tag_cloud(tags = None, font_sizes = None, search_state = None) -%}
     {% for tag in tags %}
     <span class="tag-size-{{ font_sizes[tag.name] }}">
-        <a class="link-typeA" title="Number of entries: {{ tag.used_count }}" href="{% url questions %}?tags={{ tag.name }}">{{ tag.name }}</a>
+        <a 
+            class="link-typeA"
+            title="Number of entries: {{ tag.used_count }}"
+            href="{{ search_state.add_tag(tag.name).full_url() }}"
+        >{{ tag.name }}</a>
     </span>
     {% endfor %}
 {%- endmacro -%}

@@ -16,7 +16,13 @@
         {% endfor %}
       </ul>
     {% else %}
-      {{ macros.tag_cloud(tags = tags, font_sizes = font_size) }}
+        {{ 
+            macros.tag_cloud(
+                tags = tags,
+                font_sizes = font_size,
+                search_state = search_state
+            )
+        }}
     {% endif %}
   </div>
 {% endcache %}

@@ -34,7 +34,7 @@ from askbot.models.tag import Tag
 from askbot import const
 from askbot.utils import functions
 from askbot.utils.decorators import anonymous_forbidden, ajax_only, get_only
-from askbot.search.state_manager import SearchState
+from askbot.search.state_manager import SearchState, DummySearchState
 from askbot.templatetags import extra_tags
 import askbot.conf
 from askbot.conf import settings as askbot_settings
@@ -295,6 +295,7 @@ def tags(request):#view showing a listing of available tags - plain list
             'stag' : stag,
             'tab_id' : sortby,
             'keywords' : stag,
+            'search_state': SearchState(*[None for x in range(7)])
         }
 
     return render_into_skin('tags.html', data, request)

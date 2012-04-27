@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-27 01:58-0600\n"
+"POT-Creation-Date: 2012-04-18 18:58-0500\n"
 "PO-Revision-Date: 2012-01-24 18:47+0200\n"
 "Last-Translator: Dean <xslidian@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 # 100%
 #: skins/common/media/jquery-openid/jquery.openid.js:73
-#, c-format
+#, perl-format
 msgid "Are you sure you want to remove your %s login?"
 msgstr "您是否确定要移除您的 %s 登录?"
 
@@ -40,45 +40,45 @@ msgid "passwords do not match"
 msgstr "密码不匹配"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:162
+#: skins/common/media/jquery-openid/jquery.openid.js:161
 msgid "Show/change current login methods"
 msgstr "显示/更改当前登录方式"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:223
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:226
+#, perl-format
 msgid "Please enter your %s, then proceed"
 msgstr "请输入您的 %s 然后继续"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:225
+#: skins/common/media/jquery-openid/jquery.openid.js:228
 msgid "Connect your %(provider_name)s account to %(site)s"
 msgstr "将您的 %(provider_name)s 账号连接到 %(site)s"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:319
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:322
+#, perl-format
 msgid "Change your %s password"
 msgstr "更改您的 %s 密码"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:320
+#: skins/common/media/jquery-openid/jquery.openid.js:323
 msgid "Change password"
 msgstr "更改密码"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:323
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:326
+#, perl-format
 msgid "Create a password for %s"
 msgstr "为 %s 创建密码"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:324
+#: skins/common/media/jquery-openid/jquery.openid.js:327
 msgid "Create password"
 msgstr "创建密码"
 
 # 100%
-#: skins/common/media/jquery-openid/jquery.openid.js:340
+#: skins/common/media/jquery-openid/jquery.openid.js:343
 msgid "Create a password-protected account"
 msgstr "创建受密码保护的账号"
 
@@ -86,157 +86,84 @@ msgstr "创建受密码保护的账号"
 msgid "loading..."
 msgstr "读取中..."
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
-msgid "tags cannot be empty"
-msgstr "标签不能为空。"
-
-#: skins/common/media/js/post.js:134
-msgid "content cannot be empty"
-msgstr "内容不能为空。"
-
-#: skins/common/media/js/post.js:135
-#, c-format
-msgid "%s content minchars"
-msgstr "请输入至少 %s 字符。"
-
-#: skins/common/media/js/post.js:138
-msgid "please enter title"
-msgstr "请输入标题。"
-
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
-#, c-format
-msgid "%s title minchars"
-msgstr "请输入至少 %s 字符。"
-
-#: skins/common/media/js/post.js:282
+#: skins/common/media/js/post.js:318
 msgid "insufficient privilege"
 msgstr "用户权限不在操作范围"
 
-#: skins/common/media/js/post.js:283
+#: skins/common/media/js/post.js:319
 msgid "cannot pick own answer as best"
 msgstr "不能设置自己的回答为最佳答案"
 
-#: skins/common/media/js/post.js:288
+#: skins/common/media/js/post.js:324
 msgid "please login"
 msgstr "注册或者登录"
 
 # 100%
-#: skins/common/media/js/post.js:290
+#: skins/common/media/js/post.js:326
 msgid "anonymous users cannot follow questions"
 msgstr "匿名用户可跟踪提问"
 
 # 100%
-#: skins/common/media/js/post.js:291
+#: skins/common/media/js/post.js:327
 msgid "anonymous users cannot subscribe to questions"
 msgstr "匿名用户不能订阅提问"
 
 # 100%
-#: skins/common/media/js/post.js:292
+#: skins/common/media/js/post.js:328
 msgid "anonymous users cannot vote"
 msgstr "匿名用户不能投票"
 
-#: skins/common/media/js/post.js:294
+#: skins/common/media/js/post.js:330
 msgid "please confirm offensive"
 msgstr "确定要归类该帖为广告、人身攻击、恶意言论吗？"
 
-#: skins/common/media/js/post.js:295
+#: skins/common/media/js/post.js:331
+#, fuzzy
+msgid "please confirm removal of offensive flag"
+msgstr "确定要归类该帖为广告、人身攻击、恶意言论吗？"
+
+#: skins/common/media/js/post.js:332
 msgid "anonymous users cannot flag offensive posts"
 msgstr "匿名用户不能操作，请先"
 
-#: skins/common/media/js/post.js:296
+#: skins/common/media/js/post.js:333
 msgid "confirm delete"
 msgstr "确定要删除/撤销删除该帖吗？"
 
-#: skins/common/media/js/post.js:297
+#: skins/common/media/js/post.js:334
 msgid "anonymous users cannot delete/undelete"
 msgstr "匿名用户不能删除或撤销删除帖子"
 
-#: skins/common/media/js/post.js:298
+#: skins/common/media/js/post.js:335
 msgid "post recovered"
 msgstr "操作成功！该帖子已被恢复。"
 
-#: skins/common/media/js/post.js:299
+#: skins/common/media/js/post.js:336
 msgid "post deleted"
 msgstr "操作成功！该帖子已删除。"
 
-# 100%
-#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
-msgid "Follow"
-msgstr "跟踪"
-
-# 100%
-#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
-#: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
-#, c-format
-msgid "%s follower"
-msgid_plural "%s followers"
-msgstr[0] "%s 位跟踪者"
-
-# 100%
-#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
-msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
-msgstr "<div>已关注</div><div class=\"unfollow\">取消关注</div>"
-
-#: skins/common/media/js/post.js:615
-msgid "undelete"
-msgstr "取消"
-
-#: skins/common/media/js/post.js:620
-msgid "delete"
-msgstr "删除"
-
-#: skins/common/media/js/post.js:957
+#: skins/common/media/js/post.js:1206
 msgid "add comment"
 msgstr "添加评论"
 
 # 100%
-#: skins/common/media/js/post.js:960
+#: skins/common/media/js/post.js:1209
 msgid "save comment"
 msgstr "保存评论"
 
-#: skins/common/media/js/post.js:990
-#, c-format
-msgid "enter %s more characters"
-msgstr "还可写%s字符"
-
-#: skins/common/media/js/post.js:995
-#, c-format
-msgid "%s characters left"
-msgstr "还可写%s字符"
-
 # 100%
-#: skins/common/media/js/post.js:1066
-msgid "cancel"
-msgstr "取消"
-
-# 100%
-#: skins/common/media/js/post.js:1109
-msgid "confirm abandon comment"
-msgstr "确认放弃评论"
-
-#: skins/common/media/js/post.js:1183
-msgid "delete this comment"
-msgstr "删除此评论"
-
-#: skins/common/media/js/post.js:1387
-msgid "confirm delete comment"
-msgstr "真要删除此评论吗？"
-
-# 100%
-#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1874
 msgid "Please enter question title (>10 characters)"
 msgstr "请输入提问标题 (>10 字符)"
 
 # 100%
 #: skins/common/media/js/tag_selector.js:15
-#: skins/old/media/js/tag_selector.js:15
 msgid "Tag \"<span></span>\" matches:"
 msgstr "标签“<span></span>”匹配下述提问:"
 
 # 100%
 #: skins/common/media/js/tag_selector.js:84
-#: skins/old/media/js/tag_selector.js:84
-#, c-format
+#, perl-format
 msgid "and %s more, not shown..."
 msgstr "另有 %s 条未显示..."
 
@@ -251,130 +178,191 @@ msgid "Delete this notification?"
 msgid_plural "Delete these notifications?"
 msgstr[0] "删除通知?"
 
+#: skins/common/media/js/user.js:65
+#, fuzzy
+msgid "Close this entry?"
+msgid_plural "Close these entries?"
+msgstr[0] "删除此评论"
+
+#: skins/common/media/js/user.js:72
+msgid "Remove all flags on this entry?"
+msgid_plural "Remove all flags on these entries?"
+msgstr[0] ""
+
+#: skins/common/media/js/user.js:79
+#, fuzzy
+msgid "Delete this entry?"
+msgid_plural "Delete these entries?"
+msgstr[0] "删除此评论"
+
 # 100%
-#: skins/common/media/js/user.js:125 skins/old/media/js/user.js:129
+#: skins/common/media/js/user.js:159
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "请<a href=\"%(signin_url)s\">登录</a>方可关注 %(username)s"
 
 # 100%
-#: skins/common/media/js/user.js:157 skins/old/media/js/user.js:161
-#, c-format
+#: skins/common/media/js/user.js:191
+#, perl-format
 msgid "unfollow %s"
 msgstr "取消关注 %s"
 
 # 100%
-#: skins/common/media/js/user.js:160 skins/old/media/js/user.js:164
-#, c-format
+#: skins/common/media/js/user.js:194
+#, perl-format
 msgid "following %s"
 msgstr "正在关注 %s"
 
 # 100%
-#: skins/common/media/js/user.js:166 skins/old/media/js/user.js:170
-#, c-format
+#: skins/common/media/js/user.js:200
+#, perl-format
 msgid "follow %s"
 msgstr "关注 %s"
 
-#: skins/common/media/js/utils.js:43
+#: skins/common/media/js/utils.js:44
 msgid "click to close"
 msgstr "点击消息框关闭"
 
-# 100%
-#: skins/common/media/js/utils.js:214
-msgid "click to edit this comment"
-msgstr "点击编辑此评论"
-
-# 100%
-#: skins/common/media/js/utils.js:215
-msgid "edit"
-msgstr "编辑"
-
-# 100%
-#: skins/common/media/js/utils.js:369
-#, c-format
-msgid "see questions tagged '%s'"
-msgstr "查看含标签“%s”的提问"
-
-#: skins/common/media/js/wmd/wmd.js:30
+#: skins/common/media/js/wmd/wmd.js:26
 msgid "bold"
 msgstr "粗体"
 
-#: skins/common/media/js/wmd/wmd.js:31
+#: skins/common/media/js/wmd/wmd.js:27
 msgid "italic"
 msgstr "斜体"
 
-#: skins/common/media/js/wmd/wmd.js:32
+#: skins/common/media/js/wmd/wmd.js:28
 msgid "link"
 msgstr "超链接"
 
-#: skins/common/media/js/wmd/wmd.js:33
+#: skins/common/media/js/wmd/wmd.js:29
 msgid "quote"
 msgstr "引用"
 
-#: skins/common/media/js/wmd/wmd.js:34
+#: skins/common/media/js/wmd/wmd.js:30
 msgid "preformatted text"
 msgstr "代码"
 
-#: skins/common/media/js/wmd/wmd.js:35
+#: skins/common/media/js/wmd/wmd.js:31
 msgid "image"
 msgstr "图片"
 
 # 100%
-#: skins/common/media/js/wmd/wmd.js:36
+#: skins/common/media/js/wmd/wmd.js:32
 msgid "attachment"
 msgstr "附件"
 
-#: skins/common/media/js/wmd/wmd.js:37
+#: skins/common/media/js/wmd/wmd.js:33
 msgid "numbered list"
 msgstr "数字编号列表"
 
-#: skins/common/media/js/wmd/wmd.js:38
+#: skins/common/media/js/wmd/wmd.js:34
 msgid "bulleted list"
 msgstr "项目符号列表"
 
-#: skins/common/media/js/wmd/wmd.js:39
+#: skins/common/media/js/wmd/wmd.js:35
 msgid "heading"
 msgstr "标题"
 
-#: skins/common/media/js/wmd/wmd.js:40
+#: skins/common/media/js/wmd/wmd.js:36
 msgid "horizontal bar"
 msgstr "水平线"
 
-#: skins/common/media/js/wmd/wmd.js:41
+#: skins/common/media/js/wmd/wmd.js:37
 msgid "undo"
 msgstr "撤销"
 
-#: skins/common/media/js/wmd/wmd.js:42 skins/common/media/js/wmd/wmd.js:1116
+#: skins/common/media/js/wmd/wmd.js:38 skins/common/media/js/wmd/wmd.js:1053
 msgid "redo"
 msgstr "重做"
 
-#: skins/common/media/js/wmd/wmd.js:53
+#: skins/common/media/js/wmd/wmd.js:47
 msgid "enter image url"
 msgstr ""
 "<b>输入图片地址</b></p><p>示例：<br />http://www.example.com/image.jpg   \"我"
 "的截图\""
 
-#: skins/common/media/js/wmd/wmd.js:54
+#: skins/common/media/js/wmd/wmd.js:48
 msgid "enter url"
 msgstr ""
 "<b>输入Web地址</b></p><p>示例：<br />http://www.cnprog.com/   \"我的网站\"</"
 "p>"
 
 # 100%
-#: skins/common/media/js/wmd/wmd.js:55
+#: skins/common/media/js/wmd/wmd.js:49
 msgid "upload file attachment"
 msgstr "上传文件附件"
 
-# 100%
-#: skins/common/media/js/wmd/wmd.js:1778
-msgid "image description"
-msgstr "图像描述"
+#~ msgid "tags cannot be empty"
+#~ msgstr "标签不能为空。"
+
+#~ msgid "content cannot be empty"
+#~ msgstr "内容不能为空。"
+
+#~ msgid "%s content minchars"
+#~ msgstr "请输入至少 %s 字符。"
+
+#~ msgid "please enter title"
+#~ msgstr "请输入标题。"
+
+#~ msgid "%s title minchars"
+#~ msgstr "请输入至少 %s 字符。"
 
 # 100%
-#: skins/common/media/js/wmd/wmd.js:1781
-msgid "file name"
-msgstr "文件名"
+#~ msgid "Follow"
+#~ msgstr "跟踪"
 
 # 100%
-#: skins/common/media/js/wmd/wmd.js:1785
-msgid "link text"
-msgstr "链接文字"
+#~ msgid "%s follower"
+#~ msgid_plural "%s followers"
+#~ msgstr[0] "%s 位跟踪者"
+
+# 100%
+#~ msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgstr "<div>已关注</div><div class=\"unfollow\">取消关注</div>"
+
+#~ msgid "undelete"
+#~ msgstr "取消"
+
+#~ msgid "delete"
+#~ msgstr "删除"
+
+#~ msgid "enter %s more characters"
+#~ msgstr "还可写%s字符"
+
+#~ msgid "%s characters left"
+#~ msgstr "还可写%s字符"
+
+# 100%
+#~ msgid "cancel"
+#~ msgstr "取消"
+
+# 100%
+#~ msgid "confirm abandon comment"
+#~ msgstr "确认放弃评论"
+
+#~ msgid "confirm delete comment"
+#~ msgstr "真要删除此评论吗？"
+
+# 100%
+#~ msgid "click to edit this comment"
+#~ msgstr "点击编辑此评论"
+
+# 100%
+#~ msgid "edit"
+#~ msgstr "编辑"
+
+# 100%
+#~ msgid "see questions tagged '%s'"
+#~ msgstr "查看含标签“%s”的提问"
+
+# 100%
+#~ msgid "image description"
+#~ msgstr "图像描述"
+
+# 100%
+#~ msgid "file name"
+#~ msgstr "文件名"
+
+# 100%
+#~ msgid "link text"
+#~ msgstr "链接文字"

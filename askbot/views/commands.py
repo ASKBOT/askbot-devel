@@ -377,6 +377,7 @@ def vote(request, id):
 
 #internally grouped views - used by the tagging system
 @csrf.csrf_exempt
+@decorators.post_only
 @decorators.ajax_login_required
 def mark_tag(request, **kwargs):#tagging system
     action = kwargs['action']
@@ -417,9 +418,11 @@ def get_tags_by_wildcard(request):
     """returns an json encoded array of tag names
     in the response to a wildcard tag name
     """
-    matching_tags = models.Tag.objects.get_by_wildcards(
-                        [request.GET['wildcard'],]
-                    )
+    wildcard = request.GET.get('wildcard', None)
+    if wildcard is None:
+        raise Http404
+        
+    matching_tags = models.Tag.objects.get_by_wildcards( [wildcard,] )
     count = matching_tags.count()
     names = matching_tags.values_list('name', flat = True)[:20]
     re_data = simplejson.dumps({'tag_count': count, 'tag_names': list(names)})
@@ -495,6 +498,7 @@ def api_get_questions(request):
 
 
 @csrf.csrf_exempt
+@decorators.post_only
 @decorators.ajax_login_required
 def set_tag_filter_strategy(request):
     """saves data in the ``User.display_tag_filter_strategy``

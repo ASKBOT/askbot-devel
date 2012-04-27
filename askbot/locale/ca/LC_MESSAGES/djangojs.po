@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-27 01:58-0600\n"
+"POT-Creation-Date: 2012-04-18 18:56-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jordi Bofill <jordi.bofill@upc.edu>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:73
-#, c-format
+#, perl-format
 msgid "Are you sure you want to remove your %s login?"
 msgstr "Vol eliminar l'entrada %s?"
 
@@ -37,38 +37,38 @@ msgstr ""
 msgid "passwords do not match"
 msgstr "les contrasenyes no coincideixen"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:162
+#: skins/common/media/jquery-openid/jquery.openid.js:161
 msgid "Show/change current login methods"
 msgstr "Mostrar/canviar els mètodes d'entrada actuals"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:223
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:226
+#, perl-format
 msgid "Please enter your %s, then proceed"
 msgstr "Entrar el vostre %s per continuar"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:225
+#: skins/common/media/jquery-openid/jquery.openid.js:228
 msgid "Connect your %(provider_name)s account to %(site)s"
 msgstr "Connectar el compte %(provider_name)s a %(site)s"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:319
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:322
+#, perl-format
 msgid "Change your %s password"
 msgstr "Canviar la contrasenya %s"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:320
+#: skins/common/media/jquery-openid/jquery.openid.js:323
 msgid "Change password"
 msgstr "Canviar contrasenya"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:323
-#, c-format
+#: skins/common/media/jquery-openid/jquery.openid.js:326
+#, perl-format
 msgid "Create a password for %s"
 msgstr "Crear una contrasenya per %s"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:324
+#: skins/common/media/jquery-openid/jquery.openid.js:327
 msgid "Create password"
 msgstr "Crear contrasenya"
 
-#: skins/common/media/jquery-openid/jquery.openid.js:340
+#: skins/common/media/jquery-openid/jquery.openid.js:343
 msgid "Create a password-protected account"
 msgstr "Crear un compte protegit amb contrasenya"
 
@@ -76,146 +76,77 @@ msgstr "Crear un compte protegit amb contrasenya"
 msgid "loading..."
 msgstr "càrrega..."
 
-#: skins/common/media/js/post.js:128 skins/common/media/js/post.js.c:859
-msgid "tags cannot be empty"
-msgstr "Les etiquetes no poden estar buides"
-
-#: skins/common/media/js/post.js:134
-msgid "content cannot be empty"
-msgstr "el contingut no pot estar buit"
-
-#: skins/common/media/js/post.js:135
-#, c-format
-msgid "%s content minchars"
-msgstr "%s contingut mín caràct."
-
-#: skins/common/media/js/post.js:138
-msgid "please enter title"
-msgstr "entrar títol"
-
-#: skins/common/media/js/post.js:139 skins/common/media/js/post.js.c:987
-#, c-format
-msgid "%s title minchars"
-msgstr "%s títol mín caràct."
-
-#: skins/common/media/js/post.js:282
+#: skins/common/media/js/post.js:318
 msgid "insufficient privilege"
 msgstr "permisos insuficients "
 
-#: skins/common/media/js/post.js:283
+#: skins/common/media/js/post.js:319
 msgid "cannot pick own answer as best"
 msgstr "no es pot escollir resp. pròpia com a millor"
 
-#: skins/common/media/js/post.js:288
+#: skins/common/media/js/post.js:324
 msgid "please login"
 msgstr "entrar"
 
-#: skins/common/media/js/post.js:290
+#: skins/common/media/js/post.js:326
 msgid "anonymous users cannot follow questions"
 msgstr "usuaris anònims no poden seguir preguntes"
 
-#: skins/common/media/js/post.js:291
+#: skins/common/media/js/post.js:327
 msgid "anonymous users cannot subscribe to questions"
 msgstr "usuaris anònims no poden subscriures a preguntes"
 
-#: skins/common/media/js/post.js:292
+#: skins/common/media/js/post.js:328
 msgid "anonymous users cannot vote"
 msgstr "usuaris anònims no poden votar"
 
-#: skins/common/media/js/post.js:294
+#: skins/common/media/js/post.js:330
 msgid "please confirm offensive"
 msgstr "confirmar com ofensiu"
 
-#: skins/common/media/js/post.js:295
+#: skins/common/media/js/post.js:331
+#, fuzzy
+msgid "please confirm removal of offensive flag"
+msgstr "confirmar com ofensiu"
+
+#: skins/common/media/js/post.js:332
 msgid "anonymous users cannot flag offensive posts"
 msgstr "usuaris anònims no poden senyalar entrades com ofensives"
 
-#: skins/common/media/js/post.js:296
+#: skins/common/media/js/post.js:333
 msgid "confirm delete"
 msgstr "confirmar eliminar"
 
-#: skins/common/media/js/post.js:297
+#: skins/common/media/js/post.js:334
 msgid "anonymous users cannot delete/undelete"
 msgstr "usuaris anònims no poden eliminar/recuperar"
 
-#: skins/common/media/js/post.js:298
+#: skins/common/media/js/post.js:335
 msgid "post recovered"
 msgstr "entrada recuperada"
 
-#: skins/common/media/js/post.js:299
+#: skins/common/media/js/post.js:336
 msgid "post deleted"
 msgstr "entrada eliminada"
 
-#: skins/common/media/js/post.js:539 skins/old/media/js/post.js:535
-msgid "Follow"
-msgstr "Seguir"
-
-#: skins/common/media/js/post.js:548 skins/common/media/js/post.js.c:557
-#: skins/old/media/js/post.js:544 skins/old/media/js/post.js.c:553
-#, c-format
-msgid "%s follower"
-msgid_plural "%s followers"
-msgstr[0] "%s seguidor"
-msgstr[1] "%s seguidors"
-
-#: skins/common/media/js/post.js:553 skins/old/media/js/post.js:549
-msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
-msgstr "<div>Seguint</div><div class=\"unfollow\">Deixar de seguir</div>"
-
-#: skins/common/media/js/post.js:615
-msgid "undelete"
-msgstr "recuperar"
-
-#: skins/common/media/js/post.js:620
-msgid "delete"
-msgstr "eliminar"
-
-#: skins/common/media/js/post.js:957
+#: skins/common/media/js/post.js:1206
 msgid "add comment"
 msgstr "afegir comentari"
 
-#: skins/common/media/js/post.js:960
+#: skins/common/media/js/post.js:1209
 msgid "save comment"
 msgstr "desar comentari"
 
-#: skins/common/media/js/post.js:990
-#, c-format
-msgid "enter %s more characters"
-msgstr "introduir %s caràcters més"
-
-#: skins/common/media/js/post.js:995
-#, c-format
-msgid "%s characters left"
-msgstr "queden %s caràcters"
-
-#: skins/common/media/js/post.js:1066
-msgid "cancel"
-msgstr "anul·lar"
-
-#: skins/common/media/js/post.js:1109
-msgid "confirm abandon comment"
-msgstr "confirmar abandó del commenari"
-
-#: skins/common/media/js/post.js:1183
-msgid "delete this comment"
-msgstr "eliminar aquest comentari"
-
-#: skins/common/media/js/post.js:1387
-msgid "confirm delete comment"
-msgstr "conformar eliminar comentari"
-
-#: skins/common/media/js/post.js:1628 skins/old/media/js/post.js:1621
+#: skins/common/media/js/post.js:1874
 msgid "Please enter question title (>10 characters)"
 msgstr "Títol de la pregunta (més de 10 caràcters)"
 
 #: skins/common/media/js/tag_selector.js:15
-#: skins/old/media/js/tag_selector.js:15
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Coincidències de la etiqueta:"
 
 #: skins/common/media/js/tag_selector.js:84
-#: skins/old/media/js/tag_selector.js:84
-#, c-format
+#, perl-format
 msgid "and %s more, not shown..."
 msgstr "i %s més què no es mostren ..."
 
@@ -229,114 +160,174 @@ msgid_plural "Delete these notifications?"
 msgstr[0] "Eliminar aquesta notificació?"
 msgstr[1] "Eliminar aquestes notificacions"
 
-#: skins/common/media/js/user.js:125 skins/old/media/js/user.js:129
+#: skins/common/media/js/user.js:65
+#, fuzzy
+msgid "Close this entry?"
+msgid_plural "Close these entries?"
+msgstr[0] "eliminar aquest comentari"
+msgstr[1] "eliminar aquest comentari"
+
+#: skins/common/media/js/user.js:72
+msgid "Remove all flags on this entry?"
+msgid_plural "Remove all flags on these entries?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: skins/common/media/js/user.js:79
+#, fuzzy
+msgid "Delete this entry?"
+msgid_plural "Delete these entries?"
+msgstr[0] "eliminar aquest comentari"
+msgstr[1] "eliminar aquest comentari"
+
+#: skins/common/media/js/user.js:159
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "<a href=\"%(signin_url)s\">Entrar</a> per seguir a %(username)s"
 
-#: skins/common/media/js/user.js:157 skins/old/media/js/user.js:161
-#, c-format
+#: skins/common/media/js/user.js:191
+#, perl-format
 msgid "unfollow %s"
 msgstr "deixar de seguir a %s"
 
-#: skins/common/media/js/user.js:160 skins/old/media/js/user.js:164
-#, c-format
+#: skins/common/media/js/user.js:194
+#, perl-format
 msgid "following %s"
 msgstr "seguint a %s"
 
-#: skins/common/media/js/user.js:166 skins/old/media/js/user.js:170
-#, c-format
+#: skins/common/media/js/user.js:200
+#, perl-format
 msgid "follow %s"
 msgstr "seguir a %s"
 
-#: skins/common/media/js/utils.js:43
+#: skins/common/media/js/utils.js:44
 msgid "click to close"
 msgstr "clicar per tancar"
 
-#: skins/common/media/js/utils.js:214
-msgid "click to edit this comment"
-msgstr "clicar per modificar aquest comentari"
-
-#: skins/common/media/js/utils.js:215
-msgid "edit"
-msgstr "modificar"
-
-#: skins/common/media/js/utils.js:369
-#, c-format
-msgid "see questions tagged '%s'"
-msgstr "veure preguntes etiquetades '%s'"
-
-#: skins/common/media/js/wmd/wmd.js:30
+#: skins/common/media/js/wmd/wmd.js:26
 msgid "bold"
 msgstr "negreta"
 
-#: skins/common/media/js/wmd/wmd.js:31
+#: skins/common/media/js/wmd/wmd.js:27
 msgid "italic"
 msgstr "cursiva"
 
-#: skins/common/media/js/wmd/wmd.js:32
+#: skins/common/media/js/wmd/wmd.js:28
 msgid "link"
 msgstr "enllaç"
 
-#: skins/common/media/js/wmd/wmd.js:33
+#: skins/common/media/js/wmd/wmd.js:29
 msgid "quote"
 msgstr "citar"
 
-#: skins/common/media/js/wmd/wmd.js:34
+#: skins/common/media/js/wmd/wmd.js:30
 msgid "preformatted text"
 msgstr "format predefinit "
 
-#: skins/common/media/js/wmd/wmd.js:35
+#: skins/common/media/js/wmd/wmd.js:31
 msgid "image"
 msgstr "imatge"
 
-#: skins/common/media/js/wmd/wmd.js:36
+#: skins/common/media/js/wmd/wmd.js:32
 msgid "attachment"
 msgstr "adjunt"
 
-#: skins/common/media/js/wmd/wmd.js:37
+#: skins/common/media/js/wmd/wmd.js:33
 msgid "numbered list"
 msgstr "llista numerada"
 
-#: skins/common/media/js/wmd/wmd.js:38
+#: skins/common/media/js/wmd/wmd.js:34
 msgid "bulleted list"
 msgstr "llista de pics"
 
-#: skins/common/media/js/wmd/wmd.js:39
+#: skins/common/media/js/wmd/wmd.js:35
 msgid "heading"
 msgstr "encapçalament"
 
-#: skins/common/media/js/wmd/wmd.js:40
+#: skins/common/media/js/wmd/wmd.js:36
 msgid "horizontal bar"
 msgstr "barra horitzontal"
 
-#: skins/common/media/js/wmd/wmd.js:41
+#: skins/common/media/js/wmd/wmd.js:37
 msgid "undo"
 msgstr "desfer"
 
-#: skins/common/media/js/wmd/wmd.js:42 skins/common/media/js/wmd/wmd.js:1116
+#: skins/common/media/js/wmd/wmd.js:38 skins/common/media/js/wmd/wmd.js:1053
 msgid "redo"
 msgstr "refer"
 
-#: skins/common/media/js/wmd/wmd.js:53
+#: skins/common/media/js/wmd/wmd.js:47
 msgid "enter image url"
 msgstr "entrar url de la imatge"
 
-#: skins/common/media/js/wmd/wmd.js:54
+#: skins/common/media/js/wmd/wmd.js:48
 msgid "enter url"
 msgstr "entrar l'url"
 
-#: skins/common/media/js/wmd/wmd.js:55
+#: skins/common/media/js/wmd/wmd.js:49
 msgid "upload file attachment"
 msgstr "pujar arxiu adjunt"
 
-#: skins/common/media/js/wmd/wmd.js:1778
-msgid "image description"
-msgstr "descripció de la imatge"
+#~ msgid "tags cannot be empty"
+#~ msgstr "Les etiquetes no poden estar buides"
 
-#: skins/common/media/js/wmd/wmd.js:1781
-msgid "file name"
-msgstr "nom del fitxer"
+#~ msgid "content cannot be empty"
+#~ msgstr "el contingut no pot estar buit"
 
-#: skins/common/media/js/wmd/wmd.js:1785
-msgid "link text"
-msgstr "text de l'enllaç"
+#~ msgid "%s content minchars"
+#~ msgstr "%s contingut mín caràct."
+
+#~ msgid "please enter title"
+#~ msgstr "entrar títol"
+
+#~ msgid "%s title minchars"
+#~ msgstr "%s títol mín caràct."
+
+#~ msgid "Follow"
+#~ msgstr "Seguir"
+
+#~ msgid "%s follower"
+#~ msgid_plural "%s followers"
+#~ msgstr[0] "%s seguidor"
+#~ msgstr[1] "%s seguidors"
+
+#~ msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgstr "<div>Seguint</div><div class=\"unfollow\">Deixar de seguir</div>"
+
+#~ msgid "undelete"
+#~ msgstr "recuperar"
+
+#~ msgid "delete"
+#~ msgstr "eliminar"
+
+#~ msgid "enter %s more characters"
+#~ msgstr "introduir %s caràcters més"
+
+#~ msgid "%s characters left"
+#~ msgstr "queden %s caràcters"
+
+#~ msgid "cancel"
+#~ msgstr "anul·lar"
+
+#~ msgid "confirm abandon comment"
+#~ msgstr "confirmar abandó del commenari"
+
+#~ msgid "confirm delete comment"
+#~ msgstr "conformar eliminar comentari"
+
+#~ msgid "click to edit this comment"
+#~ msgstr "clicar per modificar aquest comentari"
+
+#~ msgid "edit"
+#~ msgstr "modificar"
+
+#~ msgid "see questions tagged '%s'"
+#~ msgstr "veure preguntes etiquetades '%s'"
+
+#~ msgid "image description"
+#~ msgstr "descripció de la imatge"
+
+#~ msgid "file name"
+#~ msgstr "nom del fitxer"
+
+#~ msgid "link text"
+#~ msgstr "text de l'enllaç"

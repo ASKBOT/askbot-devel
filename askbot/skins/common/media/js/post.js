@@ -39,7 +39,7 @@ function removeLoader() {
 }
 
 function setSubmitButtonDisabled(form, isDisabled) {
-    form.find("input[type='submit']").attr("disabled", isDisabled ? "true" : "");
+    form.find('input[type="submit"]').attr("disabled", isDisabled);
 }
 
 function enableSubmitButton(form) {
@@ -65,7 +65,7 @@ function setupFormValidation(form, validationRules, validationMessages, onSubmit
                 if (span.length === 0){
                     //for resizable textarea
                     var element_id = element.attr('id');
-                    span = $("label[for='" + element_id + "']");
+                    span = $('label[for="' + element_id + '"]');
                 }
             }
             span.replaceWith(error);
@@ -355,8 +355,8 @@ var Vote = function(){
     };
 
     var getFavoriteButton = function(){
-        var favoriteButton = 'div.'+ voteContainerId +' a[class='+ classPrefixFollow +']';
-        favoriteButton += ', div.'+ voteContainerId +' a[class='+ classPrefixFollowed +']';
+        var favoriteButton = 'div.'+ voteContainerId +' a[class="'+ classPrefixFollow +'"]';
+        favoriteButton += ', div.'+ voteContainerId +' a[class="'+ classPrefixFollowed +'"]';
         return $(favoriteButton);
     };
     var getFavoriteNumber = function(){
@@ -364,27 +364,27 @@ var Vote = function(){
         return $(favoriteNumber);
     };
     var getQuestionVoteUpButton = function(){
-        var questionVoteUpButton = 'div.'+ voteContainerId +' div[id^='+ imgIdPrefixQuestionVoteup +']';
+        var questionVoteUpButton = 'div.'+ voteContainerId +' div[id^="'+ imgIdPrefixQuestionVoteup +'"]';
         return $(questionVoteUpButton);
     };
     var getQuestionVoteDownButton = function(){
-        var questionVoteDownButton = 'div.'+ voteContainerId +' div[id^='+ imgIdPrefixQuestionVotedown +']';
+        var questionVoteDownButton = 'div.'+ voteContainerId +' div[id^="'+ imgIdPrefixQuestionVotedown +'"]';
         return $(questionVoteDownButton);
     };
     var getAnswerVoteUpButtons = function(){
-        var answerVoteUpButton = 'div.'+ voteContainerId +' div[id^='+ imgIdPrefixAnswerVoteup +']';
+        var answerVoteUpButton = 'div.'+ voteContainerId +' div[id^="'+ imgIdPrefixAnswerVoteup +'"]';
         return $(answerVoteUpButton);
     };
     var getAnswerVoteDownButtons = function(){
-        var answerVoteDownButton = 'div.'+ voteContainerId +' div[id^='+ imgIdPrefixAnswerVotedown +']';
+        var answerVoteDownButton = 'div.'+ voteContainerId +' div[id^="'+ imgIdPrefixAnswerVotedown +'"]';
         return $(answerVoteDownButton);
     };
     var getAnswerVoteUpButton = function(id){
-        var answerVoteUpButton = 'div.'+ voteContainerId +' div[id='+ imgIdPrefixAnswerVoteup + id + ']';
+        var answerVoteUpButton = 'div.'+ voteContainerId +' div[id="'+ imgIdPrefixAnswerVoteup + id + '"]';
         return $(answerVoteUpButton);
     };
     var getAnswerVoteDownButton = function(id){
-        var answerVoteDownButton = 'div.'+ voteContainerId +' div[id='+ imgIdPrefixAnswerVotedown + id + ']';
+        var answerVoteDownButton = 'div.'+ voteContainerId +' div[id="'+ imgIdPrefixAnswerVotedown + id + '"]';
         return $(answerVoteDownButton);
     };
 
@@ -427,7 +427,7 @@ var Vote = function(){
     };
 
     var getremoveAnswersLinks = function(){
-        var removeAnswerLinks = 'div.answer-controls a[id^='+ removeAnswerLinkIdPrefix +']';
+        var removeAnswerLinks = 'div.answer-controls a[id^="'+ removeAnswerLinkIdPrefix +'"]';
         return $(removeAnswerLinks);
     };
 
@@ -458,7 +458,7 @@ var Vote = function(){
 
     var bindEvents = function(){
         // accept answers
-        var acceptedButtons = 'div.'+ voteContainerId +' div[id^='+ imgIdPrefixAccept +']';
+        var acceptedButtons = 'div.'+ voteContainerId +' div[id^="'+ imgIdPrefixAccept +'"]';
         $(acceptedButtons).unbind('click').click(function(event){
            Vote.accept($(event.target));
         });
@@ -572,9 +572,9 @@ var Vote = function(){
             $("#"+commentLinkIdPrefix+postId).removeClass("comment-link-accepted");
         }
         else if(data.success == "1"){
-            var answers = ("div[id^="+answerContainerIdPrefix +"]");
+            var answers = ('div[id^="'+answerContainerIdPrefix +"']");
             $(answers).removeClass("accepted-answer");
-            var commentLinks = ("div[id^="+answerContainerIdPrefix +"] div[id^="+ commentLinkIdPrefix +"]");
+            var commentLinks = ('div[id^="'+answerContainerIdPrefix +'"] div[id^="'+ commentLinkIdPrefix +'"]');
             $(commentLinks).removeClass("comment-link-accepted");
 
             $("#"+answerContainerIdPrefix+postId).addClass("accepted-answer");
@@ -663,9 +663,9 @@ var Vote = function(){
         //_('anonymous users cannot flag offensive posts') + pleaseLogin;
         if (data.success == "1"){
             if(data.count > 0)
-                $(object).children('span[class=darkred]').text("("+ data.count +")");
+                $(object).children('span[class="darkred"]').text("("+ data.count +")");
             else
-                $(object).children('span[class=darkred]').text("");
+                $(object).children('span[class="darkred"]').text("");
 
             // Change the link text and rebind events
             $(object).find("a.question-flag").html(gettext("remove flag"));
@@ -692,12 +692,12 @@ var Vote = function(){
         //_('anonymous users cannot flag offensive posts') + pleaseLogin;
         if (data.success == "1"){
             if(data.count > 0){
-                $(object).children('span[class=darkred]').text("("+ data.count +")");                
+                $(object).children('span[class="darkred"]').text("("+ data.count +")");                
             }
             else{
-                $(object).children('span[class=darkred]').text("");
+                $(object).children('span[class="darkred"]').text("");
                 // Remove "remove all flags link" since there are no more flags to remove
-                var remove_all = $(object).siblings("span.offensive-flag[id*=-offensive-remove-all-flag-]");
+                var remove_all = $(object).siblings('span.offensive-flag[id*="-offensive-remove-all-flag-"]');
                 $(remove_all).next("span.sep").remove();
                 $(remove_all).remove();
             }
@@ -726,11 +726,11 @@ var Vote = function(){
         //_('anonymous users cannot flag offensive posts') + pleaseLogin;
         if (data.success == "1"){
             if(data.count > 0)
-                $(object).children('span[class=darkred]').text("("+ data.count +")");
+                $(object).children('span[class="darkred"]').text("("+ data.count +")");
             else
-                $(object).children('span[class=darkred]').text("");
+                $(object).children('span[class="darkred"]').text("");
             // remove the link. All flags are gone
-            var remove_own = $(object).siblings("span.offensive-flag[id*=-offensive-remove-flag-]")
+            var remove_own = $(object).siblings('span.offensive-flag[id*="-offensive-remove-flag-"]');
             $(remove_own).find("a.question-flag").html(gettext("flag offensive"));
             $(remove_own).attr("id", $(remove_own).attr("id").replace("remove-flag-", "flag-"));
             
@@ -1695,7 +1695,7 @@ PostCommentsWidget.prototype.decorate = function(element){
     this._cbox = element.find('.content');
     var comments = new Array();
     var me = this;
-    this._cbox.children().each(function(index, element){
+    this._cbox.children('.comment').each(function(index, element){
         var comment = new Comment(me);
         comments.push(comment)
         comment.decorate(element);

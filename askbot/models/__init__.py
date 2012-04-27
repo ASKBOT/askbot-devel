@@ -1178,6 +1178,7 @@ def user_delete_answer(
     answer.save()
 
     answer.thread.update_answer_count()
+    answer.thread.invalidate_cached_data()
     logging.debug('updated answer count to %d' % answer.thread.answer_count)
 
     signals.delete_question_or_answer.send(
@@ -1247,6 +1248,7 @@ def user_reopen_question(
     self.assert_can_reopen_question(question)
     question.thread.set_closed_status(closed=False, closed_by=self, closed_at=timestamp, close_reason=None)
 
+@auto_now_timestamp
 def user_delete_post(
                     self,
                     post = None,
@@ -2005,13 +2007,13 @@ def _process_vote(user, post, timestamp=None, cancel=False, vote_type=None):
         else:
             auth.onDownVoted(vote, post, user, timestamp)
             
+    post.thread.invalidate_cached_data()
+
     if post.post_type == 'question':
         #denormalize the question post score on the thread
         post.thread.score = post.score
         post.thread.save()
         post.thread.update_summary_html()
-
-    post.thread.invalidate_cached_data()
 
     if cancel:
         return None
