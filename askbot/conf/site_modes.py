@@ -76,9 +76,9 @@ settings.register(
             "Bootstrap mode lowers reputation and certain badge "
             "thresholds, to values, more suitable "
             "for the smaller communities, "
-            "<strong>WARNING:</strong> your current value for "
+            "<strong>WARNING:</strong> your current values for "
             "Minimum reputation, "
-            "Bagde Settings and "
+            "Badge Settings and "
             "Vote Rules will "
             "be changed after you modify this setting."
         ),
