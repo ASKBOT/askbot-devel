@@ -147,6 +147,71 @@ class RssLastestQuestionsFeed(Feed):
         
         return qs.order_by('-thread__last_activity_at')[:30]
 
+class RssUnansweredQuestionsFeed(Feed):
+    """rss feed class for the latest questions
+    """
+    title = askbot_settings.APP_TITLE + _(' - ')+ _('unanswered questions')
+    link = askbot_settings.APP_URL
+    description = askbot_settings.APP_DESCRIPTION
+    copyright = askbot_settings.APP_COPYRIGHT
+
+    def item_link(self, item):
+        """get full url to the item
+        """
+        return self.link + item.get_absolute_url()
+
+    def item_author_name(self, item):
+        """get name of author
+        """
+        return item.author.username
+
+    def item_author_link(self, item):
+        """get url of the author's profile
+        """
+        return item.author.get_profile_url()
+
+    def item_pubdate(self, item):
+        """get date of creation for the item
+        """
+        return item.added_at
+
+    def item_guid(self, item):
+        """returns url without the slug
+        because the slug can change
+        """
+        return self.link + item.get_absolute_url(no_slug = True)
+
+    def item_description(self, item):
+        """returns the desciption for the item
+        """
+        return item.text
+
+    def items(self, item):
+        """get questions for the feed
+        """
+        #initial filtering
+        qs = Post.objects.get_questions().filter(deleted=False)
+
+        #get search string and tags from GET
+        query = self.request.GET.get("q", None)
+        tags = self.request.GET.getlist("tags")
+
+        if query:
+            #if there's a search string, use the
+            #question search method
+            qs = qs.get_by_text_query(query)
+
+        if tags:
+            #if there are tags in GET, filter the
+            #questions additionally
+            for tag in tags:
+                qs = qs.filter(thread__tags__name = tag)
+
+        # Limit the results to unanswered questions only
+        qs = qs.filter(thread__accepted_answer__isnull=True)
+
+        # I wanted all unanswered questions, so disabling the last 30 specifier.
+        return qs.order_by('-thread__last_activity_at')#[:30]
         
 
 def main():
