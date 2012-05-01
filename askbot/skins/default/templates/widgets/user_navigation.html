@@ -12,6 +12,6 @@
     <a href="{{ settings.LOGIN_URL }}?next={{request.path|clean_login_url}}">{% trans %}Hi, there! Please sign in{% endtrans %}</a>
 {% endif %}
 {% if request.user.is_authenticated() and request.user.is_administrator() %}
-    <a href="{% url site_settings %}">{% trans %}settings{% endtrans %}</a>
+    <a href="{% url site_settings %}?next={{ settings.ASKBOT_URL }}">{% trans %}settings{% endtrans %}</a>
 {% endif %}
     <a href="{% url "help" %}" title="{% trans %}help{% endtrans %}">{% trans %}help{% endtrans %}</a>
