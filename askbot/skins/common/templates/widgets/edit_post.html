@@ -7,11 +7,45 @@
         </div>
     </div>
 {% endif %}
+
+{% if editor_toggle %}
+    <div class="preview-toggle">
+        <span
+            id="shown-collapse"
+            title="{% trans %}Toggle extended question details{% endtrans %}"
+        >
+        {% if editor_toggle == "off" %}
+            [{% trans %}add question details{% endtrans %}]
+        {% else %}
+            [{% trans %}hide question details{% endtrans %}]
+        {% endif %}
+        </span>
+    </div>
+
+    {% if editor_toggle == "off" %}
+<div id="explain-area" style="display: none">
+    {% else %}
+<div id="explain-area">
+    {% endif %}
+{% endif %}
 <div id="wmd-button-bar" class="wmd-panel"></div>
 <div class="form-item">
     {{ post_form.text }}{# this element is resizable and will be wrapped by js #}
     <label for="editor" class="form-error">{{ post_form.text.errors }}</label>
 </div>
+<div class="preview-toggle">
+    <span
+        id="pre-collapse"
+        title="{% trans %}Toggle the real time Markdown editor preview{% endtrans %}"
+    >
+        [{% trans %}hide preview{% endtrans %}]
+    </span>
+</div>
+<div id="previewer" class="wmd-preview"></div>
+{% if editor_toggle %}
+</div>
+{% endif %}
+
 {# need label element for resizable input, b/c form validation won't find span #}
 {% if post_type == 'question' %}
     <div class="form-item">
@@ -52,12 +86,3 @@
         <div class="form-error" >{{ post_form.summary.errors }}</div>
     </div>
 {% endif %}
-<div class="preview-toggle">
-    <span 
-        id="pre-collapse" 
-        title="{% trans %}Toggle the real time Markdown editor preview{% endtrans %}"
-    >
-        [{% trans %}hide preview{% endtrans %}]
-    </span>
-</div>
-<div id="previewer" class="wmd-preview"></div>
