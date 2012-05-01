@@ -472,7 +472,7 @@ class Command(NoArgsCommand):
 
                 text += _(
                     '<p>Please remember that you can always <a '
-                    'hrefl"%(email_settings_link)s">adjust</a> frequency of the email updates or '
+                    'href="%(email_settings_link)s">adjust</a> frequency of the email updates or '
                     'turn them off entirely.<br/>If you believe that this message was sent in an '
                     'error, please email about it the forum administrator at %(admin_email)s.</'
                     'p><p>Sincerely,</p><p>Your friendly %(sitename)s server.</p>'
