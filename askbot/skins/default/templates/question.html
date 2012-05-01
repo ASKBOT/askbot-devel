@@ -11,6 +11,7 @@
 {% endblock %}
 {% block forejs %}
     <script type="text/javascript">
+    <!--
         //below is pure cross-browser javascript, no jQuery
         (function(){
             var data = askbot['data'];
@@ -153,6 +154,7 @@
             askbot['functions']['renderAddCommentButton'] = render_add_comment_button;
             askbot['functions']['renderAddAnswerButton'] = render_add_answer_button;
         })();
+    //-->	
     </script>
 {% endblock %}
 {% block content %}

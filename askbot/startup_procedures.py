@@ -182,12 +182,12 @@ def test_modules():
 
 def test_postgres():
     """Checks for the postgres buggy driver, version 2.4.2"""
-    if 'postgresql_psycopg2' in askbot.get_database_engine_name():
+    if 'postgresql_psycopg2' in askbot.get_database_engine_name() and 'test' in sys.argv:
         import psycopg2
         version = psycopg2.__version__.split(' ')[0].split('.')
         if version == ['2', '4', '2']:
             raise AskbotConfigError(
-                'Please install psycopg2 version 2.4.1,\n version 2.4.2 has a bug'
+                'When running tests please install psycopg2 version 2.4.1,\n version 2.4.2 has a bug'
             )
         elif version > ['2', '4', '2']:
             pass #don't know what to do
@@ -492,7 +492,7 @@ def run_startup_tests():
     test_encoding()
     test_modules()
     test_askbot_url()
-    #test_postgres()
+    test_postgres()
     test_middleware()
     test_celery()
     #test_csrf_cookie_domain()
