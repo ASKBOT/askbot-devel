@@ -5,6 +5,7 @@ Coffin>=0.3
 South>=0.7.1
 #-e git+https://github.com/matthiask/south.git#egg=south
 oauth2
+Lamson
 markdown2
 html5lib==0.90
 django-keyedcache

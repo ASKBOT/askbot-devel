@@ -288,10 +288,6 @@ class EmailFeedSetting(models.Model):
     reported_at = models.DateTimeField(null=True)
     objects = EmailFeedSettingManager()
 
-    class Meta:
-        #added to make account merges work properly
-        unique_together = ('subscriber', 'feed_type')
-
     def __str__(self):
         if self.reported_at is None:
             reported_at = "'not yet'"
@@ -332,4 +328,6 @@ class EmailFeedSetting(models.Model):
         self.save()
 
     class Meta:
+        #added to make account merges work properly
+        unique_together = ('subscriber', 'feed_type')
         app_label = 'askbot'

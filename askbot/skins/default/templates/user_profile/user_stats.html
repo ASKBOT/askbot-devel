@@ -92,6 +92,49 @@
             </tr>
         </table>
     </div>
+    {% if interesting_tag_names %}
+    <a name="interesting tags"></a>
+    {% spaceless %}
+        <h2>{% trans counter=interesting_tag_names|length %}<span class="count">{{counter}}</span> Interesting Tag{% pluralize %}<span class="count">{{counter}}</span> Interesting Tags{% endtrans %}</h2>
+    {% endspaceless %}
+    <div class="user-stats-table">
+        <table class="tags">
+            <tr>
+                <td valign="top">
+			    {{ 
+			        macros.tag_list_widget(
+			            interesting_tag_names,
+			            deletable = False,
+			            css_class = 'interesting marked-tags'
+			        )
+			    }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+    {% if ignored_tag_names %}
+    <a name="ignored tags"></a>
+    {% spaceless %}
+        <h2>{% trans counter=ignored_tag_names|length %}<span class="count">{{counter}}</span> Ignored Tag{% pluralize %}<span class="count">{{counter}}</span> Ignored Tags{% endtrans %}</h2>
+    {% endspaceless %}
+    <div class="user-stats-table">
+        <table class="tags">
+            <tr>
+                <td valign="top">
+				    {{ 
+				        macros.tag_list_widget(
+				            ignored_tag_names,
+				            deletable = False,
+				            make_links = True,
+				            css_class = 'ignored marked-tags'
+				        )
+				    }}
+                </td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
     <a name="badges"></a>
     {% spaceless %}
     <h2>{% trans counter=total_badges %}<span class="count">{{counter}}</span> Badge{% pluralize %}<span class="count">{{counter}}</span> Badges{% endtrans %}</h2>
@@ -153,5 +196,9 @@
             });
         });
     </script>
+    <script type='text/javascript' src='{{"/js/tag_selector.js"|media}}'></script>
+	<script type="text/javascript">
+	askbot['urls']['questions'] = '{% url "questions" %}';
+	</script>
 {% endblock %}
 <!-- end user_stats.html -->

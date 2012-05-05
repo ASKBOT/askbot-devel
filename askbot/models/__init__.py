@@ -54,7 +54,7 @@ User.add_to_class(
                     )
         )
 
-User.add_to_class('email_isvalid', models.BooleanField(default=False))
+User.add_to_class('email_isvalid', models.BooleanField(default=False)) #@UndefinedVariable
 User.add_to_class('email_key', models.CharField(max_length=32, null=True))
 #hardcoded initial reputaion of 1, no setting for this one
 User.add_to_class('reputation',
@@ -92,6 +92,8 @@ User.add_to_class('about', models.TextField(blank=True))
 #interesting tags and ignored tags are to store wildcard tag selections only
 User.add_to_class('interesting_tags', models.TextField(blank = True))
 User.add_to_class('ignored_tags', models.TextField(blank = True))
+User.add_to_class('show_tags', models.BooleanField(default = False))
+
 User.add_to_class(
     'email_tag_filter_strategy',
     models.SmallIntegerField(

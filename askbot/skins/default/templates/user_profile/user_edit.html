@@ -96,6 +96,10 @@
                     <td style="vertical-align:top">{{ form.about.label_tag() }}:</td>
                     <td>{{ form.about }} <span class="form-error"> {{ form.about.errors }} </span></td>
                 </tr>
+                <tr>
+                    <td>{{ form.show_tags.label_tag() }}:</td>
+                    <td>{{ form.show_tags }} <span class="form-error"> {{ form.show_tags.errors }} </span></td>
+                </tr>
             </table>
             <div style="margin:30px 0 60px 0">
                 <input type="submit" value="{% trans %}Update{% endtrans %}" class="submit" >&nbsp;

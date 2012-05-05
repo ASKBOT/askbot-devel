@@ -912,6 +912,11 @@ class EditUserForm(forms.Form):
                         required=False
                     )
 
+    show_tags = forms.BooleanField(
+                        label=_('Show tags'),
+                        required=False
+                    )
+
     birthday = forms.DateField(
                         label=_('Date of birth'),
                         help_text=_('will not be shown, used to calculate age, format: YYYY-MM-DD'),
@@ -942,6 +947,7 @@ class EditUserForm(forms.Form):
             country = user.country
         self.fields['country'].initial = country
         self.fields['show_country'].initial = user.show_country
+        self.fields['show_tags'].initial = user.show_tags
 
         if user.date_of_birth is not None:
             self.fields['birthday'].initial = user.date_of_birth
