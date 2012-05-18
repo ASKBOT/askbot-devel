@@ -1810,7 +1810,7 @@ var socialSharing = function(){
             params: "width=630,height=436,toolbar=1,status=1,resizable=1,scrollbars=1"
         },
         linkedin: {
-            url: "http://www.linkedin.com/shareArticle?mini=true&amp;url={URL}&amp;source={TEXT}",
+            url: "http://www.linkedin.com/shareArticle?mini=true&url={URL}&title={TEXT}",
             params: "width=630,height=436,toolbar=1,status=1,resizable=1,scrollbars=1"
         }
     };
