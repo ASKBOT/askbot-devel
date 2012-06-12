@@ -195,5 +195,5 @@ the developers of the Askbot project:
 +--------------------------------+-------------------------------------------------------------+
 | `askbot_add_test_content`      | Creates content with dummy data for testing                 |
 +--------------------------------+-------------------------------------------------------------+
-| `askbot_create_test_fixture`   | Creates a test fixture at `askbot/tests/test_data.json`  |
+| `askbot_create_test_fixture`   | Creates a test fixture at `askbot/tests/test_data.json`     |
 +--------------------------------+-------------------------------------------------------------+
