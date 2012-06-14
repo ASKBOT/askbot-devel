@@ -5,19 +5,21 @@
 # Translators:
 # Christophe kryskool <christophe.chauvet@gmail.com>, 2011.
 # Mademoiselle Geek <mademoisellegeek42@gmail.com>, 2011.
+# Alexandre Lissy <alexandrelissy@free.fr>, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-18 18:54-0500\n"
-"PO-Revision-Date: 2011-12-17 21:30+0000\n"
-"Last-Translator: Mademoiselle Geek <mademoisellegeek42@gmail.com>\n"
-"Language-Team: French (http://www.transifex.net/projects/p/askbot/team/fr/)\n"
+"PO-Revision-Date: 2012-06-14 15:40+0200\n"
+"Last-Translator: Alexandre Lissy <alexandrelissy@free.fr>\n"
+"Language-Team: français <>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Content-Transfer-Encoding: 8bits\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Translate Toolkit 1.9.0\n"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:73
@@ -111,7 +113,6 @@ msgstr ""
 "publicité, des remarques malveillantes, etc.?"
 
 #: skins/common/media/js/post.js:331
-#, fuzzy
 msgid "please confirm removal of offensive flag"
 msgstr ""
 "êtes-vous sûr que ce message est offensant, contient du spam, de la "
@@ -172,24 +173,22 @@ msgstr[0] "Supprimer cet avertissement?"
 msgstr[1] "Supprimer ces avertissements?"
 
 #: skins/common/media/js/user.js:65
-#, fuzzy
 msgid "Close this entry?"
 msgid_plural "Close these entries?"
-msgstr[0] "supprimer ce commentaire"
-msgstr[1] "supprimer ce commentaire"
+msgstr[0] "Fermer cette entrée ?"
+msgstr[1] "Fermer ces entrées ?"
 
 #: skins/common/media/js/user.js:72
 msgid "Remove all flags on this entry?"
 msgid_plural "Remove all flags on these entries?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Supprimer tous les drapeaux sur cette entrée ?"
+msgstr[1] "Supprimer tous les drapeaux sur ces entrées ?"
 
 #: skins/common/media/js/user.js:79
-#, fuzzy
 msgid "Delete this entry?"
 msgid_plural "Delete these entries?"
-msgstr[0] "supprimer ce commentaire"
-msgstr[1] "supprimer ce commentaire"
+msgstr[0] "Supprimer cette entrée ?"
+msgstr[1] "Supprimer ces entrées ?"
 
 #: skins/common/media/js/user.js:159
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
