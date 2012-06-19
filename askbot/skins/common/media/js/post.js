@@ -1551,6 +1551,10 @@ Comment.prototype.setContent = function(data){
     this._comment_body.append(this._comment_added_at);
     this._comment_body.append(')');
 
+    if (askbot['data']['is_moderator']) {
+        this._comment_body.append(' from ' + this._data['ip_addr']);
+    }
+
     if (this._editable){
         this._edit_link = new EditLink();
         this._edit_link.setHandler(this.getEditHandler())

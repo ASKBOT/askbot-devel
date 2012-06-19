@@ -555,7 +555,8 @@ def __generate_comments_json(obj, user):#non-view generates json data for the po
             'is_deletable': is_deletable,
             'is_editable': is_editable,
             'score': comment.score,
-            'upvoted_by_user': getattr(comment, 'upvoted_by_user', False)
+            'upvoted_by_user': getattr(comment, 'upvoted_by_user', False),
+            'ip_addr': comment.ip_addr,
         }
         json_comments.append(comment_data)
 
@@ -622,6 +623,7 @@ def edit_comment(request):
         'is_editable': is_editable,
         'score': comment_post.score,
         'voted': comment_post.is_upvoted_by(request.user),
+        'ip_addr': comment_post.ip_addr
     }
 
 @csrf.csrf_exempt

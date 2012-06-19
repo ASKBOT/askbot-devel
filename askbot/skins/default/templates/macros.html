@@ -77,23 +77,27 @@
 {%- endmacro -%}
 
 {%- macro post_last_updater_and_creator_info(
-        post, min_rep_to_edit_wiki, karma_mode = None, badges_mode = None, user = None
+        post, min_rep_to_edit_wiki, karma_mode = None, badges_mode = None, user = None,
+        is_moderator = False
     ) -%}
     {{ post_contributor_info(
             post, "original_author", post.wiki, min_rep_to_edit_wiki,
-            karma_mode = karma_mode, badges_mode = badges_mode, user = user
+            karma_mode = karma_mode, badges_mode = badges_mode, user = user,
+            is_moderator = is_moderator
         )
     }}
     {{ post_contributor_info(
             post, "last_updater", post.wiki, min_rep_to_edit_wiki,
-            karma_mode = karma_mode, badges_mode = badges_mode, user = user
+            karma_mode = karma_mode, badges_mode = badges_mode, user = user,
+            is_moderator = is_moderator
         )
     }}
 {%- endmacro -%}
 
 {%- macro post_contributor_info(
         post, contributor_type, is_wiki, wiki_min_rep,
-        karma_mode = None, badges_mode = None, user = None
+        karma_mode = None, badges_mode = None, user = None,
+        is_moderator = False
     ) -%}
 {# there is a whole bunch of trickery here, probably indicative of 
 poor design of the data or methods on data objects #}
@@ -136,6 +140,9 @@ poor design of the data or methods on data objects #}
                 <strong>{{ timeago(post.added_at) }}</strong>
             {% endif %}
         </p>
+        {% if is_moderator %}
+            <p>from {{ post.ip_addr }}</p>
+        {% endif %}
         {{ post_contributor_avatar_and_credentials(
             post, post.author, karma_mode = karma_mode, badges_mode = badges_mode
         ) }}
@@ -364,7 +371,8 @@ for the purposes of the AJAX comment editor #}
         show_comment = None,
         show_comment_position = None,
         user=None,
-        max_comments=None
+        max_comments=None,
+        is_moderator = False
     )
 -%}
     {% spaceless %}
