@@ -168,7 +168,8 @@ class PostManager(BaseQuerySetManager):
                 wiki = False,
                 email_notify = False,
                 post_type = None,
-                by_email = False
+                by_email = False,
+                ip_addr = None
             ):
         # TODO: Some of this code will go to Post.objects.create_new
 
@@ -183,6 +184,7 @@ class PostManager(BaseQuerySetManager):
             wiki = wiki,
             text = text,
             #.html field is denormalized by the save() call
+            ip_addr = ip_addr
         )
 
         if post.wiki:
@@ -211,7 +213,8 @@ class PostManager(BaseQuerySetManager):
                         text,
                         wiki = False,
                         email_notify = False,
-                        by_email = False
+                        by_email = False,
+                        ip_addr = None
                     ):
         answer = self.create_new(
                             thread,
@@ -220,7 +223,8 @@ class PostManager(BaseQuerySetManager):
                             text,
                             wiki = wiki,
                             post_type = 'answer',
-                            by_email = by_email
+                            by_email = by_email,
+                            ip_addr = ip_addr
                         )
         #set notification/delete
         if email_notify:
@@ -337,6 +341,7 @@ class Post(models.Model):
     #The privilege may be defined through groups to which
     #the thread belongs or in some other way.
     is_private = models.BooleanField(default=False)
+    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = PostManager()
 
@@ -681,7 +686,8 @@ class Post(models.Model):
                 comment=None,
                 user=None,
                 added_at=None,
-                by_email = False):
+                by_email = False,
+                ip_addr = None):
 
         if added_at is None:
             added_at = datetime.datetime.now()
@@ -695,7 +701,8 @@ class Post(models.Model):
                                                 comment,
                                                 parent = self,
                                                 post_type = 'comment',
-                                                by_email = by_email
+                                                by_email = by_email,
+                                                ip_addr = ip_addr
                                             )
         self.comment_count = self.comment_count + 1
         self.save()
@@ -1898,13 +1905,14 @@ class PostFlagReason(models.Model):
 class AnonymousAnswer(AnonymousContent):
     question = models.ForeignKey(Post, related_name='anonymous_answers')
 
-    def publish(self, user):
+    def publish(self, user, ip_addr=None):
         added_at = datetime.datetime.now()
         Post.objects.create_new_answer(
             thread=self.question.thread,
             author=user,
             added_at=added_at,
             wiki=self.wiki,
-            text=self.text
+            text=self.text,
+            ip_addr=ip_addr
         )
         self.delete()

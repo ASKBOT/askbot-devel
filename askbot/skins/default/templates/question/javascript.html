@@ -23,12 +23,20 @@
         {% else %}
             askbot['settings']['saveCommentOnEnter'] = false;
         {% endif %}
+        askbot['urls']['moderate_ip'] = '{% url moderate_ip %}';
+        askbot['data']['ip_addr'] = '{{request.META['REMOTE_ADDR']}}';
+        {% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
+            askbot['data']['is_moderator'] = true;
+        {% else %}
+            askbot['data']['is_moderator'] = false;
+        {% endif %}
     </script>
     <script type='text/javascript' src='{{"/js/wmd/showdown.js"|media}}'></script>
     <script type='text/javascript' src='{{"/js/wmd/wmd.js"|media}}'></script>
 {% endif %}
 <script type='text/javascript' src='{{"/js/jquery.validate.min.js"|media}}'></script>
 <script type='text/javascript' src='{{"/js/post.js"|media}}'></script>
+<script type='text/javascript' src='{{"/js/moderate_ip.js"|media}}'></script>
 <script type="text/javascript">
     // define reputation needs for comments
     var repNeededForComments = 50;

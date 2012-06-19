@@ -23,6 +23,7 @@ from django.core.urlresolvers import reverse
 from django.core import exceptions as django_exceptions
 from django.contrib.humanize.templatetags import humanize
 from django.http import QueryDict
+from tracking.models import BannedIP
 
 import askbot
 from askbot import exceptions
@@ -39,8 +40,6 @@ from askbot.templatetags import extra_tags
 import askbot.conf
 from askbot.conf import settings as askbot_settings
 from askbot.skins.loaders import render_into_skin, get_template #jinja2 template loading enviroment
-
-from tracking.models import BannedIP
 
 # used in index page
 #todo: - take these out of const or settings
@@ -530,19 +529,16 @@ def question(request, id):#refactor - long subroutine. display question body, an
     user_can_post_comment = (
         request.user.is_authenticated() and request.user.can_post_comment()
     )
-    ips = set([question.ip_addr])
-    for comment in question.comments.all():
+
+    ips = set([question_post.ip_addr])
+    for comment in question_post.comments.all():
         ips.add(comment.ip_addr)
     for answer in page_objects.object_list:
         ips.add(answer.ip_addr)
         for comment in answer.comments.all():
             ips.add(comment.ip_addr)
-    bannedIPs = BannedIP.objects.filter(
-                        ip_address__in = ips
-                    ).values_list(
-                        'ip_address',
-                        flat = True
-                    )
+    bannedIPs = [i[0] for i in BannedIP.objects.filter(
+        ip_address__in = ips).values_list('ip_address')]
 
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
@@ -565,7 +561,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_post': show_post,
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
-        'bannedIPs': bannedIPs,
+        'bannedIPs': bannedIPs
     }
 
     return render_into_skin('question.html', data, request)
@@ -604,6 +600,34 @@ def get_comment(request):
     request.user.assert_can_edit_comment(comment)
     return {'text': comment.text}
 
+@anonymous_forbidden
+def moderate_ip(request):
+    """
+    view to add/remove an IP from BannedIP list,
+    response requires request method post
+    """
+    if request.method != 'POST':
+        return HttpResponseBadRequest("Only post method supported.")
+    if not request.user.is_administrator_or_moderator():
+        return HttpResponseForbidden("You do not have permission to"\
+            " moderate IP.")
+    try:
+        moderate_type = request.POST['type']
+        ip = request.POST['ip']
+        if moderate_type == 'block':
+            try:
+                BannedIP.objects.get_or_create(ip_address = ip)
+            except BannedIP.MultipleObjectsReturned, e:
+                BannedIP.objects.filter(ip_address=ip).delete()
+                BannedIP.objects.create(ip_address=ip)
+        elif moderate_type == 'unblock':
+            BannedIP.objects.filter(ip_address = ip).delete()
+        else:
+            return HttpResponseBadRequest("Invalid IP moderation type.")
+        return HttpResponse(content='success', status=200)
+    except Exception, e:
+        return HttpResponseBadRequest(unicode(e))
+
 def widget_questions(request):
     """Returns the first x questions based on certain tags.
     @returns template with those questions listed."""
@@ -620,32 +644,3 @@ def widget_questions(request):
     }
     return render_into_skin('question_widget.html', data, request) 
     
-    return {'text': comment.comment}
-
-#todo: this view must be moved to writers where POST handlers belong
-@anonymous_forbidden
-def moderate_ip(request):
-    """
-    view to add/remove an IP from BannedIP list,
-    response requires request method post
-    """
-    if request.method != 'POST':
-        return HttpResponseNotAllowed("Only post method supported.")
-    if not request.user.is_administrator_or_moderator():
-        return HttpResponseNotAllowed("You do not have permission to moderate IP.")
-    try:
-        moderate_type = request.POST['type']
-        ip = request.POST['ip']
-        if moderate_type == 'block':
-            try:
-                BannedIP.objects.get_or_create(ip_address = ip)
-            except BannedIP.MultipleObjectsReturned, e:
-                BannedIP.objects.filter(ip_address=ip).delete()
-                BannedIP.objects.create(ip_address=ip)
-        elif moderate_type == 'unblock':
-            BannedIP.objects.filter(ip_address = ip).delete()
-        else:
-            return HttpResponseNotAllowed("Invalid IP moderation type.")
-        return HttpResponse(content='success', status=200)
-    except Exception, e:
-            return HttpResponseNotAllowed(unicode(e))

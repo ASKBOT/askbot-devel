@@ -37,6 +37,19 @@
     <a class="question-flag">{% trans %}flag offensive{% endtrans %}</a>
 </span>
 {% endif %}
+{% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
+    {% if answer.ip_addr not in bannedIPs %}
+    <span class="moderate-ip block {{answer.ip_addr}}" 
+            title="{% trans %}block IP {% endtrans %} {{answer.ip_addr}}">
+            <a>{% trans %}block IP {% endtrans %}</a>
+        </span>
+    {% else %}
+    <span class="moderate-ip unblock {{answer.ip_addr}}" 
+            title="{% trans %}unblock IP {% endtrans %} {{answer.ip_addr}}">
+            <a>{% trans %}unblock IP {% endtrans %}</a>
+        </span>
+    {% endif %}
+{% endif %}
 <span id='post-{{answer.id}}-edit' class="action-link">
     <a class="question-edit" href="{% url edit_answer answer.id %}">{% trans %}edit{% endtrans %}</a>
 </span>

@@ -29,6 +29,19 @@
         <a class="question-flag">{% trans %}flag offensive{% endtrans %}</a>
     </span>
 {% endif %}
+{% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
+    {% if question.ip_addr not in bannedIPs %}
+    <span class="moderate-ip block {{question.ip_addr}}"
+            title="{% trans %}block IP {% endtrans %} {{question.ip_addr}}">
+            <a>{% trans %}block IP {% endtrans %}</a>
+        </span>
+    {% else %}
+    <span class="moderate-ip unblock {{question.ip_addr}}"
+            title="{% trans %}unblock IP {% endtrans %} {{question.ip_addr}}">
+            <a>{% trans %}unblock IP {% endtrans %}</a>
+        </span>
+    {% endif %}
+{% endif %}
 <script type="text/javascript">
     var retagUrl = "{% url retag_question question.id %}";
 </script>

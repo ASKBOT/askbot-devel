@@ -73,7 +73,7 @@ class ThreadManager(models.Manager):
                 is_anonymous = False,
                 by_email = False,
                 email_address = None,
-                ip_addr=None,
+                ip_addr = None
             ):
         """creates new thread"""
         # TODO: Some of this code will go to Post.objects.create_new
@@ -98,8 +98,8 @@ class ThreadManager(models.Manager):
             is_anonymous = is_anonymous,
             #html field is denormalized in .save() call
             text = text,
-            #summary field is denormalized in .save() call,
-            ip_addr = ip_addr,
+            #summary field is denormalized in .save() call
+            ip_addr = ip_addr
         )
         if question.wiki:
             #DATED COMMENT
@@ -394,7 +394,6 @@ class Thread(models.Model):
                                             null=True,
                                             blank=True
                                         )
-    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     #denormalized data: the core approval of the posts is made
     #in the revisions. In the revisions there is more data about
@@ -406,6 +405,7 @@ class Thread(models.Model):
     added_at = models.DateTimeField(default = datetime.datetime.now)
 
     score = models.IntegerField(default = 0)
+    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
 
     objects = ThreadManager()
     
