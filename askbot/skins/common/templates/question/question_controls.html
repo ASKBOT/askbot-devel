@@ -29,7 +29,7 @@
         <a class="question-flag">{% trans %}flag offensive{% endtrans %}</a>
     </span>
 {% endif %}
-{% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
+{% if is_moderator %}
     {% if question.ip_addr not in bannedIPs %}
     <span class="moderate-ip block {{question.ip_addr}}"
             title="{% trans %}block IP {% endtrans %} {{question.ip_addr}}">

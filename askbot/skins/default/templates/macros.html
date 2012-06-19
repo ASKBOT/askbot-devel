@@ -110,7 +110,7 @@ poor design of the data or methods on data objects #}
            {% endif %}
            <strong>{{ timeago(post.added_at) }}</strong>
         </p>
-        {% if user and user.is_authenticated() and user.is_administrator_or_moderator() %}
+        {% if is_moderator %}
             <p>from {{ post.ip_addr }}</p>
         {% endif %}
         <img width="35" height="35"
@@ -406,7 +406,7 @@ for the purposes of the AJAX comment editor #}
                     <div class="comment-body">
                         {{comment.html}}
                         <a class="author" href="{{comment.author.get_profile_url()}}">{{comment.author.username}}</a>
-                        <span class="age">&nbsp;({{ timeago(comment.added_at) }}{% if user and user.is_authenticated() and user.is_administrator_or_moderator() %} from {{comment.ip_addr}}{% endif %})</span>
+                        <span class="age">&nbsp;({{ timeago(comment.added_at) }}{% if is_moderator %} from {{comment.ip_addr}}{% endif %})</span>
                         <a id="post-{{comment.id}}-edit"
                             class="edit">{% trans %}edit{% endtrans %}</a>
                     </div>

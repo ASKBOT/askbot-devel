@@ -25,7 +25,7 @@
         {% endif %}
         askbot['urls']['moderate_ip'] = '{% url moderate_ip %}';
         askbot['data']['ip_addr'] = '{{request.META['REMOTE_ADDR']}}';
-        {% if request.user.is_authenticated() and request.user.is_administrator_or_moderator() %}
+        {% if is_moderator %}
             askbot['data']['is_moderator'] = true;
         {% else %}
             askbot['data']['is_moderator'] = false;

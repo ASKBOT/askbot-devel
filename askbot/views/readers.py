@@ -540,6 +540,11 @@ def question(request, id):#refactor - long subroutine. display question body, an
     bannedIPs = [i[0] for i in BannedIP.objects.filter(
         ip_address__in = ips).values_list('ip_address')]
 
+    is_moderator = (
+            request.user.is_authenticated() and
+            request.user.is_administrator_or_moderator()
+    )
+
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
         'long_time': const.LONG_TIME,#"forever" caching
@@ -561,7 +566,8 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_post': show_post,
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
-        'bannedIPs': bannedIPs
+        'bannedIPs': bannedIPs,
+        'is_moderator': is_moderator
     }
 
     return render_into_skin('question.html', data, request)
