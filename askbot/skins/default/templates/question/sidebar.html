@@ -47,7 +47,7 @@
     <div class="clearfix"></div>
     <h2>{% trans %}Stats{% endtrans %}</h2>
     <p>
-        {% trans %}Asked{% endtrans %}: {{ timeago(question.added_at) }}
+        {% trans %}Asked{% endtrans %}: <strong>{{ timeago(question.added_at) }}</strong>
     </p>
     <p> 
         {% trans %}Seen{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
