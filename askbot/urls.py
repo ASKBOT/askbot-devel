@@ -246,12 +246,12 @@ urlpatterns = patterns('',
     ),
     url(
         r'^%s$' % _('users/'),
-        views.users.users, 
+        views.users.show_users, 
         name='users'
     ),
     url(
         r'^%s%s(?P<group_id>\d+)/(?P<group_slug>.*)/$' % (_('users/'), _('by-group/')),
-        views.users.users, 
+        views.users.show_users, 
         kwargs = {'by_group': True},
         name = 'users_by_group'
     ),
