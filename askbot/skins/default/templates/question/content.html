@@ -28,9 +28,11 @@
     {{ macros.paginator(paginator_context, anchor='#sort-top') }}
     <div class="clean"></div>
 {% else %}
+	{% if settings.ENABLE_INVITE_TO_SHARE %}
     {# ==== START: question/sharing_prompt_phrase.html ==== #}
     {% include "question/sharing_prompt_phrase.html" %}
     {# ==== END: question/sharing_prompt_phrase.html ==== #}
+   	{% endif %}
 {% endif %}
 
 {# ==== START: question/new_answer_form.html ==== #}

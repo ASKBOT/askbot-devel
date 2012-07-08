@@ -531,7 +531,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     user_can_post_comment = (
         request.user.is_authenticated() and request.user.can_post_comment()
     )
-
+    
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
         'long_time': const.LONG_TIME,#"forever" caching
@@ -553,6 +553,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_post': show_post,
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
+        'share_list': functions.make_share_list(),
     }
 
     return render_into_skin('question.html', data, request)

@@ -56,3 +56,21 @@ settings.register(
         description=_('Check to enable sharing of questions on Google+')
     )
 )
+
+settings.register(
+    BooleanValue(
+        SOCIAL_SHARING,
+        'ENABLE_SHARING_EMAIL',
+        default=True,
+        description=_('Check to enable sharing of questions by email')
+    )
+)
+
+settings.register(
+    BooleanValue(
+        SOCIAL_SHARING,
+        'ENABLE_INVITE_TO_SHARE',
+        default=True,
+        description=_('Check to enable sentence at bottom of question page inviting readers to share the question.')
+    )
+)
