@@ -4,6 +4,8 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.contrib.auth.models import User
 
+from askbot.conf import settings as askbot_settings
+
 def get_from_dict_or_object(source, key):
     try:
         return source[key]
@@ -167,3 +169,23 @@ def get_admin():
         return User.objects.filter(is_superuser=True)[0]
     except:
         raise Exception('there is no admin users')
+    
+def make_share_list():
+    twitter = {'site': 'twitter','site_label':'Twitter'}
+    facebook = {'site': 'facebook','site_label':'Facebook'}
+    linkedin = {'site': 'linkedin','site_label':'LinkedIn'}
+    identica = {'site': 'identica','site_label':'identi.ca'}
+    email = {'site': 'email','site_label':'email'}
+    share_list = []
+    if askbot_settings.ENABLE_SHARING_TWITTER:
+        share_list.append(twitter)
+    if askbot_settings.ENABLE_SHARING_FACEBOOK:
+        share_list.append(facebook)
+    if askbot_settings.ENABLE_SHARING_LINKEDIN:
+        share_list.append(linkedin)
+    if askbot_settings.ENABLE_SHARING_IDENTICA:
+        share_list.append(identica)
+    if askbot_settings.ENABLE_SHARING_EMAIL:
+        share_list.append(email)
+    return share_list
+

@@ -1811,8 +1811,11 @@ var socialSharing = function(){
             params: "width=630,height=436,toolbar=1,status=1,resizable=1,scrollbars=1"
         },
         linkedin: {
-            url: "http://www.linkedin.com/shareArticle?mini=true&url={URL}&title={TEXT}",
-            params: "width=630,height=436,toolbar=1,status=1,resizable=1,scrollbars=1"
+          url: "http://www.linkedin.com/shareArticle?mini=true&url={URL}&title={TEXT}",
+          params: "width=630,height=436,toolbar=1,status=1,resizable=1,scrollbars=1"
+        },
+        email: {
+          url: "mailto:?subject={TEXT}&amp;body={URL}"
         }
     };
     var URL = "";
@@ -1846,19 +1849,22 @@ var socialSharing = function(){
     return {
         init: function(){
             URL = window.location.href;
-            TEXT = escape($('h1 > a').html());
+            TEXT = askbot['settings']['appShortName'] + ": " + escape($('h1 > a').html());
             var fb = $('a.facebook-share')
             var tw = $('a.twitter-share');
             var ln = $('a.linkedin-share');
             var ica = $('a.identica-share');
+            var ema = $('a.email-share');
             copyAltToTitle(fb);
             copyAltToTitle(tw);
             copyAltToTitle(ln);
             copyAltToTitle(ica);
+            copyAltToTitle(ema);
             setupButtonEventHandlers(fb, function(){share_page("facebook")});
             setupButtonEventHandlers(tw, function(){share_page("twitter")});
             setupButtonEventHandlers(ln, function(){share_page("linkedin")});
             setupButtonEventHandlers(ica, function(){share_page("identica")});
+            setupButtonEventHandlers(ema, function(){share_page("email")});
         }
     }
 }();

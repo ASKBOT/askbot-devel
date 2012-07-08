@@ -332,3 +332,12 @@ settings.register(
         description=_('Email replies having fewer words than this number will be posted as comments instead of answers')
     )
 )
+
+settings.register(
+    livesettings.BooleanValue(
+        EMAIL,
+        'ENABLE_SUBSCRIPTION_OPTION_AT_REGISTRATION',
+        default=True,
+        description=_('Enables or disables the email subscription option when a user registers')
+    )
+)

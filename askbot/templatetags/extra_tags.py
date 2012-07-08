@@ -112,4 +112,3 @@ def include_jinja(parser, token):
         raise template.TemplateSyntaxError('file name must be quoted')
 
     return IncludeJinja(filename, request_var)
-
