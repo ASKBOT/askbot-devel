@@ -26,6 +26,28 @@ def clean_next(next, default = None):
 def get_next_url(request, default = None):
     return clean_next(request.REQUEST.get('next'), default)
 
+def post_as_user(user, form, userfield='user'):
+    """
+    Allows admin staff to post as any user.
+
+    If the `user` object is_staff and is_active:
+
+        Gets or creates a new user with the username provided in the 'user'
+        field on the form.
+
+    otherwise returns the `user` object.
+    """
+
+    if user.is_staff and user.is_active:
+        # allow admin user to post as anyone.
+        username = form.cleaned_data[userfield]
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = User.objects.create_user(username=username, email='')
+
+    return user
+
 class StrippedNonEmptyCharField(forms.CharField):
     def clean(self, value):
         value = value.strip()

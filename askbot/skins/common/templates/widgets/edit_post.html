@@ -18,7 +18,7 @@
 {% if post_type == 'question' %}
     <div class="form-item">
         {% if tags_are_required %}
-            <label for=id_tags">
+            <label for="id_tags">
             {% if mandatory_tags %}
                 <strong>{% trans %}tags{% endtrans %}</strong>
                 {% trans %}, one of these is required{% endtrans %}
@@ -54,6 +54,31 @@
         <div class="form-error" >{{ post_form.summary.errors }}</div>
     </div>
 {% endif %}
+
+{% if user and user.is_staff and user.is_active %}
+    {# admin can post answers or questions on behalf of anyone. #}
+    {% if post_type == 'question' and edit_title %}
+        {# edit question already has 'user' field set #}
+        <div class="form-item">
+            <strong>{{ post_form.user_author.label_tag() }}</strong> <br />
+            {{ post_form.user_author }}
+            <div class="title-desc">
+                {{ post_form.user_author.help_text }}
+            </div>
+            <div class="form-error">{{ post_form.user_author.errors }}</div>
+        </div>
+    {% else %}
+        <div class="form-item">
+            <strong>{{ post_form.user.label_tag() }}</strong> <br />
+            {{ post_form.user }}
+            <div class="title-desc">
+                {{ post_form.user.help_text }}
+            </div>
+            <div class="form-error">{{ post_form.user.errors }}</div>
+        </div>
+    {% endif %}
+{% endif %}
+
 <div class="preview-toggle">
     <span 
         id="pre-collapse" 

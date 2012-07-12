@@ -39,7 +39,7 @@
                     {% endif %}
                 </p>
             {% endif %}
-            {{ macros.edit_post(answer) }}
+            {{ macros.edit_post(answer, user = request.user) }}
             <input id="add-answer-btn" type="submit" class="submit after-editor" style="float:left"/>
             <script type="text/javascript">
                 askbot['functions']['renderAddAnswerButton']();

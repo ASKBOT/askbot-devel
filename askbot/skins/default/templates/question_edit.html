@@ -20,7 +20,8 @@
                     form,
                     post_type='question',
                     edit_title=True,
-                    mandatory_tags = mandatory_tags
+                    mandatory_tags = mandatory_tags,
+                    user = request.user
                 )
     }}
     <div class="after-editor">
