@@ -2191,14 +2191,14 @@ def user_get_badge_summary(self):
         bit = ungettext(
                 'one silver badge',
                 '%(count)d silver badges',
-                self.gold
+                self.silver
             ) % {'count': self.silver}
         badge_bits.append(bit)
-    if self.silver:
+    if self.bronze:
         bit = ungettext(
                 'one bronze badge',
                 '%(count)d bronze badges',
-                self.gold
+                self.bronze
             ) % {'count': self.bronze}
         badge_bits.append(bit)
 
