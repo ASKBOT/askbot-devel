@@ -72,6 +72,51 @@ settings.register(
     )
 )
 
+settings.register(
+    livesettings.BooleanValue(
+        LDAP_SETTINGS,
+        'USE_LDAP_BOT',
+        description=_('Check it if you want to connect to ldap with a bot user'),
+        default=False
+     )
+)
+
+settings.register(
+    livesettings.StringValue(
+	LDAP_SETTINGS,
+	'LDAP_BOT_USERNAME',
+	description=_('Username for the LDAP bot, to search the ldap database'),
+	default="botName"
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+	LDAP_SETTINGS,
+	'LDAP_BOT_PASSWORD',
+	description=_('Password for the LDAP bot, to search the ldap database'),
+	default="botPass"
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+	LDAP_SETTINGS,
+	'LDAP_FNAME_FIELD',
+	description=_('LDAP Server field name for first name'),
+	default="givenName"
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+	LDAP_SETTINGS,
+	'LDAP_SNAME_FIELD',
+	description=_('LDAP Server field name for surname'),
+	default="sn"
+    )
+)
+
 # May be necessary, but not handled properly.
 # --> Commenting out until handled properly in backends.ldap_authenticate()
 #settings.register(

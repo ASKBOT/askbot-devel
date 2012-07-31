@@ -18,55 +18,67 @@ log = logging.getLogger('configuration')
 def ldap_authenticate(username, password):
     """
     Authenticate using ldap
-    
+   
     python-ldap must be installed
     http://pypi.python.org/pypi/python-ldap/2.4.6
     """
     import ldap
     user_information = None
     try:
-        ldap_session = ldap.initialize(askbot_settings.LDAP_URL)
-        ldap_session.protocol_version = ldap.VERSION3
+        ldap_check = ldap.initialize(askbot_settings.LDAP_URL)
+        ldap_check.protocol_version = ldap.VERSION3
+        if askbot_settings.USE_LDAP_BOT:
+            ldap_check.bind_s(askbot_settings.LDAP_BOT_USERNAME, askbot_settings.LDAP_BOT_PASSWORD)
         user_filter = "({0}={1})".format(askbot_settings.LDAP_USERID_FIELD, 
                                          username)
-        # search ldap directory for user
-        res = ldap_session.search_s(askbot_settings.LDAP_BASEDN, ldap.SCOPE_SUBTREE, user_filter, None)
+        res = ldap_check.search_s(askbot_settings.LDAP_BASEDN, ldap.SCOPE_SUBTREE, user_filter, None)
+        if askbot_settings.USE_LDAP_BOT:
+            ldap_check.unbind_s()
         if res: # User found in LDAP Directory
             user_dn = res[0][0]
             user_information = res[0][1]
-            ldap_session.simple_bind_s(user_dn, password) # <-- will throw  ldap.INVALID_CREDENTIALS if fails
-            ldap_session.unbind_s()
-            
-            exact_username = user_information[askbot_settings.LDAP_USERID_FIELD][0]
-            
-            # Assuming last, first order
-            # --> may be different
-            last_name, first_name = user_information[askbot_settings.LDAP_COMMONNAME_FIELD][0].rsplit(" ", 1)
-            email = user_information[askbot_settings.LDAP_EMAIL_FIELD][0]
+            ldap_session = ldap.initialize(askbot_settings.LDAP_URL)
+            ldap_session.protocol_version = ldap.VERSION3
             try:
-                user = User.objects.get(username__exact=exact_username)
-                # always update user profile to synchronize with ldap server
-                user.set_password(password)
-                user.first_name = first_name
-                user.last_name = last_name
-                user.email = email
-                user.save()
-            except User.DoesNotExist:
-                # create new user in local db
-                user = User()
-                user.username = exact_username
-                user.set_password(password)
-                user.first_name = first_name
-                user.last_name = last_name
-                user.email = email
-                user.is_staff = False
-                user.is_superuser = False
-                user.is_active = True
-                user.save()
-                user_registered.send(None, user = user)
+                ldap_session.simple_bind_s(user_dn, password)
+                ldap_session.unbind_s()
 
-                log.info('Created New User : [{0}]'.format(exact_username))
-            return user
+                exact_username = user_information[askbot_settings.LDAP_USERID_FIELD][0]            
+                first_name = user_information[askbot_settings.LDAP_FNAME_FIELD][0]
+                last_name = user_information[askbot_settings.LDAP_SNAME_FIELD][0]
+                real_name = user_information[askbot_settings.LDAP_COMMONNAME_FIELD][0]
+                email = user_information[askbot_settings.LDAP_EMAIL_FIELD][0]
+                try:
+                    user = User.objects.get(username__exact=exact_username)
+                    # always update user profile to synchronize with ldap server
+                    user.set_password(password)
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.real_name = real_name
+                    user.email = email
+                    user.is_staff = False
+                    user.is_superuser = False
+                    user.save()
+                except User.DoesNotExist:
+                    # create a new local user
+                    user = User()
+                    user.username = exact_username
+                    user.set_password(password)
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.real_name = real_name
+                    user.email = email
+                    user.is_staff = False
+                    user.is_superuser = False
+                    user.is_active = True
+                    user.save()
+                    user_registered.send(None, user = user)
+
+                    log.info('Created New User : [{0}]'.format(exact_username))
+                return user
+            except ldap.INVALID_CREDENTIALS:
+                return None
+
         else:
             # Maybe a user created internally (django admin user)
             try:
@@ -76,17 +88,12 @@ def ldap_authenticate(username, password):
                 else:
                     return None
             except User.DoesNotExist:
-                return None 
+                return None
 
-    except ldap.INVALID_CREDENTIALS, e:
-        return None # Will fail login on return of None
-    except ldap.LDAPError, e:
-        log.error("LDAPError Exception")
-        log.exception(e)
-        return None
     except Exception, e:
         log.error("Unexpected Exception Occurred")
         log.exception(e)
+        raise e
         return None
 
 
