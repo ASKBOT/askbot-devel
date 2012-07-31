@@ -1138,11 +1138,11 @@ class EditTagWikiForm(forms.Form):
 
 class EditUserForm(forms.Form):
     email = forms.EmailField(
-                    label=u'Email',
-                    required=True,
-                    max_length=255,
-                    widget=forms.TextInput(attrs={'size': 35})
-                )
+                         label=u'Email',
+                         required=False,
+                         max_length=255,
+                         widget=forms.TextInput(attrs={'size' : 35})
+                    )
 
     realname = forms.CharField(
                         label=_('Real name'),
@@ -1200,7 +1200,9 @@ class EditUserForm(forms.Form):
             self.fields['username'] = UserNameField(label=_('Screen name'))
             self.fields['username'].initial = user.username
             self.fields['username'].user_instance = user
-        self.fields['email'].initial = user.email
+        if askbot_settings.EDITABLE_EMAIL:
+	    self.fields['email'].required = True;
+            self.fields['email'].initial = user.email
         self.fields['realname'].initial = user.real_name
         self.fields['website'].initial = user.website
         self.fields['city'].initial = user.location

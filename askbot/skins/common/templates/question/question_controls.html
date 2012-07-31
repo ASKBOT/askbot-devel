@@ -32,7 +32,7 @@
 <script type="text/javascript">
     var retagUrl = "{% url retag_question question.id %}";
 </script>
-<a id="retag" class="question-retag"href="{% url retag_question question.id %}">{% trans %}retag{% endtrans %}</a>
+<a id="retag" class="question-retag" href="{% url retag_question question.id %}">{% trans %}retag{% endtrans %}</a>
 <a id="post-{{question.id}}-edit" class="question-edit" href="{% url edit_question question.id %}">{% trans %}edit{% endtrans %}</a>
 <script type="text/javascript">
     askbot['functions']['renderPostControls']('{{question.id}}');

@@ -1455,7 +1455,6 @@ def user_restore_post(
         post.deleted_by = None
         post.deleted_at = None
         post.save()
-        post.thread.invalidate_cached_data()
         if post.post_type == 'answer':
             post.thread.update_answer_count()
         else:
@@ -1468,6 +1467,7 @@ def user_restore_post(
                     tag.deleted_by = None
                     tag.deleted_at = None
                     tag.save()
+        post.thread.invalidate_cached_data()
     else:
         raise NotImplementedError()
 

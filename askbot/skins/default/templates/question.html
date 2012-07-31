@@ -20,12 +20,12 @@
                     votes['{{post_id}}'] = {{user_votes[post_id]}};
                 {% endfor %}
                 data['user_votes'] = votes;
-                var posts = {};
-                {% for post_id in user_post_id_list %}
-                    posts['{{post_id}}'] = 1;
-                {% endfor %}
-                data['user_posts'] = posts;
             }
+            var posts = {};
+            {% for post_id in user_post_id_list %}
+                posts['{{post_id}}'] = 1;
+            {% endfor %}
+            data['user_posts'] = posts;
 
             function render_vote_buttons(post_type, post_id){
                 var upvote_btn = document.getElementById(
@@ -98,7 +98,7 @@
                 var add_comment_btn = document.getElementById(
                     'add-comment-to-post-' + post_id
                 );
-                if (can_add === false){
+                if (!can_add){
                     add_comment_btn.parentNode.removeChild(add_comment_btn);
                     return;
                 }
@@ -113,9 +113,7 @@
         "{% trans %}see <strong>some</strong> more{% endtrans%}";
                     }
                 } else {
-                    if (can_add){
-                        text = "{% trans %}post a comment{% endtrans %}";
-                    }
+                    text = "{% trans %}post a comment{% endtrans %}";
                 }
                 add_comment_btn.innerHTML = text;
                 //add the count

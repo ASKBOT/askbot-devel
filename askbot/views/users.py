@@ -283,9 +283,10 @@ def edit_user(request, id):
     if request.method == "POST":
         form = forms.EditUserForm(user, request.POST)
         if form.is_valid():
-            new_email = sanitize_html(form.cleaned_data['email'])
-
-            set_new_email(user, new_email)
+            
+	    if askbot_settings.EDITABLE_EMAIL:
+		new_email = sanitize_html(form.cleaned_data['email'])
+        	set_new_email(user, new_email)
 
             if askbot_settings.EDITABLE_SCREEN_NAME:
                 user.username = sanitize_html(form.cleaned_data['username'])
