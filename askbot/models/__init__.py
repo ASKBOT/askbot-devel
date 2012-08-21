@@ -146,7 +146,7 @@ User.add_to_class('new_response_count', models.IntegerField(default=0))
 User.add_to_class('seen_response_count', models.IntegerField(default=0))
 User.add_to_class('consecutive_days_visit_count', models.IntegerField(default = 0))
 
-GRAVATAR_TEMPLATE = "http://www.gravatar.com/avatar/%(gravatar)s?" + \
+GRAVATAR_TEMPLATE = "https://secure.gravatar.com/avatar/%(gravatar)s?" + \
     "s=%(size)d&amp;d=%(type)s&amp;r=PG"
 
 def user_get_gravatar_url(self, size):

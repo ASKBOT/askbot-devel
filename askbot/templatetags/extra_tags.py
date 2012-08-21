@@ -14,7 +14,7 @@ GRAVATAR_TEMPLATE = (
                      '<a style="text-decoration:none" '
                      'href="%(user_profile_url)s"><img class="gravatar" '
                      'width="%(size)s" height="%(size)s" '
-                     'src="http://www.gravatar.com/avatar/%(gravatar_hash)s'
+                     'src="https://secure.gravatar.com/avatar/%(gravatar_hash)s'
                      '?s=%(size)s&amp;d=%(gravatar_type)s&amp;r=PG" '
                      'title="%(username)s" '
                      'alt="%(alt_text)s" /></a>')
