@@ -1,6 +1,116 @@
 @import url(jquery.autocomplete.css);
 @import "lib_style.less"; /* Library of predifined less functions styles */
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.svg#RobotoRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Italic-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Italic-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Italic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Italic-webfont.svg#/RobotoItalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Bold-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Bold-webfont.svg#RobotoBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-BoldItalic-webfont.eot');
+    src: url('../fonts/roboto/Roboto-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-BoldItalic-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-BoldItalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-BoldItalic-webfont.svg#RobotoBoldItalic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.svg#RobotoThin') format('svg');
+    font-weight: 200;
+    font-style: normal;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-ThinItalic-webfont.eot');
+    src: url('../fonts/roboto/Roboto-ThinItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-ThinItalic-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-ThinItalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-ThinItalic-webfont.svg#RobotoThinItalic') format('svg'); 
+    font-weight: 200;
+    font-style: italic;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Light-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Light-webfont.svg#RobotoLight') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-LightItalic-webfont.eot');
+    src: url('../fonts/roboto/Roboto-LightItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-LightItalic-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-LightItalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-LightItalic-webfont.svg#RobotoLightItalic') format('svg');
+    font-weight: 100;
+    font-style: italic;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Medium-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.svg#RobotoMedium') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+ 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-MediumItalic-webfont.eot');
+    src: url('../fonts/roboto/Roboto-MediumItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-MediumItalic-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-MediumItalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-MediumItalic-webfont.svg#RobotoMediumItalic') format('svg');
+    font-weight: 300;
+    font-style: italic;
+}
+
 /* ----- General HTML Styles----- */
 
 body {
@@ -242,6 +352,7 @@ body.user-messages {
 #userToolsNav {/* Navigation bar containing login link or user information, check widgets/user_navigation.html*/
     height: 20px;
     padding-bottom:5px;
+    float: right;/* for #header.with-logo it is modified */
 
     a {
         height: 35px;
@@ -276,15 +387,15 @@ body.user-messages {
 }
 
 #metaNav {/* Top Navigation bar containing links for tags, people and badges, check widgets/header.html */
-    float: right;/* for #header.with-logo it is modified */
     margin-right: 7px;
+    float: left;
 
     a {
         color: #e2e2ae;
         padding: 0px 0px 0px 35px;
         height: 35px;
         line-height: 25px;
-        margin:5px 0px 0px 10px;
+        margin:5px 20px 0px 0px;
         font-size: 18px;
         font-weight: 100;
         text-decoration: none;
@@ -341,7 +452,7 @@ body.user-messages {
         display: block;
         margin: 0px 10px 0px 10px;
         width: 140px;
-        font-family: 'Open Sans Condensed', Arial, sans-serif;
+        font-family: @main-font;
         font-weight: 100;
     }
 
@@ -383,7 +494,7 @@ body.user-messages {
 }
 
 #header.without-logo #userToolsNav {
-    float:left;
+    float:right;
     margin-top: 7px;
 }
 
@@ -419,7 +530,7 @@ body.user-messages {
          }
 
         .scope-selector{
-            font-size:20px;
+            font-size:14px;
             color:#7a7a6b;
             height:55px;
             line-height:55px;
@@ -444,7 +555,7 @@ body.user-messages {
     }
     #validation-code {
         padding-left:5px;
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         height:25px;
         font-size: 14px;
         width: 200px;
@@ -545,7 +656,7 @@ body.anon {
     margin-top:6px;
     float:right;
     text-transform:uppercase;
-    .button-style(42px, 20px);
+    .button-style(42px, 16px);
     width: 200px;/* to match width of sidebar */
 }
 
@@ -579,6 +690,7 @@ body.anon {
     background: #fff;
     padding: 4px 0px 10px 0px;
     width:200px;
+    overflow: hidden;
 
     p {
         margin-bottom: 4px;
@@ -669,7 +781,7 @@ body.anon {
             border:#c9c9b5 1px solid;
             height:25px;
             line-height:25px;
-            font-size: 14px;
+            font-size: 12px;
         }
         #ab-tag-search {
             width: 138px;
@@ -681,7 +793,7 @@ body.anon {
             border:0;
             font-weight:bold;
             margin-top:-2px;
-            .button-style(27px, 14px);
+            .button-style(27px, 12px);
             .rounded-corners(4px);
         }
        #interestingTagAdd:hover,
@@ -713,7 +825,6 @@ body.anon {
 
     a.followed:hover, a.follow:hover{
         .button-style-hover;
-        .text-shadow(0px, 1px, 0px, #c6d9dd);
     }
 
     a.followed div.unfollow{
@@ -886,7 +997,7 @@ body.anon {
     width:52px;
     padding-left: 2px;
     padding-top:3px;
-    background:#fff url(../images/feed-icon-small.png) no-repeat center right;
+    background:transparent url(../images/feed-icon-small.png) no-repeat center right;
     float:right;
     font-family:@sort-font;
     font-size:16px;
@@ -1437,7 +1548,7 @@ ul#related-tags li {
         line-height: 36px;
         margin: 0px;
         padding: 0px 0 0 5px;
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         width:719px;
     }
 }
@@ -1482,7 +1593,7 @@ ul#related-tags li {
     }
 
     #id_tags {
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         height:25px;
         padding-left:5px;
         font-size:14px;
@@ -1496,7 +1607,7 @@ ul#related-tags li {
 .edit-answer-page {
     #id_post_author_username,
     #id_post_author_email {
-        border: #cce6ec 3px solid;
+        border: lighten(@link, 50%) 1px solid;
         height: 25px;
         line-height: 25px;
         padding-left: 5px;
@@ -1553,7 +1664,7 @@ ul#related-tags li {
 
 #id_user,
 #id_user_author {
-    border:#cce6ec 3px solid;
+    border:lighten(@link, 50%) 1px solid;
     height:25px;
     padding-left:5px;
     width:395px;
@@ -1591,7 +1702,7 @@ ul#related-tags li {
 
 #id_user,
 #id_user_author {
-    border:#cce6ec 3px solid;
+    border:lighten(@link, 50%) 1px solid;
     height:25px;
     padding-left:5px;
     width:395px;
@@ -1626,11 +1737,10 @@ ul#related-tags li {
 .ask-page input.submit:hover,
 .edit-question-page input.submit:hover{
     .button-style-hover;
-    .text-shadow(0px, 1px, 0px, #c6d9dd)
 }
 
 .wmd-container {
-    border:#cce6ec 3px solid;
+    border:lighten(@link, 50%) 1px solid;
     min-height: 250px;
     textarea {
         border: none;
@@ -1790,12 +1900,12 @@ ul#related-tags li {
         height: 36px;
         margin: 0px;
         padding: 0px 0 0 5px;
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         width: 719px;
         margin-bottom:10px;
     }
     #id_summary{
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         height:25px;
         padding-left:5px;
         width:395px;
@@ -2141,7 +2251,7 @@ ul#related-tags li {
             line-height: 140%;
             padding-left:2px;
             padding-top:3px;
-            border:#cce6ec 3px solid;
+            border:lighten(@link, 50%) 1px solid;
         }
         
         input {
@@ -2511,7 +2621,7 @@ ul#related-tags li {
         margin-bottom:15px;
     }
     input[type="text"],input[type="password"],select{
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         height:25px;
         line-height: 25px;
         padding-left:5px;
@@ -2523,7 +2633,7 @@ ul#related-tags li {
         height:30px;
     }
     textarea{
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         padding-left:5px;
         padding-top:5px;
         width:395px;
@@ -2580,7 +2690,7 @@ ul#related-tags li {
         height: 20px;
         margin: 0px;
         padding: 0px 0 0 5px;
-        border:#cce6ec 3px solid;
+        border:lighten(@link, 50%) 1px solid;
         width:200px;
     }
     .submit-b{
@@ -2993,7 +3103,7 @@ ins .post-tag, ins p, ins {
     border-top: 1px solid #000;
     padding: 16px 0 0 0;
     background: @header-color;
-    font-size:16px;
+    font-size:12px;
     font-family:@main-font;
 
     p {
@@ -3027,7 +3137,7 @@ ins .post-tag, ins p, ins {
     text-align:right;
 
     a{
-        color:#8ebcc7;
+        color:@link;
     }
     img.license-logo {
         margin: 6px 0px 20px 10px;

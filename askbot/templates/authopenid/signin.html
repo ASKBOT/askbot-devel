@@ -93,6 +93,7 @@
                     <h1 class="section-title">
                         {% trans %}Please, sign in{% endtrans %}
                     </h1>
+                    <h3>{% trans %}Use your AstroBin login name and password.{% endtrans %}</h3>
                 {% endif %}
                 {% if have_buttons %}
                     <p class="hint">{% trans %}(or select another login method above){% endtrans %}</p>
@@ -117,7 +118,7 @@
                 <p id="local_login_buttons">
                     <input class="submit-b" name="login_with_password" type="submit" value="{% trans %}Sign in{% endtrans %}" />
                     {% if settings.USE_LDAP_FOR_PASSWORD_LOGIN == False %}
-                    <a class="create-password-account" style="vertical-align:middle" href="{% url user_signup_with_password %}?login_provider=local">{% trans %}Create a password-protected account{% endtrans %}</a>
+                    <a class="create-password-account" style="vertical-align:middle" href="http://www.astrobin.com/accounts/register/">{% trans %}Create a password-protected account{% endtrans %}</a>
                     {% endif %}
                 </p>
             {% elif settings.USE_LDAP_FOR_PASSWORD_LOGIN == False %}

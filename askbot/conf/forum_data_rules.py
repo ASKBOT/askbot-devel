@@ -66,6 +66,18 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
+        'ALLOW_POSTING_LINKS_ANONYMOUSLY',
+        default=False,
+        description=_('Allow posting links anonymously'),
+        help_text=_(
+            'Be wary of spam, if you enable this'
+        )
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        FORUM_DATA_RULES,
         'ALLOW_POSTING_BEFORE_LOGGING_IN',
         default = True,
         description = _('Allow posting before logging in'),

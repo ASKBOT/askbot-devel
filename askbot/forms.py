@@ -304,11 +304,11 @@ class EditorField(forms.CharField):
 
         if re.search(URL_RE, value):
             min_rep = askbot_settings.MIN_REP_TO_SUGGEST_LINK
-            if self.user.is_anonymous():
+            if (not askbot_settings.ALLOW_POSTING_LINKS_ANONYMOUSLY) and self.user.is_anonymous():
                 raise forms.ValidationError(
                     _('Links or images cannot be posted anonymously')
                 )
-            elif self.user.reputation < min_rep:
+            elif not self.user.is_anonymous() and self.user.reputation < min_rep:
                 raise forms.ValidationError(
                     ungettext_lazy(
                         'At at least %d karma point is required to post links',

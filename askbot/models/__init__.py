@@ -1943,7 +1943,7 @@ def user_is_administrator(self):
     the admin must be both superuser and staff member
     the latter is because staff membership is required
     to access the live settings"""
-    return (self.is_superuser and self.is_staff)
+    return (self.is_superuser)
 
 def user_remove_admin_status(self):
     self.is_staff = False

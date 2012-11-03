@@ -458,6 +458,15 @@ def get_enabled_major_login_providers():
             'icon_media_path': '/jquery-openid/images/linkedin.gif',
             'get_user_id_function': get_linked_in_user_id
         }
+
+    data['astrobin'] = {
+        'name': 'astrobin',
+        'display_name': 'AstroBin',
+        'type': 'openid-username',
+        'extra_token_name': _('AstroBin username'),
+        'icon_media_path': '/jquery-openid/images/astrobin.png',
+        'openid_endpoint': 'http://www.astrobin.com/openid/'
+    }
     data['google'] = {
         'name': 'google',
         'display_name': 'Google',
@@ -574,6 +583,7 @@ def get_enabled_minor_login_providers():
         'icon_media_path': '/jquery-openid/images/verisign-2.png',
         'openid_endpoint': 'http://%(username)s.pip.verisignlabs.com/'
     }
+
     return filter_enabled_providers(data)
 get_enabled_minor_login_providers.is_major = False
 get_enabled_minor_login_providers = add_custom_provider(get_enabled_minor_login_providers)

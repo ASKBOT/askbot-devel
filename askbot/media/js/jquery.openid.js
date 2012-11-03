@@ -2,6 +2,10 @@
 openid login boxes
 */
 var providers_large = {
+    astrobin: {
+        name: 'AstroBin',
+        url: 'http://www.astrobin.com/openid/'
+    },
     google: {
         name: 'Google',
         url: 'https://www.google.com/accounts/o8/id'

@@ -81,6 +81,7 @@ providers = (
     'Verisign',
     'Yahoo',
     'identi.ca',
+    'AstroBin',
 )
 
 need_extra_setup = ('Twitter', 'Facebook', 'LinkedIn', 'identi.ca',)
