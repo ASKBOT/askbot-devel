@@ -12,7 +12,7 @@ NUM_ANSWERS = 20
 NUM_COMMENTS = 20
 
 # To ensure that all the actions can be made, repute each user high positive
-# karma. This can be calculated dynamically - max of MIN_REP_TO_... settings
+# reputation. This can be calculated dynamically - max of MIN_REP_TO_... settings
 INITIAL_REPUTATION = 500
 
 BAD_STUFF = "<script>alert('hohoho')</script>"

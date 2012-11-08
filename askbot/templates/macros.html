@@ -47,37 +47,37 @@
 </script>
 {%- endmacro -%}
 
-{%- macro post_contributor_avatar_and_credentials(post, user, karma_mode = None, badges_mode = None) -%}
+{%- macro post_contributor_avatar_and_credentials(post, user, reputation_mode = None, badges_mode = None) -%}
     {% if post.is_anonymous %}
         <img alt="{% trans %}anonymous user{% endtrans %}" src="{{ '/images/anon.png'|media }} " class="gravatar" width="32" height="32" />
         <p>{{ user.get_anonymous_name() }}</p>
     {% else %}
         {{ gravatar(user, 32) }}
         {{ user.get_profile_link()}}{{ user_country_flag(user) }}<br/>
-        {{ user_score_and_badge_summary(user, karma_mode = karma_mode, badges_mode = badges_mode) }}<br/>
+        {{ user_score_and_badge_summary(user, reputation_mode = reputation_mode, badges_mode = badges_mode) }}<br/>
         {{ user_website_link(user) }}
     {% endif %}
     {{ user_primary_group(user) }}
 {%- endmacro -%}
 
 {%- macro post_last_updater_and_creator_info(
-        post, min_rep_to_edit_wiki, karma_mode = None, badges_mode = None
+        post, min_rep_to_edit_wiki, reputation_mode = None, badges_mode = None
     ) -%}
     {{ post_contributor_info(
             post, "original_author", post.wiki, min_rep_to_edit_wiki,
-            karma_mode = karma_mode, badges_mode = badges_mode
+            reputation_mode = reputation_mode, badges_mode = badges_mode
         )
     }}
     {{ post_contributor_info(
             post, "last_updater", post.wiki, min_rep_to_edit_wiki,
-            karma_mode = karma_mode, badges_mode = badges_mode
+            reputation_mode = reputation_mode, badges_mode = badges_mode
         )
     }}
 {%- endmacro -%}
 
 {%- macro post_contributor_info(
         post, contributor_type, is_wiki, wiki_min_rep,
-        karma_mode = None, badges_mode = None
+        reputation_mode = None, badges_mode = None
     ) -%}
 {# there is a whole bunch of trickery here, probably indicative of 
 poor design of the data or methods on data objects #}
@@ -100,7 +100,7 @@ poor design of the data or methods on data objects #}
             style="float:left"
         />
         <p class="tip">{% trans %}This post is a wiki.
-        Anyone with karma &gt;{{wiki_min_rep}} is welcome to improve it.{% endtrans %}</p>
+        Anyone with reputation &gt;{{wiki_min_rep}} is welcome to improve it.{% endtrans %}</p>
     {% else %}
         <p style="line-height:12px;">
             {# todo: access to class names needs to be removed here #}
@@ -118,7 +118,7 @@ poor design of the data or methods on data objects #}
             {% endif %}
         </p>
         {{ post_contributor_avatar_and_credentials(
-            post, post.author, karma_mode = karma_mode, badges_mode = badges_mode
+            post, post.author, reputation_mode = reputation_mode, badges_mode = badges_mode
         ) }}
     {% endif %}
     </div>
@@ -147,7 +147,7 @@ poor design of the data or methods on data objects #}
             {{ 
                 post_contributor_avatar_and_credentials(
                     post, update_author,
-                    karma_mode = karma_mode, badges_mode = badges_mode
+                    reputation_mode = reputation_mode, badges_mode = badges_mode
                 )
             }}
         {% endif %}
@@ -550,7 +550,7 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 
 {%- macro user_score_and_badge_summary(
                                     user,
-                                    karma_mode = None,
+                                    reputation_mode = None,
                                     badges_mode = None
 ) -%}
   {%include "widgets/user_score_and_badge_summary.html"%}
@@ -622,7 +622,7 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {%- endmacro -%}
 
 {%- macro user_list(
-        users, profile_section = None, karma_mode = None, badges_mode = None
+        users, profile_section = None, reputation_mode = None, badges_mode = None
     )
 -%}
 {% include "widgets/user_list.html"%}

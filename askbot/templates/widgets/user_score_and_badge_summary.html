@@ -1,6 +1,6 @@
-{% if karma_mode == 'public' %}
+{% if reputation_mode == 'public' %}
 <span class="reputation-score"
-          title="{{user.get_karma_summary}}"
+          title="{{user.get_reputation_summary}}"
 >{{user.reputation}}</span>
 {% endif %}
 {% if badges_mode == 'public' %}

@@ -1,5 +1,5 @@
 """
-Settings for making the karma and badge systems visible to 
+Settings for making the reputation and badge systems visible to 
 the users at a different degree
 """
 from django.utils.translation import ugettext as _
@@ -7,34 +7,34 @@ from askbot.conf.settings_wrapper import settings
 from askbot.deps import livesettings
 from askbot.conf.super_groups import REP_AND_BADGES
 
-KARMA_AND_BADGE_VISIBILITY = livesettings.ConfigurationGroup(
-                    'KARMA_AND_BADGE_VISIBILITY',
-                    _('Karma & Badge visibility'),
+REPUTATION_AND_BADGE_VISIBILITY = livesettings.ConfigurationGroup(
+                    'REPUTATION_AND_BADGE_VISIBILITY',
+                    _('Reputation & Badge visibility'),
                     super_group = REP_AND_BADGES
                 )
 
 
 settings.register(
     livesettings.StringValue(
-        KARMA_AND_BADGE_VISIBILITY,
-        'KARMA_MODE',
+        REPUTATION_AND_BADGE_VISIBILITY,
+        'REPUTATION_MODE',
         default = 'public',
         choices = (
             ('public', 'show publicly'),
             ('private', 'show to owners only'),
             ('hidden', 'hide completely'),
         ),#todo: later implement hidden mode
-        description = _("Visibility of karma"),
+        description = _("Visibility of reputation"),
         clear_cache = True,
         help_text = _(
-            "User's karma may be shown publicly or only to the owners"
+            "User's reputation may be shown publicly or only to the owners"
         )
     )
 )
 
 settings.register(
     livesettings.StringValue(
-        KARMA_AND_BADGE_VISIBILITY,
+        REPUTATION_AND_BADGE_VISIBILITY,
         'BADGES_MODE',
         default = 'public',
         choices = (

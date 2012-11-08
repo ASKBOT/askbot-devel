@@ -623,7 +623,7 @@ def user_assert_can_upload_file(request_user):
     blocked_error_message = _('Sorry, blocked users cannot upload files')
     suspended_error_message = _('Sorry, suspended users cannot upload files')
     low_rep_error_message = _(
-                        'sorry, file uploading requires karma >%(min_rep)s',
+                        'sorry, file uploading requires reputation >%(min_rep)s',
                     ) % {'min_rep': askbot_settings.MIN_REP_TO_UPLOAD_FILES }
 
     _assert_user_can(
@@ -2315,10 +2315,10 @@ def user_get_groups_membership_info(self, groups):
 
     return info
 
-def user_get_karma_summary(self):
+def user_get_reputation_summary(self):
     """returns human readable sentence about
-    status of user's karma"""
-    return _("%(username)s karma is %(reputation)s") % \
+    status of user's reputation"""
+    return _("%(username)s reputation is %(reputation)s") % \
             {'username': self.username, 'reputation': self.reputation}
 
 def user_get_badge_summary(self):
@@ -2490,8 +2490,8 @@ def user_fix_html_links(self, text):
         result = replace_links_with_text(text)
         if result != text:
             message = ungettext(
-                'At least %d karma point is required to post links',
-                'At least %d karma points is required to post links',
+                'At least %d reputation point is required to post links',
+                'At least %d reputation points is required to post links',
                 askbot_settings.MIN_REP_TO_INSERT_LINK
             ) % askbot_settings.MIN_REP_TO_INSERT_LINK
             self.message_set.create(message=message)
@@ -3020,8 +3020,8 @@ def format_instant_notification_email(
     update_data = {
         'update_author_name': from_user.username,
         'receiving_user_name': to_user.username,
-        'receiving_user_karma': to_user.reputation,
-        'reply_by_email_karma_threshold': askbot_settings.MIN_REP_TO_POST_BY_EMAIL,
+        'receiving_user_reputation': to_user.reputation,
+        'reply_by_email_reputation_threshold': askbot_settings.MIN_REP_TO_POST_BY_EMAIL,
         'can_reply': can_reply,
         'content_preview': content_preview,#post.get_snippet()
         'update_type': update_type,

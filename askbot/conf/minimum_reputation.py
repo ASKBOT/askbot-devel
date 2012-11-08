@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 MIN_REP = livesettings.ConfigurationGroup(
     'MIN_REP', 
-    _('Karma thresholds'),
+    _('Reputation thresholds'),
     ordering=0,
     super_group = REP_AND_BADGES
 )
@@ -229,7 +229,7 @@ settings.register(
         description=_('Trigger email notifications'),
         help_text=_(
             'Reduces spam as notifications wont\'t be sent '
-            'to regular users for posts of low karma users'
+            'to regular users for posts of low reputation users'
         )
     )
 )

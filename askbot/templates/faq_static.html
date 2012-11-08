@@ -15,10 +15,10 @@
 <h2>{% trans %}Who moderates this community?{% endtrans %}</h2>
 <p>{% trans %}The short answer is: <strong>you</strong>.{% endtrans %}
 {% trans %}This website is moderated by the users.{% endtrans %}
-{% trans %}Karma system allows users to earn rights to perform a variety of moderation tasks{% endtrans %}
+{% trans %}Reputation system allows users to earn rights to perform a variety of moderation tasks{% endtrans %}
 </p>
-<h2>{% trans %}How does karma system work?{% endtrans %}</h2>
-<p>{% trans %}When a question or answer is upvoted, the user who posted them will gain some points, which are called \"karma points\". These points serve as a rough measure of the community trust to him/her. Various moderation tasks are gradually assigned to the users based on those points.{% endtrans %}</p>
+<h2>{% trans %}How does reputation system work?{% endtrans %}</h2>
+<p>{% trans %}When a question or answer is upvoted, the user who posted them will gain some points, which are called \"reputation points\". These points serve as a rough measure of the community trust to him/her. Various moderation tasks are gradually assigned to the users based on those points.{% endtrans %}</p>
 <p>{% trans MAX_REP_GAIN_PER_USER_PER_DAY=settings.MAX_REP_GAIN_PER_USER_PER_DAY, REP_GAIN_FOR_RECEIVING_UPVOTE=settings.REP_GAIN_FOR_RECEIVING_UPVOTE, REP_LOSS_FOR_RECEIVING_DOWNVOTE=settings.REP_LOSS_FOR_RECEIVING_DOWNVOTE|absolute_value %}For example, if you ask an interesting question or give a helpful answer, your input will be upvoted. On the other hand if the answer is misleading - it will be downvoted. Each vote in favor will generate <strong>{{REP_GAIN_FOR_RECEIVING_UPVOTE}}</strong> points, each vote against will subtract <strong>{{REP_LOSS_FOR_RECEIVING_DOWNVOTE}}</strong> points. There is a limit of <strong>{{MAX_REP_GAIN_PER_USER_PER_DAY}}</strong> points that can be accumulated for a question or answer per day. The table below explains reputation point requirements for each type of moderation task.{% endtrans %}
 </p>
 

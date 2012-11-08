@@ -4,7 +4,7 @@
     {{ macros.inbox_link(request.user) }}
     {{ macros.moderation_items_link(request.user, moderation_items) }}
     {%-
-        if settings.KARMA_MODE != 'hidden' and settings.BADGES_MODE != 'hidden' 
+        if settings.REPUTATION_MODE != 'hidden' and settings.BADGES_MODE != 'hidden' 
     -%}
         ({{ macros.user_long_score_and_badge_summary(
                                         user,

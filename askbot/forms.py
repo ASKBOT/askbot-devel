@@ -311,8 +311,8 @@ class EditorField(forms.CharField):
             elif self.user.reputation < min_rep:
                 raise forms.ValidationError(
                     ungettext_lazy(
-                        'At at least %d karma point is required to post links',
-                        'At at least %d karma points are required to post links',
+                        'At at least %d reputation point is required to post links',
+                        'At at least %d reputation points are required to post links',
                         min_rep
                     ) % min_rep
                 )
@@ -457,7 +457,7 @@ class WikiField(forms.BooleanField):
         self.required = False
         self.initial = False
         self.label = _(
-            'community wiki (karma is not awarded & '
+            'community wiki (reputation is not awarded & '
             'many others can edit wiki post)'
         )
         self.help_text = _(

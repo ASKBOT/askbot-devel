@@ -28,13 +28,13 @@
         {% else %#}
             <span class="label">{% trans %}Sort by &raquo;{% endtrans %}</span>
         {#% endif %#}
-            {% if settings.KARMA_MODE == 'public' %}
+            {% if settings.REPUTATION_MODE == 'public' %}
             <a 
                 id="sort_reputation"
                 href="{{ request.path }}?sort=reputation"
                 {% if tab_id == 'reputation' %}class="on"{% endif %}
                 title="{% trans %}see people with the highest reputation{% endtrans %}"
-            ><span>{% trans %}karma{% endtrans %}</span></a>
+            ><span>{% trans %}reputation{% endtrans %}</span></a>
             {% endif %}
             <a 
                 id="sort_newest"
@@ -66,7 +66,7 @@
 {% endif %}
 {{ macros.user_list(
         users.object_list, 
-        karma_mode = settings.KARMA_MODE, badges_mode = settings.BADGES_MODE
+        reputation_mode = settings.REPUTATION_MODE, badges_mode = settings.BADGES_MODE
     )
 }}
 <div class="pager">

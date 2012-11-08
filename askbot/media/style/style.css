@@ -3068,32 +3068,32 @@ a:hover.medal {
   -webkit-border-radius: 4px;
   -khtml-border-radius: 4px;
 }
-.karma-summary {
+.reputation-summary {
   padding: 5px;
   font-size: 13px;
 }
-.karma-summary h3 {
+.reputation-summary h3 {
   text-align: center;
   font-weight: bold;
   padding: 5px;
 }
-.karma-diagram {
+.reputation-diagram {
   width: 477px;
   height: 300px;
   float: left;
   margin-right: 10px;
 }
-.karma-details {
+.reputation-details {
   float: right;
   width: 450px;
   height: 250px;
   overflow-y: auto;
   word-wrap: break-word;
 }
-.karma-details p {
+.reputation-details p {
   margin-bottom: 10px;
 }
-.karma-gained {
+.reputation-gained {
   font-weight: bold;
   background: #eee;
   width: 25px;
@@ -3109,7 +3109,7 @@ a:hover.medal {
   -webkit-border-radius: 3px;
   -khtml-border-radius: 3px;
 }
-.karma-lost {
+.reputation-lost {
   font-weight: bold;
   background: #eee;
   width: 25px;

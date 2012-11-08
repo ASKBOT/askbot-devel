@@ -21,9 +21,9 @@
                     {% endif %}
                 {% endif %}
             </div>
-            {% if can_show_karma %}
+            {% if can_show_reputation %}
                 <div class="scoreNumber">{{view_user.reputation|intcomma}}</div>
-                <p><b style="color:#777;">{% trans %}karma{% endtrans %}</b></p>
+                <p><b style="color:#777;">{% trans %}reputation{% endtrans %}</b></p>
             {% endif %}
             {% if user_follow_feature_on %}
                 {{ macros.follow_user_toggle(visitor = request.user, subject = view_user) }}

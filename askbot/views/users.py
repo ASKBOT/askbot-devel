@@ -121,7 +121,7 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
     is_paginated = True
 
     sortby = request.GET.get('sort', 'reputation')
-    if askbot_settings.KARMA_MODE == 'private' and sortby == 'reputation':
+    if askbot_settings.REPUTATION_MODE == 'private' and sortby == 'reputation':
         sortby = 'newest'
 
     try:
@@ -897,8 +897,8 @@ def user_reputation(request, user, context):
         'active_tab':'users',
         'page_class': 'user-profile-page',
         'tab_name': 'reputation',
-        'tab_description': _('user karma'),
-        'page_title': _("Profile - User's Karma"),
+        'tab_description': _('user reputation'),
+        'page_title': _("Profile - User's Reputation"),
         'reputation': reputes,
         'reps': reps
     }
@@ -1027,21 +1027,21 @@ def user(request, id, slug=None, tab_name=None):
     if not tab_name:
         tab_name = request.GET.get('sort', 'stats')
 
-    if askbot_settings.KARMA_MODE == 'public':
-        can_show_karma = True
-    elif askbot_settings.KARMA_MODE == 'hidden':
-        can_show_karma = False
+    if askbot_settings.REPUTATION_MODE == 'public':
+        can_show_reputation = True
+    elif askbot_settings.REPUTATION_MODE == 'hidden':
+        can_show_reputation = False
     else:
         if request.user.is_anonymous():
-            can_show_karma = False
+            can_show_reputation = False
         elif request.user.is_administrator_or_moderator():
-            can_show_karma = True
+            can_show_reputation = True
         elif request.user == profile_owner:
-            can_show_karma = True
+            can_show_reputation = True
         else:
-            can_show_karma = False
+            can_show_reputation = False
 
-    if can_show_karma == False and tab_name == 'reputation':
+    if can_show_reputation == False and tab_name == 'reputation':
         raise Http404
 
     user_view_func = USER_VIEW_CALL_TABLE.get(tab_name, user_stats)
@@ -1058,7 +1058,7 @@ def user(request, id, slug=None, tab_name=None):
 
     context = {
         'view_user': profile_owner,
-        'can_show_karma': can_show_karma,
+        'can_show_reputation': can_show_reputation,
         'search_state': search_state,
         'user_follow_feature_on': ('followit' in django_settings.INSTALLED_APPS),
     }

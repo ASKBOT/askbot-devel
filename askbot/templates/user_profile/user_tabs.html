@@ -17,11 +17,11 @@
             href="{% url user_profile view_user.id, view_user.username|slugify %}?sort=network"
         ><span>{% trans %}network{% endtrans %}</span></a>
         {% endif %}
-        {% if can_show_karma %}
+        {% if can_show_reputation %}
         <a id="reputation" {% if tab_name=="reputation" %}class="on"{% endif %} 
-            title="{% trans %}Graph of user karma{% endtrans %}" 
+            title="{% trans %}Graph of user reputation{% endtrans %}" 
             href="{% url user_profile view_user.id, view_user.username|slugify %}?sort=reputation"
-        ><span>{% trans %}karma{% endtrans %}</span></a>
+        ><span>{% trans %}reputation{% endtrans %}</span></a>
         {% endif %}
         <a id="favorites" {% if tab_name=="favorites" %}class="on"{% endif %} 
             title="{% trans %}questions that user is following{% endtrans %}"

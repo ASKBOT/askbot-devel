@@ -10,7 +10,7 @@ from askbot.conf.super_groups import REP_AND_BADGES
 
 REP_CHANGES = ConfigurationGroup(
                     'REP_CHANGES',
-                    _('Karma loss and gain rules'),
+                    _('Reputation loss and gain rules'),
                     super_group = REP_AND_BADGES,
                     ordering=2
                 )

@@ -328,7 +328,7 @@ Within the askbot admin interface there are 4 significant configuration points f
 * In the email section, the "Enable posting answers and comments by email" controls whether the feature is enabled or disabled.
 * The "reply by email hostname" needs to be set to the email hostname where you want to receive the email replies. If for example this is set to "example.com" the users will post replies to addresses such as "4wffsw345wsf@example.com", you need to point the MX DNS record for that domain to the address where you will run the lamson SMTP daemon.
 * The last setting in this section controls the threshold for minimum length of the reply that is posted as an answer to a question. If the user is replying to a notification for a question and the reply  body is shorter than this threshold the reply will be posted as a comment to the question.
-* In the karma thresholds section the "Post answers and comments by email" defines the minimum karma for users to be able to post replies by email.
+* In the reputation thresholds section the "Post answers and comments by email" defines the minimum reputation for users to be able to post replies by email.
 
 If the system where lamson is hosted also acts as an email server or you simply want some of the emails to be ignored and sent to another server you can define forward rules. Any emails matching these rules will be sent to another smtp server, bypassing the reply by email function. As an example by adding the following in your settings.py file::
 

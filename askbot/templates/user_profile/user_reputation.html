@@ -2,21 +2,21 @@
 {% from "macros.html" import timeago %}
 <!-- user_reputation.html -->
 {% block profilesection %}
-    {% trans %}karma{% endtrans %}
+    {% trans %}reputation{% endtrans %}
 {% endblock %}
 {% block usercontent %}
-        <div class="karma-summary">
-            <div id="diagram" class="karma-diagram"></div>
-            <div class="karma-details">
+        <div class="reputation-summary">
+            <div id="diagram" class="reputation-diagram"></div>
+            <div class="reputation-details">
                 {% if view_user.id == user.id %}
-                <h2>{% trans %}Your karma change log.{% endtrans %}</h2>
+                <h2>{% trans %}Your reputation change log.{% endtrans %}</h2>
                 {% else %}
-                <h2>{% trans user_name=view_user.username|escape %}{{user_name}}'s karma change log{% endtrans %}</h2>
+                <h2>{% trans user_name=view_user.username|escape %}{{user_name}}'s reputation change log{% endtrans %}</h2>
                 {% endif %}
                 {% for rep in reputation %}
                 <p>
-                    <span class="karma-gained">{{ rep.positive }}</span>
-                    <span class="karma-lost">{{ rep.negative }}</span>
+                    <span class="reputation-gained">{{ rep.positive }}</span>
+                    <span class="reputation-lost">{{ rep.negative }}</span>
                     {{ rep.get_explanation_snippet() }}
                     <span class="small">({{ timeago(rep.reputed_at) }})</span>
                     <div class="clean"></div>                  

@@ -3,7 +3,7 @@ import askbot
 import askbot.conf.minimum_reputation
 import askbot.conf.vote_rules
 import askbot.conf.reputation_changes
-import askbot.conf.karma_and_badges_visibility
+import askbot.conf.reputation_and_badges_visibility
 import askbot.conf.email
 import askbot.conf.forum_data_rules
 import askbot.conf.moderation
