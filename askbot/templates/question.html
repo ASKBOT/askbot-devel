@@ -62,8 +62,8 @@
                 if (data['userIsAdminOrMod']){
                     var answer_id = 'post-id-' + post_id;
                     var answer_container = document.getElementById(answer_id);
-                    var answer_element= answer_container.getElementsByClassName('answer-body')[0].children[1];
-                    if (answer_element.textContent.length > 300){
+                    var answer_element= answer_container.querySelectorAll('.answer-body')[0].children[1];
+                    if (answer_element.innerText.length > 300){
                         convert_answer.parentNode.removeChild(convert_answer);
                     }
                 } else{
@@ -185,7 +185,7 @@
 
             function hide_convert_links(){
               if (!askbot['data']['userIsAdminOrMod']){
-                var links = document.getElementsByClassName('convert-comment');
+                var links = document.querySelectorAll('.convert-comment');
                 for (i=0; i<links.length; i++){
                   links[i].setAttribute('style', 'display:none;');
                 }
