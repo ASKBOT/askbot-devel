@@ -33,8 +33,8 @@
             </a>
             {% endif %}
             <script type="text/javascript">
-                var sortButtonData = sortButtonData || {};
-                sortButtonData['relevance'] = {
+                askbot['data']['sortButtonData'] = askbot['data']['sortButtonData'] || {};
+                askbot['data']['sortButtonData']['relevance'] = {
                     asc_tooltip: "{{asc_relevance_tooltip}}",
                     desc_tooltip: "{{desc_relevance_tooltip}}",
                     label: "{{relevance_label}}"

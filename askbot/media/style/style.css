@@ -163,6 +163,9 @@ html {
 a:hover {
   text-decoration: underline;
 }
+.avatar-box {
+  text-decoration: none;
+}
 .badge-context-toggle.active {
   cursor: pointer;
   text-decoration: underline;
@@ -207,6 +210,10 @@ body.user-messages {
 
   font-size: 16px;
   color: #424242;
+}
+.wait-icon-box {
+  text-align: center;
+  margin-bottom: 8px;
 }
 #closeNotify {
   position: absolute;
@@ -380,7 +387,7 @@ body.user-messages {
   margin-bottom: 10px;
   font-family: 'Open Sans Condensed', Arial, sans-serif;
 }
-#secondaryHeader #homeButton {
+#homeButton {
   border-right: #afaf9e 1px solid;
   background: -6px -36px url(../images/sprites.png) no-repeat;
   height: 55px;
@@ -388,28 +395,22 @@ body.user-messages {
   display: block;
   float: left;
 }
-#secondaryHeader #homeButton:hover {
+#homeButton:hover {
   background: -51px -36px url(../images/sprites.png) no-repeat;
 }
-#secondaryHeader #scopeWrapper {
-  width: 688px;
-  float: left;
-}
-#secondaryHeader #scopeWrapper a {
+.scope-selector {
   display: block;
   float: left;
-}
-#secondaryHeader #scopeWrapper .scope-selector {
   font-size: 20px;
   color: #7a7a6b;
   height: 55px;
   line-height: 55px;
   margin-left: 16px;
 }
-#secondaryHeader #scopeWrapper .on {
+.scope-selector.on {
   background: url(../images/scopearrow.png) no-repeat center bottom;
 }
-#secondaryHeader #scopeWrapper .ask-message {
+.scope-selector.ask-message {
   font-size: 24px;
 }
 .validate-email-page label {
@@ -431,77 +432,136 @@ body.user-messages {
 #searchBar {
   /* Main search form , check widgets/search_bar.html */
 
-  display: inline-block;
+  display: block;
   background-color: #fff;
-  width: 400px;
   border: 1px solid #c9c9b5;
-  float: right;
-  height: 42px;
-  margin: 6px 0px 0px 15px;
+  height: 41px;
+  z-index: 10000;
+  position: relative;
 }
-#searchBar .searchInput,
-#searchBar .searchInputCancelable {
-  font-size: 26px;
-  height: 39px;
-  line-height: 39px;
+#searchBar input.searchInput {
+  font-size: 22px;
+  height: 26px;
+  line-height: 26px;
   font-weight: 300;
   background: #FFF;
   border: 0px;
   color: #484848;
-  padding-left: 10px;
-  padding-top: 1px;
   font-family: Arial;
-  vertical-align: top;
+  width: 100%;
+  margin: 8px 0 6px 0;
+  padding: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
-#searchBar .searchInput {
-  width: 340px;
+#searchBar div.input-tool-tip {
+  margin-top: -40px;
+  padding-top: 10px;
+  height: 30px;
+  line-height: 20px;
+  font-size: 20px;
+  font-style: italic;
 }
-#searchBar .searchInputCancelable {
-  width: 305px;
+.search-drop-menu {
+  box-sizing: border-box;
+  background: whitesmoke;
+  border: 1px solid #c9c9b5;
+  border-top: none;
+  margin: 0;
+  position: relative;
+  top: 0;
+  z-index: 10000;
 }
-#searchBar .logoutsearch {
-  width: 337px;
+.search-drop-menu ul {
+  list-style: none;
+  overflow: auto;
+  padding: 0 0 10px 0;
+  margin: 0 0 20px 0;
+  position: relative;
 }
-#searchBar .searchBtn {
+.search-drop-menu ul li {
+  padding: 5px 10px;
+  position: relative;
+}
+.search-drop-menu ul li a {
+  text-decoration: none;
+}
+.search-drop-menu ul li.selected {
+  background: #08c;
+}
+.search-drop-menu ul li.selected a {
+  color: whitesmoke;
+}
+.search-drop-menu ul.empty {
+  margin-bottom: 0;
+}
+.search-drop-menu .footer {
+  text-align: center;
+  padding-bottom: 10px;
+}
+.search-drop-menu.empty ul {
+  padding: 5px;
+  margin: 0;
+}
+.input-tool-tip {
+  color: #999;
+}
+.input-tool-tip.dimmed {
+  color: #ccc;
+}
+input[type="submit"].searchBtn {
   font-size: 10px;
   color: #666;
   background-color: #eee;
-  height: 42px;
+  height: 41px;
   border: #FFF 1px solid;
   line-height: 22px;
   text-align: center;
   float: right;
-  margin: 0px;
+  margin: 7px 28px 0 0;
   width: 48px;
   background: -98px -36px url(../images/sprites.png) no-repeat;
   cursor: pointer;
+  position: relative;
+  z-index: 10001;
 }
-#searchBar .searchBtn:hover {
+.ask-page input[type="submit"].searchBtn {
+  display: none;
+}
+.ask-page .input-tool-tip {
+  color: white;
+  height: 0;
+  z-index: 0;
+}
+.ask-page .search-drop-menu.empty {
+  border: none;
+  padding: 0;
+}
+.ask-page .search-drop-menu.empty ul {
+  padding: 0;
+}
+.searchBtn:hover {
   background: -146px -36px url(../images/sprites.png) no-repeat;
 }
-#searchBar .cancelSearchBtn {
+.cancelSearchBtn {
   font-size: 30px;
   color: #ce8888;
   background: #fff;
-  height: 42px;
+  height: 41px;
   line-height: 42px;
   border: 0px;
   border-left: #deded0 1px solid;
   text-align: center;
   width: 35px;
   cursor: pointer;
+  float: right;
+  margin-top: 7px;
+  position: relative;
+  z-index: 10001;
 }
-#searchBar .cancelSearchBtn:hover {
+.cancelSearchBtn:hover {
   color: #d84040;
-}
-body.anon #searchBar {
-  width: 500px;
-}
-body.anon #searchBar .searchInput {
-  width: 435px;
-}
-body.anon #searchBar .searchInputCancelable {
-  width: 405px;
 }
 #askButton {
   /* check blocks/secondary_header.html and widgets/ask_button.html*/
@@ -554,6 +614,35 @@ body.anon #searchBar .searchInputCancelable {
   text-shadow: 0px 1px 0px #c6d9dd;
   -moz-text-shadow: 0px 1px 0px #c6d9dd;
   -webkit-text-shadow: 0px 1px 0px #c6d9dd;
+}
+/* 
+    Put the secondary navigation together:
+    1) raise the search bar by 55px
+    2) add padding to fit the buttons
+*/
+#searchBar {
+  margin: 0 228px 0 327px;
+  width: auto;
+  margin-top: -49px;
+  padding: 0 49px 0 8px;
+}
+/* line up drop menu the same way as the search bar */
+.search-drop-menu {
+  margin: 0 228px 0 327px;
+  width: auto;
+}
+.ask-page .search-drop-menu,
+body.anon.ask-page .search-drop-menu {
+  margin: 0;
+}
+body.anon #searchBar,
+body.anon .search-drop-menu {
+  margin-left: 227px;
+  /* we don't have the "followed" scope */
+
+}
+#searchBar.cancelable {
+  padding-right: 82px;
 }
 /* ----- Content layout, check two_column_body.html or one_column_body.html ----- */
 #ContentLeft {
@@ -1425,8 +1514,9 @@ ul#related-tags li {
 }
 #askFormBar {
   display: inline-block;
-  padding: 4px 7px 0px 0px;
+  padding: 4px 0 0 0;
   margin-top: 0px;
+  width: 100%;
 }
 #askFormBar p {
   margin: 0 0 5px 0;
@@ -1438,10 +1528,14 @@ ul#related-tags li {
   font-size: 24px;
   height: 36px;
   line-height: 36px;
-  margin: 0px;
-  padding: 0px 0 0 5px;
+  margin: 0;
+  padding: 0;
+  /*-left: 5px;*/
+
   border: #cce6ec 3px solid;
-  width: 719px;
+  width: 100%;
+  /*719px;*/
+
 }
 .ask-page div#question-list,
 .edit-question-page div#question-list {
@@ -1487,11 +1581,13 @@ ul#related-tags li {
 }
 .ask-page #id_tags,
 .edit-question-page #id_tags {
+  box-sizing: border-box;
   border: #cce6ec 3px solid;
-  height: 25px;
+  height: 31px;
   padding-left: 5px;
   font-size: 14px;
-  width: 395px;
+  width: 100%;
+  max-width: 395px;
 }
 .ask-page #id_post_author_username,
 .question-page #id_post_author_username,
@@ -1762,12 +1858,17 @@ ul#related-tags li {
 .edit-question-page .wmd-container,
 .edit-answer-page .wmd-container {
   width: 723px;
+  width: 100%;
 }
 .ask-page #editor,
 .question-page #editor,
 .edit-question-page #editor,
 .edit-answer-page #editor {
-  width: 710px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   padding: 6px;
 }
 .ask-page .retagger-buttons button,
@@ -1891,6 +1992,7 @@ ul#related-tags li {
   font-size: 14px;
   margin-top: 5px;
   margin-bottom: 5px;
+  width: 100%;
 }
 .edit-question-page #id_title,
 #fmedit #id_title,
@@ -1901,7 +2003,7 @@ ul#related-tags li {
   margin: 0px;
   padding: 0px 0 0 5px;
   border: #cce6ec 3px solid;
-  width: 719px;
+  width: 100%;
   margin-bottom: 10px;
 }
 .edit-question-page #id_summary,
@@ -1980,6 +2082,7 @@ ul#related-tags li {
   margin-top: 10px;
   font-family: Arial;
   color: #4b4b4b;
+  word-wrap: break-word;
 }
 .question-page .question-body p,
 .question-page .answer-body p {
@@ -3922,22 +4025,12 @@ pre.prettyprint {
 }
 /* language-specific fixes */
 body.lang-es #searchBar {
-  width: 398px;
-}
-body.lang-es #searchBar .searchInput {
-  width: 337px;
-}
-body.lang-es #searchBar .searchInputCancelable {
-  width: 302px;
+  /* need special left padding */
+
 }
 body.anon.lang-es #searchBar {
-  width: 485px;
-}
-body.anon.lang-es #searchBar .searchInput {
-  width: 425px;
-}
-body.anon.lang-es #searchBar .searchInputCancelable {
-  width: 390px;
+  /* need special left padding */
+
 }
 /* user groups */
 #user-groups ul {
@@ -4145,6 +4238,12 @@ textarea.tipped-input {
 /* modifications for small screens */
 @media screen and (max-width: 960px) {
   /* content margins touch viewport */
+  #homeButton {
+    background: 1px -36px url(../images/sprites.png) no-repeat;
+  }
+  #homeButton:hover {
+    background: -44px -36px url(../images/sprites.png) no-repeat;
+  }
 }
 @media screen and (max-width: 480px) {
   .content-wrapper {
@@ -4156,23 +4255,147 @@ textarea.tipped-input {
   #ContentLeft {
     width: 100%;
   }
-  #secondaryHeader #scopeWrapper {
-    display: none;
-  }
-  #askButton {
-    display: block;
-    float: none;
-    margin: auto;
-    margin-top: 5px;
-  }
   .main-page h1,
-  .main-page .counts .views,
-  .main-page .counts .votes,
-  .main-page .rss,
-  .main-page .tabBar,
-  .main-page .tags,
-  .main-page .userinfo {
+  #askButton,
+  #metaNav #navBadges,
+  .user-info,
+  .copyright,
+  .counts .views,
+  .counts .votes,
+  .help,
+  .rss,
+  .scope-selector,
+  .settings,
+  .tabBar,
+  .tags,
+  .userinfo,
+  .widgets {
     display: none;
+  }
+  .ask-page input[type="submit"].searchBtn,
+  .edit-question-page input[type="submit"].searchBtn {
+    display: none;
+  }
+  .ask-page .preview-toggle,
+  .edit-answer-page .preview-toggle,
+  .edit-question-page .preview-toggle,
+  .ask-page .proxy-user-info,
+  .edit-answer-page .proxy-user-info,
+  .edit-question-page .proxy-user-info,
+  .ask-page .answer-options,
+  .edit-answer-page .answer-options,
+  .edit-question-page .answer-options,
+  .ask-page .question-options,
+  .edit-answer-page .question-options,
+  .edit-question-page .question-options,
+  .ask-page .revision-comment,
+  .edit-answer-page .revision-comment,
+  .edit-question-page .revision-comment,
+  .ask-page .wmd-preview,
+  .edit-answer-page .wmd-preview,
+  .edit-question-page .wmd-preview,
+  .ask-page #wmd-hr-button,
+  .edit-answer-page #wmd-hr-button,
+  .edit-question-page #wmd-hr-button,
+  .ask-page #wmd-heading-button,
+  .edit-answer-page #wmd-heading-button,
+  .edit-question-page #wmd-heading-button {
+    display: none;
+  }
+  .edit-answer-page label[for="id_title"],
+  .edit-question-page label[for="id_title"],
+  .edit-answer-page label[for="id_revision"],
+  .edit-question-page label[for="id_revision"],
+  .edit-answer-page #id_revision,
+  .edit-question-page #id_revision {
+    display: none;
+  }
+  .edit-answer-page #fmedit #id_title,
+  .edit-question-page #fmedit #id_title {
+    margin: 15px 0 0 0;
+  }
+  .question-page .comment-votes {
+    display: none;
+  }
+  .question-page .comments form.post-comments {
+    margin: 0 10px 0 0;
+  }
+  .question-page .comments .comment .comment-body {
+    margin-left: 5px;
+  }
+  .question-page .post-update-info-container {
+    float: none;
+    width: 100%;
+  }
+  .question-page .post-update-info {
+    float: none;
+    margin-left: 0;
+    width: 95%;
+  }
+  .question-page .post-update-info br,
+  .question-page .post-update-info .badge1,
+  .question-page .post-update-info .badge2,
+  .question-page .post-update-info .badge3,
+  .question-page .post-update-info .gravatar,
+  .question-page .post-update-info .reputation-score,
+  .question-page .post-update-info .badge-count {
+    display: none;
+  }
+  .question-page .question-content,
+  .question-page ul.post-retag input {
+    width: 88%;
+  }
+  .question-page .answer-table,
+  .question-page #question-table {
+    width: 85%;
+  }
+  .users-page .userList td {
+    display: block;
+    width: 100%;
+  }
+  .users-page .userList td .user {
+    width: 100%;
+  }
+  .user-profile-page td {
+    display: block;
+  }
+  .footer-links,
+  .powered-link {
+    text-align: center;
+    width: 100%;
+  }
+  #userToolsNav {
+    margin-left: 10px;
+  }
+  #metaNav {
+    float: left;
+  }
+  #metaNav a#navUsers,
+  #metaNav a#navTags,
+  #metaNav a#navGroups {
+    background: none;
+    color: #d0e296;
+    font-size: 16px;
+    text-decoration: underline;
+    margin-left: 20px;
+    padding-left: 0;
+  }
+  .powered-link {
+    margin-bottom: 15px;
+  }
+  .short-summary:first-child {
+    padding-top: 0;
+  }
+  #searchBar,
+  body.anon #searchBar {
+    margin: -49px 8px 0 52px;
+  }
+  .search-drop-menu,
+  body.anon .search-drop-menu {
+    margin: 0 8px 0 52px;
+  }
+  input[type="submit"].searchBtn {
+    margin-right: 8px;
   }
   .short-summary {
     width: 100%;

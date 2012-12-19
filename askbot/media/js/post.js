@@ -23,6 +23,7 @@ var lanai = {
     }
 };
 
+//todo: clean-up now there is utils:WaitIcon
 function appendLoader(element) {
     loading = gettext('loading...')
     element.append('<img class="ajax-loader" ' +

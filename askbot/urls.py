@@ -13,7 +13,7 @@ from askbot.sitemap import QuestionsSitemap
 from askbot.skins.utils import update_media_revision
 
 admin.autodiscover()
-update_media_revision()#needs to be run once, so put it here
+#update_media_revision()#needs to be run once, so put it here
 
 if getattr(settings, "ASKBOT_TRANSLATE_URL", False):
     from django.utils.translation import ugettext as _
@@ -74,9 +74,9 @@ urlpatterns = patterns('',
     # END main page urls
 
     url(
-        r'^api/get_questions/',
-        views.commands.api_get_questions,
-        name='api_get_questions'
+        r'^api/title_search/',
+        views.commands.title_search,
+        name='title_search'
     ),
     url(
         r'^get-thread-shared-users/',

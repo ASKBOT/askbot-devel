@@ -153,14 +153,14 @@ class PageLoadTestCase(AskbotTestCase):
         self.proto_test_ask_page(True, 200)
 
     @with_settings(GROUPS_ENABLED=False)
-    def test_api_get_questions_groups_disabled(self):
-        data = {'query': 'Question'}
-        response = self.client.get(reverse('api_get_questions'), data)
+    def test_title_search_groups_disabled(self):
+        data = {'query_text': 'Question'}
+        response = self.client.get(reverse('title_search'), data)
         data = simplejson.loads(response.content)
         self.assertTrue(len(data) > 1)
 
     @with_settings(GROUPS_ENABLED=True)
-    def test_api_get_questions_groups_enabled(self):
+    def test_title_search_groups_enabled(self):
 
         group = models.Group(name='secret group', openness=models.Group.OPEN)
         group.save()
@@ -169,14 +169,14 @@ class PageLoadTestCase(AskbotTestCase):
         question = self.post_question(user=user, title='alibaba', group_id=group.id)
 
         #ask for data anonymously - should get nothing
-        query_data = {'query': 'alibaba'}
-        response = self.client.get(reverse('api_get_questions'), query_data)
+        query_data = {'query_text': 'alibaba'}
+        response = self.client.get(reverse('title_search'), query_data)
         response_data = simplejson.loads(response.content)
         self.assertEqual(len(response_data), 0)
 
         #log in - should get the question
         self.client.login(method='force', user_id=user.id)
-        response = self.client.get(reverse('api_get_questions'), query_data)
+        response = self.client.get(reverse('title_search'), query_data)
         response_data = simplejson.loads(response.content)
         self.assertEqual(len(response_data), 1)
 

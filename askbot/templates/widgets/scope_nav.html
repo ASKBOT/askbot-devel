@@ -1,3 +1,4 @@
+<div id="scopeNav">
 {% if active_tab != "ask" %}
     {% if not search_state %}  {#  get empty SearchState() if there's none #}
         {% set search_state=search_state|get_empty_search_state %}
@@ -13,3 +14,4 @@
 {% else %}
     <div class="scope-selector ask-message">{% trans %}Please ask your question here{% endtrans %}</div>
 {% endif %}
+</div>

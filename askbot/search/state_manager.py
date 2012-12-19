@@ -170,10 +170,16 @@ class SearchState(object):
     SAFE_CHARS = const.TAG_SEP + '_+.-'
 
     def query_string(self):
+        """returns part of the url to the main page,
+        responsible to display the full text search results,
+        taking into account sort method, selected scope
+        and search tags"""
+
         lst = [
             'scope:' + self.scope,
             'sort:' + self.sort
         ]
+
         if self.query:
             lst.append('query:' + urllib.quote(smart_str(self.query), safe=self.SAFE_CHARS))
         if self.tags:

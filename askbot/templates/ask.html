@@ -20,11 +20,6 @@
         <script type='text/javascript' src='{{"/js/wmd/showdown.js"|media}}'></script>
         <script type='text/javascript' src='{{"/js/wmd/wmd.js"|media}}'></script>
     {% endif %}
-    <script type='text/javascript'>
-        var sortMethod = undefined;//need for live_search
-        var minSearchWordLength = {{settings.MIN_SEARCH_WORD_LENGTH}};
-    </script>
-    <script type='text/javascript' src='{{"/js/live_search_new_thread.js"|media}}'></script>
     {% include "meta/editor_data.html" %}
     {% if mandatory_tags %}
         {% include "meta/mandatory_tags_js.html" %}
@@ -33,7 +28,6 @@
         {% include "meta/category_tree_js.html" %}
     {% endif %}
     <script type='text/javascript'>
-        askbot['urls']['api_get_questions'] = '{% url api_get_questions %}';
         askbot['urls']['saveDraftQuestion'] = '{% url save_draft_question %}';
         {% if settings.ENABLE_MATHJAX or settings.MARKUP_CODE_FRIENDLY %}
             var codeFriendlyMarkdown = true;
@@ -41,7 +35,6 @@
             var codeFriendlyMarkdown = false;
         {% endif %}
         $().ready(function(){
-            liveSearchNewThreadInit();
             //set current module button style
             $('#editor').TextAreaResizer();
             //highlight code synctax when editor has new text

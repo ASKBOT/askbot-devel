@@ -143,21 +143,19 @@ def badges(request):#user status/reputation system
         raise Http404
     known_badges = badge_data.BADGES.keys()
     badges = BadgeData.objects.filter(slug__in = known_badges).order_by('slug')
-    my_badges = []
+    my_badge_ids = list()
     if request.user.is_authenticated():
-        my_badges = Award.objects.filter(
+        my_badge_ids = Award.objects.filter(
                                 user=request.user
-                            ).values(
-                                'badge_id'
+                            ).values_list(
+                                'badge_id', flat=True
                             ).distinct()
-        #my_badges.query.group_by = ['badge_id']
 
     data = {
         'active_tab': 'badges',
         'badges' : badges,
         'page_class': 'meta',
-        'mybadges' : my_badges,
-        'feedback_faq_url' : reverse('feedback'),
+        'my_badge_ids' : my_badge_ids
     }
     return render(request, 'badges.html', data)
 

@@ -9,13 +9,6 @@
 <script type="text/javascript" src="{{"/js/less.min.js"|media}}"></script>
 {% endif %}
 <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
-{% if settings.USE_LOCAL_FONTS %}
-    {% include "meta/fonts.html" %}
-{% else %}
-    {# note: IE8 fix - a combined font link wont work so we have two #}
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&amp;subset=cyrillic-ext' rel='stylesheet' type='text/css'>
-{% endif %}
 {{ skin.get_extra_css_link() }}
 {% if settings.USE_CUSTOM_CSS %}
     <link 

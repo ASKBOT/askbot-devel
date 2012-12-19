@@ -109,7 +109,7 @@ def get_users_by_text_query(search_query, users_query_set = None):
             users_query_set = User.objects.all()
         if 'postgresql_psycopg2' in askbot.get_database_engine_name():
             from askbot.search import postgresql
-            return postgresql.run_full_text_search(users_query_set, search_query)
+            return postgresql.run_thread_search(users_query_set, search_query)
         else:
             return users_query_set.filter(
                 models.Q(username__icontains=search_query) |
@@ -225,7 +225,7 @@ User.add_to_class('new_response_count', models.IntegerField(default=0))
 User.add_to_class('seen_response_count', models.IntegerField(default=0))
 User.add_to_class('consecutive_days_visit_count', models.IntegerField(default = 0))
 
-GRAVATAR_TEMPLATE = "http://www.gravatar.com/avatar/%(gravatar)s?" + \
+GRAVATAR_TEMPLATE = "//www.gravatar.com/avatar/%(gravatar)s?" + \
     "s=%(size)d&amp;d=%(type)s&amp;r=PG"
 
 def user_get_gravatar_url(self, size):

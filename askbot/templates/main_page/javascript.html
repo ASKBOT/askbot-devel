@@ -1,12 +1,9 @@
 <script type="text/javascript">
     /*<![CDATA[*/
-    var sortMethod = '{{sort}}';
-    var showSortByRelevance = {% if show_sort_by_relevance %}true{% else %}false{% endif %};
-    var minSearchWordLength = {{settings.MIN_SEARCH_WORD_LENGTH}};
+    askbot['settings']['showSortByRelevance'] = {% if show_sort_by_relevance %}true{% else %}false{% endif %};
     $(document).ready(function(){
         /*var on_tab = '#nav_questions';
         $(on_tab).attr('className','on');*/
-        liveSearch('{{ search_state.query_string()|escapejs }}');
         Hilite.exact = false;
         Hilite.elementid = "question-list";
         Hilite.debug_referrer = location.href;
@@ -21,7 +18,6 @@
     askbot['urls']['mark_subscribed_tag'] = '{% url mark_subscribed_tag %}';
     askbot['urls']['unmark_tag'] = '{% url unmark_tag %}';
     askbot['urls']['set_tag_filter_strategy'] = '{% url "set_tag_filter_strategy" %}';
-    askbot['urls']['questions'] = '{% url "questions" %}';
     askbot['urls']['question_url_template'] = scriptUrl + '{{'question/'|transurl}}{{ "{{QuestionID}}/" }}';
 
     if (Modernizr.history) {
@@ -39,7 +35,7 @@
         }
         if (hash !== '' && hash !== undefined && url !== undefined){
             {# was this causing strange redirects in IE??? #}
-            window.location = 'http://' + window.location.host + url;
+            window.location = document.location.protocol + '//' + window.location.host + url;
         }
     }
     /*]]>*/
@@ -48,4 +44,3 @@
 {% if request.user.is_authenticated() %}
 <script type='text/javascript' src='{{"/js/tag_selector.js"|media}}'></script>
 {% endif %}
-<script type="text/javascript" src='{{"/js/live_search.js"|media}}'></script>

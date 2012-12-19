@@ -1,17 +1,7 @@
 {% if active_tab != "ask" %}
 {% spaceless %}
-<div id="searchBar">
+<div id="searchBar" {% if query %}class="cancelable"{% endif %}>
     {# url action depends on which tab is active #}
-    <form 
-        {% if active_tab == "tags" %}
-            action="{% url tags %}" 
-        {% elif active_tab == "users" %}
-            action="{% url users %}" 
-        {% else %}
-            action="{% url questions %}" id="searchForm"
-        {% endif %}
-        method="get">
-            <input type="submit" value="" name="search" class="searchBtn" />
             {% if active_tab == "tags" %}
                 <input type="hidden" name="t" value="tag"/>
             {% else %}
@@ -21,26 +11,13 @@
             {% endif %}
             {# class was searchInput #}
             <input 
-                {% if query %}
-                class="searchInputCancelable"
-                {% else %}
                 class="searchInput" 
-                {% endif %}
                 type="text" 
                 autocomplete="off"
                 value="{{ query|default_if_none('') }}" 
                 name="query" 
                 id="keywords"
             />
-            <input type="button"
-                value="X"
-                name="reset_query"
-                class="cancelSearchBtn"
-                {% if not query %}{# query is only defined by questions view (active_tab) #}
-                    style="display: none;"
-                {% endif %}
-            />
-    </form>
 </div>
 {% endspaceless %}
 {% endif %}

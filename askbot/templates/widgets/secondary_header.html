@@ -1,12 +1,45 @@
 <!-- template secondary_header.html -->
 <div id="secondaryHeader">
     <div class="content-wrapper">
-        <a id="homeButton" href="{% url questions %}"></a>
-        <div id="scopeWrapper">
-            {% include "widgets/scope_nav.html" %}            
+        {# form is wrapping search buttons and the search bar inputs #}
+        <form
+            {% if active_tab == "tags" %}
+                action="{% url tags %}" 
+            {% elif active_tab == "users" %}
+                action="" 
+            {% else %}
+                action="{% url questions %}" id="searchForm"
+            {% endif %}
+            method="get">
+            <div>
+                {# 
+                    Some or all contents of this div may be dropped
+                    over the search bar via negative margins,
+                    to make sure that the search bar can occupy 100%
+                    of the content width.
+                    Search bar may have padding on the left and right
+                    to accomodate the buttons.
+                #}
+                <a id="homeButton" href="{% url questions %}"></a>
+                {% include "widgets/scope_nav.html" %}            
+                {# 
+                    three buttons below are in the opposite order because
+                    they are floated at the right
+                #}
+                {% include "widgets/ask_button.html" %}            
+                <input type="submit" value="" name="search" class="searchBtn" />
+                <input type="button"
+                    value="X"
+                    name="reset_query"
+                    class="cancelSearchBtn"
+                    {% if not query %}{# query is only defined by questions view (active_tab) #}
+                        style="display: none;"
+                    {% endif %}
+                />
+                {# clears button floats #}
+                <div class="clearfix"></div>
+            </div>
             {% include "widgets/search_bar.html" %} {# include search form widget #}
-        </div>
-        {% include "widgets/ask_button.html" %}            
-        <div class="clean"></div>
+        </form>
     </div>
 </div>

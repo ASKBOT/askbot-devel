@@ -20,7 +20,7 @@ def setup_full_text_search(script_path):
     finally:
         cursor.close()
 
-def run_full_text_search(query_set, query_text):
+def run_full_text_search(query_set, query_text, text_search_vector_name):
     """runs full text search against the query set and
     the search text. All words in the query text are
     added to the search with the & operator - i.e.
@@ -29,14 +29,17 @@ def run_full_text_search(query_set, query_text):
     It is also assumed that we ar searching in the same
     table as the query set was built against, also
     it is assumed that the table has text search vector
-    stored in the column called `text_search_vector`.
+    stored in the column called with value of`text_search_vector_name`.
     """
     table_name = query_set.model._meta.db_table
-
+ 
     rank_clause = 'ts_rank(' + table_name + \
-        '.text_search_vector, plainto_tsquery(%s))'
-
-    where_clause = table_name + '.text_search_vector @@ plainto_tsquery(%s)'
+                    '.' + text_search_vector_name + \
+                    ', plainto_tsquery(%s))'
+ 
+    where_clause = table_name + '.' + \
+                    text_search_vector_name + \
+                    ' @@ plainto_tsquery(%s)'
 
     search_query = '&'.join(query_text.split())#apply "AND" operator
     extra_params = (search_query,)
@@ -46,5 +49,12 @@ def run_full_text_search(query_set, query_text):
         'params': extra_params,
         'select_params': extra_params,
     }
-
     return query_set.extra(**extra_kwargs)
+
+def run_thread_search(query_set, query):
+    """runs search for full thread content"""
+    return run_full_text_search(query_set, query, 'text_search_vector');
+
+def run_title_search(query_set, query):
+    """runs search for title and tags"""
+    return run_full_text_search(query_set, query, 'title_search_vector')

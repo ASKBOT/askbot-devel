@@ -10,8 +10,10 @@ var {{variable_name}} = {
   toHtml: function() {
     var html = {{variable_name}}.createButton();
     var link = document.createElement('link');
+    var protocol = document.location.protocol;
+
     link.setAttribute("rel", "stylesheet");
-    link.setAttribute("href", 'http://{{host}}{%url render_ask_widget_css widget.id%}');
+    link.setAttribute("href", protocol + '//{{host}}{%url render_ask_widget_css widget.id%}');
 
     //creating the div
     var motherDiv = document.createElement('div');
@@ -36,7 +38,7 @@ var {{variable_name}} = {
     containerDiv.appendChild(closeButton);
 
     var iframe = document.createElement('iframe');
-    iframe.setAttribute('src', 'http://{{host}}{% url ask_by_widget widget.id %}');
+    iframe.setAttribute('src', protocol + '//{{host}}{% url ask_by_widget widget.id %}');
 
     containerDiv.appendChild(iframe);
 

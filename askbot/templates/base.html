@@ -10,9 +10,11 @@
         {% if settings.GOOGLE_SITEMAP_CODE %}
         <meta name="google-site-verification" content="{{settings.GOOGLE_SITEMAP_CODE}}" />
         {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
         {% block before_css %}{% endblock %}
         {% include "meta/html_head_stylesheets.html" %}
+        {% include "meta/fonts.html" %}
         {% block forestyle %}{% endblock %}
         {% include "meta/html_head_javascript.html" %}
         {% block forejs %}{% endblock %}

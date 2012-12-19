@@ -55,7 +55,7 @@
         if (window.location.hash === 'fmanswer'){
             $('#fmanswer textarea').focus();
         }
-        {% if settings.ENABLE_SHARING_GOOGLE %}$.getScript("http://apis.google.com/js/plusone.js"){% endif %}
+        {% if settings.ENABLE_SHARING_GOOGLE %}$.getScript("//apis.google.com/js/plusone.js"){% endif %}
 
         {% if request.user.id == question.author_id %}
             $("#fmanswer_button").click(function() {

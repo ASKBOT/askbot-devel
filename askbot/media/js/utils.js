@@ -97,6 +97,18 @@ var showMessage = function(element, msg, where) {
     };
 })(jQuery);
 
+/**
+ * @return {number} key code of the event or `undefined`
+ */
+var getKeyCode = function(e) {
+    if (e.which) {
+        return e.which;
+    } else if (e.keyCode) {
+        return e.keyCode;
+    }
+    return undefined;
+};
+
 var makeKeyHandler = function(key, callback){
     return function(e){
         if ((e.which && e.which == key) || (e.keyCode && e.keyCode == key)){
@@ -116,15 +128,16 @@ var setupButtonEventHandlers = function(button, callback){
 
 
 var putCursorAtEnd = function(element){
-    var el = element.get()[0];
+    var el = $(element).get()[0];
+    var jEl = $(el);
     if (el.setSelectionRange){
-        var len = element.val().length * 2;
+        var len = jEl.val().length * 2;
         el.setSelectionRange(len, len);
     }
     else{
-        element.val(element.val());
+        jEl.val(jEl.val());
     }
-    element.scrollTop = 999999;
+    jEl.scrollTop(999999);
 };
 
 var setCheckBoxesIn = function(selector, value){
@@ -201,7 +214,8 @@ QSutils.patch_query_string = function (query_string, patch, remove) {
     var mapping = {};
 
     if(!remove) {
-        mapping[patch_split[0]] = patch_split[1]; // prepopulate the patched selector if it's not meant to be removed
+        // prepopulate the patched selector if it's not meant to be removed
+        mapping[patch_split[0]] = patch_split[1];
     }
 
     for (var i = 0; i < params.length; i++) {
@@ -368,6 +382,45 @@ WrappedElement.prototype.dispose = function(){
     this._in_document = false;
 };
 
+/** 
+ * @constructor
+ * a loader
+ */
+var WaitIcon = function() {
+    WrappedElement.call(this);
+    this._isVisible = false;
+};
+inherits(WaitIcon, WrappedElement);
+
+WaitIcon.prototype.setVisible = function(isVisible) {
+    this._isVisible = isVisible;
+    if (this._element) {
+        if (this._isVisible === true) {
+            this._element.show();
+        } else {
+            this._element.hide();
+        }
+    }
+};
+
+WaitIcon.prototype.hide = function() {
+    this.setVisible(false);
+};
+
+WaitIcon.prototype.show = function() {
+    this.setVisible(true);
+};
+
+WaitIcon.prototype.createDom = function() {
+    var box = this.makeElement('div');
+    box.addClass('wait-icon-box');
+    this._element = box;
+    var img = this.makeElement('img');
+    img.attr('src', mediaUrl('media/images/ajax-loader.gif'));
+    box.append(img);
+    this.setVisible(this._isVisible); 
+};
+
 /**
  * @contsructor
  * a form helper that disables submit button
@@ -407,6 +460,30 @@ OneShotForm.prototype.decorate = function(element) {
         }
     };
     element.submit(disabler);
+};
+
+/**
+ * @constructor
+ * a simple link
+ */
+var Link = function() {
+    WrappedElement.call(this);
+};
+inherits(Link, WrappedElement);
+
+Link.prototype.setUrl = function(url) {
+    this._url = url;
+};
+
+Link.prototype.setText = function(text) {
+    this._text = text;
+};
+
+Link.prototype.createDom = function() {
+    var link = this.makeElement('a');
+    this._element = link;
+    link.attr('href', this._url);
+    link.html(this._text);
 };
 
 /**
@@ -1538,9 +1615,13 @@ var SelectBox = function(){
     this._items = [];
     this._select_handler = function(){};//empty default
     this._is_editable = false;
-    this._item_class = SelectBoxItem;
+    this._item_class = this.setItemClass(SelectBoxItem);
 };
 inherits(SelectBox, Widget);
+
+SelectBox.prototype.setItemClass = function(itemClass) {
+    this._item_class = itemClass;
+};
 
 SelectBox.prototype.setEditable = function(is_editable) {
     this._is_editable = is_editable;
@@ -1572,7 +1653,21 @@ SelectBox.prototype.getItemByIndex = function(idx) {
     return this._items[idx];
 };
 
-//why do we have these two almost identical methods?
+/**
+ * removes all items
+ */
+SelectBox.prototype.empty = function() {
+    var items = this._items;
+    $.each(items, function(idx, item){
+        item.dispose();
+    });
+    this._items = [];
+};
+
+/* 
+ * why do we have these two almost identical methods?
+ * the difference seems to be remove/vs fade out
+ */
 SelectBox.prototype.removeItem = function(id){
     var item = this.getItem(id);
     item.getElement().fadeOut();
@@ -1695,6 +1790,12 @@ SelectBox.prototype.decorate = function(element){
             me.getSelectHandler(item)
         );
     });
+};
+
+SelectBox.prototype.createDom = function() {
+    var element = this.makeElement('ul');
+    this._element = element;
+    element.addClass('select-box');
 };
 
 /**

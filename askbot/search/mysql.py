@@ -26,14 +26,3 @@ def supports_full_text_search():
         else:
             SUPPORTS_FTS = False
     return SUPPORTS_FTS
-
-def get_create_full_text_index_sql(index_name, table_name, column_list):
-    cursor = connection.cursor()
-    column_sql = '(%s)' % ','.join(column_list)
-    sql = 'CREATE FULLTEXT INDEX %s on %s %s' % (index_name, table_name, column_sql)
-    cursor.execute(sql)
-    return sql
-
-def get_drop_index_sql(index_name, table_name):
-    return 'ALTER TABLE %s DROP INDEX %s' % (table_name, index_name)
-

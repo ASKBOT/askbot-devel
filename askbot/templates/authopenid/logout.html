@@ -7,7 +7,7 @@
     <p>{% trans %}However, you still may be logged in to your OpenID provider. Please logout of your provider if you wish to do so.{% endtrans %}</p>
     {% if settings.FACEBOOK_KEY and settings.FACEBOOK_SECRET %}
         <div id="fb-root"></div>
-        <script src="http://connect.facebook.net/en_US/all.js"></script>
+        <script src="//connect.facebook.net/en_US/all.js"></script>
         <script>
             FB.init({appId: '{{settings.FACEBOOK_KEY}}', status: true, cookie: true, xfbml: true});
         </script>

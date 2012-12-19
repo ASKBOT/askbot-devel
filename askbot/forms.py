@@ -1157,11 +1157,7 @@ class RevisionForm(forms.Form):
     """
     Lists revisions of a Question or Answer
     """
-    revision = forms.ChoiceField(
-                    widget=forms.Select(
-                        attrs={'style': 'width:520px'}
-                    )
-                )
+    revision = forms.ChoiceField(widget=forms.Select())
 
     def __init__(self, post, latest_revision, *args, **kwargs):
         super(RevisionForm, self).__init__(*args, **kwargs)

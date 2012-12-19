@@ -5,21 +5,16 @@
 <h1 class="section-title">{% trans %}Badges{% endtrans %}</h1>
 <p>
 {% trans %}Community gives you awards for your questions, answers and votes.{% endtrans %}<br/>
-{% trans %}Below is the list of available badges and number 
-    of times each type of badge has been awarded. Have ideas about fun 
-badges? Please, give us your <a href='{{feedback_faq_url}}'>feedback</a>
-{% endtrans %}
+{% trans %}Below is the list of available badges and number of times each type of badge has been awarded.{% endtrans %}
 </p>
 <div id="medalList">
     {% for badge in badges %}
     <div style="clear:both;line-height:30px">
-        <div style="float:left;min-width:30px;text-align:right;height:30px">
-        {% for a in mybadges %}
-            {% if a.badge_id == badge.id %}
-             <span style="font-size:175%; padding-right:5px; color:#5B9058;">&#10004;</span>
-            {% endif %}
-        {% endfor %}
-        </div>
+        {% if badge.id in my_badge_ids %}
+            <div style="float:left;min-width:30px;text-align:right;height:30px">
+                 <span style="font-size:175%; padding-right:5px; color:#5B9058;">&#10004;</span>
+            </div>
+        {% endif %}
         <div style="float:left;width:230px;">
             <a href="{{badge.get_absolute_url()}}" 
                 title="{{badge.get_type_display()}} : {{badge.description}}" 

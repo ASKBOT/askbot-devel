@@ -10,19 +10,24 @@
     <th>Code</th>
     <th>Actions</th>
   </tr>
+  {% if request.is_secure() %}
+    {% set protocol='https' %}
+  {% else %}
+    {% set protocol='http' %}
+  {% endif %}
   {% if widget_name == 'ask' %}
-  {%for widget in widgets%}
-    <tr>
-      <td>{{widget.title}}</td>
-      <td> &lt;script type="text/javascript" src="http://{{request.get_host()}}{% url render_ask_widget widget.id%}" &gt;&lt;/script&gt;</td> 
-      <td><a href="{% url edit_widget widget_name, widget.id %}">Edit</a> | <a href="{% url delete_widget widget_name, widget.id %}">Delete</a></td>
-    </tr>
-  {%endfor%}
+      {%for widget in widgets%}
+        <tr>
+          <td>{{widget.title}}</td>
+          <td> &lt;script type="text/javascript" src="{{ protocol }}://{{request.get_host()}}{% url render_ask_widget widget.id%}" &gt;&lt;/script&gt;</td> 
+          <td><a href="{% url edit_widget widget_name, widget.id %}">Edit</a> | <a href="{% url delete_widget widget_name, widget.id %}">Delete</a></td>
+        </tr>
+      {%endfor%}
   {%else%}
   {%for widget in widgets%}
     <tr>
       <td>{{widget.title}}</td>
-      <td> &lt;iframe src="http://{{request.get_host()}}{% url question_widget widget.id%}" &gt; &lt;/iframe&gt;</td> 
+      <td> &lt;iframe src="{{ protocol }}://{{request.get_host()}}{% url question_widget widget.id%}" &gt; &lt;/iframe&gt;</td> 
       <td><a href="{% url edit_widget widget_name, widget.id %}">Edit</a> | <a href="{% url delete_widget widget_name, widget.id %}">Delete</a></td>
     </tr>
   {%endfor%}

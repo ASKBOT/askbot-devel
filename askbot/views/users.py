@@ -61,7 +61,6 @@ def owner_or_moderator_required(f):
 
 def show_users(request, by_group=False, group_id=None, group_slug=None):
     """Users view, including listing of users by group"""
-
     if askbot_settings.GROUPS_ENABLED and not by_group:
         default_group = models.Group.objects.get_global_group()
         group_slug = slugify(default_group.name)
@@ -129,7 +128,7 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
     except ValueError:
         page = 1
 
-    search_query = request.REQUEST.get('query',  "")
+    search_query = request.GET.get('query',  "")
     if search_query == "":
         if sortby == "newest":
             order_by_parameter = '-date_joined'

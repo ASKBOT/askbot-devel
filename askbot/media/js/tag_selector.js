@@ -150,7 +150,7 @@ function pickedTags(){
                 'remove',
                 function(){
                     deleteTagLocally();
-                    liveSearch.refresh();
+                    askbot['controllers']['fullTextSearch'].refresh();
                 }
             );
         }
@@ -293,7 +293,7 @@ function pickedTags(){
                         to_tag_container
                     );
                     $(input_sel).val('');
-                    liveSearch.refresh();
+                    askbot['controllers']['fullTextSearch'].refresh();
                 }
             );
         }
@@ -348,7 +348,7 @@ function pickedTags(){
                     filter_value: $(this).val()
                 },
                 success: function(){
-                    liveSearch.refresh();
+                    askbot['controllers']['fullTextSearch'].refresh();
                 }
             });
         });

@@ -24,8 +24,12 @@
     askbot['urls']['follow_user'] = '/followit/follow/user/{{'{{'}}userId{{'}}'}}/';
     askbot['urls']['unfollow_user'] = '/followit/unfollow/user/{{'{{'}}userId{{'}}'}}/';
     askbot['urls']['user_signin'] = '{{ settings.LOGIN_URL }}';
-    askbot['settings']['static_url'] = '{{ settings.STATIC_URL }}';
     askbot['urls']['getEditor'] = '{% url "get_editor" %}';
+    askbot['urls']['titleSearch'] = '{% url "title_search" %}';
+    askbot['urls']['ask'] = '{% url "ask" %}';
+	askbot['urls']['questions'] = '{% url "questions" %}';
+    askbot['settings']['static_url'] = '{{ settings.STATIC_URL }}';
+    askbot['settings']['minSearchWordLength'] = {{settings.MIN_SEARCH_WORD_LENGTH}};
 </script>
 <script 
     type="text/javascript"
@@ -39,6 +43,7 @@
 <!-- History.js --> 
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
+<script type="text/javascript" src="{{'/js/live_search.js'|media}}"></script>
 {% if settings.ENABLE_MATHJAX %}
     <script type='text/javascript' src="{{settings.MATHJAX_BASE_URL}}/MathJax.js">
         MathJax.Hub.Config({
@@ -52,13 +57,37 @@
     /*<![CDATA[*/
     $(document).ready(function(){
         // focus input on the search bar endcomment
-        {% if active_tab in ('users', 'questions', 'tags') %}
-            $('#keywords').focus();
+        {% if active_tab in ('users', 'questions', 'tags', 'badges') %}
+            var searchInput = $('#keywords');
         {% elif active_tab == 'ask' %}
-            $('#id_title').focus();
+            var searchInput = $('#id_title');
         {% else %}
+            var searchInput = undefined;
             animateHashes();
         {% endif %}
+
+        if (searchInput) {
+            searchInput.focus();
+            putCursorAtEnd(searchInput);
+        }
+        
+        {% if active_tab in ('questions', 'badges', 'ask') %}
+        if (searchInput) {
+            var search = new FullTextSearch();
+            askbot['controllers'] = askbot['controllers'] || {};
+            askbot['controllers']['fullTextSearch'] = search;
+            {% if search_state %}
+                search.setSearchUrl('{{ search_state.query_string()|escapejs }}');
+            {% else %}
+                search.setSearchUrl('');
+            {% endif %}
+            {% if active_tab == 'ask' %}
+                search.setAskButtonEnabled(false);
+            {% endif %}
+            search.decorate(searchInput);
+        }
+        {% endif %}
+
         if (askbot['data']['userIsAdminOrMod']) {
             $('body').addClass('admin');
         }

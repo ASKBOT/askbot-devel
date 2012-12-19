@@ -6,11 +6,7 @@
   {%else %}
     <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
   {%endif%}
-  {% if settings.USE_LOCAL_FONTS %}
-    {% include "meta/fonts.html" %}
-  {% else %}
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:400,700&amp;subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css' />
-  {% endif %}
+  {% include "meta/fonts.html" %}
   <style type="text/css" media="screen">
     body{
       font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -213,13 +209,15 @@
 
 <script type="text/javascript" src='{{"/js/live_search_new_thread.js"|media}}'></script>
 <script type="text/javascript" charset="utf-8">
-    var minSearchWordLength = {{settings.MIN_SEARCH_WORD_LENGTH}};
-    askbot['urls']['api_get_questions'] = '{% url api_get_questions %}';
+    askbot['settings']['minSearchWordLength'] = {{settings.MIN_SEARCH_WORD_LENGTH}};
+    askbot['urls']['titleSearch'] = '{% url title_search %}';
     askbot['urls']['upload'] = '{% url upload %}';
     $(document).ready(function(){
-      $("#id_title").focus();
-      $("#id_title").addClass('questionTitleInput');
-      liveSearchNewThreadInit(true);
+        var searchInput = $('#id_title');
+        searchInput.addClass('questionTitleInput');
+        var search = new FullTextSearch();
+        search.decorate(searchInput);
+        searchInput.focus();
     });
 </script>
 {% endblock %}
