@@ -276,19 +276,11 @@ $.fn.authenticator = function() {
 
     var start_facebook_login = function(){
         set_provider_name($(this));
-        if (typeof FB != 'undefined'){
-            FB.getLoginStatus(function(response){
-                if (response.authResponse){
-                    signin_form.submit();
-                }
-                else {
-                    if (FB.getAuthResponse()){
-                      signin_form.submit();
-                    }
-                    FB.login();
-                }
-            });
-        }
+        FB.login(function(response) {
+            if (response.authResponse) {
+                signin_form.submit();
+            }
+        });
         return false;
     };
 
