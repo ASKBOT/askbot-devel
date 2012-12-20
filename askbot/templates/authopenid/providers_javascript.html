@@ -45,7 +45,7 @@
       FB.init({appId: '{{settings.FACEBOOK_KEY}}', status: true, cookie: true, xfbml: true, oauth: true});
 
       FB.getLoginStatus(function(response){
-          if (response.status == "connected"){
+          if (response.status == "connected" && !userIsAuthenticated){
               $('input[name=facebook]').click();
           }
       });
