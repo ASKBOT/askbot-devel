@@ -1,268 +1,292 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+#   <16thetower@gmail.com>, 2012.
+# Yong Choi <sk8er.choi@gmail.com>, 2012.
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.7\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-18 18:51-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: ko\n"
+"Project-Id-Version: askbot\n"
+"Report-Msgid-Bugs-To: http://askbot.org/\n"
+"POT-Creation-Date: 2012-04-18 18:58-0500\n"
+"PO-Revision-Date: 2012-12-25 13:51+0000\n"
+"Last-Translator: Yong Choi <sk8er.choi@gmail.com>\n"
+"Language-Team: Korean (http://www.transifex.com/projects/p/askbot/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Translate Toolkit 1.9.0\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:73
 #, perl-format
 msgid "Are you sure you want to remove your %s login?"
-msgstr ""
+msgstr "%s 로그인을 정말로 제거하시겠습니까?"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:90
 msgid "Please add one or more login methods."
-msgstr ""
+msgstr "한 가지 또는 그 이상의 로그인 방법을 추가해주세요."
 
 #: skins/common/media/jquery-openid/jquery.openid.js:93
 msgid ""
 "You don't have a method to log in right now, please add one or more by "
 "clicking any of the icons below."
-msgstr ""
+msgstr "아래의 아이콘 중 하나를 클릭하여 로그인 방법을 지정하신 후 로그인해주세요."
 
 #: skins/common/media/jquery-openid/jquery.openid.js:135
 msgid "passwords do not match"
-msgstr ""
+msgstr "패스워드가 일치하지 않습니다"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:161
 msgid "Show/change current login methods"
-msgstr ""
+msgstr "현재의 로그인 방법을 표시/변경"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:226
 #, perl-format
 msgid "Please enter your %s, then proceed"
-msgstr ""
+msgstr "%s를 입력 후 진행"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:228
 msgid "Connect your %(provider_name)s account to %(site)s"
-msgstr ""
+msgstr "%(provider_name)s 계정을 %(site)s에 연결"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:322
 #, perl-format
 msgid "Change your %s password"
-msgstr ""
+msgstr "%s 패스워드를 변경"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:323
 msgid "Change password"
-msgstr ""
+msgstr "패스워드 변경"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:326
 #, perl-format
 msgid "Create a password for %s"
-msgstr ""
+msgstr "%s 패스워드를 생성"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:327
 msgid "Create password"
-msgstr ""
+msgstr "패스워드 생성"
 
 #: skins/common/media/jquery-openid/jquery.openid.js:343
 msgid "Create a password-protected account"
-msgstr ""
+msgstr "일반 계정을 생성"
 
 #: skins/common/media/js/post.js:28
 msgid "loading..."
-msgstr ""
+msgstr "로딩중.."
 
 #: skins/common/media/js/post.js:318
 msgid "insufficient privilege"
-msgstr ""
+msgstr "해당 권한이 없습니다"
 
 #: skins/common/media/js/post.js:319
 msgid "cannot pick own answer as best"
-msgstr ""
+msgstr "자신의 대답을 채택할 수 없습니다"
 
 #: skins/common/media/js/post.js:324
 msgid "please login"
-msgstr ""
+msgstr "로그인을 해주세요"
 
 #: skins/common/media/js/post.js:326
 msgid "anonymous users cannot follow questions"
-msgstr ""
+msgstr "익명의 사용자는 질문을 팔로우할 수 없습니다"
 
 #: skins/common/media/js/post.js:327
 msgid "anonymous users cannot subscribe to questions"
-msgstr ""
+msgstr "익명의 사용자는 질문을 구독하실 수 없습니다"
 
 #: skins/common/media/js/post.js:328
 msgid "anonymous users cannot vote"
-msgstr ""
+msgstr "익명의 사용자는 투표하실 수 없습니다"
 
 #: skins/common/media/js/post.js:330
 msgid "please confirm offensive"
-msgstr ""
+msgstr "이 글은 욕설, 광고, 스팸, 악의적인 내용이 포함되어 있습니까?"
 
 #: skins/common/media/js/post.js:331
 msgid "please confirm removal of offensive flag"
-msgstr ""
+msgstr "이 글에 욕설, 광고, 스팸, 악의적인 내용이 포함되어 있는 것이 확실합니까?"
 
 #: skins/common/media/js/post.js:332
 msgid "anonymous users cannot flag offensive posts"
-msgstr ""
+msgstr "익명의 사용자는 부적합한 게시물을 신고할 수 없습니다"
 
 #: skins/common/media/js/post.js:333
 msgid "confirm delete"
-msgstr ""
+msgstr "이 글을 삭제 하시겠습니까?"
 
 #: skins/common/media/js/post.js:334
 msgid "anonymous users cannot delete/undelete"
-msgstr ""
+msgstr "익명의 사용자는 글을 삭제 또는 삭제 취소할 수 없습니다"
 
 #: skins/common/media/js/post.js:335
 msgid "post recovered"
-msgstr ""
+msgstr "글이 복원되었습니다!"
 
 #: skins/common/media/js/post.js:336
 msgid "post deleted"
-msgstr ""
+msgstr "글이 삭제되었습니다"
 
 #: skins/common/media/js/post.js:1206
 msgid "add comment"
-msgstr ""
+msgstr "댓글 추가"
 
 #: skins/common/media/js/post.js:1209
 msgid "save comment"
-msgstr ""
+msgstr "댓글 저장"
 
 #: skins/common/media/js/post.js:1874
 msgid "Please enter question title (>10 characters)"
-msgstr ""
+msgstr "질문을 입력해 주세요 (10자 이상)"
 
 #: skins/common/media/js/tag_selector.js:15
 msgid "Tag \"<span></span>\" matches:"
-msgstr ""
+msgstr "\"<span></span>\" 태그 맞춤:"
 
 #: skins/common/media/js/tag_selector.js:84
 #, perl-format
 msgid "and %s more, not shown..."
-msgstr ""
+msgstr "그리고 %s 이상은 보여주지 않습니다..."
 
 #: skins/common/media/js/user.js:14
 msgid "Please select at least one item"
-msgstr ""
+msgstr "적어도 하나의 아이템을 선택 해야 합니다."
 
 #: skins/common/media/js/user.js:58
 msgid "Delete this notification?"
 msgid_plural "Delete these notifications?"
-msgstr[0] ""
+msgstr[0] "알림을 삭제 하시겠습니까?\n\n알림들을 삭제 하시겠습니까?"
 
 #: skins/common/media/js/user.js:65
 msgid "Close this entry?"
 msgid_plural "Close these entries?"
-msgstr[0] ""
+msgstr[0] "해당 항목을 닫으시겠습니까?"
 
 #: skins/common/media/js/user.js:72
 msgid "Remove all flags on this entry?"
 msgid_plural "Remove all flags on these entries?"
-msgstr[0] ""
+msgstr[0] "해당 항목의 모든 플래그를 삭제하시겠습니까?"
 
 #: skins/common/media/js/user.js:79
 msgid "Delete this entry?"
 msgid_plural "Delete these entries?"
-msgstr[0] ""
+msgstr[0] "해당 항목을 삭제하시겠습니까?"
 
 #: skins/common/media/js/user.js:159
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
-msgstr ""
+msgstr "%(username)s님을 팔로우하시려면 <a href=\"%(signin_url)s\">로그인</a>을 해주세요"
 
 #: skins/common/media/js/user.js:191
 #, perl-format
 msgid "unfollow %s"
-msgstr ""
+msgstr "%s님을 언팔로우"
 
 #: skins/common/media/js/user.js:194
 #, perl-format
 msgid "following %s"
-msgstr ""
+msgstr "%s님을 팔로잉"
 
 #: skins/common/media/js/user.js:200
 #, perl-format
 msgid "follow %s"
-msgstr ""
+msgstr "%s 팔로우"
 
 #: skins/common/media/js/utils.js:44
 msgid "click to close"
-msgstr ""
+msgstr "close를 선택"
 
 #: skins/common/media/js/wmd/wmd.js:26
 msgid "bold"
-msgstr ""
+msgstr "굵게"
 
 #: skins/common/media/js/wmd/wmd.js:27
 msgid "italic"
-msgstr ""
+msgstr "기울임꼴"
 
 #: skins/common/media/js/wmd/wmd.js:28
 msgid "link"
-msgstr ""
+msgstr "링크"
 
 #: skins/common/media/js/wmd/wmd.js:29
 msgid "quote"
-msgstr ""
+msgstr "인용"
 
 #: skins/common/media/js/wmd/wmd.js:30
 msgid "preformatted text"
-msgstr ""
+msgstr "텍스트 서식이 설정되어 있습니다."
 
 #: skins/common/media/js/wmd/wmd.js:31
 msgid "image"
-msgstr ""
+msgstr "이미지"
 
 #: skins/common/media/js/wmd/wmd.js:32
 msgid "attachment"
-msgstr ""
+msgstr "첨부파일"
 
 #: skins/common/media/js/wmd/wmd.js:33
 msgid "numbered list"
-msgstr ""
+msgstr "번호 목록"
 
 #: skins/common/media/js/wmd/wmd.js:34
 msgid "bulleted list"
-msgstr ""
+msgstr "불릿 목록"
 
 #: skins/common/media/js/wmd/wmd.js:35
 msgid "heading"
-msgstr ""
+msgstr "머리글"
 
 #: skins/common/media/js/wmd/wmd.js:36
 msgid "horizontal bar"
-msgstr ""
+msgstr "수평 막대"
 
 #: skins/common/media/js/wmd/wmd.js:37
 msgid "undo"
-msgstr ""
+msgstr "실행 취소"
 
 #: skins/common/media/js/wmd/wmd.js:38 skins/common/media/js/wmd/wmd.js:1053
 msgid "redo"
-msgstr ""
+msgstr "다시 실행"
 
 #: skins/common/media/js/wmd/wmd.js:47
 msgid "enter image url"
-msgstr ""
+msgstr "URL이나 이미지를 입력해주세요.\n예: http://www.example.com/image.jpg 입력 또는 이미지 파일 업로드"
 
 #: skins/common/media/js/wmd/wmd.js:48
 msgid "enter url"
-msgstr ""
+msgstr "웹사이트 주소를 입력해주세요.\n예: http://www.example.com \"웹 페이지 명\""
 
 #: skins/common/media/js/wmd/wmd.js:49
 msgid "upload file attachment"
-msgstr ""
+msgstr "업로드할 파일을 선택해주세요"
 
-#, fuzzy
-#~ msgid "%s follower"
-#~ msgid_plural "%s followers"
-#~ msgstr[0] ""
-#~ "#-#-#-#-#  djangojs.po (0.7)  #-#-#-#-#\n"
-#~ "#-#-#-#-#  djangojs.po (0.7)  #-#-#-#-#\n"
-#~ msgstr[1] "#-#-#-#-#  djangojs.po (0.7)  #-#-#-#-#\n"
+#~ msgid "tags cannot be empty"
+#~ msgstr "please enter at least one tag"
+
+#~ msgid "%s content minchars"
+#~ msgstr "please enter more than %s characters"
+
+#~ msgid "%s title minchars"
+#~ msgstr "please enter at least %s characters"
+
+#~ msgid "Follow"
+#~ msgstr "Follow"
+
+#~ msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgstr "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
+
+#~ msgid "enter %s more characters"
+#~ msgstr "please enter at least %s more characters"
+
+#~ msgid "confirm abandon comment"
+#~ msgstr "Are you sure you do not want to post this comment?"
+
+#~ msgid "confirm delete comment"
+#~ msgstr "do you really want to delete this comment?"
+
+#~ msgid "click to edit this comment"
+#~ msgstr "click to edit this comment"
+
+#~ msgid "edit"
+#~ msgstr "edit"
