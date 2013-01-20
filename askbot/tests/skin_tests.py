@@ -39,7 +39,10 @@ class SkinTests(TestCase):
                         )
         shutil.rmtree(self.temp_dir)
         askbot_settings.update('ASKBOT_DEFAULT_SKIN', 'default')
-        django_settings.ASKBOT_EXTRA_SKINS_DIR = self.skins_dir_backup
+        if self.skins_dir_backup is None:
+            del(django_settings.ASKBOT_EXTRA_SKINS_DIR)
+        else:
+            django_settings.ASKBOT_EXTRA_SKINS_DIR = self.skins_dir_backup
 
     def assert_default_logo_in_skin(self, skin_name):
         url = skin_utils.get_media_url(askbot_settings.SITE_LOGO_URL)
