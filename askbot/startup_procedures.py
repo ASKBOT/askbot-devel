@@ -909,12 +909,11 @@ def run():
         run_startup_tests()
     except AskbotConfigError, error:
         transaction.rollback()
-        print error
-        sys.exit(1)
+        raise
     try:
         from askbot.models import badges
         badges.init_badges()
         transaction.commit()
     except Exception, error:
-        print error
         transaction.rollback()
+        raise
