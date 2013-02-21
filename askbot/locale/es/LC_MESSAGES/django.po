@@ -6637,7 +6637,7 @@ msgstr "ver preguntas sin respuesta"
 
 #: skins/default/templates/widgets/scope_nav.html:8
 msgid "UNANSWERED"
-msgstr "SIN RESPUESTA"
+msgstr "NUEVOS"
 
 #: skins/default/templates/widgets/scope_nav.html:11
 msgid "see your followed questions"
