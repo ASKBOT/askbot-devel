@@ -173,6 +173,8 @@
     {#% endcache %#}
 {% endif %}
 
-<div class="box">
-    {{ settings.SIDEBAR_QUESTION_FOOTER }}
-</div>
+{% if settings.SIDEBAR_QUESTION_FOOTER %}
+    <div class="box">
+        {{ settings.SIDEBAR_QUESTION_FOOTER }}
+    </div>
+{% endif %}
