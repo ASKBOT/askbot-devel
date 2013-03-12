@@ -217,6 +217,8 @@ def collect_missing_options(options_dict):
                 print 'name %s cannot be used for the database name' % value
             elif value == path_utils.LOG_DIR_NAME:
                 print 'name %s cannot be used for the database name' % value
+            else:
+                database_file_name = value
 
             if database_file_name:
                 options_dict['database_name'] = database_file_name
