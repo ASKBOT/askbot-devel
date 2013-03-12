@@ -3,17 +3,15 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
         
         # Adding model country fields to the model auth_user
-        try:
-            db.add_column(u'auth_user', 'country', self.gf('django_countries.fields.CountryField')(max_length=2, blank=True, null=True))
-            db.add_column(u'auth_user', 'show_country', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True))
-        except:
-            pass
+        safe_add_column(u'auth_user', 'country', self.gf('django_countries.fields.CountryField')(max_length=2, blank=True, null=True))
+        safe_add_column(u'auth_user', 'show_country', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True))
     
     
     def backwards(self, orm):

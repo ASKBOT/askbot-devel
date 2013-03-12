@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 
 class Migration(SchemaMigration):
@@ -10,16 +11,13 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         
         # Adding model show_marked_tags fields to the model auth_user
-        try:
-            db.add_column(
-                u'auth_user',
-                'show_marked_tags',
-                self.gf(
-                    'django.db.models.fields.BooleanField'
-                )(default=True, blank=True)
-            )
-        except:
-            pass
+        safe_add_column(
+            u'auth_user',
+            'show_marked_tags',
+            self.gf(
+                'django.db.models.fields.BooleanField'
+            )(default=True, blank=True)
+        )
     
     
     def backwards(self, orm):

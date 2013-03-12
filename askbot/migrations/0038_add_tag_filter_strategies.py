@@ -4,29 +4,27 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 from askbot import const
+from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
         
         # Adding model country fields to the model auth_user
-        try:
-            db.add_column(
-                u'auth_user',
-                'email_tag_filter_strategy',
-                self.gf(
-                    'django.db.models.fields.SmallIntegerField'
-                )(default = const.EXCLUDE_IGNORED)
-            )
-            db.add_column(
-                u'auth_user',
-                'display_tag_filter_strategy',
-                self.gf(
-                    'django.db.models.fields.SmallIntegerField'
-                )(default = const.INCLUDE_ALL)
-            )
-        except:
-            pass
+        safe_add_column(
+            u'auth_user',
+            'email_tag_filter_strategy',
+            self.gf(
+                'django.db.models.fields.SmallIntegerField'
+            )(default = const.EXCLUDE_IGNORED)
+        )
+        safe_add_column(
+            u'auth_user',
+            'display_tag_filter_strategy',
+            self.gf(
+                'django.db.models.fields.SmallIntegerField'
+            )(default = const.INCLUDE_ALL)
+        )
     
     
     def backwards(self, orm):

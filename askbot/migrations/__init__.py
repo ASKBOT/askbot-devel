@@ -1,5 +1,9 @@
 from south.db import db
 from south.utils import ask_for_it_by_name
+from south.v2 import SchemaMigration
+
+if not db.has_ddl_transactions:
+    SchemaMigration.no_dry_run = True
 
 # Terminal ANSI codes for printing colored text:
 # - http://code.google.com/p/testoob/source/browse/trunk/src/testoob/reporting/colored.py#20
@@ -67,3 +71,4 @@ def innodb_ready_rename_column(orm, models, table, old_column_name, new_column_n
     # INFO: ask_for_it_by_name() if equivalent to self.gf() which is usually used in migrations, e.g.:
     #          db.alter_column('askbot_badgedata', 'slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50))
     db.alter_column(table, new_column_name, field)
+    db.clear_deferred_sql()

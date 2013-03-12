@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
     
@@ -13,16 +14,12 @@ class Migration(SchemaMigration):
         a bit hacky but we have to do it as long as we keep patching auth models
         within the forum application
         """
-        try:
-            db.add_column(
-                    u'auth_user', 
-                    'response_count', 
-                    self.gf('django.db.models.fields.IntegerField')(default=0, ), 
-                    keep_default=False
-                )
-        except:
-            print 'probably already have column User.response_count'
-            pass
+        safe_add_column(
+                u'auth_user', 
+                'response_count', 
+                self.gf('django.db.models.fields.IntegerField')(default=0, ), 
+                keep_default=False
+            )
     
     
     def backwards(self, orm):

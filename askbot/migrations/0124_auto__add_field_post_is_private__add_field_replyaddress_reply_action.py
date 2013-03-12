@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 
 class Migration(SchemaMigration):
@@ -10,14 +11,14 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Post.is_private'
         db.start_transaction()
-        db.add_column('askbot_post', 'is_private',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        safe_add_column('askbot_post', 'is_private',
+                        self.gf('django.db.models.fields.BooleanField')(default=False),
+                        keep_default=False)
 
         # Adding field 'ReplyAddress.reply_action'
-        db.add_column('askbot_replyaddress', 'reply_action',
-                      self.gf('django.db.models.fields.CharField')(default='auto_answer_or_comment', max_length=32),
-                      keep_default=False)
+        safe_add_column('askbot_replyaddress', 'reply_action',
+                        self.gf('django.db.models.fields.CharField')(default='auto_answer_or_comment', max_length=32),
+                        keep_default=False)
 
         # Changing field 'ReplyAddress.post'
         db.alter_column('askbot_replyaddress', 'post_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['askbot.Post']))
@@ -26,7 +27,7 @@ class Migration(SchemaMigration):
         try:
             db.start_transaction()
             # Adding field 'User.interesting_tags'
-            db.add_column(u'auth_user', 'email_signature', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
+            safe_add_column(u'auth_user', 'email_signature', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
             db.commit_transaction()
         except:
             db.rollback_transaction()

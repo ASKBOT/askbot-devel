@@ -3,21 +3,19 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
         
         # Adding field 'User.status'
-        try:
-            db.add_column(
-                    u'auth_user',
-                    'status',
-                    self.gf('django.db.models.fields.CharField')(default ='w', max_length = 2),
-                    keep_default=False
-                )
-        except:
-            pass
+        safe_add_column(
+                u'auth_user',
+                'status',
+                self.gf('django.db.models.fields.CharField')(default ='w', max_length = 2),
+                keep_default=False
+            )
     
     
     def backwards(self, orm):

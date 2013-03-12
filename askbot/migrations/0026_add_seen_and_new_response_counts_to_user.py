@@ -3,16 +3,14 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
     
     def forwards(self, orm):
         # Adding fields
-        try:
-            db.add_column('auth_user', 'new_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
-            db.add_column('auth_user', 'seen_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
-        except:
-            pass
+        safe_add_column('auth_user', 'new_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
+        safe_add_column('auth_user', 'seen_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
     
     def backwards(self, orm):
         # Deleting fields
