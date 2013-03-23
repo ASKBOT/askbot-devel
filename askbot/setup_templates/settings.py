@@ -116,6 +116,14 @@ MIDDLEWARE_CLASSES = (
     'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
+JINJA2_EXTENSIONS = (
+    'compressor.contrib.jinja2ext.CompressorExtension',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+
 
 ROOT_URLCONF = os.path.basename(os.path.dirname(__file__)) + '.urls'
 
@@ -177,6 +185,8 @@ INSTALLED_APPS = (
     'followit',
     'tinymce',
     #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
+
+    'compressor',
 )
 
 
@@ -234,6 +244,11 @@ CSRF_COOKIE_NAME = 'askbot_csrf'
 
 STATICFILES_DIRS = (
     ('default/media', os.path.join(ASKBOT_ROOT, 'media')),
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 RECAPTCHA_USE_SSL = True

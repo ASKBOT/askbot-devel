@@ -1,5 +1,6 @@
+{% load compress %}
+{% compress js %}
 <script type="text/javascript" src="{{"/js/modernizr.custom.js"|media }}"></script>
-<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 <script type="text/javascript">
     var askbot = {};
     askbot['data'] = {};
@@ -7,11 +8,11 @@
         askbot['data']['userIsAuthenticated'] = true;
         askbot['data']['userId'] = {{request.user.id}};
         askbot['data']['userName'] = '{{ request.user.username }}';
-        askbot['data']['userIsAdminOrMod'] = {% if 
+        askbot['data']['userIsAdminOrMod'] = {% if
                                                 request.user.is_administrator()
                                                 or request.user.is_moderator()
                                             %}true{% else %}false{% endif %};
-        askbot['data']['userIsAdmin'] = {% if 
+        askbot['data']['userIsAdmin'] = {% if
                                             request.user.is_administrator()
                                         %}true{% else %}false{% endif %};
         askbot['data']['userReputation'] = {{request.user.reputation}};
@@ -32,4 +33,6 @@
     {% endif %}
     askbot['messages'] = {};
 </script>
+{% endcompress %}
+<script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 {# avoid adding javascript here so that pages load faster #}
