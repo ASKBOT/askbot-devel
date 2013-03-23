@@ -24,6 +24,10 @@ class AnswerAlreadyGiven(exceptions.PermissionDenied):
     to the same question"""
     pass
 
+class AnsweringOwnQuestion(exceptions.PermissionDenied):
+    """Raised when user attempts to answer his own question."""
+    pass
+
 class DuplicateCommand(exceptions.PermissionDenied):
     """exception class to indicate that something
     that can happen only once was attempted for the second time

@@ -1901,6 +1901,13 @@ def user_post_answer(
     #todo: move this to assertion - user_assert_can_post_answer
     if self == question.author and not self.is_administrator():
 
+        if not askbot_settings.ALLOW_ANSWER_OWN_QUESTIONS:
+            error_message = _(
+                'Sorry, you cannot answer your own question. Please edit it or '
+                'comment an existing answer instead.'
+            )
+            raise askbot_exceptions.AnsweringOwnQuestion(error_message)
+
         # check date and rep required to post answer to own question
 
         delta = datetime.timedelta(askbot_settings.MIN_DAYS_TO_ANSWER_OWN_QUESTION)
