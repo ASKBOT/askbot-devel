@@ -60,9 +60,15 @@ class SkinEnvironment(CoffinEnvironment):
         or empty string - depending on the existence of file
         SKIN_PATH/media/style/extra.css
         """
-        url = utils.get_media_url('style/extra.css', ignore_missing = True)
+        url = None
+        if django_settings.ASKBOT_CSS_DEVEL is True:
+            url = utils.get_media_url('style/extra.less', ignore_missing = True)
+            rel = "stylesheet/less"
+        if url is None:
+            url = utils.get_media_url('style/extra.css', ignore_missing = True)
+            rel = "stylesheet"
         if url is not None:
-            return '<link href="%s" rel="stylesheet" type="text/css" />' % url
+            return '<link href="%s" rel="%s" type="text/css" />' % (url, rel)
         return ''
 
 def load_skins():
