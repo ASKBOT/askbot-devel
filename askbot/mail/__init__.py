@@ -176,7 +176,7 @@ def mail_moderators(
         msg.content_subtype = 'html'
         msg.send()
     except smtplib.SMTPException, error:
-        sys.stderr.write('\n' + error.encode('utf-8') + '\n')
+        sys.stderr.write('\n' + unicode(error).encode('utf-8') + '\n')
         if raise_on_failure == True:
             raise exceptions.EmailNotSent(unicode(error))
 

@@ -2,23 +2,23 @@
 <script type="text/javascript">
     var retagUrl = "{% url retag_question question.id %}";
 </script>
-<a id="retag" class="question-retag"href="{% url retag_question question.id %}">{% trans %}retag{% endtrans %}</a>
+<a id="retag" class="question-retag" href="{% url retag_question question.id %}">{% trans %}retag{% endtrans %}</a>
 {% if question.offensive_flag_count > 0 %}
-    <span 
+    <span
         id="question-offensive-remove-flag-{{ question.id }}"
         class="offensive-flag"
         title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}"
     >
         <a class="question-flag">{% trans %}remove flag{% endtrans %}</a>
     </span>
-    <span 
+    <span
         id="question-offensive-flag-{{ question.id }}" class="offensive-flag"
         title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}"
     >
         <a class="question-flag">{% trans %}flag offensive{% endtrans %} ({{ question.offensive_flag_count }})</a>
     </span>
 {% else %}
-    <span 
+    <span
         id="question-offensive-flag-{{ question.id }}" class="offensive-flag"
         title="{% trans %}report as offensive (i.e containing spam, advertising, malicious text, etc.){% endtrans %}"
     >
@@ -26,11 +26,11 @@
     </span>
 {% endif %}
 {% if thread.closed %}
-    <a  class="question-close" href="{% url reopen question.id %}">{% trans %}reopen{% endtrans %}</a>
+    <a class="question-close" href="{% url reopen question.id %}">{% trans %}reopen{% endtrans %}</a>
 {% else %}
     <a class="question-close" href="{% url close question.id %}">{% trans %}close{% endtrans %}</a>
 {% endif %}
-<a 
+<a
     id="post-{{question.id}}-delete"
     class="question-delete"
 >{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
