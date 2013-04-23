@@ -575,7 +575,7 @@ def edit_answer(request, id):
 #todo: rename this function to post_new_answer
 @decorators.check_authorization_to_post(ugettext_lazy('Please log in to answer questions'))
 @decorators.check_spam('text')
-def answer(request, id):#process a new answer
+def answer(request, id, form_class=forms.AnswerForm):#process a new answer
     """view that posts new answer
 
     anonymous users post into anonymous storage
@@ -586,19 +586,17 @@ def answer(request, id):#process a new answer
     question = get_object_or_404(models.Post, post_type='question', id=id)
     if request.method == "POST":
 
-        custom_class_path = getattr(settings, 'ASKBOT_NEW_ANSWER_FORM', None)
-        if custom_class_path:
-            form_class = load_module(custom_class_path)
-        else:
-            form_class = forms.AnswerForm
-
+        #this check prevents backward compatilibility
+        if form_class == forms.AnswerForm:
+            custom_class_path = getattr(settings, 'ASKBOT_NEW_ANSWER_FORM', None)
+            if custom_class_path:
+                form_class = load_module(custom_class_path)
+            else:
+                form_class = forms.AnswerForm
+        
         form = form_class(request.POST, user=request.user)
 
         if form.is_valid():
-            wiki = form.cleaned_data['wiki']
-            text = form.cleaned_data['text']
-            update_time = datetime.datetime.now()
-
             if request.user.is_authenticated():
                 drafts = models.DraftAnswer.objects.filter(
                                                 author=request.user,
@@ -606,19 +604,8 @@ def answer(request, id):#process a new answer
                                             )
                 drafts.delete()
                 try:
-                    follow = form.cleaned_data['email_notify']
-                    is_private = form.cleaned_data['post_privately']
-
                     user = form.get_post_user(request.user)
-
-                    answer = user.post_answer(
-                                        question = question,
-                                        body_text = text,
-                                        follow = follow,
-                                        wiki = wiki,
-                                        is_private = is_private,
-                                        timestamp = update_time,
-                                    )
+                    answer = form.save(question, user)
 
                     signals.new_answer_posted.send(None,
                         answer=answer,
@@ -637,8 +624,8 @@ def answer(request, id):#process a new answer
                 request.session.flush()
                 models.AnonymousAnswer.objects.create(
                     question=question,
-                    wiki=wiki,
-                    text=text,
+                    wiki=form.cleaned_data['wiki'],
+                    text=form.cleaned_data['text'],
                     session_key=request.session.session_key,
                     ip_addr=request.META['REMOTE_ADDR'],
                 )

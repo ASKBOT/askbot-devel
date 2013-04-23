@@ -1,6 +1,7 @@
 """Forms, custom form fields and related utility functions
 used in AskBot"""
 import re
+import datetime
 from django import forms
 from askbot import const
 from askbot.const import message_keys
@@ -1131,6 +1132,21 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
         self.fields['email_notify'].widget.attrs['id'] = \
                                     'question-subscribe-updates'
 
+    #People can override this function to save their additional fields to db
+    def save(self, question, user):
+        wiki = self.cleaned_data['wiki'],
+        text = self.cleaned_data['text']
+        follow = self.cleaned_data['email_notify']
+        is_private = self.cleaned_data['post_privately']        
+
+        return user.post_answer(
+            question = question,
+            body_text = text,
+            follow = follow,
+            wiki = wiki,
+            is_private = is_private,
+            timestamp = datetime.datetime.now(),
+        )
 
 class VoteForm(forms.Form):
     """form used in ajax vote view (only comment_upvote so far)
