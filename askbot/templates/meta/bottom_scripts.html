@@ -56,16 +56,6 @@
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
 <script type="text/javascript" src="{{'/js/live_search.js'|media}}"></script>
-{% if settings.ENABLE_MATHJAX %}
-    {# we don't want to load mathjax just in case, only if it is really enabled #}
-    <script type='text/javascript' src="{{settings.MATHJAX_BASE_URL}}/MathJax.js">
-        MathJax.Hub.Config({
-            extensions: ["tex2jax.js"],
-            jax: ["input/TeX","output/HTML-CSS"],
-            tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
-        });
-    </script>
-{% endif %}
 <script type="text/javascript">
     /*<![CDATA[*/
     $('.mceStatusbar').remove();//a hack to remove the tinyMCE status bar
@@ -121,6 +111,16 @@
 </script>
 {% endcompress %}
 {# stuff below should not be compressed #}
+{% if settings.ENABLE_MATHJAX %}
+    {# we don't want to load mathjax just in case, only if it is really enabled #}
+    <script type='text/javascript' src="{{settings.MATHJAX_BASE_URL}}/MathJax.js">
+        MathJax.Hub.Config({
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX","output/HTML-CSS"],
+            tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+        });
+    </script>
+{% endif %}
 {% if settings.USE_CUSTOM_JS %}
 <script 
     src="{% url "custom_js" %}?v={{ settings.MEDIA_RESOURCE_REVISION }}"
