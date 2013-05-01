@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Taken and modified from the dbsettings project.
 
 http://code.google.com/p/django-values/
