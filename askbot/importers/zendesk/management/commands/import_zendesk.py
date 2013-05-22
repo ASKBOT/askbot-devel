@@ -149,12 +149,12 @@ class Command(BaseCommand):
 
         self.tar = tarfile.open(args[0], 'r:gz')
 
-        #sys.stdout.write('Reading users.xml: ')
-        #self.read_users()
-        #sys.stdout.write('Reading posts.xml: ')
-        #self.read_posts()
-        #sys.stdout.write('Reading forums.xml: ')
-        #self.read_forums()
+        sys.stdout.write('Reading users.xml: ')
+        self.read_users()
+        sys.stdout.write('Reading posts.xml: ')
+        self.read_posts()
+        sys.stdout.write('Reading forums.xml: ')
+        self.read_forums()
 
         sys.stdout.write("Importing user accounts: ")
         self.import_users()
@@ -195,6 +195,9 @@ class Command(BaseCommand):
             for field in fields:
                 value = get_val(xml_entry, field)
                 model_field_name = field.replace('-', '_')
+                max_length = instance._meta.get_field(model_field_name).max_length
+                if value and max_length:
+                    value = value[:max_length]
                 setattr(instance, model_field_name, value)
             if extra_field_mappings:
                 for (field, model_field_name) in extra_field_mappings:
