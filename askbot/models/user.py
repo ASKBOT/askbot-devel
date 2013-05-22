@@ -311,13 +311,15 @@ class EmailFeedSetting(models.Model):
         unique_together = ('subscriber', 'feed_type')
         app_label = 'askbot'
 
-
     def __str__(self):
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
         if self.reported_at is None:
             reported_at = "'not yet'"
         else:
             reported_at = '%s' % self.reported_at.strftime('%d/%m/%y %H:%M')
-        return 'Email feed for %s type=%s, frequency=%s, reported_at=%s' % (
+        return u'Email feed for %s type=%s, frequency=%s, reported_at=%s' % (
                                                      self.subscriber,
                                                      self.feed_type,
                                                      self.frequency,
