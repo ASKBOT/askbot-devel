@@ -514,9 +514,14 @@ class GroupTests(AskbotTestCase):
         self.assertEqual(qa.groups.filter(name='private').exists(), True)
 
     def test_global_group_name_setting_changes_group_name(self):
+        orig_group_name = askbot_settings.GLOBAL_GROUP_NAME;
         askbot_settings.update('GLOBAL_GROUP_NAME', 'all-people')
         group = models.Group.objects.get_global_group()
         self.assertEqual(group.name, 'all-people')
+        # Revert the global group name, so we don't mess up other tests!
+        askbot_settings.update('GLOBAL_GROUP_NAME', orig_group_name);
+        group = models.Group.objects.get_global_group()
+        self.assertEqual(group.name, orig_group_name)
 
     def test_ask_global_group_by_id_works(self):
         group = models.Group.objects.get_global_group()
@@ -698,5 +703,3 @@ class LinkPostingTests(AskbotTestCase):
         self.assert_no_link(question.html)
         self.edit_question(user=admin, question=question, body_text=text + ' ok')
         self.assert_has_link(question.html, 'http://wikipedia.org')
-
-    
