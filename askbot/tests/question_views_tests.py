@@ -33,7 +33,7 @@ class PrivateQuestionViewsTests(AskbotTestCase):
         dom = BeautifulSoup(response2.content)
         title = dom.find('h1').text
         self.assertTrue(unicode(const.POST_STATUS['private']) in title)
-        question = models.Thread.objects.get(id=1)
+        question = models.Thread.objects.get()
         self.assertEqual(question.title, self.qdata['title'])
         self.assertFalse(models.Group.objects.get_global_group() in set(question.groups.all()))
 
@@ -114,7 +114,7 @@ class PrivateQuestionViewsTests(AskbotTestCase):
 
 
 class PrivateAnswerViewsTests(AskbotTestCase):
-    
+
     def setUp(self):
         self._backup = askbot_settings.GROUPS_ENABLED
         askbot_settings.update('GROUPS_ENABLED', True)
@@ -147,7 +147,6 @@ class PrivateAnswerViewsTests(AskbotTestCase):
         response = self.client.get(self.question.get_absolute_url())
         self.assertFalse('some answer text' in response.content)
 
-    
     def test_private_checkbox_is_on_when_editing_private_answer(self):
         answer = self.post_answer(
             question=self.question, user=self.user, is_private=True
