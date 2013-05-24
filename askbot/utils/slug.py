@@ -50,10 +50,13 @@ def slugify(input_text, max_length=150):
         return input_text
 
     allow_unicode_slugs = getattr(settings, 'ALLOW_UNICODE_SLUGS', False)
-    if allow_unicode_slugs:
+    if isinstance(input_text, unicode) and not allow_unicode_slugs:
+        input_text = unidecode(input_text)
+
+    if isinstance(input_text, unicode):
         slug = unicode_slugify(input_text)
     else:
-        slug = defaultfilters.slugify(unidecode(input_text))
+        slug = defaultfilters.slugify(input_text)
     while len(slug) > max_length:
         # try to shorten word by word until len(slug) <= max_length
         temp = slug[:slug.rfind('-')]
