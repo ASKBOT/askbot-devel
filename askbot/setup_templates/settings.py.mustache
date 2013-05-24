@@ -27,6 +27,8 @@ DATABASES = {
         'PASSWORD': '{{database_password}}',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
+        'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
     }
 }
 
@@ -46,7 +48,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #go to the site's live settings and enable the feature
 #"Email settings" -> "allow asking by email"
 #
-#   WARNING: command post_emailed_questions DELETES all 
+#   WARNING: command post_emailed_questions DELETES all
 #            emails from the mailbox each time
 #            do not use your personal mail box here!!!
 #
@@ -125,7 +127,7 @@ ROOT_URLCONF = os.path.basename(os.path.dirname(__file__)) + '.urls'
 
 #UPLOAD SETTINGS
 FILE_UPLOAD_TEMP_DIR = os.path.join(
-                                os.path.dirname(__file__), 
+                                os.path.dirname(__file__),
                                 'tmp'
                             ).replace('\\','/')
 
@@ -258,7 +260,7 @@ HAYSTACK_SITECONF = 'askbot.search.haystack'
 #http://django-haystack.readthedocs.org/en/v1.2.7/settings.html
 HAYSTACK_SEARCH_ENGINE = 'simple'
 
-TINYMCE_COMPRESSOR = True 
+TINYMCE_COMPRESSOR = True
 TINYMCE_SPELLCHECKER = False
 TINYMCE_JS_ROOT = os.path.join(STATIC_ROOT, 'default/media/js/tinymce/')
 #TINYMCE_JS_URL = STATIC_URL + 'default/media/js/tinymce/tiny_mce.js'
@@ -287,7 +289,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 #delayed notifications, time in seconds, 15 mins by default
-NOTIFICATION_DELAY_TIME = 60 * 15 
+NOTIFICATION_DELAY_TIME = 60 * 15
 
 GROUP_MESSAGING = {
     'BASE_URL_GETTER_FUNCTION': 'askbot.models.user_get_profile_url',
@@ -303,5 +305,9 @@ if 'ASKBOT_CSS_DEVEL' in locals() and ASKBOT_CSS_DEVEL == True:
     )
 
 COMPRESS_JS_FILTERS = []
-COMPRESS_PARSER = 'compressor.parser.HtmlParser' 
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
+
+# Use syncdb for tests instead of South migrations. Without this, some tests
+# fail spuriously in MySQL.
+SOUTH_TESTS_MIGRATE = False
