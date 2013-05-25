@@ -115,7 +115,8 @@ def ask_widget(request, widget_id):
                 return redirect('ask_by_widget_complete')
             else:
                 #FIXME: this redirect is temporal need to create the correct view
-                next_url = '%s?next=%s' % (reverse('widget_signin'), reverse('ask_by_widget'))
+                next_url = '%s?next=%s' % (reverse('widget_signin'),
+                                           reverse('ask_by_widget', args=(widget_id,)))
                 return redirect(next_url)
 
         form = forms.AskWidgetForm(
