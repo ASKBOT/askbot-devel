@@ -63,18 +63,24 @@
         // focus input on the search bar endcomment
         var activeTab = askbot['data']['activeTab'];
         if (inArray(activeTab, ['users', 'questions', 'tags', 'badges'])) {
+			alert("1");
             var searchInput = $('#keywords');
         } else if (activeTab === 'ask') {
+			alert("2");
             var searchInput = $('#id_title');
         } else {
+			alert("3");
             var searchInput = undefined;
             animateHashes();
         }
 
         if (searchInput) {
+			alert("4: "+searchInput);
             searchInput.focus();
             putCursorAtEnd(searchInput);
         }
+        
+        alert("askbot: "+askbot);
         
         if (inArray(activeTab, ['questions', 'badges', 'ask']) && searchInput.length) {
             var search = new FullTextSearch();
