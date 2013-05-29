@@ -18,12 +18,7 @@ class EmailParsingTests(utils.AskbotTestCase):
 
     def test_clean_email_body(self):
         cleaned_body = mail.clean_html_email(self.rendered_template)
-        print "EXPECTED BODY"
-        print self.expected_output
-        print '=================================================='
-        print cleaned_body
-        print "CLEANED BODY"
-        self.assertEqual(cleaned_body, self.expected_output)
+        self.assertEqual(self.expected_output, cleaned_body)
 
     def test_gmail_rich_text_response_stripped(self):
         text = u'\n\nthis is my reply!\n\nOn Wed, Oct 31, 2012 at 1:45 AM, <kp@kp-dev.askbot.com> wrote:\n\n> **\n>            '
