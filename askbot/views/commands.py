@@ -1034,12 +1034,12 @@ def edit_group_membership(request):
             template = get_template('widgets/group_snippet.html')
             return {
                 'name': group.name,
-                'description': getattr(group.tag_wiki, 'text', ''),
+                'description': getattr(group.description, 'text', ''),
                 'html': template.render({'group': group})
             }
         elif action == 'remove':
             try:
-                group = models.Group.objects.get(group_name = group_name)
+                group = models.Group.objects.get(name = group_name)
                 request.user.edit_group_membership(user, group, 'remove')
             except models.Group.DoesNotExist:
                 raise exceptions.PermissionDenied()

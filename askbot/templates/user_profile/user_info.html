@@ -60,17 +60,19 @@
                 <tr>
                     <td>{% if user_groups %}{% trans %}groups{% endtrans %}{% endif %}</td>
                     <td>
-                        <table id="groups-list">
-                            {% for group in user_groups %}
-                            <tr>
-                                {{ macros.user_group(group, groups_membership_info[group.id]) }}
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        <div class="clearfix"></div>
-                        <a id="add-group">{% trans %}add group{% endtrans %}</a>
+                        <div id="user-groups">
+                            <table id="groups-list">
+                                {% for group in user_groups %}
+                                <tr>
+                                    {{ macros.user_group(group, groups_membership_info[group.id]) }}
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <div class="clearfix"></div>
+                            <a id="add-group">{% trans %}add group{% endtrans %}</a>
+                        </div>
                     </td>
-                </div>
+                </tr>
                 {% endif %}
                 <tr>
                     <td>{% trans %}member since{% endtrans %}</td>
