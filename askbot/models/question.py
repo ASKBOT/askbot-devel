@@ -19,7 +19,7 @@ import askbot
 from askbot.conf import settings as askbot_settings
 from askbot import mail
 from askbot.mail import messages
-from askbot.models.tag import Tag
+from askbot.models.tag import Tag, TagSynonym
 from askbot.models.tag import get_tags_by_names
 from askbot.models.tag import filter_accepted_tags, filter_suggested_tags
 from askbot.models.tag import separate_unused_tags
@@ -1258,6 +1258,8 @@ class Thread(models.Model):
         Tag use counts are recalculated
         A signal tags updated is sent
 
+        TagSynonym is used to replace tag names
+
         *IMPORTANT*: self._question_post() has to
         exist when update_tags() is called!
         """
@@ -1267,9 +1269,20 @@ class Thread(models.Model):
         previous_tags = list(self.tags.filter(status = Tag.STATUS_ACCEPTED))
 
         ordered_updated_tagnames = [t for t in tagnames.strip().split(' ')]
+        updated_tagnames_tmp = set(ordered_updated_tagnames)
+
+        #apply TagSynonym
+        updated_tagnames = set()
+        for tag_name in updated_tagnames_tmp:
+            try:
+                tag_synonym = TagSynonym.objects.get(source_tag_name=tag_name)
+                updated_tagnames.add(tag_synonym.target_tag_name)
+                tag_synonym.auto_rename_count += 1
+                tag_synonym.save()
+            except TagSynonym.DoesNotExist:
+                updated_tagnames.add(tag_name)
 
         previous_tagnames = set([tag.name for tag in previous_tags])
-        updated_tagnames = set(ordered_updated_tagnames)
         removed_tagnames = previous_tagnames - updated_tagnames
 
         #remove tags from the question's tags many2many relation

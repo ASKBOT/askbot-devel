@@ -2,6 +2,7 @@ from django.core import management
 from django.contrib import auth
 from askbot.tests.utils import AskbotTestCase
 from askbot import models
+from django.contrib.auth.models import User
 
 class ManagementCommandTests(AskbotTestCase):
     def test_add_askbot_user(self):
@@ -50,3 +51,80 @@ class ManagementCommandTests(AskbotTestCase):
         user_two = models.User.objects.get(pk=user_two_pk)
         self.assertEqual(user_two.gold, number_of_gold)
         self.assertEqual(user_two.reputation, reputation)
+
+    def test_create_tag_synonym(self):
+
+        admin = User.objects.create_superuser('test_admin', 'admin@admin.com', 'admin_pass')
+
+        options = {
+            'from': 'tag1',     # ok.. 'from' is a bad keyword argument name..
+            'to': 'tag2',
+            'user_id': admin.id,
+            'is_force': True
+            }
+        management.call_command(
+            'create_tag_synonyms',
+            **options
+            )
+
+        options['from'] = 'tag3'
+        options['to'] = 'tag4'
+        management.call_command(
+            'create_tag_synonyms',
+            **options
+            )
+
+        options['from']='tag5'
+        options['to']='tag4'
+        management.call_command(
+            'create_tag_synonyms',
+            **options
+            )
+
+        options['from']='tag2'
+        options['to']='tag3'
+        management.call_command(
+            'create_tag_synonyms',
+            **options
+            )
+
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag1',
+                                                          target_tag_name = 'tag4'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag2',
+                                                          target_tag_name = 'tag4'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag3',
+                                                          target_tag_name = 'tag4'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag5',
+                                                          target_tag_name = 'tag4'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.count(), 4)
+
+        options['from']='tag4'
+        options['to']='tag6'
+        management.call_command(
+            'create_tag_synonyms',
+            **options
+            )
+
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag1',
+                                                          target_tag_name = 'tag6'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag2',
+                                                          target_tag_name = 'tag6'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag3',
+                                                          target_tag_name = 'tag6'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag4',
+                                                          target_tag_name = 'tag6'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag5',
+                                                          target_tag_name = 'tag6'
+                                                          ).count(), 1)
+        self.assertEqual(models.TagSynonym.objects.count(), 5)
+
+        print 'done create_tag_synonym_test'
+        

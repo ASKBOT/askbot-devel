@@ -123,21 +123,33 @@ or repost a bug, if that does not help"""
         for question in questions[:10]:
             print '* %s' % question.title.strip()
 
-        from_tag_names = format_tag_name_list(from_tags)
-        to_tag_names = format_tag_name_list(to_tags)
+        formatted_from_tag_names = format_tag_name_list(from_tags)
+        formatted_to_tag_names = format_tag_name_list(to_tags)
 
-        prompt = 'Rename tags %s --> %s?' % (from_tag_names, to_tag_names)
-        choice = console.choice_dialog(prompt, choices=('yes', 'no'))
-        if choice == 'no':
-            print 'Canceled'
-            sys.exit()
+        if not options.get('is_force', False):
+            prompt = 'Rename tags %s --> %s?' % (formatted_from_tag_names, formatted_to_tag_names)
+            choice = console.choice_dialog(prompt, choices=('yes', 'no'))
+            if choice == 'no':
+                print 'Canceled'
+                sys.exit()
         else:
-            sys.stdout.write('Processing:')
+            print 'Renaming tags %s --> %s' % (formatted_from_tag_names, formatted_to_tag_names)
+        sys.stdout.write('Processing:')
 
-        #actual processing stage, only after this point we start to
-        #modify stuff in the database, one question per transaction
         from_tag_names = get_tag_names(from_tags)
         to_tag_names = get_tag_names(to_tags)
+
+        #if user provided tag1 as to_tag, and tagsynonym tag1->tag2 exists.
+        for to_tag_name in to_tag_names:
+            try:
+               tag_synonym =  models.TagSynonym.objects.get(source_tag_name = to_tag_name)
+               raise CommandError(u'You gave %s as --to argument, but TagSynonym: %s -> %s exists, probably you want to provide %s as --to argument' % (to_tag_name, tag_synonym.source_tag_name, tag_synonym.target_tag_name, tag_synonym.target_tag_name))
+            except models.TagSynonym.DoesNotExist:
+                pass
+        
+        
+        #actual processing stage, only after this point we start to
+        #modify stuff in the database, one question per transaction
         i = 0
         for question in questions:
             tag_names = set(question.get_tag_names())
@@ -174,3 +186,9 @@ or repost a bug, if that does not help"""
         #    print "None found."
         #print "Done."
         #transaction.commit()
+
+        # A user wants to rename tag2->tag3 and tagsynonym tag1->tag2 exists.
+        # we want to update tagsynonym (tag1->tag2) to (tag1->tag3)
+        for from_tag_name in from_tag_names:
+            # we need db_index for target_tag_name as well for this
+            models.TagSynonym.objects.filter(target_tag_name = from_tag_name).update(target_tag_name = to_tag_name) 

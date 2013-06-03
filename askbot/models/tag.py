@@ -318,3 +318,20 @@ class MarkedTag(models.Model):
 
     class Meta:
         app_label = 'askbot'
+
+
+class TagSynonym(models.Model):
+
+    source_tag_name = models.CharField(max_length=255, unique=True)
+    target_tag_name = models.CharField(max_length=255, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    owned_by = models.ForeignKey(User, related_name='tag_synonyms')
+    auto_rename_count = models.IntegerField(default=0)
+    last_auto_rename_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        app_label = 'askbot'
+
+    def __unicode__(self):
+        return u'%s -> %s' % (self.source_tag_name, self.target_tag_name)
+        
