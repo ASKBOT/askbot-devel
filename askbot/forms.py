@@ -385,11 +385,10 @@ def clean_tag(tag_name):
     else:
         try:
             from askbot import models
-            stored_tag = models.Tag.objects.get(name__iexact=tag_name)
+            stored_tag = models.Tag.objects.filter(name__iexact=tag_name)[0]
             return stored_tag.name
-        except models.Tag.DoesNotExist:
+        except IndexError:
             return tag_name
-
 
 class TagNamesField(forms.CharField):
     """field that receives AskBot tag names"""
@@ -1137,7 +1136,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
         wiki = self.cleaned_data['wiki']
         text = self.cleaned_data['text']
         follow = self.cleaned_data['email_notify']
-        is_private = self.cleaned_data['post_privately']        
+        is_private = self.cleaned_data['post_privately']
 
         return user.post_answer(
             question = question,
