@@ -1276,7 +1276,7 @@ class Thread(models.Model):
         for tag_name in updated_tagnames_tmp:
             try:
                 tag_synonym = TagSynonym.objects.get(source_tag_name=tag_name)
-                updated_tagnames.add(tag_synonym.target_tag_name)
+                updated_tagnames.add(tag_synonym.target_tag.name)
                 tag_synonym.auto_rename_count += 1
                 tag_synonym.save()
             except TagSynonym.DoesNotExist:

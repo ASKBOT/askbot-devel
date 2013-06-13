@@ -89,16 +89,16 @@ class ManagementCommandTests(AskbotTestCase):
             )
 
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag1',
-                                                          target_tag_name = 'tag4'
+                                                          target_tag__name = 'tag4'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag2',
-                                                          target_tag_name = 'tag4'
+                                                          target_tag__name = 'tag4'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag3',
-                                                          target_tag_name = 'tag4'
+                                                          target_tag__name = 'tag4'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag5',
-                                                          target_tag_name = 'tag4'
+                                                          target_tag__name = 'tag4'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.count(), 4)
 
@@ -110,19 +110,19 @@ class ManagementCommandTests(AskbotTestCase):
             )
 
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag1',
-                                                          target_tag_name = 'tag6'
+                                                          target_tag__name = 'tag6'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag2',
-                                                          target_tag_name = 'tag6'
+                                                          target_tag__name = 'tag6'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag3',
-                                                          target_tag_name = 'tag6'
+                                                          target_tag__name = 'tag6'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag4',
-                                                          target_tag_name = 'tag6'
+                                                          target_tag__name = 'tag6'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.filter(source_tag_name = 'tag5',
-                                                          target_tag_name = 'tag6'
+                                                          target_tag__name = 'tag6'
                                                           ).count(), 1)
         self.assertEqual(models.TagSynonym.objects.count(), 5)
 

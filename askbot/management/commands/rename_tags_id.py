@@ -48,6 +48,13 @@ def format_tag_name_list(tag_list):
     name_list = get_tag_names(tag_list)
     return u', '.join(name_list)
 
+def prompt_tag_name(from_tag_name, to_tag_names, formatted_to_tag_names):
+    while True:
+        prompt = '%s ---> ???, please choose a tag_name from %s' % (from_tag_name, formatted_to_tag_names)
+        choice = console.choice_dialog(prompt, choices=to_tag_names)
+        if choice in to_tag_names:
+            return choice
+
 class Command(BaseCommand):
     "The command object itself"
 
@@ -143,7 +150,7 @@ or repost a bug, if that does not help"""
         for to_tag_name in to_tag_names:
             try:
                tag_synonym =  models.TagSynonym.objects.get(source_tag_name = to_tag_name)
-               raise CommandError(u'You gave %s as --to argument, but TagSynonym: %s -> %s exists, probably you want to provide %s as --to argument' % (to_tag_name, tag_synonym.source_tag_name, tag_synonym.target_tag_name, tag_synonym.target_tag_name))
+               raise CommandError(u'You gave %s as --to argument, but TagSynonym: %s -> %s exists, probably you want to provide %s as --to argument' % (to_tag_name, tag_synonym.source_tag_name, tag_synonym.target_tag.name, tag_synonym.target_tag.name))
             except models.TagSynonym.DoesNotExist:
                 pass
         
@@ -190,5 +197,12 @@ or repost a bug, if that does not help"""
         # A user wants to rename tag2->tag3 and tagsynonym tag1->tag2 exists.
         # we want to update tagsynonym (tag1->tag2) to (tag1->tag3)
         for from_tag_name in from_tag_names:
-            # we need db_index for target_tag_name as well for this
-            models.TagSynonym.objects.filter(target_tag_name = from_tag_name).update(target_tag_name = to_tag_name) 
+            if len(to_tags) > 1:
+                to_tag_name = prompt_tag_name(from_tag_name, to_tag_names, formatted_to_tag_names)
+                to_tag = models.Tag.objects.get(name=to_tag_name)
+            else:
+                to_tag = to_tags[0]
+            
+            models.TagSynonym.objects.filter(target_tag__name = from_tag_name).update(target_tag = to_tag) 
+
+        
