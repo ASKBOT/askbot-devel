@@ -151,6 +151,7 @@ class ThreadManager(BaseQuerySetManager):
             #html field is denormalized in .save() call
             text = text,
             #summary field is denormalized in .save() call
+            language_code=language
         )
         if question.wiki:
             #DATED COMMENT
