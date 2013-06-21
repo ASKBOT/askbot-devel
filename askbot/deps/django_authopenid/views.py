@@ -81,7 +81,7 @@ import urllib
 from askbot import forms as askbot_forms
 from askbot.deps.django_authopenid import util
 from askbot.deps.django_authopenid import decorators
-from askbot.deps.django_authopenid.models import UserAssociation
+from askbot.deps.django_authopenid.models import UserAssociation, UserEmailVerifier
 from askbot.deps.django_authopenid import forms
 from askbot.deps.django_authopenid.backends import AuthBackend
 import logging
@@ -1019,12 +1019,13 @@ def register(request, login_provider_name=None, user_identifier=None):
                 cleanup_post_register_session(request)
                 return HttpResponseRedirect(next_url)
             else:
-                request.session['username'] = username
-                request.session['email'] = email
-                key = generate_random_key()
-                email = request.session['email']
-                send_email_key(email, key, handler_url_name='verify_email_and_register')
-                request.session['validation_code'] = key
+                email_verifier = UserEmailVerifier(key=generate_random_key())
+                email_verifier.value = {'username': username, 'email': email,
+                                        'user_identifier': user_identifier,
+                                        'login_provider_name': login_provider_name}
+                email_verifier.save()
+                send_email_key(email, email_verifier.key,
+                               handler_url_name='verify_email_and_register')
                 redirect_url = reverse('verify_email_and_register') + '?next=' + next_url
                 return HttpResponseRedirect(redirect_url)
 
@@ -1073,14 +1074,17 @@ def verify_email_and_register(request):
         try:
             #we get here with post if button is pushed
             #or with "get" if emailed link is clicked
-            expected_code = request.session['validation_code']
-            assert(presented_code == expected_code)
-            #create an account!
-            username = request.session['username']
-            email = request.session['email']
-            password = request.session.get('password', None)
-            user_identifier = request.session.get('user_identifier', None)
-            login_provider_name = request.session.get('login_provider_name', None)
+            email_verifier = UserEmailVerifier.objects.get(key=presented_code)
+            #verifies that the code has not been used already
+            assert(email_verifier.verified == False)
+            assert(email_verifier.has_expired() == False)
+
+            username = email_verifier.value['username']
+            email = email_verifier.value['email']
+            password = email_verifier.value.get('password', None)
+            user_identifier = email_verifier.value.get('user_identifier', None)
+            login_provider_name = email_verifier.value.get('login_provider_name', None)
+
             if password:
                 user = create_authenticated_user_account(
                     username=username,
@@ -1098,12 +1102,15 @@ def verify_email_and_register(request):
                 raise NotImplementedError()
 
             login(request, user)
+            email_verifier.verified = True
+            email_verifier.save()
             cleanup_post_register_session(request)
+
             return HttpResponseRedirect(get_next_url(request))
         except Exception, e:
             message = _(
                 'Sorry, registration failed. '
-                'Please ask the site administrator for help.'
+                'The token can be already used or has expired. Please try again'
             )
             request.user.message_set.create(message=message)
             return HttpResponseRedirect(reverse('index'))
@@ -1159,14 +1166,13 @@ def signup_with_password(request):
                 cleanup_post_register_session(request)
                 return HttpResponseRedirect(get_next_url(request))
             else:
-                request.session['username'] = username
-                request.session['email'] = email
-                request.session['password'] = password
-                #todo: generate a key and save it in the session
-                key = generate_random_key()
-                email = request.session['email']
-                send_email_key(email, key, handler_url_name='verify_email_and_register')
-                request.session['validation_code'] = key
+                email_verifier = UserEmailVerifier(key=generate_random_key())
+                email_verifier.value = {'username': username,
+                                        'login_provider_name': provider_name,
+                                        'email': email, 'password': password}
+                email_verifier.save()
+                send_email_key(email, email_verifier.key,
+                               handler_url_name='verify_email_and_register')
                 redirect_url = reverse('verify_email_and_register') + \
                                 '?next=' + get_next_url(request)
                 return HttpResponseRedirect(redirect_url)

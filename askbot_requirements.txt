@@ -23,3 +23,4 @@ sanction
 django-tinymce==1.5.1b2
 longerusername
 beautifulsoup4
+django-picklefield==0.3.0

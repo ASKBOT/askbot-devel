@@ -36,7 +36,8 @@ REQUIREMENTS = {
     'pytz': 'pytz',
     'tinymce': 'django-tinymce==1.5.1b2',
     'longerusername': 'longerusername',
-    'bs4': 'beautifulsoup4'
+    'bs4': 'beautifulsoup4',
+    'picklefield': 'django-picklefield==0.3.0',
 }
 
 if platform.system() != 'Windows':

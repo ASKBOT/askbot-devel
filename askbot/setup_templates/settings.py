@@ -313,3 +313,5 @@ JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
 # Use syncdb for tests instead of South migrations. Without this, some tests
 # fail spuriously in MySQL.
 SOUTH_TESTS_MIGRATE = False
+
+VERIFIER_EXPIRE_DAYS = 3
