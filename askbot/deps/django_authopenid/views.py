@@ -62,7 +62,7 @@ from urlparse import urlparse
 from openid.consumer.consumer import Consumer, \
     SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
 from openid.consumer.discover import DiscoveryFailure
-from openid.extensions import sreg
+from openid.extensions import sreg, ax
 # needed for some linux distributions like debian
 try:
     from openid.yadis import xri
@@ -218,6 +218,17 @@ def ask_openid(
     if sreg_request:
         logging.debug('adding sreg_request - wtf it is?')
         auth_request.addExtension(sreg_request)
+
+    use_ax, use_sreg = util.discover_extensions(openid_url)
+    if use_ax:
+        ax_req = ax.FetchRequest()
+        ax_req.add(ax.AttrInfo('http://schema.openid.net/contact/email',
+                               alias='email', required=True))
+        ax_req.add(ax.AttrInfo('http://schema.openid.net/namePerson/friendly',
+                               alias='nickname', required=True))
+
+        auth_request.addExtension(ax_req)
+        
     redirect_url = auth_request.redirectURL(trust_root, redirect_to)
     logging.debug('redirecting to %s' % redirect_url)
     return HttpResponseRedirect(redirect_url)
@@ -232,6 +243,7 @@ def complete(request, on_success=None, on_failure=None, return_to=None):
     consumer = Consumer(request.session, util.DjangoOpenIDStore())
     # make sure params are encoded in utf8
     params = dict((k,smart_unicode(v)) for k, v in request.GET.items())
+
     openid_response = consumer.complete(params, return_to)
 
     try:
@@ -832,6 +844,7 @@ def signin_success(request, identity_url, openid_response):
     """
 
     logging.debug('')
+    
     openid_data = util.from_openid_response(openid_response) #create janrain OpenID object
     request.session['openid'] = openid_data
 
@@ -846,6 +859,7 @@ def signin_success(request, identity_url, openid_response):
 
     request.session['email'] = openid_data.sreg.get('email', '')
     request.session['username'] = openid_data.sreg.get('nickname', '')
+
 
     return finalize_generic_signin(
                         request = request,
@@ -957,12 +971,19 @@ def register(request, login_provider_name=None, user_identifier=None):
     email = request.session.get('email', '')
     logging.debug('request method is %s' % request.method)
 
+    openid = request.session.get('openid', None)
+    if openid.ax is not None and not username or not email:
+        if openid.ax.get('http://schemas.openid.net/namePerson/friendly', False):
+            username = openid.ax.get('http://schema.openid.net/namePerson/friendly')[0]
+        if openid.ax.get('http://schema.openid.net/contact/email', False):
+            email = openid.ax.get('http://schema.openid.net/contact/email')[0]
+
     form_class = forms.get_registration_form_class()
     register_form = form_class(
                 initial={
                     'next': next_url,
-                    'username': request.session.get('username', ''),
-                    'email': request.session.get('email', ''),
+                    'username': username,
+                    'email': email,
                 }
             )
 

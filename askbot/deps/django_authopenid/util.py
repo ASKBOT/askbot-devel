@@ -8,7 +8,7 @@ import random
 from askbot.utils.html import site_url
 from openid.store.interface import OpenIDStore
 from openid.association import Association as OIDAssociation
-from openid.extensions import sreg
+from openid.extensions import sreg, ax
 from openid import store as openid_store
 import oauth2 as oauth # OAuth1 protocol
 from django.db.models.query import Q
@@ -40,12 +40,13 @@ __all__ = ['OpenID', 'DjangoOpenIDStore', 'from_openid_response', 'clean_next']
 ALLOWED_LOGIN_TYPES = ('password', 'oauth', 'openid-direct', 'openid-username', 'wordpress')
 
 class OpenID:
-    def __init__(self, openid_, issued, attrs=None, sreg_=None):
+    def __init__(self, openid_, issued, attrs=None, sreg_=None, ax_=None):
         logging.debug('init janrain openid object')
         self.openid = openid_
         self.issued = issued
         self.attrs = attrs or {}
         self.sreg = sreg_ or {}
+        self.ax = ax_ or {}
         self.is_iname = (xri.identifierScheme(openid_) == 'XRI')
     
     def __repr__(self):
@@ -143,10 +144,19 @@ def from_openid_response(openid_response):
     issued = int(time.time())
     sreg_resp = sreg.SRegResponse.fromSuccessResponse(openid_response) \
             or []
+
+    ax_resp = ax.FetchResponse.fromSuccessResponse(openid_response)
+    ax_args = {}
+    if ax_resp is not None:
+        ax_args = ax_resp.getExtensionArgs()
+        ax_resp.parseExtensionArgs(ax_args)
+        ax_args = ax_resp.data
+                                        
     
     return OpenID(
         openid_response.identity_url, issued, openid_response.signed_fields, 
-         dict(sreg_resp)
+         dict(sreg_resp),
+        ax_args
     )
 
 def get_provider_name(openid_url):
@@ -838,3 +848,18 @@ def ldap_check_password(username, password):
     except ldap.LDAPError, e:
         logging.critical(unicode(e))
         return False
+
+from openid.consumer.discover import discover    
+def discover_extensions(openid_url):
+    service = discover(openid_url)
+    use_ax = False
+    use_sreg = False
+    for endpoint in service[1]:
+        if not use_sreg:
+            use_sreg = sreg.supportsSReg(endpoint)
+        if not use_ax:
+            use_ax = endpoint.usesExtension("http://openid.net/srv/ax/1.0")
+        if use_ax and use_sreg: break
+    if not use_sreg and not use_ax:
+        use_sreg = True
+    return use_ax, use_sreg
