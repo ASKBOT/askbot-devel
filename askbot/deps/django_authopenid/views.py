@@ -972,11 +972,12 @@ def register(request, login_provider_name=None, user_identifier=None):
     logging.debug('request method is %s' % request.method)
 
     openid = request.session.get('openid', None)
-    if openid.ax is not None and not username or not email:
-        if openid.ax.get('http://schemas.openid.net/namePerson/friendly', False):
-            username = openid.ax.get('http://schema.openid.net/namePerson/friendly')[0]
-        if openid.ax.get('http://schema.openid.net/contact/email', False):
-            email = openid.ax.get('http://schema.openid.net/contact/email')[0]
+    if openid and hasattr(openid, 'ax'):
+        if openid.ax is not None and not username or not email:
+            if openid.ax.get('http://schemas.openid.net/namePerson/friendly', False):
+                username = openid.ax.get('http://schema.openid.net/namePerson/friendly')[0]
+            if openid.ax.get('http://schema.openid.net/contact/email', False):
+                email = openid.ax.get('http://schema.openid.net/contact/email')[0]
 
     form_class = forms.get_registration_form_class()
     register_form = form_class(
