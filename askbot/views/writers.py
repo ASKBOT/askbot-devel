@@ -45,6 +45,7 @@ from askbot.utils.loading import load_module
 from askbot.views import context
 from askbot.templatetags import extra_filters_jinja as template_filters
 from askbot.importers.stackexchange import management as stackexchange#todo: may change
+from askbot.utils.slug import slugify
 
 # used in index page
 INDEX_PAGE_SIZE = 20
@@ -219,6 +220,12 @@ def ask(request):#view used to ask a new question
     user can start posting a question anonymously but then
     must login/register in order for the question go be shown
     """
+    if request.user.is_authenticated():
+        if request.user.is_read_only():
+            referer = request.META.get("HTTP_REFERER", reverse('questions'))
+            request.user.message_set.create(message=_("You are not allowed to create content"))
+            return HttpResponseRedirect(referer)
+
     form = forms.AskForm(request.REQUEST, user=request.user)
     if request.method == 'POST':
         if form.is_valid():
@@ -592,7 +599,7 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
                 form_class = load_module(custom_class_path)
             else:
                 form_class = forms.AnswerForm
-        
+
         form = form_class(request.POST, user=request.user)
 
         if form.is_valid():
@@ -680,7 +687,7 @@ def __generate_comments_json(obj, user):#non-view generates json data for the po
 @decorators.check_spam('comment')
 def post_comments(request):#generic ajax handler to load comments to an object
     """todo: fixme: post_comments is ambigous:
-    means either get comments for post or 
+    means either get comments for post or
     add a new comment to post
     """
     # only support get post comments by ajax now

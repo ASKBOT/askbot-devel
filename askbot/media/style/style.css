@@ -315,6 +315,7 @@ body.user-messages {
   height: 20px;
   padding-bottom: 5px;
   white-space: nowrap;
+  font-size: 16px;
 }
 #userToolsNav a {
   height: 35px;
@@ -322,7 +323,6 @@ body.user-messages {
   margin-left: 20px;
   text-decoration: underline;
   color: #d0e296;
-  font-size: 16px;
 }
 #userToolsNav a:first-child {
   margin-left: 0;

@@ -536,6 +536,7 @@ class Group(AuthGroup):
                         )
 
     is_vip = models.BooleanField(default=False)
+    read_only = models.BooleanField(default=False)
 
     objects = GroupManager()
 

@@ -87,6 +87,17 @@
             {% trans %}Make group VIP{% endtrans %}
         </label>
         <br/>
+        <input
+            type="checkbox"
+            id="read-only-toggle"
+            {% if group.read_only%}checked="checked"{% endif %}
+            data-toggle-url="{% url toggle_group_profile_property %}"
+        />
+        <label for="read-only-toggle">
+            {% trans %}Enable Read Only mode{% endtrans %}
+        </label>
+        <br/>
+
 
         <a 
             id="preapproved-emails"

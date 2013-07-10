@@ -527,6 +527,12 @@ def user_notify_users(
     activity.save()
     activity.add_recipients(recipients)
 
+def user_is_read_only(self):
+    if self.is_authenticated() and askbot_settings.GROUPS_ENABLED:
+        return bool(self.get_groups().filter(read_only=True).count())
+    else:
+        return False
+
 def user_get_notifications(self, notification_types=None, **kwargs):
     """returns query set of activity audit status objects"""
     return ActivityAuditStatus.objects.filter(
@@ -547,7 +553,8 @@ def _assert_user_can(
                         min_rep_setting = None,
                         low_rep_error_message = None,
                         owner_low_rep_error_message = None,
-                        general_error_message = None
+                        general_error_message = None,
+                        group_read_only_error_message = None
                     ):
     """generic helper assert for use in several
     User.assert_can_XYZ() calls regarding changing content
@@ -557,6 +564,14 @@ def _assert_user_can(
     if assertion fails, method raises exception.PermissionDenied
     with appropriate text as a payload
     """
+    group_read_only_error_message = group_read_only_error_message or \
+                                    _("You are not allowed to create content")
+
+    if askbot_settings.GROUPS_ENABLED:
+        assert(user)
+        if  user.is_read_only():
+            raise django_exceptions.PermissionDenied(group_read_only_error_message)
+
     if general_error_message is None:
         general_error_message = _('Sorry, this operation is not allowed')
     if blocked_error_message and user.is_blocked():
@@ -900,6 +915,7 @@ def user_assert_can_edit_post(self, post = None):
         self.assert_can_edit_deleted_post(post)
         return
 
+
     blocked_error_message = _(
                 'Sorry, since your account is blocked '
                 'you cannot edit posts'
@@ -930,7 +946,7 @@ def user_assert_can_edit_post(self, post = None):
         blocked_error_message = blocked_error_message,
         suspended_error_message = suspended_error_message,
         low_rep_error_message = low_rep_error_message,
-        min_rep_setting = min_rep_setting
+        min_rep_setting = min_rep_setting,
     )
 
 
@@ -1009,6 +1025,7 @@ def user_assert_can_delete_answer(self, answer = None):
             {'min_rep': askbot_settings.MIN_REP_TO_DELETE_OTHERS_POSTS}
     min_rep_setting = askbot_settings.MIN_REP_TO_DELETE_OTHERS_POSTS
 
+
     _assert_user_can(
         user = self,
         post = answer,
@@ -1016,7 +1033,7 @@ def user_assert_can_delete_answer(self, answer = None):
         blocked_error_message = blocked_error_message,
         suspended_error_message = suspended_error_message,
         low_rep_error_message = low_rep_error_message,
-        min_rep_setting = min_rep_setting
+        min_rep_setting = min_rep_setting,
     )
 
 
@@ -1044,6 +1061,7 @@ def user_assert_can_close_question(self, question = None):
                         'a minimum reputation of %(min_rep)s is required'
                     ) % {'min_rep': owner_min_rep_setting}
 
+
     _assert_user_can(
         user = self,
         post = question,
@@ -1054,7 +1072,7 @@ def user_assert_can_close_question(self, question = None):
         suspended_error_message = suspended_error_message,
         low_rep_error_message = low_rep_error_message,
         owner_low_rep_error_message = owner_low_rep_error_message,
-        min_rep_setting = min_rep_setting
+        min_rep_setting = min_rep_setting,
     )
 
 
@@ -1223,6 +1241,7 @@ def user_assert_can_retag_question(self, question = None):
                         )
             raise django_exceptions.PermissionDenied(error_message)
 
+
     blocked_error_message = _(
                 'Sorry, since your account is blocked '
                 'you cannot retag questions'
@@ -1245,7 +1264,7 @@ def user_assert_can_retag_question(self, question = None):
         blocked_error_message = blocked_error_message,
         suspended_error_message = suspended_error_message,
         low_rep_error_message = low_rep_error_message,
-        min_rep_setting = min_rep_setting
+        min_rep_setting = min_rep_setting,
     )
 
 
@@ -1265,6 +1284,7 @@ def user_assert_can_delete_comment(self, comment = None):
             {'min_rep': askbot_settings.MIN_REP_TO_DELETE_OTHERS_COMMENTS}
     min_rep_setting = askbot_settings.MIN_REP_TO_DELETE_OTHERS_COMMENTS
 
+
     _assert_user_can(
         user = self,
         post = comment,
@@ -1272,7 +1292,7 @@ def user_assert_can_delete_comment(self, comment = None):
         blocked_error_message = blocked_error_message,
         suspended_error_message = suspended_error_message,
         low_rep_error_message = low_rep_error_message,
-        min_rep_setting = min_rep_setting
+        min_rep_setting = min_rep_setting,
     )
 
 
@@ -1364,6 +1384,11 @@ def user_post_anonymous_askbot_content(user, session_key):
     """
     aq_list = AnonymousQuestion.objects.filter(session_key = session_key)
     aa_list = AnonymousAnswer.objects.filter(session_key = session_key)
+
+
+    is_on_read_only_group = user.get_groups().filter(read_only=True).count()
+    if is_on_read_only_group:
+        user.message_set.create(message = _("You are not allowed to create content"))
     #from askbot.conf import settings as askbot_settings
     if askbot_settings.EMAIL_VALIDATION == True:#add user to the record
         for aq in aq_list:
@@ -2853,7 +2878,8 @@ def user_update_wildcard_tag_selections(
     return new_tags
 
 
-def user_edit_group_membership(self, user=None, group=None, action=None):
+def user_edit_group_membership(self, user=None, group=None,
+                               action=None, force=False):
     """allows one user to add another to a group
     or remove user from group.
 
@@ -2868,17 +2894,20 @@ def user_edit_group_membership(self, user=None, group=None, action=None):
         openness = group.get_openness_level_for_user(user)
 
         #let people join these special groups, but not leave
-        if group.name == askbot_settings.GLOBAL_GROUP_NAME:
-            openness = 'open'
-        elif group.name == format_personal_group_name(user):
-            openness = 'open'
+        if not force:
+            if group.name == askbot_settings.GLOBAL_GROUP_NAME:
+                openness = 'open'
+            elif group.name == format_personal_group_name(user):
+                openness = 'open'
 
-        if openness == 'open':
+            if openness == 'open':
+                level = GroupMembership.FULL
+            elif openness == 'moderated':
+                level = GroupMembership.PENDING
+            elif openness == 'closed':
+                raise django_exceptions.PermissionDenied()
+        else:
             level = GroupMembership.FULL
-        elif openness == 'moderated':
-            level = GroupMembership.PENDING
-        elif openness == 'closed':
-            raise django_exceptions.PermissionDenied()
 
         membership, created = GroupMembership.objects.get_or_create(
                         user=user, group=group, level=level
@@ -2891,8 +2920,9 @@ def user_edit_group_membership(self, user=None, group=None, action=None):
     else:
         raise ValueError('invalid action')
 
-def user_join_group(self, group):
-    return self.edit_group_membership(group=group, user=self, action='add')
+def user_join_group(self, group, force=False):
+    return self.edit_group_membership(group=group, user=self,
+                                      action='add', force=force)
 
 def user_leave_group(self, group):
     self.edit_group_membership(group=group, user=self, action='remove')
@@ -3029,6 +3059,7 @@ User.add_to_class(
 )
 User.add_to_class('approve_post_revision', user_approve_post_revision)
 User.add_to_class('notify_users', user_notify_users)
+User.add_to_class('is_read_only', user_is_read_only)
 
 #assertions
 User.add_to_class('assert_can_vote_for_post', user_assert_can_vote_for_post)

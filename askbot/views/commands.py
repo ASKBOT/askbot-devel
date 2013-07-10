@@ -1041,7 +1041,7 @@ def edit_group_membership(request):
                 raise exceptions.PermissionDenied(
                     _('Group %(name)s does not exist') % {'name': group_name}
                 )
-                
+
         elif action == 'remove':
             try:
                 group = models.Group.objects.get(name = group_name)
@@ -1121,7 +1121,8 @@ def toggle_group_profile_property(request):
     assert property_name in (
                         'moderate_email',
                         'moderate_answers_to_enquirers',
-                        'is_vip'
+                        'is_vip',
+                        'read_only'
                     )
     group = models.Group.objects.get(id = group_id)
     new_value = not getattr(group, property_name)

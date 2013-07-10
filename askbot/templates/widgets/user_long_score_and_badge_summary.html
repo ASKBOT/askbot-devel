@@ -1,4 +1,7 @@
 {% set have_badges = user.gold or user.silver or user.bronze %}
+{% if user.is_read_only() %}
+{% trans %}read only,{% endtrans %}
+{% endif %}
 {%- if karma_mode != 'hidden' -%}
 <a 
     class="user-micro-info reputation" 

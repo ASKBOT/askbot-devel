@@ -2608,32 +2608,36 @@ FoldedEditor.prototype.getOpenHandler = function() {
     var externalTrigger = this._externalTrigger;
     var me = this;
     return function() {
-        promptBox.hide();
-        editorBox.show();
-        var element = me.getElement();
-        element.addClass('unfolded');
+        if (askbot['data']['groupReadOnly'] == true){
+          notify.show(gettext('This group is read only.'));
+        } else {
+          promptBox.hide();
+          editorBox.show();
+          var element = me.getElement();
+          element.addClass('unfolded');
 
-        /* make the editor one shot - once it unfolds it's
-         * not accepting any events
-         */
-        element.unbind('click');
-        element.unbind('focus');
+          /* make the editor one shot - once it unfolds it's
+           * not accepting any events
+           */
+          element.unbind('click');
+          element.unbind('focus');
 
-        /* this function will open the editor
-         * and focus cursor on the editor
-         */
-        me.onAfterOpenHandler();
+          /* this function will open the editor
+           * and focus cursor on the editor
+           */
+          me.onAfterOpenHandler();
 
-        /* external trigger is a clickable target
-         * placed outside of the this._element
-         * that will cause the editor to unfold
-         */       
-        if (externalTrigger) {
-            var label = me.makeElement('label');
-            label.html(externalTrigger.html());
-            //set what the label is for
-            label.attr('for', me.getEditorInputId());
-            externalTrigger.replaceWith(label);
+          /* external trigger is a clickable target
+           * placed outside of the this._element
+           * that will cause the editor to unfold
+           */       
+          if (externalTrigger) {
+              var label = me.makeElement('label');
+              label.html(externalTrigger.html());
+              //set what the label is for
+              label.attr('for', me.getEditorInputId());
+              externalTrigger.replaceWith(label);
+          }
         }
     };
 };
@@ -2820,7 +2824,9 @@ var TinyMCE = function(config) {
 inherits(TinyMCE, WrappedElement);
 
 /*
- * not passed onto prototoype on purpose!!!
+ * not passed onto prototoype on purpose!!!{
+ *
+* }
  */
 TinyMCE.onInitHook = function() {
     //set initial content
@@ -3303,6 +3309,14 @@ UserGroupProfileEditor.prototype.decorate = function(element){
     });
     var btn = element.find('#vip-toggle');
     vip_toggle.decorate(btn);
+
+    var read_only_toggle = new TwoStateToggle();
+    read_only_toggle.setPostData({
+        group_id: this.getTagId(),
+        property_name: 'read_only'
+    });
+    var btn = element.find('#read-only-toggle');
+    read_only_toggle.decorate(btn);
 
     var opennessSelector = new DropdownSelect();
     var selectorElement = element.find('#group-openness-selector');
@@ -4606,6 +4620,23 @@ CategorySelectorLoader.prototype.decorate = function(element) {
     );
 };
 
+var AskButton = function(){
+  WrappedElement.call(this);
+};
+inherits(AskButton, WrappedElement);
+
+AskButton.prototype.decorate = function(element){
+  this._element = element;
+  this._element.click(this.clickCallback);
+};
+
+AskButton.prototype.clickCallback = function(e){
+  if (askbot['data']['groupReadOnly'] === true){
+    notify.show(gettext('This group is read only.'));
+    e.preventDefault();
+  }
+};
+
 $(document).ready(function() {
     $('[id^="comments-for-"]').each(function(index, element){
         var comments = new PostCommentsWidget();
@@ -4717,6 +4748,9 @@ $(document).ready(function() {
         groupsPopup.setHeadingText(gettext('Shared with the following groups:'));
         groupsPopup.decorate(showSharedGroups);
     }
+
+    var askButton = new AskButton();
+    askButton.decorate($("#askButton"));
 });
 
 /* google prettify.js from google code */

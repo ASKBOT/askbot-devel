@@ -16,6 +16,7 @@
     askbot['urls'] = {};
     askbot['settings'] = {};
     askbot['messages'] = {};
+    askbot['data']['groupReadOnly'] = {{ request.user.is_read_only()|as_js_bool }};
 </script>
 <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
 {# avoid adding javascript here so that pages load faster #}

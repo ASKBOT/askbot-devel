@@ -241,7 +241,7 @@ def questions(request, **kwargs):
                                 )
         template_data.update(extra_context)
 
-        #and one more thing:) give admin user heads up about 
+        #and one more thing:) give admin user heads up about
         #setting the domain name if they have not done that yet
         #todo: move this out to a separate middleware
         if request.user.is_authenticated() and request.user.is_administrator():
@@ -580,6 +580,11 @@ def question(request, id):#refactor - long subroutine. display question body, an
                     previous_answer = answer
                     break
 
+    if askbot_settings.GROUPS_ENABLED:
+        group_read_only = request.user.is_read_only()
+    else:
+        group_read_only = False
+
     data = {
         'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
         'long_time': const.LONG_TIME,#"forever" caching
@@ -608,6 +613,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_post': show_post,
         'show_comment': show_comment,
         'show_comment_position': show_comment_position,
+        'group_read_only': group_read_only,
     }
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
@@ -710,7 +716,7 @@ def get_perms_data(request):
             getattr(askbot_settings, item)
         )
         data.append(setting)
-    
+
     template = get_template('widgets/user_perms.html')
     html = template.render({
         'user': request.user,

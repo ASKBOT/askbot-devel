@@ -649,6 +649,21 @@ class GroupTests(AskbotTestCase):
         found_count = self.u1.get_groups().filter(name='somegroup').count()
         self.assertEqual(found_count, 1)
 
+        #closed group
+        closed_group = models.Group(name="secretgroup")
+        closed_group.openness = models.Group.CLOSED
+        closed_group.save()
+
+        #join (should raise exception)
+        self.assertRaises(exceptions.PermissionDenied,
+                          self.u1.join_group, closed_group)
+        #testing force parameter
+        self.u1.join_group(closed_group, force=True)
+
+        #assert membership of askbot group object
+        found_count = self.u1.get_groups().filter(name='secretgroup').count()
+        self.assertEqual(found_count, 1)
+
     def test_group_moderation(self):
         #create group
         group = models.Group(name='somegroup')
