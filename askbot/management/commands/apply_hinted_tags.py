@@ -1,6 +1,8 @@
 import datetime
 from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
+from django.utils import timezone
+
 from optparse import make_option
 from askbot.utils.console import ProgressBar
 from askbot.models import Thread
@@ -50,7 +52,7 @@ class Command(BaseCommand):
         message = 'Applying tags to questions'
 
         user = User.objects.all().order_by('-id')[0]
-        now = datetime.datetime.now()
+        now = timezone.now()
 
         for thread in ProgressBar(threads.iterator(), count, message):
             thread.apply_hinted_tags(

@@ -11,6 +11,7 @@ from group_messaging.models import LastVisitTime
 from group_messaging.models import get_personal_group
 from group_messaging.models import create_personal_group
 from group_messaging.views import ThreadsList
+from django.utils import timezone
 from mock import Mock
 
 MESSAGE_TEXT = 'test message text'
@@ -100,7 +101,7 @@ class ViewsTests(GroupMessagingTests):
                                                 user=self.sender,
                                                 message=root
                                             )
-        last_visit_time.at = datetime.datetime.now()
+        last_visit_time.at = timezone.now()
         last_visit_time.save()
         time.sleep(1.5)
 

@@ -7,6 +7,7 @@ from django.db import transaction
 from optparse import make_option
 from askbot.utils.console import ProgressBar
 from datetime import datetime
+from django.utils import timezone
 
 ITEMS_PER_TRANSACTION = 1000
 
@@ -28,7 +29,7 @@ class Command(NoArgsCommand):
         quiet = options.get('quiet', False)
 
         expired_sessions = Session.objects.filter(
-                                expire_date__lt=datetime.now()
+                                expire_date__lt=timezone.now()
                             )
         count = expired_sessions.count()
         expired_sessions = expired_sessions.iterator()

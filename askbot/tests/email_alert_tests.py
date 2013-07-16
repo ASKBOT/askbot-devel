@@ -10,6 +10,8 @@ import django.core.mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
+from django.utils import timezone
+
 from askbot.tests import utils
 from askbot.tests.utils import with_settings
 from askbot import models
@@ -52,7 +54,7 @@ def setup_email_alert_tests(setup_func):
                     copy.deepcopy(models.EmailFeedSetting.NO_EMAIL_SCHEDULE)
         #timestamp to use for the setup
         #functions
-        test_object.setup_timestamp = datetime.datetime.now()
+        test_object.setup_timestamp = timezone.now()
 
         #timestamp to use for the question visit
         #by the target user
@@ -484,7 +486,7 @@ class WeeklyQAskEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_ask'] = 'w'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(14)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(14)
         self.expected_results['q_ask'] = {'message_count': 1}
         self.expected_results['q_ask_delete_answer'] = {'message_count': 0}
         self.expected_results['question_edit'] = {'message_count': 1, }
@@ -508,7 +510,7 @@ class WeeklyQAskEmailAlertTests(EmailAlertTests):
         self.edit_post(
                     post = question,
                     author = self.other_user,
-                    timestamp = datetime.datetime.now() - datetime.timedelta(1)
+                    timestamp = timezone.now() - datetime.timedelta(1)
                 )
 
     @email_alert_test
@@ -523,14 +525,14 @@ class WeeklyQAskEmailAlertTests(EmailAlertTests):
         self.edit_post(
                     post = answer,
                     author = self.other_user,
-                    timestamp = datetime.datetime.now() - datetime.timedelta(1)
+                    timestamp = timezone.now() - datetime.timedelta(1)
                 )
 
 class WeeklyMentionsAndCommentsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['m_and_c'] = 'w'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(14)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(14)
         self.expected_results['question_comment'] = {'message_count': 1, }
         self.expected_results['question_comment_delete'] = {'message_count': 0, }
         self.expected_results['answer_comment'] = {'message_count': 1, }
@@ -542,7 +544,7 @@ class WeeklyQAnsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_ans'] = 'w'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(14)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(14)
         self.expected_results['answer_edit'] = {'message_count': 1, }
         self.expected_results['q_ans_new_answer'] = {'message_count': 1, }
 
@@ -550,7 +552,7 @@ class InstantQAskEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_ask'] = 'i'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
         self.expected_results['q_ask'] = {'message_count': 1}
         self.expected_results['q_ask_delete_answer'] = {'message_count': 1}
         self.expected_results['question_edit'] = {'message_count': 1, }
@@ -560,7 +562,7 @@ class InstantWholeForumEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_all'] = 'i'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
 
         self.expected_results['q_ask'] = {'message_count': 1, }
         self.expected_results['q_ask_delete_answer'] = {'message_count': 1}
@@ -594,7 +596,7 @@ class BlankWeeklySelectedQuestionsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_sel'] = 'w'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(14)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(14)
         self.expected_results['q_ask'] = {'message_count': 1, }
         self.expected_results['q_ask_delete_answer'] = {'message_count': 0, }
         self.expected_results['question_comment'] = {'message_count': 0, }
@@ -617,7 +619,7 @@ class BlankInstantSelectedQuestionsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_sel'] = 'i'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
         self.expected_results['q_ask'] = {'message_count': 1, }
         self.expected_results['q_ask_delete_answer'] = {'message_count': 1, }
         self.expected_results['question_comment'] = {'message_count': 1, }
@@ -639,7 +641,7 @@ class LiveWeeklySelectedQuestionsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_sel'] = 'w'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(14)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(14)
         self.follow_question = True
 
         self.expected_results['q_ask'] = {'message_count': 1, }
@@ -664,7 +666,7 @@ class LiveInstantSelectedQuestionsEmailAlertTests(EmailAlertTests):
     def setUp(self):
         self.notification_schedule['q_sel'] = 'i'
         #first posts yesterday
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
         self.follow_question = True
 
         self.expected_results['q_ask'] = {'message_count': 1, }
@@ -685,7 +687,7 @@ class InstantMentionsAndCommentsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['m_and_c'] = 'i'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
         self.expected_results['question_comment'] = {'message_count': 1, }
         self.expected_results['question_comment_delete'] = {'message_count': 1, }
         self.expected_results['answer_comment'] = {'message_count': 1, }
@@ -713,7 +715,7 @@ class InstantQAnsEmailAlertTests(EmailAlertTests):
     @setup_email_alert_tests
     def setUp(self):
         self.notification_schedule['q_ans'] = 'i'
-        self.setup_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        self.setup_timestamp = timezone.now() - datetime.timedelta(1)
         self.expected_results['answer_edit'] = {'message_count': 1, }
         self.expected_results['q_ans_new_answer'] = {'message_count': 1, }
 
@@ -924,14 +926,14 @@ class AcceptAnswerReminderTests(EmailReminderTestCase):
         """a positive test - user must receive a reminder
         """
         days_ago = self.wait_days
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         self.assert_have_emails(1)
 
     def test_reminder_negative_wait(self):
         """negative test - the answer is accepted already"""
         days_ago = self.wait_days
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         self.u1.accept_best_answer(
             answer = self.answer,
@@ -951,7 +953,7 @@ class UnansweredReminderTests(EmailReminderTestCase):
         """a positive test - user must receive a reminder
         """
         days_ago = self.wait_days
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         self.assert_have_emails(1)
 
@@ -959,7 +961,7 @@ class UnansweredReminderTests(EmailReminderTestCase):
         """a positive test - user must receive a reminder
         """
         days_ago = self.wait_days - 1
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         self.assert_have_emails(0)
 
@@ -967,7 +969,7 @@ class UnansweredReminderTests(EmailReminderTestCase):
         """send a reminder a slightly before the last reminder
         date passes"""
         days_ago = self.wait_days + (self.max_emails - 1)*self.recurrence_days - 1
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         #todo: change groups to django groups
         #then replace to 2 back to 1 in the line below
@@ -978,7 +980,7 @@ class UnansweredReminderTests(EmailReminderTestCase):
         """no reminder after the time for the last reminder passes
         """
         days_ago = self.wait_days + (self.max_emails - 1)*self.recurrence_days
-        timestamp = datetime.datetime.now() - datetime.timedelta(days_ago, 3600)
+        timestamp = timezone.now() - datetime.timedelta(days_ago, 3600)
         self.do_post(timestamp)
         self.assert_have_emails(0)
 

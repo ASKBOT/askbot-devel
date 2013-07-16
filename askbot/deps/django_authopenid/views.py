@@ -50,6 +50,7 @@ from askbot.utils.functions import generate_random_key
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
+from django.utils import timezone
 from askbot.mail import send_mail
 from askbot.utils.html import site_url
 from recaptcha_works.decorators import fix_recaptcha_remote_ip
@@ -110,7 +111,7 @@ def create_authenticated_user_account(
             openid_url = user_identifier,
             user = user,
             provider_name = login_provider_name,
-            last_used_timestamp = datetime.datetime.now()
+            last_used_timestamp = timezone.now()
         ).save()
 
     subscribe_form = askbot_forms.SimpleEmailSubscribeForm({'subscribe': 'y'})
@@ -891,7 +892,7 @@ def finalize_generic_signin(
                     user=request.user,
                     provider_name=login_provider_name,
                     openid_url=user_identifier,
-                    last_used_timestamp=datetime.datetime.now()
+                    last_used_timestamp=timezone.now()
                 ).save()
                 return HttpResponseRedirect(redirect_url)
 

@@ -30,6 +30,7 @@ from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.utils.html import strip_tags as strip_all_tags
 from django.views.decorators import csrf
+from django.utils import timezone
 
 from askbot.utils.slug import slugify
 from askbot.utils.html import sanitize_html
@@ -267,7 +268,7 @@ def user_moderate(request, subject, context):
                                     user = subject,
                                     reputation_change = rep_delta,
                                     comment = comment,
-                                    timestamp = datetime.datetime.now(),
+                                    timestamp = timezone.now(),
                                 )
                 #reset form to preclude accidentally repeating submission
                 user_rep_form = forms.ChangeUserReputationForm()
@@ -870,7 +871,7 @@ def user_reputation(request, user, context):
     reputes = models.Repute.objects.filter(user=user).select_related('question', 'question__thread', 'user').order_by('-reputed_at')
 
     # prepare data for the graph - last values go in first
-    rep_list = ['[%s,%s]' % (calendar.timegm(datetime.datetime.now().timetuple()) * 1000, user.reputation)]
+    rep_list = ['[%s,%s]' % (calendar.timegm(timezone.now().timetuple()) * 1000, user.reputation)]
     for rep in reputes:
         rep_list.append('[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation))
     reps = ','.join(rep_list)
@@ -1080,7 +1081,7 @@ def update_has_custom_avatar(request):
     if request.is_ajax() and request.user.is_authenticated():
         if request.user.avatar_type in ('n', 'g'):
             request.user.update_avatar_type()
-            request.session['avatar_data_updated_at'] = datetime.datetime.now()
+            request.session['avatar_data_updated_at'] = timezone.now()
             return HttpResponse(simplejson.dumps({'status':'ok'}), mimetype='application/json')
     return HttpResponseForbidden()
 

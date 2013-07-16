@@ -4,6 +4,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 from picklefield.fields import PickledObjectField
 
@@ -100,13 +101,13 @@ class UserEmailVerifier(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.expires_on:
-            self.expires_on = datetime.datetime.now() + \
+            self.expires_on = timezone.now() + \
                     datetime.timedelta(VERIFIER_EXPIRE_DAYS)
 
         super(UserEmailVerifier, self).save(*args, **kwargs)
 
     def has_expired(self):
-        now = datetime.datetime.now()
+        now = timezone.now()
         return now > self.expires_on
 
     def __unicode__(self):

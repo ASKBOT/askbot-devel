@@ -38,14 +38,14 @@ class PostModelTests(AskbotTestCase):
             **{
                 'text': 'blah',
                 'author': self.u1,
-                'revised_at': datetime.datetime.now()
+                'revised_at': timezone.now()
             }
         )
 
         post_revision = PostRevision(
             text='blah',
             author=self.u1,
-            revised_at=datetime.datetime.now(),
+            revised_at=timezone.now(),
             revision=1,
         )
 
@@ -59,7 +59,7 @@ class PostModelTests(AskbotTestCase):
 
         rev2 = PostRevision(
             post=question, text='blah', author=self.u1,
-            revised_at=datetime.datetime.now(), revision=2
+            revised_at=timezone.now(), revision=2
         )
         rev2.save()
         self.assertFalse(rev2.id is None)
@@ -81,9 +81,12 @@ class PostModelTests(AskbotTestCase):
         self.user = self.u1
         q = self.post_question()
 
-        c1 = self.post_comment(parent_post=q, timestamp=datetime.datetime(2010, 10, 2, 14, 33, 20))
-        c2 = q.add_comment(user=self.user, comment='blah blah', added_at=datetime.datetime(2010, 10, 2, 14, 33, 21))
-        c3 = self.post_comment(parent_post=q, body_text='blah blah 2', timestamp=datetime.datetime(2010, 10, 2, 14, 33, 22))
+        t1 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 20), timezone.get_default_timezone())
+        c1 = self.post_comment(parent_post=q, timestamp=t1)
+        t2 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 21), timezone.get_default_timezone())
+        c2 = q.add_comment(user=self.user, comment='blah blah', added_at=t2)
+        t3 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 22), timezone.get_default_timezone())
+        c3 = self.post_comment(parent_post=q, body_text='blah blah 2', timestamp=t3)
 
         Post.objects.precache_comments(for_posts=[q], visitor=self.user)
         self.assertListEqual([c1, c2, c3], q._cached_comments)
@@ -105,9 +108,12 @@ class PostModelTests(AskbotTestCase):
         self.user = self.u1
         q = self.post_question()
 
-        c1 = self.post_comment(parent_post=q, timestamp=datetime.datetime(2010, 10, 2, 14, 33, 20))
-        c2 = q.add_comment(user=self.user, comment='blah blah', added_at=datetime.datetime(2010, 10, 2, 14, 33, 21))
-        c3 = self.post_comment(parent_post=q, timestamp=datetime.datetime(2010, 10, 2, 14, 33, 22))
+        t1 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 20), timezone.get_default_timezone())
+        c1 = self.post_comment(parent_post=q, timestamp=t1)
+        t2 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 21), timezone.get_default_timezone())
+        c2 = q.add_comment(user=self.user, comment='blah blah', added_at=t2)
+        t3 = timezone.make_aware(datetime.datetime(2010, 10, 2, 14, 33, 22), timezone.get_default_timezone())
+        c3 = self.post_comment(parent_post=q, timestamp=t3)
 
         Post.objects.precache_comments(for_posts=[q], visitor=self.user)
         self.assertListEqual([c1, c2, c3], q._cached_comments)

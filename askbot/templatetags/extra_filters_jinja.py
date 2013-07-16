@@ -13,6 +13,7 @@ from django.template import defaultfilters
 from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from django.utils import simplejson
+from django.utils import timezone
 from askbot import exceptions as askbot_exceptions
 from askbot.conf import settings as askbot_settings
 from django.conf import settings as django_settings
@@ -36,6 +37,14 @@ TIMEZONE_STR = pytz.timezone(
                 ).localize(
                     datetime.datetime.now()
                 ).strftime('%z')
+
+FMT = '%Y-%m-%d %H:%M:%S %z'
+TIME_ZONE = pytz.timezone(django_settings.TIME_ZONE)
+@register.filter
+def as_local_time(utc_dt):
+    """ convert UTC time to local time"""
+    loc_dt = utc_dt.astimezone(TIME_ZONE).strftime(FMT)
+    return loc_dt
 
 @register.filter
 def add_tz_offset(datetime_object):

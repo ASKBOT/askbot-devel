@@ -10,6 +10,8 @@
 import datetime
 import time
 from django.test import TestCase
+from django.utils import timezone
+
 from askbot import models
 from askbot import const
 from askbot.tests.utils import create_user
@@ -101,7 +103,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.thread = models.Thread.objects.create_new(
                             title = 'test question',
                             author = self.u11,
-                            added_at = datetime.datetime.now(),
+                            added_at = timezone.now(),
                             wiki = False,
                             tagnames = 'test', 
                             text = 'hey listen up',
@@ -118,7 +120,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.answer1 = models.Post.objects.create_new_answer(
                             thread = self.thread,
                             author = self.u21,
-                            added_at = datetime.datetime.now(),
+                            added_at = timezone.now(),
                             text = 'answer1'
                         )
         self.comment22 = self.answer1.add_comment(
@@ -132,7 +134,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.answer2 = models.Post.objects.create_new_answer(
                             thread = self.thread,
                             author = self.u31,
-                            added_at = datetime.datetime.now(),
+                            added_at = timezone.now(),
                             text = 'answer2'
                         )
         self.comment32 = self.answer2.add_comment(
@@ -209,7 +211,7 @@ class OnScreenUpdateNotificationTests(TestCase):
     def test_post_mention_in_comments_then_delete(self):
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         comment = self.question.add_comment(
                             user = self.u11,
                             comment = '@user12 howyou doin?',
@@ -227,7 +229,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         comment = self.answer1.add_comment(
                             user = self.u21,
                             comment = 'hey @user22 blah',
@@ -249,7 +251,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         under the corresponding question or answer"""
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.add_comment(
                             user = self.u11,
                             comment = 'self-comment',
@@ -270,7 +272,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer1.add_comment(
                             user = self.u21,
                             comment = 'self-comment 2',
@@ -293,7 +295,7 @@ class OnScreenUpdateNotificationTests(TestCase):
     def test_self_mention_not_posting_in_comment_to_question1(self):
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.add_comment(
                             user = self.u11,
                             comment = 'self-comment @user11',
@@ -316,7 +318,7 @@ class OnScreenUpdateNotificationTests(TestCase):
     def test_self_mention_not_posting_in_comment_to_question2(self):
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.add_comment(
                             user = self.u11,
                             comment = 'self-comment @user11 blah',
@@ -339,7 +341,7 @@ class OnScreenUpdateNotificationTests(TestCase):
     def test_self_mention_not_posting_in_comment_to_answer(self):
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer1.add_comment(
                             user = self.u21,
                             comment = 'self-comment 1 @user21',
@@ -369,7 +371,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         """
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.add_comment(
             user = self.u14,
             comment = 'dudududududu',
@@ -439,7 +441,7 @@ class OnScreenUpdateNotificationTests(TestCase):
                     )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.add_comment(
                             user = self.u12,
                             comment = 'self-comment 1',
@@ -465,7 +467,7 @@ class OnScreenUpdateNotificationTests(TestCase):
                     )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer1.add_comment(
                             user = self.u22,
                             comment = 'self-comment 1',
@@ -492,7 +494,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         """
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.apply_edit(
                         edited_by = self.u14,
                         text = 'waaay better question!',
@@ -513,7 +515,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.question.apply_edit(
                         edited_by = self.u31,
                         text = 'waaay even better question!',
@@ -538,7 +540,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         """
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer1.apply_edit(
                         edited_by = self.u24,
                         text = 'waaay better answer!',
@@ -567,14 +569,14 @@ class OnScreenUpdateNotificationTests(TestCase):
     def test_new_answer(self):
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer3 = models.Post.objects.create_new_answer(
                             thread = self.thread,
                             author = self.u11,
                             added_at = timestamp,
                             text = 'answer3'
                         )
-        time_end = datetime.datetime.now()
+        time_end = timezone.now()
         notifications = get_re_notif_after(timestamp)
         self.assertEqual(len(notifications), 1)
         self.assertEqual(
@@ -595,7 +597,7 @@ class OnScreenUpdateNotificationTests(TestCase):
         )
         self.reset_response_counts()
         time.sleep(1)
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
         self.answer3 = models.Post.objects.create_new_answer(
                             thread = self.thread,
                             author = self.u31,

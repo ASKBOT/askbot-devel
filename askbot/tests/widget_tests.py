@@ -5,6 +5,7 @@ from askbot.tests.utils import AskbotTestCase
 
 from django.test.client import Client
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 
 class WidgetViewsTests(AskbotTestCase):
@@ -35,7 +36,7 @@ class WidgetViewsTests(AskbotTestCase):
     def test_post_after_login(self):
         widget_question_data = { 'title': 'testing post after login, does it?',
                                  'author': self.user,
-                                 'added_at': datetime.now(),
+                                 'added_at': timezone.now(),
                                  'wiki': False,
                                  'text': ' ',
                                  'tagnames': '',

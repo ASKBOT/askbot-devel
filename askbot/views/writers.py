@@ -30,6 +30,7 @@ from django.core.urlresolvers import reverse
 from django.core import exceptions
 from django.conf import settings
 from django.views.decorators import csrf
+from django.utils import timezone
 
 from askbot import exceptions as askbot_exceptions
 from askbot import forms
@@ -229,7 +230,7 @@ def ask(request):#view used to ask a new question
     form = forms.AskForm(request.REQUEST, user=request.user)
     if request.method == 'POST':
         if form.is_valid():
-            timestamp = datetime.datetime.now()
+            timestamp = timezone.now()
             title = form.cleaned_data['title']
             wiki = form.cleaned_data['wiki']
             tagnames = form.cleaned_data['tags']
