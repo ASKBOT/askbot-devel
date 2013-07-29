@@ -2,6 +2,7 @@
 to be performed at the moment"""
 from datetime import datetime
 from django.utils import timezone
+import logging
 
 def should_update_avatar_data(request):
     """True if it is time to update user's avatar data
@@ -16,5 +17,9 @@ def should_update_avatar_data(request):
         if updated_at is None:
             return True
         else:
+            if timezone.is_naive(updated_at):
+                updated_at = timezone.make_aware(updated_at, timezone.get_default_timezone())
+                logging.info('updated_at is not timezone aware')
+            
             return (timezone.now() - updated_at).days > 0
     return False

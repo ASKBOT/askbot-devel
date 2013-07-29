@@ -68,6 +68,7 @@ from askbot.utils.html import sanitize_html
 from askbot.utils.html import site_url
 from askbot.utils.diff import textDiff as htmldiff
 from askbot.utils.url_utils import strip_path
+from askbot.utils.timezone_utils import get_midnight
 from askbot import mail
 
 from django import VERSION
@@ -1309,7 +1310,7 @@ def user_get_unused_votes_today(self):
     """returns number of votes that are
     still available to the user today
     """
-    today = datetime.date.today()
+    today = get_midnight()
     one_day_interval = (today, today + datetime.timedelta(1))
 
     used_votes = Vote.objects.filter(
@@ -1346,6 +1347,7 @@ def user_post_comment(
                     added_at = timestamp,
                     by_email = by_email
                 )
+
     comment.add_to_groups([self.get_personal_group()])
 
     parent_post.thread.invalidate_cached_data()
@@ -2791,7 +2793,8 @@ def user_get_flags(self):
 def user_get_flag_count_posted_today(self):
     """return number of flags the user has posted
     within last 24 hours"""
-    today = datetime.date.today()
+    today = get_midnight()
+
     time_frame = (today, today + datetime.timedelta(1))
     flags = self.get_flags()
     return flags.filter(active_at__range = time_frame).count()

@@ -8,6 +8,7 @@ from django.utils.html import escape
 from askbot import const
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from askbot.utils.timezone_utils import get_midnight
 
 class VoteManager(models.Manager):
     def get_up_vote_count_from_user(self, user):
@@ -24,7 +25,7 @@ class VoteManager(models.Manager):
 
     def get_votes_count_today_from_user(self, user):
         if user is not None:
-            today = datetime.date.today()
+            today = get_midnight()
             return self.filter(user=user, voted_at__range=(today, today + datetime.timedelta(1))).count()
         else:
             return 0
@@ -152,7 +153,8 @@ class ReputeManager(models.Manager):
         if user is None:
             return 0
         else:
-            today = datetime.date.today()
+            today = get_midnight()
+            
             tomorrow = today + datetime.timedelta(1)
             rep_types = (1,-8)
             sums = self.filter(models.Q(reputation_type__in=rep_types),
