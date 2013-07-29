@@ -1265,25 +1265,34 @@ class Thread(models.Model):
         *IMPORTANT*: self._question_post() has to
         exist when update_tags() is called!
         """
+
         if tagnames.strip() == '':
             return
 
-        previous_tags = list(self.tags.filter(status = Tag.STATUS_ACCEPTED))
+        given_tagnames = [t for t in tagnames.strip().split(' ')]
+        given_tagnames_set = set(given_tagnames)
 
-        ordered_updated_tagnames = [t for t in tagnames.strip().split(' ')]
-        updated_tagnames_tmp = set(ordered_updated_tagnames)
-
-        #apply TagSynonym
+        ordered_updated_tagnames = []
         updated_tagnames = set()
-        for tag_name in updated_tagnames_tmp:
+        
+        #apply TagSynonym
+        for tag_name in given_tagnames:
+
+            try:
+                given_tagnames_set.remove(tag_name)
+            except KeyError: # handle duplicates
+                continue
+
             try:
                 tag_synonym = TagSynonym.objects.get(source_tag_name=tag_name)
-                updated_tagnames.add(tag_synonym.target_tag_name)
+                ordered_updated_tagnames.append(tag_synonym.target_tag.name)
                 tag_synonym.auto_rename_count += 1
                 tag_synonym.save()
             except TagSynonym.DoesNotExist:
-                updated_tagnames.add(tag_name)
+                ordered_updated_tagnames.append(tag_name)
+        updated_tagnames = set(ordered_updated_tagnames)
 
+        previous_tags = list(self.tags.filter(status = Tag.STATUS_ACCEPTED))
         previous_tagnames = set([tag.name for tag in previous_tags])
         removed_tagnames = previous_tagnames - updated_tagnames
 
