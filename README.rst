@@ -18,22 +18,22 @@ in April 2010.
 Installation
 ============
 
-## first create a virtual environment
+**first create a virtual environment**
 
     virtualenv askbotenv --no-site-packages
     source askbotenv/bin/activate
 
-## install askbot
+**install askbot**
 
     pip install askbot
     
-## connect to mysql and install database
+**connect to mysql and install database**
 
     mysql -u USERNAME -pPASSWORD
     
     mysql> create database askbot;
     
-## install askbot as a new django project
+**install askbot as a new django project**
 
     mkdir mydjangosite
     cd mydjangosite
