@@ -13,3 +13,35 @@ All documentation is in the directory askbot/doc
 Askbot is based on code of CNPROG, originally created by Mike Chen 
 and Sailing Cai and some code written for OSQA. Askbot had officially launched
 in April 2010.
+
+
+Installation
+============
+
+### first create a virtual environment
+
+    virtualenv askbotenv --no-site-packages
+    source askbotenv/bin/activate
+
+### install askbot
+
+    pip install askbot
+    
+### connect to mysql and install database
+
+    mysql -u USERNAME -pPASSWORD
+    
+    mysql> create database askbot;
+    
+### install askbot as a new django project
+
+    mkdir mydjangosite
+    cd mydjangosite
+    askbot-setup
+    
+if prompt for database select mysql
+then
+
+   python manage.py syncdb
+   python manage.py migrate
+   python manage.py runserver
