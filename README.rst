@@ -51,8 +51,8 @@ Or clone the code from the development repository:
     
 **if prompt for database select mysql then**
 
-    python manage.py syncdb
-    python manage.py migrate
-    python manage.py runserver
+    + python manage.py syncdb
+    + python manage.py migrate
+    + python manage.py runserver
 
 now you can browse askbot at localhost:8000
