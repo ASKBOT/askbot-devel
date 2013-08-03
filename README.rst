@@ -50,7 +50,7 @@ Or clone the code from the development repository:
     askbot-setup
     
 if prompt for database select mysql
-then
+then:
 
     python manage.py syncdb
     python manage.py migrate
