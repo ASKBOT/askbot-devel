@@ -49,8 +49,7 @@ Or clone the code from the development repository:
     cd mydjangosite
     askbot-setup
     
-if prompt for database select mysql
-then:
+**if prompt for database select mysql then**
 
     python manage.py syncdb
     python manage.py migrate
