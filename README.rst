@@ -23,9 +23,19 @@ Installation
     virtualenv askbotenv --no-site-packages
     source askbotenv/bin/activate
 
-**install askbot**
+install askbot
+--------------
 
     pip install askbot
+    
+Or clone the code from the development repository:
+--------------------------------------------------
+
+    git clone git://github.com/suhailvs/askbot-devel.git <project_name>
+    cd <project_name>
+    
+    python setup.py develop #the develop option will not install askbot into the python site packages directory
+
     
 **connect to mysql and install database**
 
@@ -42,6 +52,6 @@ Installation
 if prompt for database select mysql
 then
 
-   python manage.py syncdb
-   python manage.py migrate
-   python manage.py runserver
+    python manage.py syncdb
+    python manage.py migrate
+    python manage.py runserver
