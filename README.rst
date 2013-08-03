@@ -55,3 +55,5 @@ then:
     python manage.py syncdb
     python manage.py migrate
     python manage.py runserver
+
+now you can browse askbot at localhost:8000
