@@ -139,3 +139,19 @@ settings.register(
         default = ''
     )
 )
+
+
+settings.register(
+    BooleanValue(
+        MARKUP,
+        'ENABLE_AUTO_URLIZE',
+        description=_('Enable autolinking for urls'),
+        help_text=_(
+            'If you enable this feature, '
+            'the application  will use pre-defined patterns that look like links and convert them to links'
+            'Just a convinient shortcut to urlize without setting ENABLE_AUTO_LINKING, AUTO_LINK_PATTERNS, AUTO_LINK_URLS,'
+        ),
+        default = True
+    )
+)
+

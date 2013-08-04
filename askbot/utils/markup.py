@@ -31,6 +31,14 @@ def get_parser():
     link_patterns = [
         (URL_RE, r'\1'),
     ]
+
+    if askbot_settings.ENABLE_AUTO_URLIZE:
+        url_link_patterns = [
+            (re.compile(r'(^|[\n ])(([\w]+?://[\w\#$%&~.\-;:=,?@\[\]+]*[^ \<]*[^ \<\.])(/[\w\#$%&~/.\-;:=,?@\[\]+]*)?)', re.IGNORECASE | re.DOTALL), r'\2'),
+            (re.compile(r'(^|[\n ])(((www|ftp)\.[\w\#$%&~.\-;:=,?@\[\]+]*[^ \<]*[^ \<\.])(/[\w\#$%&~/.\-;:=,?@\[\]+]*)?)', re.IGNORECASE | re.DOTALL), r'http://\2')
+            ]
+        link_patterns.extend(url_link_patterns)
+        
     if askbot_settings.ENABLE_AUTO_LINKING:
         pattern_list = askbot_settings.AUTO_LINK_PATTERNS.split('\n')
         url_list = askbot_settings.AUTO_LINK_URLS.split('\n')
@@ -198,7 +206,7 @@ def plain_text_input_converter(text):
 
 def markdown_input_converter(text):
     """markdown to html converter"""
-    text = urlize(text)
+
     text = get_parser().convert(text)
     return sanitize_html(text)
 
