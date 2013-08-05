@@ -30,41 +30,18 @@ settings.register(
     )
 )
 
-LANGUAGE_CHOICES = (
-            ('en', _("English")),
-            ('es', _("Spanish")),
-            ('ca', _("Catalan")),
-            ('de', _("German")),
-            ('el', _("Greek")),
-            ('fi', _("Finnish")),
-            ('fr', _("French")),
-            ('hi', _("Hindi")),
-            ('hu', _("Hungarian")),
-            ('it', _("Italian")),
-            ('ja', _("Japanese")),
-            ('ko', _("Korean")),
-            ('pt', _("Portuguese")),
-            ('pt_BR', _("Brazilian Portuguese")),
-            ('ro', _("Romanian")),
-            ('ru', _("Russian")),
-            ('sr', _("Serbian")),
-            ('tr', _("Turkish")),
-            ('vi', _("Vietnamese")),
-            ('zh_CN', _("Chinese")),
-            ('zh_TW', _("Chinese (Taiwan)")),
+#cannot use HAS_ASKBOT_LOCALE_MIDDLEWARE due to circular import error
+if not getattr(django_settings, 'ASKBOT_MULTILINGUAL', False) and \
+        'askbot.middleware.locale.LocaleMiddleware' in django_settings.MIDDLEWARE_CLASSES:
+    settings.register(
+        values.StringValue(
+            GENERAL_SKIN_SETTINGS,
+            'ASKBOT_LANGUAGE',
+            default = django_settings.LANGUAGE_CODE,
+            choices =  django_settings.LANGUAGES,
+            description = _('Select Language'),
         )
-
-"""
-settings.register(
-    values.StringValue(
-        GENERAL_SKIN_SETTINGS,
-        'ASKBOT_LANGUAGE',
-        default = 'en',
-        choices =  LANGUAGE_CHOICES,
-        description = _('Select Language'),
     )
-)
-"""
 
 settings.register(
     values.BooleanValue(

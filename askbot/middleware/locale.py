@@ -22,5 +22,5 @@ class LocaleMiddleware(object):
         patch_vary_headers(response, ('Accept-Language',))
         if 'Content-Language' not in response:
             response['Content-Language'] = translation.get_language()
-        translation.deactivate()
+        #translation.deactivate()
         return response
