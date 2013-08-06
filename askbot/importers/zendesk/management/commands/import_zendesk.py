@@ -82,6 +82,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from django.db import transaction
 from django.db import connection
+from django.utils import timezone
 from askbot import models as askbot_models
 from askbot.utils import console
 from askbot.utils.html import unescape
@@ -108,7 +109,7 @@ except askbot_models.User.DoesNotExist:
             first_name = 'Phantom',
             last_name = 'Voter',
             real_name = 'Phantom Voter',
-            date_joined = datetime.now(),
+            date_joined = timezone.now(),
             is_active = False,
             about = 'Fake account for seeding vote counts during Zendesk import',
         ).save()
@@ -210,7 +211,7 @@ def seed_post_with_votes(post, votes_count):
     post.thread.points = votes_count
     post.thread.save()
     askbot_models.Vote(user=PHANTOM_VOTER_USER, voted_post=post, 
-                       vote=votes_count, voted_at=datetime.now()).save()
+                       vote=votes_count, voted_at=timezone.now()).save()
 
 def post_question(zendesk_entry):
     """Posts question to askbot from Zendesk Entry
@@ -242,7 +243,7 @@ def post_question(zendesk_entry):
             askbot_post.thread.set_closed_status(
                 closed=True, 
                 closed_by=ADMIN_USER, 
-                closed_at=datetime.now(), 
+                closed_at=timezone.now(), 
                 close_reason=5)
             askbot_post.thread.save()
         return askbot_post

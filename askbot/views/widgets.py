@@ -86,7 +86,7 @@ def ask_widget(request, widget_id):
 
             data_dict = {
                 'title': title,
-                'added_at': datetime.now(),
+                'added_at': timezone.now(),
                 'wiki': False,
                 'text': text,
                 'tagnames': tagnames,

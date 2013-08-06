@@ -14,6 +14,8 @@ from django.utils.translation import ungettext_lazy, string_concat
 from django.utils.text import get_text_list
 from django.contrib.auth.models import User
 from django_countries import countries
+from django.utils import timezone
+
 from askbot.utils.forms import NextUrlField, UserNameField
 from askbot.mail import extract_first_email_address
 from recaptcha_works.fields import RecaptchaField
@@ -1143,7 +1145,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
             body_text = text,
             wiki = wiki,
             is_private = is_private,
-            timestamp = datetime.datetime.now(),
+            timestamp = timezone.now(),
         )
 
 class VoteForm(forms.Form):

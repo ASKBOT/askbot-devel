@@ -8,6 +8,7 @@ from askbot.models import Activity, EmailFeedSetting
 from django.template.loader import get_template
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
+from django.utils import timezone
 from django.conf import settings as django_settings
 from askbot.conf import settings as askbot_settings
 from django.utils.datastructures import SortedDict
@@ -400,7 +401,7 @@ class Command(NoArgsCommand):
             else:
                 meta_data['skip'] = False
                 #print 'not skipping'
-                update_info.active_at = datetime.datetime.now() 
+                update_info.active_at = timezone.now() 
                 if DEBUG_THIS_COMMAND == False:
                     update_info.save() #save question email update activity 
         #q_list is actually an ordered dictionary

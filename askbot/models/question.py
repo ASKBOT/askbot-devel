@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.translation import string_concat
 from django.utils.translation import get_language
+from django.utils import timezone
 
 import askbot
 from askbot.conf import settings as askbot_settings
@@ -556,7 +557,7 @@ class Thread(models.Model):
     view_count = models.PositiveIntegerField(default=0)
     favourite_count = models.PositiveIntegerField(default=0)
     answer_count = models.PositiveIntegerField(default=0)
-    last_activity_at = models.DateTimeField(default=datetime.datetime.now)
+    last_activity_at = models.DateTimeField(default=timezone.now)
     last_activity_by = models.ForeignKey(User, related_name='unused_last_active_in_threads')
     language_code = models.CharField(max_length=16, default=django_settings.LANGUAGE_CODE)
 
@@ -580,7 +581,7 @@ class Thread(models.Model):
 
     accepted_answer = models.ForeignKey(Post, null=True, blank=True, related_name='+')
     answer_accepted_at = models.DateTimeField(null=True, blank=True)
-    added_at = models.DateTimeField(default = datetime.datetime.now)
+    added_at = models.DateTimeField(default = timezone.now)
 
     #db_column will be removed later
     points = models.IntegerField(default = 0, db_column='score')
@@ -660,7 +661,7 @@ class Thread(models.Model):
 
         self.retag(
             retagged_by=user,
-            retagged_at=timestamp or datetime.datetime.now(),
+            retagged_at=timestamp or timezone.now(),
             tagnames =' '.join(existing_tags + add_tags),
             silent=silent
         )
@@ -1560,7 +1561,7 @@ class AnonymousQuestion(DraftContent):
     is_anonymous = models.BooleanField(default=False)
 
     def publish(self, user):
-        added_at = datetime.datetime.now()
+        added_at = timezone.now()
         #todo: wrong - use User.post_question() instead
         try:
             user.assert_can_post_text(self.text)

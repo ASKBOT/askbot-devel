@@ -798,8 +798,8 @@ for the purposes of the AJAX comment editor #}
 {%- endmacro -%}
 
 {%- macro timeago(datetime_object) -%}
-    <abbr class="timeago" title="{{datetime_object.replace(microsecond=0)|add_tz_offset}}">
-        {{datetime_object.replace(microsecond=0)|add_tz_offset}}
+    <abbr class="timeago" title="{{datetime_object.replace(microsecond=0)|as_local_time}}">
+        {{datetime_object.replace(microsecond=0)|as_local_time}}
     </abbr>
 {%- endmacro -%}
 

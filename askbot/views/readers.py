@@ -27,6 +27,7 @@ from django.core import exceptions as django_exceptions
 from django.contrib.humanize.templatetags import humanize
 from django.http import QueryDict
 from django.conf import settings as django_settings
+from django.utils import timezone
 
 import askbot
 from askbot import exceptions
@@ -514,15 +515,18 @@ def question(request, id):#refactor - long subroutine. display question body, an
 
         last_seen = request.session['question_view_times'].get(question_post.id, None)
 
+
         if thread.last_activity_by_id != request.user.id:
             if last_seen:
+                if timezone.is_naive(last_seen): # probably need this check for a while only, because old session data is stored as 'naive'
+                    last_seen = timezone.make_aware(last_seen, timezone.get_default_timezone())
                 if last_seen < thread.last_activity_at:
                     update_view_count = True
             else:
                 update_view_count = True
 
-        request.session['question_view_times'][question_post.id] = \
-                                                    datetime.datetime.now()
+        request.session['question_view_times'][question_post.id] = timezone.now()
+            
 
         #2) run the slower jobs in a celery task
         from askbot import tasks

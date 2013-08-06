@@ -172,6 +172,6 @@ class ReplyAddress(models.Model):
                                 )
         result.thread.invalidate_cached_data()
         self.response_post = result
-        self.used_at = datetime.now()
+        self.used_at = timezone.now()
         self.save()
         return result

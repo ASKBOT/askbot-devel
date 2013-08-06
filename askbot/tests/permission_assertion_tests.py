@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase
 from django.core import exceptions
+from django.utils import timezone
+
 from askbot.tests import utils
 from askbot.tests.utils import with_settings
 from askbot.conf import settings as askbot_settings
@@ -1236,7 +1238,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         """
         askbot_settings.update('USE_TIME_LIMIT_TO_EDIT_COMMENT', True)
         askbot_settings.update('MINUTES_TO_EDIT_COMMENT', 0)
-        old_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        old_timestamp = timezone.now() - datetime.timedelta(1)
         self.assert_user_can_edit_previous_comment(
                                     old_timestamp = old_timestamp,
                                     original_poster = original_poster
@@ -1266,7 +1268,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         askbot_settings.update('USE_TIME_LIMIT_TO_EDIT_COMMENT', True)
         askbot_settings.update('MINUTES_TO_EDIT_COMMENT', 10)
         #about 3 min ago
-        old_timestamp = datetime.datetime.now() - datetime.timedelta(0, 200)
+        old_timestamp = timezone.now() - datetime.timedelta(0, 200)
         self.assert_user_can_edit_previous_comment(
                                 old_timestamp = old_timestamp,
                                 original_poster = self.user
@@ -1277,7 +1279,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.user.save()
         askbot_settings.update('USE_TIME_LIMIT_TO_EDIT_COMMENT', False)
         askbot_settings.update('MINUTES_TO_EDIT_COMMENT', 10)
-        old_timestamp = datetime.datetime.now() - datetime.timedelta(365)#a year ago
+        old_timestamp = timezone.now() - datetime.timedelta(365)#a year ago
         self.assert_user_can_edit_previous_comment(
                                 old_timestamp = old_timestamp,
                                 original_poster = self.user
@@ -1290,7 +1292,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.user.save()
         askbot_settings.update('USE_TIME_LIMIT_TO_EDIT_COMMENT', True)
         askbot_settings.update('MINUTES_TO_EDIT_COMMENT', 10)
-        old_timestamp = datetime.datetime.now() - datetime.timedelta(1)
+        old_timestamp = timezone.now() - datetime.timedelta(1)
         question = self.post_question(author = self.user, timestamp = old_timestamp)
         comment = self.user.post_comment(
                                     parent_post = question,

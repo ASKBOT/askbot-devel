@@ -134,7 +134,7 @@ remove source_tag"""
             new_options['from'] = existing_tag_synonym.source_tag_name
             new_options['user_id'] = admin.id
             new_options['is_force'] = True # this is mandatory conversion
-            new_options['timestamp'] = datetime.datetime.now()
+            new_options['timestamp'] = timezone.now()
             existing_tag_synonym.delete() # no longer needed
             self.handle(*args, **new_options)
 
@@ -143,5 +143,5 @@ remove source_tag"""
             source_tag.delete()
         else:
             source_tag.deleted = True
-            source_tag.deleted_at = options.get('timestamp', datetime.datetime.now())
+            source_tag.deleted_at = options.get('timestamp', timezone.now())
             source_tag.deleted_by = admin

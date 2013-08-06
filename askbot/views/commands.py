@@ -28,6 +28,7 @@ from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.translation import string_concat
 from askbot.utils.slug import slugify
+from django.utils import timezone
 from askbot import models
 from askbot import forms
 from askbot import conf
@@ -1266,7 +1267,7 @@ def moderate_suggested_tag(request):
                 thread.add_tag(
                     tag_name = tag.name,
                     user = tag.created_by,
-                    timestamp = datetime.datetime.now(),
+                    timestamp = timezone.now(),
                     silent = True
                 )
         else:
@@ -1400,7 +1401,7 @@ def share_question_with_group(request):
                 updated_by=request.user,
                 notify_sets=notify_sets,
                 activity_type=const.TYPE_ACTIVITY_POST_SHARED,
-                timestamp=datetime.datetime.now()
+                timestamp=timezone.now()
             )
 
             return HttpResponseRedirect(thread.get_absolute_url())
@@ -1433,7 +1434,7 @@ def share_question_with_user(request):
                 updated_by=request.user,
                 notify_sets=notify_sets,
                 activity_type=const.TYPE_ACTIVITY_POST_SHARED,
-                timestamp=datetime.datetime.now()
+                timestamp=timezone.now()
             )
 
             return HttpResponseRedirect(thread.get_absolute_url())

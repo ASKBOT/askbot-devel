@@ -3,6 +3,8 @@ import pytz
 import re
 import time
 import urllib
+import logging
+
 from coffin import template as coffin_template
 from bs4 import BeautifulSoup
 from django.core import exceptions as django_exceptions
@@ -13,6 +15,7 @@ from django.template import defaultfilters
 from django.core.urlresolvers import reverse, resolve
 from django.http import Http404
 from django.utils import simplejson
+from django.utils import timezone
 from askbot import exceptions as askbot_exceptions
 from askbot.conf import settings as askbot_settings
 from django.conf import settings as django_settings
@@ -36,6 +39,17 @@ TIMEZONE_STR = pytz.timezone(
                 ).localize(
                     datetime.datetime.now()
                 ).strftime('%z')
+
+FMT = '%Y-%m-%d %H:%M:%S %z'
+TIME_ZONE = pytz.timezone(django_settings.TIME_ZONE)
+@register.filter
+def as_local_time(utc_dt):
+    """ convert UTC time to local time"""
+    if timezone.is_naive(utc_dt):
+        logging.info("expected aware time, but got naive time: %s" % utc_dt)
+        utc_dt = timezone.make_aware(utc_dt, timezone.get_default_timezone())
+    loc_dt = utc_dt.astimezone(TIME_ZONE).strftime(FMT)
+    return loc_dt
 
 @register.filter
 def add_tz_offset(datetime_object):

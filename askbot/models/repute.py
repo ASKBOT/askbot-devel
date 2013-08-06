@@ -7,6 +7,8 @@ from django.utils.translation import ugettext as _
 from django.utils.html import escape
 from askbot import const
 from django.core.urlresolvers import reverse
+from django.utils import timezone
+from askbot.utils.timezone_utils import get_midnight
 
 class VoteManager(models.Manager):
     def get_up_vote_count_from_user(self, user):
@@ -23,7 +25,7 @@ class VoteManager(models.Manager):
 
     def get_votes_count_today_from_user(self, user):
         if user is not None:
-            today = datetime.date.today()
+            today = get_midnight()
             return self.filter(user=user, voted_at__range=(today, today + datetime.timedelta(1))).count()
         else:
             return 0
@@ -40,7 +42,7 @@ class Vote(models.Model):
     voted_post = models.ForeignKey('Post', related_name='votes')
 
     vote           = models.SmallIntegerField(choices=VOTE_CHOICES)
-    voted_at       = models.DateTimeField(default=datetime.datetime.now)
+    voted_at       = models.DateTimeField(default=timezone.now)
 
     objects = VoteManager()
 
@@ -131,7 +133,7 @@ class Award(models.Model):
     content_type   = models.ForeignKey(ContentType)
     object_id      = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
-    awarded_at = models.DateTimeField(default=datetime.datetime.now)
+    awarded_at = models.DateTimeField(default=timezone.now)
     notified   = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -151,7 +153,8 @@ class ReputeManager(models.Manager):
         if user is None:
             return 0
         else:
-            today = datetime.date.today()
+            today = get_midnight()
+            
             tomorrow = today + datetime.timedelta(1)
             rep_types = (1,-8)
             sums = self.filter(models.Q(reputation_type__in=rep_types),
@@ -176,7 +179,7 @@ class Repute(models.Model):
     positive = models.SmallIntegerField(default=0)
     negative = models.SmallIntegerField(default=0)
     question = models.ForeignKey('Post', null=True, blank=True)
-    reputed_at = models.DateTimeField(default=datetime.datetime.now)
+    reputed_at = models.DateTimeField(default=timezone.now)
     reputation_type = models.SmallIntegerField(choices=const.TYPE_REPUTATION)
     reputation = models.IntegerField(default=1)
 

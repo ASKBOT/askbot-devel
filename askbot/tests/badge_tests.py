@@ -2,6 +2,7 @@ import datetime
 from django.conf import settings as django_settings
 from django.core.urlresolvers import reverse
 from django.test.client import Client
+from django.utils import timezone
 from askbot.tests.utils import AskbotTestCase
 from askbot.conf import settings
 from askbot import models
@@ -324,7 +325,7 @@ class BadgeTests(AskbotTestCase):
 
     def test_necromancer_badge(self):
         question = self.post_question(user = self.u1)
-        now = datetime.datetime.now()
+        now = timezone.now()
         delta = datetime.timedelta(settings.NECROMANCER_BADGE_MIN_DELAY + 1)
         future = now + delta
         answer = self.post_answer(
@@ -496,7 +497,7 @@ class BadgeTests(AskbotTestCase):
         self.assert_have_badge('taxonomist', self.u1, 1)
 
     def test_enthusiast_badge(self):
-        yesterday = datetime.datetime.now() - datetime.timedelta(1)
+        yesterday = timezone.now() - datetime.timedelta(1)
         self.u1.last_seen = yesterday
         prev_visit_count = settings.ENTHUSIAST_BADGE_MIN_DAYS - 1
         self.u1.consecutive_days_visit_count = prev_visit_count
