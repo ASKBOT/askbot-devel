@@ -298,7 +298,7 @@ msgstr ""
 
 #: media/js/post.js:1884 media/js/utils.js:3170 media/js/utils.js.c:3325
 msgid "just now"
-msgstr "방금전"
+msgstr ""
 
 #: media/js/post.js:1950
 msgid "delete this comment"
@@ -579,33 +579,33 @@ msgstr ""
 
 #: media/js/utils.js:3168
 msgid "ago"
-msgstr "전"
+msgstr ""
 
 #: media/js/utils.js:3169
 msgid "from now"
-msgstr "지금부터"
+msgstr ""
 
 #: media/js/utils.js:3171
 msgid "about a minute"
-msgstr "1분전"
+msgstr ""
 
 #: media/js/utils.js:3172
 #, c-format
 msgid "%d minutes"
-msgstr "%d 분"
+msgstr ""
 
 #: media/js/utils.js:3173
 msgid "about an hour"
-msgstr "약 한시간"
+msgstr ""
 
 #: media/js/utils.js:3174
 #, c-format
 msgid "%d hours"
-msgstr "%d 시간"
+msgstr ""
 
 #: media/js/utils.js:3175 media/js/utils.js.c:3303
 msgid "yesterday"
-msgstr "어제"
+msgstr ""
 
 #: media/js/utils.js:3176
 #, c-format
@@ -619,7 +619,7 @@ msgstr ""
 #: media/js/utils.js:3178
 #, c-format
 msgid "%d months"
-msgstr "%d 달"
+msgstr ""
 
 #: media/js/utils.js:3179
 msgid "about a year"
@@ -686,13 +686,13 @@ msgstr ""
 #, c-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
-msgstr[0] "%s 시간 전"
+msgstr[0] ""
 
 #: media/js/utils.js:3318
 #, c-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
-msgstr[0] "%s 분 전"
+msgstr[0] ""
 
 #: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:71
 msgid "Insert a file"
