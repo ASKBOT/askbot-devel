@@ -911,7 +911,6 @@ body.anon.ask-page .search-drop-menu {
 .box h2 {
   padding-left: 0;
   background: #eceeeb;
-  height: 30px;
   line-height: 30px;
   text-align: right;
   font-size: 18px !important;
@@ -975,7 +974,7 @@ body.anon.ask-page .search-drop-menu {
 .box .inputs #ignoredTagInput,
 .box .inputs #subscribedTagInput,
 .box .inputs #ab-tag-search {
-  width: 150px;
+  width: 140px;
   padding-left: 5px;
   border: #c9c9b5 1px solid;
   height: 25px;
@@ -1785,7 +1784,7 @@ ul#related-tags li {
 }
 .groups-input,
 .users-input {
-  width: 150px;
+  width: 140px;
   padding-left: 5px;
   border: #c9c9b5 1px solid;
   height: 25px;
@@ -4642,4 +4641,32 @@ body.lang-zh.question-page a.submit,
 body.lang-zh_CN.question-page a.submit,
 body.lang-zh_TW.question-page a.submit {
   line-height: 30px !important;
+}
+body.lang-hu .scope-selector {
+  font-size: 14px;
+  margin-left: 10px;
+}
+body.lang-hu .box .inputs #interestingTagInput,
+body.lang-hu .box .inputs #ignoredTagInput {
+  width: 100px;
+}
+body.lang-hu .users-input,
+body.lang-hu .groups-input {
+  width: 100px;
+}
+body.lang-es .scope-selector {
+  margin-left: 10px;
+}
+body.lang-es .box .inputs #interestingTagInput,
+body.lang-es .box .inputs #ignoredTagInput {
+  width: 130px;
+}
+body.lang-es .users-input,
+body.lang-es .groups-input {
+  width: 130px;
+}
+body.lang-es .short-summary .counts .answers div,
+body.lang-es .short-summary .counts .views div,
+body.lang-es .short-summary .counts .votes div {
+  font-size: 10px;
 }
