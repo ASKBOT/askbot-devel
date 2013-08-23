@@ -24,7 +24,7 @@ REQUIREMENTS = {
     'keyedcache': 'django-keyedcache',
     'threaded_multihost': 'django-threaded-multihost',
     'robots': 'django-robots',
-    'sanction': 'sanction',
+    'sanction': 'sanction==0.3.1',
     'unidecode': 'unidecode',
     'django_countries': 'django-countries==1.0.5',
     'djcelery': 'django-celery==3.0.11',

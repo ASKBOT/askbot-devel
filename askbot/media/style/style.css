@@ -4656,6 +4656,7 @@ body.lang-hu .groups-input {
 }
 body.lang-es .scope-selector {
   margin-left: 10px;
+  font-size: 18px;
 }
 body.lang-es .box .inputs #interestingTagInput,
 body.lang-es .box .inputs #ignoredTagInput {
