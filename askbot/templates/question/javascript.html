@@ -15,11 +15,13 @@
         });
     })();
 </script>
+{% compress js %}
 <script type='text/javascript' src='{{"/js/editor.js"|media}}'></script>
 <script type="text/javascript" src='{{"/bootstrap/js/bootstrap.js"|media}}'></script>
 {% include "meta/markdown_javascript.html" %}
 <script type='text/javascript' src='{{"/js/jquery.validate.min.js"|media}}'></script>
 <script type='text/javascript' src='{{"/js/post.js"|media}}'></script>
+{% endcompress %}
 <script type="text/javascript">
     // define reputation needs for comments
     $(document).ready(function(){

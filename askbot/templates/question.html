@@ -341,13 +341,11 @@
         askbot['settings']['enableEmailAlerts'] = {{ settings.ENABLE_EMAIL_ALERTS|as_js_bool }};
     </script>
     {% include "meta/editor_data.html" %}
-    {% compress js %}
     {% include "question/javascript.html" %}
     {% if settings.TAG_SOURCE == 'category-tree' %}
         {% include "meta/category_tree_js.html" %}
     {% endif %}
     {% include "question/custom_javascript.html" ignore missing %}
-    {% endcompress %}
     {#
     <script type="text/javascript">
         var messages = askbot['messages'];

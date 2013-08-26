@@ -30,9 +30,7 @@
         {# cant cache this #}
         askbot['settings']['showSortByRelevance'] = {{ show_sort_by_relevance|as_js_bool }};
     </script>
-    {% compress js %}
     {% include "main_page/javascript.html" %}
     {% include "main_page/custom_javascript.html" ignore missing %}
-    {% endcompress %}
 {% endblock %}
 <!-- end questions.html -->

@@ -56,6 +56,7 @@
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
 <script type="text/javascript" src="{{'/js/live_search.js'|media}}"></script>
+{% endcompress %}
 <script type="text/javascript">
     /*<![CDATA[*/
     $('.mceStatusbar').remove();//a hack to remove the tinyMCE status bar
@@ -114,7 +115,6 @@
     /*]]>*/
 </script>
 {% include "meta/custom_javascript.html" ignore missing %}
-{% endcompress %}
 {# stuff below should not be compressed #}
 {% if settings.ENABLE_MATHJAX %}
     {# we don't want to load mathjax just in case, only if it is really enabled #}
