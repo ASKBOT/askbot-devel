@@ -463,10 +463,15 @@ def user_can_have_strong_url(self):
 def user_can_post_by_email(self):
     """True, if reply by email is enabled
     and user has sufficient reputatiton"""
-    if self.is_administrator_or_moderator():
-        return True
-    return askbot_settings.REPLY_BY_EMAIL and \
-        self.reputation >= askbot_settings.MIN_REP_TO_POST_BY_EMAIL
+
+    if askbot_settings.REPLY_BY_EMAIL:
+        if self.is_administrator_or_moderator():
+            return True
+        else:
+            return self.reputation >= askbot_settings.MIN_REP_TO_POST_BY_EMAIL
+    else:
+        return False
+
 
 def user_get_social_sharing_mode(self):
     """returns what user wants to share on his/her channels"""
