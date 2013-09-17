@@ -1,4 +1,5 @@
 from django.core.management.base import CommandError, BaseCommand
+from django.db import transaction
 from askbot.models import User
 
 # TODO: this command is broken - doesn't take into account UNIQUE constraints
@@ -13,32 +14,40 @@ class MergeUsersBaseCommand(BaseCommand):
     args = '<from_user_id> <to_user_id>'
     help = 'Merge an account and all information from a <user_id> to a <user_id>, deleting the <from_user>'
 
+    @transaction.commit_manually
     def handle(self, *arguments, **options):
-
         self.parse_arguments(*arguments)
-
+        
         for rel in User._meta.get_all_related_objects():
+            sid = transaction.savepoint()
             try:
                 self.process_field(rel.model, rel.field.name)
+                transaction.savepoint_commit(sid)
             except Exception, error:
                 self.stdout.write((u'Warning: %s\n' % error).encode('utf-8'))
+                transaction.savepoint_rollback(sid)
+            transaction.commit()
 
         for rel in User._meta.get_all_related_many_to_many_objects():
+            sid = transaction.savepoint()
             try:
                 self.process_m2m_field(rel.model, rel.field.name)
+                transaction.savepoint_commit(sid)
             except Exception, error:
                 self.stdout.write((u'Warning: %s\n' % error).encode('utf-8'))
+                transaction.savepoint_rollback(sid)
+            transaction.commit()
 
         self.process_custom_user_fields()
 
         self.cleanup() 
 
     def cleanup(self):
-      raise Exception, 'Not implemented'
+        raise Exception, 'Not implemented'
       
     def process_custom_user_fields(self):
-      """Put app specific logic here."""
-      raise Exception, 'Not implemented'
+        """Put app specific logic here."""
+        raise Exception, 'Not implemented'
 
     def parse_arguments(self, *arguments):
         if len(arguments) != 2:
@@ -66,19 +75,19 @@ class MergeUsersBaseCommand(BaseCommand):
 
 class Command(MergeUsersBaseCommand):
 
-  def process_custom_user_fields(self):
-    self.to_user.reputation += self.from_user.reputation - 1
-    self.to_user.gold += self.from_user.gold
-    self.to_user.silver += self.from_user.silver
-    self.to_user.bronze += self.from_user.bronze
+    def process_custom_user_fields(self):
+        self.to_user.reputation += self.from_user.reputation - 1
+        self.to_user.gold += self.from_user.gold
+        self.to_user.silver += self.from_user.silver
+        self.to_user.bronze += self.from_user.bronze
 
-    if self.from_user.last_seen > self.to_user.last_seen:
-        self.to_user.last_seen = self.from_user.last_seen
+        if self.from_user.last_seen > self.to_user.last_seen:
+            self.to_user.last_seen = self.from_user.last_seen
+    
+        if self.from_user.date_joined < self.to_user.date_joined:
+            self.to_user.date_joined = self.from_user.date_joined
 
-    if self.from_user.date_joined < self.to_user.date_joined:
-        self.to_user.date_joined = self.from_user.date_joined
-
-  def cleanup(self):
-    self.to_user.save()
-    self.from_user.delete()
+    def cleanup(self):
+        self.to_user.save()
+        self.from_user.delete()
 
