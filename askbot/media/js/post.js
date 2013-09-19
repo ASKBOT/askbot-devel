@@ -617,17 +617,17 @@ var Vote = function(){
     };
 
     var getOffensiveQuestionFlag = function(){
-        var offensiveQuestionFlag = '.question-card span[id^="'+ offensiveIdPrefixQuestionFlag +'"]';
+        var offensiveQuestionFlag = 'div.question span[id^="'+ offensiveIdPrefixQuestionFlag +'"]';
         return $(offensiveQuestionFlag);
     };
 
     var getRemoveOffensiveQuestionFlag = function(){
-        var removeOffensiveQuestionFlag = '.question-card span[id^="'+ removeOffensiveIdPrefixQuestionFlag +'"]';
+        var removeOffensiveQuestionFlag = 'div.question span[id^="'+ removeOffensiveIdPrefixQuestionFlag +'"]';
         return $(removeOffensiveQuestionFlag);
     };
 
     var getRemoveAllOffensiveQuestionFlag = function(){
-        var removeAllOffensiveQuestionFlag = '.question-card span[id^="'+ removeAllOffensiveIdPrefixQuestionFlag +'"]';
+        var removeAllOffensiveQuestionFlag = 'div.question span[id^="'+ removeAllOffensiveIdPrefixQuestionFlag +'"]';
         return $(removeAllOffensiveQuestionFlag);
     };
 
