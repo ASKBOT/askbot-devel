@@ -64,7 +64,7 @@
     {% if not request.user.is_authenticated() %}
     <input type="submit" name="post_anon" value="{% trans %}Login/Signup to Post{% endtrans %}" class="submit" />
     {% else %}
-    <input type="submit" name="post" value="{% trans %}Ask Your Question{% endtrans %}" class="submit" />
+    <input type="submit" name="post" value="{% if settings.ASK_BUTTON_TEXT %}{{ settings.ASK_BUTTON_TEXT }}{% else %}{% trans %}Ask Your Question{% endtrans %}{% endif %}" class="submit" />
     {% endif %}
     <div class="clean"></div>
 </form>
