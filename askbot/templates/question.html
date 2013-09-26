@@ -185,7 +185,7 @@
                 var deleteBtn = document.getElementById('post-' + post_id + '-delete');
                 var controls = deleteBtn.parentNode;
                 if (//maybe remove "delete" button
-                    (data['userReputation'] < 
+                    (data['userReputation'] <
                     {{settings.MIN_REP_TO_DELETE_OTHERS_COMMENTS}}) ||
                     data['userIsReadOnly']
                 ) {
@@ -244,18 +244,18 @@
                         add_answer_btn.className += ' answer-own-question';
                         add_answer_btn.setAttribute(
                             'value',
-                            '{% trans %}Answer Your Own Question{% endtrans %}'
+                            "{% trans %}Answer Your Own Question{% endtrans %}"
                         )
                     } else {
                         add_answer_btn.setAttribute(
                            'value',
-                            '{% trans %}Post Your Answer{% endtrans %}'
+                            "{% trans %}Post Your Answer{% endtrans %}"
                         )
                     }
                 } else {
                     add_answer_btn.setAttribute(
                         'value',
-                        '{% trans %}Login/Signup to Post{% endtrans %}'
+                        "{% trans %}Login/Signup to Post{% endtrans %}"
                     );
                 }
             }
@@ -277,7 +277,7 @@
                     }
                 }
             }
-            
+
             askbot['functions'] = askbot['functions'] || {};
             askbot['functions']['renderPostVoteButtons'] = render_vote_buttons;
             askbot['functions']['renderPostControls'] = render_post_controls;
