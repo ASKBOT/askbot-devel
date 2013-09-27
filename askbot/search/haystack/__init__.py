@@ -32,7 +32,7 @@ class PostIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     post_text = indexes.CharField(model_attr='text')
     author = indexes.CharField()
-    thread_id = indexes.IntegerField(model_attr='thread__pk')
+    thread_id = indexes.IntegerField(model_attr='thread__pk', null=True)
 
 
     def get_model(self):
