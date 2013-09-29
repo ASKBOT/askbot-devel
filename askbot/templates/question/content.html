@@ -35,7 +35,7 @@
         <a
             class="button submit"
             href="{% url "edit_answer" previous_answer.id %}"
-        >{% trans %}Edit Your Previous Answer{% endtrans %}</a>
+            >{% if settings.EDIT_ANSWER_BUTTON_TEXT %}{{ settings.EDIT_ANSWER_BUTTON_TEXT }}{% else %}{% trans %}Edit Your Previous Answer{% endtrans %}{% endif %}</a>
         <span>{% trans %}(only one answer per user is allowed){% endtrans %}</span>
         <div class="invisible">
             {# hidden because we still need js from the tinymce widget #}
@@ -48,6 +48,6 @@
   type="button"
   class="submit after-editor answer-own-question"
   id="fmanswer_button"
-  value="{% trans %}Answer Your Own Question{% endtrans %}"
+  value="{% if settings.ANSWER_OWN_QUESTION_BUTTON_TEXT %}{{ settings.ANSWER_OWN_QUESTION_BUTTON_TEXT }}{% else %}{% trans %}Answer Your Own Question{% endtrans %}{% endif %}"
 />
 {% endif %}

@@ -244,12 +244,12 @@
                         add_answer_btn.className += ' answer-own-question';
                         add_answer_btn.setAttribute(
                             'value',
-                            '{% trans %}Answer Your Own Question{% endtrans %}'
+                            '{% if settings.ANSWER_OWN_QUESTION_BUTTON_TEXT %}{{ settings.ANSWER_OWN_QUESTION_BUTTON_TEXT }}{% else %}{% trans %}Answer Your Own Question{% endtrans %}{% endif %}'
                         )
                     } else {
                         add_answer_btn.setAttribute(
                            'value',
-                            '{% trans %}Post Your Answer{% endtrans %}'
+                           '{% if settings.ANSWER_BUTTON_TEXT %}{{ settings.ANSWER_BUTTON_TEXT }}{% else %}{% trans %}Post Your Answer{% endtrans %}{% endif %}'
                         )
                     }
                 } else {
