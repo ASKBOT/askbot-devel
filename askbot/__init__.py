@@ -33,7 +33,7 @@ REQUIREMENTS = {
     'recaptcha_works': 'django-recaptcha-works',
     'openid': 'python-openid',
     'pystache': 'pystache==0.3.1',
-    'pytz': 'pytz',
+    'pytz': 'pytz==2013b',
     'tinymce': 'django-tinymce==1.5.1b2',
     'longerusername': 'longerusername',
     'bs4': 'beautifulsoup4',
