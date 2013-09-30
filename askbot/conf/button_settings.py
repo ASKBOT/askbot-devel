@@ -11,7 +11,7 @@ from askbot.conf.super_groups import CONTENT_AND_UI
 
 BUTTON_SETTINGS = ConfigurationGroup(
                     'BUTTON_SETTINGS',
-                    _('Ask, edit, and post button text'),
+                    _('Text on buttons'),
                     super_group = CONTENT_AND_UI
                 )
 
@@ -20,7 +20,7 @@ settings.register(
         BUTTON_SETTINGS,
         'ASK_BUTTON_TEXT',
         default = '',
-        description = _('Ask Button text'),
+        description = _('Ask new question button'),
     )
 )
 
@@ -29,7 +29,7 @@ settings.register(
         BUTTON_SETTINGS,
         'ASK_GROUP_BUTTON_TEXT',
         default = '',
-        description = _('Ask To Group button text'),
+        description = _('Ask new question to group button'),
     )
 )
 
@@ -38,7 +38,7 @@ settings.register(
         BUTTON_SETTINGS,
         'ANSWER_BUTTON_TEXT',
         default = '',
-        description = _('Post Answer button text'),
+        description = _('Post answer button'),
     )
 )
 
@@ -47,7 +47,7 @@ settings.register(
         BUTTON_SETTINGS,
         'ANSWER_OWN_QUESTION_BUTTON_TEXT',
         default = '',
-        description = _('Answer Your Own Question button text'),
+        description = _('Answer your own question button'),
     )
 )
 
@@ -65,6 +65,6 @@ settings.register(
         BUTTON_SETTINGS,
         'EDIT_ANSWER_BUTTON_TEXT',
         default = '',
-        description = _('Edit Answer button text'),
+        description = _('Edit answer button'),
     )
 )

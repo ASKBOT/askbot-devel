@@ -5,16 +5,16 @@
     <a
         id="askButton"
         class="button"
-        href="{{ search_state.full_ask_url() }}{% if group %}{% if '?' in search_state.full_ask_url() %}&{% else %}?{% endif %}group_id={{ group.id }}{% endif %}"
+        href="{{ search_state.full_ask_url() }}{% if group %}{% if '?' in search_state.full_ask_url() %}&amp;{% else %}?{% endif %}group_id={{ group.id }}{% endif %}"
         >{% if group %}
           {% if settings.ASK_GROUP_BUTTON_TEXT %}
-            {{ settings.ASK_GROUP_BUTTON_TEXT }}
+            {{ settings.ASK_GROUP_BUTTON_TEXT|escape }}
           {% else %}
             {% trans %}Ask the Group{% endtrans %}
           {% endif %}
         {% else %}
           {% if settings.ASK_BUTTON_TEXT %}
-            {{ settings.ASK_BUTTON_TEXT }}
+            {{ settings.ASK_BUTTON_TEXT|escape }}
           {% else %}
             {% trans %}Ask Your Question{% endtrans %}
           {% endif %}
