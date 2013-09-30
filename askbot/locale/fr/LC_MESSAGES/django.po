@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Alban Tiberghien <alban.tiberghien@gmail.com>, 2012
+# noirbizarre <noirbizarre@gmail.com>, 2013
 # Camille Baldock <mademoisellegeek42@gmail.com>, 2011
 # Christophe kryskool <christophe.chauvet@gmail.com>, 2011-2013
 # Emmanuel <emmanuel@raviart.com>, 2013
@@ -19,8 +20,8 @@ msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: http://askbot.org/\n"
 "POT-Creation-Date: 2013-07-13 14:06-0500\n"
-"PO-Revision-Date: 2013-08-10 20:34+0000\n"
-"Last-Translator: Emmanuel <emmanuel@raviart.com>\n"
+"PO-Revision-Date: 2013-09-27 13:14+0000\n"
+"Last-Translator: noirbizarre <noirbizarre@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/askbot/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1109,7 +1110,7 @@ msgstr "Complètement ouvert par défaut"
 
 #: conf/forum_data_rules.py:124
 msgid "Folded by default"
-msgstr ""
+msgstr "Replié par défaut"
 
 #: conf/forum_data_rules.py:133
 msgid "Question details/body editor should be"
@@ -1815,7 +1816,7 @@ msgstr "Activer le sélecteur \"Toutes les questions\""
 #: conf/question_lists.py:21 conf/question_lists.py:31
 #: conf/question_lists.py:41
 msgid "At least one of these selectors must be enabled"
-msgstr ""
+msgstr "Au moins un de ces sélecteurs doit être activé"
 
 #: conf/question_lists.py:30
 msgid "Enable \"Unanswered Questions\" selector"
@@ -1976,7 +1977,7 @@ msgstr "Identification utilisateur"
 
 #: conf/sidebar_profile.py:20
 msgid "Custom sidebar"
-msgstr ""
+msgstr "Barre latérale personnalisée"
 
 #: conf/sidebar_question.py:11
 msgid "Question page banners and sidebar"
@@ -3467,7 +3468,7 @@ msgstr "Veuillez vous connecter pour utiliser %s"
 
 #: models/__init__.py:569 models/__init__.py:1388 views/writers.py:226
 msgid "Sorry, but you have only read access"
-msgstr ""
+msgstr "Désolé, mais vous n'avez q'un accès en lecture seule"
 
 #: models/__init__.py:573
 msgid "Sorry, this operation is not allowed"
@@ -5173,7 +5174,7 @@ msgstr "Voir les questions marquées par '%(tag)s'."
 
 #: templates/macros.html:395
 msgid "Comments"
-msgstr ""
+msgstr "Commentaires"
 
 #: templates/macros.html:430
 msgid "delete this comment"
@@ -5274,7 +5275,7 @@ msgstr "voir plus de commentaires"
 
 #: templates/question.html:232 templates/question.html.py:335
 msgid "add a comment"
-msgstr ""
+msgstr "ajouter un commentaire"
 
 #: templates/question.html:245 templates/question/content.html:46
 msgid "Answer Your Own Question"
@@ -5918,15 +5919,15 @@ msgstr ""
 #: templates/email/delayed_email_alert.html:2
 #, python-format
 msgid "Dear %(name)s,"
-msgstr ""
+msgstr "Cher %(name)s,"
 
 #: templates/email/delayed_email_alert.html:3
 #, python-format
 msgid "The following question has been updated %(site_name)s:"
 msgid_plural ""
 "The following %(num)s questions have been updated on %(site_name)s:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "La question suivante a été mise à jour %(site_name)s:"
+msgstr[1] "Les %(num)s questions suivantes ont été mises à jour sur %(site_name)s:"
 
 #: templates/email/feedback_email.txt:2
 #, python-format
@@ -6041,8 +6042,8 @@ msgid_plural ""
 "\n"
 "                %(count)s comments:\n"
 "            "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "\n%(count)s commentaire:"
+msgstr[1] "\n%(count)s commentaires:"
 
 #: templates/email/re_welcome_lamson_on.html:2
 #: templates/email/re_welcome_lamson_on.html:3
@@ -6532,7 +6533,7 @@ msgstr "Votre réponse"
 
 #: templates/question/new_answer_form.html:22
 msgid "Be the first one to answer this question!"
-msgstr "Soyez le premier à répondre à cette quesion !"
+msgstr "Soyez le premier à répondre à cette question !"
 
 #: templates/question/new_answer_form.html:28
 msgid ""
@@ -7543,11 +7544,11 @@ msgstr ""
 
 #: templates/widgets/tag_selector.html:59
 msgid "Show only questions from"
-msgstr ""
+msgstr "Ne montrer que les questions de"
 
 #: templates/widgets/tag_selector.html:70
 msgid "Send me email alerts for"
-msgstr ""
+msgstr "Envoyez-moi des alertes par email pour"
 
 #: templates/widgets/tag_selector.html:86
 msgid "Change frequency of emails"
@@ -7684,7 +7685,7 @@ msgstr "veuillez utiliser au moins quelques caractères alphabétiques dans le n
 
 #: utils/forms.py:110
 msgid "symbol \"@\" is not allowed"
-msgstr ""
+msgstr "symbole \"@\" non autorisé"
 
 #: utils/forms.py:222
 msgid "Your email <i>(never shared)</i>"
@@ -7704,7 +7705,7 @@ msgstr "Cette adresse email est déjà utilisée par un autre utilisateur; veuil
 
 #: utils/forms.py:227
 msgid "this email address is not authorized"
-msgstr ""
+msgstr "cette adresse email n'est pas autorisée"
 
 #: utils/forms.py:265
 msgid "password is required"
@@ -7825,7 +7826,7 @@ msgstr "Veuillez vous inscrire pour supprimer/récupérer une publication"
 #: views/commands.py:1042
 #, python-format
 msgid "Group %(name)s does not exist"
-msgstr ""
+msgstr "Le groupe %(name)s n'existe pas"
 
 #: views/commands.py:1408 views/commands.py:1441
 msgid "Sorry, looks like sharing request was invalid"
@@ -7920,7 +7921,7 @@ msgstr ""
 
 #: views/users.py:739
 msgid "private messages"
-msgstr ""
+msgstr "messages privés"
 
 #: views/users.py:740
 msgid "profile - messages"
