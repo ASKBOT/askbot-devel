@@ -52,8 +52,9 @@
 {% compress js %}
 <script type="text/javascript" src="{{"/js/jquery-1.7.2.min.js"|media}}"></script>
 <script type="text/javascript" src='{{"/bootstrap/js/bootstrap.js"|media}}'></script>
-<!-- History.js --> 
+<!-- History.js -->
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
+<script type='text/javascript' src="{{"/js/jquery.timeago.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
 <script type="text/javascript" src="{{'/js/live_search.js'|media}}"></script>
 {% endcompress %}
@@ -127,7 +128,7 @@
     </script>
 {% endif %}
 {% if settings.USE_CUSTOM_JS %}
-<script 
+<script
     src="{% url "custom_js" %}?v={{ settings.MEDIA_RESOURCE_REVISION }}"
     type="text/javascript"
 ></script>
