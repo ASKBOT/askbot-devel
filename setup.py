@@ -1,31 +1,51 @@
 import ez_setup
 ez_setup.use_setuptools()
 from setuptools import setup, find_packages
-import sys
+import os
+import re
 
 #NOTE: if you want to develop askbot
 #you might want to install django-debug-toolbar as well
 
-import askbot
+here = os.path.abspath(os.path.dirname(__file__))
+
+v = open(os.path.join(here, 'askbot', '__init__.py'))
+version = ".".join([i.strip() for i in re.compile(r".*VERSION = \((.*?)\)", re.S).match(v.read()).group(1).split(',')])
+v.close()
+
+
+def parse_requirements(file_name):
+    requirements = []
+    for line in open(file_name, 'r').read().split('\n'):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line))
+        elif re.match(r'\s*-f\s+', line):
+            pass
+        else:
+            requirements.append(line)
+
+    return requirements
 
 setup(
-    name = "askbot",
-    version = askbot.get_version(),#remember to manually set this correctly
-    description = 'Question and Answer forum, like StackOverflow, written in python and Django',
-    packages = find_packages(),
-    author = 'Evgeny.Fadeev',
-    author_email = 'evgeny.fadeev@gmail.com',
-    license = 'GPLv3',
-    keywords = 'forum, community, wiki, Q&A',
-    entry_points = {
-        'console_scripts' : [
+    name="askbot",
+    version=version,  # remember to manually set this correctly
+    description='Question and Answer forum, like StackOverflow, written in python and Django',
+    packages=find_packages(),
+    author='Evgeny.Fadeev',
+    author_email='evgeny.fadeev@gmail.com',
+    license='GPLv3',
+    keywords='forum, community, wiki, Q&A',
+    entry_points={
+        'console_scripts': [
             'askbot-setup = askbot.deployment:askbot_setup',
         ]
     },
-    url = 'http://askbot.org',
-    include_package_data = True,
-    install_requires = askbot.REQUIREMENTS.values(),
-    classifiers = [
+    url='http://askbot.org',
+    include_package_data=True,
+    install_requires=parse_requirements('askbot_requirements.txt'),
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -47,7 +67,7 @@ setup(
         'Topic :: Communications',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    long_description = """Askbot will work alone or with other django apps (with some limitations, please see below), Django 1.3.1 - 1.5.1, PostgresQL(recommended) (>=8.3) and MySQL(**) (MyISAM backend only - see footnote **)
+    long_description="""Askbot will work alone or with other django apps (with some limitations, please see below), Django 1.3.1 - 1.5.1, PostgresQL(recommended) (>=8.3) and MySQL(**) (MyISAM backend only - see footnote **)
 
 Questions? Suggestions? Found a bug? -> please post at http://askbot.org/en/questions/
 
