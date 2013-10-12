@@ -11,22 +11,22 @@
     {% for login_provider in major_login_providers %}
         {%if settings['SIGNIN_' + login_provider.name.upper() + '_ENABLED'] == True %}
           {% if login_provider.extra_token_name %}
-              extra_token_name['{{login_provider.name}}'] = '{{login_provider.extra_token_name}}';
+              extra_token_name['{{login_provider.name}}'] = {{login_provider.extra_token_name | as_json}};
           {% endif %}
           {% if login_provider.type == 'password' %}
-              create_pw_text['{{login_provider.name}}'] = '{{login_provider.create_password_prompt}}';
-              change_pw_text['{{login_provider.name}}'] = '{{login_provider.change_password_prompt}}';
+              create_pw_text['{{login_provider.name}}'] = {{login_provider.create_password_prompt | as_json}};
+              change_pw_text['{{login_provider.name}}'] = {{login_provider.change_password_prompt | as_json}};
           {% endif %}
         {% endif %}
     {% endfor %}
     {% for login_provider in minor_login_providers %}
         {% if settings['SIGNIN_' + login_provider.name.upper() + '_ENABLED'] == True %}
-          {% if login_provider.extra_token_name %}
-              extra_token_name['{{login_provider.name}}'] = '{{login_provider.extra_token_name}}';
+{% if login_provider.extra_token_name %}
+              extra_token_name['{{login_provider.name}}'] = {{login_provider.extra_token_name | as_json }};
           {% endif %}
           {% if login_provider.type == 'password' %}
-              create_pw_text['{{login_provider.name}}'] = '{{login_provider.create_password_prompt}}';
-              change_pw_text['{{login_provider.name}}'] = '{{login_provider.change_password_prompt}}';
+              create_pw_text['{{login_provider.name}}'] = {{login_provider.create_password_prompt | as_json}};
+              change_pw_text['{{login_provider.name}}'] = {{login_provider.change_password_prompt | as_json}};
           {% endif %}
         {% endif %}
     {% endfor %}
