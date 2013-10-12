@@ -197,25 +197,6 @@ the list of MIDDLEWARE_CLASSES in your settings.py - these are not used any more
         middleware_text = format_as_text_tuple_entries(invalid_middleware)
         raise AskbotConfigError(error_message + middleware_text)
 
-def try_import(module_name, pypi_package_name, short_message = False):
-    """tries importing a module and advises to install
-    A corresponding Python package in the case import fails"""
-    try:
-        load_module(module_name)
-    except ImportError, error:
-        message = 'Error: ' + unicode(error)
-        message += '\n\nPlease run: >pip install %s' % pypi_package_name
-        if short_message == False:
-            message += '\n\nTo install all the dependencies at once, type:'
-            message += '\npip install -r askbot_requirements.txt'
-        message += '\n\nType ^C to quit.'
-        raise AskbotConfigError(message)
-
-def test_modules():
-    """tests presence of required modules"""
-    from askbot import REQUIREMENTS
-    for module_name, pip_path in REQUIREMENTS.items():
-        try_import(module_name, pip_path)
 
 def test_postgres():
     """Checks for the postgres buggy driver, version 2.4.2"""
@@ -990,9 +971,6 @@ def run_startup_tests():
     """function that runs
     all startup tests, mainly checking settings config so far
     """
-    #this is first because it gives good info on what to install
-    test_modules()
-
     #todo: refactor this when another test arrives
     test_versions()
     test_askbot_url()
