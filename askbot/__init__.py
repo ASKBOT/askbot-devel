@@ -9,40 +9,6 @@ import platform
 
 VERSION = (0, 7, 49)
 
-#keys are module names used by python imports,
-#values - the package qualifier to use for pip
-REQUIREMENTS = {
-    'akismet': 'akismet',
-    'django': 'django>=1.3.1,<=1.5',
-    'compressor': 'django-compressor==1.2',
-    'jinja2': 'Jinja2',
-    'coffin': 'Coffin>=0.3',
-    'south': 'South>=0.7.1',
-    'oauth2': 'oauth2',
-    'markdown2': 'markdown2',
-    'html5lib': 'html5lib==0.90',
-    'keyedcache': 'django-keyedcache',
-    'threaded_multihost': 'django-threaded-multihost',
-    'robots': 'django-robots',
-    'sanction': 'sanction==0.3.1',
-    'unidecode': 'unidecode',
-    'django_countries': 'django-countries==1.0.5',
-    'djcelery': 'django-celery==3.0.11',
-    'djkombu': 'django-kombu==0.9.4',
-    'followit': 'django-followit',
-    'recaptcha_works': 'django-recaptcha-works',
-    'openid': 'python-openid',
-    'pystache': 'pystache==0.3.1',
-    'pytz': 'pytz==2013b',
-    'tinymce': 'django-tinymce==1.5.1b2',
-    'longerusername': 'longerusername',
-    'bs4': 'beautifulsoup4',
-    'picklefield': 'django-picklefield==0.3.0',
-}
-
-if platform.system() != 'Windows':
-    REQUIREMENTS['lamson'] = 'Lamson'
-
 #necessary for interoperability of django and coffin
 try:
     from askbot import patches
