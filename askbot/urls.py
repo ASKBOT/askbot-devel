@@ -5,7 +5,6 @@ import os.path
 import django
 from django.conf import settings
 from django.conf.urls.defaults import url, patterns, include
-from django.conf.urls.defaults import handler500, handler404
 from django.contrib import admin
 from askbot import views
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
