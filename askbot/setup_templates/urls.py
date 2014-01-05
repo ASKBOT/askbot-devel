@@ -2,13 +2,13 @@
 main url configuration file for the askbot site
 """
 from django.conf import settings
-from django.conf.urls.defaults import handler404
-from django.conf.urls.defaults import handler500
 from django.conf.urls.defaults import include
 from django.conf.urls.defaults import patterns
 from django.conf.urls.defaults import url
 from django.conf import settings
 from django.contrib import admin
+
+handler500 = 'askbot.views.meta.server_error'
 
 admin.autodiscover()
 

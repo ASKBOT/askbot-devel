@@ -52,11 +52,10 @@ def about(request, template='about.html'):
     }
     return render(request, 'static_page.html', data)
 
-def page_not_found(request, template='404.html'):
-    return generic_view(request, template)
-
 def server_error(request, template='500.html'):
-    return generic_view(request, template)
+    data = dict(settings=askbot_settings, skin=skins.loaders.get_skin())
+    return render_to_response(template,
+                              context_instance=RequestContext(request, data))
 
 def help(request):
     data = {
