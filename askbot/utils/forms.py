@@ -27,7 +27,7 @@ def clean_next(next, default = None):
     logging.debug('next url is %s' % next)
     return next
 
-def get_next_url(request, default = None):
+def get_next_url(request, default = settings.LOGIN_REDIRECT_URL):
     return clean_next(request.REQUEST.get('next'), default)
 
 def get_db_object_or_404(params):
