@@ -1,7 +1,6 @@
 """
 main url configuration file for the askbot site
 """
-from django.conf import settings
 from django.conf.urls.defaults import handler404
 from django.conf.urls.defaults import handler500
 from django.conf.urls.defaults import include
@@ -11,6 +10,9 @@ from django.conf import settings
 from django.contrib import admin
 
 admin.autodiscover()
+
+handler500 = 'askbot.views.meta.server_error'
+handler404 = 'askbot.views.meta.page_not_found'
 
 if getattr(settings, 'ASKBOT_MULTILINGUAL', False) == True:
     from django.conf.urls.i18n import i18n_patterns
