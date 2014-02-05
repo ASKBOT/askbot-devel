@@ -96,30 +96,30 @@ remove source_tag"""
             tag_synonym_tmp = models.TagSynonym.objects.get(source_tag_name = target_tag_name)
             if not options.get('is_force', False):
                 prompt = """There exists a TagSynonym %s ==> %s,
-    hence we will create a tag synonym %s ==> %s instead. Proceed?""" % (tag_synonym_tmp.source_tag_name, tag_synonym_tmp.target_tag_name,
-                                                                         source_tag_name, tag_synonym_tmp.target_tag_name)
+    hence we will create a tag synonym %s ==> %s instead. Proceed?""" % (tag_synonym_tmp.source_tag_name, tag_synonym_tmp.target_tag.name,
+                                                                         source_tag_name, tag_synonym_tmp.target_tag.name)
                 choice = console.choice_dialog(prompt, choices=('yes', 'no'))
                 if choice == 'no':
                     print 'Cancled'
                     sys.exit()
-            target_tag_name = tag_synonym_tmp.target_tag_name
+            target_tag_name = tag_synonym_tmp.target_tag.name
             options['to'] = target_tag_name
         except models.TagSynonym.DoesNotExist:
             pass
         
         try: 
-            models.Tag.objects.get(name=target_tag_name)
+            target_tag=models.Tag.objects.get(name=target_tag_name)
         except models.Tag.DoesNotExist:
             # we are creating a target tag, let's copy source tag's info
             # used_count are updated later
-            models.Tag.objects.create(name=target_tag_name,
+            target_tag=models.Tag.objects.create(name=target_tag_name,
                                       created_by = admin,
                                       status = source_tag.status,
                                       tag_wiki = source_tag.tag_wiki
                                       )
 
         tag_synonym_tmp, created = models.TagSynonym.objects.get_or_create(source_tag_name = source_tag_name,
-                                                                           target_tag_name = target_tag_name,
+                                                                           target_tag = target_tag,
                                                                            owned_by = admin
                                                                            )
         
@@ -128,7 +128,7 @@ remove source_tag"""
         # When source_tag_name is a target_tag_name of already existing TagSynonym.
         # ie. if tag1->tag2 exists when user asked tag2->tag3
         # we are going to convert all tag1->tag2 to tag1->tag3 as well
-        existing_tag_synonyms = models.TagSynonym.objects.filter(target_tag_name=source_tag_name)
+        existing_tag_synonyms = models.TagSynonym.objects.filter(target_tag__name=source_tag_name)
         for existing_tag_synonym in existing_tag_synonyms:
             new_options = options.copy()
             new_options['from'] = existing_tag_synonym.source_tag_name
