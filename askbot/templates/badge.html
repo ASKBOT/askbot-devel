@@ -1,26 +1,21 @@
-{% extends "two_column_body.html" %}
-{% import "macros.html" as macros %}
-{%from "macros.html" import gravatar %}
+{% extends "two_column_body.html" %} {% import "macros.html" as macros %} {%from "macros.html" import gravatar %}
 <!-- template badge.html -->
-{% block title %}{% spaceless %}{% trans name=badge.get_name() %}{{name}}{% endtrans %} - {% trans %}Badge{% endtrans %}{% endspaceless %}{% endblock %}
-{% block content %}
+{% block title %}{% spaceless %}{% trans name=badge.get_name() %}{{name}}{% endtrans %} - {% trans %}Badge{% endtrans %}{% endspaceless %}{% endblock %} {% block content %}
 <h1 class="section-title">{% trans name=badge.get_name() %}Badge "{{name}}"{% endtrans %}</h1>
-    <p>
-        <a href="{{badge.get_absolute_url()}}" title="{{ badge.get_type_display() }} : {% trans description=badge.get_description() %}{{description}}{% endtrans %}" class="medal"><span class="{{ badge.get_css_class() }}">&#9679;</span>&nbsp;{% trans name=badge.get_name() %}{{name}}{% endtrans %}</a> {% trans description=badge.get_description() %}{{description}}{% endtrans %}
+<p>
+    <a href="{{badge.get_absolute_url()}}" title="{{ badge.get_type_display() }} : {% trans description=badge.get_description() %}{{description}}{% endtrans %}" class="medal"><span class="{{ badge.get_css_class() }}">&#9679;</span>&nbsp;{% trans name=badge.get_name() %}{{name}}{% endtrans %}</a> {%
+    trans description=badge.get_description() %}{{description}}{% endtrans %}
+</p>
+<div>
+    {% if badge.awarded_count %}
+    <p style="float:left"><span class="count">{{ badge_recipients|length|intcomma }}</span>
+        <strong>{% trans num_awardees=badge_recipients|length %}user received this badge:{% pluralize %}users received this badge:{% endtrans %}</strong>
     </p>
-    <div>
-        {% if badge.awarded_count %}
-        <p style="float:left"><span class="count">{{ badge_recipients|length|intcomma }}</span>
-        <strong>{% trans num_awardees=badge_recipients|length %}user received this badge:{% pluralize %}users received this badge:{% endtrans %}</strong></p>
-        {% endif %}
-    </div>
-    <div class="clean"></div>
-    <div id="award-list">
-        {{ macros.user_list(
-            badge_recipients,
-            karma_mode=settings.KARMA_MODE,
-            badges_mode=settings.BADGES_MODE
-        )}}
-    </div>
+    {% endif %}
+</div>
+<div class="clean"></div>
+<div id="award-list">
+    {{ macros.user_list( badge_recipients, karma_mode=settings.KARMA_MODE, badges_mode=settings.BADGES_MODE )}}
+</div>
 {% endblock %}
 <!-- end template badge.html -->
