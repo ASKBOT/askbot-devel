@@ -44,6 +44,41 @@ var getNewUniqueInt = function() {
     return num;
 };
 
+/**
+ * generic tag cleaning function, settings
+ * are from askbot live settings and askbot.const
+ */
+var cleanTag = function(tag_name, settings) {
+    var tag_regex = new RegExp(settings['tag_regex']);
+    if (tag_regex.test(tag_name) === false) {
+        var firstChar = tag_name.substring(0, 1);
+        if (settings['tag_forbidden_first_chars'].indexOf(firstChar) > -1) {
+            throw settings['messages']['wrong_first_char'];
+        } else {
+            throw settings['messages']['wrong_chars'];
+        }
+    }
+
+    var max_length = settings['max_tag_length'];
+    if (tag_name.length > max_length) {
+        throw interpolate(
+            ngettext(
+                'must be shorter than %(max_chars)s character',
+                'must be shorter than %(max_chars)s characters',
+                max_length
+            ),
+            {'max_chars': max_length },
+            true
+        );
+    }
+    if (settings['force_lowercase_tags']) {
+        return tag_name.toLowerCase();
+    } else {
+        return tag_name;
+    }
+};
+
+
 var getSingletonController = function(controllerClass, name) {
     askbot['controllers'] = askbot['controllers'] || {};
     var controller = askbot['controllers'][name];
@@ -2750,10 +2785,9 @@ Tag.prototype.createDom = function(){
     }
     this._inner_element.addClass('tag tag-right');
     this._inner_element.attr('rel', 'tag');
-    if (this._title === null){
-        this.setTitle(
-            interpolate(gettext("see questions tagged '%s'"), [this.getName()])
-        );
+    if (this._title === null) {
+        var name = this.getName();
+        this.setTitle(interpolate(gettext("see questions tagged '%s'"), [name,]));
     }
     this._inner_element.attr('title', this._title);
     this._inner_element.html(this.getDisplayTagName());

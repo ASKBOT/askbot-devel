@@ -263,7 +263,9 @@ def questions(request, **kwargs):
                                     request,
                                     template_data
                                 )
+
         template_data.update(extra_context)
+        template_data.update(context.get_for_tag_editor())
 
         #and one more thing:) give admin user heads up about
         #setting the domain name if they have not done that yet

@@ -83,40 +83,6 @@ function setupFormValidation(form, validationRules, validationMessages, onSubmit
     });
 }
 
-/**
- * generic tag cleaning function, settings
- * are from askbot live settings and askbot.const
- */
-var cleanTag = function(tag_name, settings) {
-    var tag_regex = new RegExp(settings['tag_regex']);
-    if (tag_regex.test(tag_name) === false) {
-        var firstChar = tag_name.substring(0, 1);
-        if (settings['tag_forbidden_first_chars'].indexOf(firstChar) > -1) {
-            throw settings['messages']['wrong_first_char'];
-        } else {
-            throw settings['messages']['wrong_chars'];
-        }
-    }
-
-    var max_length = settings['max_tag_length'];
-    if (tag_name.length > max_length) {
-        throw interpolate(
-            ngettext(
-                'must be shorter than %(max_chars)s character',
-                'must be shorter than %(max_chars)s characters',
-                max_length
-            ),
-            {'max_chars': max_length },
-            true
-        );
-    }
-    if (settings['force_lowercase_tags']) {
-        return tag_name.toLowerCase();
-    } else {
-        return tag_name;
-    }
-};
-
 var validateTagLength = function(value){
     var tags = getUniqueWords(value);
     var are_tags_ok = true;

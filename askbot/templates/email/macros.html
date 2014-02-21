@@ -8,7 +8,7 @@
     {% spaceless %}
         {{ start_quote(quote_level) }}
             {% if post.is_anonymous %}
-                {% set author = settings.NAME_OF_ANONYMOUS_USER %}
+                {% set author = post.author.get_name_of_anonymous_user()|escape %}
             {% else %}
                 {% set author = post.author.username|escape %}
             {% endif %}

@@ -17,6 +17,7 @@
     askbot['urls']['mark_subscribed_tag'] = '{% url mark_subscribed_tag %}';
     askbot['urls']['unmark_tag'] = '{% url unmark_tag %}';
     askbot['urls']['set_tag_filter_strategy'] = '{% url "set_tag_filter_strategy" %}';
+    askbot['settings']['tag_editor'] = '{{ tag_editor_settings|escapejs }}';
 
     if (Modernizr.history) {
         // history management works!
