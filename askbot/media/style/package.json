@@ -1,0 +1,11 @@
+{
+  "name": "Grunt-Askbot-less2css",
+  "version": "0.1.0",
+  "author": "Benjamin Abel",
+  "description": "test",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}

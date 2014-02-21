@@ -1,0 +1,22 @@
+% README
+% Benjamin Abel(bbig26 at gmail.com)
+% 14 févr. 2014
+
+Grunt is used to improve styles development
+
+If you want to use [Grunt](http://gruntjs.com/) yoo need to install nodejs.
+
+Then change directory to `style` and:
+
+- First time install the `npm_modules` from `package.json`
+
+	npm install 
+
+- Then you can use the tasks defined in the `Gruntfile.js`
+
+	- Type `grunt less` to create the `style.css` file from `style.less`
+	- Type `grunt watch` to generate automaticaly the `style.css` when any `less` file is modified.
+
+
+
+
