@@ -1,4 +1,10 @@
-*.pyc
+# 
+# AOIM
+#
+./.pydevproject
+./.project*.pyc
+#/ AOIM
+
 *.swp
 *.log
 *~
