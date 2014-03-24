@@ -1,78 +1,81 @@
+{# vim modeline
+vim:filetype=htmldjango ts=4 sts=4 et sw=4
+end vim modeline #} 
 {% load compress %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>{% block title %}{% endblock %} - {{ settings.APP_TITLE|escape }}</title>
-          {% block meta_description %}
-            <meta name="description" content="{{settings.APP_DESCRIPTION|escape}}" />
-          {% endblock %}
-          <meta name="keywords" content="{%block keywords%}{%endblock%},{{settings.APP_KEYWORDS|escape}}" />
-          {% if settings.GOOGLE_SITEMAP_CODE %}
-            <meta name="google-site-verification" content="{{settings.GOOGLE_SITEMAP_CODE}}" />
-          {% endif %}
-          <meta name="referrer" content="always" />
-          {% if settings.SITE_FAVICON %}
-            <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
-          {% endif %}
-          <link
-              rel="alternate"
-              type="application/rss+xml"
-              title="{% trans site_title=settings.APP_SHORT_NAME %}RSS feed from {{ site_title }}{% endtrans %}"
-            href="{{ base_url }}{% url "latest_questions_feed" %}"
-          />
-        {% block before_css %}{% endblock %}
-        {% include "meta/html_head_stylesheets.html" %}
-        {% include "meta/fonts.html" %} {# may contain external files #}
-        {% block forestyle %}{% endblock %}
-        {% include "meta/html_head_javascript.html" %}
-        {% block forejs %}{% endblock %}
-        {% if settings.USE_CUSTOM_HTML_HEAD %}
-          {{ settings.CUSTOM_HTML_HEAD }}
-        {% endif %}
-      </head>
-      <body class="{% block body_class %}{% endblock %}{% if user_messages %} user-messages{% endif %}{% if page_class %} {{page_class}}{% endif %}{% if request.user.is_anonymous() %} anon{% endif %} lang-{{ current_language_code }}">
-        <div class="container">
-        {% include "widgets/system_messages.html" %}
-        {% include "debug_header.html" %}
-        {% if settings.MULTILINGUAL %}
-          <div class="content-wrapper">
-            {% include "widgets/language_nav.html" %}
-          </div>
-        {% endif %}
-        {% include "custom_header.html" ignore missing %}
-        {% if settings.CUSTOM_HEADER|trim != '' %}
-          <div id="custom-header">
-            {{settings.CUSTOM_HEADER}}
-          </div>
-        {% endif %}
-        {% include "widgets/header.html" %} {# Logo, user tool navigation and meta navitation #}
-        {% include "widgets/secondary_header.html" %} {# Scope selector, search input and ask button #}
-        {% if settings.ENABLE_LEADING_SIDEBAR %}
-          <div id="leading-sidebar">
-            {{ settings.LEADING_SIDEBAR }}
-          </div>
-        {% endif %}
-        <div class="content-wrapper">
-          {% block body %}
-          {% endblock %}
-        </div>
-        {% if settings.FOOTER_MODE == 'default' %}
-          {% include "widgets/footer.html" %}
-          {% elif settings.FOOTER_MODE == 'customize' %}
-          {{ settings.CUSTOM_FOOTER }}
-        {% endif %}
-        {% include "custom_footer.html" ignore missing %}
-        {% include "meta/bottom_scripts.html" %}
-        {% block endjs %}
-        {% endblock %}
-        <script type="text/javascript">
-          for (url_name in askbot['urls']){
-            askbot['urls'][url_name] = cleanUrl(askbot['urls'][url_name]);
-          }
-        </script>
-        </div><!--.container-->
-      </body>
-    </html>
+    <head>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <title>{% block title %}{% endblock %} - {{ settings.APP_TITLE|escape }}</title>
+                    {% block meta_description %}
+                        <meta name="description" content="{{settings.APP_DESCRIPTION|escape}}" />
+                    {% endblock %}
+                    <meta name="keywords" content="{%block keywords%}{%endblock%},{{settings.APP_KEYWORDS|escape}}" />
+                    {% if settings.GOOGLE_SITEMAP_CODE %}
+                        <meta name="google-site-verification" content="{{settings.GOOGLE_SITEMAP_CODE}}" />
+                    {% endif %}
+                    <meta name="referrer" content="always" />
+                    {% if settings.SITE_FAVICON %}
+                        <link rel="shortcut icon" href="{{ settings.SITE_FAVICON|media }}" />
+                    {% endif %}
+                    <link
+                            rel="alternate"
+                            type="application/rss+xml"
+                            title="{% trans site_title=settings.APP_SHORT_NAME %}RSS feed from {{ site_title }}{% endtrans %}"
+                        href="{{ base_url }}{% url "latest_questions_feed" %}"
+                    />
+                {% block before_css %}{% endblock %}
+                {% include "meta/html_head_stylesheets.html" %}
+                {% include "meta/fonts.html" %} {# may contain external files #}
+                {% block forestyle %}{% endblock %}
+                {% include "meta/html_head_javascript.html" %}
+                {% block forejs %}{% endblock %}
+                {% if settings.USE_CUSTOM_HTML_HEAD %}
+                    {{ settings.CUSTOM_HTML_HEAD }}
+                {% endif %}
+            </head>
+            <body class="{% block body_class %}{% endblock %}{% if user_messages %} user-messages{% endif %}{% if page_class %} {{page_class}}{% endif %}{% if request.user.is_anonymous() %} anon{% endif %} lang-{{ current_language_code }}">
+                <div class="container">
+                    {% include "widgets/system_messages.html" %}
+                    {% include "debug_header.html" %}
+                    {% if settings.MULTILINGUAL %}
+                        <div class="content-wrapper">
+                            {% include "widgets/language_nav.html" %}
+                        </div>
+                    {% endif %}
+                    {% include "custom_header.html" ignore missing %}
+                    {% if settings.CUSTOM_HEADER|trim != '' %}
+                        <div id="custom-header">
+                            {{settings.CUSTOM_HEADER}}
+                        </div>
+                    {% endif %}
+                    {% include "widgets/header.html" %} {# Logo, user tool navigation and meta navigation #}
+                    {% include "widgets/secondary_header.html" %} {# Scope selector, search input and ask button #}
+                    {% if settings.ENABLE_LEADING_SIDEBAR %}
+                        <div id="leading-sidebar">
+                            {{ settings.LEADING_SIDEBAR }}
+                        </div>
+                    {% endif %}
+                    <div class="content-wrapper">
+                        {% block body %}
+                        {% endblock %}
+                    </div>
+                    {% if settings.FOOTER_MODE == 'default' %}
+                        {% include "widgets/footer.html" %}
+                        {% elif settings.FOOTER_MODE == 'customize' %}
+                        {{ settings.CUSTOM_FOOTER }}
+                    {% endif %}
+                    {% include "custom_footer.html" ignore missing %}
+                    {% include "meta/bottom_scripts.html" %}
+                    {% block endjs %}
+                    {% endblock %}
+                    <script type="text/javascript">
+                        for (url_name in askbot['urls']){
+                            askbot['urls'][url_name] = cleanUrl(askbot['urls'][url_name]);
+                        }
+                    </script>
+                </div><!--.container-->
+            </body>
+        </html>

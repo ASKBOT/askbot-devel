@@ -1,29 +1,101 @@
+{# vim modeline
+vim:filetype=htmldjango ts=4 sts=4 et sw=4
+end vim modeline #} 
+<!-- meta_nav.html -->
+{% import "macros.html" as macros%}
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-meta-navbar-collapse">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href="{% url questions %}">{{settings.APP_SHORT_NAME}}</a>
+</div><!-- /.navbar-header -->
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-meta-navbar-collapse">
+  <ul class="nav navbar-nav">
+    <li class="active">
+      <a 
+          id="navTags"
+          href="{% url tags %}"
+          {% if active_tab == 'tags' %}class="on"{% endif %}
+          >{% trans %}tags{% endtrans %}</a>
+    </li>
+    <li>
+      {% if settings.GROUPS_ENABLED %}
+      <span class="dropdown">
+        <a
+            id="navGroups" 
+            {% if active_tab == 'groups' %}class="on"{% endif %}
+            href="{% url groups %}" data-target="#" >
+          {% trans %}people & groups{% endtrans %}
+        </a>
+      </span>
+      {%else%}
+      <a 
+          id="navUsers"
+          href="{% url users %}"
+          {% if active_tab == 'users' %}class="on"{% endif %}
+          >{% trans %}users{% endtrans %}</a>
+      {% endif %}
+    </li>
+    <li>
+      {% if settings.BADGES_MODE == 'public' %}
+      <a 
+          id="navBadges"
+          href="{% url badges %}"
+          {% if active_tab == 'badges' %}class="on"{% endif %}
+          >{% trans %}badges{% endtrans %}</a>
+      {% endif %}
+    </li>
+  </ul>
+
+</div><!-- /.collapse navbar-collapse -->
+
+
+
+
+<!-- end meta_nav.html -->
+
+
+
+
+
+
+{# Original
+<!-- meta_nav.html -->
 {% import "macros.html" as macros%}
 <a 
-  id="navTags"
-  href="{% url tags %}"
-  {% if active_tab == 'tags' %}class="on"{% endif %}
->{% trans %}tags{% endtrans %}</a>
+    id="navTags"
+    href="{% url tags %}"
+    {% if active_tab == 'tags' %}class="on"{% endif %}
+    >{% trans %}tags{% endtrans %}</a>
 {% if settings.GROUPS_ENABLED %}
 <span class="dropdown">
-<a
-  id="navGroups" 
-  {% if active_tab == 'groups' %}class="on"{% endif %}
-  href="{% url groups %}" data-target="#" >
-  {% trans %}people & groups{% endtrans %}
-</a>
+  <a
+      id="navGroups" 
+      {% if active_tab == 'groups' %}class="on"{% endif %}
+      href="{% url groups %}" data-target="#" >
+    {% trans %}people & groups{% endtrans %}
+  </a>
 </span>
 {%else%}
 <a 
-  id="navUsers"
-  href="{% url users %}"
-  {% if active_tab == 'users' %}class="on"{% endif %}
->{% trans %}users{% endtrans %}</a>
+    id="navUsers"
+    href="{% url users %}"
+    {% if active_tab == 'users' %}class="on"{% endif %}
+    >{% trans %}users{% endtrans %}</a>
 {% endif %}
 {% if settings.BADGES_MODE == 'public' %}
 <a 
-  id="navBadges"
-  href="{% url badges %}"
-  {% if active_tab == 'badges' %}class="on"{% endif %}
->{% trans %}badges{% endtrans %}</a>
+    id="navBadges"
+    href="{% url badges %}"
+    {% if active_tab == 'badges' %}class="on"{% endif %}
+    >{% trans %}badges{% endtrans %}</a>
 {% endif %}
+<!-- end meta_nav.html -->
+#}
