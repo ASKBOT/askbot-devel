@@ -1,16 +1,38 @@
+{# vim modeline
+vim:filetype=htmldjango ts=4 sts=4 et sw=4
+end vim modeline #} 
 <!-- template header.html -->
 {% import "macros.html" as macros %}
-<div 
-    id="header"
-    class="{% if settings.SHOW_LOGO %}with-logo{% else %}without-logo{% endif %}"
->
+{#
+<div id="header" class="{% if settings.SHOW_LOGO %}with-logo{% else %}without-logo{% endif %}">
     <div class="content-wrapper">
         <div id="userToolsNav">
             {% include "widgets/user_navigation.html" %}
         </div>
-        {% if settings.SHOW_LOGO %}
-            {% include "widgets/logo.html" %}
-        {% endif %}
+        {% if settings.SHOW_LOGO %} {% include "widgets/logo.html" %} {% endif %}
+        <div id="metaNav">
+            {% include "widgets/meta_nav.html" %}
+        </div>
+        <div class="clean"></div>
+    </div>
+</div>
+#}
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+         {% include "widgets/meta_nav.html" %}
+    </div><!-- /.container-fluid -->
+</nav>
+<!-- end template header.html -->
+
+{#
+<!-- template header.html -->
+{% import "macros.html" as macros %}
+<div id="header" class="{% if settings.SHOW_LOGO %}with-logo{% else %}without-logo{% endif %}">
+    <div class="content-wrapper">
+        <div id="userToolsNav">
+            {% include "widgets/user_navigation.html" %}
+        </div>
+        {% if settings.SHOW_LOGO %} {% include "widgets/logo.html" %} {% endif %}
         <div id="metaNav">
             {% include "widgets/meta_nav.html" %}
         </div>
@@ -18,3 +40,5 @@
     </div>
 </div>
 <!-- end template header.html -->
+
+#}
