@@ -1,7 +1,9 @@
-# AOIM
-./.pydevproject
-./.project
-#/ AOIM
+##AMOI
+manage-*
+.project
+.pydevproject
+./askbot/media/style/node_modules
+##AMOI
 *.pyc
 *.swp
 *.log
