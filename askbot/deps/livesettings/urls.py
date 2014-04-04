@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('askbot.deps.livesettings.views',
     url(r'^$', 'site_settings', {}, name='site_settings'),
