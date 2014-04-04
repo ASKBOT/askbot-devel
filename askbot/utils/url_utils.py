@@ -2,7 +2,7 @@ import os
 import urlparse
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.conf.urls.defaults import url
+from django.conf.urls import url
 
 def service_url(*args, **kwargs):
     """adds the service prefix to the url"""
