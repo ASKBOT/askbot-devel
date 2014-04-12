@@ -51,8 +51,9 @@
 </script>
 {# everything below until the custom js and google analytics is compressable #}
 {% compress js %}
-<script type="text/javascript" src="{{"/js/jquery-1.7.2.min.js"|media}}"></script>
-<script type="text/javascript" src='{{"/bootstrap/js/bootstrap.js"|media}}'></script>
+<script type="text/javascript" src="{{"/vendor/jquery-1.11.0.min.js"|media}}"></script>
+<script type="text/javascript" src="{{"/vendor/jquery-migrate-1.2.1.js"|media}}"></script>
+<script type="text/javascript" src='{{"/vendor/bootstrap-3.1.1/dist/js/bootstrap.js"|media}}'></script>
 <!-- History.js --> 
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
