@@ -1,109 +1,95 @@
-<div class="modal" style="display:none" id="reject-edit-modal">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">x</a>
-        <h3>{% trans %}Reject the post(s)?{% endtrans %}</h3>
-    </div>
-    <div id="reject-edit-modal-add-new">{# create new reject reason #}
-        <div class="modal-body">
-            <input 
-                class="reject-reason-title tipped-input blank"
-                type="text"
-                value="{% trans %}1) Enter a brief description of why you are rejecting the post.{% endtrans %}"
-            />
-            <textarea class="reject-reason-details tipped-input blank"
-            >{% trans %}2) Please enter details here. This text will be sent to the user.{% endtrans %}</textarea>
-        </div>
-        <div class="modal-footer">
-            <div class="btn-toolbar">
-                <div class="btn-group dropup">
-                    <button class="btn btn-danger save-reason-and-reject"
-                    >{% trans %}Use this reason &amp; reject{% endtrans %}</button>
-                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="select-other-reason" href="#"
-                            >{% trans %}Use other reason{% endtrans %}</a>
-                        </li>
-                    </ul>
+<div class="modal" id="reject-edit-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">x</a>
+                <h3>{% trans %}Reject the post(s)?{% endtrans %}</h3>
+            </div>
+            <div id="reject-edit-modal-add-new">{# create new reject reason #}
+                <div class="modal-body">
+                    <input class="reject-reason-title tipped-input blank" type="text" value="{% trans %}1) Enter a brief description of why you are rejecting the post.{% endtrans %}" />
+                    <textarea class="reject-reason-details tipped-input blank">{% trans %}2) Please enter details here. This text will be sent to the user.{% endtrans %}</textarea>
                 </div>
-                <div class="btn-group">
-                    <a class="btn save-reason"
-                    >{% trans %}Save reason, but do not reject{% endtrans %}</a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
+                <div class="modal-footer">
+                    <div class="btn-toolbar">
+                        <div class="btn-group dropup">
+                            <button class="btn btn-danger save-reason-and-reject">{% trans %}Use this reason &amp; reject{% endtrans %}</button>
+                            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="select-other-reason" href="#">{% trans %}Use other reason{% endtrans %}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn save-reason">{% trans %}Save reason, but do not reject{% endtrans %}</a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="reject-edit-modal-select">{# select one of existing reasons #}
-        <div class="modal-body">
-            <p>{% trans %}Please, choose a reason for the rejection.{% endtrans %}</p>
-            <ul class="select-box">
-                {% for reason in post_reject_reasons %}
-                <li 
-                    class="select-box-item"
-                    data-original-title="{{reason.details.text|escape}}"
-                    data-item-id="{{reason.id}}"
-                >{{reason.title|escape}}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <div class="btn-toolbar">
-                <div class="btn-group dropup">
-                    <a class="btn select-this-reason"
-                    >{% trans %}Select this reason{% endtrans %}</a>
-                    <a class="btn dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="delete-this-reason"
-                            >{% trans %}Delete this reason{% endtrans %}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="btn-group">
-                    <a class="btn add-new-reason"
-                    >{% trans %}Add a new reason{% endtrans %}</a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
-                </div>
+        </div><!-- /.modal-content -->
+        <div class="modal-content" id="reject-edit-modal-select">{# select one of existing reasons #}
+            <div class="modal-body">
+                <p>{% trans %}Please, choose a reason for the rejection.{% endtrans %}</p>
+                <ul class="select-box">
+                    {% for reason in post_reject_reasons %}
+                    <li class="select-box-item" data-original-title="{{reason.details.text|escape}}" data-item-id="{{reason.id}}">{{reason.title|escape}}</li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
-    </div>
-    <div id="reject-edit-modal-preview">{# preview reject reason #}
-        <div class="modal-body">
-            <p>{% trans %}You have selected reason for the rejection <strong>"<span class="selected-reason-title"></span>"</strong>. The text below will be sent to the user and the post(s) will be deleted:{% endtrans %}</p>
-            <textarea disabled="disabled" class="selected-reason-details"></textarea>
-        </div>
-        <div class="modal-footer">
-            <div class="btn-toolbar">
-                <div class="btn-group dropup">
-                    <a class="btn btn-danger reject"
-                        >{% trans %}Use this reason &amp; reject{% endtrans %}</a>
-                    <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
+            <div class="modal-footer">
+                <div class="btn-toolbar">
+                    <div class="btn-group dropup">
+                        <a class="btn select-this-reason">{% trans %}Select this reason{% endtrans %}</a>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
                             <li>
-                                <a class="select-other-reason"
-                                >{% trans %}Use other reason{% endtrans %}</a>
+                                <a class="delete-this-reason">{% trans %}Delete this reason{% endtrans %}</a>
                             </li>
-                    </ul>
-                </div>
-                <div class="btn-group">
-                    <a class="btn edit-reason"
-                    >{% trans %}Edit this reason{% endtrans %}</a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn add-new-reason">{% trans %}Add a new reason{% endtrans %}</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div><!-- /.modal-content -->
+        <div class="modal-content" id="reject-edit-modal-preview">{# preview reject reason #}
+            <div class="modal-body">
+                <p>{% trans %}You have selected reason for the rejection <strong>"<span class="selected-reason-title"></span>"</strong>. The text below will be sent to the user and the post(s) will be deleted:{% endtrans %}</p>
+                <textarea disabled="disabled" class="selected-reason-details"></textarea>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-toolbar">
+                    <div class="btn-group dropup">
+                        <a class="btn btn-danger reject">{% trans %}Use this reason &amp; reject{% endtrans %}</a>
+                        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="select-other-reason">{% trans %}Use other reason{% endtrans %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn edit-reason">{% trans %}Edit this reason{% endtrans %}</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn cancel">{% trans %}Cancel{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>

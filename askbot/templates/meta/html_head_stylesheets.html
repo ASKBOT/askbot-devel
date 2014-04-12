@@ -1,13 +1,10 @@
 {% if settings.ASKBOT_CSS_DEVEL %}
     <link href="{{"/style/style.less"|media }}" rel="stylesheet/less" type="text/css" />
     {{ skin.get_extra_css_link() }}
-    <script type="text/javascript" src="{{"/js/less.min.js"|media}}"></script>
-    <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{"vendor/less.min.js"|media}}"></script>
 {% else %}
     {% compress css %}
         <link href="{{"/style/style.css"|media }}" rel="stylesheet" type="text/css" />
-        {{ skin.get_extra_css_link() }}
-        <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
     {% endcompress %}
 {% endif %}
 {% if settings.USE_CUSTOM_CSS %}
