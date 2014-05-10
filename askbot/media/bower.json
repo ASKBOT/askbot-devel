@@ -1,0 +1,13 @@
+{
+  "name": "Askbot",
+  "version": "0.7.49",
+  "dependencies": {
+	  "foundation": "latest"   
+  },
+  "homepage": "https://github.com/BenjaminABEL/askbot-devel",
+  "authors": [
+    "Benjamin ABEL <bbig26@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true
+}

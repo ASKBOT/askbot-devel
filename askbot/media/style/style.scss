@@ -1,0 +1,60 @@
+// Normalize
+@import "../bower_components/foundation/scss/normalize.scss";
+
+// Askbot variables
+
+@import "./scss/askbot_variables.scss";
+
+// Foundation by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// Behold, here are all the Foundation components.
+@import
+  "../bower_components/foundation/scss/foundation/_functions.scss",
+  "../bower_components/foundation/scss/foundation/components/_grid.scss",
+  "../bower_components/foundation/scss/foundation/components/_accordion.scss",
+  "../bower_components/foundation/scss/foundation/components/_alert-boxes.scss",
+  "../bower_components/foundation/scss/foundation/components/_block-grid.scss",
+  "../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss",
+  "../bower_components/foundation/scss/foundation/components/_button-groups.scss",
+  "../bower_components/foundation/scss/foundation/components/_buttons.scss",
+  "../bower_components/foundation/scss/foundation/components/_clearing.scss",
+  "../bower_components/foundation/scss/foundation/components/_dropdown.scss",
+  "../bower_components/foundation/scss/foundation/components/_dropdown-buttons.scss",
+  "../bower_components/foundation/scss/foundation/components/_flex-video.scss",
+  "../bower_components/foundation/scss/foundation/components/_forms.scss",
+  "../bower_components/foundation/scss/foundation/components/_inline-lists.scss",
+  "../bower_components/foundation/scss/foundation/components/_joyride.scss",
+  "../bower_components/foundation/scss/foundation/components/_keystrokes.scss",
+  "../bower_components/foundation/scss/foundation/components/_labels.scss",
+  "../bower_components/foundation/scss/foundation/components/_magellan.scss",
+  "../bower_components/foundation/scss/foundation/components/_orbit.scss",
+  "../bower_components/foundation/scss/foundation/components/_pagination.scss",
+  "../bower_components/foundation/scss/foundation/components/_panels.scss",
+  "../bower_components/foundation/scss/foundation/components/_pricing-tables.scss",
+  "../bower_components/foundation/scss/foundation/components/_progress-bars.scss",
+  "../bower_components/foundation/scss/foundation/components/_range-slider.scss",
+  "../bower_components/foundation/scss/foundation/components/_reveal.scss",
+  "../bower_components/foundation/scss/foundation/components/_side-nav.scss",
+  "../bower_components/foundation/scss/foundation/components/_split-buttons.scss",
+  "../bower_components/foundation/scss/foundation/components/_sub-nav.scss",
+  "../bower_components/foundation/scss/foundation/components/_switch.scss",
+  "../bower_components/foundation/scss/foundation/components/_tables.scss",
+  "../bower_components/foundation/scss/foundation/components/_tabs.scss",
+  "../bower_components/foundation/scss/foundation/components/_thumbs.scss",
+  "../bower_components/foundation/scss/foundation/components/_tooltips.scss",
+  "../bower_components/foundation/scss/foundation/components/_top-bar.scss",
+  "../bower_components/foundation/scss/foundation/components/_type.scss",
+  "../bower_components/foundation/scss/foundation/components/_offcanvas.scss",
+  "../bower_components/foundation/scss/foundation/components/_visibility.scss";
+
+//
+// Askbot stylesheets
+/////////////////////
+@import "./scss/askbot_styles.scss";
+
+

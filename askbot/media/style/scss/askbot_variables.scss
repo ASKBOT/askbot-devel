@@ -1,0 +1,77 @@
+/* General Predifined classes, read more in lesscss.org */
+
+/* Variables for Colors*/
+
+$header-color:#16160f;
+$link:#1b79bd;
+$question-link:#464646;
+$button-label:#4a757f;
+$section-title:#7ea9b3;
+$info-text:#707070;
+$info-text-dark:#525252;
+
+/* Variables for fonts*/
+
+$body-font:Arial;
+$sort-font:Georgia, serif;
+$main-font:'Open Sans Condensed', Arial, sans-serif;
+$secondary-font:Arial;
+
+/* General styles for gradients */
+@mixin linear-gradient($start: #eee, $end: #fff, $stop: 25%) {
+    background-color: $start;
+    background-repeat: no-repeat;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from($start), color-stop($stop, $start), to($end));
+    background-image: -webkit-linear-gradient($start, $start $stop, $end);
+    background-image: -moz-linear-gradient(top, $start, $start $stop, $end);
+    background-image: -ms-linear-gradient($start, $start $stop, $end);
+    background-image: -o-linear-gradient($start, $start $stop, $end);
+    background-image: linear-gradient($start, $start $stop, $end);
+}
+
+/* Receive exactly positions for background Sprite  */
+
+@mixin sprites($hor,$vert,$back:url(../images/sprites.png)){
+    background:$hor $vert $back no-repeat;
+}
+
+/* CSS3 Elements */
+
+@mixin box-shadow ($hor: 0px, $vert: 0px, $blur: 5px, $shadow: #929292){
+    -webkit-box-shadow: $hor, $vert, $blur, $shadow;
+    -moz-box-shadow: $hor, $vert, $blur, $shadow;
+    box-shadow: $hor, $vert, $blur, $shadow;
+}
+
+@mixin text-shadow($hor: 0px, $vert: 0px, $blur: 5px, $shadow: #929292){
+    text-shadow: $hor, $vert, $blur, $shadow;
+    -moz-text-shadow: $hor, $vert, $blur, $shadow;
+    -webkit-text-shadow: $hor, $vert, $blur, $shadow;
+}
+
+@mixin rounded-corners($radio: 5px){
+    border-radius: $radio;
+    -ms-border-radius: $radio;
+    -moz-border-radius: $radio;
+    -webkit-border-radius: $radio;
+    -khtml-border-radius: $radio;
+}
+
+@mixin rounded-corners-top($radio:5px){
+    border-top-right-radius:$radio;
+    border-top-left-radius:$radio;
+    -moz-border-radius-topright:$radio;
+    -moz-border-radius-topleft:$radio;
+    -webkit-border-top-left-radius:$radio;
+    -webkit-border-top-right-radius:$radio;
+}
+
+@mixin rounded-corners-right($radio:5px){
+    border-top-right-radius:$radio;
+    border-bottom-right-radius:$radio;
+    -moz-border-radius-topright:$radio;
+    -moz-border-radius-bottomright:$radio;
+    -webkit-border-bottom-right-radius:$radio;
+    -webkit-border-top-right-radius:$radio;
+}
+
