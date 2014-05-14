@@ -1,6 +1,7 @@
 {% extends "user_profile/user.html" %}
 {% block before_css %}
-    <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
+    <link href="{{'/vendor/normalize.css'|media}}" rel="stylesheet" type="text/css" />
+    <link href="{{'/vendor/foundation.css'|media}}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block profilesection %}
     {% trans %}inbox{% endtrans %}

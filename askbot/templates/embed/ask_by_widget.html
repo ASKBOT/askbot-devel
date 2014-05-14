@@ -4,7 +4,8 @@
   {% if editor_type == 'markdown' %}
   <link rel="stylesheet" type="text/css" href="{{"/js/wmd/wmd.css"|media}}" />
   {%else %}
-    <link href="{{'/bootstrap/css/bootstrap.css'|media}}" rel="stylesheet" type="text/css" />
+    <link href="{{'/bower_components/foundation/css/normalize.css'|media}}" rel="stylesheet" type="text/css" />
+    <link href="{{'/bower_components/foundation/css/foundation.css'|media}}" rel="stylesheet" type="text/css" />
   {%endif%}
   {% include "meta/fonts.html" %}
   <style type="text/css" media="screen">

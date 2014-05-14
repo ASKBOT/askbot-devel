@@ -51,8 +51,12 @@
 </script>
 {# everything below until the custom js and google analytics is compressable #}
 {% compress js %}
-<script type="text/javascript" src="{{"/js/jquery-1.7.2.min.js"|media}}"></script>
-<script type="text/javascript" src='{{"/bootstrap/js/bootstrap.js"|media}}'></script>
+<script type="text/javascript" src="{{"/bower_components/jquery/dist/jquery.min.js"|media}}"></script>
+<script type="text/javascript" src="{{"/bower_components/fastclick/lib/fastclick.js"|media}}"></script>
+<script type="text/javascript" src='{{"/bower_components/foundation/js/foundation.min.js"|media}}'></script>
+<script>
+    $(document).foundation();
+</script>
 <!-- History.js --> 
 <script type='text/javascript' src="{{"/js/jquery.history.js"|media }}"></script>
 <script type='text/javascript' src="{{"/js/utils.js"|media }}"></script>
