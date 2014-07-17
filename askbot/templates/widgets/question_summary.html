@@ -1,4 +1,4 @@
-{% from "macros.html" import user_country_flag, tag_list_widget, timeago, user_primary_group %}
+{% from "macros.html" import user_country_flag, tag_list_widget, timeago, user_primary_group, emergency %}
 <div class="short-summary{% if extra_class %} {{extra_class}}{% endif %}" id="question-{{question.id}}">
     <div class="counts">
         <div class="views
@@ -56,4 +56,5 @@
     </div>
     <h2><a href="{{ question.get_absolute_url(thread=thread) }}">{{thread.get_title()|escape}}</a></h2>
     {{ tag_list_widget(thread.get_tag_names(), search_state=search_state) }}
+{{emergency(thread.emergency)}}
 </div>
