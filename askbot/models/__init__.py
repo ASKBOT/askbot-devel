@@ -1667,6 +1667,20 @@ def user_restore_post(
 
 def user_post_question(
                     self,
+<<<<<<< HEAD
+                    title = None,
+                    emergency=None,
+                    body_text = '',
+                    tags = None,
+                    wiki = False,
+                    is_anonymous = False,
+                    is_private = False,
+                    group_id = None,
+                    timestamp = None,
+                    by_email = False,
+                    email_address = None,
+                    language = None
+=======
                     title=None,
                     body_text='',
                     tags=None,
@@ -1679,6 +1693,7 @@ def user_post_question(
                     email_address=None,
                     language=None,
                     ip_addr=None,
+>>>>>>> ac721d1aa97372eef3b7d1772dc7f40b7c8a860d
                 ):
     """makes an assertion whether user can post the question
     then posts it and returns the question object"""
@@ -1700,6 +1715,7 @@ def user_post_question(
     thread = Thread.objects.create_new(
                                     author=self,
                                     title=title,
+                                    emergency=emergency,
                                     text=body_text,
                                     tagnames=tags,
                                     added_at=timestamp,
