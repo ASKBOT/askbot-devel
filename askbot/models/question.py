@@ -143,6 +143,7 @@ class ThreadManager(BaseQuerySetManager):
     def create_new(
                 self,
                 title,
+                emergency,
                 author,
                 added_at,
                 wiki,
@@ -167,6 +168,7 @@ class ThreadManager(BaseQuerySetManager):
             self
         ).create(
             title=title,
+            emergency=emergency,
             tagnames=tagnames,
             last_activity_at=added_at,
             last_activity_by=author,
@@ -584,7 +586,7 @@ class Thread(models.Model):
     ANSWER_LIST_KEY_TPL = 'thread-answer-list-%d'
 
     title = models.CharField(max_length=300)
-
+    emergency=models.CharField(max_length=15)
     tags = models.ManyToManyField('Tag', related_name='threads')
     groups = models.ManyToManyField(Group, through=ThreadToGroup, related_name='group_threads')
 
