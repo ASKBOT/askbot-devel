@@ -237,6 +237,7 @@ def ask(request):#view used to ask a new question
             post_privately = form.cleaned_data['post_privately']
             group_id = form.cleaned_data.get('group_id', None)
             language = form.cleaned_data.get('language', None)
+            emergency=form.cleaned_data['emergency']
 
             if request.user.is_authenticated():
                 drafts = models.DraftQuestion.objects.filter(author=request.user)
@@ -252,6 +253,7 @@ def ask(request):#view used to ask a new question
                 try:
                     question = user.post_question(
                         title=title,
+                        emergency=emergency,
                         body_text=text,
                         tags=tagnames,
                         wiki=wiki,
@@ -278,6 +280,7 @@ def ask(request):#view used to ask a new question
                 models.AnonymousQuestion.objects.create(
                     session_key = session_key,
                     title       = title,
+                    emergency=emergency,
                     tagnames = tagnames,
                     wiki = wiki,
                     is_anonymous = ask_anonymously,
@@ -309,6 +312,7 @@ def ask(request):#view used to ask a new question
         'post_privately': request.REQUEST.get('post_privately', False),
         'language': get_language(),
         'wiki': request.REQUEST.get('wiki', False),
+        'emergency':request.REQUEST.get('emergency', False),
     }
     if 'group_id' in request.REQUEST:
         try:
