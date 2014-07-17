@@ -179,7 +179,27 @@ poor design of the data or methods on data objects #}
     </span>
     {% endfor %}
 {%- endmacro -%}
-
+{%- macro emergency(
+        em,
+        id = None,
+        deletable = False,
+        make_links = True,
+        search_state = None,
+        css_class = None,
+        tag_css_class = None,
+        tag_html_tag = 'li'
+    )
+-%}
+<div class="wrapper">
+ 
+    <a href="#" class="tagrq">
+        <span class="arrow"></span>
+        <span class="text">{{em}}</span>
+        <span class="end"></span>
+    </a>
+ 
+</div>
+{%- endmacro -%}
 {%- macro tag_list_widget(
         tags,
         id = None,
