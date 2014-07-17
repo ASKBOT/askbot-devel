@@ -506,7 +506,7 @@ class rqtime(forms.ChoiceField):
         super(rqtime, self).__init__(*args, **kwargs)
         self.required = True
         self.initial = True
-	self.choices=(('1','now'),('2','soon'),('3','1day'),('4','1week'),('1','3week')) # the choices are optional
+	self.choices=(('1','now'),('2','soon'),('3','1day'),('4','1week'),('5','3week')) # the choices are optional
 	global mydic
 	mydic=dict(self.choices)
     def clean(self, value):
