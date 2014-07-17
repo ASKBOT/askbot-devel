@@ -72,6 +72,7 @@ def ask_widget(request, widget_id):
         if form.is_valid():
             ask_anonymously = form.cleaned_data['ask_anonymously']
             title = form.cleaned_data['title']
+            emergency = form.cleaned_data['emergency']
             if widget.include_text_field:
                 text = form.cleaned_data['text']
             else:
@@ -90,6 +91,7 @@ def ask_widget(request, widget_id):
 
             data_dict = {
                 'title': title,
+                'emergency':emergency,
                 'added_at': datetime.now(),
                 'wiki': False,
                 'text': text,
