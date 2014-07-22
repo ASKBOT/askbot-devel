@@ -30,6 +30,12 @@ those are much harder to understand and merge.
 Follow https://help.github.com/articles/fork-a-repo to to learn how to use
 `fetch` and `push` as well as other help on using git.
 
+Futues of this branch 
+=====================
+**I add an emergency field to any question ,that save a requested time by who ,that asked the question ,so this time is a max time that the owner of question can wait for any help or answer.**
+
+kasra.ahmadvand@gmail.com
+
 License, copyright and trademarks
 =================================
 Askbot software is licensed under GPL, version 3.
