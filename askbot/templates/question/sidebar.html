@@ -5,16 +5,16 @@
 </div>
 {% endif %}
 <div class="box vote-buttons">
-  <h2>{{ settings.WORDS_QUESTION_TOOLS|escape }}</h2>
+    <h2 >{% trans %}Question tools{% endtrans %}</h2>
     {% if favorited %}
         <a class="button followed" 
-            alt="{% trans %}click to unfollow {% endtrans %}">
+            alt="{% trans %}click to unfollow this question{% endtrans %}">
             <div>{% trans %}Following{% endtrans %}</div>
             <div class='unfollow'>{% trans %}Unfollow{% endtrans %}</div>
         </a>
     {% else %}
         <a class="button followed"
-            alt="{% trans %}click to follow {% endtrans %}">
+            alt="{% trans %}click to follow this question{% endtrans %}">
             {%trans %}Follow{%endtrans%}
         </a>
     {% endif %}
@@ -30,7 +30,7 @@
         <p class="rss">
             <a
                 href="{{ base_url }}/feeds/question/{{ question.id }}"
-                title="{% trans %}subscribe to the rss feed{% endtrans %}"
+                title="{% trans %}subscribe to this question rss feed{% endtrans %}"
                 >{% trans %}subscribe to rss feed{% endtrans %}</a>
         </p>
         {% endif %}
@@ -42,7 +42,8 @@
 <div class="box sharing-widget">
     {% if thread.is_private() %}
         <h2>{% trans %}Invite{% endtrans %}</h2>
-        <p style="margin: 16px 0">{{ settings.WORDS_INVITE_OTHERS_TO_HELP_ANSWER_THIS_QUESTION|escape }}</p>
+        <p style="margin: 16px 0"
+        >Invite others to help answer this question</p>
         <form action="{% url share_question_with_user %}" method="post">{% csrf_token %}
             <input id="share_user_name" type="text" class="groups-input" name="recipient_name" />
             <input type="hidden" name="thread_id" value="{{ thread.id }}"/>
@@ -77,7 +78,7 @@
         {% if shared_users_count or shared_groups_count %}
             <p 
                 style="margin:16px 0 4px 0"
-            >{{ settings.WORDS_THIS_QUESTION_IS_CURRENTLY_SHARED_ONLY_WITH|escape }}</p>
+            >{% trans %}This question is currently shared only with:{% endtrans %}</p>
         {% endif %}
         <h3>{% trans %}Individual users{% endtrans %}</h3>
             {% set comma = joiner(',') %}
@@ -141,13 +142,16 @@
     <p>
         {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>
     </p>
+        <p>
+        {% trans %}Emergency{% endtrans %}: <strong>{{ thread.emergency }}</strong>
+    </p>
 </div>
 {% endif %}
 
 {% if similar_threads.data() and settings.SIDEBAR_QUESTION_SHOW_RELATED %}
     {#% cache 1800 "related_questions" related_questions question.id language_code %#}
     <div class="box">
-      <h2>{{ settings.WORDS_RELATED_QUESTIONS|escape }}</h2>
+        <h2>{% trans %}Related questions{% endtrans %}</h2>
         <div class="questions-related">
             {% for thread_dict in similar_threads.data() %}
             <p>
