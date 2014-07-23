@@ -83,7 +83,7 @@ settings.register(
         default = '',
         help_text = _(
             'Usually base DN mirrors domain name of your organization, '
-            'e.g. "dn=example,dn=com" when your site url is "example.com".'
+            'e.g. "dn=example,dn=com" when your site url is "example.com". '
             'This value is the "root" address of your LDAP directory.'
         )
     )

@@ -33,16 +33,71 @@ QUOTE_REGEXES = (
     r'\nSubject: [^\n]+\nFrom: [^\n]+\nTo: [^\n]+\nDate: [^\n]+\Z',
     #OUTLOOK_TEXT_QUOTE_RE = 
     r'\n_+\Z',
+    r'From:.*?\nSent:.*?\nTo:.*?\nSubject:.*?\Z',
 )
 
 
-# extra samples
+# extra samples, separated with ####
 """
 -----Original Message-----^M
 From: forum@example.com [mailto:forum@example.com] ^M
 Sent: Wednesday, August 07, 2013 11:00 AM^M
 To: Jane Doe^M
 Subject: "One more test question from email."^M
+
+##########
+
+________________________________
+ From: "nobody@example.com" <nobody@example.com>
+To: someone@rocketmail.com
+Sent: Wednesday, April 24, 2013 3:37 AM
+Subject: Welcome to Askbot
+
+##########
+
+On Wed, Jul 3, 2013 at 10:40 AM, <ask@example.org> wrote:
+
+> **
+>          Evgeny, please reply to this message.
+>
+> Your post could not be published, because we could not detect signature in
+> your email.
+> This happened either because this is your first post or you have changed
+> your email signature.
+> Please make a simple response, without editing this message.
+> We will then attempt to detect the signature in your response and you
+> should be able to post.
+>   ------------------------------
+>
+> Sincerely,
+> forum Administrator
+>
+> welcome-gofrnegwnwxgl9@example.org
+>
+
+
+
+--
+Askbot
+Valparaiso, Chile
+skype: aou aeu a u
+
+############
+Test from email
+
+From: ask@ask.example.org [mailto:ask@ask.example.org]
+Sent: Wednesday, July 03, 2013 10:41 AM
+To: John Doe 
+Subject: aou aoeu oau aoeu aou aoeu oeau
+
+############
+
+
+-------- Original message --------
+From: forum@ask.examle.org
+Date:12/15/2013 2:35 AM (GMT-05:00)
+To: John Doe 
+Subject: this is it
 
 """
 

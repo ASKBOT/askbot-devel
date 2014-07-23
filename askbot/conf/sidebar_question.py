@@ -76,7 +76,7 @@ settings.register(
         description = _('Custom sidebar header'),
         default = '',
         help_text = _(
-                    'Use this area to enter content at the TOP of the sidebar'
+                    'Use this area to enter content at the TOP of the sidebar '
                     'in HTML format. When using this option '
                     '(as well as the sidebar footer), please '
                     'use the HTML validation service to make sure that '

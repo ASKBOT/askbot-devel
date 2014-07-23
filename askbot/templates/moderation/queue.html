@@ -28,13 +28,18 @@
                 </li>
             </ul>
         </div>
-        <a class="btn btn-danger decline-block-users">{% trans %}delete posts and block users{% endtrans %}</a>
+        <a class="btn btn-danger decline-block-users">{% trans %}block spammers{% endtrans %}</a>
         {% if settings.IP_MODERATION_ENABLED %}
-        <a class="btn btn-danger decline-block-users-ips">{% trans %}delete posts, block users and IPs{% endtrans %}</a>
+        <a class="btn btn-danger decline-block-users-ips">{% trans %}block spammers and IPs{% endtrans %}</a>
         {% endif %}
     </div>
-    <p style="margin-top: 12px;">Attention: approval of users removes them from the queue and approves ALL of their posts, blocking of the users 
-    DELETES ALL OF THEIR POSTS. There is no easy undo at the moment.</p>
+    <ul style="margin-top: 12px">
+        <li>Approval of users removes them from the queue and approves ALL of their posts.</li>
+        <li>Blocking spammers denies them future access and deletes ALL their posts.</li>
+        {% if settings.IP_MODERATION_ENABLED %}
+        <li>Blocking IPs denies access by IP address and blocks all accounts using those IPs (and mass deletes content as above).</li>
+        {% endif %}
+    </ul>
     {% include "moderation/manage_reject_reasons_dialog.html" %}
     <div class="action-status"><span></span></div>
     <div class="messages">

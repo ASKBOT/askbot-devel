@@ -511,8 +511,8 @@ class SummaryField(forms.CharField):
         self.label = _('update summary:')
         self.help_text = _(
             'enter a brief summary of your revision (e.g. '
-            'fixed spelling, grammar, improved style, this '
-            'field is optional)'
+            'fixed spelling, grammar, improved style...), this '
+            'field is optional'
         )
 
 class EditorForm(forms.Form):

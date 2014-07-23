@@ -36,15 +36,15 @@
                     <th></th>
                 </tr>
                 <tr>
-                <td>{% trans %}Screen Name{% endtrans %}:</td>
-                <td>
-                {% if settings.EDITABLE_SCREEN_NAME %}
-                    {{ form.username }}
-                    <span class="form-error"> {{ form.username.errors }} </span></td>
-                {% else %}
-                    {{ view_user.username|escape }}
-                {% endif %}
-                </td>
+                    <td>{% trans %}Screen Name{% endtrans %}:</td>
+                    <td>
+                        {% if settings.EDITABLE_SCREEN_NAME %}
+                            {{ form.username }}
+                            <span class="form-error"> {{ form.username.errors }} </span>
+                        {% else %}
+                            {{ view_user.username|escape }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -118,7 +118,7 @@
             $().ready(function(){
                 $("#nav_profile").attr('className',"on");
                 $("#cancel").bind('click', function(){history.go(-1);})
-            });     
+            });
         </script>
         {% block userjs %}
         {% endblock %}

@@ -63,6 +63,22 @@ Subject: "One more test question from email."
 """
         self.assertEqual(mail.extract_reply(text), "some real text")
 
+    def test_some_other(self):
+        text = """some real text
+
+-------- Original message --------
+From: forum@example.com [mailto:forum@example.com] 
+Sent: Wednesday, August 07, 2013 11:00 AM
+To: Jane Doe
+Subject: "One more test question from email."
+
+"""
+        self.assertEqual(mail.extract_reply(text), "some real text")
+
+    def test_some_other1(self):
+        text = 'some text here\n\n\n-------- Original message --------\nFrom: forum@example.com\nDate:12/15/2013 2:35 AM (GMT-05:00)\nTo: Some One\nSubject: some subject\n\n\n\n'
+        self.assertEqual(mail.extract_reply(text), 'some text here')
+
     def test_blackberry(self):
 
         text = """Lorem ipsum lorem ipsum

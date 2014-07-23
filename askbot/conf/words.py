@@ -224,7 +224,7 @@ settings.register(
         WORDS,
         'WORDS_QUESTIONS_COUNTABLE_FORMS',
         default='question\nquestions',
-        description=_('Countable plural forms for "queston"'),
+        description=_('Countable plural forms for "question"'),
         help_text=_('Enter one form per line, pay attention')
     )
 )
