@@ -617,7 +617,7 @@ def test_avatar():
     """if "avatar" is in the installed apps,
     checks that the module is actually installed"""
     if 'avatar' in django_settings.INSTALLED_APPS:
-        try_import('PIL', 'PIL', short_message = True)
+        try_import('Image', 'PIL', short_message = True)
         try_import(
             'avatar',
             '-e git+git://github.com/ericflo/django-avatar.git#egg=avatar',
