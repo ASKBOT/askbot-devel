@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Tomoyuki KATO <tomo@dream.daynight.jp>, 2012-2013
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
-"Report-Msgid-Bugs-To: http://askbot.org/\n"
-"POT-Creation-Date: 2013-07-13 14:07-0500\n"
-"PO-Revision-Date: 2013-07-13 19:09+0000\n"
-"Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
-"Language-Team: Japanese (http://www.transifex.com/projects/p/askbot/language/ja/)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-31 02:23+0900\n"
+"PO-Revision-Date: 2014-07-31 18:01+0900\n"
+"Last-Translator: yoneken <yoneken@kicad.jp>\n"
+"Language-Team: yoneken <yoneken@kicad.jp>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: media/jquery-openid/jquery.openid.js:73
 #, c-format
@@ -31,7 +32,9 @@ msgstr "１つ以上のログイン方法を追加してください。"
 msgid ""
 "You don't have a method to log in right now, please add one or more by "
 "clicking any of the icons below."
-msgstr "今すぐにログインする方法がありません、以下のアイコンのどれかをクリックして1つ以上を追加してください。"
+msgstr ""
+"今すぐにログインする方法がありません、以下のアイコンのどれかをクリックして1つ"
+"以上を追加してください。"
 
 #: media/jquery-openid/jquery.openid.js:135
 msgid "passwords do not match"
@@ -68,638 +71,612 @@ msgstr "%s のパスワードを作成します"
 msgid "Create password"
 msgstr "パスワードを作成します"
 
-#: media/jquery-openid/jquery.openid.js:344
+#: media/jquery-openid/jquery.openid.js:343
 msgid "Create a password-protected account"
 msgstr "パスワード保護されたアカウントを作成します"
 
 #: media/js/group_messaging.js:102 media/js/group_messaging.js.c:293
 msgid "required"
-msgstr ""
+msgstr "必須"
 
 #: media/js/group_messaging.js:139
 msgid "Your message:"
-msgstr ""
+msgstr "メッセージ："
 
 #: media/js/group_messaging.js:152
 msgid "send"
-msgstr ""
+msgstr "送る"
 
-#: media/js/group_messaging.js:164 media/js/post.js:1809
-#: media/js/post.js.c:3081 media/js/post.js.c:4598 media/js/user.js:888
+#: media/js/group_messaging.js:164 media/js/post.js:1941
+#: media/js/post.js.c:3216 media/js/post.js.c:4779 media/js/user.js:846
 msgid "cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: media/js/group_messaging.js:227
 msgid "Reply"
-msgstr ""
+msgstr "返信"
 
 #: media/js/group_messaging.js:236 media/js/group_messaging.js.c:743
 msgid "message sent"
-msgstr ""
+msgstr "メッセージが送信されました"
 
 #: media/js/group_messaging.js:271
 msgid "user {{str}} does not exist"
 msgid_plural "users {{str}} do not exist"
-msgstr[0] ""
+msgstr[0] "ユーザー {{str}} はいません"
 
 #: media/js/group_messaging.js:278
 msgid "cannot send message to yourself"
-msgstr ""
+msgstr "あなた自身にメッセージを送ることはできません"
 
 #: media/js/group_messaging.js:323
 msgid "Recipient:"
-msgstr ""
+msgstr "受取者"
 
-#: media/js/live_search.js:196
+#: media/js/live_search.js:198
 msgid "To see search results, 2 or more characters may be required"
-msgstr ""
+msgstr "検索結果を見るために，2字以上の文字数が必要です．"
 
-#: media/js/live_search.js:218
+#: media/js/live_search.js:220
 msgid "Ask Your Question"
-msgstr ""
+msgstr "質問をする"
 
-#: media/js/live_search.js:299
+#: media/js/live_search.js:301
 msgid "Sorry, this tag does not exist"
 msgid_plural "Sorry, these tags do not exist"
-msgstr[0] ""
+msgstr[0] "申し訳ありません．それらのタグは存在します．"
 
-#: media/js/live_search.js:313
+#: media/js/live_search.js:315
 msgid "search or ask your question"
-msgstr ""
+msgstr "質問を検索か投稿します"
 
 #: media/js/post.js:28
 msgid "loading..."
 msgstr "読み込み中..."
 
-#: media/js/post.js:100
-msgid "must be shorter than %(max_chars)s character"
-msgid_plural "must be shorter than %(max_chars)s characters"
-msgstr[0] ""
-
-#: media/js/post.js:154 media/js/post.js.c:1269
+#: media/js/post.js:125 media/js/post.js.c:1401
 msgid "tags cannot be empty"
-msgstr ""
+msgstr "タグは空にできません"
 
-#: media/js/post.js:160
+#: media/js/post.js:131
 msgid "details are required"
-msgstr ""
+msgstr "詳細な説明が必要です．"
 
-#: media/js/post.js:163
+#: media/js/post.js:134
 #, c-format
 msgid "details must have > %s character"
 msgid_plural "details must have > %s characters"
-msgstr[0] ""
+msgstr[0] "詳細な説明は %s 字数以上必要です．"
+
+#: media/js/post.js:142
+msgid "enter your question"
+msgstr "質問を入力"
+
+#: media/js/post.js:145
+msgid "%(question)s must have > %(length)s character"
+msgid_plural "%(question)s must have > %(length)s characters"
+msgstr[0] "%(question)s は %(length)s 字以上の文字数が必要です．"
+
+#: media/js/post.js:168
+msgid "content cannot be empty"
+msgstr "コンテンツは空にできません．"
 
 #: media/js/post.js:171
-msgid "enter your question"
-msgstr ""
+msgid "%(answer)s must be > %(length)s character"
+msgid_plural "%(answer)s must be > %(length)s characters"
+msgstr[0] "%(answer)s は %(length)s 字以上の文字数が必要です．"
 
-#: media/js/post.js:174
-#, c-format
-msgid "question must have > %s character"
-msgid_plural "question must have > %s characters"
-msgstr[0] ""
-
-#: media/js/post.js:193
-msgid "content cannot be empty"
-msgstr ""
-
-#: media/js/post.js:196
-#, c-format
-msgid "answer must be > %s character"
-msgid_plural "answer must be > %s characters"
-msgstr[0] ""
-
-#: media/js/post.js:253
+#: media/js/post.js:232
 msgid "Back to the question"
-msgstr ""
+msgstr "質問に戻る"
 
-#: media/js/post.js:303
+#: media/js/post.js:332
+msgid "Merge"
+msgstr "マージ"
+
+#: media/js/post.js:336 media/js/post.js.c:388
+msgid "Load preview"
+msgstr "プレビューの読込み"
+
+#: media/js/post.js:348
+msgid "messages"
+msgstr "メッセージ"
+
+#: media/js/post.js:387 media/js/utils.js:1456 media/js/utils.js.c:1948
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: media/js/post.js:433
 msgid "draft saved..."
-msgstr ""
+msgstr "下書きを保存..."
 
-#: media/js/post.js:548
+#: media/js/post.js:678
 msgid "insufficient privilege"
 msgstr "不十分な権限"
 
-#: media/js/post.js:549
-msgid "cannot pick own answer as best"
-msgstr "申し訳ありませんが、あなたの回答を受領できません"
-
-#: media/js/post.js:552 media/js/post.js.c:1416
+#: media/js/post.js:681 media/js/post.js.c:1548
 msgid "please login"
 msgstr "ログインしてください"
 
-#: media/js/post.js:554
-msgid "anonymous users cannot follow questions"
-msgstr "匿名ユーザーは質問をフォローできません"
+#: media/js/post.js:684
+msgid "anonymous users cannot %(follow_questions)s"
+msgstr "匿名ユーザーは %(follow_questions)s できません．"
 
-#: media/js/post.js:555
+#: media/js/post.js:690
 msgid "anonymous users cannot subscribe to questions"
 msgstr "匿名ユーザーは質問を購読できません"
 
-#: media/js/post.js:556 media/js/post.js.c:1426
+#: media/js/post.js:691 media/js/post.js.c:1558
 msgid "anonymous users cannot vote"
 msgstr "申し訳ありませんが、匿名ユーザーは投票できません "
 
-#: media/js/post.js:558
-msgid "please confirm offensive"
-msgstr "あなたはこの投稿が攻撃的、スパム、広告、悪意のある意見などであると思いますか？"
-
-#: media/js/post.js:559
-msgid "please confirm removal of offensive flag"
-msgstr "この投稿が本当に、攻撃的、スパム、広告、悪意のある意見などですか？"
-
-#: media/js/post.js:560
+#: media/js/post.js:693
 msgid "anonymous users cannot flag offensive posts"
 msgstr "匿名ユーザーが攻撃的な投稿のフラグをつけられません"
 
-#: media/js/post.js:561
+#: media/js/post.js:694
 msgid "confirm delete"
 msgstr "本当にこれを削除したいですか？"
 
-#: media/js/post.js:562
+#: media/js/post.js:695
 msgid "anonymous users cannot delete/undelete"
 msgstr "申し訳ありませんが、匿名ユーザーは投稿を削除または復旧できません"
 
-#: media/js/post.js:563
+#: media/js/post.js:696
 msgid "post recovered"
-msgstr "これで投稿が復元されました！"
+msgstr "投稿が復元されました"
 
-#: media/js/post.js:564
+#: media/js/post.js:697
 msgid "post deleted"
 msgstr "投稿が削除されました"
 
-#: media/js/post.js:831
-msgid "Follow"
-msgstr ""
+#: media/js/post.js:932
+msgid "sorry, you cannot %(accept_own_answer)s"
+msgstr "申し訳ありません．あなたは %(accept_own_answer)s できません．"
 
-#: media/js/post.js:840 media/js/post.js.c:849
+#: media/js/post.js:969
+msgid "Follow"
+msgstr "フォロー"
+
+#: media/js/post.js:978 media/js/post.js.c:987
 #, c-format
 msgid "%s follower"
 msgid_plural "%s followers"
-msgstr[0] ""
+msgstr[0] "%s フォロワー"
 
-#: media/js/post.js:845
+#: media/js/post.js:983
 msgid "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
-msgstr ""
+msgstr "<div>フォロー中</div><div class=\"unfollow\">フォローから外す</div>"
 
-#: media/js/post.js:901
+#: media/js/post.js:1039
 msgid "remove flag"
-msgstr ""
+msgstr "フラグを削除"
 
-#: media/js/post.js:935 media/js/post.js.c:964
+#: media/js/post.js:1073 media/js/post.js.c:1102
 msgid "flag offensive"
-msgstr ""
+msgstr "攻撃的のフラグ"
 
-#: media/js/post.js:990 media/js/post.js.c:1497
+#: media/js/post.js:1128 media/js/post.js.c:1629
 msgid "undelete"
-msgstr ""
+msgstr "復旧"
 
-#: media/js/post.js:995 media/js/post.js.c:1501
+#: media/js/post.js:1133 media/js/post.js.c:1633
 msgid "delete"
-msgstr ""
+msgstr "削除"
 
-#: media/js/post.js:1218 media/js/post.js.c:1445
+#: media/js/post.js:1350 media/js/post.js.c:1577
 msgid "sorry, something is not right here"
-msgstr ""
+msgstr "申し訳ありません．何かが正しくありません．"
 
-#: media/js/post.js:1665
+#: media/js/post.js:1797
 msgid "add comment"
 msgstr "コメントの追加"
 
-#: media/js/post.js:1671
+#: media/js/post.js:1803
 msgid "save comment"
 msgstr "コメントの保存"
 
-#: media/js/post.js:1711
+#: media/js/post.js:1843
 #, c-format
 msgid "enter at least %s characters"
-msgstr ""
+msgstr "最低 %s 文字入力してください．"
 
-#: media/js/post.js:1713
+#: media/js/post.js:1845
 #, c-format
 msgid "enter at least %s more characters"
-msgstr ""
-
-#: media/js/post.js:1723
-#, c-format
-msgid "%s characters left"
-msgstr ""
-
-#: media/js/post.js:1823
-msgid "minor edit (don't send alerts)"
-msgstr ""
+msgstr "最低 %s 文字以上入力してください．"
 
 #: media/js/post.js:1855
-msgid "Are you sure you don't want to post this comment?"
-msgstr ""
-
-#: media/js/post.js:1890 media/js/utils.js:3360 media/js/utils.js.c:3515
-msgid "just now"
-msgstr ""
-
-#: media/js/post.js:1956
-msgid "delete this comment"
-msgstr ""
-
-#: media/js/post.js:2271
-msgid "confirm delete comment"
-msgstr ""
-
-#: media/js/post.js:2409
-msgid "please sign in or register to post comments"
-msgstr ""
-
-#: media/js/post.js:2560
-msgid "Please enter question title (>10 characters)"
-msgstr "質問の見出しを入力してください ( >10 文字)"
-
-#: media/js/post.js:2612 media/js/post.js.c:4626
-msgid "Sorry, you have only read access"
-msgstr ""
-
-#: media/js/post.js:3075 media/js/post.js.c:3869 media/js/post.js.c:4058
-msgid "save"
-msgstr ""
-
-#: media/js/post.js:3199
-msgid "Enter the logo url or upload an image"
-msgstr ""
-
-#: media/js/post.js:3225
-msgid "Do you really want to remove the image?"
-msgstr ""
-
-#: media/js/post.js:3341
-msgid "change logo"
-msgstr ""
-
-#: media/js/post.js:3342
-msgid "add logo"
-msgstr ""
-
-#: media/js/post.js:3444
 #, c-format
-msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
-msgstr ""
+msgid "%s characters left"
+msgstr "%s 文字残っています"
 
-#: media/js/post.js:3453
+#: media/js/post.js:1955
+msgid "minor edit (don't send alerts)"
+msgstr "細部の変更（アラートを送らない）"
+
+#: media/js/post.js:1987
+msgid "Are you sure you don't want to post this comment?"
+msgstr "このコメントは投稿したくないですか？"
+
+#: media/js/post.js:2022 media/js/utils.js:3904 media/js/utils.js.c:4059
+msgid "just now"
+msgstr "たった今"
+
+#: media/js/post.js:2088
+msgid "delete this comment"
+msgstr "このコメントを削除"
+
+#: media/js/post.js:2403
+msgid "confirm delete comment"
+msgstr "コメントの削除を確認"
+
+#: media/js/post.js:2544
+msgid "please sign in or register to post comments"
+msgstr "コメントを投稿するためにサインインか登録してください．"
+
+#: media/js/post.js:2695
+msgid "Please enter question title (>10 characters)"
+msgstr "質問タイトルを入力してください (10 文字以上)"
+
+#: media/js/post.js:2747 media/js/post.js.c:4807
+msgid "Sorry, you have only read access"
+msgstr "申し訳ありません．あなたは読む権限しかありません．"
+
+#: media/js/post.js:3210 media/js/post.js.c:4050 media/js/post.js.c:4239
+msgid "save"
+msgstr "保存"
+
+#: media/js/post.js:3334
+msgid "Enter the logo url or upload an image"
+msgstr "ロゴのURLを入力するか，画像をアップロード"
+
+#: media/js/post.js:3360
+msgid "Do you really want to remove the image?"
+msgstr "本当にこの画像を削除して良いですか？"
+
+#: media/js/post.js:3476
+msgid "change logo"
+msgstr "ロゴの変更"
+
+#: media/js/post.js:3477
+msgid "add logo"
+msgstr "ロゴの追加"
+
+#: media/js/post.js:3625
+#, c-format
+msgid ""
+"tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
+msgstr ""
+"タグ \"%s\" は追加済みで，繰り返す必要はありません．（\"Escape\"を押すと消え"
+"ます）"
+
+#: media/js/post.js:3634
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
-msgstr[0] ""
+msgstr[0] "最大 %s タグが付けられます．"
 
-#: media/js/post.js:3799
+#: media/js/post.js:3980
 msgid "Delete category?"
-msgstr ""
+msgstr "カテゴリーを削除しますか？"
 
-#: media/js/post.js:3888 media/js/utils.js:881
+#: media/js/post.js:4069 media/js/utils.js:1371
 msgid "edit"
-msgstr ""
+msgstr "編集"
 
-#: media/js/post.js:3975
+#: media/js/post.js:4156
 msgid "category name cannot be empty"
-msgstr ""
+msgstr "カテゴリー名は空にできません．"
 
-#: media/js/post.js:4011
+#: media/js/post.js:4192
 msgid "already exists at the current level!"
-msgstr ""
+msgstr "現在のレベルは既にあります！"
 
-#: media/js/post.js:4047
+#: media/js/post.js:4228
 msgid "add category"
-msgstr ""
+msgstr "カテゴリー追加"
 
-#: media/js/post.js:4594
+#: media/js/post.js:4775
 msgid "save tags"
-msgstr ""
+msgstr "タグの保存"
 
-#: media/js/post.js:4689 media/js/post.js.c:4723
-msgid "User name:"
-msgstr ""
-
-#: media/js/post.js:4710
+#: media/js/post.js:4891
 msgid "Group name:"
-msgstr ""
+msgstr "グループ名："
 
-#: media/js/post.js:4736
+#: media/js/post.js:4917
 msgid "Shared with the following users:"
-msgstr ""
+msgstr "フォロー中のユーザーとシェア："
 
-#: media/js/post.js:4742
+#: media/js/post.js:4923
 msgid "Shared with the following groups:"
-msgstr ""
+msgstr "フォロー中のグループとシェア："
 
 #: media/js/tag_selector.js:14
 msgid "Tag \"<span></span>\" matches:"
-msgstr "タグ \"<span></span>\" が一致します:"
+msgstr "タグ \"<span></span>\" が一致:"
 
 #: media/js/tag_selector.js:84
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "さらに %s 個、表示されていません..."
 
-#: media/js/user.js:15
+#: media/js/user.js:210
 msgid "Please select at least one item"
 msgstr "最低1つの項目を選択してください"
 
-#: media/js/user.js:59
-msgid "Delete this notification?"
-msgid_plural "Delete these notifications?"
-msgstr[0] "この通知を削除しますか？"
-
-#: media/js/user.js:66
-msgid "Close this entry?"
-msgid_plural "Close these entries?"
-msgstr[0] "この項目をクローズしますか？"
-
-#: media/js/user.js:74
-msgid "Remove all flags and approve this entry?"
-msgid_plural "Remove all flags and approve these entries?"
-msgstr[0] ""
-
-#: media/js/user.js:223
-msgid "Post deleted"
-msgstr ""
-
-#: media/js/user.js:225
-msgid "Post approved"
-msgstr ""
-
 #: media/js/user.js:246
-msgid "Accept"
-msgstr ""
+msgid "Load more items."
+msgstr "さらにアイテムを読込み．"
 
-#: media/js/user.js:255
-msgid "Reject"
-msgstr ""
-
-#: media/js/user.js:270
-msgid "add new reject reason"
-msgstr ""
-
-#: media/js/user.js:375
+#: media/js/user.js:391
 msgid "Looks there are some things to fix:"
-msgstr ""
+msgstr "修正しなければならない何かがありそう："
 
-#: media/js/user.js:443
+#: media/js/user.js:459
 msgid "Please provide description."
-msgstr ""
+msgstr "説明を加えてください．"
 
-#: media/js/user.js:446
+#: media/js/user.js:462
 msgid "Please provide details."
-msgstr ""
+msgstr "詳細な説明を加えてください．"
 
-#: media/js/user.js:560
+#: media/js/user.js:549
 msgid "A reason must be selected to delete one."
-msgstr ""
+msgstr "削除するためには，その理由を選択してください．"
 
-#: media/js/user.js:659
-msgid "A reason must be selected to reject post."
-msgstr ""
-
-#: media/js/user.js:708
+#: media/js/user.js:666
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
-msgstr "%(username)s をフォローするには<a href=\"%(signin_url)s\">サインイン</a>してください"
+msgstr ""
+"%(username)s をフォローするには<a href=\"%(signin_url)s\">サインイン</a>して"
+"ください"
 
-#: media/js/user.js:740
+#: media/js/user.js:698
 #, c-format
 msgid "unfollow %s"
 msgstr "%s のフォロー解除"
 
-#: media/js/user.js:743
+#: media/js/user.js:701
 #, c-format
 msgid "following %s"
 msgstr "%s のフォロー中"
 
-#: media/js/user.js:749
+#: media/js/user.js:707
 #, c-format
 msgid "follow %s"
 msgstr "%s のフォロー"
 
-#: media/js/user.js:883
+#: media/js/user.js:841
 msgid "add group"
-msgstr ""
+msgstr "グループ追加"
 
-#: media/js/user.js:963
+#: media/js/user.js:921
 msgid "add"
-msgstr ""
+msgstr "追加"
 
-#: media/js/utils.js:99
+#: media/js/utils.js:81
+msgid "must be shorter than %(max_chars)s character"
+msgid_plural "must be shorter than %(max_chars)s characters"
+msgstr[0] "%(max_chars)s 字より短い必要があります"
+
+#: media/js/utils.js:149
 msgid "and"
-msgstr ""
+msgstr "と"
 
-#: media/js/utils.js:117
+#: media/js/utils.js:167
 msgid "click to close"
 msgstr "閉じるにはクリックしてください"
 
-#: media/js/utils.js:880
+#: media/js/utils.js:670
+#, c-format
+msgid "page %s"
+msgstr "%s ページ"
+
+#: media/js/utils.js:1370
 msgid "click to edit this comment"
-msgstr ""
+msgstr "コメントを編集するにはクリック"
 
-#: media/js/utils.js:905
+#: media/js/utils.js:1401
 msgid "convert to answer"
-msgstr ""
+msgstr "回答に変換"
 
-#: media/js/utils.js:958
+#: media/js/utils.js:1454
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
-#: media/js/utils.js:959 media/js/utils.js.c:1407
-msgid "Cancel"
-msgstr ""
-
-#: media/js/utils.js:1219
+#: media/js/utils.js:1760
 #, c-format
 msgid "Uploaded file: %s"
-msgstr ""
+msgstr "アップロードされたファイル：%s"
 
-#: media/js/utils.js:1234
+#: media/js/utils.js:1775
 msgid "Choose a different image"
-msgstr ""
+msgstr "他の画像を選択"
 
-#: media/js/utils.js:1236
+#: media/js/utils.js:1777
 msgid "Choose a different file"
-msgstr ""
+msgstr "他のファイルを選択"
 
-#: media/js/utils.js:1250
+#: media/js/utils.js:1791
 msgid "Oops, looks like we had an error. Sorry."
-msgstr ""
+msgstr "申し訳ありません．サイト側にミスがあったようです．"
 
-#: media/js/utils.js:1311
+#: media/js/utils.js:1852
 msgid "Choose an image to insert"
-msgstr ""
+msgstr "挿入する画像を選択"
 
-#: media/js/utils.js:1313
+#: media/js/utils.js:1854
 msgid "Choose a file to insert"
-msgstr ""
+msgstr "挿入するファイルを選択"
 
-#: media/js/utils.js:1326
+#: media/js/utils.js:1867
 msgid "Allowed file types are:"
-msgstr ""
+msgstr "許可されているファイルタイプ："
 
-#: media/js/utils.js:1332
+#: media/js/utils.js:1873
 #: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:35
 msgid "Or paste file url here"
-msgstr ""
+msgstr "ここにファイルのURLを張付け"
 
-#: media/js/utils.js:1406
+#: media/js/utils.js:1947
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
-#: media/js/utils.js:1478
+#: media/js/utils.js:2019
 msgid "saved"
-msgstr ""
+msgstr "保存済み"
 
-#: media/js/utils.js:1602
+#: media/js/utils.js:2143
 msgid "enabled"
-msgstr ""
+msgstr "有効化"
 
-#: media/js/utils.js:1604
+#: media/js/utils.js:2145
 msgid "disabled"
-msgstr ""
+msgstr "無効化"
 
-#: media/js/utils.js:2038
+#: media/js/utils.js:2583
 msgid "group name"
-msgstr ""
+msgstr "グループ名"
 
-#: media/js/utils.js:2046
+#: media/js/utils.js:2591
 msgid "add new group"
-msgstr ""
+msgstr "新しいグループを追加"
 
-#: media/js/utils.js:2138
+#: media/js/utils.js:2683
 msgid "Group %(name)s already exists. Group names are case-insensitive."
 msgstr ""
+"%(name)s グループは既にあります．グループ名は大文字小文字を区別しません．"
 
-#: media/js/utils.js:2311
+#: media/js/utils.js:2856
 #, c-format
 msgid "see questions tagged '%s'"
-msgstr ""
+msgstr "'%s' タグのついた質問を見る"
 
-#: media/js/utils.js:3358
+#: media/js/utils.js:3902
 msgid "ago"
-msgstr ""
+msgstr "前"
 
-#: media/js/utils.js:3359
+#: media/js/utils.js:3903
 msgid "from now"
-msgstr ""
+msgstr "今から"
 
-#: media/js/utils.js:3361
+#: media/js/utils.js:3905
 msgid "about a minute"
-msgstr ""
+msgstr "1分ほど"
 
-#: media/js/utils.js:3362
+#: media/js/utils.js:3906
 #, c-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d 分"
 
-#: media/js/utils.js:3363
+#: media/js/utils.js:3907
 msgid "about an hour"
-msgstr ""
+msgstr "1時間ほど"
 
-#: media/js/utils.js:3364
+#: media/js/utils.js:3908
 #, c-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d 時間"
 
-#: media/js/utils.js:3365 media/js/utils.js.c:3493
+#: media/js/utils.js:3909 media/js/utils.js.c:4037
 msgid "yesterday"
-msgstr ""
+msgstr "昨日"
 
-#: media/js/utils.js:3366
+#: media/js/utils.js:3910
 #, c-format
 msgid "%d days"
-msgstr ""
+msgstr "%d 日"
 
-#: media/js/utils.js:3367
+#: media/js/utils.js:3911
 msgid "about a month"
-msgstr ""
+msgstr "一ヶ月ほど"
 
-#: media/js/utils.js:3368
+#: media/js/utils.js:3912
 #, c-format
 msgid "%d months"
-msgstr ""
+msgstr "%d 月"
 
-#: media/js/utils.js:3369
+#: media/js/utils.js:3913
 msgid "about a year"
-msgstr ""
+msgstr "一年ほど"
 
-#: media/js/utils.js:3370
+#: media/js/utils.js:3914
 #, c-format
 msgid "%d years"
-msgstr ""
+msgstr "%d 年"
 
-#: media/js/utils.js:3468
+#: media/js/utils.js:4012
 msgid "Jan"
-msgstr ""
+msgstr "1月"
 
-#: media/js/utils.js:3469
+#: media/js/utils.js:4013
 msgid "Feb"
-msgstr ""
+msgstr "2月"
 
-#: media/js/utils.js:3470
+#: media/js/utils.js:4014
 msgid "Mar"
-msgstr ""
+msgstr "3月"
 
-#: media/js/utils.js:3471
+#: media/js/utils.js:4015
 msgid "Apr"
-msgstr ""
+msgstr "4月"
 
-#: media/js/utils.js:3472
+#: media/js/utils.js:4016
 msgid "May"
-msgstr ""
+msgstr "5月"
 
-#: media/js/utils.js:3473
+#: media/js/utils.js:4017
 msgid "Jun"
-msgstr ""
+msgstr "6月"
 
-#: media/js/utils.js:3474
+#: media/js/utils.js:4018
 msgid "Jul"
-msgstr ""
+msgstr "7月"
 
-#: media/js/utils.js:3475
+#: media/js/utils.js:4019
 msgid "Aug"
-msgstr ""
+msgstr "8月"
 
-#: media/js/utils.js:3476
+#: media/js/utils.js:4020
 msgid "Sep"
-msgstr ""
+msgstr "9月"
 
-#: media/js/utils.js:3477
+#: media/js/utils.js:4021
 msgid "Oct"
-msgstr ""
+msgstr "10月"
 
-#: media/js/utils.js:3478
+#: media/js/utils.js:4022
 msgid "Nov"
-msgstr ""
+msgstr "11月"
 
-#: media/js/utils.js:3479
+#: media/js/utils.js:4023
 msgid "Dec"
-msgstr ""
+msgstr "12月"
 
-#: media/js/utils.js:3491
+#: media/js/utils.js:4035
 msgid "2 days ago"
-msgstr ""
+msgstr "2日前"
 
-#: media/js/utils.js:3498
+#: media/js/utils.js:4042
 #, c-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
-msgstr[0] ""
+msgstr[0] "%s 時間前"
 
-#: media/js/utils.js:3508
+#: media/js/utils.js:4052
 #, c-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
-msgstr[0] ""
+msgstr[0] "%s 分前"
 
 #: media/js/tinymce/plugins/askbot_attachment/editor_plugin.js:71
 msgid "Insert a file"
-msgstr ""
+msgstr "ファイルの挿入"
 
 #: media/js/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
 msgid "Insert image"
-msgstr ""
+msgstr "画像の挿入"
 
 #: media/js/wmd/wmd.js:31
 msgid "bold"
@@ -727,7 +704,7 @@ msgstr "画像"
 
 #: media/js/wmd/wmd.js:37
 msgid "attachment"
-msgstr "添付"
+msgstr "添付ファイル"
 
 #: media/js/wmd/wmd.js:38
 msgid "numbered list"
@@ -747,35 +724,54 @@ msgstr "水平線"
 
 #: media/js/wmd/wmd.js:42
 msgid "undo"
-msgstr "やり直し"
+msgstr "元に戻す"
 
-#: media/js/wmd/wmd.js:43 media/js/wmd/wmd.js.c:1169
+#: media/js/wmd/wmd.js:43 media/js/wmd/wmd.js.c:1170
 msgid "redo"
-msgstr "再実行"
+msgstr "やり直し"
 
 #: media/js/wmd/wmd.js:54
 msgid "enter image url"
-msgstr "画像のURL（例、http://www.example.com/image.jpg）を入力してください、または画像ファイルをアップロードしてください"
+msgstr "画像のURLを入力"
 
 #: media/js/wmd/wmd.js:55
 msgid "enter url"
-msgstr "ウェブアドレス（例、http://www.example.com \"page title\"）を入力してください"
+msgstr "URLを入力"
 
 #: media/js/wmd/wmd.js:56
 msgid "upload file attachment"
-msgstr "ファイルを選択してアップロードしてください:"
+msgstr "ファイルを添付してアップロード"
 
-#: media/js/wmd/wmd.js:1836
+#: media/js/wmd/wmd.js:1837
 msgid "image description"
-msgstr ""
+msgstr "画像の説明"
 
-#: media/js/wmd/wmd.js:1839
+#: media/js/wmd/wmd.js:1840
 msgid "file name"
-msgstr ""
+msgstr "ファイル名"
 
-#: media/js/wmd/wmd.js:1843
+#: media/js/wmd/wmd.js:1844
 msgid "link text"
-msgstr ""
+msgstr "テキストにリンク"
+
+#~ msgid "cannot pick own answer as best"
+#~ msgstr "申し訳ありませんが、あなたの回答を受領できません"
+
+#~ msgid "please confirm offensive"
+#~ msgstr ""
+#~ "あなたはこの投稿が攻撃的、スパム、広告、悪意のある意見などであると思います"
+#~ "か？"
+
+#~ msgid "please confirm removal of offensive flag"
+#~ msgstr "この投稿が本当に、攻撃的、スパム、広告、悪意のある意見などですか？"
+
+#~ msgid "Delete this notification?"
+#~ msgid_plural "Delete these notifications?"
+#~ msgstr[0] "この通知を削除しますか？"
+
+#~ msgid "Close this entry?"
+#~ msgid_plural "Close these entries?"
+#~ msgstr[0] "この項目をクローズしますか？"
 
 #~ msgid "post a comment"
 #~ msgstr "save comment"
