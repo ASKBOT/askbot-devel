@@ -1658,11 +1658,11 @@ def user_close_question(
                     self,
                     question = None,
                     reason = None,
-                    timestamp = None
+                    timestamp = None,
+                    message = None
                 ):
     self.assert_can_close_question(question)
-    question.thread.set_closed_status(closed=True, closed_by=self, closed_at=timestamp, close_reason=reason)
-
+    question.thread.set_closed_status_dupe(closed=True, closed_by=self, closed_at=timestamp, close_reason=reason, close_message=message)
 @auto_now_timestamp
 def user_reopen_question(
                     self,

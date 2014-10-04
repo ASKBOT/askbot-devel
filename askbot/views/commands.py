@@ -900,10 +900,11 @@ def close(request, id):#close question
             form = forms.CloseForm(request.POST)
             if form.is_valid():
                 reason = form.cleaned_data['reason']
-
+                message = request.POST.get('message',"")
                 request.user.close_question(
                                         question = question,
-                                        reason = reason
+                                        reason = reason,
+                                        message = message
                                     )
             return HttpResponseRedirect(question.get_absolute_url())
         else:

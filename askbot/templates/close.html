@@ -11,6 +11,10 @@
             <strong>{% trans %}Reasons{% endtrans %}:</strong>
             {{ form.reason }}
         </p>
+        <p id="messageInput">
+            <strong>{% trans %}URL of duplicate{% endtrans %}:</strong><br/>
+            <input id="id_message" type="text" name="message" style="width:100%;"/>
+        </p>
         <p>
         <input type="submit" value="{% trans %}OK to close{% endtrans %}"/>
         <input id="btBack" type="button" value="{% trans %}Cancel{% endtrans %}"/>
@@ -22,6 +26,16 @@
         $().ready(function(){
             $('#btBack').bind('click', function(){ history.back(); });
         });
+    </script>
+    <script type="text/javascript">
+        document.getElementById("id_reason").onclick = function(){
+            if(document.getElementById("id_reason").value == 1){
+                document.getElementById("messageInput").style.display = "block";
+            }
+            else{
+                document.getElementById("messageInput").style.display = "none";
+            }
+        }
     </script>
 {% endblock %}
 <!-- end template close.html -->

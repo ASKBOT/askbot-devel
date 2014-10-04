@@ -615,6 +615,7 @@ class Thread(models.Model):
                                             null=True,
                                             blank=True
                                         )
+    close_message   = models.CharField(max_length=125)
     deleted = models.BooleanField(default=False, db_index=True)
 
     #denormalized data: the core approval of the posts is made
@@ -852,6 +853,17 @@ class Thread(models.Model):
         self.closed_by = closed_by
         self.closed_at = closed_at
         self.close_reason = close_reason
+        self.save()
+        self.invalidate_cached_data()
+    def set_closed_status_dupe(self, closed, closed_by, closed_at, close_reason, close_message):
+        """Adding ability to specify which question
+           the dupe is of
+        """
+        self.closed = closed
+        self.closed_by = closed_by
+        self.closed_at = closed_at
+        self.close_reason = close_reason
+        self.close_message = close_message
         self.save()
         self.invalidate_cached_data()
 
