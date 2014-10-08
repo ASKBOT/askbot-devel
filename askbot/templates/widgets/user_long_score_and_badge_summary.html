@@ -9,7 +9,7 @@
       data-url="{% url 'get_perms_data' %}"
     >{% trans %}karma:{% endtrans %} {{user.reputation}}</a>{% if settings.BADGES_MODE == 'public' and have_badges %}, {% endif -%}
     {%- endif -%}
-    {%- if badges_mode == 'public' and have_badges -%}
+    {%- if settings.BADGES_MODE == 'public' and have_badges -%}
       <a class="user-micro-info"
          href="{{ user.get_absolute_url() }}#badges"
       ><span title="{{ user.get_badge_summary() }}">{% trans %}badges:{% endtrans %}
