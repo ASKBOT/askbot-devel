@@ -3,7 +3,7 @@ import datetime
 import sys
 from south.db import db
 from south.v2 import DataMigration
-from django.db import models
+from django.db import models, transaction
 
 from askbot.migrations import TERM_RED_BOLD, TERM_GREEN, TERM_RESET
 from askbot.utils.console import ProgressBar

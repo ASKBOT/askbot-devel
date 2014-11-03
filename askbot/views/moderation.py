@@ -158,7 +158,7 @@ def moderate_post_edits(request):
     if not request.user.is_administrator_or_moderator():
         raise exceptions.PermissionDenied()
 
-    post_data = simplejson.loads(request.raw_post_data)
+    post_data = simplejson.loads(request.body)
     #{'action': 'decline-with-reason', 'items': ['posts'], 'reason': 1, 'edit_ids': [827]}
 
     memo_set = models.ActivityAuditStatus.objects.filter(id__in=post_data['edit_ids'])

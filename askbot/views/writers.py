@@ -4,7 +4,6 @@
 
 This module contains views that allow adding, editing, and deleting main textual content.
 """
-import datetime
 import logging
 import os
 import os.path
@@ -21,7 +20,7 @@ from django.http import HttpResponseBadRequest
 from django.http import HttpResponseForbidden
 from django.http import HttpResponseRedirect
 from django.http import Http404
-from django.utils import simplejson
+from django.utils import simplejson, timezone
 from django.utils.html import strip_tags, escape
 from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
@@ -228,7 +227,7 @@ def ask(request):#view used to ask a new question
     if request.method == 'POST':
         form = forms.AskForm(request.POST, user=request.user)
         if form.is_valid():
-            timestamp = datetime.datetime.now()
+            timestamp = timezone.now()
             title = form.cleaned_data['title']
             wiki = form.cleaned_data['wiki']
             tagnames = form.cleaned_data['tags']

@@ -23,6 +23,7 @@ from django.core.paginator import Paginator
 from django.db.models import signals as django_signals
 from django.template import Context
 from django.template.loader import get_template
+from django.utils import timezone
 from django.utils.translation import get_language
 from django.utils.translation import string_concat
 from django.utils.translation import ugettext as _
@@ -207,7 +208,7 @@ User.add_to_class(
     )
 )
 User.add_to_class('last_seen',
-                  models.DateTimeField(default=datetime.datetime.now))
+                  models.DateTimeField(default=timezone.now))
 User.add_to_class('real_name', models.CharField(max_length=100, blank=True))
 User.add_to_class('website', models.URLField(max_length=200, blank=True))
 #location field is actually city
@@ -721,7 +722,7 @@ def user_assert_can_unaccept_best_answer(self, answer = None):
                 days=askbot_settings.MIN_DAYS_FOR_STAFF_TO_ACCEPT_ANSWER)
         )
 
-        if datetime.datetime.now() < will_be_able_at:
+        if timezone.now() < will_be_able_at:
             error_message = _(message_keys.CANNOT_PERFORM_ACTION_UNTIL) % {
                 'perform_action': askbot_settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER,
                 'until': will_be_able_at.strftime('%d/%m/%Y')
@@ -846,7 +847,7 @@ def user_assert_can_edit_comment(self, comment = None):
     else:
         if comment.author == self:
             if askbot_settings.USE_TIME_LIMIT_TO_EDIT_COMMENT:
-                now = datetime.datetime.now()
+                now = timezone.now()
                 delta_seconds = 60 * askbot_settings.MINUTES_TO_EDIT_COMMENT
                 if now - comment.added_at > datetime.timedelta(0, delta_seconds):
                     if comment.is_last():
@@ -1200,7 +1201,7 @@ def user_assert_can_revoke_old_vote(self, vote):
     """raises exceptions.PermissionDenied if old vote
     cannot be revoked due to age of the vote
     """
-    if (datetime.datetime.now().day - vote.voted_at.day) \
+    if (timezone.now().day - vote.voted_at.day) \
         >= askbot_settings.MAX_DAYS_TO_CANCEL_VOTE:
         raise django_exceptions.PermissionDenied(
             _('sorry, but older votes cannot be revoked')
@@ -1238,7 +1239,7 @@ def user_post_comment(
     if parent_post is None:
         raise ValueError('parent_post is required to post comment')
     if timestamp is None:
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
 
     self.assert_can_post_comment(parent_post = parent_post)
 
@@ -1616,7 +1617,7 @@ def user_delete_all_content_authored_by_user(self, author, timestamp=None):
 
     #delete answers
     answers = Post.objects.get_answers().filter(author=author)
-    timestamp = timestamp or datetime.datetime.now()
+    timestamp = timestamp or timezone.now()
     count += answers.update(deleted_at=timestamp, deleted_by=self, deleted=True)
 
     #delete questions
@@ -1752,7 +1753,7 @@ def user_post_question(
     if tags is None:
         raise ValueError('Tags are required to post question')
     if timestamp is None:
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
 
     #todo: split this into "create thread" + "add question", if text exists
     #or maybe just add a blank question post anyway
@@ -2012,7 +2013,7 @@ def user_post_answer(
 
         delta = datetime.timedelta(askbot_settings.MIN_DAYS_TO_ANSWER_OWN_QUESTION)
 
-        now = datetime.datetime.now()
+        now = timezone.now()
         asked = question.added_at
         #todo: this is an assertion, must be moved out
         if (now - asked  < delta and self.reputation < askbot_settings.MIN_REP_TO_ANSWER_OWN_QUESTION):
@@ -2054,7 +2055,7 @@ def user_post_answer(
     if body_text is None:
         raise ValueError('Body text is required to post answer')
     if timestamp is None:
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
 #    answer = Answer.objects.create_new(
 #        thread = question.thread,
 #        author = self,
@@ -2094,7 +2095,7 @@ def user_visit_question(self, question = None, timestamp = None):
     the post - question, answer or comments
     """
     if timestamp is None:
-        timestamp = datetime.datetime.now()
+        timestamp = timezone.now()
 
     try:
         QuestionView.objects.filter(
@@ -2619,7 +2620,7 @@ def toggle_favorite_question(
 
     except FavoriteQuestion.DoesNotExist:
         if timestamp is None:
-            timestamp = datetime.datetime.now()
+            timestamp = timezone.now()
         fave = FavoriteQuestion(
             thread = question.thread,
             user = self,
@@ -3507,7 +3508,7 @@ def record_answer_accepted(instance, created, **kwargs):
     if not created and instance.accepted():
         activity = Activity(
                         user=question.author,
-                        active_at=datetime.datetime.now(),
+                        active_at=timezone.now(),
                         content_object=question,
                         activity_type=const.TYPE_ACTIVITY_MARK_ANSWER,
                         question=question
@@ -3523,7 +3524,7 @@ def record_user_visit(user, timestamp, **kwargs):
     when user visits any pages, we update the last_seen and
     consecutive_days_visit_count
     """
-    prev_last_seen = user.last_seen or datetime.datetime.now()
+    prev_last_seen = user.last_seen or timezone.now()
     user.last_seen = timestamp
     consecutive_days = user.consecutive_days_visit_count
     if (user.last_seen.date() - prev_last_seen.date()).days == 1:
@@ -3569,7 +3570,7 @@ def record_cancel_vote(instance, **kwargs):
     """
     activity = Activity(
                     user=instance.user,
-                    active_at=datetime.datetime.now(),
+                    active_at=timezone.now(),
                     content_object=instance,
                     activity_type=const.TYPE_ACTIVITY_CANCEL_VOTE
                 )
@@ -3592,7 +3593,7 @@ def record_delete_question(instance, delete_by, **kwargs):
 
     activity = Activity(
                     user=delete_by,
-                    active_at=datetime.datetime.now(),
+                    active_at=timezone.now(),
                     content_object=instance,
                     activity_type=activity_type,
                     question = instance.get_origin_post()
@@ -3603,7 +3604,7 @@ def record_delete_question(instance, delete_by, **kwargs):
 def record_flag_offensive(instance, mark_by, **kwargs):
     activity = Activity(
                     user=mark_by,
-                    active_at=datetime.datetime.now(),
+                    active_at=timezone.now(),
                     content_object=instance,
                     activity_type=const.TYPE_ACTIVITY_MARK_OFFENSIVE,
                     question=instance.get_origin_post()
@@ -3646,7 +3647,7 @@ def record_update_tags(thread, tags, user, timestamp, **kwargs):
 
     activity = Activity(
                     user=user,
-                    active_at=datetime.datetime.now(),
+                    active_at=timezone.now(),
                     content_object=question,
                     activity_type=const.TYPE_ACTIVITY_UPDATE_TAGS,
                     question = question
@@ -3660,7 +3661,7 @@ def record_favorite_question(instance, created, **kwargs):
     if created:
         activity = Activity(
                         user=instance.user,
-                        active_at=datetime.datetime.now(),
+                        active_at=timezone.now(),
                         content_object=instance,
                         activity_type=const.TYPE_ACTIVITY_FAVORITE,
                         question=instance.thread._question_post()
@@ -3674,7 +3675,7 @@ def record_favorite_question(instance, created, **kwargs):
 def record_user_full_updated(instance, **kwargs):
     activity = Activity(
                     user=instance,
-                    active_at=datetime.datetime.now(),
+                    active_at=timezone.now(),
                     content_object=instance,
                     activity_type=const.TYPE_ACTIVITY_USER_FULL_UPDATED
                 )

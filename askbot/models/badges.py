@@ -584,6 +584,7 @@ class Necromancer(Badge):
         question = answer.thread._question_post()
         delta = datetime.timedelta(askbot_settings.NECROMANCER_BADGE_MIN_DELAY)
         min_score = askbot_settings.NECROMANCER_BADGE_MIN_UPVOTES
+        print answer.added_at, question.added_at
         if answer.added_at - question.added_at >= delta \
             and answer.points >= min_score:
             return self.award(answer.author, answer, timestamp)

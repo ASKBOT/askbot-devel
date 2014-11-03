@@ -20,7 +20,7 @@ from django.http import HttpResponseBadRequest
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.template.loader import get_template
 from django.template import RequestContext
-from django.utils import simplejson
+from django.utils import simplejson, timezone
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
@@ -561,7 +561,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
                 update_view_count = True
 
         request.session['question_view_times'][question_post.id] = \
-                                                    datetime.datetime.now()
+                                                    timezone.now()
 
         #2) run the slower jobs in a celery task
         from askbot import tasks

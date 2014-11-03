@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core import urlresolvers
 from django.db import models
 from django.utils import html as html_utils
-from django.utils.text import truncate_html_words
+from django.utils.text import Truncator
 from django.utils.translation import activate as activate_language
 from django.utils.translation import get_language
 from django.utils.translation import ugettext as _
@@ -970,7 +970,7 @@ class Post(models.Model):
         #the issue is that code blocks have few words
         #but very tall, while paragraphs can be dense on words
         #and fit into fewer lines
-        truncated = truncate_html_words(self.html, max_words)
+        truncated = Truncator(self.html).words(max_words, truncate=' ...', html=True)
         new_count = get_word_count(truncated)
         orig_count = get_word_count(self.html)
         if new_count + 1 < orig_count:

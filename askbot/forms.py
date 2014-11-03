@@ -1,13 +1,13 @@
 """Forms, custom form fields and related utility functions
 used in AskBot"""
 import re
-import datetime
 from django import forms
 from askbot import const
 from askbot.const import message_keys
 from django.conf import settings as django_settings
 from django.core.exceptions import PermissionDenied
 from django.forms.util import ErrorList
+from django.utils import timezone
 from django.utils.html import strip_tags
 from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext_lazy as _
@@ -1176,7 +1176,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
             body_text = text,
             wiki = wiki,
             is_private = is_private,
-            timestamp = datetime.datetime.now(),
+            timestamp = timezone.now(),
             ip_addr=ip_addr
         )
 
@@ -1677,7 +1677,7 @@ class GetUserItemsForm(forms.Form):
     user_id = forms.IntegerField()
 
 class NewCommentForm(forms.Form):
-    comment = forms.CharField(max)
+    comment = forms.CharField()
     post_id = forms.IntegerField()
     def __init__(self, *args, **kwargs):
         super(NewCommentForm, self).__init__(*args, **kwargs)
