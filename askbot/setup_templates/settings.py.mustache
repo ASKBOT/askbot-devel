@@ -1,9 +1,10 @@
 ## Django settings for ASKBOT enabled project.
 import os.path
 import logging
-import sys
 import askbot
 import site
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 #this line is added so that we can import pre-packaged askbot dependencies
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
@@ -193,8 +194,11 @@ INSTALLED_APPS = (
 
 
 #setup memcached for production use!
-#see http://docs.djangoproject.com/en/1.1/topics/cache/ for details
-CACHE_BACKEND = 'locmem://'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 #needed for django-keyedcache
 CACHE_TIMEOUT = 6000
 #sets a special timeout for livesettings if you want to make them different
@@ -324,3 +328,7 @@ JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
 SOUTH_TESTS_MIGRATE = False
 
 VERIFIER_EXPIRE_DAYS = 3
+
+# just for compatible with django1.5
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

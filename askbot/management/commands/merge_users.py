@@ -19,23 +19,19 @@ class MergeUsersBaseCommand(BaseCommand):
         self.parse_arguments(*arguments)
         
         for rel in User._meta.get_all_related_objects():
-            sid = transaction.savepoint()
             try:
-                self.process_field(rel.model, rel.field.name)
-                transaction.savepoint_commit(sid)
+                with transaction.atomic():
+                    self.process_field(rel.model, rel.field.name)
             except Exception, error:
                 self.stdout.write((u'Warning: %s\n' % error).encode('utf-8'))
-                transaction.savepoint_rollback(sid)
             transaction.commit()
 
         for rel in User._meta.get_all_related_many_to_many_objects():
-            sid = transaction.savepoint()
             try:
-                self.process_m2m_field(rel.model, rel.field.name)
-                transaction.savepoint_commit(sid)
+                with transaction.atomic():
+                    self.process_m2m_field(rel.model, rel.field.name)
             except Exception, error:
                 self.stdout.write((u'Warning: %s\n' % error).encode('utf-8'))
-                transaction.savepoint_rollback(sid)
             transaction.commit()
 
         self.process_custom_user_fields()
