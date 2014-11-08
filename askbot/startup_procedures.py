@@ -972,16 +972,16 @@ def test_versions():
 
     #if django version is >= 1.5, require python 2.6.5 or higher
     dj_ver = django.VERSION
-    if dj_ver[:2] > (1, 5):
+    if dj_ver[:2] > (1, 6):
         errors.append(
-            'Highest major version of django supported is 1.5 '
+            'Highest major version of django supported is 1.6 '
             'if you would like to try newer version add setting.'
         )
-    elif dj_ver[0:2] == (1, 5) and py_ver[:3] < (2, 6, 4):
+    elif dj_ver[0:2] == (1, 6) and py_ver[:3] < (2, 7, 1):
         errors.append(
-            'Django 1.5 and higher requires Python '
-            'version 2.6.4 or higher, please see release notes.\n'
-            'https://docs.djangoproject.com/en/dev/releases/1.5/'
+            'Django 1.6 and higher requires Python '
+            'version 2.7.1 or higher, please see release notes.\n'
+            'https://docs.djangoproject.com/en/dev/releases/1.6/'
         )
 
     print_errors(errors)

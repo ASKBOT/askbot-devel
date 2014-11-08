@@ -124,6 +124,7 @@ MIDDLEWARE_CLASSES = (
     'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
+ATOMIC_REQUESTS = True
 
 ROOT_URLCONF = os.path.basename(os.path.dirname(__file__)) + '.urls'
 

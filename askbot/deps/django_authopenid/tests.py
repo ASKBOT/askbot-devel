@@ -17,6 +17,6 @@ class LoginFormTests(TestCase):
         result = form.is_valid()
         #print form.errors
         self.assertFalse(result)
-        self.assertEquals(form.initial['new_password'], None)
+        self.assertEquals(form.initial.get('new_password'), None)
         #self.assertFalse('new_password_retyped' in form.cleaned_data)
 

@@ -13,8 +13,8 @@ VERSION = (0, 7, 49)
 #values - the package qualifier to use for pip
 REQUIREMENTS = {
     'akismet': 'akismet',
-    'django': 'django>=1.3.1',
-    'compressor': 'django-compressor==1.2',
+    'django': 'django>=1.3.1,<1.7',
+    'compressor': 'django-compressor>=1.3',
     'jinja2': 'Jinja2',
     'coffin': 'Coffin>=0.3',
     'south': 'South>=0.7.1',
@@ -34,7 +34,7 @@ REQUIREMENTS = {
     'openid': 'python-openid',
     'pystache': 'pystache==0.3.1',
     'pytz': 'pytz==2013b',
-    'tinymce': 'django-tinymce==1.5.1b2',
+    'tinymce': 'django-tinymce>=1.5.3',
     'longerusername': 'longerusername',
     'bs4': 'beautifulsoup4',
     'picklefield': 'django-picklefield==0.3.0',

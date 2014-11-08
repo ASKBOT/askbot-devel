@@ -202,7 +202,7 @@ def sanitize_html(html):
 
 def site_url(url):
     from askbot.conf import settings
-    base_url = urlparse(settings.APP_URL)
+    base_url = urlparse(settings.APP_URL or 'http://localhost/')
     return base_url.scheme + '://' + base_url.netloc + url
 
 def site_link(url_name, title):
