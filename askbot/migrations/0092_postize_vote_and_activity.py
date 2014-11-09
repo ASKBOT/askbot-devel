@@ -33,7 +33,9 @@ class Migration(DataMigration):
 
         # ContentType for Post model might not yet be present in the database
         # (if migrations are applied in a row then contenttypes update is not called between them)
+        transaction.set_autocommit(True)
         ct_post, c = orm['contenttypes.ContentType'].objects.get_or_create(app_label='askbot', model='post', defaults={'name': 'post'})
+        transaction.set_autocommit(False)
 
         abandoned_activities = []
 
