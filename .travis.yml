@@ -2,7 +2,7 @@ language: python
 python:
   - "2.7"
 install:
-  - pip install -q -r askbot_requirement_dev.txt
+  - pip install -q -r askbot_requirements_dev.txt
   - python setup.py develop
 before_script:
   - askbot-setup -n . -e2 -d data.db
