@@ -2,10 +2,10 @@ language: python
 python:
   - "2.7"
 install:
-  - python setup.py develop
-  - pip install git+git://github.com/coffin/coffin.git@master git+git://github.com/saltduck/django-followit.git@support_django1.6
-before_script:
+  - python setup.py -q develop
   - askbot-setup -n . -e2 -d data.db
-  - python manage.py syncdb --migrate --noinput
+  - pip install -q -U git+git://github.com/coffin/coffin.git@master git+git://github.com/saltduck/django-followit.git@support_django1.6
+before_script:
+  - python manage.py syncdb --migrate --noinput -v0
 script:
   - python manage.py test askbot
