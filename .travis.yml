@@ -6,5 +6,6 @@ install:
   - python setup.py develop
 before_script:
   - askbot-setup -n . -e2 -d data.db
+  - python manage.py syncdb --migrate
 script:
   - python manage.py test askbot
