@@ -261,19 +261,19 @@ var notify = function() {
                 var par = $('<p class="notification"></p>');
                 par.html(html);
                 $(".notify").prepend(par);
-            }          
+            }
             $(".notify").fadeIn("slow");
             visible = true;
             if (autohide) {
                 setTimeout(
-                    function() { 
+                    function() {
                         notify.close(false);
                         notify.clear();
                     },
                     3000
                 );
             }
-        },       
+        },
         clear: function() {
             $('.notify').empty();
         },
@@ -287,8 +287,8 @@ var notify = function() {
             $(".notify").fadeOut("fast");
             $('body').removeClass('user-messages');
             visible = false;
-        },     
-        isVisible: function() { return visible; }     
+        },
+        isVisible: function() { return visible; }
     };
 }();
 
@@ -439,7 +439,7 @@ WrappedElement.prototype.setElement = function(element){
     this._element = element;
 };
 
-/** 
+/**
  * this function must be overridden for any object
  * what will use "DOM generation" pattern
  *
@@ -470,7 +470,7 @@ WrappedElement.prototype.decorate = function(element){
  * Normally you call this method to generate the dom
  * structure, if applicable, or just obtain the
  * jQuery object encapsulating the dom.
- * 
+ *
  * @return {object} jQuery
  */
 WrappedElement.prototype.getElement = function(){
@@ -514,7 +514,7 @@ WrappedElement.prototype.dispose = function(){
     this._in_document = false;
 };
 
-/** 
+/**
  * @constructor
  * a loader
  */
@@ -550,7 +550,7 @@ WaitIcon.prototype.createDom = function() {
     var img = this.makeElement('img');
     img.attr('src', mediaUrl('media/images/ajax-loader.gif'));
     box.append(img);
-    this.setVisible(this._isVisible); 
+    this.setVisible(this._isVisible);
 };
 
 var Paginator = function() {
@@ -558,7 +558,7 @@ var Paginator = function() {
 };
 inherits(Paginator, WrappedElement);
 
-/** 
+/**
  * A mandotory method.
  * this method needs to be implemented by the subclass
  * @interface
@@ -577,7 +577,7 @@ Paginator.prototype.getPageDataUrl = function(pageNo) {
     throw 'implement me in the subclass';
 };
 
-/** 
+/**
  * Optional method
  * @interface - implement in subclass
  * returns url parameters for the page request
@@ -746,9 +746,9 @@ Paginator.prototype.createButton = function(cls, label) {
 
 Paginator.prototype.getPageButtonHandler = function(pageNo) {
     var me = this;
-    return function() { 
+    return function() {
         if (me.getCurrentPageNo() !== pageNo) {
-            me.startLoadingPageData(pageNo); 
+            me.startLoadingPageData(pageNo);
         }
         return false;
     };
@@ -776,7 +776,7 @@ Paginator.prototype.decorate = function(element) {
     }
 
     var currPageNo = element.find('.curr').data('page');
-    
+
     //next page button
     var nextPage = element.find('.next');
     this._nextPageButton = nextPage;
@@ -805,7 +805,7 @@ Paginator.prototype.decorate = function(element) {
  * makes images never take more spaces then they can take
  * @param {<Array>} breakPoints
  * @param {number} maxWidth
- * an array of array values like (min-width, width-offset) 
+ * an array of array values like (min-width, width-offset)
  * where min-width is screen minimum width
  * width-offset - difference between the actual screen width and
  * max-width of the image.
@@ -960,7 +960,7 @@ Widget.prototype.makeButton = function(label, handler) {
  * Can be used for an input box or textarea.
  * The original value will be treated as an instruction.
  * When user focuses on the field, the tip will be gone,
- * when the user escapes without typing anything besides 
+ * when the user escapes without typing anything besides
  * perhaps empty text, the instruction is restored.
  * When instruction is shown, class "blank" is present
  * in the input/textare element.
@@ -968,7 +968,7 @@ Widget.prototype.makeButton = function(label, handler) {
  * For the usage examples - search for "new TippedInput"
  * there is at least one example for both - decoration and
  * the "dom creation" patterns.
- * 
+ *
  * Also - in the FileUploadDialog the TippedInput is used
  * as a sub-element - the widget composition use case.
  */
@@ -1042,14 +1042,14 @@ TippedInput.prototype.createDom = function() {
 /**
  * Attaches the TippedInput behavior to
  * a pre-existing <input> element
- * 
+ *
  * decorate() method normally does not create
  * new dom elements, but it might add some missing elements,
  * if necessary.
  *
  * for example the decorate might be composing inside
  * a more complex widget, in which case other elements
- * can be added via a "composition" pattern, or 
+ * can be added via a "composition" pattern, or
  * just "naked dom elements" added to the current widget's element
  *
  */
@@ -1728,7 +1728,7 @@ FileUploadDialog.prototype.startFileUpload = function(startUploadHandler) {
     var spinner = this._spinner;
     var label = this._label;
 
-    spinner.ajaxStart(function(){ 
+    spinner.ajaxStart(function(){
         spinner.show();
         label.hide();
     });
@@ -1781,7 +1781,7 @@ FileUploadDialog.prototype.startFileUpload = function(startUploadHandler) {
 
             /* re-install this as the upload extension
              * will remove the handler to prevent double uploading
-             * this hack is a manipulation around the 
+             * this hack is a manipulation around the
              * ajaxFileUpload jQuery plugin. */
             me.installFileUploadHandler(startUploadHandler);
         },
@@ -2141,11 +2141,11 @@ TwoStateToggle.prototype.decorate = function(element){
     var messages = {};
     messages['on-state'] =
         element.attr('data-on-state-text') || gettext('enabled');
-    messages['off-state'] = 
+    messages['off-state'] =
         element.attr('data-off-state-text') || gettext('disabled');
     messages['on-prompt'] =
         element.attr('data-on-prompt-text') || messages['on-state'];
-    messages['off-prompt'] = 
+    messages['off-prompt'] =
         element.attr('data-off-prompt-text') || messages['off-state'];
     this._state_messages = messages;
 
@@ -2424,7 +2424,7 @@ SelectBox.prototype.empty = function() {
     this._items = [];
 };
 
-/* 
+/*
  * why do we have these two almost identical methods?
  * the difference seems to be remove/vs fade out
  */
@@ -2563,12 +2563,12 @@ SelectBox.prototype.createDom = function() {
 };
 
 /**
- * This is a dropdown list elment 
+ * This is a dropdown list elment
  */
 
 var GroupDropdown = function(groups){
     WrappedElement.call(this);
-    this._group_list = groups; 
+    this._group_list = groups;
 };
 inherits(GroupDropdown, WrappedElement);
 
@@ -2610,7 +2610,7 @@ GroupDropdown.prototype.createDom =  function(){
  */
 GroupDropdown.prototype.insertGroup = function(group_name, url){
 
-    //1) take out first and last list elements: 
+    //1) take out first and last list elements:
     // everyone and the "add group" item
     var list = this._element.children();
     var everyoneGroup = list.first().detach();
@@ -2688,7 +2688,7 @@ GroupDropdown.prototype._add_group_handler = function(group_name){
                 } else {
                     me.insertGroup(data['group_name'], data['url']);
                     me.setState('display');
-                    return true; 
+                    return true;
                 }
             } else{
                 notify.show(data['message']);
@@ -2701,14 +2701,14 @@ GroupDropdown.prototype._add_group_handler = function(group_name){
 
 GroupDropdown.prototype.enableAddGroups = function(){
     var self = this;
-    this._add_link.click(function(){ 
+    this._add_link.click(function(){
         self._add_link.hide();
-        self._input_box_element.show(); 
-        self._input_box_element.focus(); 
+        self._input_box_element.show();
+        self._input_box_element.focus();
     });
     this._input_box_element.keydown(function(event){
         if (event.which == 13 || event.keyCode==13){
-            self._add_group_handler(); 
+            self._add_group_handler();
             self._input_box_element.val('');
         }
     });
@@ -3757,7 +3757,7 @@ AutoCompleter.prototype.isContentChar = function(symbol){
  * and saves _selection_start and _selection_end coordinates
  * respects settings autocompleteMultiple and
  * multipleSeparator
- * @return {string} the current word in the 
+ * @return {string} the current word in the
  * autocompletable word
  */
 AutoCompleter.prototype.getValue = function(){
@@ -3796,7 +3796,7 @@ AutoCompleter.prototype.getValue = function(){
     return text.substring(start, end);
 }
 
-/** 
+/**
  * sets value of the input box
  * by replacing the previous selection
  * with the value from the autocompleter
@@ -3862,209 +3862,3 @@ AutoCompleter.prototype.selectRange = function(start, end) {
 AutoCompleter.prototype.setCaret = function(pos) {
     this.selectRange(pos, pos);
 };
-
-(function($){function isRGBACapable(){var $script=$("script:first"),color=$script.css("color"),result=false;if(/^rgba/.test(color)){result=true}else{try{result=(color!=$script.css("color","rgba(0, 0, 0, 0.5)").css("color"));$script.css("color",color)}catch(e){}}return result}$.extend(true,$,{support:{rgba:isRGBACapable()}});var properties=["color","backgroundColor","borderBottomColor","borderLeftColor","borderRightColor","borderTopColor","outlineColor"];$.each(properties,function(i,property){$.fx.step[property]=function(fx){if(!fx.init){fx.begin=parseColor($(fx.elem).css(property));fx.end=parseColor(fx.end);fx.init=true}fx.elem.style[property]=calculateColor(fx.begin,fx.end,fx.pos)}});$.fx.step.borderColor=function(fx){if(!fx.init){fx.end=parseColor(fx.end)}var borders=properties.slice(2,6);$.each(borders,function(i,property){if(!fx.init){fx[property]={begin:parseColor($(fx.elem).css(property))}}fx.elem.style[property]=calculateColor(fx[property].begin,fx.end,fx.pos)});fx.init=true};function calculateColor(begin,end,pos){var color="rgb"+($.support.rgba?"a":"")+"("+parseInt((begin[0]+pos*(end[0]-begin[0])),10)+","+parseInt((begin[1]+pos*(end[1]-begin[1])),10)+","+parseInt((begin[2]+pos*(end[2]-begin[2])),10);if($.support.rgba){color+=","+(begin&&end?parseFloat(begin[3]+pos*(end[3]-begin[3])):1)}color+=")";return color}function parseColor(color){var match,triplet;if(match=/#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/.exec(color)){triplet=[parseInt(match[1],16),parseInt(match[2],16),parseInt(match[3],16),1]}else{if(match=/#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])/.exec(color)){triplet=[parseInt(match[1],16)*17,parseInt(match[2],16)*17,parseInt(match[3],16)*17,1]}else{if(match=/rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(color)){triplet=[parseInt(match[1]),parseInt(match[2]),parseInt(match[3]),1]}else{if(match=/rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9\.]*)\s*\)/.exec(color)){triplet=[parseInt(match[1],10),parseInt(match[2],10),parseInt(match[3],10),parseFloat(match[4])]}else{if(color=="transparent"){triplet=[0,0,0,0]}}}}}return triplet}})(jQuery);
-
-/**
- * Timeago is a jQuery plugin that makes it easy to support automatically
- * updating fuzzy timestamps (e.g. "4 minutes ago" or "about 1 day ago").
- *
- * @name timeago
- * @version 0.11.1
- * @requires jQuery v1.2.3+
- * @author Ryan McGeary
- * @license MIT License - http://www.opensource.org/licenses/mit-license.php
- *
- * For usage and examples, visit:
- * http://timeago.yarp.com/
- *
- * Copyright (c) 2008-2011, Ryan McGeary (ryanonjavascript -[at]- mcgeary [*dot*] org)
- */
-(function($) {
-  $.timeago = function(timestamp) {
-    if (timestamp instanceof Date) {
-      return inWords(timestamp);
-    } else if (typeof timestamp === "string") {
-      return inWords($.timeago.parse(timestamp));
-    } else {
-      return inWords($.timeago.datetime(timestamp));
-    }
-  };
-  var $t = $.timeago;
-
-  $.extend($.timeago, {
-    settings: {
-      refreshMillis: 60000,
-      allowFuture: false,
-      strings: {
-        prefixAgo: null,
-        prefixFromNow: null,
-        suffixAgo: gettext("ago"),
-        suffixFromNow: gettext("from now"),
-        seconds: gettext("just now"),
-        minute: gettext("about a minute"),
-        minutes: gettext("%d minutes"),
-        hour: gettext("about an hour"),
-        hours: gettext("%d hours"),
-        day: gettext("yesterday"),
-        days: gettext("%d days"),
-        month: gettext("about a month"),
-        months: gettext("%d months"),
-        year: gettext("about a year"),
-        years: gettext("%d years"),
-        wordSeparator: " ",
-        numbers: []
-      }
-    },
-    inWords: function(distanceMillis) {
-      var $l = this.settings.strings;
-      var prefix = $l.prefixAgo;
-      var suffix = $l.suffixAgo;
-      if (this.settings.allowFuture) {
-        if (distanceMillis < 0) {
-          prefix = $l.prefixFromNow;
-          suffix = $l.suffixFromNow;
-        }
-      }
-
-      var seconds = Math.abs(distanceMillis) / 1000;
-      var minutes = seconds / 60;
-      var hours = minutes / 60;
-      var days = hours / 24;
-      var years = days / 365;
-
-      function substitute(stringOrFunction, number) {
-        var string = $.isFunction(stringOrFunction) ? stringOrFunction(number, distanceMillis) : stringOrFunction;
-        var value = ($l.numbers && $l.numbers[number]) || number;
-        return string.replace(/%d/i, value);
-      }
-
-      var words = seconds < 45 && substitute($l.seconds, Math.round(seconds)) ||
-        seconds < 90 && substitute($l.minute, 1) ||
-        minutes < 45 && substitute($l.minutes, Math.round(minutes)) ||
-        minutes < 90 && substitute($l.hour, 1) ||
-        hours < 24 && substitute($l.hours, Math.round(hours)) ||
-        hours < 42 && substitute($l.day, 1) ||
-        days < 30 && substitute($l.days, Math.round(days)) ||
-        days < 45 && substitute($l.month, 1) ||
-        days < 365 && substitute($l.months, Math.round(days / 30)) ||
-        years < 1.5 && substitute($l.year, 1) ||
-        substitute($l.years, Math.round(years));
-
-      var separator = $l.wordSeparator === undefined ?  " " : $l.wordSeparator;
-      return $.trim([prefix, words, suffix].join(separator));
-    },
-    parse: function(iso8601) {
-      var s = $.trim(iso8601);
-      s = s.replace(/\.\d\d\d+/,""); // remove milliseconds
-      s = s.replace(/-/,"/").replace(/-/,"/");
-      s = s.replace(/T/," ").replace(/Z/," UTC");
-      s = s.replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2"); // -04:00 -> -0400
-      return new Date(s);
-    },
-    datetime: function(elem) {
-      // jQuery's `is()` doesn't play well with HTML5 in IE
-      var isTime = $(elem).get(0).tagName.toLowerCase() === "time"; // $(elem).is("time");
-      var iso8601 = isTime ? $(elem).attr("datetime") : $(elem).attr("title");
-      return $t.parse(iso8601);
-    }
-  });
-
-  $.fn.timeago = function() {
-    var self = this;
-    self.each(refresh);
-
-    var $s = $t.settings;
-    if ($s.refreshMillis > 0) {
-      setInterval(function() { self.each(refresh); }, $s.refreshMillis);
-    }
-    return self;
-  };
-
-  function refresh() {
-    var data = prepareData(this);
-    if (!isNaN(data.datetime)) {
-      $(this).text(inWords(data.datetime));
-    }
-    return this;
-  }
-
-  function prepareData(element) {
-    element = $(element);
-    if (!element.data("timeago")) {
-      element.data("timeago", { datetime: $t.datetime(element) });
-      var text = $.trim(element.text());
-      if (text.length > 0) {
-        element.attr("title", text);
-      }
-    }
-    return element.data("timeago");
-  }
-
-  function inWords(date) {
-    var distanceMillis = distance(date);
-    var seconds = Math.abs(distanceMillis) / 1000;
-    var minutes = seconds / 60;
-    var hours = minutes / 60;
-    var days = hours / 24;
-    var years = days / 365;
-    var months = [
-        gettext('Jan'),
-        gettext('Feb'),
-        gettext('Mar'),
-        gettext('Apr'),
-        gettext('May'),
-        gettext('Jun'),
-        gettext('Jul'),
-        gettext('Aug'),
-        gettext('Sep'),
-        gettext('Oct'),
-        gettext('Nov'),
-        gettext('Dec')
-    ];
-    //todo: rewrite this in javascript
-    if (days > 2){
-        var month_date = months[date.getMonth()] + ' ' + date.getDate()
-        if (years == 0){
-            //how to do this in js???
-            return month_date;
-        } else {
-            return month_date + ' ' + "'" + date.getYear() % 20;
-        }
-    } else if (days == 2) {
-        return gettext('2 days ago')
-    } else if (days == 1) {
-        return gettext('yesterday')
-    } else if (minutes >= 60) {
-        var wholeHours = Math.floor(hours);
-        return interpolate(
-                    ngettext(
-                        '%s hour ago',
-                        '%s hours ago',
-                        wholeHours
-                    ),
-                    [wholeHours,]
-                )
-    } else if (seconds > 90){
-        var wholeMinutes = Math.floor(minutes);
-        return interpolate(
-                    ngettext(
-                        '%s min ago',
-                        '%s mins ago',
-                        wholeMinutes
-                    ),
-                    [wholeMinutes,]
-                )
-    } else {
-        return gettext('just now')
-    }
-  }
-
-  function distance(date) {
-    return (new Date() - date);
-  }
-
-  // fix for IE6 suckage
-  document.createElement("abbr");
-  document.createElement("time");
-}(jQuery));
