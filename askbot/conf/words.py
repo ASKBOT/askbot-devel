@@ -18,6 +18,17 @@ WORDS = ConfigurationGroup(
 settings.register(
     values.StringValue(
         WORDS,
+        'WORDS_LOGIN_SIGNUP_LINK_TEXT',
+        default=_('Hi there! Please sign in'),
+        description=_('Log in/Sign up text'),
+        help_text=_('Text for the link to log in/sign up.'),
+        localized=True
+    )
+)
+
+settings.register(
+    values.StringValue(
+        WORDS,
         'WORDS_ASK_YOUR_QUESTION',
         default=_('Ask Your Question'),
         description=_('Ask Your Question'),

@@ -18,7 +18,7 @@
     <a 
         class="login"
         href="{{ settings.LOGIN_URL }}?next={{request.path|clean_login_url|escape}}{% if space %}&amp;space={{ space }}{% endif %}"
-    >{% trans %}Hi there! Please sign in{% endtrans %}</a>
+    >{{ settings.WORDS_LOGIN_SIGNUP_LINK_TEXT }}</a>
 {% endif %}
 {% if request.user.is_authenticated() and request.user.is_administrator() %}
     <a class="settings" href="{% url site_settings %}">{% trans %}settings{% endtrans %}</a>
