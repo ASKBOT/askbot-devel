@@ -16,7 +16,9 @@
         id="askButton"
         class="button"
         href="{{ search_state.full_ask_url(group_id=group_id) }}"
-        >{% if group %}
+        >{% if settings.ASK_BUTTON_TEXT %}
+            {{ settings.ASK_BUTTON_TEXT }}
+        {% elif group %}
             {{ settings.WORDS_ASK_THE_GROUP|escape }}
         {% else %}
             {{ settings.WORDS_ASK_YOUR_QUESTION|escape }}
