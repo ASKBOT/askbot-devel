@@ -1,6 +1,6 @@
 <div class="question-status">
     <h3>{% trans %}Closed for the following reason{% endtrans %}
-      <b>{{ thread.get_close_reason_display() }}</b> {% trans %}by{% endtrans %}
+      <b>{{ thread.get_close_reason_display() }} of <a href="{{thread.close_message}}">{{thread.close_message}}</a></b> {% trans %}by{% endtrans %}
       <i><a href="{{ thread.closed_by.get_profile_url() }}">{{ thread.closed_by.username|escape }}</a> </i><br>
       {% trans closed_at=thread.closed_at %}close date {{ closed_at }}{% endtrans %}</h3>
 </div>
