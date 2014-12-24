@@ -2790,8 +2790,7 @@ PostCommentsWidget.prototype.getAllowEditHandler = function () {
     };
 };
 
-PostCommentsWidget.prototype.getOpenEditorHandler = function(button) {
-PostCommentsWidget.prototype.getOpenEditorHandler = function () {
+PostCommentsWidget.prototype.getOpenEditorHandler = function (button) {
     var me = this;
     return function () {
         //if user can't post, we tell him something and refuse
