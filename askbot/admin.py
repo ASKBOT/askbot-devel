@@ -209,12 +209,6 @@ class QuestionWidgetAdmin(admin.ModelAdmin):
         return obj.search_query.strip() != u''
 admin.site.register(models.QuestionWidget, QuestionWidgetAdmin)
 
-class DraftQuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'title', 'tagnames')
-    list_filter = ('author',)
-    search_fields = ('title', 'tagnames')
-admin.site.register(models.DraftQuestion, DraftQuestionAdmin)
-
 
 from django.contrib.sites.models import Site
 try:
