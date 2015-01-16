@@ -162,6 +162,19 @@ settings.register(
 )
 
 settings.register(
+    livesettings.values.StringValue(
+        FORUM_DATA_RULES,
+        'ASK_BUTTON_TEXT',
+        description=_('Text for big Ask button'),
+        default='',
+        localized=True,
+        help_text=_(
+            'If big Ask button enabled, over-ride its text here.'
+        )
+    )
+)
+
+settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'ENABLE_VIDEO_EMBEDDING',
