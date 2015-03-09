@@ -273,13 +273,17 @@ class SetPasswordForm(forms.Form):
                                     attrs=login_form_widget_attrs,
                                     render_value=True
                                 ),
-                                label=mark_safe(_('Password <i>(please retype)</i>')),
+                                label=_('Password <i>(please retype)</i>'),
                                 error_messages={'required':_('please, retype your password'),
                                                 'nomatch':_('entered passwords did not match, please try again')},
                             )
 
     def __init__(self, data=None, user=None, *args, **kwargs):
         super(SetPasswordForm, self).__init__(data, *args, **kwargs)
+
+        if 'password2' in self.fields:
+            label = self.fields['password2'].label
+            self.fields['password2'].label = mark_safe(label)
 
     def clean_password2(self):
         """
