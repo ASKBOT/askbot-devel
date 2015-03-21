@@ -883,7 +883,7 @@ def delete_comment(request):
             #attn: recalc denormalized field
             parent.comment_count = parent.comments.count()
             parent.save()
-            parent.thread.invalidate_cached_data()
+            parent.thread.reset_cached_data()
 
             avatar_size = form.cleaned_data['avatar_size']
             return __generate_comments_json(parent, request.user, avatar_size)
@@ -979,7 +979,7 @@ def repost_answer_as_comment(request, destination=None):
             answer.parent.comment_count += new_comment_count
             answer.parent.save()
 
-            answer.thread.invalidate_cached_data()
+            answer.thread.reset_cached_data()
         else:
             message = _(
                 'Cannot convert, because text has more characters than '

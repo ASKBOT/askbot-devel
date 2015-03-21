@@ -883,7 +883,8 @@ class Thread(models.Model):
     def increase_view_count(self, increment=1):
         qset = Thread.objects.filter(id=self.id)
         qset.update(view_count=models.F('view_count') + increment)
-        self.view_count = qset.values('view_count')[0]['view_count'] # get the new view_count back because other pieces of code relies on such behaviour
+        # get the new view_count back because other pieces of code relies on such behaviour
+        self.view_count = qset.values('view_count')[0]['view_count']
         ####################################################################
         self.invalidate_cached_summary_html() # regenerate question/thread summary html
         ####################################################################
@@ -894,7 +895,7 @@ class Thread(models.Model):
         self.closed_at = closed_at
         self.close_reason = close_reason
         self.save()
-        self.invalidate_cached_data()
+        self.reset_cached_data()
 
     def set_tags_language_code(self, language_code=None):
         """sets language code to tags of this thread.
@@ -969,10 +970,6 @@ class Thread(models.Model):
     def set_last_activity_info(self, last_activity_at, last_activity_by):
         self.last_activity_at = last_activity_at
         self.last_activity_by = last_activity_by
-        self.save()
-        ####################################################################
-        self.update_summary_html() # regenerate question/thread summary html
-        ####################################################################
 
     def get_last_activity_info(self):
         post_ids = self.get_answers().values_list('id', flat=True)
@@ -992,8 +989,10 @@ class Thread(models.Model):
 
     def update_last_activity_info(self):
         timestamp, user = self.get_last_activity_info()
+
         if timestamp:
             self.set_last_activity_info(timestamp, user)
+            self.save()
 
     def get_tag_names(self):
         "Creates a list of Tag names from the ``tagnames`` attribute."
@@ -1093,12 +1092,6 @@ class Thread(models.Model):
             #                | models.Q(deleted_by=user)
             #            )
 
-    def invalidate_cached_thread_content_fragment(self):
-        """Deprecated alias to a new method"""
-        LOG.warning("""Thread.invalidate_cached_thread_content is 
-deprecated, use invalidate_cached_summary_html""")
-        self.invalidate_cached_summary_html()
-
     def invalidate_cached_summary_html(self):
         """Invalidates cached summary html in all activated languages"""
         langs = translation_utils.get_language_codes()
@@ -1121,12 +1114,13 @@ deprecated, use invalidate_cached_summary_html""")
         keys = map(lambda v: self.get_post_data_cache_key(v), sort_methods)
         cache.cache.delete_many(keys)
 
-    def invalidate_cached_data(self, lazy=False):
+    def reset_cached_data(self):
+        self.clear_cached_data()
+        self.update_summary_html()
+
+    def clear_cached_data(self):
         self.invalidate_cached_post_data()
-        if lazy:
-            self.invalidate_cached_thread_content_fragment()
-        else:
-            self.update_summary_html()
+        self.invalidate_cached_summary_html()
 
     def get_post_data_for_question_view(self, user=None, sort_method=None):
         """loads post data for use in the question details view
@@ -1701,10 +1695,6 @@ deprecated, use invalidate_cached_summary_html""")
                 ) % ', '.join([tag.name for tag in suggested_tags])
             user.message_set.create(message = msg)
             #2) todo: notify moderators about newly suggested tags
-
-        ####################################################################
-        self.update_summary_html() # regenerate question/thread summary html
-        ####################################################################
         #if there are any modified tags, update their use counts
         modified_tags = set(modified_tags)
         if modified_tags:

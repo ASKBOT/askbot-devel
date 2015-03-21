@@ -175,7 +175,7 @@ or repost a bug, if that does not help"""
                 tags = u' '.join(tag_names),
                 #silent = True #do we want to timestamp activity on question
             )
-            question.invalidate_cached_thread_content_fragment()
+            question.invalidate_cached_summary_html()
             i += 1
             sys.stdout.write('%6.2f%%' % (100*float(i)/float(question_count)))
             sys.stdout.write('\b'*7)

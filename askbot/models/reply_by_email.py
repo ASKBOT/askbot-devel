@@ -139,7 +139,7 @@ class ReplyAddress(models.Model):
                 revision_comment = revision_comment,
                 by_email = True
             )
-        self.post.thread.invalidate_cached_data()
+        self.post.thread.reset_cached_data()
 
     def create_reply(self, body_text):
         """creates a reply to the post which was emailed
@@ -185,7 +185,7 @@ class ReplyAddress(models.Model):
                                     body_text,
                                     by_email = True
                                 )
-        result.thread.invalidate_cached_data()
+        result.thread.reset_cached_data()
         self.response_post = result
         self.used_at = datetime.now()
         self.save()

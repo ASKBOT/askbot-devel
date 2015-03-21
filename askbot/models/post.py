@@ -335,11 +335,11 @@ class PostManager(BaseQuerySetManager):
         #todo: this totally belongs to some `Thread` class method
         if answer.is_approved():
             thread.answer_count += 1
-            thread.save()
             thread.set_last_activity_info(
-                        last_activity_at=added_at,
-                        last_activity_by=author
-                    ) # this should be here because it regenerates cached thread summary html
+                last_activity_at=added_at,
+                last_activity_by=author
+            )
+            thread.save()
         return answer
 
 
@@ -2033,6 +2033,14 @@ class Post(models.Model):
             else:
                 self.make_public()
 
+        if edited_at is None:
+            edited_at = datetime.datetime.now()
+
+        self.thread.set_last_activity_info(
+            ast_activity_at=edited_at,
+            last_activity_by=edited_by
+        )
+
         revision = self.__apply_edit(
             edited_at=edited_at,
             edited_by=edited_by,
@@ -2044,13 +2052,6 @@ class Post(models.Model):
             suppress_email=suppress_email,
             ip_addr=ip_addr,
         )
-
-        if edited_at is None:
-            edited_at = datetime.datetime.now()
-        self.thread.set_last_activity_info(
-                        last_activity_at=edited_at,
-                        last_activity_by=edited_by
-                    )
         return revision
 
     def _question__apply_edit(
@@ -2088,6 +2089,10 @@ class Post(models.Model):
 
         self.thread.title = title
         self.thread.tagnames = tags
+        self.thread.set_last_activity_info(
+            last_activity_at=edited_at,
+            last_activity_by=edited_by
+        )
         self.thread.save()
 
         ##it is important to do this before __apply_edit b/c of signals!!!
@@ -2110,11 +2115,6 @@ class Post(models.Model):
             suppress_email=suppress_email,
             ip_addr=ip_addr
         )
-
-        self.thread.set_last_activity_info(
-                        last_activity_at=edited_at,
-                        last_activity_by=edited_by
-                    )
         return revision
 
     def apply_edit(self, *args, **kwargs):
@@ -2631,7 +2631,7 @@ class AnonymousAnswer(DraftContent):
                 text=self.text,
                 ip_addr=self.ip_addr,
             )
-            self.question.thread.invalidate_cached_data()
+            self.question.thread.reset_cached_data()
 
         finally:
             self.delete()
