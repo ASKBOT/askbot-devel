@@ -1,4 +1,4 @@
-Coffin>=0.3
+Coffin>=0.3,<2.0.0
 Jinja2
 Lamson
 South>=0.7.1
