@@ -13,7 +13,11 @@ from django.core import exceptions as django_exceptions
 from django.core.urlresolvers import reverse
 from django.template.loader import get_template
 from django.template import Context
-from django.utils.hashcompat import md5_constructor
+try: 
+    from django.utils.hashcompat import md5_constructor
+except ImportError:
+    import hashlib
+    md5_constructor = hashlib.md5
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.translation import string_concat
