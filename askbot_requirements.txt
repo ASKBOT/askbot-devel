@@ -16,7 +16,7 @@ django-recaptcha-works
 django-robots==1.0
 django-threaded-multihost
 django-tinymce==1.5.1b2
-django>=1.5,<1.6
+django>=1.5,<1.8
 html5lib==0.90
 longerusername
 markdown2
