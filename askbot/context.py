@@ -5,7 +5,10 @@ and the application available for the templates
 import sys
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 
 import askbot
 from askbot import api

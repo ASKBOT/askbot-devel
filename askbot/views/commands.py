@@ -24,7 +24,10 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.views.decorators import csrf
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 from django.utils import translation
 from django.utils.encoding import force_text
 from django.utils.html import escape
