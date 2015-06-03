@@ -4313,11 +4313,11 @@ signals.question_visited.connect(
 )
 
 #set up a possibility for the users to follow others
-try:
-    import followit
-    followit.register(User)
-except ImportError:
-    pass
+# try:
+#     import followit
+#     followit.register(User)
+# except ImportError:
+#     pass
 
 
 __all__ = [
