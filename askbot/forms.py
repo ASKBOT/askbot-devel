@@ -1770,7 +1770,7 @@ class GetUserItemsForm(forms.Form):
     user_id = forms.IntegerField()
 
 class NewCommentForm(forms.Form):
-    comment = forms.CharField(max)
+    comment = forms.CharField(askbot_settings.MAX_COMMENT_LENGTH)
     post_id = forms.IntegerField()
     avatar_size = forms.IntegerField()
     def __init__(self, *args, **kwargs):

@@ -425,7 +425,7 @@ class AuthUserGroups(models.Model):
     user = models.ForeignKey(User)
 
     class Meta:
-        app_label = 'auth'
+        app_label = 'askbot'
         unique_together = ('group', 'user')
         db_table = 'auth_user_groups'
         managed = False

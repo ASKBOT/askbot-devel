@@ -16,7 +16,6 @@ try:
     from django.utils import simplejson
 except ImportError:
     import json as simplejson
-from django.utils.text import truncate_html_words
 from askbot import exceptions as askbot_exceptions
 from askbot.conf import settings as askbot_settings
 from django.conf import settings as django_settings
@@ -43,6 +42,18 @@ TIMEZONE_STR = pytz.timezone(
                 ).localize(
                     datetime.datetime.now()
                 ).strftime('%z')
+
+def truncate_html_words(value, num_words):
+    """Backwords compatibility shim."""
+    try:
+        # Django 1.4+
+        from django.utils.text import Truncator
+    except ImportError:
+        # Django 1.3
+        from django.utils.text import truncate_html_words
+        return truncate_html_words(value, num_words)
+    else:
+        return Truncator(value).words(num_words, html=True)
 
 @register.filter
 def add_tz_offset(datetime_object):
