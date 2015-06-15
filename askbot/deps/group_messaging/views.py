@@ -24,13 +24,13 @@ try:
 except ImportError:
     import json as simplejson
 from askbot.utils.views import PjaxView
-from .models import Message
-from .models import MessageMemo
-from .models import SenderList
-from .models import LastVisitTime
-from .models import get_personal_group_by_user_id
-from .models import get_personal_groups_for_users
-from .models import get_unread_inbox_counter
+from group_messaging.models import Message
+from group_messaging.models import MessageMemo
+from group_messaging.models import SenderList
+from group_messaging.models import LastVisitTime
+from group_messaging.models import get_personal_group_by_user_id
+from group_messaging.models import get_personal_groups_for_users
+from group_messaging.models import get_unread_inbox_counter
 
 
 class NewThread(PjaxView):

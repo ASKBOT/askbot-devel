@@ -999,7 +999,7 @@ def run_startup_tests():
     test_longerusername()
     test_new_skins()
     test_media_url()
-    #test_postgres()
+    test_postgres()
     test_messages_framework()
     test_middleware()
     test_multilingual()

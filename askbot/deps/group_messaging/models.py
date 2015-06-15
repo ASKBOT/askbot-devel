@@ -77,6 +77,7 @@ class LastVisitTime(models.Model):
 
     class Meta:
         unique_together = ('user', 'message')
+        app_label = 'askbot'
 
 
 class SenderListManager(models.Manager):
@@ -101,6 +102,9 @@ class SenderList(models.Model):
     recipient = models.ForeignKey(Group, unique=True)
     senders = models.ManyToManyField(User)
     objects = SenderListManager()
+
+    class Meta:
+        app_label = 'askbot'
 
 
 class MessageMemo(models.Model):
@@ -129,10 +133,14 @@ class MessageMemo(models.Model):
 
     class Meta:
         unique_together = ('user', 'message')
+        app_label = 'askbot'
 
 
 class MessageManager(models.Manager):
     """model manager for the :class:`Message`"""
+
+    class Meta:
+        app_label = 'askbot'
 
     def get_sent_threads(self, sender=None):
         """returns list of threads for the "sent" mailbox
@@ -331,6 +339,9 @@ class Message(models.Model):
 
     objects = MessageManager()
 
+    class Meta:
+        app_label = 'askbot'
+
     def add_recipient_names_to_senders_info(self, recipient_groups):
         names = get_recipient_names(recipient_groups)
         old_names = set(self.senders_info.split(','))
@@ -521,6 +532,9 @@ class UnreadInboxCounter(models.Model):
     """
     user = models.ForeignKey(User)
     count = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        app_label = 'askbot'
 
     def decrement(self):
         """decrements count if > 1
