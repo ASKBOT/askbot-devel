@@ -34,7 +34,7 @@ def get_all_origin_posts(mentions):
 
 #todo: refactor this as class
 def extend_question_list(
-                    src, dst, cutoff_time = None, 
+                    src, dst, cutoff_time = None,
                     limit=False, add_mention=False,
                     add_comment = False,
                     languages=None
@@ -96,7 +96,7 @@ class Command(NoArgsCommand):
             connection.close()
 
     def format_debug_msg(self, user, content):
-        msg = u"%s site_id=%d user=%s: %s" % ( 
+        msg = u"%s site_id=%d user=%s: %s" % (
             datetime.datetime.now().strftime('%y-%m-%d %h:%m:%s'),
             SITE_ID,
             repr(user.username),
@@ -108,7 +108,7 @@ class Command(NoArgsCommand):
         """reports exception that happened during sending email alert to user"""
         message = self.format_debug_msg(user, traceback.format_exc())
         print message
-        admin_email = askbot_settings.ADMIN_EMAIL 
+        admin_email = askbot_settings.ADMIN_EMAIL
         try:
             subject_line = u"Error processing daily/weekly notification for User '%s' for Site '%s'" % (user.username, SITE_ID)
             send_mail(
@@ -119,7 +119,7 @@ class Command(NoArgsCommand):
         except:
             message = u"ERROR: was unable to report this exception to %s: %s" % (admin_email, traceback.format_exc())
             print self.format_debug_msg(user, message)
-        else: 
+        else:
             message = u"Sent email reporting this exception to %s" % admin_email
             print self.format_debug_msg(user, message)
 
@@ -178,7 +178,7 @@ class Command(NoArgsCommand):
 
         if askbot_settings.CONTENT_MODERATION_MODE == 'premoderation':
             base_qs = base_qs.filter(approved = True)
-        #todo: for some reason filter on did not work as expected ~Q(viewed__who=user) | 
+        #todo: for some reason filter on did not work as expected ~Q(viewed__who=user) |
         #      Q(viewed__who=user,viewed__when__lt=F('thread__last_activity_at'))
         #returns way more questions than you might think it should
         #so because of that I've created separate query sets Q_set2 and Q_set3
@@ -223,7 +223,7 @@ class Command(NoArgsCommand):
             if feed.should_send_now():
                 if DEBUG_THIS_COMMAND == False:
                     feed.mark_reported_now()
-                cutoff_time = feed.get_previous_report_cutoff_time() 
+                cutoff_time = feed.get_previous_report_cutoff_time()
 
                 if feed.feed_type == 'q_sel':
                     q_sel_A = Q_set_A.filter(thread__followed_by=user)
@@ -277,7 +277,7 @@ class Command(NoArgsCommand):
                                         ).exclude(
                                             author = user
                                         )
-                q_commented = list() 
+                q_commented = list()
                 for c in comments:
                     post = c.parent
                     if post.author != user:
@@ -371,8 +371,8 @@ class Command(NoArgsCommand):
                 emailed_at = update_info.active_at
             except Activity.DoesNotExist:
                 update_info = Activity(
-                                        user=user, 
-                                        content_object=q, 
+                                        user=user,
+                                        content_object=q,
                                         activity_type=EMAIL_UPDATE_ACTIVITY
                                     )
                 emailed_at = datetime.datetime(1970, 1, 1)#long time ago
@@ -403,7 +403,7 @@ class Command(NoArgsCommand):
                 meta_data['new_q'] = True
             else:
                 meta_data['new_q'] = False
-                
+
             new_ans = Post.objects.get_answers(user).filter(
                                             thread=q.thread,
                                             added_at__gt=emailed_at,
@@ -434,13 +434,13 @@ class Command(NoArgsCommand):
             else:
                 meta_data['skip'] = False
                 #print 'not skipping'
-                update_info.active_at = datetime.datetime.now() 
+                update_info.active_at = datetime.datetime.now()
                 if DEBUG_THIS_COMMAND == False:
-                    update_info.save() #save question email update activity 
+                    update_info.save() #save question email update activity
         #q_list is actually an ordered dictionary
         #print 'user %s gets %d' % (user.username, len(q_list.keys()))
         #todo: sort question list by update time
-        return q_list 
+        return q_list
 
     def send_email_alerts(self, user):
         #does not change the database, only sends the email

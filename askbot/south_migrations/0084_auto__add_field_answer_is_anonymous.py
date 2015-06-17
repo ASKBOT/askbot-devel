@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Answer.is_anonymous'
         db.delete_column(u'answer', 'is_anonymous')
 

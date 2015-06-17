@@ -96,7 +96,7 @@ def ajax_only(view_func):
             if hasattr(e, 'messages'):
                 if len(e.messages) > 1:
                     message = u'<ul>' + \
-                        u''.join( 
+                        u''.join(
                             map(lambda v: u'<li>%s</li>' % v, e.messages)
                         ) + \
                         u'</ul>'
@@ -157,10 +157,10 @@ def profile(log_file):
     for later processing and examination.
 
     It takes one argument, the profile log name. If it's a relative path, it
-    places it under the PROFILE_LOG_BASE. It also inserts a time stamp into the 
-    file name, such that 'my_view.prof' become 'my_view-20100211T170321.prof', 
-    where the time stamp is in UTC. This makes it easy to run and compare 
-    multiple trials.     
+    places it under the PROFILE_LOG_BASE. It also inserts a time stamp into the
+    file name, such that 'my_view.prof' become 'my_view-20100211T170321.prof',
+    where the time stamp is in UTC. This makes it easy to run and compare
+    multiple trials.
 
     http://code.djangoproject.com/wiki/ProfilingDjango
     """
@@ -207,8 +207,8 @@ def check_spam(field):
 
                 from akismet import Akismet
                 api = Akismet(
-                    askbot_settings.AKISMET_API_KEY, 
-                    smart_str(site_url(reverse('questions'))), 
+                    askbot_settings.AKISMET_API_KEY,
+                    smart_str(site_url(reverse('questions'))),
                     "Askbot/%s" % get_version()
                 )
 
@@ -224,7 +224,7 @@ def check_spam(field):
                     )
                     if request.is_ajax():
                         return HttpResponseForbidden(
-                                spam_message, 
+                                spam_message,
                                 mimetype="application/json"
                             )
                     else:
@@ -264,7 +264,7 @@ def admins_only(view_func):
 
 def reject_forbidden_phrases(func):
     """apply to functions that make posts
-    assuming kwargs (all optional): 
+    assuming kwargs (all optional):
         title, tags, body_text, ip_addr
 
     assumes that first of *args is User
@@ -275,7 +275,7 @@ def reject_forbidden_phrases(func):
 
     @functools.wraps(func)
     def wrapped(*args, **kwargs):
-        
+
         user = args[0]
         if not user.is_administrator_or_moderator():
             text_bits = list()
@@ -285,7 +285,7 @@ def reject_forbidden_phrases(func):
                 text_bits.append(kwargs['tags'])
             if 'body_text' in kwargs:
                 text_bits.append(kwargs['body_text'])
-            
+
             combined_text = ' '.join(text_bits)
             from askbot.utils.markup import find_forbidden_phrase
             from askbot import signals

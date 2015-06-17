@@ -48,7 +48,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """create an askbot user account, given email address,
-        user name, (optionally) password 
+        user name, (optionally) password
         and (also optionally) - the
         default email delivery schedule
         """

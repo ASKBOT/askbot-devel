@@ -28,7 +28,7 @@ class PjaxView(object):
         html = template.render(Context(context))
         json = simplejson.dumps({'html': html, 'success': True})
         return HttpResponse(json, content_type='application/json')
-            
+
 
     def get(self, request, *args, **kwargs):
         """view function for the "GET" method"""

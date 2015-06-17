@@ -6,9 +6,9 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'Answer.text'
         db.add_column(u'answer', 'text', self.gf('django.db.models.fields.TextField')(null=True), keep_default=False)
 
@@ -20,10 +20,10 @@ class Migration(SchemaMigration):
 
         # Changing field 'Question.html'
         db.alter_column(u'question', 'html', self.gf('django.db.models.fields.TextField')(null=True))
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'Answer.text'
         db.delete_column(u'answer', 'text')
 
@@ -35,9 +35,9 @@ class Migration(SchemaMigration):
 
         # Changing field 'Question.html'
         db.alter_column(u'question', 'html', self.gf('django.db.models.fields.TextField')())
-    
+
     app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
-    
+
     if app_dir_name == 'forum':
         models = {
             'auth.group': {
@@ -694,5 +694,5 @@ class Migration(SchemaMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-    
+
     complete_apps = [app_dir_name]

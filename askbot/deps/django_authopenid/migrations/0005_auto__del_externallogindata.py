@@ -5,15 +5,15 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Deleting model 'ExternalLoginData'
         db.delete_table('django_authopenid_externallogindata')
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Adding model 'ExternalLoginData'
         db.create_table('django_authopenid_externallogindata', (
             ('external_username', self.gf('django.db.models.fields.CharField')(max_length=40, unique=True)),
@@ -22,8 +22,8 @@ class Migration(SchemaMigration):
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
         ))
         db.send_create_signal('django_authopenid', ['ExternalLoginData'])
-    
-    
+
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -114,5 +114,5 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
-    
+
     complete_apps = ['django_authopenid']

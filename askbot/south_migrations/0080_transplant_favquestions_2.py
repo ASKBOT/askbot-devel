@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'FavoriteQuestion.question'
         db.delete_column(u'favorite_question', 'question_id')
 
@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # User chose to not deal with backwards NULL issues for 'FavoriteQuestion.question'
         raise RuntimeError("Cannot reverse this migration. 'FavoriteQuestion.question' and its values cannot be restored.")
 

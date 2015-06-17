@@ -9,7 +9,7 @@ import difflib, string
 
 def isTag(x): return x[0] == "<" and x[-1] == ">"
 
-def textDiff(a, b, 
+def textDiff(a, b,
             ins_start='<ins>', ins_end = '</ins>',
             del_start='<del>', del_end='</del>'
         ):
@@ -23,7 +23,7 @@ def textDiff(a, b,
             # @@ need to do something more complicated here
             # call textDiff but not for html, but for some html... ugh
             # gonna cop-out for now
-            out.append(del_start + ''.join(a[e[1]:e[2]]) + 
+            out.append(del_start + ''.join(a[e[1]:e[2]]) +
                 del_end + ins_start + ''.join(b[e[3]:e[4]])+ ins_end
             )
         elif e[0] == "delete":
@@ -32,7 +32,7 @@ def textDiff(a, b,
             out.append(ins_start + ''.join(b[e[3]:e[4]]) + ins_end)
         elif e[0] == "equal":
             out.append(''.join(b[e[3]:e[4]]))
-        else: 
+        else:
             raise "Um, something's broken. I didn't expect a '" + `e[0]` + "'."
     return ''.join(out)
 
@@ -42,17 +42,17 @@ def html2list(x, b=0):
     out = []
     for c in x:
         if mode == 'tag':
-            if c == '>': 
-                if b: 
+            if c == '>':
+                if b:
                     cur += ']'
-                else: 
+                else:
                     cur += c
                 out.append(cur)
                 cur = ''
                 mode = 'char'
             else: cur += c
         elif mode == 'char':
-            if c == '<': 
+            if c == '<':
                 out.append(cur)
                 if b:
                     cur = '['

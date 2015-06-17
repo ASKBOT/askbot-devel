@@ -9,9 +9,9 @@ from django.db import connection
 app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Deleting model 'AuthKeyUserAssociation'
         if app_dir_name == 'forum':
             db.delete_table('forum_authkeyuserassociation')
@@ -33,9 +33,9 @@ class Migration(SchemaMigration):
         # Deleting model 'Book'
         db.delete_table(u'book')
 
-    
+
     def backwards(self, orm):
-        
+
         # Adding model 'AuthKeyUserAssociation'
         if app_dir_name == 'forum':
             db.create_table('forum_authkeyuserassociation', (
@@ -175,8 +175,8 @@ class Migration(SchemaMigration):
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
             db.send_create_signal('askbot', ['BookAuthorRss'])
-    
-    
+
+
     if app_dir_name == 'forum':
         models = {
             'auth.group': {
@@ -749,5 +749,5 @@ class Migration(SchemaMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-    
+
     complete_apps = [app_dir_name]

@@ -8,9 +8,9 @@ from askbot.migrations import houston_do_we_have_a_problem
 
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'UserAssociation.provider_name'
         db.add_column('django_authopenid_userassociation', 'provider_name', self.gf('django.db.models.fields.CharField')(default='unknown', max_length=64), keep_default=False)
 
@@ -23,10 +23,10 @@ class Migration(SchemaMigration):
 
         # Adding unique constraint on 'UserAssociation', fields ['provider_name', 'user']
         db.create_unique('django_authopenid_userassociation', ['provider_name', 'user_id'])
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'UserAssociation.provider_name'
         db.delete_column('django_authopenid_userassociation', 'provider_name')
 
@@ -35,8 +35,8 @@ class Migration(SchemaMigration):
 
         # Removing unique constraint on 'UserAssociation', fields ['provider_name', 'user']
         db.delete_unique('django_authopenid_userassociation', ['provider_name', 'user_id'])
-    
-    
+
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -131,5 +131,5 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
-    
+
     complete_apps = ['django_authopenid']

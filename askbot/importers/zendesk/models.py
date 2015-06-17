@@ -138,7 +138,7 @@ class Forum(models.Model):
 
     def viewable_to_public(self):
         """There are two ways to restrict visibility of the forum. If is_public
-        is False, then it's not public, duh. But for 
+        is False, then it's not public, duh. But for
         visibility_restriction_id:
             1=viewable to everyone
             2=viewable to logged in users only
@@ -147,7 +147,7 @@ class Forum(models.Model):
             if not null, this forum is restricted to a specific organization
             on top of other restrictions
         """
-        if (not self.is_public or self.visibility_restriction_id != 1 or 
+        if (not self.is_public or self.visibility_restriction_id != 1 or
             self.organization_id):
             return False
         else:
@@ -229,4 +229,3 @@ class Comment(models.Model):
         if not hasattr(self, '_body_text'):
             self._body_text = unescape(self.value)
         return self._body_text
- 

@@ -13,4 +13,3 @@ class Command(NoArgsCommand):
     def handle_noargs(self, *args, **kwargs):
         acts = Activity.objects.filter(activity_type__in=ACTIVITY_TYPES)
         acts.delete()
-        

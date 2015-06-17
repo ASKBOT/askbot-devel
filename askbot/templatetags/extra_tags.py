@@ -45,7 +45,7 @@ def gravatar(user, size):
         'alt_text': _('%(username)s gravatar image') % {'username': user.username},
         'username': functions.get_from_dict_or_object(user, 'username'),
     })
-    
+
 @register.simple_tag
 def get_tag_font_size(tags):
     max_tag = 0
@@ -61,7 +61,7 @@ def get_tag_font_size(tags):
     font_size = {}
     for tag in tags:
         font_size[tag.name] = tag_font_size(max_tag,min_tag,tag.used_count)
-    
+
     return font_size
 
 @register.simple_tag
@@ -76,12 +76,12 @@ def tag_font_size(max_size, min_size, current_size):
 
     #avoid invalid calculation
     if current_size == 0:
-        current_size = 1    
+        current_size = 1
     try:
         weight = (math.log10(current_size) - math.log10(min_size)) / (math.log10(max_size) - math.log10(min_size))
     except Exception:
         weight = 0
-        
+
     return int(MIN_FONTSIZE + round((MAX_FONTSIZE - MIN_FONTSIZE) * weight))
 
 

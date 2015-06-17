@@ -6,12 +6,12 @@ from django.db import models
 from django.contrib.auth.models import Group
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
         moderators = Group(name = 'askbot_moderators')
         moderators.save()
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         try:
@@ -19,7 +19,7 @@ class Migration(DataMigration):
             moderators.delete()
         except Group.DoesNotExist:
             pass
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -297,5 +297,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

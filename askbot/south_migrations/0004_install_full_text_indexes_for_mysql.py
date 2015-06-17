@@ -40,7 +40,7 @@ def get_drop_index_sql(index_name, table_name):
     return 'ALTER TABLE %s DROP INDEX %s' % (table_name, index_name)
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         """install fulltext indices for mysql
         will work only for MyISAM engine
@@ -64,7 +64,7 @@ class Migration(DataMigration):
                 db.execute(answer_index_sql)
             else:
                 print NO_FTS_WARNING
-    
+
     def backwards(self, orm):
         "code for removal of full text indices in mysql"
         if db.backend_name == 'mysql' and supports_full_text_search():
@@ -80,7 +80,7 @@ class Migration(DataMigration):
                             orm.Answer._meta.db_table,
                         )
                 )
-    
+
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
     if forum_app_name == 'forum':
         models = {
@@ -410,7 +410,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -740,5 +740,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

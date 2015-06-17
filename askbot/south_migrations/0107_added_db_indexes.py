@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding index on 'Post', fields ['post_type']
         db.create_index('askbot_post', ['post_type'])
 
@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing index on 'Post', fields ['deleted']
         db.delete_index('askbot_post', ['deleted'])
 

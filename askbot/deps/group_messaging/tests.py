@@ -395,4 +395,3 @@ class ModelsTests(GroupMessagingTests):
         time.sleep(1.5)
         last_visits = LastVisitTime.objects.filter(message=root, user=self.sender)
         self.assertEqual(last_visits.count(), 1)
-

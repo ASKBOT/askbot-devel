@@ -85,7 +85,7 @@ def app_url_callback(old_value, new_value):
     site.save()
 
     return new_value
-        
+
 
 settings.register(
     livesettings.StringValue(

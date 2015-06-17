@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Thread'
         db.create_table('askbot_thread', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Thread'
         db.delete_table('askbot_thread')
 

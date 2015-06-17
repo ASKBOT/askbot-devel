@@ -7,7 +7,7 @@ from askbot import const
 OFFENSIVE = const.TYPE_ACTIVITY_MARK_OFFENSIVE
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         """find all FlaggedItems and the corresponding Activity
         transfer content object to Activity
@@ -36,7 +36,7 @@ class Migration(DataMigration):
             activity.save()
             api.add_recipients_to_activity(moderators, activity)
             flag.delete()
-    
+
     def backwards(self, orm):
         """there is a side-effect that activity recipients are not removed
         question reference is not deleted either
@@ -50,7 +50,7 @@ class Migration(DataMigration):
                 content_type = activity.content_type
             )
             flag.save()
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -340,5 +340,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

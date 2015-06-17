@@ -257,7 +257,7 @@ class ThreadDetails(PjaxView):
             last_visit.save()
 
         return {
-            'root_message': root, 
-            'responses': responses, 
+            'root_message': root,
+            'responses': responses,
             'request': request
         }

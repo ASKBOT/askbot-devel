@@ -8,7 +8,7 @@ from django.db import models
 app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
         if app_dir_name == 'forum':
             try:
@@ -20,8 +20,8 @@ class Migration(SchemaMigration):
                 db.rename_table('forum_validationhash', 'askbot_validationhash')
             except:
                 pass
-    
-    
+
+
     def backwards(self, orm):
         if app_dir_name == 'forum':
             db.rename_table('askbot_anonymousanswer', 'forum_anonymousanswer')
@@ -30,8 +30,8 @@ class Migration(SchemaMigration):
             db.rename_table('askbot_markedtag', 'forum_markedtag')
             db.rename_table('askbot_questionview', 'forum_questionview')
             db.rename_table('askbot_validationhash', 'forum_validationhash')
-    
-    
+
+
     if app_dir_name == 'forum':
         models = {
             'forum.activity': {
@@ -606,5 +606,5 @@ class Migration(SchemaMigration):
                 'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
             }
         }
-    
+
     complete_apps = [app_dir_name]

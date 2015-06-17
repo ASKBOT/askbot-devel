@@ -82,7 +82,7 @@ class Badge(object):
 
     @classmethod
     def is_enabled(cls):
-        setting_name = format_setting_name(cls.key) + '_BADGE_ENABLED' 
+        setting_name = format_setting_name(cls.key) + '_BADGE_ENABLED'
         return getattr(askbot_settings, setting_name, False)
 
     def get_level_display(self):
@@ -897,7 +897,7 @@ extra badges from stackexchange
     (_('Alpha'), 2, _('alpha'), _('Actively participated in the private alpha'), False, 0),
 """
 def get_badge_keys(badges):
-    """returns list of badge keys for the list, 
+    """returns list of badge keys for the list,
     tuple, or set of badges"""
     return set([badge.key for badge in badges])
 
@@ -911,8 +911,8 @@ def get_badges_dict(e_to_b):
     for badge in badges:
         badges_dict[badge.key] = badge
 
-    return badges_dict 
-        
+    return badges_dict
+
 
 def extend_badge_events(e_to_b):
     mod_path = getattr(django_settings, 'ASKBOT_CUSTOM_BADGES', None)

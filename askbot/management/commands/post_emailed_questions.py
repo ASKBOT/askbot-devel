@@ -6,7 +6,7 @@ Expects subject line of emails to have format:
 [Tag1, Tag2] Question title
 
 Tags can be entered as multiword, but the space character
-within the tag may be replaced with a dash, per live 
+within the tag may be replaced with a dash, per live
 setting EMAIL_REPLACE_SPACE_IN_TAGS
 also, to make use of this command, the feature must
 be enabled via ALLOW_ASKING_BY_EMAIL

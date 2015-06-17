@@ -35,17 +35,17 @@ def choice_dialog(prompt_phrase, choices = None, invalid_phrase = None):
         time.sleep(1)
 
 def numeric_choice_dialog(prompt_phrase, choices):
-    """Prints a list of choices with numeric options and requires the 
-    user to select a single choice from the list. 
+    """Prints a list of choices with numeric options and requires the
+    user to select a single choice from the list.
 
-    :param prompt_phrase: (str) Prompt to give the user asking them to 
+    :param prompt_phrase: (str) Prompt to give the user asking them to
     choose from the list.
 
     :param choices: (list) List of string choices for the user to choose
-    from. The numeric value they will use to select from the list is the 
+    from. The numeric value they will use to select from the list is the
     list index of the choice.
 
-    :returns: (int) index number of the choice selected by the user   
+    :returns: (int) index number of the choice selected by the user
     """
     assert(hasattr(choices, '__iter__'))
     assert(not isinstance(choices, basestring))
@@ -62,22 +62,22 @@ def numeric_choice_dialog(prompt_phrase, choices):
             return index
 
 def numeric_multiple_choice_dialog(prompt_phrase, choices, all_option=False):
-    """Prints a list of choices with numeric options and requires the 
-    user to select zero or more choices from the list. 
+    """Prints a list of choices with numeric options and requires the
+    user to select zero or more choices from the list.
 
-    :param prompt_phrase: (str) Prompt to give the user asking them to 
+    :param prompt_phrase: (str) Prompt to give the user asking them to
     choose from the list.
 
     :param choices: (list) List of string choices for the user to choose
-    from. The numeric value they will use to select from the list is the 
+    from. The numeric value they will use to select from the list is the
     list index of the choice.
 
-    :param all_option: (bool) Optional. If True, the first choice will be a 
+    :param all_option: (bool) Optional. If True, the first choice will be a
     fake option to choose all options. This is a convenience to avoid requiring
     the user provide a lot of input when there are a lot of options
 
-    :returns: (list) list of index numbers of the choices selected by 
-    the user   
+    :returns: (list) list of index numbers of the choices selected by
+    the user
     """
     assert(hasattr(choices, '__iter__'))
     assert(not isinstance(choices, basestring))
@@ -119,7 +119,7 @@ def simple_dialog(prompt_phrase, required=False):
             prompt_phrase += ' (required)'
 
         response = raw_input(prompt_phrase + '\n> ').strip()
-        
+
         if response or required is False:
             return response
 
@@ -149,7 +149,7 @@ def get_yes_or_no(prompt_phrase, default=None):
             return default
         if response in ('yes', 'no'):
             return response
-            
+
 
 def open_new_file(prompt_phrase, extension = '', hint = None):
     """will ask for a file name to be typed
@@ -168,7 +168,7 @@ def open_new_file(prompt_phrase, extension = '', hint = None):
     if hint:
         file_path = path.extend_file_name(hint, extension)
         file_object = path.create_file_if_does_not_exist(file_path, print_warning = True)
-        
+
     while file_object == None:
         file_path = raw_input(prompt_phrase)
         file_path = path.extend_file_name(file_path, extension)
@@ -203,7 +203,7 @@ def print_progress(elapsed, total, nowipe = False):
     print_action(output, nowipe)
 
 class ProgressBar(object):
-    """A wrapper for an iterator, that prints 
+    """A wrapper for an iterator, that prints
     a progress bar along the way of iteration
     """
     def __init__(self, iterable, length, message = ''):
@@ -215,7 +215,7 @@ class ProgressBar(object):
         self.progress = ''
         if message and length > 0:
             print message
- 
+
 
     def __iter__(self):
         return self

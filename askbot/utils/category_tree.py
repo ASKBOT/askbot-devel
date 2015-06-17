@@ -1,11 +1,11 @@
 """This is temporary code to parse category
 tree, stored in the settings.
-The tree is plain text, with levels of branching 
+The tree is plain text, with levels of branching
 reflected by indentation (2 spaces per level).
 example of desired structure, when input is parsed
 
     cat_tree = [
-        ['dummy', 
+        ['dummy',
             [
                 ['tires', [
                         ['michelin', [

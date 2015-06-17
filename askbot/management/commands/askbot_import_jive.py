@@ -61,13 +61,13 @@ def fix_internal_links_in_post(post):
         """naked link either starts at the beginning of string
         or is not inside the jive link construct: [...]"""
         pos = match.start()
-        # the second test is rather naive as it assumes that a 
+        # the second test is rather naive as it assumes that a
         # | will be preceded by something like [some link
         # which we don't test here
-        return pos < 2 or post.text[pos-2] not in ('[', '|') 
+        return pos < 2 or post.text[pos-2] not in ('[', '|')
 
     def internal_link_sub(match):
-        """pull post by the matched pars in the old link 
+        """pull post by the matched pars in the old link
         and returns link to the new post"""
         link_type = match.group(1)
         item_id = int(match.group(2))
@@ -165,7 +165,7 @@ class Command(BaseCommand):
         translation.activate(django_settings.LANGUAGE_CODE)
         assert len(args) == 1, 'Dump file name is required'
         dump_file_name = args[0]
-        xml = open(dump_file_name, 'r').read() 
+        xml = open(dump_file_name, 'r').read()
         soup = BeautifulSoup(xml, ['lxml', 'xml'])
         self.soup = soup
         url_prop = self.soup.find('Property', attrs={'name': 'jiveURL'})
@@ -205,7 +205,7 @@ For your reference, the original is [available here|%s]{quote}"""
     def make_redirects(self):
         """todo: implement this when needed"""
         pass
-            
+
 
     @transaction.commit_manually
     def convert_jive_markup_to_html(self):
@@ -271,7 +271,7 @@ For your reference, the original is [available here|%s]{quote}"""
             except ValidationError:
                 email = 'unknown%d@example.com' % self.bad_email_count
                 self.bad_email_count += 1
-                
+
             joined_timestamp = parse_date(user.find('CreationDate').text)
             user = models.User(
                 username=username,
@@ -375,7 +375,7 @@ For your reference, the original is [available here|%s]{quote}"""
                 comment.html = jive.convert(comment.text)
                 comment.summary = comment.get_snippet()
                 comment.save()
-                
+
 
     def parse_post(self, post):
         title = post.find('Subject').text
@@ -383,7 +383,7 @@ For your reference, the original is [available here|%s]{quote}"""
         username = post.find('Username').text
         body = post.find('Body').text
         attachments_soup = post.find_all('Attachment')
-        attachments = list() 
+        attachments = list()
         for att in attachments_soup:
             att_id = att['id']
             name = att.find('Name').text

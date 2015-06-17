@@ -46,7 +46,7 @@ class DraftContent(models.Model):
     session_key = models.CharField(max_length=40)  #session id for anonymous questions
     wiki = models.BooleanField(default=False)
     added_at = models.DateTimeField(default=datetime.datetime.now)
-    ip_addr = models.IPAddressField(max_length=21) #allow high port numbers
+    ip_addr = models.GenericIPAddressField(max_length=45) #allow high port numbers
     author = models.ForeignKey(User,null=True)
     text = models.TextField()
 

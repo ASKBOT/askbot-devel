@@ -350,7 +350,7 @@ def user_calculate_avatar_url(self, size=48):
         sizes = avatar_settings.AVATAR_AUTO_GENERATE_SIZES
         if size not in sizes:
             logging.critical(
-                'add values %d to setting AVATAR_AUTO_GENERATE_SIZES', 
+                'add values %d to setting AVATAR_AUTO_GENERATE_SIZES',
                 size
             )
 
@@ -712,7 +712,7 @@ def _assert_user_can(
 
     elif user.is_active == False:
         error_message = getattr(
-                            django_settings, 
+                            django_settings,
                             'ASKBOT_INACTIVE_USER_MESSAGE',
                             _(message_keys.ACCOUNT_CANNOT_PERFORM_ACTION) % {
                                 'perform_action': action_display,
@@ -807,10 +807,10 @@ def user_assert_can_unaccept_best_answer(self, answer=None):
                 #check rep
                 _assert_user_can(
                     user=self,
-                    #action_display=askbot_settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER,
+                    action_display=askbot_settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER,
                     blocked_user_cannot=True,
                     suspended_owner_cannot=True,
-                    #min_rep_setting = askbot_settings.MIN_REP_TO_ACCEPT_OWN_ANSWER
+                    min_rep_setting = askbot_settings.MIN_REP_TO_ACCEPT_OWN_ANSWER
                 )
         return # success
 
@@ -1466,7 +1466,7 @@ def user_post_comment(
                 )
     comment.add_to_groups([self.get_personal_group()])
 
-    parent_post.thread.invalidate_cached_data()
+    parent_post.thread.reset_cached_data()
     award_badges_signal.send(
         None,
         event = 'post_comment',
@@ -1499,27 +1499,15 @@ def user_post_anonymous_askbot_content(user, session_key):
 
     this function is used by the signal handler with a similar name
     """
-    aq_list = AnonymousQuestion.objects.filter(session_key = session_key)
-    aa_list = AnonymousAnswer.objects.filter(session_key = session_key)
-
-
     is_on_read_only_group = user.get_groups().filter(read_only=True).count()
-    if is_on_read_only_group:
+    if askbot_settings.READ_ONLY_MODE_ENABLED or is_on_read_only_group:
         user.message_set.create(message = _('Sorry, but you have only read access'))
-    #from askbot.conf import settings as askbot_settings
-    if askbot_settings.EMAIL_VALIDATION == True:#add user to the record
-        for aq in aq_list:
-            aq.author = user
-            aq.save()
-        for aa in aa_list:
-            aa.author = user
-            aa.save()
-        #maybe add pending posts message?
-    else:
-        for aq in aq_list:
-            aq.publish(user)
-        for aa in aa_list:
-            aa.publish(user)
+        return
+
+    for aq in AnonymousQuestion.objects.filter(session_key=session_key):
+        aq.publish(user)
+    for aa in AnonymousAnswer.objects.filter(session_key=session_key):
+        aa.publish(user)
 
 
 def user_mark_tags(
@@ -1651,7 +1639,7 @@ def user_merge_duplicate_questions(self, from_q, to_q):
     to_thread.last_activity_by = self
     to_thread.last_activity_at = datetime.datetime.now()
     to_thread.save()
-    to_thread.invalidate_cached_data()
+    to_thread.reset_cached_data()
 
 
 def user_recount_badges(self):
@@ -1694,7 +1682,7 @@ def user_retag_question(
         tagnames = tags,
         silent = silent
     )
-    question.thread.invalidate_cached_data()
+    question.thread.reset_cached_data()
     award_badges_signal.send(None,
         event = 'retag_question',
         actor = self,
@@ -1728,7 +1716,7 @@ def user_repost_comment_as_answer(self, comment):
         old_parent.comment_count = 0
 
     old_parent.save()
-    comment.thread.invalidate_cached_data()
+    comment.thread.reset_cached_data()
 
 @auto_now_timestamp
 def user_accept_best_answer(
@@ -1790,7 +1778,7 @@ def user_delete_comment(
     #comment.deleted_at = timestamp
     #comment.save()
     comment.delete()
-    comment.thread.invalidate_cached_data()
+    comment.thread.reset_cached_data()
 
 @auto_now_timestamp
 def user_delete_answer(
@@ -1813,7 +1801,7 @@ def user_delete_answer(
 
     answer.thread.update_answer_count()
     answer.thread.update_last_activity_info()
-    answer.thread.invalidate_cached_data()
+    answer.thread.reset_cached_data()
     logging.debug('updated answer count to %d' % answer.thread.answer_count)
 
     signals.after_post_removed.send(
@@ -1893,7 +1881,7 @@ def user_delete_all_content_authored_by_user(self, author, timestamp=None):
     threads = Thread.objects.filter(id__in=thread_ids)
     threads.update(deleted=True)
     for thread in threads:
-        thread.invalidate_cached_data()
+        thread.reset_cached_data()
 
     #delete comments
     comments = Post.objects.get_comments().filter(author=author)
@@ -1948,7 +1936,7 @@ def user_delete_post(
         self.delete_question(question = post, timestamp = timestamp)
     else:
         raise TypeError('either Comment, Question or Answer expected')
-    post.thread.invalidate_cached_data()
+    post.thread.reset_cached_data()
 
 def user_restore_post(
                     self,
@@ -1965,7 +1953,7 @@ def user_restore_post(
         if post.post_type == 'question':
             post.thread.deleted = False
             post.thread.save()
-        post.thread.invalidate_cached_data()
+        post.thread.reset_cached_data()
         if post.post_type == 'answer':
             if post.endorsed and post.thread.accepted_answer == None:
                 post.thread.accepted_answer = post
@@ -2037,6 +2025,7 @@ def user_post_question(
                                     language=language,
                                     ip_addr=ip_addr
                                 )
+    thread.reset_cached_data()
     question = thread._question_post()
     if question.author != self:
         raise ValueError('question.author != self')
@@ -2080,7 +2069,7 @@ def user_edit_comment(
                         suppress_email=suppress_email,
                         ip_addr=ip_addr,
                     )
-    comment_post.thread.invalidate_cached_data()
+    comment_post.thread.reset_cached_data()
     return revision
 
 def user_edit_post(self,
@@ -2162,6 +2151,22 @@ def user_edit_question(
     if force == False:
         self.assert_can_edit_question(question)
 
+    ##it is important to do this before __apply_edit b/c of signals!!!
+    if question.is_private() != is_private:
+        if is_private:
+            #todo: make private for author or for the editor?
+            question.thread.make_private(question.author)
+        else:
+            question.thread.make_public(recursive=False)
+
+    latest_revision = question.get_latest_revision()
+    #a hack to allow partial edits - important for SE loader
+    if title is None:
+        title = question.thread.title
+    if tags is None:
+        tags = latest_revision.tagnames
+
+    #revision has title and tags as well
     revision = question.apply_edit(
         edited_at=timestamp,
         edited_by=self,
@@ -2178,13 +2183,26 @@ def user_edit_question(
         ip_addr=ip_addr
     )
 
-    question.thread.invalidate_cached_data()
+    # Update the Question tag associations
+    if latest_revision.tagnames != tags:
+        question.thread.update_tags(
+            tagnames=tags, user=self, timestamp=timestamp
+        )
+
+    question.thread.title = title
+    question.thread.tagnames = tags
+    question.thread.set_last_activity_info(
+        last_activity_at=timestamp,
+        last_activity_by=self
+    )
+    question.thread.save()
+    question.thread.reset_cached_data()
 
     award_badges_signal.send(None,
-        event = 'edit_question',
-        actor = self,
-        context_object = question,
-        timestamp = timestamp
+        event='edit_question',
+        actor=self,
+        context_object=question,
+        timestamp=timestamp
     )
     return revision
 
@@ -2218,12 +2236,18 @@ def user_edit_answer(
         ip_addr=ip_addr,
     )
 
-    answer.thread.invalidate_cached_data()
+    answer.thread.set_last_activity_info(
+        last_activity_at=timestamp,
+        last_activity_by=self
+    )
+    answer.thread.save()
+    answer.thread.reset_cached_data()
+
     award_badges_signal.send(None,
-        event = 'edit_answer',
-        actor = self,
-        context_object = answer,
-        timestamp = timestamp
+        event='edit_answer',
+        actor=self,
+        context_object=answer,
+        timestamp=timestamp
     )
     return revision
 
@@ -2354,7 +2378,7 @@ def user_post_answer(
     #add to the answerer's group
     answer_post.add_to_groups([self.get_personal_group()])
 
-    answer_post.thread.invalidate_cached_data()
+    answer_post.thread.reset_cached_data()
     award_badges_signal.send(None,
         event = 'post_answer',
         actor = self,
@@ -2981,13 +3005,12 @@ def _process_vote(user, post, timestamp=None, cancel=False, vote_type=None):
         else:
             auth.onDownVoted(vote, post, user, timestamp)
 
-    post.thread.invalidate_cached_data()
+    post.thread.reset_cached_data()
 
     if post.post_type == 'question':
         #denormalize the question post score on the thread
         post.thread.points = post.points
         post.thread.save()
-        post.thread.update_summary_html()
 
     if cancel:
         return None
@@ -3067,7 +3090,7 @@ def user_approve_post_revision(user, post_revision, timestamp = None):
     #approval of unpublished revision
     if post_revision.revision > 0:
         post.parse_and_save(author=post_revision.author)
-        post.thread.invalidate_cached_data()
+        post.thread.reset_cached_data()
         #todo: maybe add a notification here
     else:
         post_revision.revision = post.get_latest_revision_number() + 1
@@ -3106,11 +3129,11 @@ def user_approve_post_revision(user, post_revision, timestamp = None):
             thread.approved = True
             thread.save()
 
-        post.thread.invalidate_cached_data()
+        post.thread.reset_cached_data()
 
         #send the signal of published revision
         signals.post_revision_published.send(
-                                        None, 
+                                        None,
                                         revision=post_revision,
                                         was_approved=True
                                     )
@@ -3493,6 +3516,11 @@ User.add_to_class(
     user_assert_can_approve_post_revision
 )
 
+
+def reset_cached_post_data(sender, instance, **kwargs):
+    instance.reset_cached_data()
+
+
 def get_reply_to_addresses(user, post):
     """Returns one or two email addresses that can be
     used by a given `user` to reply to the `post`
@@ -3726,7 +3754,8 @@ def record_question_visit(request, question, **kwargs):
             kwargs={
                 'question_post_id': question.id,
                 'user_id': request.user.id,
-                'update_view_count': update_view_count
+                'update_view_count': update_view_count,
+                'language_code': get_language()
             }
         )
 
@@ -3961,7 +3990,7 @@ def init_avatar_type(sender, instance, *args, **kwargs):
     #if user is new, set avatar type
     if not user.pk:
         user.avatar_type = askbot_settings.AVATAR_TYPE_FOR_NEW_USERS
-        
+
 
 def init_avatar_urls(sender, instance, *args, **kwargs):
     instance.init_avatar_urls()
@@ -4092,7 +4121,7 @@ def autoapprove_reputable_user(user=None, reputation_before=None, *args, **kwarg
 def init_badge_data(sender, app=None, migration=None, method=None, **kwargs):
     """initializes badge data from the hardcoded badge info,
     e.g. in askbot/models/badges.py"""
-    #mig_name is the name of latest migration that changes model 
+    #mig_name is the name of latest migration that changes model
     #askbot.models.BadgeData. It's important that we run this
     #only after the `askbot_badgedata` table is fully constructed
     mig_name = '0186_auto__add_field_badgedata_display_order'
@@ -4131,7 +4160,7 @@ def record_spam_rejection(
         activity.save()
 
 
-from south.signals import ran_migration 
+from south.signals import ran_migration
 
 ran_migration.connect(
     init_badge_data,
@@ -4219,7 +4248,7 @@ django_signals.post_save.connect(
     dispatch_uid='record_favorite_question_on_fave_save'
 )
 django_signals.post_save.connect(
-    moderate_group_joining, 
+    moderate_group_joining,
     sender=GroupMembership,
     dispatch_uid='moderate_group_joining_on_gm_save'
 )
@@ -4276,6 +4305,13 @@ signals.user_logged_in.connect(
     post_anonymous_askbot_content,
     dispatch_uid='post_anon_content_on_login'
 )
+"""
+signals.post_save.connect(
+    reset_cached_post_data,
+    sender=Thread,
+    dispatch_uid='reset_cached_post_data',
+)
+"""
 signals.post_updated.connect(
     record_post_update_activity,
     dispatch_uid='record_post_update_activity'
@@ -4356,7 +4392,7 @@ __all__ = [
         'User',
 
         'ReplyAddress',
-        
+
         'ImportRun',
         'ImportedObjectInfo',
 

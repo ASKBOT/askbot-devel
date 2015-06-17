@@ -5,24 +5,24 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Deleting model 'Badge'
         db.rename_table(u'badge', u'askbot_badgedata')
         db.create_unique('askbot_badgedata', ['type', 'name'])
         # Changing field 'Award.badge'
         db.alter_column(u'award', 'badge_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.BadgeData']))
-    
-    
+
+
     def backwards(self, orm):
-        
+
         db.rename_table(u'askbot_badgedata', u'badge')
         db.create_unique('badge', ['type', 'name'])
         # Changing field 'Award.badge'
         db.alter_column(u'award', 'badge_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Badge']))
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -305,5 +305,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

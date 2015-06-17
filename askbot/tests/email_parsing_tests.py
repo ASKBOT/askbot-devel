@@ -58,7 +58,7 @@ class EmailParsingTests(utils.AskbotTestCase):
         text = """some real text
 
 -----Original Message-----
-From: forum@example.com [mailto:forum@example.com] 
+From: forum@example.com [mailto:forum@example.com]
 Sent: Wednesday, August 07, 2013 11:00 AM
 To: Jane Doe
 Subject: "One more test question from email."
@@ -70,7 +70,7 @@ Subject: "One more test question from email."
         text = """some real text
 
 -------- Original message --------
-From: forum@example.com [mailto:forum@example.com] 
+From: forum@example.com [mailto:forum@example.com]
 Sent: Wednesday, August 07, 2013 11:00 AM
 To: Jane Doe
 Subject: "One more test question from email."

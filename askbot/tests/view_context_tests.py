@@ -27,4 +27,3 @@ class ViewContextTests(AskbotTestCase):
         inbox_context = context.get_for_inbox(simple)
         values = set(inbox_context.values())
         self.assertEqual(values, set([0, 0, 0]))
-

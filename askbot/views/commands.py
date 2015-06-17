@@ -100,7 +100,11 @@ def process_vote(user=None, vote_direction=None, post=None):
         response_data['status'] = 0 #this means "not cancel", normal operation
 
     if vote and post.thread_id:
-        post.thread.invalidate_cached_post_data()
+        #todo: may be more careful here and clear
+        #less items and maybe recalculate certain data
+        #depending on whether the vote is on question
+        #or other posts
+        post.thread.clear_cached_data()
 
     response_data['success'] = 1
 
@@ -198,10 +202,9 @@ def vote(request):
                 user.delete_post(post=post)
         else:
             raise ValueError('unexpected vote type %d' % vote_type)
-            
 
         if vote_type in const.VOTE_TYPES_INVALIDATE_CACHE:
-            post.thread.invalidate_cached_data()
+            post.thread.reset_cached_data()
     except Exception, e:
         response_data['message'] = unicode(e)
         response_data['success'] = 0

@@ -71,7 +71,7 @@ def split_list(text):
     return text.strip().split()
 
 def split_phrases(text):
-    """splits text by semicolon (;), comma(,) and 
+    """splits text by semicolon (;), comma(,) and
     end of line
     """
     text = text.replace(';', ',').replace('\n', ',')

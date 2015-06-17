@@ -601,9 +601,14 @@ class ShowQuestionForm(forms.Form):
     answer = forms.IntegerField(required=False)
     comment = forms.IntegerField(required=False)
     page = PageField()
-    sort = SortField(
+
+    def __init__(self, *args, **kwargs):
+        super(ShowQuestionForm, self).__init__(*args, **kwargs)
+        #uses livesettings for the default so the 'sort' field
+        #must be added in the __init__
+        self.fields['sort'] = SortField(
                 choices=const.ANSWER_SORT_METHODS,
-                default=const.DEFAULT_ANSWER_SORT_METHOD
+                default=askbot_settings.DEFAULT_ANSWER_SORT_METHOD
             )
 
     def get_pruned_data(self):
@@ -662,7 +667,7 @@ class ShowUsersForm(forms.Form):
     query = forms.CharField(required=False)
 
     def clean_sort(self):
-        sort_method = self.cleaned_data['sort'] 
+        sort_method = self.cleaned_data['sort']
         if sort_method == 'reputation' and askbot_settings.KARMA_MODE == 'private':
             self.cleaned_data['sort'] = 'newest'
         return self.cleaned_data['sort']
@@ -1484,6 +1489,7 @@ class EditUserForm(forms.Form):
 
     def __init__(self, user, *args, **kwargs):
         super(EditUserForm, self).__init__(*args, **kwargs)
+
         logging.debug('initializing the form')
         if askbot_settings.EDITABLE_SCREEN_NAME:
             self.fields['username'] = UserNameField(label=_('Screen name'))
@@ -1509,22 +1515,26 @@ class EditUserForm(forms.Form):
 
     def clean_email(self):
         """For security reason one unique email in database"""
-        if self.user.email != self.cleaned_data['email']:
+        email = self.cleaned_data['email']
+        if email.strip() == '' and askbot_settings.BLANK_EMAIL_ALLOWED:
+            self.cleaned_data['email'] = ''
+            return self.cleaned_data['email']
+
+        if email != self.user.email:
             #todo dry it, there is a similar thing in openidauth
-            if 'email' in self.cleaned_data:
-                try:
-                    User.objects.get(email=self.cleaned_data['email'])
-                except User.DoesNotExist:
-                    return self.cleaned_data['email']
-                except User.MultipleObjectsReturned:
-                    raise forms.ValidationError(_(
-                        'this email has already been registered, '
-                        'please use another one')
-                    )
+            try:
+                User.objects.get(email=email)
+            except User.DoesNotExist:
+                return self.cleaned_data['email']
+            except User.MultipleObjectsReturned:
                 raise forms.ValidationError(_(
                     'this email has already been registered, '
                     'please use another one')
                 )
+            raise forms.ValidationError(_(
+                'this email has already been registered, '
+                'please use another one')
+            )
         return self.cleaned_data['email']
 
 

@@ -25,7 +25,7 @@ APPROPRIATE_ACTIVITIES = (
 )
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         api = API(orm)
         #1) fill in audit status values
@@ -39,7 +39,7 @@ class Migration(DataMigration):
             for user in users:
                 orm.ActivityAuditStatus(user = user, activity = act).save()
 
-        #2) save question value into the activity 
+        #2) save question value into the activity
         for act in orm.Activity.objects.all():
             if act.activity_type in APPROPRIATE_ACTIVITIES:
                 try:
@@ -59,8 +59,8 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         orm.ActivityAuditStatus.objects.all().delete()
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -350,5 +350,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

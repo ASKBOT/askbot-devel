@@ -14,13 +14,13 @@ def deslugify(text):
 
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         pass# nothing to do
-    
-    
+
+
     def backwards(self, orm):
-        """need this reverse migration so that creation of unique 
+        """need this reverse migration so that creation of unique
         constraint (type, name) works in backwards migration 0030
         """
         for badge in orm.BadgeData.objects.all():
@@ -28,7 +28,7 @@ class Migration(DataMigration):
             if badge.name == 'Strunk And White':#special case
                 badge.name = 'Strunk & White'
             badge.save()
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -311,5 +311,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

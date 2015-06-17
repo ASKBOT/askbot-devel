@@ -9,7 +9,7 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         message = "Adding answer counts to threads"
-        num_questions = orm.Question.objects.count() 
+        num_questions = orm.Question.objects.count()
         for question in ProgressBar(orm.Question.objects.iterator(), num_questions, message):
             thread = question.thread
             thread.answer_count = question.answer_count

@@ -689,7 +689,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
     def create(
                 self,
                 tag_names=None,
-                user_list=None, 
+                user_list=None,
                 group_list=None,
                 tag_author=None,
                 language_code=None,

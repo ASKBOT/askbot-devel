@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 QUESTION_LISTS = livesettings.ConfigurationGroup(
             'QUESTION_LISTS',
-            _('Listings of questions'), 
+            _('Listings of questions'),
             super_group=DATA_AND_FORMATTING
         )
 

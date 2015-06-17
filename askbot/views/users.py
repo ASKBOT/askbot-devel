@@ -188,7 +188,7 @@ def show_users(request, by_group=False, group_id=None, group_slug=None):
                             users.order_by(order_by_parameter),
                             const.USERS_PAGE_SIZE
                         )
-        base_url = request.path + '?sort=%s&' % sort_method 
+        base_url = request.path + '?sort=%s&' % sort_method
     else:
         sort_method = 'reputation'
         matching_users = models.get_users_by_text_query(search_query, users)
@@ -349,8 +349,6 @@ def set_new_email(user, new_email, nomessage=False):
         user.email = new_email
         user.email_isvalid = False
         user.save()
-        #if askbot_settings.EMAIL_VALIDATION == True:
-        #    send_new_email_key(user,nomessage=nomessage)
 
 
 def need_to_invalidate_post_caches(user, form):
@@ -398,7 +396,7 @@ def edit_user(request, id):
                 threads = models.Thread.objects.filter(id__in=thread_ids)
                 for thread in threads:
                     #for each thread invalidate cache keys for posts, etc
-                    thread.invalidate_cached_data(lazy=True)
+                    thread.clear_cached_data()
 
             user.real_name = strip_all_tags(form.cleaned_data['realname'])
             user.website = sanitize_html(form.cleaned_data['website'])

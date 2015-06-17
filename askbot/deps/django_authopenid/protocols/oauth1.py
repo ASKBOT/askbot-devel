@@ -26,6 +26,9 @@ class OAuth1Provider(object):
         self.consumer_secret = 'consumer-secret'
         self.icon_media_path = 'https//example.com/button.png'
         self.callback_is_oob = True
+        #skip entry of username and email and get the values
+        #from the OAuth1 server
+        self.one_click_registration = False 
 
     def get_user_id(self):
         """Returns user ID within the OAuth1 provider system,
@@ -134,9 +137,15 @@ class OAuth1Provider(object):
         url, body = self.normalize_url_and_params(url, params)
         response, content = client.request(url, method, body=body, **kwargs)
         if response['status'] == '200':
-            return dict(cgi.parse_qsl(content))
+            parsed_response = dict(cgi.parse_qsl(content))
+            #todo: validate parsed response. For now
+            #a simple check for the dictionary emptiness
+            if parsed_response:
+                return parsed_response
+            else:
+                raise OAuthError('error obtaining request token {}'.format(content))
         else:
-            raise OAuthError('response is %s' % response)
+            raise OAuthError('response is {}'.format(response))
 
     def get_token(self):
         return self.request_token

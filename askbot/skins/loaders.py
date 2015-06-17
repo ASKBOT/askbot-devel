@@ -79,7 +79,7 @@ class AppDirectoryEnvironment(MultilingualEnvironment):
             if len(setup_item) != 2 or not isinstance(dir_list, (list, tuple)):
                 raise ImproperlyConfigured(JINJA2_TEMPLATES_HELP_TEXT)
             return setup_item, dir_list
-                
+
 
     def get_app_template_dir(self, app_name):
         """returns path to directory `templates` within the app directory
@@ -100,7 +100,7 @@ class AppDirectoryEnvironment(MultilingualEnvironment):
 
             #append custom app dirs first
             template_dirs.extend(app_dirs)
-            
+
             #after that append the default app templates dir
             app_template_dir = self.get_app_template_dir(app_name)
             template_dirs.append(app_template_dir)
@@ -225,7 +225,7 @@ class Loader(BaseLoader):
             raise TemplateDoesNotExist
 
 class JinjaAppDirectoryLoader(BaseLoader):
-    """Optional Jinja2 template loader to support apps using 
+    """Optional Jinja2 template loader to support apps using
     Jinja2 templates.
 
     The loader must be placed before the django template loaders
@@ -236,7 +236,7 @@ class JinjaAppDirectoryLoader(BaseLoader):
     templates, via the setting `JINJA2_TEMPLATES` (formatted
     the same way as the `INSTALLED_APPS` setting).
 
-    2) Templates must be within the app directory's templates/appname/ 
+    2) Templates must be within the app directory's templates/appname/
     directory. For example, template XYZ_home.html must be in directory
     XYZ_app/templates/XYZ_app/, where the root directory
     is the app module directory itself.

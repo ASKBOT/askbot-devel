@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'FavoriteQuestion.thread'
         db.add_column(u'favorite_question', 'thread', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Thread'], null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'FavoriteQuestion.thread'
         db.delete_column(u'favorite_question', 'thread_id')
 

@@ -8,7 +8,7 @@ import urllib
 import urlparse
 
 class UserViewsTests(AskbotTestCase):
-    
+
     def test_owner_or_mod_required_passes_url_parameters(self):
         @owner_or_moderator_required
         def mock_view(request, user, context):

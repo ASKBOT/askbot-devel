@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Thread.closed'
         db.add_column('askbot_thread', 'closed', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
 
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Thread.closed'
         db.delete_column('askbot_thread', 'closed')
 

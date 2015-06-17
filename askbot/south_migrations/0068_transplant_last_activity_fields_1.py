@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Thread.last_activity_at'
         db.add_column('askbot_thread', 'last_activity_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now), keep_default=False)
 
@@ -17,7 +17,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Thread.last_activity_at'
         db.delete_column('askbot_thread', 'last_activity_at')
 

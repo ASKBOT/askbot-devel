@@ -130,7 +130,7 @@ class ManagementCommandTests(AskbotTestCase):
         self.assertEqual(models.TagSynonym.objects.count(), 5)
 
         print 'done create_tag_synonym_test'
-        
+
     def test_delete_unused_tags(self):
 
         user = self.create_user()

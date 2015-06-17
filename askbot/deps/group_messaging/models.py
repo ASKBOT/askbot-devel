@@ -37,7 +37,7 @@ def get_recipient_names(recipient_groups):
         else:
             names.add(group.name)
     return names
-            
+
 
 def get_personal_group_by_user_id(user_id):
     return Group.objects.get(name=GROUP_NAME_TPL % user_id)
@@ -57,7 +57,7 @@ def get_personal_group(user):
 def get_unread_inbox_counter(user):
     """returns unread inbox counter for the user"""
     counter, junk = UnreadInboxCounter.objects.get_or_create(user=user)
-    return counter 
+    return counter
 
 
 def create_personal_group(user):
@@ -68,7 +68,7 @@ def create_personal_group(user):
 
 
 class LastVisitTime(models.Model):
-    """just remembers when a user has 
+    """just remembers when a user has
     last visited a given thread
     """
     user = models.ForeignKey(User)
@@ -175,7 +175,7 @@ class MessageManager(models.Manager):
         if recipient:
             filter_kwargs['recipients__in'] = recipient.groups.all()
         else:
-            #todo: possibly a confusing hack - for this branch - 
+            #todo: possibly a confusing hack - for this branch -
             #sender but no recipient in the args - we need "sent" origin threads
             recipient = sender
 
@@ -204,7 +204,7 @@ class MessageManager(models.Manager):
             #part2 - messages for the user without an attached memo
             part2 = self.filter(message_filter & ~models.Q(memos__user=recipient))
             #strange that (part1 | part2).distinct() sometimes gives wrong result
-            threads = list(set(part1) | set(part2)) 
+            threads = list(set(part1) | set(part2))
             thread_ids = [thread.id for thread in threads]
             return Message.objects.filter(id__in=thread_ids).distinct()
 
@@ -301,21 +301,21 @@ class Message(models.Model):
         choices=MESSAGE_TYPE_CHOICES,
         default=STORED,
     )
-    
+
     sender = models.ForeignKey(User, related_name='group_messaging_sent_messages')
 
     senders_info = models.CharField(
         max_length=MAX_SENDERS_INFO_LENGTH,
         default=''
     )#comma-separated list of a few names
-    
+
     recipients = models.ManyToManyField(Group)
 
     root = models.ForeignKey(
         'self', null=True,
         blank=True, related_name='descendants'
     )
-    
+
     parent = models.ForeignKey(
         'self', null=True,
         blank=True, related_name='children'
@@ -538,7 +538,7 @@ class UnreadInboxCounter(models.Model):
 
     def decrement(self):
         """decrements count if > 1
-        does not save the object""" 
+        does not save the object"""
         if self.count > 0:
             self.count -= 1
 

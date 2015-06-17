@@ -1,4 +1,4 @@
-"""Replaces django-avatar 'rebuild_avatars' 
+"""Replaces django-avatar 'rebuild_avatars'
 and saves cached active avatar urls for each user"""
 from askbot.models import User
 from askbot.utils.console import ProgressBar
@@ -10,7 +10,7 @@ class Command(NoArgsCommand):
     def handle_noargs(self, *args, **kwargs):
 
         avatars = Avatar.objects.all()
-        count = avatars.count() 
+        count = avatars.count()
         message = 'Rebuilding avatar thumbnails'
         for avatar in ProgressBar(avatars.iterator(), count, message):
             for size in avatar_settings.AVATAR_AUTO_GENERATE_SIZES:

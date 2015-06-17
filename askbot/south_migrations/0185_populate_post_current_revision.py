@@ -10,7 +10,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         "Write your forwards methods here."
         posts = orm['askbot.Post'].objects.all()
-        count = posts.count() 
+        count = posts.count()
         message = 'Populating Post.current_revision'
         for post in ProgressBar(posts.iterator(), count, message):
             rev = post.revisions.order_by('-revision')[0]

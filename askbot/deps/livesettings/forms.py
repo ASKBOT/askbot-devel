@@ -9,7 +9,7 @@ class SettingsEditor(forms.Form):
     "Base editor, from which customized forms are created"
 
     def __init__(self, *args, **kwargs):
-        settings = kwargs.pop('settings') 
+        settings = kwargs.pop('settings')
         super(SettingsEditor, self).__init__(*args, **kwargs)
         flattened = []
         groups = []

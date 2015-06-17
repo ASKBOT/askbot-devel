@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Vote.voted_post'
         db.add_column(u'vote', 'voted_post', self.gf('django.db.models.fields.related.ForeignKey')(related_name='post_votes', null=True, to=orm['askbot.Post']), keep_default=False)
 
@@ -16,7 +16,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Vote.voted_post'
         db.delete_column(u'vote', 'voted_post_id')
 

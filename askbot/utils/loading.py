@@ -24,7 +24,7 @@ def load_module(mod_path):
 
 
 def load_plugin(setting_name, default_path):
-    """loads custom module/class/function 
+    """loads custom module/class/function
     provided with setting with the fallback
     to the default module/class/function"""
     python_path = getattr(

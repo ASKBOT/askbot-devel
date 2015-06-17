@@ -10,7 +10,7 @@ from django.conf import settings
 from askbot.search.postgresql import setup_full_text_search
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
         if 'postgresql_psycopg2' in askbot.get_database_engine_name():
@@ -21,11 +21,11 @@ class Migration(DataMigration):
                                 'question_answer_comment_models.plsql'
                             )
             setup_full_text_search(script_path)
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         pass
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -306,5 +306,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

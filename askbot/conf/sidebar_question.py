@@ -104,7 +104,7 @@ settings.register(
         description = _('Show tag list in sidebar'),
         help_text = _(
                     'Uncheck this if you want to hide the tag '
-                    'list from the sidebar ' 
+                    'list from the sidebar '
                     ),
         default = True
     )
@@ -116,9 +116,9 @@ settings.register(
         'SIDEBAR_QUESTION_SHOW_META',
         description = _('Show meta information in sidebar'),
         help_text = _(
-                    'Uncheck this if you want to hide the meta ' 
-                    'information about the question (post date, ' 
-                    'views, last updated). ' 
+                    'Uncheck this if you want to hide the meta '
+                    'information about the question (post date, '
+                    'views, last updated). '
                     ),
         default = True
     )
@@ -130,8 +130,8 @@ settings.register(
         'SIDEBAR_QUESTION_SHOW_RELATED',
         description = _('Show related questions in sidebar'),
         help_text = _(
-                    'Uncheck this if you want to hide the list ' 
-                    'of related questions. ' 
+                    'Uncheck this if you want to hide the list '
+                    'of related questions. '
                     ),
         default = True
     )

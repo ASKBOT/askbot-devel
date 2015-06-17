@@ -1,5 +1,5 @@
 """
-Settings for minimum reputation required for 
+Settings for minimum reputation required for
 a variety of actions on the askbot askbot
 """
 from askbot.conf.settings_wrapper import settings
@@ -8,7 +8,7 @@ from askbot.deps import livesettings
 from django.utils.translation import ugettext_lazy as _
 
 MIN_REP = livesettings.ConfigurationGroup(
-    'MIN_REP', 
+    'MIN_REP',
     _('Karma thresholds'),
     ordering=0,
     super_group = REP_AND_BADGES

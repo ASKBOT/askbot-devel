@@ -84,7 +84,7 @@ def get_avatar_data(user, avatar_size):
             datum['is_primary'] = False
         map(clear_primary, primary_avatars)
         primary_avatars[0]['is_primary'] = True
-            
+
     #insert primary avatar first
     primary_avatars = filter(lambda v: v['is_primary'], avatar_data)
     if len(primary_avatars):
@@ -100,7 +100,7 @@ def redirect_to_show_list(user_id):
     return HttpResponseRedirect(
         reverse('askbot_avatar_show_list', kwargs={'user_id': user_id})
     )
-   
+
 
 @admin_or_owner_required
 def show_list(request, user_id=None, extra_context=None, avatar_size=128):

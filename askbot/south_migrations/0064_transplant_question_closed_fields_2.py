@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Question.closed_at'
         db.delete_column(u'question', 'closed_at')
 
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Adding field 'Question.closed_at'
         db.add_column(u'question', 'closed_at', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True), keep_default=False)
 

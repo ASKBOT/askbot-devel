@@ -4,7 +4,7 @@
 :mod:`on_screen_notification_tests` -- Module for testing on-screen notifications
 =================================================================================
 
-.. automodule:: on_screen_notification_tests 
+.. automodule:: on_screen_notification_tests
   .. moduleauthor:: Evgeny Fadeev <evgeny.fadeev@gmail.com>
 """
 import datetime
@@ -103,7 +103,7 @@ class OnScreenUpdateNotificationTests(TestCase):
                             author = self.u11,
                             added_at = datetime.datetime.now(),
                             wiki = False,
-                            tagnames = 'test', 
+                            tagnames = 'test',
                             text = 'hey listen up',
                         )
         self.question = self.thread._question_post()
@@ -550,7 +550,7 @@ class OnScreenUpdateNotificationTests(TestCase):
             set(notifications[0].recipients.all()),
             set(
                 [
-                    self.u11, self.u12, self.u13, 
+                    self.u11, self.u12, self.u13,
                     self.u21, self.u22, self.u23,
                     self.u31
                 ]
@@ -581,7 +581,7 @@ class OnScreenUpdateNotificationTests(TestCase):
             set(notifications[0].recipients.all()),
             set(
                 [
-                    self.u12, self.u13, 
+                    self.u12, self.u13,
                     self.u21, self.u31
                 ]
             )
@@ -608,7 +608,7 @@ class OnScreenUpdateNotificationTests(TestCase):
             set(notifications[0].recipients.all()),
             set(
                 [
-                    self.u11, self.u12, self.u13, 
+                    self.u11, self.u12, self.u13,
                     self.u21
                 ]
             )
@@ -620,5 +620,4 @@ class OnScreenUpdateNotificationTests(TestCase):
                  0, 0, 0, 0,
             ]
         )
-
 

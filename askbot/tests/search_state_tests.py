@@ -290,4 +290,3 @@ class SearchStateTests(AskbotTestCase):
             ss.query_string()
         )
 
-

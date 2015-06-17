@@ -227,7 +227,7 @@ def collect_missing_options(options_dict):
                 return options_dict
 
     else:#others
-        for key in ('database_name', 'database_user', 'database_password'): 
+        for key in ('database_name', 'database_user', 'database_password'):
             if options_dict[key] is None:
                 key_name = key.replace('_', ' ')
                 value = console.simple_dialog(

@@ -62,7 +62,7 @@ class BaseImportXMLCommand(BaseCommand):
         return format_table[format_setting]
 
     def setup_run(self):
-        """remembers the run information, 
+        """remembers the run information,
         for the logging purposes
         """
         command = ' '.join(sys.argv)
@@ -73,7 +73,7 @@ class BaseImportXMLCommand(BaseCommand):
         """reads xml data int BeautifulSoup instance"""
         if not os.path.isfile(filename):
             raise CommandError('File %s does not exist') % filename
-        xml = open(filename, 'r').read() 
+        xml = open(filename, 'r').read()
         self.soup = BeautifulSoup(xml, ['lxml', 'xml'])
 
     def remember_message_ids(self):
@@ -172,7 +172,7 @@ class BaseImportXMLCommand(BaseCommand):
         xml = obj._source_xml
         soup = BeautifulSoup(xml)
         ids = list()
-        for field in soup.findAll('field', attrs={'name': field_name}): 
+        for field in soup.findAll('field', attrs={'name': field_name}):
             objs = field.findAll('object')
             for obj in objs:
                 ids.append(obj.attrs['pk'])
@@ -194,7 +194,7 @@ class BaseImportXMLCommand(BaseCommand):
 
     def copy_bool_parameter(self, from_obj, to_obj, from_param_name, to_param_name=None, operator='or'):
         """copy value of boolean parameter from old to new object"""
-        
+
         to_param_name = to_param_name or from_param_name
 
         from_par = getattr(from_obj, from_param_name)

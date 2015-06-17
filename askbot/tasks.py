@@ -87,7 +87,7 @@ def tweet_new_post_task(post_id):
     if post.author.social_sharing_mode != const.SHARE_NOTHING:
         token = simplejson.loads(post.author.twitter_access_token)
         twitter.tweet(tweet_text, access_token=token)
-        
+
 
 @task(ignore_result=True)
 def notify_author_of_published_revision_celery_task(revision_id):
@@ -179,14 +179,17 @@ def record_post_update_celery_task(
 
 @task(ignore_result=True)
 def record_question_visit(
-    question_post_id = None,
-    user_id = None,
-    update_view_count = False):
+    language_code=None,
+    question_post_id=None,
+    update_view_count=False,
+    user_id=None
+):
     """celery task which records question visit by a person
     updates view counter, if necessary,
     and awards the badges associated with the
     question visit
     """
+    activate_language(language_code)
     #1) maybe update the view count
 
     try:

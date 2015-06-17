@@ -9,7 +9,7 @@ from askbot.migrations_api import safe_add_column
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model show_marked_tags fields to the model auth_user
         safe_add_column(
             u'auth_user',
@@ -18,13 +18,13 @@ class Migration(SchemaMigration):
                 'django.db.models.fields.BooleanField'
             )(default=True, blank=True)
         )
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting show_marked_tags fields
         db.delete_column(u'auth_user', 'show_marked_tags')
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},

@@ -52,7 +52,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Post'
         db.delete_table('askbot_post')
 

@@ -63,6 +63,6 @@ def preview_email(request, slug):
                 )
         error_message += u'</br> %s' % tech_error
         data['error_message'] = error_message
-        
+
     data['email'] = email
     return render(request, 'email/preview_email.html', Context(data))

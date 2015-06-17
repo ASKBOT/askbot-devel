@@ -313,7 +313,7 @@ def moderate_post_edits(request):
             revs = expand_revision_set(revs)
             ips, users = get_revision_ips_and_authors(revs)
             memo_set = get_memos_by_revisions(revs, request.user)
-            
+
             #to make sure to not block the admin and
             #in case REMOTE_ADDR is a proxy server - not
             #block access to the site
@@ -337,7 +337,7 @@ def moderate_post_edits(request):
                 user.set_status('b')
                 #delete all content by the user
                 num_posts += request.user.delete_all_content_authored_by_user(user)
-                
+
             num_ips = len(ips)
             num_users = len(users)
 

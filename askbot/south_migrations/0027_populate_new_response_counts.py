@@ -5,21 +5,21 @@ from south.v2 import DataMigration
 from django.db import models
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         """transfer value of response_count to new_response_count
         """
         for user in orm['auth.User'].objects.all():
             user.new_response_count= user.response_count
             user.save()
-    
-    
+
+
     def backwards(self, orm):
         """transfer a total of new and seen responses to response_count"""
         for user in orm['auth.User'].objects.all():
             user.response_count= user.new_response_count + user.seen_response_count
             user.save()
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -309,5 +309,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

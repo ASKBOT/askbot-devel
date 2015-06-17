@@ -19,7 +19,7 @@ class AnonymousMessageManager(object):
 
     def create(self, message=''):
         """send message to anonymous user"""
-        create_message(self.request, message)  
+        create_message(self.request, message)
 
     def get_and_delete(self):
         """returns messages sent to the anonymous user

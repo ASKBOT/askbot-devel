@@ -46,7 +46,7 @@ settings.register(
         description = _('Show avatar block in sidebar'),
         help_text = _(
                     'Uncheck this if you want to hide the avatar '
-                    'block from the sidebar ' 
+                    'block from the sidebar '
                     ),
         default = True
     )
@@ -57,7 +57,7 @@ settings.register(
         SIDEBAR_MAIN,
         'SIDEBAR_MAIN_AVATAR_LIMIT',
         description = _('Limit how many avatars will be displayed on the sidebar'),
-        default = 16 
+        default = 16
     )
 )
 
@@ -69,7 +69,7 @@ settings.register(
         description=_('Show tag selector in sidebar'),
         help_text=_(
                     'Uncheck this if you want to hide the options '
-                    'for choosing interesting and ignored tags ' 
+                    'for choosing interesting and ignored tags '
                     ),
         default=True,
     )
@@ -82,7 +82,7 @@ settings.register(
         description = _('Show tag list/cloud in sidebar'),
         help_text = _(
                     'Uncheck this if you want to hide the tag '
-                    'cloud or tag list from the sidebar ' 
+                    'cloud or tag list from the sidebar '
                     ),
         default = True
     )
@@ -113,4 +113,3 @@ settings.register(
         description=_('Show above only to anonymous users')
     )
 )
-

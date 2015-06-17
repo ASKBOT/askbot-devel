@@ -6,14 +6,14 @@ from django.db import models
 from askbot import const
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model country fields to the model auth_user
         db.delete_column(u'auth_user', 'hide_ignored_questions')
         db.delete_column(u'auth_user', 'tag_filter_setting')
-    
-    
+
+
     def backwards(self, orm):
         db.add_column(
             u'auth_user',
@@ -29,8 +29,8 @@ class Migration(SchemaMigration):
                 'django.db.models.fields.CharField'
             )(default = 'ignored', max_length = 16)
         )
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -313,5 +313,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

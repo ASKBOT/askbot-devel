@@ -30,7 +30,7 @@ import logging
 import signals
 import os
 
-__all__ = ['BASE_GROUP', 'BASE_SUPER_GROUP', 'ConfigurationGroup', 'Value', 'BooleanValue', 
+__all__ = ['BASE_GROUP', 'BASE_SUPER_GROUP', 'ConfigurationGroup', 'Value', 'BooleanValue',
       'DecimalValue', 'DurationValue',
       'FloatValue', 'IntegerValue', 'ModuleValue', 'PercentValue', 'PositiveIntegerValue', 'SortedDotDict',
       'StringValue', 'SuperGroup', 'ImageValue', 'LongStringValue', 'MultipleStringValue', 'URLValue']
@@ -441,7 +441,7 @@ class Value(object):
                         pass
 
                 signals.configuration_value_changed.send(self, old_value=current_value, new_value=new_value, setting=self)
-                
+
                 if self.clear_cache:
                     cache.clear()
 
@@ -491,7 +491,7 @@ class Value(object):
             raw_value = self.get_default_editor_value(language_code)
 
         return self.to_python(raw_value)
-            
+
 
     # Subclasses should override the following methods where applicable
 
@@ -854,4 +854,3 @@ class ModuleValue(Value):
         if value == NOTSET:
             value = ""
         return value
-

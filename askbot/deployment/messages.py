@@ -46,7 +46,7 @@ DIR_NAME_TAKEN_BY_ASKBOT = """Please do not name your entire Django project 'ask
 because this name is already used by the askbot app itself"""
 
 def format_msg_dir_not_writable(directory):
-    """returns a meaningful message explaining why directory 
+    """returns a meaningful message explaining why directory
     is not writable by the user
     """
     if os.path.exists(directory):

@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Activity.summary'
         db.add_column(u'activity', 'summary', self.gf('django.db.models.fields.TextField')(default=''), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Activity.summary'
         db.delete_column(u'activity', 'summary')
 

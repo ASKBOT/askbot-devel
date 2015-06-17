@@ -7,9 +7,9 @@ from askbot import const
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model country fields to the model auth_user
         safe_add_column(
             u'auth_user',
@@ -25,14 +25,14 @@ class Migration(SchemaMigration):
                 'django.db.models.fields.SmallIntegerField'
             )(default = const.INCLUDE_ALL)
         )
-    
-    
+
+
     def backwards(self, orm):
-        
+
         db.delete_column(u'auth_user', 'email_tag_filter_strategy')
         db.delete_column(u'auth_user', 'display_tag_filter_strategy')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -315,5 +315,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

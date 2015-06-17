@@ -5,12 +5,6 @@
     <ul>
         {% if request.user.is_anonymous() and not settings.ALLOW_ASK_UNREGISTERED %}
         <li class="warning">{% trans %}since you are not logged in right now, you will be asked to sign in or register after making your post{% endtrans %}</li>
-        {% else %}
-            {% if settings.EMAIL_VALIDATION %}
-                {% if not request.user.email_isvalid %}
-                <li class="warning">{% trans email=request.user.email %}Your email, {{ email }} has not yet been validated. To post messages you must verify your email, please see <a href='{{ email_validation_faq_url }}'>more details here</a>. You can submit your post now and validate email after that.{% endtrans %}</li>
-                {% endif %}
-            {% endif %}
         {% endif %}
         <li>{{ settings.WORDS_ASK_A_QUESTION_INTERESTING_TO_THIS_COMMUNITY|escape }}</li>
         <li>{% trans %}provide enough details{% endtrans %}</li>

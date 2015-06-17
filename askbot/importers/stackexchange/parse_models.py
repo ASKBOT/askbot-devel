@@ -46,7 +46,7 @@ def get_table_name(name):
     else:
         bits = name.split('2')
         bits = map(singular, bits)
-        out += '2'.join(bits) 
+        out += '2'.join(bits)
     return out
 
 class DjangoModel(object):
@@ -75,7 +75,7 @@ class DjangoField(object):
     def __str__(self):
         out  = '%s = %s(' % (self.name, types[self.type])
         if self.type == 'FK':
-            out += "'%s'" % self.relation  
+            out += "'%s'" % self.relation
             out += ", related_name='%s_by_%s_set'" % (self.table.name, self.name)
             out += ', null=True'#nullable to make life easier
         elif self.type == 'PK':
@@ -108,7 +108,7 @@ class DjangoFK(DjangoField):
         self.set_relation(name)
 
     def set_relation(self, name):
-        """some relations need to be mapped 
+        """some relations need to be mapped
         to actual tables
         """
         self.relation = table_prefix
@@ -132,7 +132,7 @@ def get_col_type(col):
         try:
             restriction = int(type_e.getchildren()[0].get('value'))
         except:
-            restriction = -1 
+            restriction = -1
         if restriction > 400:
             type = 'text'
             restriction = -1

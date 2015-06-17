@@ -6,18 +6,18 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
         # Adding fields
         safe_add_column('auth_user', 'new_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
         safe_add_column('auth_user', 'seen_response_count', self.gf('django.db.models.fields.IntegerField')(default=0), keep_default=False)
-    
+
     def backwards(self, orm):
         # Deleting fields
         db.delete_column('auth_user', 'new_response_count')
         db.delete_column('auth_user', 'seen_response_count')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -309,5 +309,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

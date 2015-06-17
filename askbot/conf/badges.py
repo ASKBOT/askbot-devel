@@ -1,5 +1,5 @@
 """
-Settings for reputation changes that apply to 
+Settings for reputation changes that apply to
 user in response to various actions by the same
 users or others
 """
@@ -41,7 +41,7 @@ def register_badge_settings(badge_slug=None, badge_name=None, params=None):
                 default=param_default
             )
         )
-        
+
 register_badge_settings(
     'ASSOCIATE_EDITOR',
     _('Associate Editor'),

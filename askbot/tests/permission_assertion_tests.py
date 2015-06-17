@@ -163,7 +163,7 @@ class SeeOffensiveFlagsPermissionAssertionTests(utils.AskbotTestCase):
         )
 
 class DeleteAnswerPermissionAssertionTests(utils.AskbotTestCase):
-    
+
     def setUp(self):
         self.create_user()
         self.create_user(username = 'other_user')
@@ -315,7 +315,7 @@ class DeleteQuestionPermissionAssertionTests(utils.AskbotTestCase):
 
 
 class CloseQuestionPermissionAssertionTests(utils.AskbotTestCase):
-    
+
     def setUp(self):
         super(CloseQuestionPermissionAssertionTests, self).setUp()
         self.create_user()
@@ -484,25 +484,15 @@ class EditQuestionPermissionAssertionTests(utils.AskbotTestCase):
         self.min_rep = askbot_settings.MIN_REP_TO_EDIT_OTHERS_POSTS
         self.min_rep_wiki = askbot_settings.MIN_REP_TO_EDIT_WIKI
 
-    def assert_user_can(
-                    self,
-                    user = None,
-                ):
-        if user is None:
-            user = self.user
-
+    def assert_user_can(self, user=None):
+        user = user or self.user
         user.assert_can_edit_post(self.post)
         self.assertTrue(
             template_filters.can_edit_post(user, self.post)
         )
 
-    def assert_user_cannot(
-                    self,
-                    user = None,
-                ):
-        if user is None:
-            user = self.user
-
+    def assert_user_cannot(self, user=None):
+        user = user or self.user
         self.assertRaises(
                     exceptions.PermissionDenied,
                     user.assert_can_edit_post,
@@ -939,7 +929,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         )
         self.assertFalse(
             template_filters.can_delete_comment(
-                self.user, 
+                self.user,
                 comment
             )
         )
@@ -961,7 +951,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         )
         self.assertFalse(
             template_filters.can_delete_comment(
-                self.other_user, 
+                self.other_user,
                 comment
             )
         )
@@ -978,7 +968,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.other_user.delete_comment(comment)
         self.assertTrue(
             template_filters.can_delete_comment(
-                self.other_user, 
+                self.other_user,
                 comment
             )
         )
@@ -1000,7 +990,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.user.delete_comment(comment)
         self.assertTrue(
             template_filters.can_delete_comment(
-                self.user, 
+                self.user,
                 comment
             )
         )
@@ -1015,7 +1005,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.other_user.delete_comment(comment)
         self.assertTrue(
             template_filters.can_delete_comment(
-                self.other_user, 
+                self.other_user,
                 comment
             )
         )
@@ -1031,7 +1021,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.other_user.delete_comment(comment)
         self.assertTrue(
             template_filters.can_delete_comment(
-                self.other_user, 
+                self.other_user,
                 comment
             )
         )
@@ -1052,7 +1042,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
             )
         self.assertFalse(
             template_filters.can_delete_comment(
-                self.other_user, 
+                self.other_user,
                 comment
             )
         )
@@ -1067,7 +1057,7 @@ class CommentPermissionAssertionTests(PermissionAssertionTestCase):
         self.user.delete_comment(comment)
         self.assertTrue(
             template_filters.can_delete_comment(
-                self.user, 
+                self.user,
                 comment
             )
         )
@@ -1335,13 +1325,13 @@ class AcceptBestAnswerPermissionAssertionTests(utils.AskbotTestCase):
             user = self.user
         user.assert_can_accept_best_answer(self.answer)
 
-    def assert_user_cannot(self, user = None):
+    def assert_user_cannot(self, user=None):
         if user is None:
             user = self.user
         self.assertRaises(
             exceptions.PermissionDenied,
             user.assert_can_accept_best_answer,
-            answer = self.answer
+            answer=self.answer
         )
 
     def test_question_owner_can_accept_others_answer(self):
@@ -1360,7 +1350,7 @@ class AcceptBestAnswerPermissionAssertionTests(utils.AskbotTestCase):
 
     def test_answer_owner_cannot_accept_answer(self):
         self.other_post_answer()
-        self.assert_user_cannot(user = self.other_user)
+        self.assert_user_cannot(user=self.other_user)
 
     def test_question_and_answer_owner_cannot_accept_answer(self):
         self.user_post_answer()
@@ -1437,7 +1427,7 @@ class VotePermissionAssertionTests(PermissionAssertionTestCase):
         assert(dir in ('up', 'down'))
 
         vote_func = self.get_vote_function(
-                                        user = user, 
+                                        user = user,
                                         dir = dir
                                     )
 
@@ -1473,7 +1463,7 @@ class VotePermissionAssertionTests(PermissionAssertionTestCase):
 
         def vote_func(post):
             user.assert_can_vote_for_post(post = post, direction = dir)
-        
+
         return vote_func
 
 

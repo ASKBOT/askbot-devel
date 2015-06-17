@@ -5,24 +5,24 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'Repute.comment'
         db.add_column(u'repute', 'comment', self.gf('django.db.models.fields.CharField')(max_length=128, null=True), keep_default=False)
 
         # Changing field 'Repute.question'
         db.alter_column(u'repute', 'question_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Question'], null=True, blank=True))
-    
+
     def backwards(self, orm):
-        
+
         # Deleting field 'Repute.comment'
         db.delete_column(u'repute', 'comment')
 
         # Changing field 'Repute.question'
         db.alter_column(u'repute', 'question_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Question']))
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -302,5 +302,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

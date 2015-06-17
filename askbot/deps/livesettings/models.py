@@ -186,4 +186,3 @@ class LongSetting(models.Model, CachedObjectMixin):
 
     class Meta:
         unique_together = ('site', 'group', 'key')
-

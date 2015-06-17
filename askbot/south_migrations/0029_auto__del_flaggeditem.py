@@ -5,15 +5,15 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Deleting model 'FlaggedItem'
         db.delete_table(u'flagged_item')
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Adding model 'FlaggedItem'
         db.create_table(u'flagged_item', (
             ('flagged_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
@@ -23,8 +23,8 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
         ))
         db.send_create_signal('askbot', ['FlaggedItem'])
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -307,5 +307,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

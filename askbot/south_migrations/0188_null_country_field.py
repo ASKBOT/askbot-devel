@@ -11,8 +11,8 @@ class Migration(SchemaMigration):
         """this migration may or may not be necessary, depending on the
         history of versions of the django-countries app used"""
         db.alter_column(
-            'auth_user', 
-            'country', 
+            'auth_user',
+            'country',
             models.CharField(max_length=2, null=True, blank=True)#, default='')
         )
         pass

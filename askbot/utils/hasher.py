@@ -10,7 +10,7 @@ def get_hash_of_dirs(dirs):
     for directory in dirs:
         if not os.path.exists (directory):
             return -1
-          
+
         try:
             for root, dirs, files in os.walk(directory):
                 for names in files:

@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Question.last_activity_by'
         db.delete_column(u'question', 'last_activity_by_id')
 
@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # User chose to not deal with backwards NULL issues for 'Question.last_activity_by'
         raise RuntimeError("Cannot reverse this migration. 'Question.last_activity_by' and its values cannot be restored.")
 

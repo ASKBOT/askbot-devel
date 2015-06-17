@@ -23,7 +23,7 @@ def with_settings(**settings_dict):
             for key, value in settings_dict.items():
                 backup_settings_dict[key] = getattr(askbot_settings, key)
                 askbot_settings.update(key, value)
-            
+
             try:
                 return func(*args, **kwargs)
             except:
@@ -35,7 +35,7 @@ def with_settings(**settings_dict):
         return wrapped
 
     return decorator
-                
+
 
 
 def create_user(

@@ -95,7 +95,7 @@ class Command(BaseCommand):
 
             #add names of explicitly followed tags
             followed_tags = list()
-            followed_tags.extend(   
+            followed_tags.extend(
                 tag_marks.filter(
                             reason='good'
                         ).values_list(
@@ -151,7 +151,7 @@ class Command(BaseCommand):
                 follow = ''
             user_string = '%s (%d)%s' % (user.username, user.id, follow)
             output_lines = format_table_row(
-                                [user_string,], 
+                                [user_string,],
                                 followed_lines,
                                 ignored_lines,
                                 subscribed_lines,
@@ -223,8 +223,8 @@ class Command(BaseCommand):
             follow_str = '%d (%d)' % (follow_count, wild_follow)
             ignore_str = '%d (%d)' % (ignore_count, wild_ignore)
             subscribe_str = '%d (%d)' % (subscribe_count, wild_sub)
-            counts = (11-len(subscribe_str)) * ' ' + subscribe_str + '  ' 
-            counts = (11-len(follow_str)) * ' ' + follow_str + '  ' 
+            counts = (11-len(subscribe_str)) * ' ' + subscribe_str + '  '
+            counts = (11-len(follow_str)) * ' ' + follow_str + '  '
             counts += (11-len(ignore_str)) * ' ' + ignore_str
 
             total_count = follow_count + ignore_count + subscribe_count

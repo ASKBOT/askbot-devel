@@ -1,4 +1,4 @@
-#todo: http://stackoverflow.com/questions/837828/how-to-use-a-slug-in-django 
+#todo: http://stackoverflow.com/questions/837828/how-to-use-a-slug-in-django
 DEBUGME = False
 import os
 import re
@@ -138,7 +138,7 @@ class X(object):#
     @classmethod
     def get_message_text(cls, se_m):
         """try to intelligently translate
-        SE message to ASKBOT so that it makese sense in 
+        SE message to ASKBOT so that it makese sense in
         our context
         """
         #todo: properly translate messages
@@ -187,7 +187,7 @@ class X(object):#
 
     @classmethod
     def get_post_revision_group_types(cls, rev_group):
-        rev_types = {} 
+        rev_types = {}
         for rev in rev_group:
             rev_type = cls.get_post_revision_type(rev)
             rev_types[rev_type] = 1
@@ -213,7 +213,7 @@ class X(object):#
     @classmethod
     def get_screen_name(cls, se_user):
         """always returns unique screen name
-        even if there are multiple users in SE 
+        even if there are multiple users in SE
         with the same exact screen name
         """
 
@@ -277,13 +277,13 @@ class X(object):#
     @classmethod
     def parse_badge_summary(cls, badge_summary):
         badge_counts = [0,0,0]#gold, silver and bronze, respectively
-        if badge_summary: 
+        if badge_summary:
             badge_info_list = badge_summary.split(' ')
             for badge_info in badge_info_list:
                 level, count = badge_info.split('=')
                 badge_counts[int(level) - 1] = int(count)
         return badge_counts
-        
+
     @classmethod
     def get_badge_name(cls, name):
         return slugify(cls.badge_exceptions.get(name, name).lower())
@@ -343,7 +343,7 @@ it may be helpful to split this procedure in two:\n
             raise CommandError('Error: first argument must be a zip file with the SE forum data')
 
         if kwarg['read_dump']:
-            self.zipfile = self.open_dump(arg[0]) 
+            self.zipfile = self.open_dump(arg[0])
             #read the data into SE tables
             for item in xml_read_order:
                 time_before = datetime.now()
@@ -593,7 +593,7 @@ it may be helpful to split this procedure in two:\n
                 if rev_type == 'Post Locked':
                     p.locked = True
                     p.locked_by = u
-                    p.locked_at = t 
+                    p.locked_at = t
                 elif rev_type == 'Post Unlocked':
                     p.locked = False
                     p.locked_by = None
@@ -654,7 +654,7 @@ it may be helpful to split this procedure in two:\n
             #drop userless revisions - those are probably garbage posts
             #by the deleted users
             return
-        rev_types = X.get_post_revision_group_types(rev_group) 
+        rev_types = X.get_post_revision_group_types(rev_group)
         if 'initial' in rev_types:
             self._process_post_initial_revision_group(rev_group)
         elif 'edit' in rev_types:
@@ -669,7 +669,7 @@ it may be helpful to split this procedure in two:\n
             self._process_post_delete_revision_group(rev_group)
         else:
             pass
-            #todo: rollback, lock, close and delete are 
+            #todo: rollback, lock, close and delete are
             #not tested
             #merge and migrate actions are ignored
         #wiki is mixable with other groups, so process it in addition
@@ -793,7 +793,7 @@ it may be helpful to split this procedure in two:\n
         self._collect_missing_badges()
         #2) award badges
         self._award_badges()
-        #3) report missing badges 
+        #3) report missing badges
         self._report_missing_badges()
         pass
 

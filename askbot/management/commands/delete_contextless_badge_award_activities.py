@@ -17,4 +17,3 @@ class Command(NoArgsCommand):
             print "%d activity objects deleted" % deleted_count
         else:
             print "None found"
-        

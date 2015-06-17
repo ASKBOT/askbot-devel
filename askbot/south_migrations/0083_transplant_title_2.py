@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Question.title'
         db.delete_column(u'question', 'title')
 
 
     def backwards(self, orm):
-        
+
         # User chose to not deal with backwards NULL issues for 'Question.title'
         raise RuntimeError("Cannot reverse this migration. 'Question.title' and its values cannot be restored.")
 

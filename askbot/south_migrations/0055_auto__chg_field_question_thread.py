@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Changing field 'Question.thread'
         db.alter_column(u'question', 'thread_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, unique=True, to=orm['askbot.Thread']))
 
 
     def backwards(self, orm):
-        
+
         # Changing field 'Question.thread'
         db.alter_column(u'question', 'thread_id', self.gf('django.db.models.fields.related.ForeignKey')(unique=True, null=True, to=orm['askbot.Thread']))
 

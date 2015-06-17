@@ -20,7 +20,7 @@
 """
 This script parse a directory tree looking for python modules and packages and
 create ReST files appropriately to create code documentation with Sphinx.
-It also create a modules index. 
+It also create a modules index.
 """
 
 import os
@@ -94,7 +94,7 @@ def create_package_content(package, py_files, sub_packages):
         text += '\n'
         for py_file in py_files:
             if py_file == '__init__.py':
-                #continue, because this file is being created for 
+                #continue, because this file is being created for
                 #__init__.py of the current module
                 continue
             py_file = os.path.splitext(py_file)[0]
@@ -124,11 +124,11 @@ def write_file(module_name, text_content, opts):
     """
     file_path = create_file_name(module_name, opts)
     if not opts.force and os.path.isfile(file_path):
-        print 'File %s already exists.' % file_path 
+        print 'File %s already exists.' % file_path
     else:
         print 'Writing file %s' % file_path
         # write the file
-        if not opts.dryrun:       
+        if not opts.dryrun:
             fd = open(file_path, 'w')
             fd.write(text_content)
             fd.close()
@@ -157,7 +157,7 @@ def select_public_names(name_list):
             continue
         else:
             public_names.append(name)
-    return public_names 
+    return public_names
 
 def select_python_packages(package_path, sub_directory_names):
     """returns list of subdimodule_name directories (only basenames) of package_path
@@ -180,7 +180,7 @@ def recurse_tree(path, excludes, opts):
     # check if the base directory is a package and get is name
     if '__init__.py' in os.listdir(path):
         base_package_name = os.path.basename(path)
-    
+
     toc = []
     excludes = format_excludes(path, excludes)
     tree = os.walk(path, False)
@@ -198,7 +198,7 @@ def recurse_tree(path, excludes, opts):
         subs = select_python_packages(directory, subs)
 
         #calculate dotted python package name - like proj.pack.subpackage
-        package_name = directory.replace(os.path.sep, '.') 
+        package_name = directory.replace(os.path.sep, '.')
 
         if is_python_package(directory):
             text = create_package_content(package_name, py_files, subs)
@@ -222,7 +222,7 @@ def modules_toc(modules, opts, name='modules'):
     """
     Create the module's index.
     """
-    fname = create_file_name(name, opts)    
+    fname = create_file_name(name, opts)
     if not opts.force and os.path.exists(fname):
         print "File %s already exists." % name
         return
@@ -232,7 +232,7 @@ def modules_toc(modules, opts, name='modules'):
     text += title_line('Modules:', '-')
     text += '.. toctree::\n'
     text += '   :maxdepth: %s\n\n' % opts.maxdepth
-    
+
     modules.sort()
     prev_module = ''
     for module in modules:
@@ -241,9 +241,9 @@ def modules_toc(modules, opts, name='modules'):
             continue
         prev_module = module
         text += '   %s\n' % module
-        
+
     # write the file
-    if not opts.dryrun:       
+    if not opts.dryrun:
         fd = open(fname, 'w')
         fd.write(text)
         fd.close()
@@ -274,7 +274,7 @@ def is_directory_excluded(directory, excludes):
 
 def select_py_files(files):
     """
-    Return a list with only the python scripts (remove all other files). 
+    Return a list with only the python scripts (remove all other files).
     """
     py_files = [fich for fich in files if os.path.splitext(fich)[1] == '.py']
     return py_files
@@ -285,7 +285,7 @@ def main():
     Parse and check the command line arguments
     """
     parser = optparse.OptionParser(usage="""usage: %prog [options] <package path> [exclude paths, ...]
-    
+
 Note: By default this script will not overwrite already created files.""")
     parser.add_option("-n", "--doc-header", action="store", dest="header", help="Documentation Header (default=Project)", default="Project")
     parser.add_option("-d", "--dest-dir", action="store", dest="destdir", help="Output destination directory", default="")
@@ -308,10 +308,9 @@ Note: By default this script will not overwrite already created files.""")
                 print '%s is not a valid output destination directory.' % opts.destdir
         else:
             print '%s is not a valid directory.' % args
-            
-            
+
+
 
 
 if __name__ == '__main__':
     main()
-    

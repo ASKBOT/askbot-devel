@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'AnswerRevision.revision_type'
         db.add_column(u'answer_revision', 'revision_type', self.gf('django.db.models.fields.SmallIntegerField')(default=0), keep_default=False)
 
@@ -31,7 +31,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'QuestionRevision', fields ['question', 'revision']
         db.delete_unique(u'question_revision', ['question_id', 'revision'])
 

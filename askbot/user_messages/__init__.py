@@ -12,7 +12,7 @@ def create_message (request, message):
 
     """
     assert hasattr(request, 'session'), "django-session-messages requires session middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."
-    
+
     try:
         request.session['messages'].append(message)
     except KeyError:
@@ -31,6 +31,5 @@ def get_and_delete_messages (request, include_auth=False):
 
     if include_auth and request.user.is_authenticated():
         messages.extend(request.user.get_and_delete_messages())
-    
-    return messages
 
+    return messages

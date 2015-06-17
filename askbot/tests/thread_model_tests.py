@@ -5,7 +5,7 @@ import django.core.mail
 from django.core.urlresolvers import reverse
 
 class ThreadModelTestsWithGroupsEnabled(AskbotTestCase):
-    
+
     def setUp(self):
         self.groups_enabled_backup = askbot_settings.GROUPS_ENABLED
         askbot_settings.update('GROUPS_ENABLED', True)
@@ -106,7 +106,7 @@ class ThreadModelTestsWithGroupsEnabled(AskbotTestCase):
         self.client.post(
             reverse('publish_answer'),
             data={'answer_id': answer.id},
-            HTTP_X_REQUESTED_WITH='XMLHttpRequest' 
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         #todo: test redirect
 

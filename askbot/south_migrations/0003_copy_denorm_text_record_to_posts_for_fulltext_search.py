@@ -6,7 +6,7 @@ from south.v2 import DataMigration
 from django.db import models
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
         for q in orm.Question.objects.all():
@@ -17,11 +17,11 @@ class Migration(DataMigration):
             r = a.revisions.all()[0]
             a.text = r.text
             a.save()
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         pass#there's no need to clean data here, just delete columns
-    
+
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
     if forum_app_name == 'forum':
         models = {
@@ -351,7 +351,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -681,5 +681,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

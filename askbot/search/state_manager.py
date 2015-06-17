@@ -88,7 +88,7 @@ class SearchState(object):
     def get_empty(cls):
         return cls(scope=None, sort=None, query=None, tags=None, author=None, page=None, page_size=None, user_logged_in=None)
 
-    def __init__(self, 
+    def __init__(self,
         scope=None, sort=None, query=None, tags=None,
         author=None, page=None, page_size=None, user_logged_in=False
     ):

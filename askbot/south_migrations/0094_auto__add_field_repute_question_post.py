@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Repute.question_post'
         db.add_column(u'repute', 'question_post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Post'], null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Repute.question_post'
         db.delete_column(u'repute', 'question_post_id')
 

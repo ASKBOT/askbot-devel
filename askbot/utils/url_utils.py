@@ -61,7 +61,7 @@ def urls_equal(url1, url2, ignore_trailing_slash=False):
 
     if purl1.netloc != purl2.netloc:
         return False
-    
+
     if ignore_trailing_slash is True:
         normfunc = append_trailing_slash
     else:
@@ -75,7 +75,7 @@ def urls_equal(url1, url2, ignore_trailing_slash=False):
 
 def get_login_url():
     """returns internal login url if
-    django_authopenid is used, or 
+    django_authopenid is used, or
     the corresponding django setting
     """
     if 'askbot.deps.django_authopenid' in settings.INSTALLED_APPS:

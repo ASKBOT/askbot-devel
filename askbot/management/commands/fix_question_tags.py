@@ -76,7 +76,7 @@ class Command(NoArgsCommand):
                 #because it was an invalid duplicate version
                 #of other valid tag
                 continue
-                
+
 
             fixed_name = get_valid_tag_name(tag)
 
@@ -106,7 +106,7 @@ class Command(NoArgsCommand):
                 tag.delete()
                 found_count += 1
                 continue
-                
+
 
             #if there are case variant dupes, we assign questions
             #from the case variants to the current tag and

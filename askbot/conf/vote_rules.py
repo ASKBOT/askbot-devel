@@ -10,8 +10,8 @@ from askbot.deps.livesettings import ConfigurationGroup, IntegerValue
 from django.utils.translation import ugettext_lazy as _
 
 VOTE_RULES = ConfigurationGroup(
-                    'VOTE_RULES', 
-                    _('Vote and flag limits'), 
+                    'VOTE_RULES',
+                    _('Vote and flag limits'),
                     ordering = 1,
                     super_group = REP_AND_BADGES
                 )

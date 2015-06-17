@@ -39,12 +39,12 @@ class MergeUsersBaseCommand(BaseCommand):
             transaction.commit()
 
         self.process_custom_user_fields()
-        self.cleanup() 
+        self.cleanup()
         transaction.commit()
 
     def cleanup(self):
         raise Exception, 'Not implemented'
-      
+
     def process_custom_user_fields(self):
         """Put app specific logic here."""
         raise Exception, 'Not implemented'
@@ -83,11 +83,10 @@ class Command(MergeUsersBaseCommand):
 
         if self.from_user.last_seen > self.to_user.last_seen:
             self.to_user.last_seen = self.from_user.last_seen
-    
+
         if self.from_user.date_joined < self.to_user.date_joined:
             self.to_user.date_joined = self.from_user.date_joined
 
     def cleanup(self):
         self.to_user.save()
         self.from_user.set_status('b')
-

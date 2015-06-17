@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Post.language_code'
         db.add_column('askbot_post', 'language_code', self.gf('django.db.models.fields.CharField')(default='en', max_length=16), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Post.language_code'
         db.delete_column('askbot_post', 'language_code')
 

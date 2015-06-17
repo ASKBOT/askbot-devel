@@ -53,7 +53,7 @@ def format_tag_name_list(tag_list):
 class Command(BaseCommand):
     "The command object itself"
 
-    help = """Retags questions from one set of tags to another, like 
+    help = """Retags questions from one set of tags to another, like
 rename_tags, but using tag id's
 
 
@@ -160,8 +160,8 @@ or repost a bug, if that does not help"""
                raise CommandError(u'You gave %s as --to argument, but TagSynonym: %s -> %s exists, probably you want to provide %s as --to argument' % (to_tag_name, tag_synonym.source_tag_name, tag_synonym.target_tag_name, tag_synonym.target_tag_name))
             except models.TagSynonym.DoesNotExist:
                 pass
-        
-        
+
+
         #actual processing stage, only after this point we start to
         #modify stuff in the database, one question per transaction
         i = 0
@@ -175,7 +175,7 @@ or repost a bug, if that does not help"""
                 tags = u' '.join(tag_names),
                 #silent = True #do we want to timestamp activity on question
             )
-            question.invalidate_cached_thread_content_fragment()
+            question.invalidate_cached_summary_html()
             i += 1
             sys.stdout.write('%6.2f%%' % (100*float(i)/float(question_count)))
             sys.stdout.write('\b'*7)
@@ -209,4 +209,4 @@ or repost a bug, if that does not help"""
             models.TagSynonym.objects.filter(
                                 target_tag_name=from_tag_name,
                                 language_code=lang
-                            ).update(target_tag_name = to_tag_name) 
+                            ).update(target_tag_name = to_tag_name)

@@ -147,7 +147,7 @@ two plus two equals four
     def test_links1(self):
         text = """[url]http://example.com/2[/url] blah
 http://example.com/1 blah
-[link text3|http://example.com/3|tooltip text3] blah2 
+[link text3|http://example.com/3|tooltip text3] blah2
 [link text4|http://example.com/4|tooltip text4]
 !http://example.com/img.png!
 [email@example.com]
@@ -155,7 +155,7 @@ http://example.com/1 blah
 """
         expected = """<p><a href="http://example.com/2">http://example.com/2</a> blah<br/>
 <a href="http://example.com/1">http://example.com/1</a> blah<br/>
-<a href="http://example.com/3" title="tooltip text3">link text3</a> blah2 <br/>
+<a href="http://example.com/3" title="tooltip text3">link text3</a> blah2<br/>
 <a href="http://example.com/4" title="tooltip text4">link text4</a><br/>
 <img src="http://example.com/img.png"/><br/>
 <a href="mailto:email@example.com">email@example.com</a><br/>
@@ -235,7 +235,7 @@ As you said:
 {quote}
 h2. Another time
 Nothing happened.
-""" 
+"""
         expected = """<h1>Once <a href="http://example.com">upon</a> a <strong>time</strong></h1>
 <p>There was a queen who said:</p>
 <blockquote><p>I <span class="underline">find</span> <strong>this</strong> interesting</p>
@@ -275,6 +275,6 @@ Nothing happened.
 #<a href="/url">/url</a>"""
 #        fix_internal_links_in_post(post)
 #        self.assertEqual(post.text, expected)
-        
+
 if __name__ == '__main__':
     unittest.main()

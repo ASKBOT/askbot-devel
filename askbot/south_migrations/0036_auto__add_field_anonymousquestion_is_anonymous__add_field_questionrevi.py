@@ -5,9 +5,9 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'AnonymousQuestion.is_anonymous'
         db.add_column('askbot_anonymousquestion', 'is_anonymous', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default=False)
 
@@ -16,10 +16,10 @@ class Migration(SchemaMigration):
 
         # Adding field 'Question.is_anonymous'
         db.add_column(u'question', 'is_anonymous', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True), keep_default=False)
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'AnonymousQuestion.is_anonymous'
         db.delete_column('askbot_anonymousquestion', 'is_anonymous')
 
@@ -28,8 +28,8 @@ class Migration(SchemaMigration):
 
         # Deleting field 'Question.is_anonymous'
         db.delete_column(u'question', 'is_anonymous')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -315,5 +315,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

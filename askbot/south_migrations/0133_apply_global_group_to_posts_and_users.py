@@ -103,7 +103,7 @@ class Migration(DataMigration):
         done_count = 0
         for comment in ProgressBar(comments.iterator(), comments.count(), message):
             if comment.groups.count() == 0:
-                parent_post_groups = comment.parent.groups.all() 
+                parent_post_groups = comment.parent.groups.all()
                 comment.groups.add(*parent_post_groups)
                 done_count += 1
 

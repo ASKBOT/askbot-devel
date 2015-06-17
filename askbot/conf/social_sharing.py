@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 SOCIAL_SHARING = ConfigurationGroup(
             'SOCIAL_SHARING',
-            _('Content sharing'), 
+            _('Content sharing'),
             super_group = EXTERNAL_SERVICES
         )
 

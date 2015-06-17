@@ -1,5 +1,5 @@
 """
-Settings for reputation changes that apply to 
+Settings for reputation changes that apply to
 user in response to various actions by the same
 users or others
 """
@@ -68,7 +68,7 @@ settings.register(
         description=_('Gain for voter on canceling downvote')
     )
 )
-#'gain_by_canceling_downvote', 
+#'gain_by_canceling_downvote',
 
 settings.register(
     IntegerValue(
@@ -78,7 +78,7 @@ settings.register(
         description=_('Loss for voter for canceling of answer acceptance')
     )
 )
-#'lose_by_canceling_accepted_answer', 
+#'lose_by_canceling_accepted_answer',
 
 settings.register(
     IntegerValue(
@@ -88,7 +88,7 @@ settings.register(
         description=_('Loss for author whose answer was "un-accepted"')
     )
 )
-#'lose_by_accepted_answer_cancled', 
+#'lose_by_accepted_answer_cancled',
 
 settings.register(
     IntegerValue(
@@ -98,7 +98,7 @@ settings.register(
         description=_('Loss for giving a downvote')
     )
 )
-#'lose_by_downvoted', 
+#'lose_by_downvoted',
 
 settings.register(
     IntegerValue(
@@ -108,7 +108,7 @@ settings.register(
         description=_('Loss for owner of post that was flagged offensive')
     )
 )
-#'lose_by_flagged', 
+#'lose_by_flagged',
 
 settings.register(
     IntegerValue(
@@ -118,7 +118,7 @@ settings.register(
         description=_('Loss for owner of post that was downvoted')
     )
 )
-#'lose_by_downvoting', 
+#'lose_by_downvoting',
 
 settings.register(
     IntegerValue(
@@ -128,7 +128,7 @@ settings.register(
         description=_('Loss for owner of post that was flagged 3 times per same revision')
     )
 )
-#'lose_by_flagged_lastrevision_3_times', 
+#'lose_by_flagged_lastrevision_3_times',
 
 settings.register(
     IntegerValue(
@@ -138,7 +138,7 @@ settings.register(
         description=_('Loss for owner of post that was flagged 5 times per same revision')
     )
 )
-#'lose_by_flagged_lastrevision_5_times', 
+#'lose_by_flagged_lastrevision_5_times',
 
 settings.register(
     IntegerValue(

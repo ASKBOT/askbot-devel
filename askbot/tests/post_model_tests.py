@@ -3,6 +3,7 @@ import datetime
 from operator import attrgetter
 import time
 from askbot.search.state_manager import SearchState
+from django.conf import settings as django_settings
 from django.contrib.auth.models import User
 from django.core import cache, urlresolvers
 from django.core.cache.backends.dummy import DummyCache
@@ -22,6 +23,7 @@ try:
     from django.utils import simplejson
 except ImportError:
     import json as simplejson
+from askbot.tests.utils import skipIf
 from askbot.conf import settings as askbot_settings
 
 
@@ -611,6 +613,7 @@ class ThreadRenderCacheUpdateTests(AskbotTestCase):
         html = self._html_for_question(thread._question_post())
         self.assertEqual(html, thread.get_cached_summary_html())
 
+    @skipIf(django_settings.CELERY_ALWAYS_EAGER == True, 'celery deamon not running')
     def test_view_count(self):
         question = self.post_question()
         self.assertEqual(0, question.thread.view_count)

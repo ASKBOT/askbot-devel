@@ -569,7 +569,7 @@ def script_cat(chr):
             l = m + 1
         else:
             return (
-                script_data['names'][script_data['idx'][m][2]], 
+                script_data['names'][script_data['idx'][m][2]],
                 script_data['cats'][script_data['idx'][m][3]])
     return 'Unknown', 'Zzzz'
 
@@ -606,4 +606,4 @@ def _compile_scripts_txt():
     print 'script_data = {\n"names":%s,\n"cats":%s,\n"idx":[\n%s\n]}' % (
         '\n'.join(textwrap.wrap(repr(names), 80)),
         '\n'.join(textwrap.wrap(repr(cats), 80)),
-        '\n'.join(textwrap.wrap(', '.join('(0x%x,0x%x,%d,%d)' % c for c in idx), 80)))        
+        '\n'.join(textwrap.wrap(', '.join('(0x%x,0x%x,%d,%d)' % c for c in idx), 80)))

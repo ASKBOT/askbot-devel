@@ -8,4 +8,3 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         os.chdir(DOC_DIR)
         subprocess.call(['make', 'html'])
-

@@ -54,7 +54,7 @@ def get_flat_list(sequence):
     flat = []
     flatten_list(sequence, result=flat)
     return flat
-    
+
 def url_join(*args):
     """Join any arbitrary strings into a forward-slash delimited string.
     Do not strip leading / from first element, nor trailing / from last element.

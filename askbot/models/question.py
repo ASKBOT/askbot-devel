@@ -19,9 +19,7 @@ except ImportError:
     import hashlib
     md5_constructor = hashlib.md5
 from django.utils.translation import ugettext as _
-from django.utils.translation import ungettext
-from django.utils.translation import string_concat
-from django.utils.translation import get_language
+from django.utils.translation import ungettext, string_concat, get_language
 
 import askbot
 from askbot.conf import settings as askbot_settings
@@ -522,7 +520,7 @@ class ThreadManager(BaseQuerySetManager):
         # qs = qs.distinct()
 
         qs = qs.only(
-            'id', 'title', 'view_count', 'answer_count', 'last_activity_at', 
+            'id', 'title', 'view_count', 'answer_count', 'last_activity_at',
             'last_activity_by', 'closed', 'tagnames', 'accepted_answer'
         )
 
@@ -774,7 +772,7 @@ class Thread(models.Model):
         if len(answers) > 0:
             return answers[0].id
         return None
-        
+
     def get_answer_ids(self, user=None):
         """give the ids to all the answers for the user"""
         answers = self.get_answers(user=user)
@@ -790,7 +788,7 @@ class Thread(models.Model):
         }
 
         if user and user.is_authenticated() and askbot_settings.GROUPS_ENABLED:
-            #get post with groups shared with having at least 
+            #get post with groups shared with having at least
             #one of the user groups
             #of those posts return the latest revision
             posts_filter['groups__in'] = user.get_groups()
@@ -890,9 +888,13 @@ class Thread(models.Model):
     def increase_view_count(self, increment=1):
         qset = Thread.objects.filter(id=self.id)
         qset.update(view_count=models.F('view_count') + increment)
-        self.view_count = qset.values('view_count')[0]['view_count'] # get the new view_count back because other pieces of code relies on such behaviour
+        # get the new view_count back because other pieces of code relies on such behaviour
+        self.view_count = qset.values('view_count')[0]['view_count']
+
         ####################################################################
-        self.invalidate_cached_summary_html() # regenerate question/thread summary html
+        self.invalidate_cached_summary_html()
+        if django_settings.CELERY_ALWAYS_EAGER == False:
+            self.update_summary_html() #proactively regenerate thread summary html
         ####################################################################
 
     def set_closed_status(self, closed, closed_by, closed_at, close_reason):
@@ -901,7 +903,7 @@ class Thread(models.Model):
         self.closed_at = closed_at
         self.close_reason = close_reason
         self.save()
-        self.invalidate_cached_data()
+        self.reset_cached_data()
 
     def set_tags_language_code(self, language_code=None):
         """sets language code to tags of this thread.
@@ -960,7 +962,7 @@ class Thread(models.Model):
 
         #make sure that tags have correct language code
         self.set_tags_language_code(language_code)
-            
+
 
     def set_accepted_answer(self, answer, actor, timestamp):
         if answer and answer.thread != self:
@@ -976,10 +978,6 @@ class Thread(models.Model):
     def set_last_activity_info(self, last_activity_at, last_activity_by):
         self.last_activity_at = last_activity_at
         self.last_activity_by = last_activity_by
-        self.save()
-        ####################################################################
-        self.update_summary_html() # regenerate question/thread summary html
-        ####################################################################
 
     def get_last_activity_info(self):
         post_ids = self.get_answers().values_list('id', flat=True)
@@ -999,8 +997,10 @@ class Thread(models.Model):
 
     def update_last_activity_info(self):
         timestamp, user = self.get_last_activity_info()
+
         if timestamp:
             self.set_last_activity_info(timestamp, user)
+            self.save()
 
     def get_tag_names(self):
         "Creates a list of Tag names from the ``tagnames`` attribute."
@@ -1100,12 +1100,6 @@ class Thread(models.Model):
             #                | models.Q(deleted_by=user)
             #            )
 
-    def invalidate_cached_thread_content_fragment(self):
-        """Deprecated alias to a new method"""
-        LOG.warning("""Thread.invalidate_cached_thread_content is 
-deprecated, use invalidate_cached_summary_html""")
-        self.invalidate_cached_summary_html()
-
     def invalidate_cached_summary_html(self):
         """Invalidates cached summary html in all activated languages"""
         langs = translation_utils.get_language_codes()
@@ -1128,12 +1122,13 @@ deprecated, use invalidate_cached_summary_html""")
         keys = map(lambda v: self.get_post_data_cache_key(v), sort_methods)
         cache.cache.delete_many(keys)
 
-    def invalidate_cached_data(self, lazy=False):
+    def reset_cached_data(self):
+        self.clear_cached_data()
+        self.update_summary_html()
+
+    def clear_cached_data(self):
         self.invalidate_cached_post_data()
-        if lazy:
-            self.invalidate_cached_thread_content_fragment()
-        else:
-            self.update_summary_html()
+        self.invalidate_cached_summary_html()
 
     def get_post_data_for_question_view(self, user=None, sort_method=None):
         """loads post data for use in the question details view
@@ -1179,7 +1174,7 @@ deprecated, use invalidate_cached_summary_html""")
             return post_data
 
         if askbot_settings.CONTENT_MODERATION_MODE == 'premoderation' and user.is_watched():
-            #in this branch we patch post_data with the edits suggested by the 
+            #in this branch we patch post_data with the edits suggested by the
             #watched user
             post_data = list(post_data)
             post_ids = self.posts.filter(author=user).values_list('id', flat=True)
@@ -1689,7 +1684,6 @@ deprecated, use invalidate_cached_summary_html""")
                 ordered_final_tagnames.append(tagname)
 
         self.tagnames = ' '.join(ordered_final_tagnames)
-        self.save()#need to save here?
 
         #todo: factor out - tell author about suggested tags
         suggested_tags = filter_suggested_tags(added_tags)
@@ -1708,10 +1702,6 @@ deprecated, use invalidate_cached_summary_html""")
                 ) % ', '.join([tag.name for tag in suggested_tags])
             user.message_set.create(message = msg)
             #2) todo: notify moderators about newly suggested tags
-
-        ####################################################################
-        self.update_summary_html() # regenerate question/thread summary html
-        ####################################################################
         #if there are any modified tags, update their use counts
         modified_tags = set(modified_tags)
         if modified_tags:
@@ -1799,10 +1789,7 @@ deprecated, use invalidate_cached_summary_html""")
         return last_updated_at, last_updated_by
 
     def get_summary_html(self, search_state=None, visitor=None):
-        html = self.get_cached_summary_html(visitor)
-        if not html:
-            html = self.update_summary_html(visitor)
-
+        html = self.get_cached_summary_html(visitor) or self.update_summary_html(visitor)
         # todo: this work may be pushed onto javascript we post-process tag names
         # in the snippet so that tag urls match the search state
         # use `<<<` and `>>>` because they cannot be confused with user input
@@ -1835,7 +1822,7 @@ deprecated, use invalidate_cached_summary_html""")
             return None
         return cache.cache.get(self.get_summary_cache_key())
 
-    def update_summary_html(self, visitor = None):
+    def update_summary_html(self, visitor=None):
         #todo: it is quite wrong that visitor is an argument here
         #because we do not include any visitor-related info in the cache key
         #ideally cache should be shareable between users, so straight up
@@ -1851,7 +1838,8 @@ deprecated, use invalidate_cached_summary_html""")
         }
         from askbot.views.context import get_extra as get_extra_context
         context.update(get_extra_context('ASKBOT_QUESTION_SUMMARY_EXTRA_CONTEXT', None, context))
-        html = get_template('widgets/question_summary.html').render(Context(context))
+        template = get_template('widgets/question_summary.html')
+        html = template.render(Context(context))
         # INFO: Timeout is set to 30 days:
         # * timeout=0/None is not a reliable cross-backend way to set infinite timeout
         # * We probably don't need to pollute the cache with threads older than 30 days

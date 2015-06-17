@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Copyright (c) Askbot S.p.A. 2013
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 r"""Converter of Jive markup to markdown,
@@ -170,12 +170,12 @@ class JiveConverter(object):
     def _run_span_gamut(self, text):
         # These are all the transformations that occur *within* block-level
         # tags like paragraphs, headers, and list items.
-    
+
         # Process anchor and image tags.
         text = self._do_links(text)
 
         text = self._do_inline_styling(text)
-    
+
         # Do hard breaks:
         return re.sub(r" {2,}\n", "\n\n", text)
 
@@ -185,7 +185,7 @@ class JiveConverter(object):
         elif '@' in s and self._auto_email_link_re.match(s):
             return True
         return False
-    
+
     def _unhash_html_blocks(self, text):
         for hash, html in self._blocks.items():
             text = text.replace(hash, html)
@@ -236,7 +236,7 @@ class JiveConverter(object):
     _image_link_re = re.compile(r'!(.*?)!')
     def _do_image_links(self, text):
         """
-        !http://../post.gif! 
+        !http://../post.gif!
         !post.gif!
         """
         return self._image_link_re.sub(self._image_link_sub, text)
@@ -266,8 +266,8 @@ class JiveConverter(object):
         return self._hashed(html)
 
     def _do_headers(self, text):
-        """convert 
-        h1. Header1 
+        """convert
+        h1. Header1
         to <hx></hx>
         """
         return self._h_re.sub(self._h_sub, text)
@@ -351,7 +351,7 @@ class JiveConverter(object):
         """do block quote of type:
         &gt; {quote:title=some title:}{quote}
         &gt; some text
-        &gt; 
+        &gt;
         &gt; some more ...
         """
         return self._block_quote_re2.sub(self._block_quote_sub2, text)
@@ -411,7 +411,7 @@ class JiveConverter(object):
     def _preserve_leading_blanks(self, text):
         """replace leading blanks with &nbsp;"""
         return self._leading_blanks_re.sub(self._leading_blanks_sub, text)
-    
+
     def _form_paragraphs(self, text):
         # Strip leading and trailing lines:
         text = text.strip('\n')

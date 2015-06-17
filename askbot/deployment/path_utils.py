@@ -251,7 +251,7 @@ def dir_taken_by_python_module(directory):
         return False
 
 def get_install_directory(force = False):
-    """returns a directory where a new django app/project 
+    """returns a directory where a new django app/project
     can be installed.
     If ``force`` is ``True`` - will permit
     using a directory with an existing django project.

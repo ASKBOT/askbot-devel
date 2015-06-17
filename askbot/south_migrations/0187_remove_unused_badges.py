@@ -8,16 +8,16 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        # Note: Don't use "from appname.models import ModelName". 
+        # Note: Don't use "from appname.models import ModelName".
         # Use orm.ModelName to refer to models in this application,
         # and orm['appname.ModelName'] for models in other applications.
         slugs = (
-            'alpha', 'beta', 'generalist', 
+            'alpha', 'beta', 'generalist',
             'yearling', 'pundit', 'cleanup',
             'expert', 'strunk-and-white'
         )
         orm['askbot.BadgeData'].objects.filter(slug__in=slugs).delete()
-            
+
 
     def backwards(self, orm):
         "Write your backwards methods here."

@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Thread.tagnames'
         db.add_column('askbot_thread', 'tagnames', self.gf('django.db.models.fields.CharField')(default='', max_length=125), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Thread.tagnames'
         db.delete_column('askbot_thread', 'tagnames')
 

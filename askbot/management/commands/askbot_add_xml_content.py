@@ -42,7 +42,7 @@ class Command(BaseImportXMLCommand):
         #we need this to link old user ids to
         #new users' personal groups
         #self.record_personal_groups()
-        
+
         self.import_user_logins()
         self.import_tags()
         self.import_marked_tags()
@@ -119,7 +119,7 @@ class Command(BaseImportXMLCommand):
         """imports askbot group profiles"""
 
         #redirects_file = self.open_unique_file('group_redirects')
-        
+
         #1) we import auth groups
         for group in self.get_objects_for_model('auth.group'):
 
@@ -129,7 +129,7 @@ class Command(BaseImportXMLCommand):
                 #associations between old user ids and old personal
                 #group ids, because we create the personal groups
                 #anew and so need to have a connection
-                #old personal group id --> old user id --> new user id 
+                #old personal group id --> old user id --> new user id
                 # --> new pers. group id
                 self.log_personal_group(group)
                 continue
@@ -243,7 +243,7 @@ class Command(BaseImportXMLCommand):
             self.copy_numeric_parameter(from_user, to_user, 'display_tag_filter_strategy')
             self.copy_numeric_parameter(
                 from_user,
-                to_user, 
+                to_user,
                 'consecutive_days_visit_count',
                 operator='sum'
             )

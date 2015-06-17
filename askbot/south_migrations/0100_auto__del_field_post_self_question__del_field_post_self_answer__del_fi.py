@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Post.self_question'
         db.delete_column('askbot_post', 'self_question_id')
 
@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Adding field 'Post.self_question'
         db.add_column('askbot_post', 'self_question', self.gf('django.db.models.fields.related.ForeignKey')(related_name='+', null=True, to=orm['askbot.Question'], blank=True), keep_default=False)
 

@@ -207,11 +207,11 @@ class EmailAlertTests(TestCase):
         """
         if timestamp is None:
             timestamp = self.setup_timestamp
-        post.apply_edit(
-                    edited_by = author,
-                    edited_at = timestamp,
-                    text = body_text,
-                    comment = 'nothing serious'
+        author.edit_post(
+                    post=post,
+                    timestamp=timestamp,
+                    body_text=body_text,
+                    revision_comment='nothing serious'
                 )
 
     def post_question(
@@ -337,13 +337,8 @@ class EmailAlertTests(TestCase):
 
     @email_alert_test
     def test_question_edit(self):
-        question = self.post_question(
-                                author = self.target_user
-                            )
-        self.edit_post(
-                    post = question,
-                    author = self.other_user
-                )
+        question = self.post_question(author=self.target_user)
+        self.edit_post(post=question, author=self.other_user)
         self.question = question
 
     @email_alert_test

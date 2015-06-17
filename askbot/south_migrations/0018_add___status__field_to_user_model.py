@@ -6,9 +6,9 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'User.status'
         safe_add_column(
                 u'auth_user',
@@ -16,14 +16,14 @@ class Migration(SchemaMigration):
                 self.gf('django.db.models.fields.CharField')(default ='w', max_length = 2),
                 keep_default=False
             )
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'User.status'
         db.delete_column(u'auth_user', 'status')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -302,5 +302,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

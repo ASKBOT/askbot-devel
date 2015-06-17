@@ -7,16 +7,16 @@ class ReminderSchedule(object):
     * frequency of reminders
     * maximum number of reminders
     return dates when to start sending the reminders,
-    when to stop, and give friendly names to other 
+    when to stop, and give friendly names to other
     variables
 
     These objects can be reused to all methods that
     intend to remind of certain events periodically
     """
 
-    def __init__(self, 
+    def __init__(self,
         days_before_starting = None,
-        frequency_days = None, 
+        frequency_days = None,
         max_reminders = None):
         """function that calculates values
         and assigns them to user-friendly variable names

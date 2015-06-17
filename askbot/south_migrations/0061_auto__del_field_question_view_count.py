@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Deleting field 'Question.view_count'
         db.delete_column(u'question', 'view_count')
 
 
     def backwards(self, orm):
-        
+
         # Adding field 'Question.view_count'
         db.add_column(u'question', 'view_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0), keep_default=False)
 

@@ -61,7 +61,7 @@ def application_settings(request):
         my_settings['TINYMCE_PLUGINS'] = [];
 
     my_settings['LOGOUT_REDIRECT_URL'] = url_utils.get_logout_redirect_url()
-    
+
     current_language = get_language()
 
     #for some languages we will start searching for shorter words
@@ -69,7 +69,7 @@ def application_settings(request):
         #we need to open the search box and show info message about
         #the japanese lang search
         min_search_word_length = 1
-    else:   
+    else:
         min_search_word_length = my_settings['MIN_SEARCH_WORD_LENGTH']
 
     need_scope_links = askbot_settings.ALL_SCOPE_ENABLED or \

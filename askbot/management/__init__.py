@@ -6,8 +6,8 @@ from askbot.utils import console
 
 class NoArgsJob(NoArgsCommand):
     """Base class for a job command -
-    the one that runs the same operation on 
-    sets of items - each item operation in its own 
+    the one that runs the same operation on
+    sets of items - each item operation in its own
     transaction and prints progress in % of items
     completed
 
@@ -20,7 +20,7 @@ class NoArgsJob(NoArgsCommand):
         'function': <function or callable that performs
                      an operation on a single item
                      and returns True if item was changed
-                     False otherwise 
+                     False otherwise
                      item is given as argument
                      >,
         'items_changed_message': <string with one %d placeholder>,

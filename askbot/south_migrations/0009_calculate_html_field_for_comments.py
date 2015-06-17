@@ -42,9 +42,9 @@ def get_authors(question, orm = None):
 
 def get_absolute_url(user):
     url = reverse(
-                    'user_profile', 
+                    'user_profile',
                     kwargs={
-                            'id':user.id, 
+                            'id':user.id,
                             'slug': slugify(user.username)
                         }
                 )
@@ -57,8 +57,8 @@ def get_comment_continuation(matching_author):
         return '@'
 
 def maybe_save_mention(
-                        context = None, 
-                        mentioned_whom = None, 
+                        context = None,
+                        mentioned_whom = None,
                         orm = None,
                         comment_content_type = None
                     ):
@@ -68,7 +68,7 @@ def maybe_save_mention(
                 mentioned_whom = mentioned_whom,
                 mentioned_at = context.added_at,
                 object_id = context.id,
-                content_type = comment_content_type, 
+                content_type = comment_content_type,
             )
         m.save()
 
@@ -105,7 +105,7 @@ def mentionize(text, comment = None, all_users = None, orm = None):
     output = ''
     while '@' in text:
         #the purpose of this loop is to convert any occurance of '@mention ' syntax
-        #to user account links leading space is required unless @ is the first 
+        #to user account links leading space is required unless @ is the first
         #character in whole text, also, either a punctuation or a ' ' char is required
         #after the name
         pos = text.index('@')
@@ -124,8 +124,8 @@ def mentionize(text, comment = None, all_users = None, orm = None):
                 matching_author, text = extract_matching_author(text, ordered_authors)
                 output += get_comment_continuation(matching_author)
                 maybe_save_mention(
-                                    context = comment, 
-                                    mentioned_whom = matching_author, 
+                                    context = comment,
+                                    mentioned_whom = matching_author,
                                     orm = orm,
                                     comment_content_type = comment_content_type
                                 )
@@ -137,8 +137,8 @@ def mentionize(text, comment = None, all_users = None, orm = None):
             matching_author, text = extract_matching_author(text, ordered_authors)
             output += get_comment_continuation(matching_author)
             maybe_save_mention(
-                                context = comment, 
-                                mentioned_whom = matching_author, 
+                                context = comment,
+                                mentioned_whom = matching_author,
                                 orm = orm,
                                 comment_content_type = comment_content_type
                             )
@@ -148,25 +148,25 @@ def mentionize(text, comment = None, all_users = None, orm = None):
     return output
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
         all_users = set(orm['auth.User'].objects.all())
         for comment in orm.Comment.objects.all():
             comment.html = mentionize(
-                                        urlize(comment.comment, nofollow=True), 
+                                        urlize(comment.comment, nofollow=True),
                                         comment = comment,
                                         all_users = all_users,
                                         orm = orm
                                     )
             comment.save()
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         for comment in orm.Comment.objects.all():
             comment.html = comment.comment
             comment.save()
-    
+
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
     if forum_app_name == 'forum':
         models = {
@@ -506,7 +506,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -846,5 +846,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

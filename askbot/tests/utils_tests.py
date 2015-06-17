@@ -7,7 +7,7 @@ from askbot.utils.html import get_text_from_html
 from askbot.conf import settings as askbot_settings
 
 class UrlUtilsTests(TestCase):
-    
+
     def tests_urls_equal(self):
         e = urls_equal
         self.assertTrue(e('', ''))
@@ -26,16 +26,16 @@ class ReplaceLinksWithTextTests(TestCase):
 
     def test_local_link_not_replaced(self):
         text = '<a href="/some-link">some link</a>'
-        self.assertEqual(replace_links_with_text(text), text) 
+        self.assertEqual(replace_links_with_text(text), text)
 
     def test_link_without_url_replaced(self):
         text = '<a>some link</a>'
-        self.assertEqual(replace_links_with_text(text), 'some link') 
+        self.assertEqual(replace_links_with_text(text), 'some link')
 
     def test_external_link_without_text_replaced(self):
         text = '<a href="https://example.com/"></a>'
         #in this case we delete the link
-        self.assertEqual(replace_links_with_text(text), '') 
+        self.assertEqual(replace_links_with_text(text), '')
 
     def test_external_link_with_text_replaced(self):
         text = '<a href="https://example.com/">some link</a>'
@@ -46,7 +46,7 @@ class ReplaceLinksWithTextTests(TestCase):
 
     def test_local_image_not_replaced(self):
         text = '<img src="/some-image.gif"/>'
-        self.assertEqual(replace_links_with_text(text), text) 
+        self.assertEqual(replace_links_with_text(text), text)
 
     def test_local_url_with_hotlinked_image_replaced(self):
         text = '<a href="/some-link"><img src="http://example.com/img.png" alt="picture""> some text</a>'

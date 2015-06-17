@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Removing unique constraint on 'Vote', fields ['object_id', 'content_type', 'user']
         db.delete_unique(u'vote', ['object_id', 'content_type_id', 'user_id'])
 
@@ -28,7 +28,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'Vote', fields ['user', 'voted_post']
         db.delete_unique(u'vote', ['user_id', 'voted_post_id'])
 

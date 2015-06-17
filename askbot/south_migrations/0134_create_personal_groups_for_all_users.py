@@ -33,7 +33,7 @@ class Migration(DataMigration):
         "Write your backwards methods here."
         for user in orm['auth.User'].objects.iterator():
             group_name = format_group_name(user)
-            
+
             memberships = orm['askbot.GroupMembership'].objects.filter(
                                                             user=user,
                                                             group__name=group_name

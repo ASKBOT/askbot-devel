@@ -1,4 +1,4 @@
-"""module for monkey patching that is 
+"""module for monkey patching that is
 necessary for interoperability of different
 versions of various components used in askbot
 """

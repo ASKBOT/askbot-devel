@@ -70,7 +70,7 @@ remove source_tag"""
             raise CommandError('the --from argument is required')
         if options['to'] is None:
             raise CommandError('the --to argument is required')
-            
+
         source_tag_name = decode_input(options['from'])
         target_tag_name = decode_input(options['to'])
 
@@ -81,7 +81,7 @@ remove source_tag"""
 
         source_tag = None
         is_source_tag_created = False
-        
+
         try:
             source_tag = models.Tag.objects.get(name=source_tag_name, language_code=options['lang'])
         except models.Tag.DoesNotExist:
@@ -119,8 +119,8 @@ remove source_tag"""
             options['to'] = target_tag_name
         except models.TagSynonym.DoesNotExist:
             pass
-        
-        try: 
+
+        try:
             models.Tag.objects.get(name=target_tag_name, language_code=options['lang'])
         except models.Tag.DoesNotExist:
             # we are creating a target tag, let's copy source tag's info
@@ -139,7 +139,7 @@ remove source_tag"""
                                                                    owned_by=admin,
                                                                    language_code=options['lang']
                                                                 )
-        
+
         management.call_command('rename_tags', *args, **options)
 
         # When source_tag_name is a target_tag_name of already existing TagSynonym.

@@ -327,7 +327,7 @@ def add_csrf_protection():
 
     #add csrf_protect decorator
     import django.views.decorators
-    django.views.decorators.csrf = imp.new_module('csrf') 
+    django.views.decorators.csrf = imp.new_module('csrf')
     django.views.decorators.csrf.csrf_protect = csrf_protect
 
 def add_available_attrs_decorator():

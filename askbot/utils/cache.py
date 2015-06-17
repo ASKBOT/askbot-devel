@@ -24,7 +24,7 @@ def get_kwargs_key(**kwargs):
     key = get_args_key(*kwargs.values())
     return key or ''
     #todo: delete above line when args and kwargs resolution is fixed
-    items = kwargs.items() 
+    items = kwargs.items()
     items = map(lambda v: (django_repr(v[0]), django_repr(v[1])), items)
     items.sort(items)
     return ':'.join(map(lambda v: v[0] + '=' + v[1], items))

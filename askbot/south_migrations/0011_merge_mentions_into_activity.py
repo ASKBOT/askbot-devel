@@ -10,7 +10,7 @@ except:
     from askbot import const
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
         for m in orm.Mention.objects.all():
@@ -23,7 +23,7 @@ class Migration(DataMigration):
             a.save()
             a.receiving_users.add(m.mentioned_whom)
             m.delete()
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         m_type = const.TYPE_ACTIVITY_MENTION
@@ -36,7 +36,7 @@ class Migration(DataMigration):
             m.object_id = a.object_id
             a.delete()
             m.save()
-    
+
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
     if forum_app_name == 'forum':
         models = {
@@ -377,7 +377,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -718,5 +718,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

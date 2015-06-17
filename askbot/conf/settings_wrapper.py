@@ -15,15 +15,17 @@ NOTE that at the moment there is distinction between settings
 
 the value will be taken from askbot.deps.livesettings database or cache
 note that during compilation phase database is not accessible
-for the most part, so actual values are reliably available only 
+for the most part, so actual values are reliably available only
 at run time
 
 askbot.deps.livesettings is a module developed for satchmo project
 """
 from django.conf import settings as django_settings
 from django.core.cache import cache
+from django.utils.encoding import force_unicode
 from django.utils.functional import lazy
 from django.utils.translation import get_language
+from django.utils.translation import string_concat
 from django.utils.translation import ugettext_lazy as _
 from askbot.deps.livesettings import SortedDotDict, config_register
 from askbot.deps.livesettings.functions import config_get
@@ -31,7 +33,7 @@ from askbot.deps.livesettings import signals
 
 def assert_setting_info_correct(info):
     assert isinstance(info, tuple), u'must be tuple, %s found' % unicode(info)
-    assert len(info) == 3, 'setting tuple must have three elements'
+    assert len(info) in (3, 4), 'setting tuple must have three or four elements'
     assert isinstance(info[0], str)
     assert isinstance(info[1], str)
     assert isinstance(info[2], bool)
@@ -119,14 +121,21 @@ class ConfigSettings(object):
             self.__instance[key] = config_register(value)
             self.__group_map[key] = group_key
 
-    def get_setting_url(self, group_name, setting_name):
+    def get_setting_url(self, data):
         from askbot.utils.html import internal_link #not site_link
-        return internal_link(
-                        'group_settings',
-                        setting_name, #todo: better use description
-                        kwargs={'group': group_name},
-                        anchor='id_%s__%s__%s' % (group_name, setting_name, get_language())
-                    )
+        group_name = data[0]
+        setting_name = data[1]
+
+        link = internal_link(
+            'group_settings',
+            setting_name, #todo: better use description
+            kwargs={'group': group_name},
+            anchor='id_%s__%s__%s' % (group_name, setting_name, get_language())
+        )
+        if len(data) == 4:
+            return force_unicode(string_concat(link, ' (', data[3], ')'))
+        return link
+
 
     def get_related_settings_info(self, *requirements):
         """returns a translated string explaining which
@@ -145,8 +154,9 @@ class ConfigSettings(object):
                 else:
                     optional.append(req)
 
-            required_links = map(lambda v: self.get_setting_url(v[0], v[1]), required)
-            optional_links = map(lambda v: self.get_setting_url(v[0], v[1]), optional)
+            required_links = map(lambda v: self.get_setting_url(v), required)
+            optional_links = map(lambda v: self.get_setting_url(v), optional)
+                
             if required_links and optional_links:
                 return _(
                     'There are required related settings: '

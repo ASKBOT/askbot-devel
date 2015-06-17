@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Thread.view_count'
         db.add_column('askbot_thread', 'view_count', self.gf('django.db.models.fields.PositiveIntegerField')(default=0), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Thread.view_count'
         db.delete_column('askbot_thread', 'view_count')
 

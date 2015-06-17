@@ -25,7 +25,7 @@ class Migration(SchemaMigration):
             'social_sharing_mode',
             self.gf('django.db.models.fields.IntegerField')(default=0)
         )
-        
+
     def backwards(self, orm):
         self.delete_column('auth_user', 'twitter_access_token')
         self.delete_column('auth_user', 'twitter_handle')

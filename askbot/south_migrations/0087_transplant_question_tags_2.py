@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Removing M2M table for field tags on 'Question'
         db.delete_table('question_tags')
 
 
     def backwards(self, orm):
-        
+
         # Adding M2M table for field tags on 'Question'
         db.create_table(u'question_tags', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),

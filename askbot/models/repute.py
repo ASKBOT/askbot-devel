@@ -232,4 +232,3 @@ class Repute(models.Model):
                                'url': self.question.get_absolute_url(),
                                'question_title': escape(self.question.thread.title),
                             }
-

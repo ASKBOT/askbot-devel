@@ -45,9 +45,10 @@ settings.register(
     livesettings.LongStringValue(
         FEEDBACK,
         'FEEDBACK_PAGE_MESSAGE',
+        localized=True,
         description=_('Message on the feedback page'),
         default=_(
-            '*{{ USER_NAME }}*, we look forward to hearing your feedback. '
+            '**Dear {{ USER_NAME }}**, we look forward to hearing your feedback. '
             'Please type and send us your message below.'
         ),
         help_text=_(

@@ -36,7 +36,7 @@ class BaseEmail(object):
     """Base class for templated emails.
 
     Besides sending formatted emails,
-    this class allows to generate 
+    this class allows to generate
     email mockups, to help development
     of the email templates.
 
@@ -406,7 +406,7 @@ class WelcomeEmailRespondable(BaseEmail):
         return {'Reply-To': context['reply_to_address']}
 
     def get_mock_context(self):
-        email_code = '5kxe4cyfkchv' 
+        email_code = '5kxe4cyfkchv'
         return {
             'recipient_user': get_user(),
             'email_code': email_code,
@@ -690,13 +690,13 @@ class ApprovedPostNotification(BaseEmail):
             and askbot_settings.APPROVED_POST_NOTIFICATION_ENABLED
 
     def get_mock_context(self):
-        question = get_question() 
+        question = get_question()
         return {
             'recipient_user': question.author,
             'post': question
         }
 
-    def process_context(self, context): 
+    def process_context(self, context):
         context['site_name'] = askbot_settings.APP_SHORT_NAME
         return context
 
@@ -715,7 +715,7 @@ class ApprovedPostNotificationRespondable(BaseEmail):
             and askbot_settings.REPLY_BY_EMAIL
 
     def get_mock_context(self):
-        question = get_question() 
+        question = get_question()
         hostname = askbot_settings.REPLY_BY_EMAIL_HOSTNAME
         replace_content_address = 'reply-kot1jxx4@' + hostname
         append_content_address = 'reply-kot1jxx4@' + hostname
@@ -732,7 +732,7 @@ class ApprovedPostNotificationRespondable(BaseEmail):
         #todo: possibly add more mailto thread headers to organize messages
         return {'Reply-To': context['append_content_address']}
 
-    def process_context(self, context): 
+    def process_context(self, context):
         revision = context['revision']
         prompt = force_str(_('To add to your post EDIT ABOVE THIS LINE'))
         context.update({

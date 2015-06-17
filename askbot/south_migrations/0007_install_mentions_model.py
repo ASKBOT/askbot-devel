@@ -8,9 +8,9 @@ from django.db import models
 app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'Mention'
         db.create_table(u'mention', (
             ('mentioned_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='mentions_sent', to=orm['auth.User'])),
@@ -21,13 +21,13 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
         ))
         db.send_create_signal(app_dir_name, ['Mention'])
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'Mention'
         db.delete_table(u'mention')
-    
+
     if app_dir_name == 'forum':
         models = {
             'auth.group': {
@@ -702,5 +702,5 @@ class Migration(SchemaMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
     complete_apps = [app_dir_name]

@@ -16,9 +16,8 @@ def is_ready():
     """determines whether the stackexchange app is ready to roll
     by trying to load a model from the database
     """
-    try: 
+    try:
         get_model('stackexchange', 'User2Vote')
         return True
     except Exception:
         return False
-

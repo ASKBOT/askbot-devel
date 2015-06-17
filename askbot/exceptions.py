@@ -6,7 +6,7 @@ class DeploymentError(exceptions.ImproperlyConfigured):
     pass
 
 class LoginRequired(exceptions.PermissionDenied):
-    """raised when an operation required a logged 
+    """raised when an operation required a logged
     in user"""
     def __init__(self, msg = None):
         if msg is None:

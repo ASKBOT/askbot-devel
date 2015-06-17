@@ -9,7 +9,7 @@ from askbot.migrations_api import safe_add_column
 app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
         #1) patch the existing auth_user table
         safe_add_column('auth_user', 'website', self.gf('django.db.models.fields.URLField')(max_length=200, blank=True, null=True), keep_default = False)
@@ -725,7 +725,7 @@ class Migration(SchemaMigration):
                 ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ))
             db.send_create_signal('askbot', ['BookAuthorRss'])
-    
+
     def backwards(self, orm):
         db.delete_column('auth_user', 'website')
         db.delete_column('auth_user', 'about')
@@ -744,7 +744,7 @@ class Migration(SchemaMigration):
         db.delete_column('auth_user', 'silver')
         db.delete_column('auth_user', 'questions_per_page')
         db.delete_column('auth_user', 'response_count')
-        
+
         if app_dir_name == 'forum':
             # Deleting model 'Vote'
             db.delete_table(u'vote')
@@ -925,8 +925,8 @@ class Migration(SchemaMigration):
 
             # Deleting model 'BookAuthorRss'
             db.delete_table(u'book_author_rss')
-        
-        
+
+
     if app_dir_name == 'forum':
         models = {
             'auth.group': {
@@ -1579,5 +1579,5 @@ class Migration(SchemaMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
     complete_apps = [app_dir_name]

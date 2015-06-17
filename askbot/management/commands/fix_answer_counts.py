@@ -9,7 +9,7 @@ from askbot import models
 from askbot.utils.console import ProgressBar
 
 class Command(NoArgsCommand):
-    """Command class for "fix_answer_counts" 
+    """Command class for "fix_answer_counts"
     """
 
     def remove_save_signals(self):

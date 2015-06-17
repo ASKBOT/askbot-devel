@@ -15,6 +15,7 @@ class Provider(OAuth1Provider):
         self.consumer_key = askbot_settings.MEDIAWIKI_KEY
         self.consumer_secret = askbot_settings.MEDIAWIKI_SECRET
         self.icon_media_path = askbot_settings.MEDIAWIKI_SITE_ICON
+        self.one_click_registration = askbot_settings.MEDIAWIKI_ONE_CLICK_REGISTRATION_ENABLED
         self.callback_is_oob = True
         self.mediawiki_data = None
 

@@ -1,6 +1,6 @@
 """methods that make parsing of post inputs possible,
-handling of markdown and additional syntax rules - 
-such as optional link patterns, video embedding and 
+handling of markdown and additional syntax rules -
+such as optional link patterns, video embedding and
 Twitter-style @mentions"""
 
 import re
@@ -19,7 +19,7 @@ URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-
 def get_parser():
     """returns an instance of configured ``markdown2`` parser
     """
-    extras = ['link-patterns', 'video']  
+    extras = ['link-patterns', 'video']
 
     if askbot_settings.ENABLE_MATHJAX or \
         askbot_settings.MARKUP_CODE_FRIENDLY:
@@ -38,7 +38,7 @@ def get_parser():
     if askbot_settings.ENABLE_AUTO_LINKING:
         pattern_list = askbot_settings.AUTO_LINK_PATTERNS.split('\n')
         url_list = askbot_settings.AUTO_LINK_URLS.split('\n')
-        pairs = zip(pattern_list, url_list)#always takes equal number of items 
+        pairs = zip(pattern_list, url_list)#always takes equal number of items
         for item in pairs:
             if item[0].strip() =='' or item[1].strip() == '':
                 continue
@@ -48,7 +48,7 @@ def get_parser():
                     item[1].strip()
                 )
             )
-        
+
         #Check whether  we have matching links for all key terms,
         #Other wise we ignore the key terms
         #May be we should do this test in update_callback?
@@ -59,8 +59,8 @@ def get_parser():
             settings_url = askbot_settings.APP_URL+'/settings/AUTOLINK/'
             logging.critical(
                 "Number of autolink patterns didn't match the number "
-                "of url templates, fix this by visiting" + settings_url) 
-            
+                "of url templates, fix this by visiting" + settings_url)
+
     return Markdown(
                 html4tags=True,
                 extras=extras,
@@ -140,10 +140,10 @@ def mentionize_text(text, anticipated_authors):
     output = ''
     mentioned_authors = list()
     while '@' in text:
-        #the purpose of this loop is to convert any occurance of 
+        #the purpose of this loop is to convert any occurance of
         #'@mention ' syntax
         #to user account links leading space is required unless @ is the first
-        #character in whole text, also, either a punctuation or 
+        #character in whole text, also, either a punctuation or
         #a ' ' char is required after the name
         pos = text.index('@')
 
@@ -164,7 +164,7 @@ def mentionize_text(text, anticipated_authors):
                 text = text[pos+1:]
                 mentioned_author, text = \
                                     extract_first_matching_mentioned_author(
-                                                            text, 
+                                                            text,
                                                             anticipated_authors
                                                         )
                 if mentioned_author:
@@ -183,7 +183,7 @@ def mentionize_text(text, anticipated_authors):
             text = text[1:]
             mentioned_author, text = \
                                 extract_first_matching_mentioned_author(
-                                                    text, 
+                                                    text,
                                                     anticipated_authors
                                                 )
             if mentioned_author:

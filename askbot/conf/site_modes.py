@@ -42,7 +42,7 @@ def bootstrap_callback(current_value, new_value):
     '''Callback to update settings'''
 
     if current_value == new_value:
-        #do not overwrite settings in case that tha value 
+        #do not overwrite settings in case that tha value
         #is the same
         return new_value
 

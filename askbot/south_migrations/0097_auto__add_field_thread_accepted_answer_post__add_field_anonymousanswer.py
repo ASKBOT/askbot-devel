@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Thread.accepted_answer_post'
         db.add_column('askbot_thread', 'accepted_answer_post', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='+', null=True, to=orm['askbot.Post']), keep_default=False)
 
@@ -22,7 +22,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Thread.accepted_answer_post'
         db.delete_column('askbot_thread', 'accepted_answer_post_id')
 

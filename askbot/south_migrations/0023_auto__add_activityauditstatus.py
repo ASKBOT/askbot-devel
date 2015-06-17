@@ -5,9 +5,9 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model 'ActivityAuditStatus'
         db.create_table('askbot_activityauditstatus', (
             ('status', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
@@ -18,15 +18,15 @@ class Migration(SchemaMigration):
         db.send_create_signal('askbot', ['ActivityAuditStatus'])
         #denorm field to make User.visit_question call quicker
         db.add_column(u'activity', 'question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['askbot.Question'], null=True), keep_default=False)
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting model 'ActivityAuditStatus'
         db.delete_column(u'activity', 'question')
         db.delete_table('askbot_activityauditstatus')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -315,5 +315,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

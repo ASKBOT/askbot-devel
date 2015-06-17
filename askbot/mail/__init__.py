@@ -392,7 +392,7 @@ def process_emailed_question(
                 user.email_signature == '' or
                 signature_changed
             )
-            
+
             #ask for signature response if user's email has not been
             #validated yet or if email signature could not be found
             if need_new_signature:

@@ -8,24 +8,24 @@ from django.db import models
 app_dir_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'Comment.html'
         db.add_column(u'comment', 'html', self.gf('django.db.models.fields.CharField')(default='', max_length=2048), keep_default=False)
 
         # Changing field 'Comment.comment'
         db.alter_column(u'comment', 'comment', self.gf('django.db.models.fields.CharField')(max_length=2048))
-    
+
     def backwards(self, orm):
-        
+
         # Deleting field 'Comment.html'
         db.delete_column(u'comment', 'html')
 
         # Changing field 'Comment.comment'
         db.alter_column(u'comment', 'comment', self.gf('django.db.models.fields.CharField')(max_length=300))
-    
-    
+
+
     if app_dir_name == 'forum':
         models = {
             'auth.group': {
@@ -702,5 +702,5 @@ class Migration(SchemaMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-    
+
     complete_apps = [app_dir_name]

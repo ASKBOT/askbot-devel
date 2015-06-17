@@ -1,4 +1,4 @@
-"""the management command that outputs configuration 
+"""the management command that outputs configuration
 for sphinx search"""
 from django.conf import settings
 from django.core.management.base import BaseCommand

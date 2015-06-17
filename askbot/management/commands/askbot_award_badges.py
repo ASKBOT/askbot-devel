@@ -1,4 +1,4 @@
-"""WARNING: 
+"""WARNING:
 This command is incomplete, current awards only
 Civic Duty badge
 """

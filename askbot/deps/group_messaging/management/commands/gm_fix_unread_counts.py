@@ -5,7 +5,7 @@ from group_messaging.models import get_unread_inbox_counter
 from django.db import transaction
 
 class Command(NoArgsCommand):
-    
+
     @transaction.commit_manually
     def handle_noargs(self, *args, **kwargs):
         users = User.objects.all()

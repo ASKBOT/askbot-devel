@@ -44,7 +44,7 @@ from askbot.search import mysql
 def default_html_moderator(post):
     """Moderates inline HTML items: images and/or links
     depending on what items are moderated per settings.
-    
+
     Returns sanitized html with suspicious
     content edited out and replaced with warning signs.
     Moderators content is not sanitized.
@@ -68,7 +68,7 @@ def default_html_moderator(post):
     author = rev.author
     not_admin = not author.is_administrator_or_moderator()
     if not_admin and has_moderated_tags(post.html):
-        before = post.html 
+        before = post.html
         after = moderate_tags(before)
         if after != before:
             rev.place_on_moderation_queue()
@@ -347,11 +347,11 @@ class PostManager(BaseQuerySetManager):
         #todo: this totally belongs to some `Thread` class method
         if answer.is_approved():
             thread.answer_count += 1
-            thread.save()
             thread.set_last_activity_info(
-                        last_activity_at=added_at,
-                        last_activity_by=author
-                    ) # this should be here because it regenerates cached thread summary html
+                last_activity_at=added_at,
+                last_activity_by=author
+            )
+            thread.save()
         return answer
 
 
@@ -447,8 +447,8 @@ class Post(models.Model):
     parent = models.ForeignKey('Post', blank=True, null=True, related_name='comments') # Answer or Question for Comment
     thread = models.ForeignKey('Thread', blank=True, null=True, default=None, related_name='posts')
     current_revision = models.ForeignKey(
-                                'PostRevision', 
-                                blank=True, 
+                                'PostRevision',
+                                blank=True,
                                 null=True, #nullable b/c we have to first save post
                                            #and then add link to current revision
                                            #(which has a non-nullable fk to post)
@@ -634,7 +634,7 @@ class Post(models.Model):
         last_revision = self.html
         data = self.parse_post_text()
 
-        #todo: possibly remove feature of posting links 
+        #todo: possibly remove feature of posting links
         #depending on user's reputation
         self.html = author.fix_html_links(data['html'])
 
@@ -914,11 +914,11 @@ class Post(models.Model):
         orig_text = rev.text
         for rev in post.revisions.all().order_by('revision'):
             #for each revision of other post Ri
-            #append content of Ri to R1 and use author 
+            #append content of Ri to R1 and use author
             new_text = orig_text + '\n\n' + rev.text
             self.apply_edit(
                 edited_by=user,
-                text=new_text, 
+                text=new_text,
                 comment=_('merged revision'),
                 by_email=False,
                 edit_anonymously=rev.is_anonymous,
@@ -970,9 +970,9 @@ class Post(models.Model):
         self._is_approved = False
 
     def set_is_approved(self, is_approved):
-        """sets denormalized value of whether post/thread is 
+        """sets denormalized value of whether post/thread is
         approved"""
-        self.approved = is_approved 
+        self.approved = is_approved
         self.save()
         if self.is_question():
             self.thread.approved = is_approved
@@ -996,7 +996,7 @@ class Post(models.Model):
         #todo: do we need this, can't we just use is_approved()?
         return self.is_approved() is False
 
-    def get_absolute_url(self, 
+    def get_absolute_url(self,
                     no_slug=False,
                     question_post=None,
                     language=None,
@@ -2000,7 +2000,7 @@ class Post(models.Model):
                 ip_addr=ip_addr,
                 is_anonymous=edit_anonymously
             )
-        
+
         if latest_rev.revision > 0:
             parse_results = self.parse_and_save(author=edited_by, is_private=is_private)
 
@@ -2047,6 +2047,9 @@ class Post(models.Model):
             else:
                 self.make_public()
 
+        if edited_at is None:
+            edited_at = datetime.datetime.now()
+
         revision = self.__apply_edit(
             edited_at=edited_at,
             edited_by=edited_by,
@@ -2058,59 +2061,22 @@ class Post(models.Model):
             suppress_email=suppress_email,
             ip_addr=ip_addr,
         )
-
-        if edited_at is None:
-            edited_at = datetime.datetime.now()
-        self.thread.set_last_activity_info(
-                        last_activity_at=edited_at,
-                        last_activity_by=edited_by
-                    )
         return revision
 
     def _question__apply_edit(
-                            self, 
+                            self,
                             edited_at=None,
                             edited_by=None,
                             title=None,
-                            text=None, 
-                            comment=None, 
-                            tags=None, 
+                            text=None,
+                            comment=None,
+                            tags=None,
                             wiki=False,
                             edit_anonymously=False,
                             is_private=False,
                             by_email=False, suppress_email=False,
                             ip_addr=None
                         ):
-
-        #todo: the thread editing should happen outside of this
-        #method, then we'll be able to unify all the *__apply_edit
-        #methods
-        latest_revision = self.get_latest_revision()
-        #a hack to allow partial edits - important for SE loader
-        if title is None:
-            title = self.thread.title
-        if tags is None:
-            tags = latest_revision.tagnames
-        if edited_at is None:
-            edited_at = datetime.datetime.now()
-
-        # Update the Question tag associations
-        if latest_revision.tagnames != tags:
-            self.thread.update_tags(
-                tagnames = tags, user = edited_by, timestamp = edited_at
-            )
-
-        self.thread.title = title
-        self.thread.tagnames = tags
-        self.thread.save()
-
-        ##it is important to do this before __apply_edit b/c of signals!!!
-        if self.is_private() != is_private:
-            if is_private:
-                #todo: make private for author or for the editor?
-                self.thread.make_private(self.author)
-            else:
-                self.thread.make_public(recursive=False)
 
         revision = self.__apply_edit(
             edited_at=edited_at,
@@ -2124,11 +2090,6 @@ class Post(models.Model):
             suppress_email=suppress_email,
             ip_addr=ip_addr
         )
-
-        self.thread.set_last_activity_info(
-                        last_activity_at=edited_at,
-                        last_activity_by=edited_by
-                    )
         return revision
 
     def apply_edit(self, *args, **kwargs):
@@ -2363,7 +2324,7 @@ class PostRevisionManager(models.Manager):
         needs_moderation = is_content and (author.needs_moderation() or moderate_email)
 
         needs_premoderation = askbot_settings.CONTENT_MODERATION_MODE == 'premoderation' \
-                                and needs_moderation 
+                                and needs_moderation
 
         #0 revision is not shown to the users
         if needs_premoderation:
@@ -2411,7 +2372,7 @@ class PostRevisionManager(models.Manager):
             post.current_revision = revision
             post.save()
         #don't advance current revision if we
-        #have premoderated revision and have previously 
+        #have premoderated revision and have previously
         #approved revisions
 
         revision.post.cache_latest_revision(revision)
@@ -2442,7 +2403,7 @@ class PostRevision(models.Model):
     title = models.CharField(max_length=300, blank=True, default='')
     tagnames = models.CharField(max_length=125, blank=True, default='')
     is_anonymous = models.BooleanField(default=False)
-    ip_addr = models.IPAddressField(max_length=21, default='0.0.0.0')
+    ip_addr = models.GenericIPAddressField(max_length=45, default='0.0.0.0')
 
     objects = PostRevisionManager()
 
@@ -2627,7 +2588,7 @@ class AnonymousAnswer(DraftContent):
         except django_exceptions.PermissionDenied, e:
             #delete previous draft questions (only one is allowed anyway)
             thread = self.question.thread
-            prev_drafts = DraftAnswer.objects.filter(   
+            prev_drafts = DraftAnswer.objects.filter(
                                                 author=user,
                                                 thread=thread
                                             )
@@ -2648,7 +2609,7 @@ class AnonymousAnswer(DraftContent):
                 text=self.text,
                 ip_addr=self.ip_addr,
             )
-            self.question.thread.invalidate_cached_data()
+            self.question.thread.reset_cached_data()
 
         finally:
             self.delete()

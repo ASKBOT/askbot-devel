@@ -6,18 +6,18 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'Tag.avatar_url'
         safe_add_column(u'auth_user', 'has_custom_avatar', self.gf('django.db.models.fields.BooleanField')(default=False), keep_default=False)
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'Tag.avatar_url'
         db.delete_column(u'auth_user', 'has_custom_avatar')
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -299,5 +299,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

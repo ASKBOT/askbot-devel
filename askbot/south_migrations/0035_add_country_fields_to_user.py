@@ -6,21 +6,21 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding model country fields to the model auth_user
         safe_add_column(u'auth_user', 'country', self.gf('django_countries.fields.CountryField')(max_length=2, blank=True, null=True))
         safe_add_column(u'auth_user', 'show_country', self.gf('django.db.models.fields.BooleanField')(default=False, blank=True))
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting country fields
         db.delete_column(u'auth_user', 'country')
         db.delete_column(u'auth_user', 'show_country')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -303,5 +303,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

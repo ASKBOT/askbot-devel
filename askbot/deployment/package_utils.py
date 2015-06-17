@@ -23,6 +23,6 @@ def get_coffin_version():
     return (major_version, minor_version, micro_version)
 
 def get_django_version():
-    """returns three-tuple for the version 
+    """returns three-tuple for the version
     of django"""
     return django.VERSION[:3]

@@ -5,15 +5,15 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Deleting model 'ValidationHash'
         db.delete_table('askbot_validationhash')
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Adding model 'ValidationHash'
         db.create_table('askbot_validationhash', (
             ('hash_code', self.gf('django.db.models.fields.CharField')(max_length=255, unique=True)),
@@ -24,8 +24,8 @@ class Migration(SchemaMigration):
             ('expiration', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2010, 6, 13, 23, 48, 5, 784060))),
         ))
         db.send_create_signal('askbot', ['ValidationHash'])
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -303,5 +303,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

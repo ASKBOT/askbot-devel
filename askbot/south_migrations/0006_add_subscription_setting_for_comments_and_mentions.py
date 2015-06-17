@@ -45,11 +45,11 @@ class Migration(DataMigration):
             new_feed.save()
             verbose_frequency = unicode(dict(const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES)[frequency])
             print 'added \'%s\' subscription for %s (%d)' % (
-                                                            unicode(verbose_frequency), 
-                                                            unidecode(user.username), 
+                                                            unicode(verbose_frequency),
+                                                            unidecode(user.username),
                                                             user.id
                                                         )
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         feeds = orm.EmailFeedSetting.objects.filter(feed_type = 'm_and_c')
@@ -386,7 +386,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -716,5 +716,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

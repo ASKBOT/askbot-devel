@@ -16,7 +16,7 @@ def get_after_login_url(request):
     else:
         #after login go to the special page
         default_next = login_redirect
-    return forms.get_next_url(request, default_next) 
+    return forms.get_next_url(request, default_next)
 
 def login_context(request):
     """context necessary for the login functionality

@@ -46,7 +46,7 @@ INITIAL_BADGE_DATA = (
 )
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         "Write your forwards methods here."
 
@@ -71,7 +71,7 @@ class Migration(DataMigration):
             badge.multiple = multiple
             badge.save()
 
-    
+
     def backwards(self, orm):
         "Write your backwards methods here."
         for entry in INITIAL_BADGE_DATA:
@@ -84,7 +84,7 @@ class Migration(DataMigration):
             except orm.Badge.DoesNotExist:
                 print 'no such badge %s - so skipping' % unidecode(name)
                 pass
-    
+
     forum_app_name = os.path.basename(os.path.dirname(os.path.dirname(__file__)))
     if forum_app_name == 'forum':
         models = {
@@ -414,7 +414,7 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['forum']
     else:
         models = {
@@ -744,5 +744,5 @@ class Migration(DataMigration):
                 'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
             }
         }
-        
+
         complete_apps = ['askbot']

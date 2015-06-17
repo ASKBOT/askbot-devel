@@ -1,5 +1,5 @@
 """
-Settings for making the karma and badge systems visible to 
+Settings for making the karma and badge systems visible to
 the users at a different degree
 """
 from django.utils.translation import ugettext_lazy as _

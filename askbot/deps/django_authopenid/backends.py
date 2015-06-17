@@ -211,7 +211,7 @@ class AuthBackend(object):
                     else:
                         return None
                 except User.DoesNotExist:
-                    return None 
+                    return None
             else:
                 #load user by association or maybe auto-create one
                 ldap_username = user_info['ldap_username']
@@ -258,7 +258,7 @@ class AuthBackend(object):
             return None
 
     @classmethod
-    def set_password(cls, 
+    def set_password(cls,
                     user=None,
                     password=None,
                     provider_name=None

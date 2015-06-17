@@ -24,11 +24,11 @@ def regex_settings_validation(*args):
 
         new_value = args[1]
         regex_list = new_value.split('\n')
-        
+
         for i in range(0, len(regex_list)):
             re.compile(regex_list[i].strip())
         return args[1]
-    
+
     except Exception:
         # The regex is invalid, so we overwrite it with empty string
         return ""
@@ -92,7 +92,7 @@ settings.register(
         help_text=_(
             'If you enable this feature, '
             'the application  will be able to '
-            'detect patterns and auto link to URLs'        
+            'detect patterns and auto link to URLs'
         ),
         default = False
     )

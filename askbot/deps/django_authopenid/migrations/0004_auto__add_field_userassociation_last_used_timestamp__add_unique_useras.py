@@ -5,25 +5,25 @@ from south.v2 import SchemaMigration
 from django.db import models
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'UserAssociation.last_used_timestamp'
         db.add_column('django_authopenid_userassociation', 'last_used_timestamp', self.gf('django.db.models.fields.DateTimeField')(null=True), keep_default=False)
 
         # Adding unique constraint on 'UserAssociation', fields ['provider_name', 'openid_url']
         db.create_unique('django_authopenid_userassociation', ['provider_name', 'openid_url'])
-    
-    
+
+
     def backwards(self, orm):
-        
+
         # Deleting field 'UserAssociation.last_used_timestamp'
         db.delete_column('django_authopenid_userassociation', 'last_used_timestamp')
 
         # Removing unique constraint on 'UserAssociation', fields ['provider_name', 'openid_url']
         db.delete_unique('django_authopenid_userassociation', ['provider_name', 'openid_url'])
-    
-    
+
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -119,5 +119,5 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'})
         }
     }
-    
+
     complete_apps = ['django_authopenid']

@@ -6,22 +6,22 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
-        
+
         # Adding field 'User.interesting_tags'
         safe_add_column(u'auth_user', 'interesting_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
         # Adding field 'User.ignored_tags'
         safe_add_column(u'auth_user', 'ignored_tags', self.gf('django.db.models.fields.TextField')(blank=True, default = ''), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'User.interesting_tags'
         db.delete_column('auth_user', 'interesting_tags')
         # Deleting field 'User.ignored_tags'
         db.delete_column('auth_user', 'ignored_tags')
-    
-    
+
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -309,5 +309,5 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

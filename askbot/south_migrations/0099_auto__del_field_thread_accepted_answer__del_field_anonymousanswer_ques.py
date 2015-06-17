@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Removing unique constraint on 'PostRevision', fields ['question', 'revision']
         db.delete_unique('askbot_postrevision', ['question_id', 'revision'])
 
@@ -40,7 +40,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'PostRevision', fields ['post', 'revision']
         db.delete_unique('askbot_postrevision', ['post_id', 'revision'])
 

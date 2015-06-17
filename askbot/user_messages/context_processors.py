@@ -31,7 +31,7 @@ def user_messages(request):
     #the get_and_delete_messages is added to anonymous user by the
     #ConnectToSessionMessages middleware by the process_request,
     #however - if the user is logging out via /admin/logout/
-    #the AnonymousUser is installed in the response and thus 
+    #the AnonymousUser is installed in the response and thus
     #the Askbot's session messages hack will fail, so we have
     #an extra if statement here.
     if hasattr(request.user, 'get_and_delete_messages'):

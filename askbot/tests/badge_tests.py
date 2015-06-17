@@ -176,20 +176,20 @@ class BadgeTests(AskbotTestCase):
 
         url = question.get_absolute_url()
 
-        self.client.login(method='force', user_id = self.u2.id)
+        self.client.login(method='force', user_id=self.u2.id)
         self.client.get(url)
-        self.assert_have_badge('popular-question', recipient = self.u1)
+        self.assert_have_badge('popular-question', recipient=self.u1)
 
-        self.client.login(method='force', user_id = self.u3.id)
+        self.client.login(method='force', user_id=self.u3.id)
         self.client.get(url)
-        self.assert_have_badge('popular-question', recipient = self.u1, expected_count = 1)
+        self.assert_have_badge('popular-question', recipient=self.u1, expected_count=1)
 
-        question2 = self.post_question(user = self.u1)
+        question2 = self.post_question(user=self.u1)
         question2.thread.view_count = min_views - 1
         question2.thread.save()
-        self.client.login(method='force', user_id = self.u2.id)
+        self.client.login(method='force', user_id=self.u2.id)
         self.client.get(question2.get_absolute_url())
-        self.assert_have_badge('popular-question', recipient = self.u1, expected_count = 2)
+        self.assert_have_badge('popular-question', recipient=self.u1, expected_count=2)
 
     def test_student_badge(self):
         question = self.post_question(user = self.u1)

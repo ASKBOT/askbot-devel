@@ -29,7 +29,7 @@ def store_file(file_object, file_name_prefix = ''):
     parsed_url = urlparse.urlparse(file_url)
     file_url = urlparse.urlunparse(
         urlparse.ParseResult(
-            parsed_url.scheme, 
+            parsed_url.scheme,
             parsed_url.netloc,
             parsed_url.path,
             '', '', ''

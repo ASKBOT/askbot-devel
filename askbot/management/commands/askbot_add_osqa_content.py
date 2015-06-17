@@ -82,8 +82,8 @@ class DataObject(object):
             return self.decode_rel_value(field)
         else:
             raise ValueError('unknown field class %s - neither data nor relation')
-        
-        
+
+
     def __getattr__(self, key):
         """Returns value of property, if decoded
         or decodes the property first from the bs4 soup"""
@@ -104,7 +104,7 @@ class Command(BaseImportXMLCommand):
         self.redirect_format = self.get_redirect_format(options['redirect_format'])
 
         dump_file_name = args[0]
-        xml = open(dump_file_name, 'r').read() 
+        xml = open(dump_file_name, 'r').read()
         self.soup = BeautifulSoup(xml, ['lxml', 'xml'])
 
         #site settings
@@ -139,7 +139,7 @@ class Command(BaseImportXMLCommand):
         #model="forum.userproperty"
         #model="forum.validationhash"
         #model="forum.vote"
-        
+
         #self.import_marked_tags()
 
         #self.apply_groups_to_threads()

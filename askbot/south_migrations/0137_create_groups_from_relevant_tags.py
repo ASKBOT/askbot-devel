@@ -67,10 +67,10 @@ class Migration(DataMigration):
 
         #for postgresql setup new user full text search
         if 'postgresql_psycopg2' in db_engine_name:
-            
+
             script_path = os.path.join(
                 askbot.get_install_directory(),
-                'search', 'postgresql', 
+                'search', 'postgresql',
                 'user_profile_search_08312012.plsql'
             )
             setup_full_text_search(script_path)

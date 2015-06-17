@@ -5,7 +5,7 @@ from south.v2 import DataMigration
 from django.db import models
 
 class Migration(DataMigration):
-    
+
     def forwards(self, orm):
         """populates User.status field.
         """
@@ -17,12 +17,12 @@ class Migration(DataMigration):
                 #approved user
                 user.status = 'a'
             user.save()
-    
-    
+
+
     def backwards(self, orm):
         "Backwards migration is meaningless here"
         pass
-    
+
     models = {
         'askbot.activity': {
             'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
@@ -301,5 +301,5 @@ class Migration(DataMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         }
     }
-    
+
     complete_apps = ['askbot']

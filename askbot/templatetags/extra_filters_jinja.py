@@ -122,7 +122,7 @@ def can_see_private_user_data(viewer, target):
             return True
         if viewer.is_administrator_or_moderator():
             #todo: take into account intersection of viewer and target user groups
-            return askbot_settings.SHOW_ADMINS_PRIVATE_USER_DATA 
+            return askbot_settings.SHOW_ADMINS_PRIVATE_USER_DATA
     return False
 
 @register.filter

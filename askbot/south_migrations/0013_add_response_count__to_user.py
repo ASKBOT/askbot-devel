@@ -6,7 +6,7 @@ from django.db import models
 from askbot.migrations_api import safe_add_column
 
 class Migration(SchemaMigration):
-    
+
     def forwards(self, orm):
         """adds integer field User.response_counter
         if the field does not yet exist
@@ -15,19 +15,19 @@ class Migration(SchemaMigration):
         within the forum application
         """
         safe_add_column(
-                u'auth_user', 
-                'response_count', 
-                self.gf('django.db.models.fields.IntegerField')(default=0, ), 
+                u'auth_user',
+                'response_count',
+                self.gf('django.db.models.fields.IntegerField')(default=0, ),
                 keep_default=False
             )
-    
-    
+
+
     def backwards(self, orm):
         """remove field User.respose_count
         """
         db.delete_column(u'auth_user', 'response_count')
-    
-    
+
+
     models = {
         'auth.group': {
             'Meta': {'object_name': 'Group'},
@@ -314,5 +314,5 @@ class Migration(SchemaMigration):
             'voted_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
         }
     }
-    
+
     complete_apps = ['forum']

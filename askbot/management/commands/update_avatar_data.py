@@ -13,7 +13,7 @@ class Command(NoArgsCommand):
         has_avatar = User.objects.exclude(avatar_type='n').count()
         total_users = users.count()
         print '%s users in total, %s have valid avatar' \
-           % (total_users, has_avatar) 
+           % (total_users, has_avatar)
 
         for count, user in enumerate(users):
             users_left = total_users - count

@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Removing M2M table for field followed_by on 'Question'
         db.delete_table('question_followed_by')
 
 
     def backwards(self, orm):
-        
+
         # Adding M2M table for field followed_by on 'Question'
         db.create_table(u'question_followed_by', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),

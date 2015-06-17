@@ -41,7 +41,7 @@ sitemaps = {
 PREFIX = getattr(settings, 'ASKBOT_SERVICE_URL_PREFIX', '')
 
 MAIN_PAGE_BASE_URL = getattr(
-                        settings, 
+                        settings,
                         'ASKBOT_MAIN_PAGE_BASE_URL',
                         pgettext('urls', 'questions')
                     ).strip('/') + '/'
@@ -86,7 +86,7 @@ urlpatterns = patterns('',
     ),
     url(
         r'^%s%s(?P<group_id>\d+)/(?P<group_slug>.*)/$' % (
-                                            pgettext('urls', 'users/'), 
+                                            pgettext('urls', 'users/'),
                                             pgettext('urls', 'by-group/')
                                         ),
         views.users.show_users,
@@ -369,8 +369,8 @@ urlpatterns = patterns('',
     ),
     service_url(#post only
         r'^%s%s%s$' % (
-            pgettext('urls', 'tags/'), 
-            pgettext('urls', 'subscriptions/'), 
+            pgettext('urls', 'tags/'),
+            pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'delete/')
         ),
         views.commands.delete_bulk_tag_subscription,
@@ -378,8 +378,8 @@ urlpatterns = patterns('',
     ),
     service_url(
         r'^%s%s%s$' % (
-            pgettext('urls', 'tags/'), 
-            pgettext('urls', 'subscriptions/'), 
+            pgettext('urls', 'tags/'),
+            pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'create/')
         ),
         views.commands.create_bulk_tag_subscription,
@@ -387,8 +387,8 @@ urlpatterns = patterns('',
     ),
     service_url(
         r'^%s%s%s(?P<pk>\d+)/$' % (
-            pgettext('urls', 'tags/'), 
-            pgettext('urls', 'subscriptions/'), 
+            pgettext('urls', 'tags/'),
+            pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'edit/')
         ),
         views.commands.edit_bulk_tag_subscription,
@@ -583,7 +583,7 @@ urlpatterns = patterns('',
     ),
     service_url(
         r'^%s%s(?P<widget_id>\d+).css$' % (
-            pgettext('urls', 'widgets/'), 
+            pgettext('urls', 'widgets/'),
             pgettext('urls', 'ask/')
         ),
         views.widgets.render_ask_widget_css,
@@ -696,7 +696,7 @@ if 'avatar' in settings.INSTALLED_APPS:
         #either dynamic extra context or custom redirect
         #or extra parameter in the urls
         service_url(
-            '^avatar/upload/(?P<user_id>\d+)/$', 
+            '^avatar/upload/(?P<user_id>\d+)/$',
             views.avatar_views.upload,
             name='askbot_avatar_upload'
         ),

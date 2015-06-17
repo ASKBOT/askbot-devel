@@ -36,7 +36,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Adding model 'Comment'
         db.create_table(u'comment', (
             ('comment', self.gf('django.db.models.fields.CharField')(max_length=2048)),

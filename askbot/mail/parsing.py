@@ -15,9 +15,9 @@ from askbot.conf import settings as askbot_settings
 #to keep them simpler and make the additions of language variants
 #easier.
 QUOTE_REGEXES = (
-    #GMAIL_QUOTE_RE = 
+    #GMAIL_QUOTE_RE =
     r'\nOn [^\n]* wrote:\Z',
-    #GMAIL_SECOND_QUOTE_RE = 
+    #GMAIL_SECOND_QUOTE_RE =
     r'\n\d{4}/\d{1,2}/\d{1,2} [^\n]*\Z',
     #BLACKBERRY
     r'_+\nFrom:.*?\nSent:.*?\nTo:.*?\nSubject:.*?\Z',
@@ -25,13 +25,13 @@ QUOTE_REGEXES = (
     r'\n-+[\w -]+\nFrom:.*?\nSent:.*?\nTo:.*?\nSubject:.*?\Z',
     #unknown
     r'\n-+[\w -]+\nFrom:.*?\nDate:.*?\nTo:.*?\nSubject:.*?\Z',
-    #YAHOO_QUOTE_RE = 
+    #YAHOO_QUOTE_RE =
     r'\n_+\n\s*From: [^\n]+\nTo: [^\n]+\nSent: [^\n]+\nSubject: [^\n]+\Z',
-    #KMAIL_QUOTE_RE = 
+    #KMAIL_QUOTE_RE =
     r'\AOn [^\n]+ you wrote:\s*\n\n',
-    #OUTLOOK_RTF_QUOTE_RE = 
+    #OUTLOOK_RTF_QUOTE_RE =
     r'\nSubject: [^\n]+\nFrom: [^\n]+\nTo: [^\n]+\nDate: [^\n]+\Z',
-    #OUTLOOK_TEXT_QUOTE_RE = 
+    #OUTLOOK_TEXT_QUOTE_RE =
     r'\n_+\Z',
     r'From:.*?\nSent:.*?\nTo:.*?\nSubject:.*?\Z',
 )
@@ -87,7 +87,7 @@ Test from email
 
 From: ask@ask.example.org [mailto:ask@ask.example.org]
 Sent: Wednesday, July 03, 2013 10:41 AM
-To: John Doe 
+To: John Doe
 Subject: aou aoeu oau aoeu aou aoeu oeau
 
 ############
@@ -96,7 +96,7 @@ Subject: aou aoeu oau aoeu aou aoeu oeau
 -------- Original message --------
 From: forum@ask.examle.org
 Date:12/15/2013 2:35 AM (GMT-05:00)
-To: John Doe 
+To: John Doe
 Subject: this is it
 
 """
