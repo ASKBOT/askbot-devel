@@ -173,6 +173,8 @@ class PostManager(BaseQuerySetManager):
         optionally filtered to exclude posts of groups
         to which user does not belong"""
         answers = self.filter(post_type='answer')
+        if user == 'n/a':
+            return answers
         return answers.get_for_user(user)
 
     def get_comments(self):
