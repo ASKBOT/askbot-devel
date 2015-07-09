@@ -1034,11 +1034,9 @@ class Thread(models.Model):
         self.update_summary_html() # regenerate question/thread summary html
         ####################################################################
 
-    def get_last_activity_info(self):
-        post_ids = self.get_answers().values_list('id', flat=True)
-        question = self._question_post()
-        post_ids = list(post_ids)
-        post_ids.append(question.id)
+    def get_last_activity_info(self, user=None):
+        post_ids = list(self.get_answers(user=user).values_list('id', flat=True))
+        post_ids.append(self._question_post().id)
         from askbot.models import PostRevision
         revs = PostRevision.objects.filter(
                             post__id__in=post_ids,
@@ -1051,7 +1049,9 @@ class Thread(models.Model):
             return None, None
 
     def update_last_activity_info(self):
-        timestamp, user = self.get_last_activity_info()
+        # The Thread can't record this info on a per-user basis so don't 
+        # consider any user memberships when calculating it.
+        timestamp, user = self.get_last_activity_info(user='n/a')
         if timestamp:
             self.set_last_activity_info(timestamp, user)
 
