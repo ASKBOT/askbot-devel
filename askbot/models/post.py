@@ -168,12 +168,15 @@ class PostManager(BaseQuerySetManager):
         questions = self.filter(post_type='question')
         return questions.get_for_user(user)
 
-    def get_answers(self, user=None):
+    def get_answers(self, user=None, ignore_user=False):
         """returns query set of answer posts,
         optionally filtered to exclude posts of groups
         to which user does not belong"""
         answers = self.filter(post_type='answer')
-        return answers.get_for_user(user)
+        if ignore_user:
+            return answers
+        else:
+            return answers.get_for_user(user)
 
     def get_comments(self):
         return self.filter(post_type='comment')
