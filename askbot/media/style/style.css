@@ -260,7 +260,7 @@ body.user-messages {
   padding: 0;
   text-align: center;
   background-color: #f5dd69;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .notify .notification {
   color: #424242;
@@ -327,8 +327,8 @@ body.user-messages {
 /* ----- Header, check blocks/header.html ----- */
 #header {
   margin-top: 0px;
-  background: #16160f;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  background: #1CAFD9;
+  font-family: "open-sans", sans-serif;
 }
 .content-wrapper {
   /* wrapper positioning class */
@@ -339,7 +339,8 @@ body.user-messages {
 }
 #logo img {
   padding: 5px 0px 5px 0px;
-  height: 75px;
+  margin: 13px;
+  height: 43px;
   width: auto;
   float: left;
 }
@@ -404,8 +405,7 @@ body.user-messages {
   height: 35px;
   text-align: right;
   margin-left: 20px;
-  text-decoration: underline;
-  color: #d0e296;
+  color: #ffffff;
 }
 #userToolsNav a:first-child {
   margin-left: 0;
@@ -414,7 +414,7 @@ body.user-messages {
   margin-left: 3px;
 }
 #userToolsNav .user-info, #userToolsNav .user-micro-info {
-  color: #b5b593;
+  color: #FFFFFF;
 }
 #userToolsNav a img {
   vertical-align: middle;
@@ -457,7 +457,7 @@ body.user-messages {
   margin-right: 7px;
 }
 #metaNav a {
-  color: #e2e2ae;
+  color: #FFFFFF;
   padding: 0px 0px 0px 35px;
   height: 35px;
   line-height: 25px;
@@ -545,11 +545,11 @@ body.user-messages {
   /* Div containing Home button, scope navigation, search form and ask button, check blocks/secondary_header.html */
 
   height: 55px;
-  background: #e9e9e1;
+  background: #F6F6F6;
   border-bottom: #d3d3c2 1px solid;
   border-top: #fcfcfc 1px solid;
   margin-bottom: 10px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -579,8 +579,8 @@ body.user-messages {
 }
 .scope-selector {
   display: inline-block;
-  font-size: 20px;
-  color: #7a7a6b;
+  font-size: 16px;
+  color: #000000;
   height: 55px;
   line-height: 55px;
   margin-left: 16px;
@@ -631,7 +631,7 @@ body.user-messages {
 
 }
 #searchBar input.searchInput {
-  font-size: 22px;
+  font-size: 16px;
   height: 26px;
   line-height: 26px;
   font-weight: 300;
@@ -847,7 +847,7 @@ input[type="reset"],
   box-sizing: border-box;
   cursor: pointer;
   color: #4a757f;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   font-size: 14px;
   font-weight: bold;
   height: 27px;
@@ -960,7 +960,7 @@ form.ajax-file-upload img.spinner {
   /* check blocks/secondary_header.html and widgets/ask_button.html*/
 
   float: right;
-  font-size: 20px;
+  font-size: 16px;
   height: 42px;
   line-height: 44px;
   margin: -1px 0 0 0;
@@ -1017,7 +1017,7 @@ form.ajax-file-upload img.spinner {
 .box p {
   margin-bottom: 4px;
   color: #707070;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   font-size: 14px;
 }
 .box p.info-box-follow-up-links {
@@ -1026,7 +1026,7 @@ form.ajax-file-upload img.spinner {
 }
 .box h2 {
   padding-left: 0;
-  background: #eceeeb;
+  background: #F6F6F6;
   line-height: 30px;
   text-align: right;
   font-size: 18px !important;
@@ -1034,7 +1034,7 @@ form.ajax-file-upload img.spinner {
   color: #656565;
   padding-right: 10px;
   margin-bottom: 10px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   width: 190px;
 }
 .box h3 {
@@ -1042,11 +1042,11 @@ form.ajax-file-upload img.spinner {
   font-size: 18px;
   text-align: left;
   font-weight: normal;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   padding-left: 0px;
 }
 .box .contributorback {
-  background: #eceeeb url(../images/contributorsback.png) no-repeat center left;
+  background: #F6F6F6;
 }
 .box form {
   margin: 0px;
@@ -1057,7 +1057,7 @@ form.ajax-file-upload img.spinner {
   vertical-align: bottom;
   display: inline;
   text-align: left;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .box #displayTagFilterControl label, .box #emailTagFilterControl label {
   /*Especial width just for the tag filter boxes in index page*/
@@ -1089,7 +1089,7 @@ form.ajax-file-upload img.spinner {
 .box .inputs #ignoredTagInput,
 .box .inputs #subscribedTagInput,
 .box .inputs #ab-tag-search {
-  width: 147px;
+  width: 138px;
   padding-left: 5px;
   border: #c9c9b5 1px solid;
   height: 25px;
@@ -1104,7 +1104,7 @@ form.ajax-file-upload img.spinner {
 .box .inputs #subscribedTagAdd,
 .box .inputs #ab-tag-search-add {
   border: 0;
-  margin: -2px 0 0 0;
+  margin: 2px;
 }
 .box .inputs #ab-tag-search-add {
   width: 47px;
@@ -1115,7 +1115,7 @@ form.ajax-file-upload img.spinner {
 .box .js-question-follower-count {
   padding: 5px 0 0 5px;
   font-size: 100%;
-  font-family: Arial;
+  font-family: "open-sans", sans-serif;
   font-weight: bold;
   color: #777;
   text-align: center;
@@ -1190,7 +1190,7 @@ form.ajax-file-upload img.spinner {
   margin-bottom: 3px;
   margin-top: 3px;
   float: right;
-  font-family: Georgia, serif;
+  font-family: "open-sans", sans-serif;
   font-size: 16px;
   border-radius: 5px;
   -ms-border-radius: 5px;
@@ -1277,13 +1277,13 @@ form.ajax-file-upload img.spinner {
   float: left;
   margin-bottom: 6px;
   padding-top: 6px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 #listSearchTags {
   margin-top: 3px;
   color: #707070;
   font-size: 16px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 #listSearchTags ul.tags li {
   margin: 0 5px 0 0;
@@ -1303,7 +1303,7 @@ ul#searchTags {
   margin: 5px 0 10px 0;
   padding: 0px;
   float: left;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .search-tips a {
   text-decoration: underline;
@@ -1335,7 +1335,7 @@ ul#searchTags {
   padding-left: 0;
   margin-bottom: 7px;
   display: block;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .short-summary a {
   color: #464646;
@@ -1359,12 +1359,12 @@ ul#searchTags {
 .short-summary .counts {
   float: right;
   margin: 4px 0 0 5px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .short-summary .counts .item-count {
   padding: 0px 5px 0px 5px;
   font-size: 25px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .short-summary .counts .votes div,
 .short-summary .counts .views div,
@@ -1750,7 +1750,7 @@ ul.js-related-tags li {
 /* ----- Ask and Edit Question Form template----- */
 .section-title {
   color: #7ea9b3;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   font-weight: bold;
   font-size: 24px;
 }
@@ -2180,7 +2180,7 @@ ul.js-related-tags li {
 }
 .question-page h1 {
   padding-top: 0px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 .question-page h1 a {
   color: #464646;
@@ -2198,7 +2198,7 @@ ul.js-related-tags li {
   background-position: center left;
 }
 .question-page p.rss a {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   vertical-align: top;
 }
 .question-page .post {
@@ -2438,7 +2438,7 @@ ul.js-related-tags li {
 }
 .question-page #questionCount {
   float: left;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   line-height: 15px;
 }
 .question-page #fmanswer_button {
@@ -2451,7 +2451,7 @@ ul.js-related-tags li {
   color: #7ea9b3;
   font-weight: bold;
   font-size: 23px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   float: left;
   padding-left: 0;
   width: 200px;
@@ -2780,7 +2780,7 @@ ul.js-related-tags li {
   margin-top: 10px;
 }
 .question-page #fmanswer h2 {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   color: #7ea9b3;
   font-size: 24px;
 }
@@ -2837,7 +2837,7 @@ ul.js-related-tags li {
   background: url(../images/vote-arrow-down-on-new.png) no-repeat;
 }
 .vote-number {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   padding: 2px 0 5px 0;
   font-size: 25px;
   font-weight: bold;
@@ -3213,8 +3213,8 @@ a:hover.medal {
   margin-bottom: 0;
 }
 .user-profile-page h2 {
-  padding: 4px 0px 10px 0px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  padding: 30px 0px 10px 0px;
+  font-family: "open-sans", sans-serif;
 }
 .user-profile-page h3 {
   padding: 0;
@@ -3284,7 +3284,7 @@ a:hover.medal {
   vertical-align: top;
 }
 .user-about {
-  background-color: #EEEEEE;
+  background-color: #FFFFFF;
   height: 200px;
   line-height: 20px;
   overflow: auto;
@@ -3303,13 +3303,13 @@ a:hover.medal {
   text-decoration: none !important;
 }
 .count {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
-  font-size: 200%;
+  font-family: "open-sans", sans-serif;
+  font-size: 100%;
   font-weight: 700;
   color: #777777;
 }
 .scoreNumber {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   font-size: 35px;
   font-weight: 800;
   color: #777;
@@ -3420,7 +3420,7 @@ a:hover.medal {
   color: #525252;
 }
 .revision h3 {
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   font-size: 21px;
   padding-left: 0px;
 }
@@ -3531,9 +3531,9 @@ body.question-page ins, body.main-page ins {
   clear: both;
   border-top: 1px solid #000;
   padding: 16px 0 0 0;
-  background: #16160f;
+  background: #1CAFD9;
   font-size: 16px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
 }
 #ground a:hover {
   color: #ebff88;
@@ -3542,13 +3542,13 @@ body.question-page ins, body.main-page ins {
   margin-bottom: 0;
 }
 .footer-links {
-  color: #EEE;
+  color: #F6F6F6;
   text-align: left;
   width: 450px;
   float: left;
 }
 .footer-links a {
-  color: #e7e8a8;
+  color: #FFFFFF;
 }
 .powered-link {
   width: 450px;
@@ -3556,16 +3556,16 @@ body.question-page ins, body.main-page ins {
   text-align: left;
 }
 .powered-link a {
-  color: #8ebcc7;
+  color: #FFFFFF;
 }
 .copyright {
-  color: #616161;
+  color: #FFFFFF;
   width: 500px;
   float: right;
   text-align: right;
 }
 .copyright a {
-  color: #8ebcc7;
+  color: #FFFFFF;
 }
 .copyright img.license-logo {
   margin: 6px 0px 20px 10px;
@@ -4480,7 +4480,7 @@ input.tipped-input, textarea.tipped-input {
 .tag-subscriptions .action {
   cursor: pointer;
   color: #4A757F;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "open-sans", sans-serif;
   text-decoration: none;
 }
 .tag-subscriptions ul.tags li {

@@ -81,6 +81,7 @@ settings.register(
         'GOOGLE_PLUS_KEY',
         description=_('Google+ public API key'),
         localized=True,
+        default='151092736454-cmo5efoh8j7b5o15hquqmnsfsnq477hu.apps.googleusercontent.com',
     )
 )
 
@@ -90,6 +91,7 @@ settings.register(
         'GOOGLE_PLUS_SECRET',
         description=_('Google+ secret API key'),
         localized=True,
+        default='uQ1nZF-pWAmUoeEDJD1ITsde',
     )
 )
 

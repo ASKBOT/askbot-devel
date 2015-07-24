@@ -21,7 +21,11 @@ import logging
 import sys
 import traceback
 import uuid
+import urllib2
+import json
 
+from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.template import Context
 from django.template.loader import get_template
 from django.utils.translation import ugettext as _
@@ -53,12 +57,18 @@ from askbot.utils.twitter import Twitter
 
 logger = get_task_logger(__name__)
 
+@task(ignore_result=True)
+def slack_new_post_task(post_id, host):
+    stackfolio_post = Post.objects.get(id=post_id)
+    hyperlink = "http://" + host + reverse('question', args=(post_id,))
+    post_data = json.dumps({"text": "The following question has been posted: <" + hyperlink + "|" + stackfolio_post.thread.title + ">"})
+    result = urllib2.urlopen('https://hooks.slack.com/services/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', post_data)
 
 # TODO: Make exceptions raised inside record_post_update_celery_task() ...
 #       ... propagate upwards to test runner, if only CELERY_ALWAYS_EAGER = True
 #       (i.e. if Celery tasks are not deferred but executed straight away)
 @task(ignore_result=True)
-def tweet_new_post_task(post_id):
+def tweet_new_post_task(post_id, host):
 
     try:
         twitter = Twitter()

@@ -1899,7 +1899,7 @@ class AnonymousQuestion(DraftContent):
     tagnames = models.CharField(max_length=125)
     is_anonymous = models.BooleanField(default=False)
 
-    def publish(self, user):
+    def publish(self, user, host):
         added_at = datetime.datetime.now()
         #todo: wrong - use User.post_question() instead
         try:
@@ -1917,7 +1917,7 @@ class AnonymousQuestion(DraftContent):
                             tagnames=self.tagnames
                         )
         else:
-            Thread.objects.create_new(
+            thread = Thread.objects.create_new(
                 title = self.title,
                 added_at = added_at,
                 author = user,
@@ -1925,6 +1925,14 @@ class AnonymousQuestion(DraftContent):
                 is_anonymous = self.is_anonymous,
                 tagnames = self.tagnames,
                 text = self.text,
+            )
+            from askbot.models.post import Post
+            question = Post.objects.get(thread=thread)
+            signals.new_question_posted.send(None,
+                question= question,
+                user=user,
+                form_data=None,
+                host=host
             )
             DraftQuestion.objects.filter(author=user).delete()
 

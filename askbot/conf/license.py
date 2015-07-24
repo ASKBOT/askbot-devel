@@ -19,7 +19,7 @@ settings.register(
         LICENSE_SETTINGS,
         'USE_LICENSE',
         description = _('Show license clause in the site footer'),
-        default = True
+        default = False
     )
 )
 

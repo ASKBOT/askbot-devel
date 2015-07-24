@@ -91,11 +91,12 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_URL',
+        default = 'http://ec2-52-3-45-239.compute-1.amazonaws.com:8000/',
         description=_(
                 'Base URL for your Q&A forum, must start with '
                 'http or https'
             ),
-        update_callback=app_url_callback
+        update_callback=app_url_callback,
     )
 )
 
