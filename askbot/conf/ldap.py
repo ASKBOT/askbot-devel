@@ -15,7 +15,7 @@ settings.register(
         LDAP_SETTINGS,
         'USE_LDAP_FOR_PASSWORD_LOGIN',
         description=_('Use LDAP authentication for the password login'),
-        defaut=False
+        defaut=True
     )
 )
 

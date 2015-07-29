@@ -22,8 +22,8 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_TITLE',
-        default=_('My site'),
-        description=_('Site title for the Q&A forum')
+        default=_('Stackfolio'),
+        description=_('AppFolio Q&A Site')
     )
 )
 
@@ -31,7 +31,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_KEYWORDS',
-        default=u'Askbot,forum,community',
+        default=u'Stackfolio,forum,community',
         description=_('Comma separated list of Q&A site keywords')
     )
 )
@@ -49,8 +49,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_DESCRIPTION',
-        default='Open source question and answer forum written in ' +\
-                'Python and Django',
+        default='AppFolio Q&A Site',
         description=_('Site description for the search engines')
     )
 )
@@ -59,7 +58,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_SHORT_NAME',
-        default='Askbot',
+        default='Stackfolio',
         description=_('Short name for your Q&A forum')
     )
 )
@@ -91,11 +90,12 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_URL',
+        default = 'http://stack.appfolio.us/',
         description=_(
                 'Base URL for your Q&A forum, must start with '
                 'http or https'
             ),
-        update_callback=app_url_callback
+        update_callback=app_url_callback,
     )
 )
 

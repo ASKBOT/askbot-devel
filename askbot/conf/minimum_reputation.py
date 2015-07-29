@@ -18,7 +18,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_AUTOAPPROVE_USER',
-        default=10,
+        default=1,
         description=_('Become approved'),
         help_text=_('Approved users bypass moderation and skip recaptcha')
     )
@@ -28,7 +28,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_VOTE_UP',
-        default=5,
+        default=1,
         description=_('Upvote')
     )
 )
@@ -37,7 +37,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_VOTE_DOWN',
-        default=50,
+        default=1,
         description=_('Downvote')
     )
 )
@@ -46,7 +46,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_ANSWER_OWN_QUESTION',
-        default=5,
+        default=1,
         description=_('Answer own question immediately')
     )
 )
@@ -55,7 +55,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_ACCEPT_OWN_ANSWER',
-        default=20,
+        default=1,
         description=_('Accept own answer')
     )
 )
@@ -64,7 +64,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_ACCEPT_ANY_ANSWER',
-        default=500,
+        default=1,
         description=_('Accept any answer')
     )
 )
@@ -73,7 +73,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_FLAG_OFFENSIVE',
-        default=5,
+        default=1,
         description=_('Flag offensive')
     )
 )
@@ -84,7 +84,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_LEAVE_COMMENTS',
-        default=10,
+        default=1,
         description=_('Leave comments')
     )
 )
@@ -94,7 +94,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_DELETE_OTHERS_COMMENTS',
-        default=200,
+        default=100000,
         description=_('Delete comments posted by others')
     )
 )
@@ -103,7 +103,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_DELETE_OTHERS_POSTS',
-        default=500,
+        default=100000,
         description=_('Delete questions and answers posted by others')
     )
 )
@@ -121,7 +121,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_UPLOAD_FILES',
-        default=10,
+        default=1,
         description=_('Upload files')
     )
 )
@@ -152,7 +152,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_RETAG_OTHERS_QUESTIONS',
-        default=50,
+        default=1,
         description=_('Retag questions posted by other people')
     )
 )
@@ -161,7 +161,7 @@ settings.register(
             livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_EDIT_WIKI',
-        default=75,
+        default=1,
         description=_('Edit community wiki posts')
     )
 )
@@ -170,7 +170,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_EDIT_OTHERS_POSTS',
-        default=200,
+        default=1,
         description=_('Edit posts authored by other people')
     )
 )
@@ -179,7 +179,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_VIEW_OFFENSIVE_FLAGS',
-        default=200,
+        default=1,
         description=_('View offensive flags')
     )
 )
@@ -188,7 +188,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_CLOSE_OTHERS_QUESTIONS',
-        default=200,
+        default=100000,
         description=_('Close and reopen questions')
     )
 )
@@ -197,7 +197,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_HAVE_STRONG_URL',
-        default=25,
+        default=1,
         description=_('Remove rel=nofollow from own homepage'),
         help_text=_(
                     'When a search engine crawler will see a rel=nofollow '
@@ -211,7 +211,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_POST_BY_EMAIL',
-        default=100,
+        default=1,
         description=_('Make posts by email')
     )
 )
@@ -220,7 +220,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_TRIGGER_EMAIL',
-        default=15,
+        default=1,
         description=_('Trigger email notifications'),
         help_text=_('Reduces spam')
     )
@@ -230,7 +230,7 @@ settings.register(
     livesettings.IntegerValue(
         MIN_REP,
         'MIN_REP_TO_TWEET_ON_OTHERS_ACCOUNTS',
-        default=15,
+        default=100000,
         description=_('Trigger tweets on others accounts'),
         help_text=_('Reduces spam')
     )

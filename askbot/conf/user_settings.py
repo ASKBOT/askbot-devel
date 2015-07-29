@@ -38,7 +38,7 @@ settings.register(
     livesettings.BooleanValue(
         USER_SETTINGS,
         'SHOW_ADMINS_PRIVATE_USER_DATA',
-        default=False,
+        default=True,
         description=_('Show email addresses to moderators')
     )
 )
@@ -57,7 +57,7 @@ settings.register(
     livesettings.BooleanValue(
         USER_SETTINGS,
         'EDITABLE_EMAIL',
-        default = True,
+        default = False,
         description = _('Allow users change own email addresses')
     )
 )
@@ -75,7 +75,7 @@ settings.register(
     livesettings.BooleanValue(
         USER_SETTINGS,
         'ALLOW_ACCOUNT_RECOVERY_BY_EMAIL',
-        default = True,
+        default = False,
         description = _('Allow account recovery by email')
     )
 )
@@ -179,7 +179,7 @@ settings.register(
     livesettings.StringValue(
         USER_SETTINGS,
         'NAME_OF_ANONYMOUS_USER',
-        default = '',
+        default = 'Anonymous Appfolian',
         description = _('Name for the Anonymous user')
     )
 )

@@ -1493,7 +1493,7 @@ def user_post_object_description(
     return description_post
 
 
-def user_post_anonymous_askbot_content(user, session_key):
+def user_post_anonymous_askbot_content(user, session_key, host):
     """posts any posts added just before logging in
     the posts are identified by the session key, thus the second argument
 
@@ -1505,7 +1505,7 @@ def user_post_anonymous_askbot_content(user, session_key):
         return
 
     for aq in AnonymousQuestion.objects.filter(session_key=session_key):
-        aq.publish(user)
+        aq.publish(user, host)
     for aa in AnonymousAnswer.objects.filter(session_key=session_key):
         aa.publish(user)
 
@@ -4040,7 +4040,7 @@ def post_anonymous_askbot_content(
     if user.is_blocked() or user.is_suspended():
         pass
     else:
-        user.post_anonymous_askbot_content(session_key)
+        user.post_anonymous_askbot_content(session_key, request.get_host())
 
 def make_admin_if_first_user(user, **kwargs):
     """first user automatically becomes an administrator
@@ -4105,11 +4105,17 @@ def group_membership_changed(**kwargs):
             GROUP_MEMBERSHIP_LEVELS.pop(gm_key, None)
 
 
-def tweet_new_post(sender, user=None, question=None, answer=None, form_data=None, **kwargs):
+def tweet_new_post(sender, user=None, question=None, answer=None, form_data=None, host=None, **kwargs):
     """seends out tweets about the new post"""
     from askbot.tasks import tweet_new_post_task
     post = question or answer
-    defer_celery_task(tweet_new_post_task, args=(post.id,))
+    defer_celery_task(tweet_new_post_task, args=(post.id, host,))
+
+def slack_new_post(sender, user=None, question=None, answer=None, form_data=None, host=None, **kwargs):
+    """seends out tweets about the new post"""
+    from askbot.tasks import slack_new_post_task
+    post = question or answer
+    defer_celery_task(slack_new_post_task, args=(post.id, host,))
 
 def autoapprove_reputable_user(user=None, reputation_before=None, *args, **kwargs):
     """if user is 'watched' we change status to 'approved'
@@ -4323,6 +4329,10 @@ signals.new_answer_posted.connect(
 signals.new_question_posted.connect(
     tweet_new_post,
     dispatch_uid='tweet_on_new_question'
+)
+signals.new_question_posted.connect(
+    slack_new_post,
+    dispatch_uid='slack_on_new_question'
 )
 signals.reputation_received.connect(
     autoapprove_reputable_user,

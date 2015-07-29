@@ -35,7 +35,7 @@ settings.register(
     livesettings.BooleanValue(
         ACCESS_CONTROL,
         'ASKBOT_CLOSED_FORUM_MODE',
-        default=False,
+        default=True,
         description=_('Allow only registered user to access the forum'),
     )
 )
@@ -50,7 +50,7 @@ settings.register(
     livesettings.StringValue(
         ACCESS_CONTROL,
         'REQUIRE_VALID_EMAIL_FOR',
-        default='nothing',
+        default='see-content',
         choices=EMAIL_VALIDATION_CASE_CHOICES,
         description=_(
             'Require valid email for'
@@ -72,7 +72,7 @@ settings.register(
     livesettings.LongStringValue(
         ACCESS_CONTROL,
         'ALLOWED_EMAIL_DOMAINS',
-        default='',
+        default='appfolio.com rentlinx.com mycase.com',
         description=_('Allowed email domain names'),
         help_text=_('Please use space to separate the entries, do not use the @ symbol!')
     )

@@ -16,7 +16,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'RSS_ENABLED',
-        default=True,
+        default=False,
         description=_('Check to enable RSS feeds')
     )
 )
@@ -34,7 +34,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'ENABLE_SHARING_TWITTER',
-        default=True,
+        default=False,
         description=_('Check to enable sharing of questions on Twitter'),
         help_text=_(
             'Important - to actually start sharing on twitter, '
@@ -48,7 +48,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'ENABLE_SHARING_FACEBOOK',
-        default=True,
+        default=False,
         description=_('Check to enable sharing of questions on Facebook')
     )
 )
@@ -57,7 +57,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'ENABLE_SHARING_LINKEDIN',
-        default=True,
+        default=False,
         description=_('Check to enable sharing of questions on LinkedIn')
     )
 )
@@ -66,7 +66,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'ENABLE_SHARING_IDENTICA',
-        default=True,
+        default=False,
         description=_('Check to enable sharing of questions on Identi.ca')
     )
 )
@@ -75,7 +75,7 @@ settings.register(
     BooleanValue(
         SOCIAL_SHARING,
         'ENABLE_SHARING_GOOGLE',
-        default=True,
+        default=False,
         description=_('Check to enable sharing of questions on Google+')
     )
 )

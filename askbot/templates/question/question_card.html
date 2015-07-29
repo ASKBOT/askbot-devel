@@ -1,8 +1,6 @@
 <div class="post js-question" data-post-id="{{ question.id }}">
     <div class="vote-buttons">
         {% include "question/question_vote_buttons.html" %}
-
-        {% include "question/share_buttons.html" %}
     </div>
     <div id="post-id-{{question.id}}" class="post-content{% if question.deleted %} deleted{% endif %}">
         <h1><a href="{{ question.get_absolute_url() }}">{{ thread.get_title()|escape }}</a></h1>

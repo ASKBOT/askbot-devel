@@ -543,7 +543,7 @@ def get_enabled_major_login_providers():
                 'resource_endpoint': 'https://www.googleapis.com/plus/v1/people/',
                 'icon_media_path': 'images/jquery-openid/google.gif',
                 'get_user_id_function': get_google_user_id,
-                'extra_auth_params': {'scope': ('profile', 'email', 'openid'), 'openid.realm': askbot_settings.APP_URL}
+                'extra_auth_params': {'scope': ('profile', 'email', 'openid'), 'openid.realm': askbot_settings.APP_URL, 'hd': 'appfolio.com,rentlinx.com,mycase.com'}
             }
     elif google_method == 'openid':
         data['google'] = {
@@ -554,44 +554,44 @@ def get_enabled_major_login_providers():
             'openid_endpoint': 'https://www.google.com/accounts/o8/id',
         }
 
-    data['mozilla-persona'] = {
-        'name': 'mozilla-persona',
-        'display_name': 'Mozilla Persona',
-        'type': 'mozilla-persona',
-        'icon_media_path': 'images/jquery-openid/mozilla-persona.gif',
-    }
-    data['yahoo'] = {
-        'name': 'yahoo',
-        'display_name': 'Yahoo',
-        'type': 'openid-direct',
-        'icon_media_path': 'images/jquery-openid/yahoo.gif',
-        'tooltip_text': _('Sign in with Yahoo'),
-        'openid_endpoint': 'http://yahoo.com',
-    }
-    data['aol'] = {
-        'name': 'aol',
-        'display_name': 'AOL',
-        'type': 'openid-direct',
-        'extra_token_name': _('AOL screen name'),
-        'icon_media_path': 'images/jquery-openid/aol.gif',
-        'openid_endpoint': 'http://openid.aol.com'
-    }
-    data['launchpad'] = {
-        'name': 'launchpad',
-        'display_name': 'LaunchPad',
-        'type': 'openid-direct',
-        'icon_media_path': 'images/jquery-openid/launchpad.gif',
-        'tooltip_text': _('Sign in with LaunchPad'),
-        'openid_endpoint': 'https://login.launchpad.net/'
-    }
-    data['openid'] = {
-        'name': 'openid',
-        'display_name': 'OpenID',
-        'type': 'openid-generic',
-        'extra_token_name': _('OpenID url'),
-        'icon_media_path': 'images/jquery-openid/openid.gif',
-        'openid_endpoint': None,
-    }
+# data['mozilla-persona'] = {
+#         'name': 'mozilla-persona',
+#         'display_name': 'Mozilla Persona',
+#         'type': 'mozilla-persona',
+#         'icon_media_path': 'images/jquery-openid/mozilla-persona.gif',
+#     }
+#     data['yahoo'] = {
+#         'name': 'yahoo',
+#         'display_name': 'Yahoo',
+#         'type': 'openid-direct',
+#         'icon_media_path': 'images/jquery-openid/yahoo.gif',
+#         'tooltip_text': _('Sign in with Yahoo'),
+#         'openid_endpoint': 'http://yahoo.com',
+#     }
+#     data['aol'] = {
+#         'name': 'aol',
+#         'display_name': 'AOL',
+#         'type': 'openid-direct',
+#         'extra_token_name': _('AOL screen name'),
+#         'icon_media_path': 'images/jquery-openid/aol.gif',
+#         'openid_endpoint': 'http://openid.aol.com'
+#     }
+#     data['launchpad'] = {
+#         'name': 'launchpad',
+#         'display_name': 'LaunchPad',
+#         'type': 'openid-direct',
+#         'icon_media_path': 'images/jquery-openid/launchpad.gif',
+#         'tooltip_text': _('Sign in with LaunchPad'),
+#         'openid_endpoint': 'https://login.launchpad.net/'
+#     }
+#     data['openid'] = {
+#         'name': 'openid',
+#         'display_name': 'OpenID',
+#         'type': 'openid-generic',
+#         'extra_token_name': _('OpenID url'),
+#         'icon_media_path': 'images/jquery-openid/openid.gif',
+#         'openid_endpoint': None,
+#     }
     return filter_enabled_providers(data)
 get_enabled_major_login_providers.is_major = True
 get_enabled_major_login_providers = add_custom_provider(get_enabled_major_login_providers)
@@ -613,70 +613,70 @@ def get_enabled_minor_login_providers():
     #    'icon_media_path': 'images/jquery-openid/myopenid-2.png',
     #    'openid_endpoint': 'http://%(username)s.myopenid.com'
     #}
-    data['flickr'] = {
-        'name': 'flickr',
-        'display_name': 'Flickr',
-        'type': 'openid-username',
-        'extra_token_name': _('Flickr user name'),
-        'icon_media_path': 'images/jquery-openid/flickr.png',
-        'openid_endpoint': 'http://flickr.com/%(username)s/'
-    }
-    data['technorati'] = {
-        'name': 'technorati',
-        'display_name': 'Technorati',
-        'type': 'openid-username',
-        'extra_token_name': _('Technorati user name'),
-        'icon_media_path': 'images/jquery-openid/technorati-1.png',
-        'openid_endpoint': 'http://technorati.com/people/technorati/%(username)s/'
-    }
-    data['wordpress'] = {
-        'name': 'wordpress',
-        'display_name': 'WordPress',
-        'type': 'openid-username',
-        'extra_token_name': _('WordPress blog name'),
-        'icon_media_path': 'images/jquery-openid/wordpress.png',
-        'openid_endpoint': 'http://%(username)s.wordpress.com'
-    }
-    data['blogger'] = {
-        'name': 'blogger',
-        'display_name': 'Blogger',
-        'type': 'openid-username',
-        'extra_token_name': _('Blogger blog name'),
-        'icon_media_path': 'images/jquery-openid/blogger-1.png',
-        'openid_endpoint': 'http://%(username)s.blogspot.com'
-    }
-    data['livejournal'] = {
-        'name': 'livejournal',
-        'display_name': 'LiveJournal',
-        'type': 'openid-username',
-        'extra_token_name': _('LiveJournal blog name'),
-        'icon_media_path': 'images/jquery-openid/livejournal-1.png',
-        'openid_endpoint': 'http://%(username)s.livejournal.com'
-    }
-    data['claimid'] = {
-        'name': 'claimid',
-        'display_name': 'ClaimID',
-        'type': 'openid-username',
-        'extra_token_name': _('ClaimID user name'),
-        'icon_media_path': 'images/jquery-openid/claimid-0.png',
-        'openid_endpoint': 'http://claimid.com/%(username)s/'
-    }
-    data['vidoop'] = {
-        'name': 'vidoop',
-        'display_name': 'Vidoop',
-        'type': 'openid-username',
-        'extra_token_name': _('Vidoop user name'),
-        'icon_media_path': 'images/jquery-openid/vidoop.png',
-        'openid_endpoint': 'http://%(username)s.myvidoop.com/'
-    }
-    data['verisign'] = {
-        'name': 'verisign',
-        'display_name': 'Verisign',
-        'type': 'openid-username',
-        'extra_token_name': _('Verisign user name'),
-        'icon_media_path': 'images/jquery-openid/verisign-2.png',
-        'openid_endpoint': 'http://%(username)s.pip.verisignlabs.com/'
-    }
+    # data['flickr'] = {
+#         'name': 'flickr',
+#         'display_name': 'Flickr',
+#         'type': 'openid-username',
+#         'extra_token_name': _('Flickr user name'),
+#         'icon_media_path': 'images/jquery-openid/flickr.png',
+#         'openid_endpoint': 'http://flickr.com/%(username)s/'
+#     }
+#     data['technorati'] = {
+#         'name': 'technorati',
+#         'display_name': 'Technorati',
+#         'type': 'openid-username',
+#         'extra_token_name': _('Technorati user name'),
+#         'icon_media_path': 'images/jquery-openid/technorati-1.png',
+#         'openid_endpoint': 'http://technorati.com/people/technorati/%(username)s/'
+#     }
+#     data['wordpress'] = {
+#         'name': 'wordpress',
+#         'display_name': 'WordPress',
+#         'type': 'openid-username',
+#         'extra_token_name': _('WordPress blog name'),
+#         'icon_media_path': 'images/jquery-openid/wordpress.png',
+#         'openid_endpoint': 'http://%(username)s.wordpress.com'
+#     }
+#     data['blogger'] = {
+#         'name': 'blogger',
+#         'display_name': 'Blogger',
+#         'type': 'openid-username',
+#         'extra_token_name': _('Blogger blog name'),
+#         'icon_media_path': 'images/jquery-openid/blogger-1.png',
+#         'openid_endpoint': 'http://%(username)s.blogspot.com'
+#     }
+#     data['livejournal'] = {
+#         'name': 'livejournal',
+#         'display_name': 'LiveJournal',
+#         'type': 'openid-username',
+#         'extra_token_name': _('LiveJournal blog name'),
+#         'icon_media_path': 'images/jquery-openid/livejournal-1.png',
+#         'openid_endpoint': 'http://%(username)s.livejournal.com'
+#     }
+#     data['claimid'] = {
+#         'name': 'claimid',
+#         'display_name': 'ClaimID',
+#         'type': 'openid-username',
+#         'extra_token_name': _('ClaimID user name'),
+#         'icon_media_path': 'images/jquery-openid/claimid-0.png',
+#         'openid_endpoint': 'http://claimid.com/%(username)s/'
+#     }
+#     data['vidoop'] = {
+#         'name': 'vidoop',
+#         'display_name': 'Vidoop',
+#         'type': 'openid-username',
+#         'extra_token_name': _('Vidoop user name'),
+#         'icon_media_path': 'images/jquery-openid/vidoop.png',
+#         'openid_endpoint': 'http://%(username)s.myvidoop.com/'
+#     }
+#     data['verisign'] = {
+#         'name': 'verisign',
+#         'display_name': 'Verisign',
+#         'type': 'openid-username',
+#         'extra_token_name': _('Verisign user name'),
+#         'icon_media_path': 'images/jquery-openid/verisign-2.png',
+#         'openid_endpoint': 'http://%(username)s.pip.verisignlabs.com/'
+#     }
     return filter_enabled_providers(data)
 get_enabled_minor_login_providers.is_major = False
 get_enabled_minor_login_providers = add_custom_provider(get_enabled_minor_login_providers)

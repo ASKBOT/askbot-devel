@@ -255,7 +255,8 @@ def ask(request):#view used to ask a new question
                     signals.new_question_posted.send(None,
                         question=question,
                         user=user,
-                        form_data=form.cleaned_data
+                        form_data=form.cleaned_data,
+                        host=request.get_host()
                     )
                     return HttpResponseRedirect(question.get_absolute_url())
                 except exceptions.PermissionDenied, e:
