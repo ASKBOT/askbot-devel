@@ -1034,8 +1034,8 @@ class Thread(models.Model):
         self.update_summary_html() # regenerate question/thread summary html
         ####################################################################
 
-    def get_last_activity_info(self):
-        post_ids = self.get_answers().values_list('id', flat=True)
+    def get_last_activity_info(self, ignore_user=False):
+        post_ids = self.get_answers(ignore_user=ignore_user).values_list('id', flat=True)
         question = self._question_post()
         post_ids = list(post_ids)
         post_ids.append(question.id)
@@ -1053,7 +1053,7 @@ class Thread(models.Model):
             return None, None
 
     def update_last_activity_info(self):
-        timestamp, user = self.get_last_activity_info()
+        timestamp, user = self.get_last_activity_info(ignore_user=True)
         if timestamp:
             self.set_last_activity_info(timestamp, user)
 
@@ -1134,11 +1134,11 @@ class Thread(models.Model):
     def all_answers(self):
         return self.posts.get_answers()
 
-    def get_answers(self, user=None):
+    def get_answers(self, user=None, ignore_user=False):
         """returns query set for answers to this question
         that may be shown to the given user
         """
-        return self.posts.get_answers(user=user).filter(deleted=False)
+        return self.posts.get_answers(user, ignore_user).filter(deleted=False)
 
     def invalidate_cached_thread_content_fragment(self):
         site_id = django_settings.SITE_ID
