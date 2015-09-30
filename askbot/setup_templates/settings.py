@@ -1,18 +1,20 @@
-## Django settings for ASKBOT enabled project.
+# Django settings for ASKBOT enabled project.
 import os.path
 import logging
 import sys
-import askbot
+
 import site
 
-#this line is added so that we can import pre-packaged askbot dependencies
+import askbot
+
+# this line is added so that we can import pre-packaged askbot dependencies
 ASKBOT_ROOT = os.path.abspath(os.path.dirname(askbot.__file__))
 site.addsitedir(os.path.join(ASKBOT_ROOT, 'deps'))
 
 DEBUG = True  # set to True to enable debugging
 TEMPLATE_DEBUG = False  # keep false when debugging jinja2 templates
 INTERNAL_IPS = ('127.0.0.1',)
-ALLOWED_HOSTS = ['*',]#change this for better security on your site
+ALLOWED_HOSTS = ['*', ]  # change this for better security on your site
 
 ADMINS = (
     ('Your Name', 'your_email@domain.com'),
@@ -20,22 +22,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'postgresql_psycopg2' # only postgres (>8.3) and mysql are supported so far others have not been tested yet
+DATABASE_ENGINE = 'postgresql_psycopg2'  # only postgres (>8.3) and mysql are supported so far others have not been tested yet
 DATABASE_NAME = ''             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-#outgoing mail server settings
+# outgoing mail server settings
 SERVER_EMAIL = ''
 DEFAULT_FROM_EMAIL = ''
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_SUBJECT_PREFIX = ''
-EMAIL_HOST=''
-EMAIL_PORT=''
-EMAIL_USE_TLS=False
+EMAIL_HOST = ''
+EMAIL_PORT = ''
+EMAIL_USE_TLS = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #incoming mail settings
@@ -329,3 +331,9 @@ SOUTH_TESTS_MIGRATE = False
 
 VERIFIER_EXPIRE_DAYS = 3
 AVATAR_AUTO_GENERATE_SIZES = (16, 32, 48, 128)
+
+
+if sys.argv[1:2] == ['test']:
+    MIDDLEWARE_CLASSES = filter(lambda x: x != 'debug_toolbar.middleware.DebugToolbarMiddleware',
+                                MIDDLEWARE_CLASSES)
+    INSTALLED_APPS = filter(lambda x: x != 'debug_toolbar', INSTALLED_APPS)
