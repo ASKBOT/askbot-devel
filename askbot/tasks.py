@@ -26,7 +26,10 @@ from django.template import Context
 from django.template.loader import get_template
 from django.utils.translation import ugettext as _
 from django.utils.translation import activate as activate_language
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 
 from celery.decorators import task
 from celery.utils.log import get_task_logger

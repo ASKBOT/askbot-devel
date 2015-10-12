@@ -46,7 +46,7 @@ def generic_view(request, template=None, page_class=None, context=None):
         return render_to_response('django_error.html')
     context = context or {}
     context['page_class'] = page_class
-    return render(request, template, Context(context))
+    return render(request, template, context)
 
 def markdown_flatpage(request, page_class=None, setting_name=None):
     value = getattr(askbot_settings, setting_name)

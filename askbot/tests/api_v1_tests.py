@@ -1,6 +1,9 @@
 from askbot.tests.utils import AskbotTestCase
 from django.core.urlresolvers import reverse
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 
 class ApiV1Tests(AskbotTestCase):
     def test_api_v1_user(self):

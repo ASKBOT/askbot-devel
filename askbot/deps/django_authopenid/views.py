@@ -51,7 +51,10 @@ from askbot.utils.functions import generate_random_key
 from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 from askbot.mail.messages import EmailValidation
 from askbot.utils import decorators as askbot_decorators
 from askbot.utils.functions import format_setting_name
@@ -177,7 +180,7 @@ def logout_page(request):
         'page_class': 'meta',
         'have_federated_login_methods': util.have_enabled_federated_login_methods()
     }
-    return render(request, 'authopenid/logout.html', Context(data))
+    return render(request, 'authopenid/logout.html', data)
 
 def get_url_host(request):
     if request.is_secure():
@@ -816,7 +819,7 @@ def show_signin_view(
     data['major_login_providers'] = major_login_providers.values()
     data['minor_login_providers'] = minor_login_providers.values()
 
-    return render(request, template_name, Context(data))
+    return render(request, template_name, data)
 
 @csrf.csrf_protect
 @askbot_decorators.post_only
@@ -1172,7 +1175,7 @@ def register(request, login_provider_name=None,
         'login_type':'openid',
         'gravatar_faq_url':reverse('faq') + '#gravatar',
     }
-    return render(request, 'authopenid/complete.html', Context(data))
+    return render(request, 'authopenid/complete.html', data)
 
 def signin_failure(request, message):
     """
@@ -1237,7 +1240,7 @@ def verify_email_and_register(request):
             return HttpResponseRedirect(reverse('index'))
     else:
         data = {'page_class': 'validate-email-page'}
-        return render(request, 'authopenid/verify_email.html', Context(data))
+        return render(request, 'authopenid/verify_email.html', data)
 
 @not_authenticated
 @csrf.csrf_protect
@@ -1303,7 +1306,7 @@ def signup_with_password(request):
     return render(
         request,
         'authopenid/signup_with_password.html',
-        Context(context_data)
+        context_data
     )
 
 @login_required

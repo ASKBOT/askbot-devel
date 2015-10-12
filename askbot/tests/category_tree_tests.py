@@ -1,6 +1,9 @@
 import unittest
 from askbot.utils import category_tree as ct
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 
 class CategoryTreeTests(unittest.TestCase):
     def setUp(self):

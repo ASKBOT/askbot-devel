@@ -19,8 +19,11 @@ from askbot.models import Thread
 from askbot.models import Tag
 from askbot.models import Group
 from askbot.search.state_manager import DummySearchState
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 from askbot.tests.utils import skipIf
-from django.utils import simplejson
 from askbot.conf import settings as askbot_settings
 
 

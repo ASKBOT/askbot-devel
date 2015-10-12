@@ -5,9 +5,18 @@ Time-stamp: <2008-07-19 23:16:19 carljm context_processors.py>
 
 """
 from django.conf import settings as django_settings
-from django.utils.encoding import StrAndUnicode
 
 from askbot.user_messages import get_and_delete_messages
+
+try:
+    from django.utils.encoding import StrAndUnicode
+except ImportError:
+    from django.utils.encoding import python_2_unicode_compatible
+
+    @python_2_unicode_compatible
+    class StrAndUnicode:
+        def __str__(self):
+            return self.code
 
 def user_messages(request):
     """

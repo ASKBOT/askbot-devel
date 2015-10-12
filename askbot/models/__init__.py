@@ -4364,12 +4364,12 @@ signals.question_visited.connect(
     dispatch_uid='record_question_visit'
 )
 
-#set up a possibility for the users to follow others
-try:
-    import followit
-    followit.register(User)
-except ImportError:
-    pass
+# set up a possibility for the users to follow others
+# try:
+#     import followit
+#     followit.register(User)
+# except ImportError:
+#     pass
 
 
 __all__ = [

@@ -104,7 +104,7 @@ class ImmutableSetting(object):
 
 
 class Setting(models.Model, CachedObjectMixin):
-    site = models.ForeignKey(Site, verbose_name=ugettext_lazy('Site'))
+    site = models.ForeignKey(Site, verbose_name=ugettext_lazy('Site'), related_name='site_settings')
     group = models.CharField(max_length=100, blank=False, null=False)
     key = models.CharField(max_length=100, blank=False, null=False)
     value = models.CharField(max_length=255, blank=True)

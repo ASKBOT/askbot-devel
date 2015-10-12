@@ -671,7 +671,7 @@ urlpatterns = patterns('',
         name = 'askbot_jsi18n'
     ),
     service_url(r'^private-messages/', include('group_messaging.urls')),
-    service_url(r'^settings/', include('livesettings.urls')),
+    service_url(r'^settings/', include('askbot.deps.livesettings.urls')),
     service_url(r'^preview-emails/$', views.emails.list_emails, name='list_emails'),
     service_url(r'^preview-emails/(?P<slug>.+)/$', views.emails.preview_email, name='preview_email'),
 

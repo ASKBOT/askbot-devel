@@ -2,7 +2,10 @@
 import datetime
 from south.db import db
 from south.v2 import DataMigration
-from django.utils import simplejson
+try:
+    from django.utils import simplejson
+except ImportError:
+    import json as simplejson
 from django.db import models
 from askbot.conf import settings as askbot_settings
 
