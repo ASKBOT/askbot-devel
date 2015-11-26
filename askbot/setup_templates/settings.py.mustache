@@ -31,6 +31,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         'TEST_CHARSET': 'utf8',              # Setting the character set and collation to utf-8
         'TEST_COLLATION': 'utf8_general_ci', # is necessary for MySQL tests to work properly.
+        'ATOMIC_REQUESTS': True, # Required for sqlite3 with django ≥ 1.6, see http://stackoverflow.com/a/20707924/712014
     }
 }
 
