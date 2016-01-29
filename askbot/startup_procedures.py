@@ -217,7 +217,7 @@ def unparse_requirement(req):
     line = req.name
     if req.specs:
         specs = ['%s%s' % spec for spec in req.specs]
-        line += ','.join(specs) 
+        line += ','.join(specs)
     if req.extras:
         line += ' [%s]' % ','.join(req.extras)
     return line
@@ -863,7 +863,7 @@ def test_group_messaging():
     """tests correctness of the "group_messaging" app configuration"""
     errors = list()
     if 'askbot.deps.group_messaging' not in django_settings.INSTALLED_APPS:
-        errors.append("add to the INSTALLED_APPS:\n'group_messaging'")
+        errors.append("add to the INSTALLED_APPS:\n'askbot.deps.group_messaging'")
 
     if 'group_messaging' in django_settings.INSTALLED_APPS:
         errors.append("remove from the INSTALLED_APPS:\n'group_messaging'")
@@ -937,7 +937,7 @@ def test_lang_mode():
     errors = list()
     if legacy_multilang == True:
         errors.append("""replace ASKBOT_MULTILINGUAL = True with either:
-ASKBOT_LANGUAGE_MODE = 'url-lang' or 
+ASKBOT_LANGUAGE_MODE = 'url-lang' or
 ASKBOT_LANGUAGE_MODE = 'user-lang'""")
     if legacy_multilang == False:
         errors.append("""replace ASKBOT_MULTILINGUAL = True with either:
