@@ -222,7 +222,7 @@ def moderated_email_validator(email):
             ):
             raise forms.ValidationError(error_msg)
     else:
-        from askbot.deps.django_authopenid.util import email_is_blacklisted
+        from django_authopenid.util import email_is_blacklisted
         blacklisting_on = askbot_settings.BLACKLISTED_EMAIL_PATTERNS_MODE != 'disabled'
         if blacklisting_on and email_is_blacklisted(email):
             raise forms.ValidationError(error_msg)

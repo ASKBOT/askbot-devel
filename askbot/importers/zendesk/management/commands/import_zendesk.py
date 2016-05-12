@@ -936,9 +936,9 @@ class Command(BaseCommand):
             zd_user.save()
             # save open auth info as well.
             if zd_user.openid_url != None and \
-                'askbot.deps.django_authopenid' in settings.INSTALLED_APPS:
-                from askbot.deps.django_authopenid.models import UserAssociation
-                from askbot.deps.django_authopenid.util import get_provider_name
+                'django_authopenid' in settings.INSTALLED_APPS:
+                from django_authopenid.models import UserAssociation
+                from django_authopenid.util import get_provider_name
                 try:
                     assoc = UserAssociation(
                         user = ab_user,

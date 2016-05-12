@@ -3,6 +3,7 @@ Jinja2>=2.8
 Lamson
 akismet
 beautifulsoup4
+django-authopenid==1.0.2
 django-avatar==2.2.1
 django-celery>=3.1.17
 django-compressor>=1.3,<=1.5

@@ -1,5 +1,0 @@
-this is a forked version of django-authopenid module
-specifically for askbot forum project.
-
-most likely it is not useful for anything else and
-in fact will be phased out in askbot as well

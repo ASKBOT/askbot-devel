@@ -682,11 +682,11 @@ urlpatterns = patterns('',
     service_url('^api/v1/questions/(?P<question_id>\d+)/$', views.api_v1.question, name='api_v1_question'),
 )
 
-if 'askbot.deps.django_authopenid' in settings.INSTALLED_APPS:
+if 'django_authopenid' in settings.INSTALLED_APPS:
     urlpatterns += (
         service_url(
             r'^%s' % pgettext('urls', 'account/'),
-            include('askbot.deps.django_authopenid.urls')
+            include('django_authopenid.urls')
         ),
     )
 

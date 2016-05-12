@@ -607,7 +607,7 @@ def _assert_user_can(
     """
     action_display = action_display or _('perform this action')
 
-    from askbot.deps.django_authopenid.util import email_is_blacklisted
+    from django_authopenid.util import email_is_blacklisted
 
     if askbot_settings.READ_ONLY_MODE_ENABLED:
         error_message = _(
