@@ -218,7 +218,7 @@ class ConfigSettings(object):
         out = dict()
         for key in cls.__instance.keys():
             hardcoded_setting = getattr(django_settings, 'ASKBOT_' + key, None)
-            if hardcoded_setting:
+            if hardcoded_setting is not None:
                 value = hardcoded_setting
             else:
                 setting_value = cls.__instance[key]
