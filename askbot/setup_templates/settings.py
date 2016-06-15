@@ -178,7 +178,7 @@ INSTALLED_APPS = (
     #'debug_toolbar',
     #'haystack',
     'askbot',
-    'askbot.deps.django_authopenid',
+    'django_authopenid',
     #'askbot.importers.stackexchange', #se loader
     'askbot.deps.livesettings',
     'keyedcache',
@@ -216,7 +216,7 @@ CACHE_MIDDLEWARE_SECONDS = 600
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'askbot.deps.django_authopenid.backends.AuthBackend',
+    'django_authopenid.backends.AuthBackend',
 )
 
 #logging settings

@@ -14,7 +14,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import activate as activate_language
 
 from askbot import const
-from askbot.deps.django_authopenid.util import email_is_blacklisted
+from django_authopenid.util import email_is_blacklisted
 from askbot.conf import settings as askbot_settings
 from askbot.models import User, Post, PostRevision, Thread
 from askbot.models import Activity, EmailFeedSetting

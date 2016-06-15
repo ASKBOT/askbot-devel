@@ -1,5 +1,5 @@
 from askbot import const
-from askbot.deps.django_authopenid.util import OAuthConnection
+from django_authopenid.util import OAuthConnection
 from askbot.utils import decorators
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse

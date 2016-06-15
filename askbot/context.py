@@ -90,10 +90,10 @@ def application_settings(request):
         'noscript_url': const.DEPENDENCY_URLS['noscript'],
     }
 
-    use_askbot_login = 'askbot.deps.django_authopenid' in settings.INSTALLED_APPS
+    use_askbot_login = 'django_authopenid' in settings.INSTALLED_APPS
     my_settings['USE_ASKBOT_LOGIN_SYSTEM'] = use_askbot_login
     if use_askbot_login and request.user.is_anonymous():
-        from askbot.deps.django_authopenid import context as login_context
+        from django_authopenid import context as login_context
         context.update(login_context.login_context(request))
 
     if askbot_settings.GROUPS_ENABLED:

@@ -1,4 +1,4 @@
-from askbot.deps.django_authopenid.models import UserAssociation
+from django_authopenid.models import UserAssociation
 from askbot.management.commands.base import BaseImportXMLCommand
 from askbot.models import Award
 from askbot.models import BadgeData

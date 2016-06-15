@@ -1,5 +1,5 @@
 import urllib
-from askbot.deps.django_authopenid.util import OAuthConnection
+from django_authopenid.util import OAuthConnection
 
 class Twitter(OAuthConnection):
 

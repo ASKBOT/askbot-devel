@@ -14,7 +14,7 @@ from django.db.models import fields
 from django.db.utils import IntegrityError
 from django.db import models
 import askbot.models as askbot
-import askbot.deps.django_authopenid.models as askbot_openid
+import django_authopenid.models as askbot_openid
 import askbot.importers.stackexchange.models as se
 from askbot.forms import EditUserEmailFeedsForm
 from askbot.conf import settings as askbot_settings

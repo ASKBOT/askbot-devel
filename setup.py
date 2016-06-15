@@ -25,6 +25,7 @@ setup(
     url = 'http://askbot.org',
     include_package_data = True,
     install_requires = askbot.REQUIREMENTS.values(),
+    dependency_links = ['https://github.com/powlo/django-authopenid/tarball/askbot#egg=django-authopenid-1.0.2'],
     classifiers = [
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
