@@ -121,7 +121,7 @@ class RssLastestQuestionsFeed(Feed):
 
     def title(self):
         return askbot_settings.APP_TITLE + _(' - ') + \
-                _('Latest %(question)s feed') % {'question': askbot_settings.WORDS_QUESTION_SINGULAR}
+                _('Latest %(questions)s feed') % {'questions': askbot_settings.WORDS_QUESTION_PLURAL}
 
     def feed_copyright(self):
         return askbot_settings.APP_COPYRIGHT
