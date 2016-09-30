@@ -4,6 +4,7 @@ from django.core.signals import request_started
 
 BADGES_READY = False
 
+
 def init_badges_once(sender, **kwargs):
     from askbot.models import badges
     global BADGES_READY
@@ -15,17 +16,17 @@ def init_badges_once(sender, **kwargs):
         else:
             BADGES_READY = True
 
+
 class AskbotConfig(AppConfig):
     name = 'askbot'
     verbose_name = 'Askbot Q&A platform'
     badges_ready = False
 
     def ready(self):
-        #too bad there isn't an "all_django_apps_ready" signal
+        # too bad there isn't an "all_django_apps_ready" signal
         request_started.connect(
-                    init_badges_once,
-                    dispatch_uid='init_askbot_badges_once'
-                )
+            init_badges_once,
+            dispatch_uid='init_askbot_badges_once')
 
         import followit
         user_model = get_user_model()
