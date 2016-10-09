@@ -11,17 +11,18 @@
         </div>
     </div>
 
-    {% if editor_is_folded %}
-        <a class="question-body-trigger"><label for="editor">{{ form.text.label }}</label></a>
-    {% else %}
-        <label for="editor">{{ form.text.label }}</label>
-    {% endif %}
-    <div class="folded-editor{% if editor_is_folded == False %} unfolded{% endif %}">
-        <div class="editor-proper">
-            {{ macros.edit_post(form) }}
+    <div class="form-group">
+        {% if editor_is_folded %}
+            <a class="question-body-trigger"><label for="editor">{{ form.text.label }}</label></a>
+        {% else %}
+            <label for="editor">{{ form.text.label }}</label>
+        {% endif %}
+        <div class="folded-editor{% if editor_is_folded == False %} unfolded{% endif %}">
+            <div class="editor-proper">
+                {{ macros.edit_post(form) }}
+            </div>
         </div>
     </div>
-
     {% include "widgets/tags_field.html" %}
     
     {{ form.group_id }}

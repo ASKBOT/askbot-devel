@@ -2050,6 +2050,15 @@ TinyMCE.onInitHook = function () {
     }
 };
 
+/* By default TinyMCE saves data from Editor to the real field (textarea) within callback bound to form's
+  onSubmit event. Unfortunatelly form validation plugin is also called from onSubmit event
+  handler - but before TinyMCE has saved it's data! Because of that we have to trigger TinyMCE save
+  within onchange callback to have validation plugin work properly */
+TinyMCE.onChangeHook = function (editor) {
+    tinyMCE.triggerSave();
+    $("#" + editor.id).valid();
+};
+
 /* 3 dummy functions to match WMD api */
 TinyMCE.prototype.setEnabledButtons = function () {};
 

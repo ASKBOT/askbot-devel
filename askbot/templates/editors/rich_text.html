@@ -1,42 +1,40 @@
-<div class="form-group">
-    {% if post_form.text.errors %}
-        <label for="editor" class="form-error">{{ post_form.text.errors }}</label>
-    {% endif %}
-    {% if settings.EDITOR_TYPE == 'markdown' %}
-        <div class="wmd-container">
-            <div id="wmd-button-bar" class="wmd-panel"></div>
-            {{ post_form.text }}{# this element is resizable and will be wrapped by js #}
-        </div>
-        <div class="form-item">
-            <p class="editor-status action-status"><span></span></p>
-        </div>
-        <div class="preview-toggle">
-            <span 
-                id="pre-collapse" 
-                title="{% trans %}Toggle the real time Markdown editor preview{% endtrans %}"
-            >
-                [{% trans %}hide preview{% endtrans %}]
-            </span>
-        </div>
-        <div class="clearfix"></div>
-        <div id="previewer" class="wmd-preview"></div>
-    {% else %}
-        <div class="wmd-container">
-            {# jquery has to be loaded before the tinymce scripts,
-               potentially duplicating the jquery script tag #}
-            <script type="text/javascript" src="{{ '/jslib/jquery-1.7.2.min.js'|media }}"></script>
-            <script type="text/javascript">
-                var django = django || {};
-                django.jQuery = $;
-            </script>
-            <script type="text/javascript">
-                askbot['settings']['tinyMCEPlugins'] = JSON.parse('{{ settings.TINYMCE_PLUGINS|as_json }}');
-            </script>
-            {{ post_form.media }}
-            {{ post_form.text }}
-        </div>
-        <div class="form-item">
-            <p class="editor-status action-status"><span></span></p>
-        </div>
-    {% endif %}
-</div>
+{% if post_form.text.errors %}
+    <label for="editor" class="form-error">{{ post_form.text.errors }}</label>
+{% endif %}
+{% if settings.EDITOR_TYPE == 'markdown' %}
+    <div class="wmd-container">
+        <div id="wmd-button-bar" class="wmd-panel"></div>
+        {{ post_form.text }}{# this element is resizable and will be wrapped by js #}
+    </div>
+    <div class="form-item">
+        <p class="editor-status action-status"><span></span></p>
+    </div>
+    <div class="preview-toggle">
+        <span
+            id="pre-collapse"
+            title="{% trans %}Toggle the real time Markdown editor preview{% endtrans %}"
+        >
+            [{% trans %}hide preview{% endtrans %}]
+        </span>
+    </div>
+    <div class="clearfix"></div>
+    <div id="previewer" class="wmd-preview"></div>
+{% else %}
+    <div class="wmd-container">
+        {# jquery has to be loaded before the tinymce scripts,
+           potentially duplicating the jquery script tag #}
+        <script type="text/javascript" src="{{ '/jslib/jquery-1.7.2.min.js'|media }}"></script>
+        <script type="text/javascript">
+            var django = django || {};
+            django.jQuery = $;
+        </script>
+        <script type="text/javascript">
+            askbot['settings']['tinyMCEPlugins'] = JSON.parse('{{ settings.TINYMCE_PLUGINS|as_json }}');
+        </script>
+        {{ post_form.media }}
+        {{ post_form.text }}
+    </div>
+    <div class="form-item">
+        <p class="editor-status action-status"><span></span></p>
+    </div>
+{% endif %}

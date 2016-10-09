@@ -38,6 +38,7 @@
                     {% set draft_answer=answer.text.value() %}
                     <div class="form-group editor-placeholder"
                         {% if draft_answer %}data-draft-answer="{{ draft_answer|escape }}"{% endif %}>
+                    <label for="editor"></label>
                     </div>
                     <div class="answer-options">
                         {% if settings.WIKI_ON %}

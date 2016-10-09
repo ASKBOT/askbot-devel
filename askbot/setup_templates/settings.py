@@ -303,7 +303,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_statusbar_location': 'bottom',
     'editor_deselector': 'mceNoEditor',
     'width': '100%',
-    'height': '250'
+    'height': '250',
+    'onchange_callback': 'TinyMCE.onChangeHook'
 }
 
 #delayed notifications, time in seconds, 15 mins by default
