@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+from lxml.etree import ParserError
+from lxml.html.clean import Cleaner as LxmlCleaner
+
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
+from django.utils import six
 from django.utils.importlib import import_module
+from django.utils.html import strip_tags as _strip_tags
 from django.utils.translation import get_language as _get_language
 
 from haystack.constants import DEFAULT_ALIAS
@@ -66,3 +71,28 @@ def language_from_alias(alias):
     else:
         language = alias.split('_')[-1]
     return language
+
+
+def strip_tags(value):
+    """
+    Returns the given HTML with all tags stripped.
+    We use lxml to strip all js tags and then hand the result to django's
+    strip tags. If value isn't valid, just return value since there is
+    no tags to strip.
+    """
+    # borrowed from aldryn-search
+
+    if isinstance(value, six.string_types):
+        value = value.strip()
+
+        if not value:
+            return
+
+        try:
+            partial_strip = LxmlCleaner().clean_html(value)
+        except ParserError:
+            # error could occur because of empty comment
+            partial_strip = value
+        value = _strip_tags(partial_strip)
+        return value.strip()  # clean cases we have <div>\n\n</div>
+    return value
