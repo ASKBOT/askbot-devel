@@ -120,16 +120,16 @@
         // focus input on the search bar endcomment
         var activeTab = askbot['data']['activeTab'];
         if (inArray(activeTab, ['users', 'questions', 'tags', 'badges'])) {
-            var searchInput = $('#keywords');
+			var searchInput = $('#keywords'); 
         } else if (activeTab === 'ask') {
-            var searchInput = $('#id_title');
+			var searchInput = $('#id_title');
         } else {
-            var searchInput = undefined;
+			var searchInput = undefined;
             animateHashes();
         }
 
         if (searchInput) {
-            searchInput.focus();
+			searchInput.focus();
             putCursorAtEnd(searchInput);
         }
 
