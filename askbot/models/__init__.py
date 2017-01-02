@@ -287,7 +287,14 @@ def user_calculate_avatar_url(self, size=48):
                 size
             )
 
-        from avatar.util import get_primary_avatar
+        try:
+            from avatar.utils import get_primary_avatar
+        except ImportError, error:
+            # If the updated version of django-avatar isn't installed
+            # Let's fall back
+            from avatar.util import get_primary_avatar
+            logging.warning("Using deprecated version of django-avatar")
+
         avatar = get_primary_avatar(self, size=size)
         if avatar:
             return avatar.avatar_url(size)

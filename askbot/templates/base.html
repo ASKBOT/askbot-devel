@@ -13,7 +13,6 @@
         <link
             rel="alternate"
             type="application/rss+xml"
-            title="{% trans site_title=settings.APP_SHORT_NAME %}RSS feed from {{ site_title }}{% endtrans %}"
             href="{{ base_url }}{% url "latest_questions_feed" %}"
         />
         {% block before_css %}{% endblock %}

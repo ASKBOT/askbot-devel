@@ -134,6 +134,10 @@ Editable.prototype.saveText = function () {
     var me = this;
     var editorText = this._editor.getText();
 
+    if (this._editorType == 'tinymce') {
+        editorText = stripTags(editorText);
+    }
+
     if (this._validator) {
         try {
             this._validator(editorText);

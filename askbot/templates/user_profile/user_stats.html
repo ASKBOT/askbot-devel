@@ -11,7 +11,7 @@
     {% spaceless %}
         <h2>
             <span class="count">{{ question_count }}</span>
-            {{ settings.WORDS_QUESTIONS_COUNTABLE_FORMS|py_pluralize(question_count)|capitalize }}
+            {{ settings.WORDS_QUESTIONS_COUNTABLE_FORMS|py_pluralize(question_count)|capitalize|escape }}
         </h2>
     {% endspaceless %}
     {% include "user_profile/users_questions.html" %}
@@ -19,7 +19,7 @@
     {% spaceless %}
         <h2 style="clear:both;">
             <span class="count">{{ top_answer_count }}</span>
-            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(top_answer_count)|capitalize }}
+            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(top_answer_count)|capitalize|escape }}
         </h2>
     {% endspaceless %}
     {% include "user_profile/users_answers.html" %}

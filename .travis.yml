@@ -1,11 +1,36 @@
 language: python
+
+services:
+  - mysql
+
 python:
   - "2.7"
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS askbot;'
+  - export DATABASE_URL="mysql://travis:@127.0.0.1:3306/askbot?reconnect=true"
+
 install:
-  - python setup.py -q develop
-  - askbot-setup -n . -e2 -d data.db
-  - pip install -q -U git+git://github.com/coffin/coffin.git@master git+git://github.com/saltduck/django-followit.git@support_django1.6
-before_script:
-  - python manage.py syncdb --migrate --noinput -v0
+  - TOX_ENV=py${TRAVIS_PYTHON_VERSION}
+  - pip install tox
+  - tox -e $TOX_ENV --notest
+  - tox -e $TOX_ENV -- pip install mysqlclient
+
 script:
-  - python manage.py test askbot
+  - tox -e $TOX_ENV
+
+after_success:
+  - tox -e $TOX_ENV -- pip install coveralls 
+  - tox -e $TOX_ENV -- coveralls $COVERALLS_OPTION
+
+matrix:
+  fast_finish: true
+  include:
+    - python: "2.7"
+      env: TOX_ENV=lint
+      install: pip install tox
+      script: tox -e $TOX_ENV
+    - python: "2.7"
+      env: TOX_ENV=setup
+      install: pip install tox
+      script: tox -e $TOX_ENV

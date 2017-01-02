@@ -59,3 +59,4 @@ recaptcha
 htmlcov
 node_modules
 bower_components/
+.tox

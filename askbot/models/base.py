@@ -4,8 +4,7 @@ from django.utils import timezone
 from askbot.conf import settings as askbot_settings
 
 class BaseQuerySetManager(models.Manager):
-    """a base class that allows chainable qustom filters
-    on the query sets
+    """Base class for chainable custom filters on the query sets.
 
     pattern from http://djangosnippets.org/snippets/562/
 

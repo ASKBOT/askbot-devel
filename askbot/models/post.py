@@ -1295,7 +1295,7 @@ class Post(models.Model):
         * global subscribers (any personalized tag filters are applied)
         * author of the question who subscribe to instant updates
           on questions that they asked
-        * authors or any answers who subsribe to instant updates
+        * authors or any answers who subscribe to instant updates
           on the questions which they answered
         """
         subscriber_set = set()
@@ -1512,14 +1512,17 @@ class Post(models.Model):
 
         # TODO: there may be a better way to do these queries
         authors = set()
-        authors.update([r.author for r in self.revisions.all()])
+        #authors.update([r.author for r in self.revisions.all()])
+        #TODO : add all authors of merged posts, but for that authors
+        #must be reflected on merge revisions, currently author of merge
+        #revision is user who made the merge
+        authors.add(self.author)
         if include_comments:
             authors.update([c.author for c in self.comments.all()])
-        if recursive:
-            if self.is_question():  # hasattr(self, 'answers'):
-                # for a in self.answers.exclude(deleted = True):
-                for a in self.thread.posts.get_answers().exclude(deleted=True):
-                    authors.update(a.get_author_list(include_comments=include_comments))
+        if recursive and self.is_question(): #hasattr(self, 'answers'):
+            #for a in self.answers.exclude(deleted = True):
+            for a in self.thread.posts.get_answers().exclude(deleted=True):
+                authors.update(a.get_author_list(include_comments=include_comments ))
         if exclude_list:
             authors -= set(exclude_list)
         return list(authors)

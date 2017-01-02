@@ -144,6 +144,15 @@ var setHtmlTag = function (fromElement, toTagName) {
     return newElement;
 };
 
+var stripTags = function(html) {
+    var div = $('<div style="margin-left: -999em; position: absolute;"></div>');
+    $(document.body).append(div);
+    div.html(html);
+    var text = div.text();
+    div.remove();
+    return text
+};
+
 var animateHashes = function () {
     var id_value = window.location.hash;
     if (id_value !== '') {

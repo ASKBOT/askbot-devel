@@ -7,7 +7,7 @@ basic actions on behalf of the forum application
 import os
 import platform
 
-VERSION = (0, 10, 1)
+VERSION = (0, 10, 2)
 
 default_app_config = 'askbot.apps.AskbotConfig'
 

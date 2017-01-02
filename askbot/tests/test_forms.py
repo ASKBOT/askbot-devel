@@ -7,7 +7,8 @@ from askbot import forms
 from askbot.utils import forms as util_forms
 from askbot import models
 
-EMAIL_CASES = (#test should fail if the second item is None
+# Test should fail if the second item is None
+EMAIL_CASES = (
     ('user@example.com', 'user@example.com'),
     ('Name Name <name@example.com>', 'name@example.com'),
     ('"Name Name [example.com]" <name@example.com>', 'name@example.com'),
@@ -28,7 +29,9 @@ EMAIL_CASES = (#test should fail if the second item is None
     ('<summary@example.com>', 'summary@example.com'),
     ('some text without an email adderess', None)
 )
-SUBJECT_LINE_CASES = (#test fails if second item is None
+
+# Test fails if second item is None
+SUBJECT_LINE_CASES = (
     (
         ' [ tag1;long  tag, another] question title',
         ('tag1 long-tag another', 'question title')
@@ -39,11 +42,12 @@ SUBJECT_LINE_CASES = (#test fails if second item is None
     ('] question title', None),
 )
 
+
 class AskByEmailFormTests(AskbotTestCase):
     """Tests :class:`~askbot.forms.AskByEmailForm`
     form"""
     def setUp(self):
-        #benign data set that must pass
+        # Begin data set that must pass
         self.data = {
             'sender': 'someone@example.com',
             'subject': '[tag-one] where is titanic?',
@@ -92,8 +96,8 @@ class AskByEmailFormTests(AskbotTestCase):
                     expected_result
                 )
 
-class TagNamesFieldTests(AskbotTestCase):
 
+class TagNamesFieldTests(AskbotTestCase):
     def setUp(self):
         self.field = forms.TagNamesField()
         self.user = self.create_user('user1')
@@ -112,14 +116,14 @@ class TagNamesFieldTests(AskbotTestCase):
         """
         askbot_settings.update('FORCE_LOWERCASE_TAGS', True)
         cleaned_tags = self.clean('Tag1 TAG5 tag1 tag5')
-        self.assert_tags_equal(cleaned_tags, ['tag1','tag5'])
+        self.assert_tags_equal(cleaned_tags, ['tag1', 'tag5'])
 
     def test_custom_case(self):
         """FORCE_LOWERCASE setting is off
         """
         askbot_settings.update('FORCE_LOWERCASE_TAGS', False)
-        models.Tag(name = 'TAG1', created_by = self.user).save()
-        models.Tag(name = 'Tag2', created_by = self.user).save()
+        models.Tag(name='TAG1', created_by=self.user).save()
+        models.Tag(name='Tag2', created_by=self.user).save()
         cleaned_tags = self.clean('tag1 taG2 TAG1 tag3 tag3')
         self.assert_tags_equal(cleaned_tags, ['TAG1', 'Tag2', 'tag3'])
 
@@ -134,13 +138,13 @@ class TagNamesFieldTests(AskbotTestCase):
     def test_pass_with_entered_mandatory_tag(self):
         askbot_settings.update('MANDATORY_TAGS', 'one two')
         cleaned_tags = self.clean('one')
-        self.assert_tags_equal(cleaned_tags, ['one',])
+        self.assert_tags_equal(cleaned_tags, ['one'])
 
     def test_pass_with_entered_wk_mandatory_tag(self):
         askbot_settings.update('MANDATORY_TAGS', 'one* two')
         askbot_settings.update('USE_WILDCARD_TAGS', True)
         cleaned_tags = self.clean('oneness')
-        self.assert_tags_equal(cleaned_tags, ['oneness',])
+        self.assert_tags_equal(cleaned_tags, ['oneness'])
 
 
 class EditQuestionAnonymouslyFormTests(AskbotTestCase):
@@ -157,21 +161,22 @@ class EditQuestionAnonymouslyFormTests(AskbotTestCase):
         (0, 1, 0, 0, False),
         (0, 1, 0, 1, False),
         (0, 1, 1, 0, False),
-        (0, 1, 1, 1, False),#all up to this point are False
+        (0, 1, 1, 1, False),  # all up to this point are False
         (1, 0, 0, 0, False),
         (1, 1, 0, 0, False),
         (1, 1, 1, 0, False),
         (1, 1, 1, 1, True),
     )
-    #legend: is_anon - question is anonymous
-    #        can - askbot_settings.ALLOW_ASK_ANONYMOUSLY
-    #        owner - editor is question owner
-    #        checked - the checkbox "reveal_identity" is marked
+
+    # legend: is_anon - question is anonymous
+    #         can - askbot_settings.ALLOW_ASK_ANONYMOUSLY
+    #         owner - editor is question owner
+    #         checked - the checkbox "reveal_identity" is marked
     def setUp(self):
         self.create_user()
         self.create_user(
-            username = 'other_user',
-            status = 'm'#must be able to edit
+            username='other_user',
+            status='m'  # must be able to edit
         )
         super(EditQuestionAnonymouslyFormTests, self).setUp()
 
@@ -182,7 +187,7 @@ class EditQuestionAnonymouslyFormTests(AskbotTestCase):
         the four positional arguments are in the same order
         """
         askbot_settings.update('ALLOW_ASK_ANONYMOUSLY', can_be_anon)
-        question = self.post_question(is_anonymous = is_anon)
+        question = self.post_question(is_anonymous=is_anon)
         if is_owner:
             editor = self.user
         else:
@@ -219,16 +224,16 @@ class EditQuestionAnonymouslyFormTests(AskbotTestCase):
             expected_result = entry[4]
             self.assertEquals(result, expected_result, error_message)
 
-class AskFormTests(AskbotTestCase):
 
-    def setup_data(self, allow_anonymous = True, ask_anonymously = None):
+class AskFormTests(AskbotTestCase):
+    def setup_data(self, allow_anonymous=True, ask_anonymously=None):
         askbot_settings.update('ALLOW_ASK_ANONYMOUSLY', allow_anonymous)
         data = {
             'title': 'test title',
             'text': 'test content',
             'tags': 'test',
         }
-        if ask_anonymously == True:
+        if ask_anonymously:
             data['ask_anonymously'] = 'on'
         self.form = forms.AskForm(data, user=AnonymousUser())
         self.form.full_clean()
@@ -241,31 +246,33 @@ class AskFormTests(AskbotTestCase):
 
     def test_ask_anonymously_disabled(self):
         """test that disabled anon postings yields False"""
-        self.setup_data(ask_anonymously = True, allow_anonymous = False)
+        self.setup_data(ask_anonymously=True, allow_anonymous=False)
         self.assert_anon_is(False)
 
     def test_ask_anonymously_field_positive(self):
         """check that the 'yes' selection goes through
         """
-        self.setup_data(ask_anonymously = True)
+        self.setup_data(ask_anonymously=True)
         self.assert_anon_is(True)
 
     def test_ask_anonymously_field_negative(self):
         """check that the 'no' selection goes through
         """
-        self.setup_data(ask_anonymously = False)
+        self.setup_data(ask_anonymously=False)
         self.assert_anon_is(False)
 
-class UserStatusFormTest(AskbotTestCase):
 
+class UserStatusFormTest(AskbotTestCase):
     def setup_data(self, status):
         data = {'user_status': status, 'delete_content': False}
         self.moderator = self.create_user('moderator_user')
         self.moderator.set_status('m')
         self.subject = self.create_user('normal_user')
         self.subject.set_status('a')
-        self.form = forms.ChangeUserStatusForm(data, moderator = self.moderator,
-                                               subject = self.subject)
+        self.form = forms.ChangeUserStatusForm(data,
+                                               moderator=self.moderator,
+                                               subject=self.subject)
+
     def test_moderator_can_suspend_user(self):
         self.setup_data('s')
         self.assertEquals(self.form.is_valid(), True)
@@ -282,7 +289,8 @@ class UserStatusFormTest(AskbotTestCase):
         self.setup_data('m')
         self.assertEquals(self.form.is_valid(), False)
 
-#Test for askbot.utils.forms
+
+# Test for askbot.utils.forms
 class UserNameFieldTest(AskbotTestCase):
     def setUp(self):
         self.u1 = self.create_user('user1')
@@ -290,25 +298,27 @@ class UserNameFieldTest(AskbotTestCase):
 
     def test_clean(self):
         self.username_field.skip_clean = True
-        self.assertEquals(self.username_field.clean('bar'), 'bar')#will pass anything
+        self.assertEquals(self.username_field.clean('bar'), 'bar')  # Will pass anything
 
         self.username_field.skip_clean = False
 
-        #will not pass b/c instance is not User model
+        # Will not pass b/c instance is not User model
         self.username_field.user_instance = dict(foo=1)
         self.assertRaises(TypeError, self.username_field.clean, 'foo')
 
         self.username_field.user_instance = self.u1
-        self.assertEquals(self.username_field.clean('user1'), self.u1.username) #will pass
+        # Will pass
+        self.assertEquals(self.username_field.clean('user1'), self.u1.username)
 
-        #not pass username required
+        # Not pass username required
         self.assertRaises(django_forms.ValidationError, self.username_field.clean, '')
 
-        #invalid username and username in reserved words
+        # Invalid username and username in reserved words
         self.assertRaises(django_forms.ValidationError, self.username_field.clean, '  ')
         self.assertRaises(django_forms.ValidationError, self.username_field.clean, 'fuck')
         self.assertEqual(self.username_field.clean('......'), '......')
-        #TODO: test more things
+        # TODO: test more things
+
 
 class AnswerEditorFieldTests(AskbotTestCase):
     """don't need to test the QuestionEditorFieldTests, b/c the
@@ -322,17 +332,12 @@ class AnswerEditorFieldTests(AskbotTestCase):
         askbot_settings.update('MIN_ANSWER_BODY_LENGTH', self.old_min_length)
 
     def test_fail_short_body(self):
-        self.assertRaises(
-            django_forms.ValidationError,
-            self.field.clean,
-            'a'
-        )
+        self.assertRaises(django_forms.ValidationError,
+                          self.field.clean,
+                          'a')
 
     def test_pass_long_body(self):
-        self.assertEquals(
-            self.field.clean(10*'a'),
-            10*'a'
-        )
+        self.assertEquals(self.field.clean(10*'a'), 10*'a')
 
 
 class PostAsSomeoneFormTests(AskbotTestCase):
@@ -361,12 +366,14 @@ class PostAsSomeoneFormTests(AskbotTestCase):
         form = forms.PostAsSomeoneForm({'post_author_email': 'me@example.com'})
         self.assertEqual(form.is_valid(), False)
 
-class AskWidgetFormTests(AskbotTestCase):
 
+class AskWidgetFormTests(AskbotTestCase):
     def setUp(self):
         self.good_data = {'title': "What's the price of a house in london?"}
-        self.good_data_anon = {'title': "What's the price of a house in london?",
-                                'ask_anonymously': True}
+        self.good_data_anon = {
+            'title': "What's the price of a house in london?",
+            'ask_anonymously': True
+        }
 
         self.bad_data = {'title': ''}
 
@@ -388,6 +395,8 @@ class AskWidgetFormTests(AskbotTestCase):
 
 
 TEXT_WITH_LINK = 'blah blah http://example.com/url/image.png'
+
+
 class EditorFieldTests(AskbotTestCase):
 
     def setUp(self):
@@ -408,3 +417,20 @@ class EditorFieldTests(AskbotTestCase):
         self.assertRaises(
             django_forms.ValidationError, field.clean, TEXT_WITH_LINK
         )
+
+
+class CleanTagTest(AskbotTestCase):
+    def test_look_in_db_true(self):
+        tag_name = u'foo'
+        new_name = forms.clean_tag(tag_name, look_in_db=True)
+        self.assertEqual(tag_name, new_name)
+
+    def test_look_in_db_false(self):
+        tag_name = u'foo'
+        new_name = forms.clean_tag(tag_name, look_in_db=False)
+        self.assertEqual(tag_name, new_name)
+
+    def test_name_too_long(self):
+        tag_name = u'foo' * askbot_settings.MAX_TAG_LENGTH
+        with self.assertRaises(forms.forms.ValidationError):
+            forms.clean_tag(tag_name, look_in_db=True)

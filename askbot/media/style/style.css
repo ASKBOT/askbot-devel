@@ -67,6 +67,9 @@ input[type="radio"] {
 input[type="checkbox"] {
   -webkit-appearance: checkbox;
 }
+input[type="number"] {
+  padding-right: 0 !important;
+}
 select {
   width: 100%;
   -webkit-appearance: menulist-button;
@@ -83,6 +86,7 @@ textarea:focus, input:focus {
 input[type="email"],
 input[type="text"],
 input[type="password"],
+input[type="number"],
 select,
 textarea,
 #askFormBar .questionTitleInput,
@@ -3047,6 +3051,10 @@ tr.mceLast {
 .users-page input[type="password"],
 .user-profile-edit-page input[type="password"],
 .user-profile-page input[type="password"],
+.meta input[type="number"],
+.users-page input[type="number"],
+.user-profile-edit-page input[type="number"],
+.user-profile-page input[type="number"],
 .meta select,
 .users-page select,
 .user-profile-edit-page select,

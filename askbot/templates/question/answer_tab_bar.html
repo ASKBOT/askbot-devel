@@ -1,6 +1,6 @@
 <div class="tabBar tabBar-answer">
     <h2 id="questionCount">
-        {{ answer_count }} {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(answer_count) }}
+        {{ answer_count }} {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(answer_count)|escape }}
     </h2>
     <div class="tabsA">
                     <span class="label">

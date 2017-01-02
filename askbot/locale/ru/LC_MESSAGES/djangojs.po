@@ -6,13 +6,13 @@
 # Леонид <masdzen@gmail.com>, 2013
 # olloff <olloff@gmail.com>, 2012
 # olloff <olloff@gmail.com>, 2012
-# Panasoft <cc072aa3@opayq.com>, 2014
+# panasoft <cc072aa3@opayq.com>, 2014
 # Леонид <masdzen@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
 "PO-Revision-Date: 2016-06-16 08:09+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/askbot/askbot/language/ru/)\n"
@@ -69,7 +69,7 @@ msgstr[2] "К сожалению, эти ключевые слова не най
 msgstr[3] "К сожалению, эти ключевые слова не найдены"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "найдите или задайте вопрос"
 
 #: media/js/post.js:28
@@ -246,7 +246,7 @@ msgstr "осталось место для %s символов"
 msgid "maximum comment length reached"
 msgstr "достигнута максимальная длина комментария"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "отмена"
@@ -268,49 +268,49 @@ msgstr "прямо сейчас"
 msgid "delete this comment"
 msgstr "удалить этот комментарий"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "Удалить комментарий?"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr "пожалуйста, войдите или зарегистрируйтесь, чтобы оставить комментарий"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "Пожалуйста, добавьте заглавие к вопросу (>10 букв)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "К сожалению, у вас доступ только для чтения"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "сохранить"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "Указать путь до логотипа или загрузить изображение"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "Вы действительно хотите удалить это изображение?"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "изменить логотип"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "добавить логотип"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "тэг \"%s\" уже есть, не стоит повторять его (нажмите \"escape\" чтобы удалить)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
@@ -319,39 +319,39 @@ msgstr[1] "максимально поддерживается %s ключевы
 msgstr[2] "максимально поддерживается %s ключевых слов"
 msgstr[3] "максимально поддерживается %s ключевых слов"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "Удалить категорию?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "редактировать"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "пожалуйста, введите хотя бы один тэг"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "уже есть на этом уровне!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "добавить категорию"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "сохранить тэги"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "Название группы:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "Сделать доступным для следующих пользователей:"
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "Сделать доступным для следующих групп:"
 
@@ -359,7 +359,7 @@ msgstr "Сделать доступным для следующих групп:"
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Тег \"<span></span>\" подходит для:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "и ещё %s, не показано..."
@@ -368,7 +368,7 @@ msgstr "и ещё %s, не показано..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "Пожалуйста <a href=\"%(signin_url)s\">авторизуйтесь</a> чтобы отметить профиль %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "должно быть короче, чем %(max_chars)s символ"
@@ -376,11 +376,11 @@ msgstr[1] "должно быть короче, чем %(max_chars)s символ
 msgstr[2] "должно быть короче, чем %(max_chars)s символов"
 msgstr[3] "должно быть короче, чем %(max_chars)s символов"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "и"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "нажмите чтобы закрыть"
 

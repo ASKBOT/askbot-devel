@@ -1,10 +1,16 @@
+import markdown2
+from django.conf import settings as django_settings
 from django.test import TestCase
 from askbot.tests.utils import with_settings
 from askbot.utils.url_utils import urls_equal
 from askbot.utils.html import absolutize_urls
 from askbot.utils.html import replace_links_with_text
 from askbot.utils.html import get_text_from_html
+from askbot.utils.html import sanitize_html
+from askbot.utils import html as html_utils
+from askbot.utils.markup import get_parser
 from askbot.conf import settings as askbot_settings
+
 
 class UrlUtilsTests(TestCase):
 
@@ -72,6 +78,7 @@ class ReplaceLinksWithTextTests(TestCase):
             'https://example.com/some-image.gif (picture)'
         )
 
+
 class HTMLUtilsTests(TestCase):
     """tests for :mod:`askbot.utils.html` module"""
     @with_settings(APP_URL='http://example.com')
@@ -113,3 +120,40 @@ class HTMLUtilsTests(TestCase):
             get_text_from_html('ataoesa uau <a>link</a>aueaotuosu ao <a href="http://cnn.com">CNN!</a>\nnaouaouuau<img> <img src="http://cnn.com/1.png"/> <img src="http://cnn.com/2.png" alt="sometext">'),
             u'ataoesa uau linkaueaotuosu ao http://cnn.com (CNN!)\n\nnaouaouuau http://cnn.com/1.png http://cnn.com/2.png (sometext)'
         )
+
+
+class GetParserTest(TestCase):
+    def test_func(self):
+        parser = get_parser()
+        self.assertIsInstance(parser, markdown2.Markdown)
+
+    def test_markdown_class_addr(self):
+        parser = get_parser('askbot.tests.utils.Markdown')
+        self.assertIsInstance(parser, markdown2.Markdown)
+
+
+class SanitizeHtml(TestCase):
+    def test_sanitize_html(self):
+        html = '<p id="foo" class="bar">TEXT</p>'
+        new_html = sanitize_html(html)
+        self.assertNotIn('foo', new_html)
+        self.assertIn('bar', new_html)
+
+    def test_sanitize_html_with_extra_elements(self):
+        setattr(django_settings, 'ASKBOT_ALLOWED_HTML_ELEMENTS',
+                html_utils.ALLOWED_HTML_ELEMENTS + ('ham',))
+        html = '<p id="foo" class="bar">TEXT</p><p><ham></ham></p>'
+        new_html = sanitize_html(html)
+        self.assertIn('<ham>', new_html)
+        self.assertNotIn('foo', new_html)
+        self.assertIn('bar', new_html)
+        delattr(django_settings, 'ASKBOT_ALLOWED_HTML_ELEMENTS')
+
+    def test_sanitize_html_with_extra_attrs(self):
+        setattr(django_settings, 'ASKBOT_ALLOWED_HTML_ATTRIBUTES',
+                html_utils.ALLOWED_HTML_ATTRIBUTES + ('id',))
+        html = '<p id="foo" class="bar">TEXT</p>'
+        new_html = sanitize_html(html)
+        self.assertIn('id="foo"', new_html)
+        self.assertIn('class="bar"', new_html)
+        delattr(django_settings, 'ASKBOT_ALLOWED_HTML_ATTRIBUTES')

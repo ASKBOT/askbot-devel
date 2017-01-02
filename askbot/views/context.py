@@ -47,12 +47,10 @@ def get_for_inbox(user):
         group_join_requests_count = pending_memberships.count()
 
     re_count = user.new_response_count + user.seen_response_count
-    flags_count = user.get_notifications(flag_activity_types).count()
     return {
         're_count': re_count,
-        'flags_count': flags_count,
         'group_join_requests_count': group_join_requests_count,
-        'need_inbox_sections_nav': int(re_count > 0) + int(flags_count > 0) + int(group_join_requests_count) > 1
+        'need_inbox_sections_nav': int(re_count > 0) + int(group_join_requests_count) > 1
     }
 
 def get_extra(context_module_setting, request, data):

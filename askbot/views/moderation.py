@@ -155,8 +155,7 @@ def moderation_queue(request):
                     'activity__content_type',
                     'activity__object_id',
                     'activity__question__thread',
-                    'activity__user',
-                    'activity__user__gravatar',
+                    'activity__user'
                 ).order_by(
                     '-activity__active_at'
                 )[:const.USER_VIEW_DATA_SIZE]

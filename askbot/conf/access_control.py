@@ -55,8 +55,8 @@ settings.register(
     livesettings.LongStringValue(
         ACCESS_CONTROL,
         'NEW_REGISTRATIONS_DISABLED_MESSAGE',
-        default=_('<p>New users cannot be registered at this time. Please sign'
-                  ' in if you already have an account.</p>'),
+        default=_('<p>New users cannot be registered at this time. Please sign '
+                  'in if you already have an account.</p>'),
         description=_('Message explaining that user registrations are disabled'),
         help_text=_('HTML is allowed')
     )

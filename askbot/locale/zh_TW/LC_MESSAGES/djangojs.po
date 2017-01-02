@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Carl XuYu Su, 2013
+# Carl XuYu Su, 2013
 # Ｖ字龍(Vdragon) <Vdragon.Taiwan@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
-"PO-Revision-Date: 2016-08-24 04:58+0000\n"
-"Last-Translator: Ｖ字龍(Vdragon) <Vdragon.Taiwan@gmail.com>\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
+"PO-Revision-Date: 2016-10-03 14:24+0000\n"
+"Last-Translator: Mark Hung <marklh9@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/askbot/askbot/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,16 +53,16 @@ msgstr "要看到搜尋結果，您必須輸入二或更多個字元"
 
 #: media/js/live_search.js:220
 msgid "Ask Your Question"
-msgstr ""
+msgstr "請在此發問"
 
 #: media/js/live_search.js:301
 msgid "Sorry, this tag does not exist"
 msgid_plural "Sorry, these tags do not exist"
-msgstr[0] ""
+msgstr[0] "對不起，這些標籤不存在"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
-msgstr ""
+msgid "Search or ask your question"
+msgstr "搜尋或提問"
 
 #: media/js/post.js:28
 msgid "loading..."
@@ -69,23 +70,23 @@ msgstr "正載入..."
 
 #: media/js/post.js:136
 msgid "enter %(question)s title"
-msgstr ""
+msgstr "輸入 %(question) 標題"
 
 #: media/js/post.js:143 media/js/post.js.c:233
 msgid "%(question)s must have > %(length)s character"
 msgid_plural "%(question)s must have > %(length)s characters"
-msgstr[0] ""
+msgstr[0] "%(question)s 必須包含 > %(length)s 個字元"
 
 #: media/js/post.js:162 media/js/post.js.c:222
 #, c-format
 msgid "details must have > %s character"
 msgid_plural "details must have > %s characters"
-msgstr[0] ""
+msgstr[0] "細節至少包含 > %s 個字元"
 
 #: media/js/post.js:177 media/js/post.js.c:260
 msgid "%(answer)s must be > %(length)s character"
 msgid_plural "%(answer)s must be > %(length)s characters"
-msgstr[0] ""
+msgstr[0] "%(answer)s 必須 > %(length)s  個字元"
 
 #: media/js/post.js:213 media/js/post.js.c:1467
 msgid "tags cannot be empty"
@@ -93,11 +94,11 @@ msgstr "標籤不能為空白"
 
 #: media/js/post.js:219
 msgid "details are required"
-msgstr ""
+msgstr "請提供細節"
 
 #: media/js/post.js:230
 msgid "enter your question"
-msgstr ""
+msgstr "請輸入您的問題"
 
 #: media/js/post.js:257
 msgid "content cannot be empty"
@@ -105,15 +106,15 @@ msgstr "內容不能為空白"
 
 #: media/js/post.js:321
 msgid "Back to the question"
-msgstr ""
+msgstr "回到問題"
 
 #: media/js/post.js:392 media/js/post.js.c:436 media/js/post.js.c:522
 msgid "Load preview"
-msgstr ""
+msgstr "載入預覽"
 
 #: media/js/post.js:430
 msgid "Merge"
-msgstr ""
+msgstr "合併"
 
 #: media/js/post.js:521 media/js/utils/modal_dialog.js:9
 #: media/js/utils/text_property_editor.js:48
@@ -122,7 +123,7 @@ msgstr "取消"
 
 #: media/js/post.js:571
 msgid "draft saved..."
-msgstr ""
+msgstr "已儲存草稿..."
 
 #: media/js/post.js:791
 #, c-format
@@ -168,15 +169,15 @@ msgstr "文章已刪除"
 
 #: media/js/post.js:1057
 msgid "sorry, you cannot %(accept_own_answer)s"
-msgstr ""
+msgstr "對不起，你不能 %(accept_own_answer)s"
 
 #: media/js/post.js:1111
 msgid "remove flag"
-msgstr ""
+msgstr "刪除標誌"
 
 #: media/js/post.js:1145 media/js/post.js.c:1176
 msgid "flag offensive"
-msgstr ""
+msgstr "標誌無禮"
 
 #: media/js/post.js:1201 media/js/post.js.c:1697
 msgid "undelete"
@@ -188,15 +189,15 @@ msgstr "刪除"
 
 #: media/js/post.js:1407 media/js/post.js.c:1645
 msgid "sorry, something is not right here"
-msgstr ""
+msgstr "對不起，出錯啦"
 
 #: media/js/post.js:1875
 msgid "Preview: (hide)"
-msgstr ""
+msgstr "預覽: (隱藏)"
 
 #: media/js/post.js:1876
 msgid "Show preview"
-msgstr ""
+msgstr "顯示預覽"
 
 #: media/js/post.js:2288
 msgid "add comment"
@@ -209,12 +210,12 @@ msgstr "儲存評註"
 #: media/js/post.js:2337
 #, c-format
 msgid "enter at least %s characters"
-msgstr ""
+msgstr "請輸入至少 %s 個字元"
 
 #: media/js/post.js:2339
 #, c-format
 msgid "enter at least %s more characters"
-msgstr ""
+msgstr "至少還需輸入 %s個字元"
 
 #: media/js/post.js:2351
 #, c-format
@@ -223,111 +224,111 @@ msgstr "還剩%s個字元"
 
 #: media/js/post.js:2353
 msgid "maximum comment length reached"
-msgstr ""
+msgstr "評論內容已超出最大長度"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "取消"
 
 #: media/js/post.js:2471
 msgid "minor edit (don't send alerts)"
-msgstr ""
+msgstr "小修改(不發送通知)"
 
 #: media/js/post.js:2503
 msgid "Are you sure you don't want to post this comment?"
-msgstr ""
+msgstr "你確定不想發表此評論？"
 
 #: media/js/post.js:2548 media/jslib/timeago.js:37
 #: media/jslib/timeago.js.c:192
 msgid "just now"
-msgstr ""
+msgstr "剛才"
 
 #: media/js/post.js:2625
 msgid "delete this comment"
 msgstr "刪除此評註"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "確認刪除評註"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
-msgstr ""
+msgstr "請登入或註冊後再發表評註"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "請輸入問題標題 (>10 個字元)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "很抱歉，您只擁有讀取權限"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
-msgstr ""
+msgstr "儲存"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
-msgstr ""
+msgstr "輸入標示圖案網址或上傳一張圖片"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
-msgstr ""
-
-#: media/js/post.js:3786
-msgid "change logo"
-msgstr ""
+msgstr "你真的想刪除這張圖片嗎？"
 
 #: media/js/post.js:3787
-msgid "add logo"
-msgstr ""
+msgid "change logo"
+msgstr "修改標示圖案"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3788
+msgid "add logo"
+msgstr "增加標示圖案"
+
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
-msgstr ""
+msgstr "標籤 \"%s\" 已經加入，不需要重複( 按\"Esc\" 刪除)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
-msgstr[0] ""
+msgstr[0] "最多允許 %s 個標籤"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "是否刪除分類？"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "編輯"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
-msgstr ""
+msgstr "分類名稱不可為空白"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
-msgstr ""
+msgstr "已存在於目前等級"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
-msgstr ""
+msgstr "加入分類"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
-msgstr ""
+msgstr "儲存標籤"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "群組名稱："
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "與這些使用者共享："
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "與這些群組共享："
 
@@ -335,7 +336,7 @@ msgstr "與這些群組共享："
 msgid "Tag \"<span></span>\" matches:"
 msgstr "標記 \"<span></span>\" 符合："
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "與 %s 項其他，不顯示..."
@@ -344,16 +345,16 @@ msgstr "與 %s 項其他，不顯示..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "請<a href=\"%(signin_url)s\">登入</a>才能跟隨 %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
-msgstr[0] ""
+msgstr[0] "須少於%(max_chars)s個字元"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
-msgstr ""
+msgstr "與"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "點擊以關閉"
 
@@ -374,15 +375,15 @@ msgstr "您沒有任何可以立刻登入的方法，請底下方任一個圖示
 
 #: media/js/jquery-openid/jquery.authenticator.js:146
 msgid "enter username"
-msgstr ""
+msgstr "請輸入使用者名稱"
 
 #: media/js/jquery-openid/jquery.authenticator.js:148
 msgid "enter username or email"
-msgstr ""
+msgstr "請輸入使用者名稱或電子郵件"
 
 #: media/js/jquery-openid/jquery.authenticator.js:157
 msgid "enter password"
-msgstr ""
+msgstr "請輸入密碼"
 
 #: media/js/jquery-openid/jquery.authenticator.js:179
 msgid "passwords do not match"
@@ -433,19 +434,19 @@ msgstr "加入"
 
 #: media/js/user/manage_reject_reasons_dialog.js:90
 msgid "Looks there are some things to fix:"
-msgstr ""
+msgstr "看來有些東西要修復："
 
 #: media/js/user/manage_reject_reasons_dialog.js:158
 msgid "Please provide description."
-msgstr ""
+msgstr "請提供描述。"
 
 #: media/js/user/manage_reject_reasons_dialog.js:161
 msgid "Please provide details."
-msgstr ""
+msgstr "請提供細節。"
 
 #: media/js/user/manage_reject_reasons_dialog.js:248
 msgid "A reason must be selected to delete one."
-msgstr ""
+msgstr "刪除時必須選擇原因。"
 
 #: media/js/user/post_moderation_controls.js:77
 #: media/js/user/response_notifs.js:30 media/js/user/response_notifs.js.c:92
@@ -454,11 +455,11 @@ msgstr "請至少選取一個項目"
 
 #: media/js/user/post_moderation_controls.js:113
 msgid "Load more items."
-msgstr ""
+msgstr "載入更多項目"
 
 #: media/js/utils/comment_convert_link.js:26
 msgid "convert to answer"
-msgstr ""
+msgstr "轉為答案"
 
 #: media/js/utils/edit_link.js:14
 msgid "click to edit this comment"
@@ -471,32 +472,32 @@ msgstr "已上傳檔案：%s"
 
 #: media/js/utils/file_upload_dialog.js:152
 msgid "Choose a different file"
-msgstr ""
+msgstr "選擇其它文件"
 
 #: media/js/utils/file_upload_dialog.js:154
 msgid "Choose a different image"
-msgstr ""
+msgstr "選擇其它圖片"
 
 #: media/js/utils/file_upload_dialog.js:168
 msgid "Oops, looks like we had an error. Sorry."
-msgstr ""
+msgstr "哎呀！對不起，看來我們有了一個錯誤。"
 
 #: media/js/utils/file_upload_dialog.js:228
 msgid "Choose a file to insert"
-msgstr ""
+msgstr "選擇插入的文件"
 
 #: media/js/utils/file_upload_dialog.js:230
 msgid "Choose an image to insert"
-msgstr ""
+msgstr "選擇插入的圖片"
 
 #: media/js/utils/file_upload_dialog.js:243
 msgid "Allowed file types are:"
-msgstr ""
+msgstr "允許的檔案類型："
 
 #: media/js/utils/file_upload_dialog.js:249
 #: media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
 msgid "Or paste file url here"
-msgstr ""
+msgstr "或貼上檔案網址"
 
 #: media/js/utils/group_dropdown.js:18
 msgid "group name"
@@ -508,7 +509,7 @@ msgstr "加入新的群組"
 
 #: media/js/utils/group_dropdown.js:118
 msgid "Group %(name)s already exists. Group names are case-insensitive."
-msgstr ""
+msgstr "群組%(name)s已經存在。群組名稱不區分大小寫。"
 
 #: media/js/utils/modal_dialog.js:7
 msgid "Ok"
@@ -517,7 +518,7 @@ msgstr "確定"
 #: media/js/utils/paginator.js:115
 #, c-format
 msgid "page %s"
-msgstr ""
+msgstr "第%s頁"
 
 #: media/js/utils/tag.js:122
 #, c-format
@@ -555,7 +556,7 @@ msgstr "約一分鐘"
 #: media/jslib/timeago.js:39
 #, c-format
 msgid "%d min"
-msgstr ""
+msgstr "%d 分鐘"
 
 #: media/jslib/timeago.js:40
 msgid "about an hour"
@@ -564,7 +565,7 @@ msgstr "約一個小時"
 #: media/jslib/timeago.js:41
 #, c-format
 msgid "%d h"
-msgstr ""
+msgstr "%d 小時"
 
 #: media/jslib/timeago.js:42 media/jslib/timeago.js.c:170
 msgid "yesterday"
@@ -595,51 +596,51 @@ msgstr "%d 年"
 
 #: media/jslib/timeago.js:145
 msgid "Jan"
-msgstr ""
+msgstr "一月"
 
 #: media/jslib/timeago.js:146
 msgid "Feb"
-msgstr ""
+msgstr "二月"
 
 #: media/jslib/timeago.js:147
 msgid "Mar"
-msgstr ""
+msgstr "三月"
 
 #: media/jslib/timeago.js:148
 msgid "Apr"
-msgstr ""
+msgstr "四月"
 
 #: media/jslib/timeago.js:149
 msgid "May"
-msgstr ""
+msgstr "五月"
 
 #: media/jslib/timeago.js:150
 msgid "Jun"
-msgstr ""
+msgstr "六月"
 
 #: media/jslib/timeago.js:151
 msgid "Jul"
-msgstr ""
+msgstr "七月"
 
 #: media/jslib/timeago.js:152
 msgid "Aug"
-msgstr ""
+msgstr "八月"
 
 #: media/jslib/timeago.js:153
 msgid "Sep"
-msgstr ""
+msgstr "九月"
 
 #: media/jslib/timeago.js:154
 msgid "Oct"
-msgstr ""
+msgstr "十月"
 
 #: media/jslib/timeago.js:155
 msgid "Nov"
-msgstr ""
+msgstr "十一月"
 
 #: media/jslib/timeago.js:156
 msgid "Dec"
-msgstr ""
+msgstr "十二月"
 
 #: media/jslib/timeago.js:168
 msgid "2 days ago"
@@ -663,7 +664,7 @@ msgstr "插入檔案"
 
 #: media/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
 msgid "Insert image"
-msgstr ""
+msgstr "插入影像"
 
 #: media/wmd/wmd.js:31
 msgid "bold"
@@ -731,11 +732,11 @@ msgstr "上傳檔案附件"
 
 #: media/wmd/wmd.js:1686
 msgid "strong text"
-msgstr ""
+msgstr "重點文字"
 
 #: media/wmd/wmd.js:1690
 msgid "emphasized text"
-msgstr ""
+msgstr "強調文字"
 
 #: media/wmd/wmd.js:1844
 msgid "image description"
@@ -751,15 +752,15 @@ msgstr "連結文字"
 
 #: media/wmd/wmd.js:2284 media/wmd/wmd.js.c:2304
 msgid "enter code here"
-msgstr ""
+msgstr "在這裡輸入代碼"
 
 #: media/wmd/wmd.js:2398
 msgid "List item"
-msgstr ""
+msgstr "清單項目"
 
 #: media/wmd/wmd.js:2430
 msgid "Heading"
-msgstr ""
+msgstr "標題"
 
 #~ msgid "anonymous users cannot %(follow_questions)s"
 #~ msgstr "sorry, anonymous users cannot vote "

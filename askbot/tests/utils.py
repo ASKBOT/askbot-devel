@@ -1,10 +1,12 @@
 """utility functions used by Askbot test cases
 """
+from functools import wraps
+from markdown2 import Markdown
 from django.core.cache import cache
 from django.test import TestCase
-from functools import wraps
 from askbot import models
 from askbot import signals
+
 
 def with_settings(**settings_dict):
     """a decorator that will run function with settings

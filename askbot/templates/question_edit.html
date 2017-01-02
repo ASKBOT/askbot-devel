@@ -22,10 +22,7 @@
         {{ form.title }}
     </div>
 
-    <div class="form-group">
-        <label for="editor"></label>
-        {{ macros.edit_post(form, post_html=revision.text) }}
-    </div>
+    {{ macros.edit_post(form, settings, post_html=revision.text) }}
 
     {% include "widgets/tags_field.html" %}
     <div class="question-options">

@@ -356,7 +356,7 @@ class NiceQuestion(QualityPost):
         self.level = const.BRONZE_BADGE
         self.multiple = True
         self.min_votes = askbot_settings.NICE_QUESTION_BADGE_MIN_UPVOTES
-        self.description = _('%(question_voted_up)s up %(num)s times') % {
+        self.description = _('%(question_voted_up)s %(num)s times') % {
             'num': self.min_votes,
             'question_voted_up': askbot_settings.WORDS_QUESTION_VOTED_UP
         }
@@ -373,7 +373,7 @@ class GoodQuestion(QualityPost):
         self.level = const.SILVER_BADGE
         self.multiple = True
         self.min_votes = askbot_settings.GOOD_QUESTION_BADGE_MIN_UPVOTES
-        self.description = _('%(question_voted_up)s up %(num)s times') % {
+        self.description = _('%(question_voted_up)s %(num)s times') % {
             'num': self.min_votes,
             'question_voted_up': askbot_settings.WORDS_QUESTION_VOTED_UP
         }

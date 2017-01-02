@@ -64,7 +64,7 @@ settings.register(
         'SIDEBAR_MAIN_SHOW_TAG_SELECTOR',
         description=_('Show tag selector in sidebar'),
         help_text=_('Uncheck this if you want to hide the options for '
-                    'choosing interesting and ignored tags '),
+                    'choosing interesting and ignored tags'),
         default=True,
     )
 )
@@ -75,7 +75,7 @@ settings.register(
         'SIDEBAR_MAIN_SHOW_TAGS',
         description=_('Show tag list/cloud in sidebar'),
         help_text=_('Uncheck this if you want to hide the tag cloud or tag '
-                    'list from the sidebar '),
+                    'list from the sidebar'),
         default=True
     )
 )
@@ -88,7 +88,7 @@ settings.register(
         default='',
         localized=True,
         help_text=_(
-                    'Use this area to enter content at the BOTTOM of the sidebar'
+                    'Use this area to enter content at the BOTTOM of the sidebar '
                     'in HTML format.   When using this option '
                     '(as well as the sidebar header), please '
                     'use the HTML validation service to make sure that '

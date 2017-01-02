@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Panasoft <cc072aa3@opayq.com>, 2014
+# panasoft <cc072aa3@opayq.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
 "PO-Revision-Date: 2016-06-16 08:09+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Ukrainian (Ukraine) (http://www.transifex.com/askbot/askbot/language/uk_UA/)\n"
@@ -63,7 +63,7 @@ msgstr[1] "Нажаль, ці ключові слова відсутні"
 msgstr[2] "Нажаль, ці ключові слова відсутні"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "знайдіть або задайте Ваше питання"
 
 #: media/js/post.js:28
@@ -236,7 +236,7 @@ msgstr "залишилось %s символів"
 msgid "maximum comment length reached"
 msgstr "досягнуто максимальної довжини коментаря"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "скасувати"
@@ -258,49 +258,49 @@ msgstr "саме тепер"
 msgid "delete this comment"
 msgstr "видалити цей коментар"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "чи Ви дійсно хочете видалити цей коментар?"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr "будь-ласка, авторизуйтесь або зареєструйтесь, щоб публікувати коментарі"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "Будь-ласка, введіть заголовок питання (>10 символів)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "Нажаль, Ви маєте доступ тільки для читання"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "зберегти"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "Введіть url логотипу або завантажте зображення"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "Чи Ви дісно хочете видалити зображення?"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "змінити логотип"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "додати логотип"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "ключове слово \"%s\" вже внесене, немає потреби повторювати (натисніть \"escape\" щоб видалити)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
@@ -308,39 +308,39 @@ msgstr[0] "підтримується максимально %s ключове �
 msgstr[1] "підтримується максимально %s ключових слів"
 msgstr[2] "підтримується максимально %s ключових слів"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "Видалити категорію?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "редагувати"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "назва категорії не може бути порожньою"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "вже присутнє на даному рівні!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "додати категорію"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "зберегти ключові слова"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "Назва групи:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "Є доступним для наступних користувачів:"
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "Є доступним для наступних груп:"
 
@@ -348,7 +348,7 @@ msgstr "Є доступним для наступних груп:"
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Ключове слово \"<span></span>\" відповідає:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "та ще %s, не показано..."
@@ -357,18 +357,18 @@ msgstr "та ще %s, не показано..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "Будь-ласка, <a href=\"%(signin_url)s\">авторизуйтесь</a> щоб слідкувати за  %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "повинно бути коротше за %(max_chars)s символ"
 msgstr[1] "повинно бути коротше за %(max_chars)s символів"
 msgstr[2] "повинно бути коротше за %(max_chars)s символів"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "та"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "клацніть, щоб закрити"
 

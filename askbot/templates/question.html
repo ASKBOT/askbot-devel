@@ -420,8 +420,8 @@
         askbot['messages']['addComment'] = '{% trans %}add a comment{% endtrans %}';
         askbot['messages']['userNamePrompt'] = '{% trans %}User name:{% endtrans %}';
         askbot['messages']['userEmailPrompt'] = '{% trans %}Email address:{% endtrans %}';
-        askbot['messages']['mergeQuestions'] = '{{ settings.WORDS_MERGE_QUESTIONS }}';
-        askbot['messages']['enterDuplicateQuestionId'] = '{{ settings.WORDS_ENTER_DUPLICATE_QUESTION_ID }}';
+        askbot['messages']['mergeQuestions'] = '{{ settings.WORDS_MERGE_QUESTIONS|escapejs }}';
+        askbot['messages']['enterDuplicateQuestionId'] = '{{ settings.WORDS_ENTER_DUPLICATE_QUESTION_ID|escapejs }}';
         {% if settings.READ_ONLY_MODE_ENABLED %}
             askbot['messages']['readOnlyMessage'] = "{{ settings.READ_ONLY_MESSAGE }}";
         {% endif %}

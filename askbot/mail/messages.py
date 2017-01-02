@@ -407,10 +407,14 @@ class WelcomeEmail(BaseEmail):
 
 
     def get_mock_context(self):
-        return {'user': get_user()}
+        return {
+            'user': get_user(),
+            'site_name': askbot_settings.APP_SHORT_NAME or 'our community'
+        }
 
     def process_context(self, context):
         context['recipient_user'] = context['user']
+        context['site_name'] = askbot_settings.APP_SHORT_NAME
         return context
 
 class WelcomeEmailRespondable(BaseEmail):
@@ -444,7 +448,8 @@ class WelcomeEmailRespondable(BaseEmail):
         return {
             'recipient_user': get_user(),
             'email_code': email_code,
-            'reply_to_address': 'welcome-' + email_code + '@example.com'
+            'reply_to_address': 'welcome-' + email_code + '@example.com',
+            'site_name': askbot_settings.APP_SHORT_NAME or 'our community'
         }
 
 

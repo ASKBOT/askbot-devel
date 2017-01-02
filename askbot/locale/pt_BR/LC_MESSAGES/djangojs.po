@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
 "PO-Revision-Date: 2016-07-19 14:51+0000\n"
 "Last-Translator: Olivier Hallot <olivier.hallot@libreoffice.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/askbot/askbot/language/pt_BR/)\n"
@@ -64,7 +64,7 @@ msgstr[0] "Esta tag não existe"
 msgstr[1] "Estas tags não existem"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "Pesquise ou pergunte"
 
 #: media/js/post.js:28
@@ -233,7 +233,7 @@ msgstr "Digite pelo menos %s caracteres a mais"
 msgid "maximum comment length reached"
 msgstr "Atingido o limite de tamanho do comentário"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "Cancelar"
@@ -255,88 +255,88 @@ msgstr "Agora mesmo"
 msgid "delete this comment"
 msgstr "Clique para editar este comentário"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "Deseja realmente excluir este comentário?"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr "Faça o login ou registre-se para postar comentários"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "Digite o título da pergunta (>10 caracteres)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "Você só tem acesso de leitura"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "Salvar"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "Insira a url da logo ou carregue uma imagem"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "Deseja realmente remover a imagem?"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "Alterar a logo"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "Adicionar logo"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "A tag \"%s\" já foi adicionada, não é necessário repeti-la (pressione \"Esc\" para excluir)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
 msgstr[0] "É permitida %s tag no máximo"
 msgstr[1] "São permitidas %s tags no máximo"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "Excluir a categoria?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "Editar"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "O nome da categoria não pode estar em branco"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "Já existe no nível atual!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "Adicionar categoria"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "Salvar tags"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "Nome do grupo:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "Compartilhado com os seguintes usuários:"
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "Compartilhado com os seguintes grupos:"
 
@@ -344,7 +344,7 @@ msgstr "Compartilhado com os seguintes grupos:"
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Tags \"<span></span>\" correspondentes:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "e %s a mais, ocultas..."
@@ -353,17 +353,17 @@ msgstr "e %s a mais, ocultas..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "Faça o <a href=\"%(signin_url)s\">login</a> para seguir %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "Deve ter menos de %(max_chars)s caractere"
 msgstr[1] "Deve ter menos de %(max_chars)s caracteres"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "e"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "Clique para fechar"
 

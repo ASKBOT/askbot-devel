@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
 "PO-Revision-Date: 2016-08-15 05:09+0000\n"
 "Last-Translator: Ian Y. Choi <ianyrchoi@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/askbot/askbot/language/ko/)\n"
@@ -64,7 +64,7 @@ msgid_plural "Sorry, these tags do not exist"
 msgstr[0] "죄송합니다, 그 tag가 존재하지 않습니다."
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "의문점을 질문하거나 검색"
 
 #: media/js/post.js:28
@@ -229,7 +229,7 @@ msgstr "적어도 %s 글자 이상으로 입력을 해주십시오."
 msgid "maximum comment length reached"
 msgstr "최대 답변 길이에 도달했습니다"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "취소"
@@ -251,87 +251,87 @@ msgstr "지금 당장"
 msgid "delete this comment"
 msgstr "이 댓글 삭제"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "정말 이 댓글을 삭제 하시겠습니까?"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr "sign in 또는 가입을 하셔야 댓글을 남기실 수 있습니다."
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "질문을 입력해 주세요 (10자 이상)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "죄송합니다. 읽기만 가능합니다."
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "저장"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "logo url을 입력하시거나 이미지를 업로드 해주십시오."
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "이미지를 삭제하길 원하십니까?"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "logo 변경"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "logo 추가"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "tag \"%s\"가 이미 추가되어 있습니다, 반복하여 입력하실 필요가 없습니다.(\"escape\"를 누르시면 삭제됩니다.)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
 msgstr[0] "%s tag에 대한 최대 허용."
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "카테고리 삭제 하시겠습니까?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "수정"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "최소 하나의 tag를 입력해 주십시오."
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "이미 현재 레벨이 존재합니다!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "카테고리 추가"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "tags 저장"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "그룹 이름:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "following 사용자들에게 공유:"
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "following 그룹에게 공유:"
 
@@ -339,7 +339,7 @@ msgstr "following 그룹에게 공유:"
 msgid "Tag \"<span></span>\" matches:"
 msgstr "\"<span></span>\" 태그 맞춤:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "그리고 %s 이상은 보여주지 않습니다..."
@@ -348,16 +348,16 @@ msgstr "그리고 %s 이상은 보여주지 않습니다..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "%(username)s님을 팔로우하시려면 <a href=\"%(signin_url)s\">로그인</a>을 해주세요"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "%(max_chars)s 글자보다 작아야 합니다."
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "그리고"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "close를 선택"
 

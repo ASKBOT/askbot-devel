@@ -39,8 +39,8 @@
     {% if settings.EDITOR_TYPE == 'tinymce' %}
         askbot['settings']['tinyMCEConfigJson'] = '{{ settings.TINYMCE_CONFIG_JSON|escapejs }}';
     {% endif %}
-    askbot['settings']['commentsEditorType'] = '{{ settings.COMMENTS_EDITOR_TYPE }}';
-    askbot['messages']['askYourQuestion'] = '{{ settings.WORDS_ASK_YOUR_QUESTION }}';
+    askbot['settings']['commentsEditorType'] = '{{ settings.COMMENTS_EDITOR_TYPE|escapejs }}';
+    askbot['messages']['askYourQuestion'] = '{{ settings.WORDS_ASK_YOUR_QUESTION|escapejs }}';
     askbot['messages']['questionSingular'] = '{{ settings.WORDS_QUESTION_SINGULAR|escapejs }}';
     askbot['messages']['answerSingular'] = '{{ settings.WORDS_ANSWER_SINGULAR|escapejs }}';
     askbot['messages']['acceptOwnAnswer'] = '{{ settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER|escapejs }}';

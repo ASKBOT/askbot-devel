@@ -4,7 +4,7 @@
 {% block title %}{% spaceless %}{% trans %}Edit user profile{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
 <h1 class="section-title">
-    {{ request.user.username|escape }} - {% trans %}edit profile{% endtrans %}
+    {{ view_user.username|escape }} - {% trans %}edit profile{% endtrans %}
 </h1>
 <div class='avatar'>
     {{ macros.gravatar(view_user, 128) }}

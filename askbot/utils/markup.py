@@ -5,67 +5,71 @@ Twitter-style @mentions"""
 
 import re
 import logging
+
+from django.utils.html import urlize
+from django.utils.module_loading import import_string
+
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils.functions import split_phrases
 from askbot.utils.html import sanitize_html
 from askbot.utils.html import strip_tags
 from askbot.utils.html import urlize_html
-from django.utils.html import urlize
-from markdown2 import Markdown
-#url taken from http://regexlib.com/REDetails.aspx?regexp_id=501
+
+# URL taken from http://regexlib.com/REDetails.aspx?regexp_id=501
 URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))")
 
-def get_parser():
-    """returns an instance of configured ``markdown2`` parser
+
+def get_parser(markdown_class_addr=None):
     """
+    Returns an instance of configured :class:`markdown2.Markdown parser.
+
+    :param markdown_class_addr: Path to :class:`markdown2.Markdown` custom
+                                class. (default: `'markdown2.Markdown'`)
+    :type markdown_class_addr: ``str``
+    """
+    if markdown_class_addr is None:
+        from django.conf import settings as django_settings
+        markdown_class_addr = getattr(django_settings, 'ASKBOT_MARKDOWN_CLASS',
+                                      'markdown2.Markdown')
+    Markdown = import_string(markdown_class_addr)
     extras = ['link-patterns', 'video']
 
-    if askbot_settings.ENABLE_MATHJAX or \
-        askbot_settings.MARKUP_CODE_FRIENDLY:
+    if askbot_settings.ENABLE_MATHJAX or askbot_settings.MARKUP_CODE_FRIENDLY:
         extras.append('code-friendly')
 
-    if askbot_settings.ENABLE_VIDEO_EMBEDDING:
-        #note: this requires a forked version of markdown2 module
-        #pip uninstall markdown2
-        #pip install -e git+git://github.com/andryuha/python-markdown2.git
-        extras.append('video')
-
-    #link_patterns = [
-    #    (URL_RE, r'\1'),
-    #]
+    # link_patterns = [
+    #     (URL_RE, r'\1'),
+    # ]
     link_patterns = []
     if askbot_settings.ENABLE_AUTO_LINKING:
         pattern_list = askbot_settings.AUTO_LINK_PATTERNS.split('\n')
         url_list = askbot_settings.AUTO_LINK_URLS.split('\n')
-        pairs = zip(pattern_list, url_list)#always takes equal number of items
+        pairs = zip(pattern_list, url_list)  # always takes equal number of items
         for item in pairs:
-            if item[0].strip() =='' or item[1].strip() == '':
+            if not item[0].strip() or not item[1].strip():
                 continue
             link_patterns.append(
-                (
-                    re.compile(item[0].strip()),
-                    item[1].strip()
-                )
+                (re.compile(item[0].strip()), item[1].strip())
             )
 
-        #Check whether  we have matching links for all key terms,
-        #Other wise we ignore the key terms
-        #May be we should do this test in update_callback?
-        #looks like this might be a defect of livesettings
-        #as there seems to be no way
-        #to validate entries that depend on each other
+        # Check whether  we have matching links for all key terms,
+        # Other wise we ignore the key terms
+        # May be we should do this test in update_callback?
+        # looks like this might be a defect of livesettings
+        # as there seems to be no way
+        # to validate entries that depend on each other
         if len(pattern_list) != len(url_list):
             settings_url = askbot_settings.APP_URL+'/settings/AUTOLINK/'
-            logging.critical(
-                "Number of autolink patterns didn't match the number "
-                "of url templates, fix this by visiting" + settings_url)
+            msg = "Number of autolink patterns didn't match the number "\
+                  "of url templates, fix this by visiting %s"
+            logging.critical(msg, settings_url)
 
     return Markdown(
-                html4tags=True,
-                extras=extras,
-                link_patterns=link_patterns
-            )
+        html4tags=True,
+        extras=extras,
+        link_patterns=link_patterns
+    )
 
 
 def format_mention_in_html(mentioned_user):
@@ -74,13 +78,14 @@ def format_mention_in_html(mentioned_user):
     username = mentioned_user.username
     return '<a href="%s">@%s</a>' % (url, username)
 
+
 def extract_first_matching_mentioned_author(text, anticipated_authors):
     """matches beginning of ``text`` string with the names
     of ``anticipated_authors`` - list of user objects.
     Returns upon first match the first matched user object
     and the remainder of the ``text`` that is left unmatched"""
 
-    if len(text) == 0:
+    if not text:
         return None, ''
 
     for author in anticipated_authors:
@@ -91,11 +96,12 @@ def extract_first_matching_mentioned_author(text, anticipated_authors):
             elif text[ulen] in const.TWITTER_STYLE_MENTION_TERMINATION_CHARS:
                 text = text[ulen:]
             else:
-                #near miss, here we could insert a warning that perhaps
-                #a termination character is needed
+                # near miss, here we could insert a warning that perhaps
+                # a termination character is needed
                 continue
             return author, text
     return None, text
+
 
 def extract_mentioned_name_seeds(text):
     """Returns list of strings that
@@ -108,7 +114,7 @@ def extract_mentioned_name_seeds(text):
     extra_name_seeds = set()
     while '@' in text:
         pos = text.index('@')
-        text = text[pos+1:]#chop off prefix
+        text = text[pos+1:]  # chop off prefix
         name_seed = ''
         for char in text:
             if char in const.TWITTER_STYLE_MENTION_TERMINATION_CHARS:
@@ -126,10 +132,11 @@ def extract_mentioned_name_seeds(text):
                 break
             name_seed += char
         if len(name_seed) > 0:
-            #in case we run off the end of text
+            # in case we run off the end of text
             extra_name_seeds.add(name_seed)
 
     return extra_name_seeds
+
 
 def mentionize_text(text, anticipated_authors):
     """Returns a tuple of two items:
@@ -140,18 +147,18 @@ def mentionize_text(text, anticipated_authors):
     output = ''
     mentioned_authors = list()
     while '@' in text:
-        #the purpose of this loop is to convert any occurance of
-        #'@mention ' syntax
-        #to user account links leading space is required unless @ is the first
-        #character in whole text, also, either a punctuation or
-        #a ' ' char is required after the name
+        # the purpose of this loop is to convert any occurance of
+        # '@mention ' syntax
+        # to user account links leading space is required unless @ is the first
+        # character in whole text, also, either a punctuation or
+        # a ' ' char is required after the name
         pos = text.index('@')
 
-        #save stuff before @mention to the output
-        output += text[:pos]#this works for pos == 0 too
+        # save stuff before @mention to the output
+        output += text[:pos]  # this works for pos == 0 too
 
         if len(text) == pos + 1:
-            #finish up if the found @ is the last symbol
+            # finish up if the found @ is the last symbol
             output += '@'
             text = ''
             break
@@ -159,14 +166,12 @@ def mentionize_text(text, anticipated_authors):
         if pos > 0:
 
             if text[pos-1] in const.TWITTER_STYLE_MENTION_TERMINATION_CHARS:
-                #if there is a termination character before @mention
-                #indeed try to find a matching person
+                # if there is a termination character before @mention
+                # indeed try to find a matching person
                 text = text[pos+1:]
                 mentioned_author, text = \
-                                    extract_first_matching_mentioned_author(
-                                                            text,
-                                                            anticipated_authors
-                                                        )
+                    extract_first_matching_mentioned_author(
+                        text, anticipated_authors)
                 if mentioned_author:
                     mentioned_authors.append(mentioned_author)
                     output += format_mention_in_html(mentioned_author)
@@ -174,31 +179,31 @@ def mentionize_text(text, anticipated_authors):
                     output += '@'
 
             else:
-                #if there isn't, i.e. text goes like something@mention,
-                #do not look up people
+                # if there isn't, i.e. text goes like something@mention,
+                # do not look up people
                 output += '@'
                 text = text[pos+1:]
         else:
-            #do this if @ is the first character
+            # do this if @ is the first character
             text = text[1:]
             mentioned_author, text = \
-                                extract_first_matching_mentioned_author(
-                                                    text,
-                                                    anticipated_authors
-                                                )
+                extract_first_matching_mentioned_author(
+                    text, anticipated_authors)
             if mentioned_author:
                 mentioned_authors.append(mentioned_author)
                 output += format_mention_in_html(mentioned_author)
             else:
                 output += '@'
 
-    #append the rest of text that did not have @ symbols
+    # append the rest of text that did not have @ symbols
     output += text
     return mentioned_authors, output
+
 
 def plain_text_input_converter(text):
     """plain text to html converter"""
     return sanitize_html(urlize('<p>' + text + '</p>'))
+
 
 def markdown_input_converter(text):
     """markdown to html converter"""
@@ -207,10 +212,12 @@ def markdown_input_converter(text):
     text = urlize_html(text)
     return sanitize_html(text)
 
+
 def tinymce_input_converter(text):
     """tinymce input to production html converter"""
     text = urlize_html(text)
     return strip_tags(text, ['script', 'style', 'link'])
+
 
 def convert_text(text):
     parser_type = askbot_settings.EDITOR_TYPE
@@ -222,6 +229,7 @@ def convert_text(text):
         return tinymce_input_converter(text)
     else:
         raise NotImplementedError
+
 
 def find_forbidden_phrase(text):
     """returns string or None"""

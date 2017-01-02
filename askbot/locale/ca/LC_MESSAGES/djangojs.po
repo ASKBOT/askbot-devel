@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# jmontane, 2016
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2016
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
-"PO-Revision-Date: 2016-08-22 20:41+0000\n"
-"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
+"PO-Revision-Date: 2016-10-18 09:59+0000\n"
+"Last-Translator: jmontane\n"
 "Language-Team: Catalan (http://www.transifex.com/askbot/askbot/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,7 +46,7 @@ msgstr[1] "els usuaris {{str}} no existeixen"
 
 #: media/js/group_messaging.js:198
 msgid "cannot send message to yourself"
-msgstr "no us podeu enviar a vosaltres mateixos el missatge"
+msgstr "no us podeu autoenviar el missatge"
 
 #: media/js/live_search.js:198
 msgid "To see search results, 2 or more characters may be required"
@@ -62,7 +63,7 @@ msgstr[0] "Ho sentim, aquesta etiqueta no existeix"
 msgstr[1] "Ho sentim, aquestes etiquetes no existeixen"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "cerqueu o feu una pregunta"
 
 #: media/js/post.js:28
@@ -94,7 +95,7 @@ msgstr[1] "%(answer)s ha de tenir > %(length)s caràcters"
 
 #: media/js/post.js:213 media/js/post.js.c:1467
 msgid "tags cannot be empty"
-msgstr "si us plau, introduïu almenys una etiqueta"
+msgstr "introduïu almenys una etiqueta"
 
 #: media/js/post.js:219
 msgid "details are required"
@@ -142,7 +143,7 @@ msgstr "permisos insuficients"
 
 #: media/js/post.js:831 media/js/post.js.c:1616
 msgid "please login"
-msgstr "si us plau, inicieu la sessió"
+msgstr "inicieu la sessió"
 
 #: media/js/post.js:834
 msgid "anonymous users cannot subscribe to questions"
@@ -231,7 +232,7 @@ msgstr "queden %s caràcters"
 msgid "maximum comment length reached"
 msgstr "s'ha assolit la mida màxima del comentari"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "cancel·la"
@@ -253,88 +254,88 @@ msgstr "ara mateix"
 msgid "delete this comment"
 msgstr "suprimeix aquest comentari"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "confirmeu eliminar comentari"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
-msgstr "si us plau, autentiqueu-vos o registreu-vos per publicar comentaris"
+msgstr "autentiqueu-vos o registreu-vos per publicar comentaris"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "Introduïu el títol de la pregunta (més de 10 caràcters)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "Ho sentim, tan sols teniu accés de lectura"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "desa"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "Introduïu l'URL del logotip o pugeu una imatge"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "Esteu segur que voleu suprimir la imatge?"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "canvia el logotip"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "afegeix un logotip"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "ja es va afegir l'etiqueta «%s», no hi ha cap necessitat de repetir-la (premeu «escapament» per eliminar-la)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
 msgstr[0] "es permet un màxim de %s etiqueta"
 msgstr[1] "es permet un màxim de %s etiquetes"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "Elimina la categoria?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "edita"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "el nom de la categoria no pot estar en blanc"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "ja existeix en el nivell actual!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "afegeix una categoria"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "desa les etiquetes"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "Nom del grup:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "Es comparteix amb els següents usuaris:"
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "Es comparteix amb els següents grups:"
 
@@ -342,26 +343,26 @@ msgstr "Es comparteix amb els següents grups:"
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Coincidències de l'etiqueta \"<span></span>\" amb:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "i %s més que no es mostren..."
 
 #: media/js/user.js:45
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
-msgstr "Si us plau, <a href=\"%(signin_url)s\">inicieu la sessió</a> per seguir a %(username)s"
+msgstr "<a href=\"%(signin_url)s\">Inicieu la sessió</a> per seguir a %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "ha de ser inferior a %(max_chars)s caràcter"
 msgstr[1] "ha de ser inferior a %(max_chars)s caràcters"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "i"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "feu clic per tancar"
 
@@ -445,11 +446,11 @@ msgstr "Pel que sembla hi ha algunes coses que s'han de corregir:"
 
 #: media/js/user/manage_reject_reasons_dialog.js:158
 msgid "Please provide description."
-msgstr "Si us plau, introduïu la descripció."
+msgstr "Introduïu la descripció."
 
 #: media/js/user/manage_reject_reasons_dialog.js:161
 msgid "Please provide details."
-msgstr "Si us plau, proporcioneu els detalls."
+msgstr "Proporcioneu els detalls."
 
 #: media/js/user/manage_reject_reasons_dialog.js:248
 msgid "A reason must be selected to delete one."
@@ -737,7 +738,7 @@ msgstr "introduïu l'adreça web, p. ex. http://www.exemple.com \"títol de la p
 
 #: media/wmd/wmd.js:56
 msgid "upload file attachment"
-msgstr "Si us plau, seleccioneu i pugeu un fitxer:"
+msgstr "Seleccioneu i pugeu un fitxer:"
 
 #: media/wmd/wmd.js:1686
 msgid "strong text"

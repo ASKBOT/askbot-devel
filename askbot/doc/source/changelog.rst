@@ -1,8 +1,15 @@
 Changes in Askbot
 =================
 
-Development version
--------------------
+0.10.2 (Dec 21, 2016)
+---------------------
+* Bug fixes for the previous version
+
+0.10.1 (Nov 16, 2016)
+---------------------
+* Added settings `ASKBOT_ALLOWED_HTML_ELEMENTS` and
+  `ASKBOT_ALLOWED_HTML_ATTRIBUTES`
+* Allow custom markdown parser via `ASKBOT_MARKDOWN_CLASS` setting
 * Applied Akismet check (if enabled) to editing of all content
 * Updated Facebook API to v2.2.
 * Unsubscribe link feature

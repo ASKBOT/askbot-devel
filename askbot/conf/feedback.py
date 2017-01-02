@@ -53,8 +53,8 @@ settings.register(
             'feedback. Please type and send us your message below.'
         ),
         help_text=_(
-            'Save, then <a href="http://validator.w3.org/">'
-            'use HTML validator</a> on the "terms" page to check your input.'
+            'Save, then <a href="http://validator.w3.org/">use HTML validator</a> '
+            'on the "terms" page to check your input.'
         )
     )
 )
@@ -81,7 +81,7 @@ settings.register(
         'FEEDBACK_EMAILS',
         description=_('Internal feedback form email recipients'),
         help_text=_(
-            'Comma separated list of email addresses. If left empty,'
+            'Comma separated list of email addresses. If left empty, '
             'feedback mails are sent to admins and moderators.'),
         update_callback=feedback_emails_callback
     )

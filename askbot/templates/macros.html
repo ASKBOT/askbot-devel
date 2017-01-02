@@ -507,7 +507,7 @@ for the purposes of the AJAX comment editor #}
     </div>
 {%- endmacro -%}
 
-{%- macro edit_post(post_form, post_html=None) -%}
+{%- macro edit_post(post_form, settings, post_html=None) -%}
     {# todo: retire this macro, this will require renaming
     or using "set" on some template variables #}
     {% include "editors/rich_text.html" %}

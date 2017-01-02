@@ -1,11 +1,11 @@
 {% extends "one_column_body.html" %}
 {% import "macros.html" as macros %}
 <!-- template list_bulk_tag_subscription.html -->
-{% block title %}{% spaceless %}{% trans %}Manage Tag subscriptions{% endtrans %}{% endspaceless %}{% endblock %}
+{% block title %}{% spaceless %}{% trans %}Manage tag subscriptions{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
 <h1 class="section-title">
-    {% trans %}Manage Tag subscription{% endtrans %}
-    (<a href="{% url create_bulk_tag_subscription %}">{%trans%}Create New{% endtrans %}</a>)</h1>
+    {% trans %}Manage tag subscription{% endtrans %}
+    (<a href="{% url create_bulk_tag_subscription %}">{%trans%}Create new{% endtrans %}</a>)</h1>
 <table class='tag-subscriptions'>
     <thead>
         <th>{% trans %}Date{% endtrans %}</th>

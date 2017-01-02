@@ -1012,7 +1012,7 @@ class EmailFeedSettingTests(utils.AskbotTestCase):
         new_user = models.User.objects.create_user('new', 'new@example.com')
         feeds_before = self.get_user_feeds()
 
-        #verify that feed settigs are created automatically
+        #verify that feed settings are created automatically
         #when user is just created
         self.assertTrue(feeds_before.count() != 0)
 

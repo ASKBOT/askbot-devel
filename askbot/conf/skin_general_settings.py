@@ -50,7 +50,7 @@ settings.register(
         'SITE_LOGO_URL',
         description=_('Q&amp;A site logo'),
         help_text=_(
-            'To change the logo, select new file, then submit'
+            'To change the logo, select new file, then submit '
             'this whole form.'),
         default='/images/logo.gif',
         url_resolver=skin_utils.get_media_url

@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Martin Srebotnjak <miles@filmsi.net>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
-"PO-Revision-Date: 2016-06-16 08:09+0000\n"
-"Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
+"PO-Revision-Date: 2016-11-26 22:24+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian (http://www.transifex.com/askbot/askbot/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,15 +20,15 @@ msgstr ""
 
 #: media/js/group_messaging.js:132
 msgid "Type a message"
-msgstr ""
+msgstr "Vnesite sporočilo"
 
 #: media/js/group_messaging.js:141
 msgid "Add a recipient"
-msgstr ""
+msgstr "Dodajte prejemnika"
 
 #: media/js/group_messaging.js:171
 msgid "message sent"
-msgstr ""
+msgstr "sporočilo poslano"
 
 #: media/js/group_messaging.js:187
 msgid ""
@@ -38,14 +39,14 @@ msgstr ""
 #: media/js/group_messaging.js:191
 msgid "user {{str}} does not exist"
 msgid_plural "users {{str}} do not exist"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "uporabnik {{str}} ne obstaja"
+msgstr[1] "uporabnika {{str}} ne obstajata"
+msgstr[2] "uporabniki {{str}} ne obstajajo"
+msgstr[3] "uporabniki {{str}} ne obstajajo"
 
 #: media/js/group_messaging.js:198
 msgid "cannot send message to yourself"
-msgstr ""
+msgstr "sporočila ne morete poslati sami sebi"
 
 #: media/js/live_search.js:198
 msgid "To see search results, 2 or more characters may be required"
@@ -53,23 +54,23 @@ msgstr ""
 
 #: media/js/live_search.js:220
 msgid "Ask Your Question"
-msgstr ""
+msgstr "Zastavite svoje vprašanje"
 
 #: media/js/live_search.js:301
 msgid "Sorry, this tag does not exist"
 msgid_plural "Sorry, these tags do not exist"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Žal ta značka ne obstaja"
+msgstr[1] "Žal ti znački ne obstajata"
+msgstr[2] "Žal te značke ne obstajajo"
+msgstr[3] "Žal te značke ne obstajajo"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr ""
 
 #: media/js/post.js:28
 msgid "loading..."
-msgstr ""
+msgstr "nalaganje ..."
 
 #: media/js/post.js:136
 msgid "enter %(question)s title"
@@ -110,45 +111,45 @@ msgstr ""
 
 #: media/js/post.js:230
 msgid "enter your question"
-msgstr ""
+msgstr "vnesite svoje vprašanje"
 
 #: media/js/post.js:257
 msgid "content cannot be empty"
-msgstr ""
+msgstr "vsebina ne more biti prazna"
 
 #: media/js/post.js:321
 msgid "Back to the question"
-msgstr ""
+msgstr "Nazaj k vprašanju"
 
 #: media/js/post.js:392 media/js/post.js.c:436 media/js/post.js.c:522
 msgid "Load preview"
-msgstr ""
+msgstr "Naloži predogled"
 
 #: media/js/post.js:430
 msgid "Merge"
-msgstr ""
+msgstr "Spoji"
 
 #: media/js/post.js:521 media/js/utils/modal_dialog.js:9
 #: media/js/utils/text_property_editor.js:48
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: media/js/post.js:571
 msgid "draft saved..."
-msgstr ""
+msgstr "osnutek shranjen ..."
 
 #: media/js/post.js:791
 #, c-format
 msgid "%s follower"
 msgid_plural "%s followers"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%s sledilec"
+msgstr[1] "%s sledilca"
+msgstr[2] "%s sledilci"
+msgstr[3] "%s sledilcev"
 
 #: media/js/post.js:829
 msgid "insufficient privilege"
-msgstr ""
+msgstr "nezadostne pravice"
 
 #: media/js/post.js:831 media/js/post.js.c:1616
 msgid "please login"
@@ -200,7 +201,7 @@ msgstr ""
 
 #: media/js/post.js:1205 media/js/post.js.c:1701
 msgid "delete"
-msgstr ""
+msgstr "izbriši"
 
 #: media/js/post.js:1407 media/js/post.js.c:1645
 msgid "sorry, something is not right here"
@@ -212,15 +213,15 @@ msgstr ""
 
 #: media/js/post.js:1876
 msgid "Show preview"
-msgstr ""
+msgstr "Pokaži predogled"
 
 #: media/js/post.js:2288
 msgid "add comment"
-msgstr ""
+msgstr "dodaj komentar"
 
 #: media/js/post.js:2293
 msgid "save comment"
-msgstr ""
+msgstr "shrani komentar"
 
 #: media/js/post.js:2337
 #, c-format
@@ -241,10 +242,10 @@ msgstr ""
 msgid "maximum comment length reached"
 msgstr ""
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
-msgstr ""
+msgstr "prekliči"
 
 #: media/js/post.js:2471
 msgid "minor edit (don't send alerts)"
@@ -257,55 +258,55 @@ msgstr ""
 #: media/js/post.js:2548 media/jslib/timeago.js:37
 #: media/jslib/timeago.js.c:192
 msgid "just now"
-msgstr ""
+msgstr "ravnokar"
 
 #: media/js/post.js:2625
 msgid "delete this comment"
-msgstr ""
+msgstr "izbriši ta komentar"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr ""
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr ""
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr ""
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
-msgstr ""
+msgstr "Žal imate le dostop za branje"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
-msgstr ""
+msgstr "shrani"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
-msgstr ""
+msgstr "Vnesite URL logotipa ali naložite sliko"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
-msgstr ""
-
-#: media/js/post.js:3786
-msgid "change logo"
-msgstr ""
+msgstr "Resnično želite odstraniti sliko?"
 
 #: media/js/post.js:3787
-msgid "add logo"
-msgstr ""
+msgid "change logo"
+msgstr "zamenjaj logotip"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3788
+msgid "add logo"
+msgstr "dodaj logotip"
+
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr ""
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
@@ -314,39 +315,39 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
-msgstr ""
+msgstr "Želite izbrisati kategorijo?"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
-msgstr ""
+msgstr "uredi"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
-msgstr ""
+msgstr "ime kategorije ne sme biti prazno"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
-msgstr ""
+msgstr "že obstaja na trenutni ravni!"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
-msgstr ""
+msgstr "dodaj kategorijo"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
-msgstr ""
+msgstr "shrani značke"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
-msgstr ""
+msgstr "Ime skupine:"
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr ""
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr ""
 
@@ -354,7 +355,7 @@ msgstr ""
 msgid "Tag \"<span></span>\" matches:"
 msgstr ""
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr ""
@@ -363,7 +364,7 @@ msgstr ""
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr ""
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] ""
@@ -371,11 +372,11 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr ""
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr ""
 
@@ -396,7 +397,7 @@ msgstr ""
 
 #: media/js/jquery-openid/jquery.authenticator.js:146
 msgid "enter username"
-msgstr ""
+msgstr "vnesite uporabniško ime"
 
 #: media/js/jquery-openid/jquery.authenticator.js:148
 msgid "enter username or email"
@@ -408,7 +409,7 @@ msgstr ""
 
 #: media/js/jquery-openid/jquery.authenticator.js:179
 msgid "passwords do not match"
-msgstr ""
+msgstr "gesli se ne ujemata"
 
 #: media/js/jquery-openid/jquery.authenticator.js:205
 msgid "Show/change current login methods"
@@ -430,7 +431,7 @@ msgstr ""
 
 #: media/js/jquery-openid/jquery.authenticator.js:363
 msgid "Change password"
-msgstr ""
+msgstr "Spremeni geslo"
 
 #: media/js/jquery-openid/jquery.authenticator.js:365
 #, c-format
@@ -439,19 +440,19 @@ msgstr ""
 
 #: media/js/jquery-openid/jquery.authenticator.js:366
 msgid "Create password"
-msgstr ""
+msgstr "Ustvari geslo"
 
 #: media/js/jquery-openid/jquery.authenticator.js:377
 msgid "Create a password-protected account"
-msgstr ""
+msgstr "Ustvari z geslom zaščiten račun"
 
 #: media/js/user/group_adder_widget.js:12
 msgid "add group"
-msgstr ""
+msgstr "dodaj skupino"
 
 #: media/js/user/group_adder_widget.js:92
 msgid "add"
-msgstr ""
+msgstr "dodaj"
 
 #: media/js/user/manage_reject_reasons_dialog.js:90
 msgid "Looks there are some things to fix:"
@@ -480,7 +481,7 @@ msgstr ""
 
 #: media/js/utils/comment_convert_link.js:26
 msgid "convert to answer"
-msgstr ""
+msgstr "pretvori v vprašanje"
 
 #: media/js/utils/edit_link.js:14
 msgid "click to edit this comment"
@@ -493,11 +494,11 @@ msgstr ""
 
 #: media/js/utils/file_upload_dialog.js:152
 msgid "Choose a different file"
-msgstr ""
+msgstr "Izberite drugo datoteko"
 
 #: media/js/utils/file_upload_dialog.js:154
 msgid "Choose a different image"
-msgstr ""
+msgstr "Izberite drugo sliko"
 
 #: media/js/utils/file_upload_dialog.js:168
 msgid "Oops, looks like we had an error. Sorry."
@@ -505,15 +506,15 @@ msgstr ""
 
 #: media/js/utils/file_upload_dialog.js:228
 msgid "Choose a file to insert"
-msgstr ""
+msgstr "Izberite datoteko za vstavljanje"
 
 #: media/js/utils/file_upload_dialog.js:230
 msgid "Choose an image to insert"
-msgstr ""
+msgstr "Izberite sliko za vstavljanje"
 
 #: media/js/utils/file_upload_dialog.js:243
 msgid "Allowed file types are:"
-msgstr ""
+msgstr "Dovoljene vrste datotek so:"
 
 #: media/js/utils/file_upload_dialog.js:249
 #: media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
@@ -522,11 +523,11 @@ msgstr ""
 
 #: media/js/utils/group_dropdown.js:18
 msgid "group name"
-msgstr ""
+msgstr "ime skupine"
 
 #: media/js/utils/group_dropdown.js:26
 msgid "add new group"
-msgstr ""
+msgstr "dodaj novo skupino"
 
 #: media/js/utils/group_dropdown.js:118
 msgid "Group %(name)s already exists. Group names are case-insensitive."
@@ -534,12 +535,12 @@ msgstr ""
 
 #: media/js/utils/modal_dialog.js:7
 msgid "Ok"
-msgstr ""
+msgstr "V redu"
 
 #: media/js/utils/paginator.js:115
 #, c-format
 msgid "page %s"
-msgstr ""
+msgstr "stran %s"
 
 #: media/js/utils/tag.js:122
 #, c-format
@@ -548,19 +549,19 @@ msgstr ""
 
 #: media/js/utils/text_property_editor.js:47
 msgid "Save"
-msgstr ""
+msgstr "Shrani"
 
 #: media/js/utils/text_property_editor.js:119
 msgid "saved"
-msgstr ""
+msgstr "shranjeno"
 
 #: media/js/utils/toggle.js:88 media/js/utils/toggle.js.c:103
 msgid "enabled"
-msgstr ""
+msgstr "omogočeno"
 
 #: media/js/utils/toggle.js:89 media/js/utils/toggle.js.c:104
 msgid "disabled"
-msgstr ""
+msgstr "onemogočeno"
 
 #: media/jslib/timeago.js:35
 msgid "ago"
@@ -590,7 +591,7 @@ msgstr ""
 
 #: media/jslib/timeago.js:42 media/jslib/timeago.js.c:170
 msgid "yesterday"
-msgstr ""
+msgstr "včeraj"
 
 #: media/jslib/timeago.js:43
 #, c-format
@@ -617,7 +618,7 @@ msgstr ""
 
 #: media/jslib/timeago.js:145
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: media/jslib/timeago.js:146
 msgid "Feb"
@@ -665,45 +666,45 @@ msgstr ""
 
 #: media/jslib/timeago.js:168
 msgid "2 days ago"
-msgstr ""
+msgstr "pred dvema dnevoma"
 
 #: media/jslib/timeago.js:175
 #, c-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "pred %s uro"
+msgstr[1] "pred %s urama"
+msgstr[2] "pred %s urami"
+msgstr[3] "pred %s urami"
 
 #: media/jslib/timeago.js:185
 #, c-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "pred %s min."
+msgstr[1] "pred %s min."
+msgstr[2] "pred %s min."
+msgstr[3] "pred %s min."
 
 #: media/tinymce/plugins/askbot_attachment/editor_plugin.js:71
 msgid "Insert a file"
-msgstr ""
+msgstr "Vstavi datoteko"
 
 #: media/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
 msgid "Insert image"
-msgstr ""
+msgstr "Vstavi sliko"
 
 #: media/wmd/wmd.js:31
 msgid "bold"
-msgstr ""
+msgstr "krepko"
 
 #: media/wmd/wmd.js:32
 msgid "italic"
-msgstr ""
+msgstr "ležeče"
 
 #: media/wmd/wmd.js:33
 msgid "link"
-msgstr ""
+msgstr "povezava"
 
 #: media/wmd/wmd.js:34
 msgid "quote"
@@ -715,23 +716,23 @@ msgstr ""
 
 #: media/wmd/wmd.js:36
 msgid "image"
-msgstr ""
+msgstr "slika"
 
 #: media/wmd/wmd.js:37
 msgid "attachment"
-msgstr ""
+msgstr "priponka"
 
 #: media/wmd/wmd.js:38
 msgid "numbered list"
-msgstr ""
+msgstr "oštevilčen seznam"
 
 #: media/wmd/wmd.js:39
 msgid "bulleted list"
-msgstr ""
+msgstr "označen seznam"
 
 #: media/wmd/wmd.js:40
 msgid "heading"
-msgstr ""
+msgstr "naslov"
 
 #: media/wmd/wmd.js:41
 msgid "horizontal bar"
@@ -739,11 +740,11 @@ msgstr ""
 
 #: media/wmd/wmd.js:42
 msgid "undo"
-msgstr ""
+msgstr "razveljavi"
 
 #: media/wmd/wmd.js:43 media/wmd/wmd.js.c:1171
 msgid "redo"
-msgstr ""
+msgstr "ponovi"
 
 #: media/wmd/wmd.js:54
 msgid "enter image url"
@@ -759,19 +760,19 @@ msgstr ""
 
 #: media/wmd/wmd.js:1686
 msgid "strong text"
-msgstr ""
+msgstr "krepko besedilo"
 
 #: media/wmd/wmd.js:1690
 msgid "emphasized text"
-msgstr ""
+msgstr "poudarjeno besedilo"
 
 #: media/wmd/wmd.js:1844
 msgid "image description"
-msgstr ""
+msgstr "opis slike"
 
 #: media/wmd/wmd.js:1847
 msgid "file name"
-msgstr ""
+msgstr "ime datoteke"
 
 #: media/wmd/wmd.js:1851
 msgid "link text"
@@ -779,7 +780,7 @@ msgstr ""
 
 #: media/wmd/wmd.js:2284 media/wmd/wmd.js.c:2304
 msgid "enter code here"
-msgstr ""
+msgstr "kodo vnesite sem"
 
 #: media/wmd/wmd.js:2398
 msgid "List item"
@@ -787,7 +788,7 @@ msgstr ""
 
 #: media/wmd/wmd.js:2430
 msgid "Heading"
-msgstr ""
+msgstr "Naslov"
 
 #~ msgid "anonymous users cannot %(follow_questions)s"
 #~ msgstr "sorry, anonymous users cannot vote "

@@ -19,21 +19,17 @@ Branch `master` supports Django 1.8
 How to contribute
 =================
 
+Your pull requests are very welcome, **but please read the few paragraphs below**, it might save our combined efforts.
+
+**Obvious bug fixes will be merged quickly**, however less obvious cases should include a clear description of how to reproduce the bug. Complex cases must be accompanied with the new unit tests.
+
+Everyone likes good geatures, but **feature PR's may be not accepted, unless discussed beforehand in the "Issues" section or by email support@askbot.com or at the Askbot support forum**. Of course you can do anything you want in your fork, but please don't make an assumption that your giant glorious PR will be used, due to limited bandwidth for testing and to avoid "easter eggs" and the feature overload.
+
+**Please always use feature branches for the PR's**, multiple feature/bugfix PR's are harder to understand and less likely to be accepted.
+
 **Translators: DO NOT use git to contribute translations!!!** instead - translate at https://www.transifex.com/projects/p/askbot/.
 
 All documentation is in the directory askbot/doc
-
-To contribute code, please fork and make pull requests.
-
-If you are planning to add a new feature, please bring it up for discussion at our forum
-(http://askbot.org/en/questions/) and mention that you are willing to develop this feature.
-
-We will merge obvious bug fixes without questions, for more complex fixes
-please add a test case that fails before and passes after applying your fix.
-
-**Notes on using git for Askbot.** Please use topic branches only - one per feature or bugfix.
-Do not add multiple features and fixes into the same branch -
-those are much harder to understand and merge.
 
 Follow https://help.github.com/articles/fork-a-repo to to learn how to use
 `fetch` and `push` as well as other help on using git.
@@ -42,7 +38,7 @@ License, copyright and trademarks
 =================================
 Askbot software is licensed under GPL, version 3.
 
-Copyright Askbot S.p.A and the project contributors, 2010-2015.
+Copyright Askbot S.p.A and the project contributors, 2010-2016.
 
 "Askbot" is a trademark and service mark registered in the United States, number 4323777.
 

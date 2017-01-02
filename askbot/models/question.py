@@ -473,8 +473,8 @@ class ThreadManager(BaseQuerySetManager):
 
         orderby = QUESTION_ORDER_BY_MAP[search_state.sort]
 
-        if not getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False) \
-                and orderby == '-relevance':
+        if not (getattr(django_settings, 'ENABLE_HAYSTACK_SEARCH', False) \
+                and orderby == '-relevance'):
             # FIXME: this does not produces the very same results as postgres.
             qs = qs.extra(order_by=[orderby])
         # HACK: We add 'ordering_key' column as an alias and order by it, because when distict() is used,

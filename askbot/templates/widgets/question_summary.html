@@ -27,7 +27,7 @@
                 class="item-count"
             >{{ answer_count|humanize_counter }}{% if thread.accepted_answer_id %}{% endif %}</span>
             <div>
-            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(answer_count) }}
+            {{ settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(answer_count)|escape }}
             </div>
         </div>
         <div class="votes 

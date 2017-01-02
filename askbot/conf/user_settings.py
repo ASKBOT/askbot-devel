@@ -157,7 +157,12 @@ settings.register(
         default = True,
         description = _('Use automatic avatars from gravatar service'),
         help_text=_(
-            'Check this option if you want to allow the use of gravatar.com for avatars. Please, note that this feature might take about 10 minutes to become fully effective. You will have to enable uploaded avatars as well. For more information, please visit <a href="http://askbot.org/doc/optional-modules.html#uploaded-avatars">this page</a>.'
+            'Check this option if you want to allow the use of '
+            'gravatar.com for avatars. Please, note that this feature '
+            'might take about 10 minutes to become fully effective. '
+            'You will have to enable uploaded avatars as well. '
+            'For more information, please visit '
+            '<a href="http://askbot.org/doc/optional-modules.html#uploaded-avatars">this page</a>.'
         )
     )
 )
@@ -170,7 +175,10 @@ settings.register(
         choices=const.GRAVATAR_TYPE_CHOICES,
         description=_('Default Gravatar icon type'),
         help_text=_(
-                    'This option allows you to set the default avatar type for email addresses without associated gravatar images.  For more information, please visit <a href="http://en.gravatar.com/site/implement/images/">this page</a>.'
+                    'This option allows you to set the default '
+                    'avatar type for email addresses without associated '
+                    'gravatar images.  For more information, please visit '
+                    '<a href="http://en.gravatar.com/site/implement/images/">this page</a>.'
                     )
     )
 )

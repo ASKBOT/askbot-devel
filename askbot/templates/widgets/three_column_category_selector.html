@@ -1,7 +1,7 @@
 {# just a skeleton for the category selector - filled by js #}
 <table class="category-selector">
     <thead>
-        <th colspan="3">{{ settings.WORDS_INSTRUCTION_FOR_THE_CATEGORY_SELECTOR|escape }}
+        <th colspan="3">{{ settings.WORDS_INSTRUCTION_FOR_THE_CATEGORY_SELECTOR|safe }}
             <a style="display:none;"
                 class='category-editor-toggle'
                 data-on-state-text='{% trans %}(done editing){% endtrans %}'

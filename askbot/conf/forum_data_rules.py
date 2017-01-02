@@ -14,8 +14,8 @@ FORUM_DATA_RULES = livesettings.ConfigurationGroup(
 )
 
 EDITOR_CHOICES = (
-    ('markdown', 'markdown'),
-    ('tinymce', 'WYSIWYG (tinymce)')
+    ('markdown', _('Markdown')),
+    ('tinymce', _('WYSIWYG (tinymce)')),
 )
 
 settings.register(
@@ -57,18 +57,17 @@ settings.register(
     )
 )
 
-
-settings.register(
-    livesettings.BooleanValue(
-        FORUM_DATA_RULES,
-        'ENABLE_VIDEO_EMBEDDING',
-        default=False,
-        description=_('Enable embedding videos. '),
-        help_text=_(
-            '<em>Note: please read <a href="%(url)s">read this</a> first.</em>'
-        ) % {'url': const.DEPENDENCY_URLS['embedding-video']}
-    )
-)
+# settings.register(
+#     livesettings.BooleanValue(
+#         FORUM_DATA_RULES,
+#         'ENABLE_VIDEO_EMBEDDING',
+#         default=False,
+#         description=_('Enable embedding videos.'),
+#         help_text=_(
+#             '<em>Note: please read <a href="%(url)s">read this</a> first.</em>'
+#         ) % {'url': const.DEPENDENCY_URLS['embedding-video']}
+#     )
+# )
 
 settings.register(
     livesettings.BooleanValue(

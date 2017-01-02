@@ -1,0 +1,45 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-10 09:16-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: deps/livesettings/models.py:107 deps/livesettings/models.py:153
+msgid "Site"
+msgstr ""
+
+#: deps/livesettings/values.py:80
+msgid "Main"
+msgstr ""
+
+#: deps/livesettings/values.py:141
+msgid "Base Settings"
+msgstr ""
+
+#: deps/livesettings/values.py:257 deps/livesettings/values.py:291
+msgid "Default value: "
+msgstr ""
+
+#: deps/livesettings/values.py:259
+#, python-format
+msgid "Default value: %s"
+msgstr ""
+
+#: deps/livesettings/values.py:765
+#, python-format
+msgid "Allowed image file types are %(types)s"
+msgstr ""

@@ -1,7 +1,7 @@
 """Procedures to initialize the full text search in PostgresQL"""
 import askbot
 from askbot.utils.translation import get_language
-from django.db import connection
+from django.db import connection, models
 
 #mapping of "django" language names to postgres
 LANGUAGE_NAMES = {
@@ -54,6 +54,7 @@ def run_full_text_search(query_set, query_text, text_search_vector_name):
     it is assumed that the table has text search vector
     stored in the column called with value of`text_search_vector_name`.
     """
+    original_qs = query_set
     table_name = query_set.model._meta.db_table
 
     rank_clause = 'ts_rank(' + table_name + \
@@ -86,7 +87,16 @@ def run_full_text_search(query_set, query_text, text_search_vector_name):
         'select_params': extra_params,
     }
 
-    return query_set.extra(**extra_kwargs)
+    result_qs = query_set.extra(**extra_kwargs)
+    #added to allow search that can be ignored by postgres FTS.
+    if not result_qs and len(query_text) < 5:
+        return original_qs.filter(
+                    models.Q(title__icontains=search_query) |
+                    models.Q(tagnames__icontains=search_query) |
+                    models.Q(posts__text__icontains = search_query)
+                    ).extra(select={'relevance': rank_clause}, select_params=extra_params)
+    return result_qs
+
 
 def run_thread_search(query_set, query):
     """runs search for full thread content"""

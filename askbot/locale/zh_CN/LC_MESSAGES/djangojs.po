@@ -9,13 +9,14 @@
 # Hans Chen <haihan@gmail.com>, 2014
 # ianwu <ian.wu@163.com>, 2013
 # Haitao Jiang <jianghaitao@gmail.com>, 2013
+# Kevin Suo <suokunlong@126.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 03:04-0500\n"
-"PO-Revision-Date: 2016-06-16 08:09+0000\n"
-"Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
+"POT-Creation-Date: 2016-09-30 10:32-0500\n"
+"PO-Revision-Date: 2016-11-22 03:28+0000\n"
+"Last-Translator: Kevin Suo <suokunlong@126.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/askbot/askbot/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,11 +26,11 @@ msgstr ""
 
 #: media/js/group_messaging.js:132
 msgid "Type a message"
-msgstr ""
+msgstr "输入消息内容"
 
 #: media/js/group_messaging.js:141
 msgid "Add a recipient"
-msgstr ""
+msgstr "增加接收人"
 
 #: media/js/group_messaging.js:171
 msgid "message sent"
@@ -39,7 +40,7 @@ msgstr "消息已发"
 msgid ""
 "Did you mean to send your message to muliple users? Use comma instead of "
 "whitespaces"
-msgstr ""
+msgstr "你是想要将消息发送给多个用户吗？请使用逗号分隔，而不是空格"
 
 #: media/js/group_messaging.js:191
 msgid "user {{str}} does not exist"
@@ -64,7 +65,7 @@ msgid_plural "Sorry, these tags do not exist"
 msgstr[0] "对不起，这些标签不存在"
 
 #: media/js/live_search.js:315
-msgid "search or ask your question"
+msgid "Search or ask your question"
 msgstr "搜索或提问"
 
 #: media/js/post.js:28
@@ -73,7 +74,7 @@ msgstr "读取中..."
 
 #: media/js/post.js:136
 msgid "enter %(question)s title"
-msgstr ""
+msgstr "输入 %(question)s 标题"
 
 #: media/js/post.js:143 media/js/post.js.c:233
 msgid "%(question)s must have > %(length)s character"
@@ -196,11 +197,11 @@ msgstr "对不起，出错啦"
 
 #: media/js/post.js:1875
 msgid "Preview: (hide)"
-msgstr ""
+msgstr "预览：（隐藏）"
 
 #: media/js/post.js:1876
 msgid "Show preview"
-msgstr ""
+msgstr "显示预览"
 
 #: media/js/post.js:2288
 msgid "add comment"
@@ -229,7 +230,7 @@ msgstr "还可输入 %s 个字符"
 msgid "maximum comment length reached"
 msgstr "评论内容已超出最大长度"
 
-#: media/js/post.js:2456 media/js/post.js.c:3525 media/js/post.js.c:5088
+#: media/js/post.js:2456 media/js/post.js.c:3526 media/js/post.js.c:5077
 #: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:314
 msgid "cancel"
 msgstr "取消"
@@ -251,87 +252,87 @@ msgstr "刚才"
 msgid "delete this comment"
 msgstr "删除此评论"
 
-#: media/js/post.js:2922
+#: media/js/post.js:2923
 msgid "confirm delete comment"
 msgstr "确认删除评论"
 
-#: media/js/post.js:3091
+#: media/js/post.js:3092
 msgid "please sign in or register to post comments"
 msgstr "请登录或注册后再进行评论"
 
-#: media/js/post.js:3252
+#: media/js/post.js:3253
 msgid "Please enter question title (>10 characters)"
 msgstr "请输入提问标题 (至少 10 个字符)"
 
-#: media/js/post.js:3308 media/js/post.js.c:5116
+#: media/js/post.js:3309 media/js/post.js.c:5105
 msgid "Sorry, you have only read access"
 msgstr "对不起，你只有阅读权限"
 
-#: media/js/post.js:3519 media/js/post.js.c:4358 media/js/post.js.c:4548
+#: media/js/post.js:3520 media/js/post.js.c:4341 media/js/post.js.c:4534
 #: media/js/utils/editable.js:309
 msgid "save"
 msgstr "保存"
 
-#: media/js/post.js:3644
+#: media/js/post.js:3645
 msgid "Enter the logo url or upload an image"
 msgstr "输入logo的URL或上传一张图片"
 
-#: media/js/post.js:3670
+#: media/js/post.js:3671
 msgid "Do you really want to remove the image?"
 msgstr "你真的想删除这张图片吗？"
 
-#: media/js/post.js:3786
+#: media/js/post.js:3787
 msgid "change logo"
 msgstr "修改 logo"
 
-#: media/js/post.js:3787
+#: media/js/post.js:3788
 msgid "add logo"
 msgstr "添加 logo"
 
-#: media/js/post.js:3934
+#: media/js/post.js:3892
 #, c-format
 msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
 msgstr "标签“%s”已添加，无需重复(按“Esc”删除)"
 
-#: media/js/post.js:3943
+#: media/js/post.js:3901
 #, c-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
 msgstr[0] "最多允许 %s 个标签"
 
-#: media/js/post.js:4288
+#: media/js/post.js:4270
 msgid "Delete category?"
 msgstr "删除类别？"
 
-#: media/js/post.js:4377 media/js/utils/edit_link.js:15
+#: media/js/post.js:4360 media/js/utils/edit_link.js:15
 msgid "edit"
 msgstr "编辑"
 
-#: media/js/post.js:4464
+#: media/js/post.js:4447
 msgid "category name cannot be empty"
 msgstr "类别名不能为空"
 
-#: media/js/post.js:4501
+#: media/js/post.js:4484
 msgid "already exists at the current level!"
 msgstr "当前已存在。"
 
-#: media/js/post.js:4537
+#: media/js/post.js:4520
 msgid "add category"
 msgstr "添加类别"
 
-#: media/js/post.js:5084
+#: media/js/post.js:5073
 msgid "save tags"
 msgstr "保存标签"
 
-#: media/js/post.js:5193
+#: media/js/post.js:5182
 msgid "Group name:"
 msgstr "组名："
 
-#: media/js/post.js:5219
+#: media/js/post.js:5208
 msgid "Shared with the following users:"
 msgstr "与下列用户共享："
 
-#: media/js/post.js:5225
+#: media/js/post.js:5214
 msgid "Shared with the following groups:"
 msgstr "与下列群组共享："
 
@@ -339,7 +340,7 @@ msgstr "与下列群组共享："
 msgid "Tag \"<span></span>\" matches:"
 msgstr "标签“<span></span>”匹配下述提问:"
 
-#: media/js/tag_selector.js:84
+#: media/js/tag_selector.js:91
 #, c-format
 msgid "and %s more, not shown..."
 msgstr "另有 %s 条未显示..."
@@ -348,16 +349,16 @@ msgstr "另有 %s 条未显示..."
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "请<a href=\"%(signin_url)s\">登录</a>方可关注 %(username)s"
 
-#: media/js/utils.js:204
+#: media/js/utils.js:199
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "标签最多只能有%(max_chars)s个字符"
 
-#: media/js/utils.js:272
+#: media/js/utils.js:267
 msgid "and"
 msgstr "与"
 
-#: media/js/utils.js:290
+#: media/js/utils.js:285
 msgid "click to close"
 msgstr "点击消息框关闭"
 
@@ -378,15 +379,15 @@ msgstr "您目前还没有登录方式，请点击下列任一图标进行添加
 
 #: media/js/jquery-openid/jquery.authenticator.js:146
 msgid "enter username"
-msgstr ""
+msgstr "输入用户名"
 
 #: media/js/jquery-openid/jquery.authenticator.js:148
 msgid "enter username or email"
-msgstr ""
+msgstr "输入用户名或email"
 
 #: media/js/jquery-openid/jquery.authenticator.js:157
 msgid "enter password"
-msgstr ""
+msgstr "输入密码"
 
 #: media/js/jquery-openid/jquery.authenticator.js:179
 msgid "passwords do not match"
@@ -735,11 +736,11 @@ msgstr "上传文件附件"
 
 #: media/wmd/wmd.js:1686
 msgid "strong text"
-msgstr ""
+msgstr "加粗文本"
 
 #: media/wmd/wmd.js:1690
 msgid "emphasized text"
-msgstr ""
+msgstr "强调文本"
 
 #: media/wmd/wmd.js:1844
 msgid "image description"
@@ -755,15 +756,15 @@ msgstr "链接文字"
 
 #: media/wmd/wmd.js:2284 media/wmd/wmd.js.c:2304
 msgid "enter code here"
-msgstr ""
+msgstr "在这里输入代码"
 
 #: media/wmd/wmd.js:2398
 msgid "List item"
-msgstr ""
+msgstr "列表项目"
 
 #: media/wmd/wmd.js:2430
 msgid "Heading"
-msgstr ""
+msgstr "标题"
 
 #~ msgid "anonymous users cannot %(follow_questions)s"
 #~ msgstr "sorry, anonymous users cannot vote "

@@ -7,94 +7,58 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-31 00:49-0600\n"
+"POT-Creation-Date: 2016-12-10 09:16-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: values.py:88
+#: deps/livesettings/models.py:107 deps/livesettings/models.py:153
+msgid "Site"
+msgstr ""
+
+#: deps/livesettings/values.py:80
+msgid "Main"
+msgstr ""
+
+#: deps/livesettings/values.py:141
 msgid "Base Settings"
 msgstr ""
 
-#: values.py:194
-msgid "Default value: \"\""
-msgstr ""
-
-#: values.py:201
+#: deps/livesettings/values.py:257 deps/livesettings/values.py:291
 msgid "Default value: "
 msgstr ""
 
-#: values.py:204
+#: deps/livesettings/values.py:259
 #, python-format
 msgid "Default value: %s"
 msgstr ""
 
-#: templates/livesettings/group_settings.html:10
-#: templates/livesettings/site_settings.html:10
-msgid "Home"
+#: deps/livesettings/values.py:765
+#, python-format
+msgid "Allowed image file types are %(types)s"
 msgstr ""
 
-#: templates/livesettings/group_settings.html:7
-#: templates/livesettings/site_settings.html:7
-msgid "Log out"
-msgstr ""
-
-#: templates/livesettings/group_settings.html:18
-#: templates/livesettings/site_settings.html:18
 #, fuzzy
-msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
-msgstr[0] ""
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-msgstr[1] ""
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-
-#: templates/livesettings/group_settings.html:7
-#: templates/livesettings/site_settings.html:7
-msgid "Documentation"
-msgstr ""
-
-#: templates/livesettings/group_settings.html:7
-#: templates/livesettings/site_settings.html:7
-msgid "Change password"
-msgstr ""
-
-#: templates/livesettings/group_settings.html:11
-msgid "Edit Group Settings"
-msgstr ""
-
-#: templates/livesettings/group_settings.html:24
-#, python-format
-msgid "Settings included in %(name)s."
-msgstr ""
-
-#: templates/livesettings/group_settings.html:49
-#: templates/livesettings/site_settings.html:61
-msgid "You don't have permission to edit values."
-msgstr ""
-
-#: templates/livesettings/site_settings.html:11
-msgid "Edit Site Settings"
-msgstr ""
-
-#: templates/livesettings/site_settings.html:34
-#, python-format
-msgid "Group settings: %(name)s"
-msgstr ""
-
+#~ msgid "Please correct the error below."
+#~ msgid_plural "Please correct the errors below."
+#~ msgstr[0] ""
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ msgstr[1] ""
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+#~ "#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"

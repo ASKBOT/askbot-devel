@@ -27,6 +27,9 @@ class MockUser(object):
 
     def get_avatar_url(self, size):
         return ''
+    
+    def get_full_name(self):
+        return ''
 
     def get_profile_url(self):
         return ''
@@ -313,23 +316,24 @@ class EmailFeedSettingManager(models.Manager):
 
         return subscriber_set
 
+
 class EmailFeedSetting(models.Model):
-    #definitions of delays before notification for each type of notification frequency
+    # Definitions of delays before notification for each type of notification frequency
     DELTA_TABLE = {
-        'i':datetime.timedelta(-1),#instant emails are processed separately
-        'd':datetime.timedelta(1),
-        'w':datetime.timedelta(7),
-        'n':datetime.timedelta(-1),
+        'i': datetime.timedelta(-1),  # Instant emails are processed separately
+        'd': datetime.timedelta(1),
+        'w': datetime.timedelta(7),
+        'n': datetime.timedelta(-1),
     }
-    #definitions of feed schedule types
+    # definitions of feed schedule types
     FEED_TYPES = (
-            'q_ask', #questions that user asks
-            'q_all', #enture forum, tag filtered
-            'q_ans', #questions that user answers
-            'q_sel', #questions that user decides to follow
-            'm_and_c' #comments and mentions of user anywhere
+            'q_ask',  # questions that user asks
+            'q_all',  # enture forum, tag filtered
+            'q_ans',  # questions that user answers
+            'q_sel',  # questions that user decides to follow
+            'm_and_c'  # comments and mentions of user anywhere
     )
-    #email delivery schedule when no email is sent at all
+    # email delivery schedule when no email is sent at all
     NO_EMAIL_SCHEDULE = {
         'q_ask': 'n',
         'q_ans': 'n',
@@ -344,35 +348,33 @@ class EmailFeedSetting(models.Model):
         'q_sel': 'i',
         'm_and_c': 'i'
     }
-    #todo: words
+    # TODO: words
     FEED_TYPE_CHOICES = (
-                    ('q_all', ugettext_lazy('Entire forum')),
-                    ('q_ask', ugettext_lazy('Questions that I asked')),
-                    ('q_ans', ugettext_lazy('Questions that I answered')),
-                    ('q_sel', ugettext_lazy('Individually selected questions')),
-                    ('m_and_c', ugettext_lazy('Mentions and comment responses')),
-                    )
+        ('q_all', ugettext_lazy('Entire forum')),
+        ('q_ask', ugettext_lazy('Questions that I asked')),
+        ('q_ans', ugettext_lazy('Questions that I answered')),
+        ('q_sel', ugettext_lazy('Individually selected questions')),
+        ('m_and_c', ugettext_lazy('Mentions and comment responses')),
+    )
     UPDATE_FREQUENCY = (
-                    ('i', ugettext_lazy('Instantly')),
-                    ('d', ugettext_lazy('Daily')),
-                    ('w', ugettext_lazy('Weekly')),
-                    ('n', ugettext_lazy('No email')),
-                   )
-
+        ('i', ugettext_lazy('Instantly')),
+        ('d', ugettext_lazy('Daily')),
+        ('w', ugettext_lazy('Weekly')),
+        ('n', ugettext_lazy('No email')),
+    )
 
     subscriber = models.ForeignKey(User, related_name='notification_subscriptions')
     feed_type = models.CharField(max_length=16, choices=FEED_TYPE_CHOICES)
     frequency = models.CharField(
-                                    max_length=8,
-                                    choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
-                                    default='n',
-                                )
+        max_length=8, choices=const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES,
+        default='n')
     added_at = models.DateTimeField(auto_now_add=True)
     reported_at = models.DateTimeField(null=True)
+
     objects = EmailFeedSettingManager()
 
     class Meta:
-        #added to make account merges work properly
+        # Added to make account merges work properly
         unique_together = ('subscriber', 'feed_type')
         app_label = 'askbot'
 
@@ -391,16 +393,15 @@ class EmailFeedSetting(models.Model):
                                                      reported_at
                                                  )
 
-    def save(self,*args,**kwargs):
+    def save(self, *args, **kwargs):
         type = self.feed_type
         subscriber = self.subscriber
-        similar = self.__class__.objects.filter(
-                                            feed_type=type,
-                                            subscriber=subscriber
-                                        ).exclude(pk=self.id)
-        if len(similar) > 0:
+        similar = self.__class__.objects\
+            .filter(feed_type=type, subscriber=subscriber)\
+            .exclude(pk=self.id)
+        if similar.exists():
             raise IntegrityError('email feed setting already exists')
-        super(EmailFeedSetting,self).save(*args,**kwargs)
+        super(EmailFeedSetting, self).save(*args, **kwargs)
 
     def get_previous_report_cutoff_time(self):
         now = timezone.now()
@@ -409,10 +410,10 @@ class EmailFeedSetting(models.Model):
     def should_send_now(self):
         now = timezone.now()
         cutoff_time = self.get_previous_report_cutoff_time()
-        if self.reported_at == None or self.reported_at <= cutoff_time:
-            return True
-        else:
-            return False
+        return (
+            self.reported_at is None or
+            self.reported_at <= cutoff_time
+        )
 
     def mark_reported_now(self):
         self.reported_at = timezone.now()
@@ -420,10 +421,10 @@ class EmailFeedSetting(models.Model):
 
 
 class GroupMembership(models.Model):
-    NONE = -1#not part of the choices as for this records should be just missing
+    NONE = -1  # not part of the choices as for this records should be just missing
     PENDING = 0
     FULL = 1
-    LEVEL_CHOICES = (#'none' is by absence of membership
+    LEVEL_CHOICES = (  # 'none' is by absence of membership
         (PENDING, 'pending'),
         (FULL, 'full')
     )
@@ -432,10 +433,7 @@ class GroupMembership(models.Model):
     group = models.ForeignKey(AuthGroup, related_name='user_membership')
     user = models.ForeignKey(User, related_name='group_membership')
     level = models.SmallIntegerField(
-                        default=FULL,
-                        choices=LEVEL_CHOICES,
-                    )
-
+        default=FULL, choices=LEVEL_CHOICES,)
 
     class Meta:
         app_label = 'askbot'
@@ -540,25 +538,22 @@ class Group(AuthGroup):
     moderate_email = models.BooleanField(default=True)
     moderate_answers_to_enquirers = models.BooleanField(
                         default=False,
-                        help_text='If true, answers to outsiders questions '
-                                'will be shown to the enquirers only when '
-                                'selected by the group moderators.'
+                        help_text=_('If true, answers to outsiders questions '
+                                    'will be shown to the enquirers only when '
+                                    'selected by the group moderators.')
                     )
     openness = models.SmallIntegerField(default=CLOSED, choices=OPENNESS_CHOICES)
-    #preapproved email addresses and domain names to auto-join groups
-    #trick - the field is padded with space and all tokens are space separated
+    # preapproved email addresses and domain names to auto-join groups
+    # trick - the field is padded with space and all tokens are space separated
     preapproved_emails = models.TextField(
-                            null = True, blank = True, default = ''
-                        )
-    #only domains - without the '@' or anything before them
+        null=True, blank=True, default='')
+    # only domains - without the '@' or anything before them
     preapproved_email_domains = models.TextField(
-                            null = True, blank = True, default = ''
-                        )
+        null=True, blank=True, default='')
 
     is_vip = models.BooleanField(
         default=False,
-        help_text='Check to make members of this group site moderators'
-    )
+        help_text=_('Check to make members of this group site moderators'))
     read_only = models.BooleanField(default=False)
 
     objects = GroupManager()
@@ -596,11 +591,11 @@ class Group(AuthGroup):
         if user.is_anonymous():
             return 'closed'
 
-        #a special case - automatic global group cannot be joined or left
+        # A special case - automatic global group cannot be joined or left
         if self.name == askbot_settings.GLOBAL_GROUP_NAME:
             return 'closed'
 
-        #todo - return 'closed' for internal per user groups too
+        # TODO: return 'closed' for internal per user groups too
 
         if self.openness == Group.OPEN:
             return 'open'
@@ -608,7 +603,7 @@ class Group(AuthGroup):
         if user.is_administrator_or_moderator():
             return 'open'
 
-        #relying on a specific method of storage
+        # Relying on a specific method of storage
         from askbot.utils.forms import email_is_allowed
         if email_is_allowed(
             user.email,
@@ -653,6 +648,7 @@ class Group(AuthGroup):
     def save(self, *args, **kwargs):
         self.clean()
         super(Group, self).save(*args, **kwargs)
+
 
 class BulkTagSubscriptionManager(BaseQuerySetManager):
 
@@ -707,7 +703,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
         if group_list:
             group_ids = []
             for group in group_list:
-                #TODO: do the group marked tag thing here
+                # TODO: do the group marked tag thing here
                 group_ids.append(group.id)
             new_object.groups.add(*group_ids)
 

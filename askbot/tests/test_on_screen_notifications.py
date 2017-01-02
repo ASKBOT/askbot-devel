@@ -450,11 +450,11 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.assertEqual(len(notifications), 1)
         self.assertEqual(
             set(notifications[0].recipients.all()),
-            set([self.u11, self.u13, self.u14]),
+            set([self.u11, self.u13]),
         )
         self.assertNewResponseCountsEqual(
             [
-                 1, 0, 1, 1,
+                 1, 0, 1, 0,
                  0, 0, 0, 0,
                  0, 0, 0, 0,
             ]
@@ -476,12 +476,12 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.assertEqual(len(notifications), 1)
         self.assertEqual(
             set(notifications[0].recipients.all()),
-            set([self.u21, self.u23, self.u24]),
+            set([self.u21, self.u23]),
         )
         self.assertNewResponseCountsEqual(
             [
                  0, 0, 0, 0,
-                 1, 0, 1, 1,
+                 1, 0, 1, 0,
                  0, 0, 0, 0,
             ]
         )
@@ -524,11 +524,11 @@ class OnScreenUpdateNotificationTests(TestCase):
         self.assertEqual(len(notifications), 1)
         self.assertEqual(
             set(notifications[0].recipients.all()),
-            set([self.u11, self.u12, self.u13, self.u14, self.u21])
+            set([self.u11, self.u12, self.u13, self.u21])
         )
         self.assertNewResponseCountsEqual(
             [
-                 1, 1, 1, 1,
+                 1, 1, 1, 0,
                  1, 0, 0, 0,
                  0, 0, 0, 0,
             ]

@@ -21,9 +21,8 @@ class ViewContextTests(AskbotTestCase):
         inbox_context = context.get_for_inbox(mod)
 
         self.assertEqual(inbox_context['re_count'], 0)
-        self.assertEqual(inbox_context['flags_count'], 0)
         self.assertEqual(inbox_context['group_join_requests_count'], 1)
 
         inbox_context = context.get_for_inbox(simple)
         values = set(inbox_context.values())
-        self.assertEqual(values, set([0, 0, 0]))
+        self.assertEqual(values, set([0, 0]))

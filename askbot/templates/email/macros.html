@@ -30,10 +30,10 @@
         {% if post.post_type == 'question' %}
             <p style="{{ info_text_style() }}">
                 {% if format == 'parent_subthread' %}
-                    {% set post_type=settings.WORDS_QUESTION_SINGULAR %}
+                    {% set post_type=settings.WORDS_QUESTION_SINGULAR|escape %}
                     {% trans %}In reply to {{ author }}'s <a href="{{ post_url }}">{{ post_type }}</a>{% endtrans %}:
                 {% else %}
-                    {{ author }} {{ settings.WORDS_ASKED }}:
+                    {{ author }} {{ settings.WORDS_ASKED|escape }}:
                 {% endif %}
             </p>
 
@@ -57,8 +57,8 @@
                 {% set post_type=gettext('comment') %}
                 {% set acted=gettext('commented') %}
             {% else %}
-                {% set post_type=settings.WORDS_ANSWER_SINGULAR %}
-                {% set acted=settings.WORDS_ANSWERED %}
+                {% set post_type=settings.WORDS_ANSWER_SINGULAR|escape %}
+                {% set acted=settings.WORDS_ANSWERED|escape %}
             {% endif %}
             <p style="{{ info_text_style() }}">
                 {% if format == 'parent_subthread' %}

@@ -23,13 +23,6 @@
                     {% trans %}forum responses (<span class="response-count">{{re_count}}</span>){% endtrans -%}
                 </a>
             {% endif %}
-            {% if flags_count > 0 %}{{ sep() }}
-                <a href="{{request.user.get_absolute_url()}}?sort=inbox&section=flags"
-                    {% if inbox_section == 'flags' %}class="on"{% endif %}
-                >
-                    {% trans %}flagged items (<span class="mod-memo-count">{{flags_count}}</span>){% endtrans %}
-                </a>
-            {% endif %}
             {% if group_join_requests_count %}{{ sep() }}
             <a href="{{request.user.get_absolute_url()}}?sort=inbox&section=join_requests"
                 {% if inbox_section == 'join_requests' %}class="on"{% endif %}

@@ -33,3 +33,4 @@ recursive-exclude categories *
 recursive-exclude follow *
 recursive-exclude env *
 recursive-exclude .tox
+recursive-exclude testproject

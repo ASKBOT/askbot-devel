@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy
 
+
 class Message(models.Model):
     """
     The message system is a lightweight way to queue messages for given
@@ -26,4 +27,3 @@ class Message(models.Model):
 
     def __str__(self):
         return self.message.encode('utf-8')
-

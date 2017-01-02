@@ -29,7 +29,7 @@ settings.register(
         description=_('HTML for the left sidebar'),
         default='',
         help_text=_(
-            'Use this area to enter content at the LEFT sidebar'
+            'Use this area to enter content at the LEFT sidebar '
             'in HTML format.  When using this option, please '
             'use the HTML validation service to make sure that '
             'your input is valid and works well in all browsers.'

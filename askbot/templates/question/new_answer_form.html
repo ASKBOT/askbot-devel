@@ -26,11 +26,11 @@
             </div>
             <p class="message">
             {% if request.user.is_anonymous() %}
-                {{ settings.WORDS_INSTRUCTION_TO_POST_ANONYMOUSLY }}
+                {{ settings.WORDS_INSTRUCTION_TO_POST_ANONYMOUSLY|safe }}
             {% elif request.user==question.author  %}
-                {{ settings.WORDS_INSTRUCTION_TO_ANSWER_OWN_QUESTION }}
+                {{ settings.WORDS_INSTRUCTION_TO_ANSWER_OWN_QUESTION|safe }}
             {% endif %}
-                {{ settings.WORDS_INSTRUCTION_TO_GIVE_ANSWER }}
+                {{ settings.WORDS_INSTRUCTION_TO_GIVE_ANSWER|safe }}
             </p>
             <div class="folded-editor" tabindex="6">
               <p class="prompt"><a>{{ settings.WORDS_ADD_ANSWER|escape }}</a></p>

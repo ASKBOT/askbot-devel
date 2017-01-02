@@ -11,6 +11,17 @@ var getAskbotMarkdownConverter = function() {
 
 var AskbotMarkdownConverter = function() {
     this._converter = new Markdown.getSanitizingConverter();
+    this._timeout = null;
+};
+
+AskbotMarkdownConverter.prototype.scheduleMathJaxRendering = function () {
+    if (this._timeout) {
+        clearTimeout(this._timeout);
+    }
+    var renderFunc = function () {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'previewer']);
+    };
+    this._timeout = setTimeout(renderFunc, 500);
 };
 
 AskbotMarkdownConverter.prototype.makeHtml = function (text) {
@@ -23,7 +34,7 @@ AskbotMarkdownConverter.prototype.makeHtml = function (text) {
                 $('#previewer').html(makeHtmlBase(text));
             }
         );
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'previewer']);
+        this.scheduleMathJaxRendering();
         return $('#previewer').html();
     } else {
         console.log('Could not load MathJax');

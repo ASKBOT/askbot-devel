@@ -1,20 +1,23 @@
 """Utilities for working with HTML."""
-from bs4 import BeautifulSoup
-from bs4 import NavigableString
-import html5lib
-from html5lib import sanitizer, serializer, tokenizer, treebuilders, treewalkers
 import functools
-import htmlentitydefs
 import re
 from urlparse import urlparse
+
+from bs4 import BeautifulSoup
+import html5lib
+from html5lib import sanitizer, serializer, tokenizer, treebuilders,\
+    treewalkers
+import htmlentitydefs
+
+from django.conf import settings as django_settings
 from django.core.urlresolvers import reverse
 from django.template.loader import get_template
 from django.utils.html import strip_tags as strip_all_tags
 from django.utils.html import urlize
 from django.utils.translation import ugettext as _
 
-class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
-    acceptable_elements = ('a', 'abbr', 'acronym', 'address', 'b', 'big',
+
+ALLOWED_HTML_ELEMENTS = ('a', 'abbr', 'acronym', 'address', 'b', 'big',
         'blockquote', 'br', 'caption', 'center', 'cite', 'code', 'col',
         'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'font',
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'kbd',
@@ -22,7 +25,8 @@ class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
         'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead',
         'tr', 'tt', 'u', 'ul', 'var', 'param')
 
-    acceptable_attributes = ('abbr', 'align', 'alt', 'axis', 'border', 'class',
+
+ALLOWED_HTML_ATTRIBUTES = ('abbr', 'align', 'alt', 'axis', 'border', 'class',
         'cellpadding', 'cellspacing', 'char', 'charoff', 'charset', 'cite',
         'cols', 'colspan', 'datetime', 'dir', 'frame', 'headers', 'height',
         'href', 'hreflang', 'hspace', 'lang', 'longdesc', 'name', 'nohref',
@@ -30,11 +34,23 @@ class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
         'span', 'src', 'start', 'summary', 'title', 'type', 'valign', 'vspace',
         'width')
 
-    allowed_elements = acceptable_elements
-    allowed_attributes = acceptable_attributes
+
+class HTMLSanitizerMixin(sanitizer.HTMLSanitizerMixin):
     allowed_css_properties = ()
     allowed_css_keywords = ()
     allowed_svg_properties = ()
+
+    def __init__(self, *args, **kwargs):
+        self.allowed_elements = tuple(getattr(django_settings,
+                                           'ASKBOT_ALLOWED_HTML_ELEMENTS',
+                                           ALLOWED_HTML_ELEMENTS
+                                           ))
+
+        self.allowed_attributes = tuple(getattr(django_settings,
+                                           'ASKBOT_ALLOWED_HTML_ATTRIBUTES',
+                                           ALLOWED_HTML_ATTRIBUTES
+                                           ))
+
 
 class HTMLSanitizer(tokenizer.HTMLTokenizer, HTMLSanitizerMixin):
     def __init__(self, stream, encoding=None, parseMeta=True, useChardet=True,
@@ -75,22 +91,25 @@ def sanitized(func):
 def absolutize_urls(html):
     """turns relative urls in <img> and <a> tags to absolute,
     starting with the ``askbot_settings.APP_URL``"""
-    #temporal fix for bad regex with wysiwyg editor
+    # temporal fix for bad regex with wysiwyg editor
     url_re1 = re.compile(r'(?P<prefix><img[^<]+src=)"(?P<url>/[^"]+)"', re.I)
     url_re2 = re.compile(r"(?P<prefix><img[^<]+src=)'(?P<url>/[^']+)'", re.I)
     url_re3 = re.compile(r'(?P<prefix><a[^<]+href=)"(?P<url>/[^"]+)"', re.I)
     url_re4 = re.compile(r"(?P<prefix><a[^<]+href=)'(?P<url>/[^']+)'", re.I)
-    base_url = site_url('')#important to have this without the slash
+    base_url = site_url('')  # important to have this without the slash
     img_replacement = '\g<prefix>"%s/\g<url>"' % base_url
     replacement = '\g<prefix>"%s\g<url>"' % base_url
     html = url_re1.sub(img_replacement, html)
     html = url_re2.sub(img_replacement, html)
     html = url_re3.sub(replacement, html)
-    #temporal fix for bad regex with wysiwyg editor
-    return url_re4.sub(replacement, html).replace('%s//' % base_url, '%s/' % base_url)
+    # temporal fix for bad regex with wysiwyg editor
+    return url_re4.sub(replacement, html)\
+        .replace('%s//' % base_url, '%s/' % base_url)
+
 
 def get_word_count(html):
     return len(strip_all_tags(html).split())
+
 
 def format_url_replacement(url, text):
     url = url.strip()
@@ -114,8 +133,8 @@ def urlize_html(html, trim_url_limit=40):
         if set(parent_tags) & set(skip_tags):
             continue
 
-        #bs4 is weird, so we work around to replace nodes
-        #maybe there is a better way though
+        # bs4 is weird, so we work around to replace nodes
+        # maybe there is a better way though
         urlized_text = urlize(node, trim_url_limit=trim_url_limit)
         if unicode(node) == urlized_text:
             continue
@@ -124,10 +143,10 @@ def urlize_html(html, trim_url_limit=40):
         contents = sub_soup.find('body').contents
         num_items = len(contents)
         for i in range(num_items):
-            #there is strange thing in bs4, can't iterate
-            #as the tag seemingly can't belong to >1 soup object
-            child = contents[0] #always take first element
-            #insure that text nodes are sandwiched by space
+            # there is strange thing in bs4, can't iterate
+            # as the tag seemingly can't belong to >1 soup object
+            child = contents[0]  # always take first element
+            # insure that text nodes are sandwiched by space
             have_string = (not hasattr(child, 'name'))
             if have_string:
                 node.insert_before(soup.new_string(' '))
@@ -137,7 +156,7 @@ def urlize_html(html, trim_url_limit=40):
 
         extract_nodes.append(node)
 
-    #extract the nodes that we replaced
+    # extract the nodes that we replaced
     for node in extract_nodes:
         node.extract()
 
@@ -182,7 +201,7 @@ def get_text_from_html(html_text):
     """
     soup = BeautifulSoup(html_text, 'html5lib')
 
-    #replace <a> links with plain text
+    # replace <a> links with plain text
     links = soup.find_all('a')
     for link in links:
         url = link.get('href', '')
@@ -309,7 +328,8 @@ def get_visible_text(html):
     http://stackoverflow.com/a/19760007/110274
     """
     soup = BeautifulSoup(html, 'html5lib')
-    [s.extract() for s in soup(['style', 'script', '[document]', 'head', 'title'])]
+    [s.extract()
+     for s in soup(['style', 'script', '[document]', 'head', 'title'])]
     return soup.get_text()
 
 
@@ -336,5 +356,5 @@ def unescape(text):
                 text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
             except KeyError:
                 pass
-        return text # leave as is
+        return text  # leave as is
     return re.sub("&#?\w+;", fixup, text)
