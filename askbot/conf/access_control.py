@@ -37,7 +37,7 @@ settings.register(
     livesettings.BooleanValue(
         ACCESS_CONTROL,
         'ASKBOT_CLOSED_FORUM_MODE',
-        default=False,
+        default=True,
         description=_('Allow only registered user to access the forum'),
     )
 )
