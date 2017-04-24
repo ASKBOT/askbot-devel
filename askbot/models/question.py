@@ -483,6 +483,8 @@ class ThreadManager(BaseQuerySetManager):
         # UPDATE: Apparently we don't need distinct, the query don't duplicate Thread rows!
         # qs = qs.extra(select={'ordering_key': orderby.lstrip('-')}, order_by=['-ordering_key' if orderby.startswith('-') else 'ordering_key'])
         # qs = qs.distinct()
+        else:
+            qs = qs.order_by(orderby)
         qs = qs.only(
             'id', 'title', 'view_count', 'answer_count', 'last_activity_at',
             'last_activity_by', 'closed', 'tagnames', 'accepted_answer'
