@@ -31,7 +31,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_KEYWORDS',
-        default=u'Askbot,forum,community',
+        default=u'Boism,forum,community',
         description=_('Comma separated list of Q&A site keywords')
     )
 )
@@ -59,7 +59,7 @@ settings.register(
     livesettings.StringValue(
         QA_SITE_SETTINGS,
         'APP_SHORT_NAME',
-        default='Askbot',
+        default='Boism.org',
         description=_('Short name for your Q&A forum')
     )
 )
@@ -93,7 +93,7 @@ settings.register(
         QA_SITE_SETTINGS,
         'APP_URL',
         description=_(
-            'Base URL for your Q&A forum, must start with http or https'),
+            'http://boism.org/'),
         update_callback=app_url_callback
     )
 )
