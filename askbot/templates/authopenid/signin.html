@@ -1,5 +1,6 @@
 {% extends "two_column_body.html" %}
 {% import "authopenid/authopenid_macros.html" as login_macros %}
+{% import "macros.html" as main_macros %}
 {% from "macros.html" import timeago %}
 <!-- signin.html -->
 {% block title %}{% spaceless %}{% trans %}User login{% endtrans %}{% endspaceless %}{% endblock %}
@@ -126,6 +127,7 @@
                         >
                     </div>
                 </div>
+                {{ main_macros.form_field_with_errors(login_form.recaptcha) }}
                 <p id="local_login_buttons">
                     <input class="button" name="change_password" type="submit" value="{% trans %}Change password{% endtrans %}" />
                 </p>

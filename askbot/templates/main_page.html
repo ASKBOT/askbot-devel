@@ -15,6 +15,12 @@
 {% block title %}{% spaceless %}{% trans %}Questions{% endtrans %}{% endspaceless %}{% endblock %}
 {% block content %}
     {% include "main_page/tab_bar.html" %}
+    <div class="tabsA" style="float:right;height:30px;line-height:30px;margin:3px;">
+        <a style="border-left:none;" href="/questions/scope%3Aall/sort%3Aactivity-desc/tags:勃学/">勃学</a> 
+        <a href="/questions/scope:all/sort:activity-desc/tags:boism.org/">boism.org</a> 
+        <a href="/questions/scope%3Aall/sort%3Aactivity-desc/tags:计算机"/>计算机</a>
+        <a href="/questions/scope%3Aall/sort%3Aactivity-desc/tags:北美"/>北美</a>
+        <a href="/questions/scope%3Aall/sort%3Aactivity-desc/tags:你乎"/>你乎</a></div>
     {% include "main_page/headline.html" %}
     {# ==== BEGIN: main_page/content.html === #}
     <div id="question-list">

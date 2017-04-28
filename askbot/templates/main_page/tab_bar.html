@@ -7,8 +7,11 @@
     >{% trans %}RSS{% endtrans %}
 </a>
 {% endif %}
+
 <div class="tabBar">
+    
     <div id="sort_tabs" class="tabsA">
+        
         <span class="label">{% trans %}Sort by &raquo;{% endtrans %}</span>
         {% if show_sort_by_relevance %}
             {% set asc_relevance_tooltip = gettext('most relevant questions') %}
@@ -74,5 +77,4 @@
         }}
     </div>
 </div>
-
 {% endcache %}

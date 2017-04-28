@@ -5,6 +5,7 @@
     <a
         id="askButton"
         class="button"
+        onclick="var tag = (window.location.href).match(/tags(?:\%3A|\:)([\s\S]*)\//); if(tag && tag[1]) this.href += (this.href.match(/\?/)?'&amp;':'?') + 'tags=' + tag[1];"
         href="{{ search_state.full_ask_url() }}{% if group %}{% if '?' in search_state.full_ask_url() %}&amp;{% else %}?{% endif %}group_id={{ group.id }}{% endif %}"
         >{% if group %}
             {{ settings.WORDS_ASK_THE_GROUP|escape }}

@@ -296,6 +296,7 @@ def user_calculate_avatar_url(self, size=48):
             logging.warning("Using deprecated version of django-avatar")
 
         avatar = get_primary_avatar(self, size=size)
+        #avatar = None
         if avatar:
             return avatar.avatar_url(size)
         return self.get_default_avatar_url(size)

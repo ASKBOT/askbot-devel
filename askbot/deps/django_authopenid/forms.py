@@ -318,7 +318,6 @@ class SafeOpenidRegisterForm(OpenidRegisterForm):
     """
     def __init__(self, *args, **kwargs):
         super(SafeOpenidRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['recaptcha'] = AskbotReCaptchaField()
 
 
 class ClassicRegisterForm(SetPasswordForm):
@@ -348,7 +347,6 @@ class SafeClassicRegisterForm(ClassicRegisterForm):
     """
     def __init__(self, *args, **kwargs):
         super(SafeClassicRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['recaptcha'] = AskbotReCaptchaField()
 
 
 class ChangePasswordForm(forms.Form):

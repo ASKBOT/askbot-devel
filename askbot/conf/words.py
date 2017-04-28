@@ -289,6 +289,28 @@ settings.register(
 )
 
 settings.register(
+    values.LongStringValue(
+        WORDS,
+        'WORDS_VIEWS_COUNTABLE_FORMS',
+        default=_('view\nviews'),
+        description=_('Countable plural forms for "view"'),
+        help_text=_('Enter one form per line, pay attention'),
+        localized=True
+    )
+)
+
+settings.register(
+    values.LongStringValue(
+        WORDS,
+        'WORDS_VOTES_COUNTABLE_FORMS',
+        default=_('vote\nvotes'),
+        description=_('Countable plural forms for "vote"'),
+        help_text=_('Enter one form per line, pay attention'),
+        localized=True
+    )
+)
+
+settings.register(
     values.StringValue(
         WORDS,
         'WORDS_QUESTION_SINGULAR',

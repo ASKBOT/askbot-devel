@@ -4,6 +4,7 @@
 /* General styles for gradients */
 /* Receive exactly positions for background Sprite  */
 /* CSS3 Elements */
+
 .border-box {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -11,9 +12,10 @@
 }
 /* Library of predifined less functions styles */
 /* ----- General HTML Styles----- */
+
 body {
   background: #FFF;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 150%;
   margin: 0;
   padding: 0;
@@ -53,7 +55,7 @@ input,
 select,
 textarea {
   vertical-align: middle;
-  font-family: Trebuchet MS, "segoe ui", Helvetica, Tahoma, Verdana, MingLiu, PMingLiu, Arial, sans-serif;
+  font-family: "Microsoft YaHei", STXihei, serif;
   margin-left: 0px;
   -webkit-appearance: none;
   border-radius: 0;
@@ -204,13 +206,14 @@ html {
   overflow-y: scroll;
 }
 /* http://pathfindersoftware.com/2007/09/developers-note-2/ */
+
 * html .clearfix,
 * html .paginator {
   height: 1;
   overflow: visible;
 }
- + html .clearfix,
- + html .paginator {
++ html .clearfix,
++ html .paginator {
   min-height: 1%;
 }
 .clearfix:after,
@@ -246,11 +249,13 @@ a:hover {
 .user-card .js-avatar {
   height: 32px !important;
   width: 32px;
+  border-radius: 20px;
 }
 .comment-controls .js-avatar,
 .message .js-avatar {
   height: 16px;
   width: 16px;
+  border-radius: 10px;
 }
 .user-info-table .js-avatar {
   height: 128px;
@@ -266,10 +271,13 @@ a:hover {
   text-decoration: underline;
 }
 h1 {
-  font-size: 24px;
+  font-size: 26px;
+  font-weight: normal;
+  line-height: 30px;
   padding: 0px 0 5px 0px;
 }
 /* ----- Extra space above for messages ----- */
+
 body.user-messages {
   margin-top: 2.4em;
   box-sizing: border-box;
@@ -277,6 +285,7 @@ body.user-messages {
   -webkit-box-sizing: border-box;
 }
 /* ----- Custom positions ----- */
+
 .left {
   float: left;
 }
@@ -294,6 +303,7 @@ body.user-messages {
   display: none;
 }
 /* ----- Notify message bar , check blocks/system_messages.html ----- */
+
 .notify {
   position: fixed;
   top: 0px;
@@ -362,13 +372,15 @@ body.user-messages {
   background: -26px -5px url(../images/sprites.png) no-repeat;
 }
 /* ----- Header, check blocks/header.html ----- */
+
 #header {
   margin-top: 0px;
   background: #16160f;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "Microsoft YaHei", STXihei, serif;
 }
 .content-wrapper {
   /* wrapper positioning class */
+  
   width: 960px;
   margin: auto;
   position: relative;
@@ -444,6 +456,7 @@ body.user-messages {
 }
 #userToolsNav {
   /* Navigation bar containing login link or user information, check widgets/user_navigation.html*/
+  
   height: 20px;
   padding-bottom: 5px;
   white-space: nowrap;
@@ -500,8 +513,10 @@ body.user-messages {
 }
 #metaNav {
   /* Top Navigation bar containing links for tags, people and badges, check widgets/header.html */
+  
   float: right;
   /* for #header.with-logo it is modified */
+  
   margin-right: 7px;
 }
 #metaNav a {
@@ -670,6 +685,7 @@ body.user-messages {
   position: relative;
   width: 100%;
   /* the guts are absolute-positioned */
+  border-radius: 15px;
 }
 #searchBar input.searchInput,
 #searchBar div.input-tool-tip,
@@ -717,8 +733,9 @@ body.user-messages {
   width: 100%;
 }
 #searchBar input[type="submit"].searchBtn {
-  right: 0;
+  right: -2px;
   top: 0;
+  border-radius: 15px;
 }
 #searchBar input[type="button"].cancelSearchBtn {
   right: 39px;
@@ -1000,6 +1017,7 @@ form.ajax-file-upload img.spinner {
 }
 #askButton {
   /* check blocks/secondary_header.html and widgets/ask_button.html*/
+  
   float: right;
   font-size: 20px;
   height: 42px;
@@ -1025,6 +1043,7 @@ body.anon.ask-page .search-drop-menu {
   color: #5a5a5a;
 }
 /* ----- Content layout, check two_column_body.html or one_column_body.html ----- */
+
 #ContentLeft,
 #ContentRight,
 #ContentFull {
@@ -1044,6 +1063,7 @@ body.anon.ask-page .search-drop-menu {
   width: 960px;
 }
 /* ----- Sidebar Widgets Box, check main_page/sidebar.html or question/sidebar.html ----- */
+
 .box {
   background: #fff;
   padding: 4px 2px 10px 2px;
@@ -1103,6 +1123,7 @@ body.anon.ask-page .search-drop-menu {
 .box #displayTagFilterControl label,
 .box #emailTagFilterControl label {
   /*Especial width just for the tag filter boxes in index page*/
+  
   width: 160px;
 }
 .box ul {
@@ -1199,6 +1220,7 @@ body.anon.ask-page .search-drop-menu {
   line-height: 1.3;
 }
 /* tips and markdown help are widgets for ask template */
+
 .question-instructions {
   background: #e9e9e1;
   box-sizing: border-box;
@@ -1219,6 +1241,7 @@ body.anon.ask-page .search-drop-menu {
   font-size: 16px;
 }
 /* ----- Sorting top Tab, check main_page/tab_bar.html ------*/
+
 .tabBar {
   background-color: #eff5f6;
   height: 30px;
@@ -1244,6 +1267,7 @@ body.anon.ask-page .search-drop-menu {
   height: 20px;
 }
 /* tabsA - used for sorting */
+
 .tabsA {
   float: right;
 }
@@ -1306,6 +1330,7 @@ body.anon.ask-page .search-drop-menu {
   color: #F4A731 !important;
 }
 /* ----- Headline, containing number of questions and tags selected, check main_page/headline.html ----- */
+
 #questionCount {
   font-weight: bold;
   font-size: 20px;
@@ -1354,6 +1379,7 @@ ul#searchTags {
   color: #1b79bd;
 }
 /* ----- Question list , check main_page/content.html and macros/macros.html----- */
+
 #question-list {
   float: left;
   position: relative;
@@ -1376,9 +1402,9 @@ ul#searchTags {
   font-weight: normal;
   line-height: 26px;
   padding-left: 0;
-  margin-bottom: 7px;
+  margin-bottom: 20px;
   display: block;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "Microsoft YaHei", STXihei, serif;
 }
 .short-summary a {
   color: #464646;
@@ -1391,19 +1417,19 @@ ul#searchTags {
 }
 .short-summary .userinfo .timeago,
 .short-summary span.anonymous {
-  font-size: 11px;
+  font-size: 10px;
   clear: both;
   font-weight: normal;
   color: #555;
 }
 .short-summary .userinfo a {
   font-weight: bold;
-  font-size: 11px;
+  font-size: 10px;
 }
 .short-summary .counts {
   float: right;
   margin: 4px 0 0 5px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "Microsoft YaHei", STXihei, serif;
 }
 .short-summary .counts .item-count {
   padding: 0px 5px 0px 5px;
@@ -1433,6 +1459,7 @@ ul#searchTags {
   float: right;
   height: 44px;
   border: #dbdbd4 1px solid;
+  border-radius: 26px;
 }
 .short-summary .votes {
   background: url(../images/vote-background.png) repeat-x;
@@ -1477,6 +1504,7 @@ ul#searchTags {
   color: yellow;
 }
 /* ----- Question list Paginator , check main_content/pager.html and macros/utils_macros.html----- */
+
 .evenMore {
   font-size: 13px;
   color: #707070;
@@ -1525,6 +1553,7 @@ ul#searchTags {
 }
 .paginator .curr {
   /*background-color: #8ebcc7;*/
+  
   color: #fff;
   font-weight: bold;
 }
@@ -1558,6 +1587,7 @@ ul#searchTags {
    askbot/models/__init__.py:format_instant_notification_email()
 */
 /* tag cloud */
+
 .tag-size-1 {
   font-size: 12px;
 }
@@ -1602,7 +1632,7 @@ ul.tags li {
   display: block;
   margin: 0 8px 8px 0;
   padding: 0;
-  height: 20px;
+  height: 18px;
 }
 .wildcard-tags {
   clear: both;
@@ -1662,7 +1692,7 @@ ul.js-related-tags li {
 .js-tag-name {
   cursor: pointer;
   background: #f3f6f6;
-  border: #fff 1px solid ;
+  border: #fff 1px solid;
   border-top: #fff 2px solid;
   outline: #cfdbdb 1px solid !important;
   -webkit-box-shadow: 0px 0px 5px #d3d6d7;
@@ -1730,6 +1760,7 @@ ul.js-related-tags li {
 .moderate-tags-page td.per-thread-controls {
   width: 160px;
   /* 20px more to compensate for the padding */
+  
   height: 30px;
 }
 .moderate-tags-page td.per-thread-controls button {
@@ -1805,6 +1836,7 @@ ul.js-related-tags li {
   padding-right: 15px;
 }
 /* ----- Ask and Edit Question Form template----- */
+
 .section-title {
   color: #7ea9b3;
   font-family: 'Open Sans Condensed', Arial, sans-serif;
@@ -1836,6 +1868,7 @@ ul.js-related-tags li {
   padding-left: 5px;
   width: 100%;
   /*719px;*/
+  
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -2113,6 +2146,7 @@ a.js-question-body-trigger {
 }
 #editor {
   /* adjustment for editor preview */
+  
   display: block;
   font-size: 100%;
   min-height: 210px;
@@ -2216,6 +2250,7 @@ tr.mceLast {
 .preview-toggle {
   color: #b6a475;
   /*letter-spacing:1px;*/
+  
   line-height: 28px;
   text-align: left;
   width: 100%;
@@ -2279,6 +2314,7 @@ tr.mceLast {
   margin-bottom: 10px;
 }
 /* ----- Question template ----- */
+
 .moderated-item {
   background: #ccc;
   border-radius: 4px;
@@ -2312,7 +2348,7 @@ tr.mceLast {
 .question-page h1 {
   display: inline-block;
   padding-top: 0px;
-  font-family: 'Open Sans Condensed', Arial, sans-serif;
+  font-family: "Microsoft YaHei", STXihei, serif;
   width: 100%;
 }
 .question-page h1 a {
@@ -2462,6 +2498,7 @@ tr.mceLast {
 .question-page .post-update-info .gravatar {
   float: left;
   margin-right: 4px;
+  border-radius: 20px;
 }
 .question-page .post-update-info p.tip {
   color: #444;
@@ -2751,7 +2788,8 @@ tr.mceLast {
   text-align: right;
 }
 .question-page .comments .comment {
-  border-bottom: 1px solid #edeeeb;
+  border-bottom: 1px dashed #edeeeb;
+  border-top: 1px dashed #edeeeb;
   display: table;
   font-family: Arial;
   font-size: 11px;
@@ -2988,6 +3026,7 @@ tr.mceLast {
   width: 25px;
   margin-right: 13px;
   /* small IE fixes */
+  
   *margin: 0;
   *height: 210px;
   *width: 30px;
@@ -3066,6 +3105,7 @@ tr.mceLast {
   background-position: -52px 0px;
 }
 /* -----Content pages, Login, About, FAQ, Users----- */
+
 .openid-signin input[type="email"],
 .openid-signin input[type="text"],
 .openid-signin input[type="password"] {
@@ -3371,8 +3411,9 @@ tr.mceLast {
 }
 /* People page */
 /*.users-page .tabBar{
-    width:375px;
+  width:375px;
 }*/
+
 .users-page #group-openness-selector {
   width: 100%;
 }
@@ -3397,10 +3438,12 @@ tr.mceLast {
   display: inline;
 }
 /* tags page */
+
 .tabBar-tags {
   margin-bottom: 15px;
 }
 /* badges page */
+
 a.medal {
   font-size: 17px;
   line-height: 250%;
@@ -3429,6 +3472,7 @@ a:hover.medal {
   margin: 5px;
 }
 /* profile page */
+
 .tabBar-profile {
   width: 100%;
   margin-bottom: 5px;
@@ -3556,6 +3600,7 @@ a:hover.medal {
   color: #777;
   line-height: 40px;
   /*letter-spacing:0px*/
+  
   margin-top: 3px;
 }
 .vote-count {
@@ -3649,6 +3694,7 @@ a:hover.medal {
   margin-bottom: 10px;
 }
 /*-----  Revision pages ----- */
+
 .revision {
   margin: 10px 0 10px 0;
   font-size: 13px;
@@ -3720,11 +3766,13 @@ ins {
 body.question-page ins,
 body.main-page ins {
   /* a hack for google adwords
-     * todo: make rule above more specific
-     * and remove this one */
+   * todo: make rule above more specific
+   * and remove this one */
+  
   background: transparent;
 }
 /* ----- Red Popup notification ----- */
+
 .vote-notification {
   z-index: 1;
   background-color: #8e0000;
@@ -3769,6 +3817,7 @@ body.main-page ins {
   font-weight: bold;
 }
 /* ----- Footer links , check blocks/footer.html----- */
+
 #ground {
   width: 100%;
   clear: both;
@@ -3861,6 +3910,7 @@ p.form-item {
   background: #F4E7E7 none repeat scroll 0 0;
 }
 /* openid styles */
+
 .form-row {
   line-height: 25px;
 }
@@ -3916,18 +3966,19 @@ label.retag-error {
 }
 /*
 .favorites-count-off {
-    color: #919191;
-    float: left;
-    text-align: center;
+  color: #919191;
+  float: left;
+  text-align: center;
 }
 
 .favorites-count {
-    color: #D4A849;
-    float: left;
-    text-align: center;
+  color: #D4A849;
+  float: left;
+  text-align: center;
 }
 */
 /* todo: get rid of this in html */
+
 .favorites-empty {
   width: 32px;
   height: 45px;
@@ -3959,6 +4010,7 @@ label.retag-error {
   margin: 0;
 }
 /* todo: remove this hack? */
+
 .user-stats-table .narrow {
   width: 660px;
 }
@@ -4063,10 +4115,12 @@ button::-moz-focus-inner {
 .submit {
   cursor: pointer;
   /*letter-spacing:1px;*/
+  
   background-color: #D4D0C8;
   height: 30px;
   border: 1px solid #777777;
   /*	width:100px; */
+  
   font-weight: bold;
   font-size: 120%;
 }
@@ -4112,6 +4166,7 @@ button::-moz-focus-inner {
 }
 .orange {
   /* used in django.po */
+  
   color: #d64000;
   font-weight: bold;
 }
@@ -4157,6 +4212,7 @@ button::-moz-focus-inner {
   padding: 3px 5px 3px 5px;
   background-color: #fff380;
   /* nice yellow */
+  
   font-weight: normal;
   -moz-border-radius: 5px;
   -khtml-border-radius: 5px;
@@ -4169,6 +4225,7 @@ button::-moz-focus-inner {
   vertical-align: top;
 }
 /* these need to go */
+
 table.form-as-table .errorlist {
   display: block;
   margin: 0;
@@ -4192,6 +4249,7 @@ table.form-as-table th {
   display: block;
 }
 /* above stuff needs to go */
+
 .text-align-right {
   text-align: center;
 }
@@ -4392,6 +4450,7 @@ a.edit {
   color: #145bff;
 }
 /* Pretty printing styles. Used with prettify.js. minified in one line */
+
 .pln {
   color: #000000;
 }
@@ -4433,7 +4492,8 @@ a.edit {
     color: #ff0000;
   }
 }
-@media print, projection {
+@media print,
+projection {
   .str {
     color: #006600;
   }
@@ -4497,6 +4557,7 @@ li.L9 {
   float: left;
 }
 /* user groups */
+
 #user-groups input[type="text"] {
   height: 21px;
   width: 100px;
@@ -4600,6 +4661,7 @@ textarea.tipped-input {
   color: white;
 }
 /* category selector */
+
 .category-selector {
   border-spacing: 0;
   width: 100%;
@@ -4673,6 +4735,7 @@ textarea.tipped-input {
   display: none;
 }
 /* tag editor */
+
 .tag-editor {
   height: 32px;
   border: #cce6ec 3px solid;
@@ -4693,16 +4756,18 @@ textarea.tipped-input {
   border: none;
   box-shadow: none;
   font-size: 14px;
-  font-color: #707070;
+  color: #707070;
   height: 16px;
   line-height: 16px;
   margin: 9px 0 0 -6px;
   -webkit-box-shadow: none;
   /* undo bootstrap glow */
+  
   -moz-box-shadow: none;
   padding: 0 0 0 6px;
 }
 /* fixes for bootstrap */
+
 .caret {
   margin-bottom: 7px;
 }
@@ -4903,9 +4968,9 @@ td.setting-input textarea {
   border: 1px solid WindowFrame;
   background-color: #fff;
   overflow: hidden;
-  -webkit-box-shadow: 0px  1px 1px #A7A7A7;
-  -moz-box-shadow: 0px  1px 1px #BFBFBF;
-  box-shadow: 0px  1px 1px #BFBFBF;
+  -webkit-box-shadow: 0px 1px 1px #A7A7A7;
+  -moz-box-shadow: 0px 1px 1px #BFBFBF;
+  box-shadow: 0px 1px 1px #BFBFBF;
 }
 .acResults ul {
   width: 100%;
@@ -4932,8 +4997,10 @@ td.setting-input textarea {
   color: HighlightText;
 }
 /* modifications for small screens */
+
 @media screen and (max-width: 960px) {
   /* content margins touch viewport */
+  
   * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -4946,7 +5013,8 @@ td.setting-input textarea {
   }
   #userToolsNav {
     padding-left: 8px;
-    margin-right: 20px;
+    margin-right: 10px;
+    /* margin-top: 10px; */
   }
   .answer-votes {
     height: 24px;
@@ -4995,6 +5063,192 @@ td.setting-input textarea {
   body {
     padding: 0;
   }
+  /* overall style changes */
+  
+  #logo img {
+    padding: 2px 8px 8px 8px;
+    height: 65px;
+    width: auto;
+    float: left;
+  }
+  #header.with-logo #userToolsNav {
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+  }
+  #userToolsNav {
+    /* Navigation bar containing login link or user information, check widgets/user_navigation.html*/
+    
+    height: 22px;
+    padding-bottom: 8px;
+    white-space: nowrap;
+    font-size: 12px;
+    width: 100%;
+  }
+  #userToolsNav a {
+    height: 20px;
+    text-align: left;
+    margin-left: 2px;
+    text-decoration: underline;
+    color: #d0e296;
+  }
+  #header.with-logo #userToolsNav {
+    position: absolute;
+    bottom: -5px;
+    margin-left: 4px;
+    /* top: 10px; */
+  }
+  #homeButton {
+    border-right: #afaf9e 1px solid;
+    height: 45px;
+    width: 35px;
+    display: block;
+    float: left;
+    border-radius:  10px;
+  }
+  #homeButton i {
+    color: #7a7a7b;
+    font-size: 26px;
+    line-height: 45px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  #searchBar input[type="button"].cancelSearchBtn {
+    right: 13px;
+    top: 0;
+  }
+  #metaNav a {
+    color: #e2e2ae;
+    padding: 0px 0px 0px 10px;
+    height: 20px;
+    line-height: 25px;
+    margin: 5px 0px 0px 10px;
+    font-size: 18px;
+    font-weight: 100;
+    text-decoration: none;
+    display: block;
+    float: left;
+  }
+  #secondaryHeader {
+    /* Div containing Home button, scope navigation, search form and ask button, check blocks/secondary_header.html */
+    height: 45px;
+    background: #e9e9e1;
+    border-bottom: #d3d3c2 1px solid;
+    border-top: #fcfcfc 1px solid;
+    margin-bottom: 20px;
+    font-family: "Microsoft YaHei", STXihei, serif;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+  .scope-selector {
+    display: inline-block;
+    font-size: 20px;
+    color: #7a7a6b;
+    height: 30px;
+    line-height: 55px;
+    margin-left: 16px;
+  }
+  #searchBar {
+    /* Main search form , check widgets/search_bar.html */
+    border: 1px solid #c9c9b5;
+    background: white;
+    height: 28px;
+    z-index: 1000;
+    position: relative;
+    width: 80%;
+    /* the guts are absolute-positioned */
+    border-radius: 10px;
+  }
+  #searchBar input.searchInput {
+    font-size: 16px;
+    height: 26px;
+    line-height: 20px;
+    font-weight: 200;
+    background: transparent;
+    border: 0px;
+    color: #484848;
+    font-family: Arial;
+    width: 100%;
+    margin: 0px 0 0px 0;
+    padding: 0 30px 0 6px;
+    top: 0;
+    left: 0;
+    -webkit-box-shadow: 0 0 0 #929292;
+    -moz-box-shadow: 0 0 0 #929292;
+    box-shadow: 0 0 0 #929292;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+  #searchBar input[type="button"].cancelSearchBtn {
+    right: 13px;
+    top: 0;
+  }
+  .search-drop-menu {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background: whitesmoke;
+    border-top: none;
+    top: 30px;
+    margin: 0;
+    outline: 1px solid #dadad4;
+    position: absolute;
+    z-index: 10000;
+  }
+  input[type="submit"].searchBtn {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
+    height: 27px;
+    border: #FFF 1px solid;
+    line-height: 22px;
+    text-align: center;
+    margin: 0;
+    width: 30px;
+    /* background-size: 20%; */
+    background: -107px -44px url(../images/sprites.png) no-repeat;
+    border-radius: 0;
+    -ms-border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -khtml-border-radius: 0;
+    -webkit-box-shadow: 0 0 0 #929292;
+    -moz-box-shadow: 0 0 0 #929292;
+    /* box-shadow: 0 0 0 #929292; */
+    cursor: pointer;
+    z-index: 10001;
+  }
+  input[type="button"].cancelSearchBtn {
+    font-size: 20px !important;
+    color: #aaa;
+    background: rgba(255, 255, 255, 0) !important;
+    height: 20px !important;
+    line-height: 20px;
+    border: 0px;
+    -webkit-box-shadow: 0 0 0 #929292;
+    -moz-box-shadow: 0 0 0 #929292;
+    box-shadow: 0 0 0 #929292;
+    border-radius: 0;
+    -ms-border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -khtml-border-radius: 0;
+    text-align: center;
+    width: 35px !important;
+    cursor: pointer;
+    z-index: 10001;
+  }
+  input[type="submit"].searchBtn:hover {
+    background-image: none;
+    background: #dddddd url(../images/sprites.png) no-repeat -155px -44px !important;
+  }
+  #scopeNav {
+    height: 30px;
+    display: inline-block;
+    white-space: nowrap;
+  }
   input[type="submit"].searchBtn {
     margin-right: 0;
   }
@@ -5010,20 +5264,7 @@ td.setting-input textarea {
   .meta #ContentLeft {
     padding: 0 10px;
   }
-  .main-page h1,
-  #askButton,
-  #metaNav #navBadges,
-  .copyright,
-  .counts .views,
-  .counts .votes,
-  .help,
-  .rss,
-  .scope-selector,
-  .settings,
-  .tabBar,
-  .tags,
-  .userinfo,
-  .widgets {
+  .main-page h1, #askButton, .copyright, .help, .rss, .scope-selector, .settings, .tabBar, .tags, .widgets {
     display: none;
   }
   .ask-page input[type="submit"].searchBtn,
@@ -5081,19 +5322,83 @@ td.setting-input textarea {
     float: none;
     width: 100%;
   }
+  .js-avatar-box {
+    text-decoration: none;
+    width: 32px;
+    height: 32px;
+  }
+  .user-card .js-avatar-box {
+    float: right;
+    margin: -20px 2px 0 0;
+  }
+  .user-list .user-card .js-avatar-box {
+    float: right;
+    margin: 0px 10px 0 0;
+  }
+  /* front page short summary */
+  
+  .short-summary .counts .views,
+  .short-summary .counts .votes,
+  .short-summary .userinfo {
+    display: block;
+  }
+  .short-summary .userinfo {
+    text-align: right;
+    line-height: 10px;
+    font-family: "Microsoft YaHei", STXihei, serif;
+    padding-right: 4px;
+    padding-top: 4px;
+  }
+  .short-summary .counts .item-count {
+    padding: 0px 1px 0px 1px;
+    font-size: 20px;
+    font-family: 'Open Sans Condensed', Arial, sans-serif;
+  }
+  .short-summary .counts .votes div,
+  .short-summary .counts .views div,
+  .short-summary .counts .answers div,
+  .short-summary .counts .favorites div {
+    margin-top: 0px;
+    font-size: 12px;
+    line-height: 12px;
+    color: #646464;
+  }
+  .short-summary .accepted .item-count {
+    background: url(../images/accept.png) no-repeat;
+    display: block;
+    text-align: right;
+    width: 30px;
+    color: #eab243;
+    background-position: 0% 50%;
+  }
+  .short-summary .answers,
+  .short-summary .views,
+  .short-summary .votes {
+    height: 40px;
+    width: 40px;
+    padding: 5px 0px 0px 0px;
+    margin: 0 2px;
+    border-radius: 20px;
+  }
   .question-page .post-update-info {
     float: none;
     margin-left: 0;
     width: auto;
   }
-  .question-page .post-update-info br,
-  .question-page .post-update-info .badge1,
-  .question-page .post-update-info .badge2,
-  .question-page .post-update-info .badge3,
-  .question-page .post-update-info .gravatar,
-  .question-page .post-update-info .reputation-score,
-  .question-page .post-update-info .user-card,
-  .question-page .post-update-info .badge-count {
+  .question-page .post-update-info .gravatar {
+    float: right;
+    margin-right: 4px;
+    display: block;
+    border-radius: 20px;
+  }
+  .question-page .post-update-info .user-card {
+    height: 10px;
+    display: inline-block;
+    width: 100%;
+    overflow: visible;
+    margin: 4px 0px 0px 2px;
+  }
+  .question-page .post-update-info br, .question-page .post-update-info .badge-count {
     display: none;
   }
   .footer-links,
@@ -5102,18 +5407,18 @@ td.setting-input textarea {
     width: 100%;
   }
   #metaNav {
-    float: left;
-    margin-left: 8px;
+    float: right;
+    margin-right: 10px;
   }
-  #metaNav a#navUsers,
-  #metaNav a#navTags,
-  #metaNav a#navGroups {
+  #metaNav a#navUsers, #metaNav a#navTags, #metaNav a#navGroups, #metaNav #navBadges {
     background: none;
     color: #d0e296;
-    font-size: 16px;
+    font-size: 12px;
+    font-weight: 400;
     text-decoration: underline;
-    margin: 7px 28px 0 0;
+    margin: 0px 10px 0px 0px;
     padding-left: 0;
+    display: block;
   }
   .powered-link {
     margin-bottom: 15px;
@@ -5126,13 +5431,14 @@ td.setting-input textarea {
     width: 100%;
   }
   .short-summary .tags {
-    margin-top: -8px;
+    margin-top: 0px;
+    padding-top: 10px;
   }
   .short-summary .tags li {
-    margin: 8px 8px 1px 0;
+    margin: 10px 4px 2px 0;
   }
   #secondaryHeader td.search-bar {
-    padding: 0 6px;
+    padding: 3px 10px;
   }
   table.form-as-table.ab-tag-filter-form td {
     text-align: left;
@@ -5180,8 +5486,7 @@ td.setting-input textarea {
   }
 }
 @media screen and (max-width: 480px) {
-  .openid-signin h1,
-  .openid-signin h2 {
+  .openid-signin h1, .openid-signin h2 {
     line-height: 1.1;
     margin-bottom: 12px;
   }
@@ -5199,8 +5504,7 @@ td.setting-input textarea {
   }
 }
 @media screen and (max-width: 380px) {
-  .wmd-button-bar .wmd-hr-button,
-  .wmd-button-bar .wmd-heading-button {
+  .wmd-button-bar .wmd-hr-button, .wmd-button-bar .wmd-heading-button {
     display: none;
   }
   .editor-status {
@@ -5227,6 +5531,7 @@ td.setting-input textarea {
   }
 }
 /* language-specific fixes */
+
 body.lang-zh .box .inputs #interestingTagInput,
 body.lang-zh_CN .box .inputs #interestingTagInput,
 body.lang-zh-cn .box .inputs #interestingTagInput,
