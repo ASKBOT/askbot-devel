@@ -1,21 +1,3 @@
-{% if unique_login_provider %}
-    <form id="signin-form" method="post" action="{{ settings.LOGIN_URL }}">
-        {{ macros.csrf_middleware_token(csrf_token) }}
-        {{ login_form.next }}
-        {{ login_form.persona_assertion }}
-        <input 
-            type='hidden'
-            name='login_provider_name'
-            value='{{ unique_login_provider.name }}'
-        />
-        <input
-          name="{{ unique_login_provider.name }}"
-          type="submit"
-          class="{{ unique_login_provider.type }}"
-          value="{% trans login_name=unique_login_provider.display_name %}Sign in via {{ login_name }}{% endtrans %}"
-        />
-    </form>
-{% else %}
-    <a href="{{ settings.LOGIN_URL }}?next={{ request.path|clean_login_url|escape }}"
-    >{% trans %}Hi there! Please sign in{% endtrans %}</a>
-{% endif %}
+<a href="{{ settings.SITE_LOGIN_URL }}">
+{% trans %}Hi there! Please sign in{% endtrans %}</a>
+

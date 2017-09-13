@@ -47,6 +47,7 @@ def application_settings(request):
     my_settings['ASKBOT_VERSION'] = askbot.get_version()
     my_settings['LOGIN_URL'] = url_utils.get_login_url()
     my_settings['LOGOUT_URL'] = url_utils.get_logout_url()
+    my_settings['SITE_LOGIN_URL'] = 'http://localhost:8001/accounts/login/'
 
     if my_settings['EDITOR_TYPE'] == 'tinymce':
         tinymce_plugins = settings.TINYMCE_DEFAULT_CONFIG.get('plugins', '').split(',')
