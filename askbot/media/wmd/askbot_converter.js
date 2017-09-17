@@ -19,7 +19,7 @@ AskbotMarkdownConverter.prototype.scheduleMathJaxRendering = function () {
         clearTimeout(this._timeout);
     }
     var renderFunc = function () {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'previewer']);
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, 'previewer-2']);
     };
     this._timeout = setTimeout(renderFunc, 500);
 };

@@ -10,7 +10,7 @@
         <div class='avatar'>
             {{ macros.gravatar(view_user, 128) }}
             {% if request.user.pk == view_user.pk %}
-                <p><a 
+                <p><a
                     {% if support_custom_avatars %}
                         href="{% url askbot_avatar_show_list view_user.id %}"
                     {% else %}
@@ -62,7 +62,7 @@
                         </a>
                     {% endif %}
                 </td>
-            </tr>  
+            </tr>
             {% endif %}
             <tr>
                 <th colspan="2" align="left">
@@ -120,10 +120,10 @@
                     }}</td>
             </tr>
             {% endif  %}
-            {% if request.user == view_user and 
-                settings.TWITTER_SECRET and 
-                settings.TWITTER_KEY and 
-                settings.ENABLE_SHARING_TWITTER 
+            {% if request.user == view_user and
+                settings.TWITTER_SECRET and
+                settings.TWITTER_KEY and
+                settings.ENABLE_SHARING_TWITTER
             %}
                 {% include "user_profile/twitter_sharing_controls.html" %}
             {% endif %}
@@ -149,7 +149,7 @@
     </div>
     <div class="col3 user-about">
     {% if show_profile_info %}
-        {% set editable=(request.user.is_authenticated() 
+        {% set editable=(request.user.is_authenticated()
             and (
                 (request.user == view_user) or request.user.is_admin_or_mod()
             )
@@ -165,15 +165,15 @@
                 data-editor-type="{{ settings.EDITOR_TYPE }}"
                 data-previewer-enabled="false"
             >
-            {% with view_user.get_localized_profile().about as user_about %}
-                <div class="js-editable-content">{{ user_about|convert_text }}</div>
-            {% endwith %}
+
+                <div class="js-editable-content">{{ view_user.get_localized_profile().about|convert_text }}</div>
+
                 <div class="js-editable-controls">
                     <button id="js-edit-btn-user-about-{{ view_user.pk }}">{% trans %}edit{% endtrans %}</button>
                 </div>
             </div>
         {% else %}
-            {{ view_user.about|convert_text }}
+            {{ view_user.get_localized_profile().about|convert_text }}
         {% endif %}
     {% endif %}
     </div>
