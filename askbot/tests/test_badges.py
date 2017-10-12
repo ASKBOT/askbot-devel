@@ -6,7 +6,8 @@ from django.utils import timezone
 from askbot.tests.utils import AskbotTestCase
 from askbot.conf import settings
 from askbot import models
-from askbot.models.badges import award_badges_signal
+from askbot.models import badges
+
 
 class BadgeTests(AskbotTestCase):
 
@@ -430,13 +431,13 @@ class BadgeTests(AskbotTestCase):
         self.u1.location = 'irvine'
         self.u1.save()
         self.u1.update_localized_profile(about='blabla bla')
-        award_badges_signal.send(None,
+        badges.award_badges_signal.send(None,
             event = 'update_user_profile',
             actor = self.u1,
             context_object = self.u1
         )
         self.assert_have_badge('autobiographer', self.u1, 1)
-        award_badges_signal.send(None,
+        badges.award_badges_signal.send(None,
             event = 'update_user_profile',
             actor = self.u1,
             context_object = self.u1
@@ -506,3 +507,37 @@ class BadgeTests(AskbotTestCase):
         self.client.login(method = 'force', user_id = self.u1.id)
         self.client.get(reverse('questions'))
         self.assert_have_badge('enthusiast', self.u1, 1)
+
+    def test_rapidresponder_badge_negative(self):
+        """test case where bage should not be set"""
+        question_time = timezone.now()
+        answer_time = question_time + datetime.timedelta(hours = settings.RAPID_RESPONDER_BADGE_MAX_DELAY + 1)
+        question = self.post_question(user = self.u1, timestamp = question_time)
+        self.post_answer(user = self.u2, question = question, timestamp = answer_time)
+        self.assert_have_badge(badges.RapidResponder.key, self.u2, expected_count = 0)
+
+    def test_rapidresponder_badge_positive(self):
+        """test case where bage should be set"""
+        question_time = timezone.now() - datetime.timedelta(settings.RAPID_RESPONDER_BADGE_EXPIRES - 1)
+        answer_time = question_time + datetime.timedelta(hours = settings.RAPID_RESPONDER_BADGE_MAX_DELAY - 1)
+        question = self.post_question(user = self.u1, timestamp = question_time)
+        self.post_answer(user = self.u2, question = question, timestamp = answer_time)
+        self.assert_have_badge(badges.RapidResponder.key, self.u2, expected_count = 1)
+        award = models.Award.objects.get(badge__slug = badges.RapidResponder.key, user = self.u2)
+        #badge should not be expired this time
+        expired = badges.RapidResponder.expire(award)
+        self.assertFalse(expired)
+        self.assert_have_badge(badges.RapidResponder.key, self.u2, expected_count = 1)
+
+    def test_rapidresponder_badge_expire(self):
+        """test case where bage should be expired"""
+        answer_time = timezone.now() - datetime.timedelta(settings.RAPID_RESPONDER_BADGE_EXPIRES + 1)
+        question_time = answer_time - datetime.timedelta(hours = settings.RAPID_RESPONDER_BADGE_MAX_DELAY - 1)
+        question = self.post_question(user = self.u1, timestamp = question_time)
+        self.post_answer(user = self.u2, question = question, timestamp = answer_time)
+        self.assert_have_badge(badges.RapidResponder.key, self.u2, expected_count = 1)
+        award = models.Award.objects.get(badge__slug = badges.RapidResponder.key, user = self.u2)
+        #badge should be expired
+        expired = badges.RapidResponder.expire(award)
+        self.assertTrue(expired)
+        self.assert_have_badge(badges.RapidResponder.key, self.u2, expected_count = 0)

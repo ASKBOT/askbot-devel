@@ -245,3 +245,13 @@ register_badge_settings(
         'MIN_UPVOTES': (_('minimum upvotes for the answer'), 1)
     }
 )
+
+register_badge_settings(
+    'RAPID_RESPONDER',
+    _('Rapid Responder'),
+    params={
+        'MAX_DELAY': (_('maximum delay in hours'), 48),
+        'EXPIRES': (_('badge expiration in days'), 48),
+    }
+)
+

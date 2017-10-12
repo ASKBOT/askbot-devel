@@ -2327,8 +2327,6 @@ def user_post_answer(
         raise TypeError('question argument must be provided')
     if body_text is None:
         raise ValueError('Body text is required to post answer')
-    if timestamp is None:
-        timestamp = timezone.now()
 #    answer = Answer.objects.create_new(
 #        thread = question.thread,
 #        author = self,
@@ -2341,7 +2339,7 @@ def user_post_answer(
         thread=question.thread,
         author=self,
         text=body_text,
-        added_at=timestamp,
+        added_at=timestamp if timestamp else timezone.now(),
         email_notify=follow,
         wiki=wiki,
         is_private=is_private,
@@ -2355,7 +2353,8 @@ def user_post_answer(
     award_badges_signal.send(None,
         event = 'post_answer',
         actor = self,
-        context_object = answer_post
+        context_object = answer_post,
+        timestamp = timestamp
     )
     return answer_post
 

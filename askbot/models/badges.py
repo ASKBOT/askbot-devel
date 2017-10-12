@@ -24,6 +24,7 @@ from django.conf import settings as django_settings
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
+from django.utils import timezone
 from django.dispatch import Signal
 
 from askbot import const
@@ -821,6 +822,38 @@ class Taxonomist(Badge):
         return False
 
 
+class RapidResponder(Badge):
+    key = 'rapid-responder'
+
+    def __init__(self):
+        description = _('Responded to question within %(max_delay)s hours') % {
+            'max_delay': askbot_settings.RAPID_RESPONDER_BADGE_MAX_DELAY,
+        }
+        super(RapidResponder, self).__init__(
+            name=_('Rapid Responder'), level=const.SILVER_BADGE,
+            description=description, multiple=True)
+
+    def consider_award(self, actor=None, context_object=None, timestamp=None):
+        if context_object.post_type != 'answer':
+            return False
+        answer = context_object
+        question = answer.thread._question_post()
+        delta = datetime.timedelta(hours=askbot_settings.RAPID_RESPONDER_BADGE_MAX_DELAY)
+        if answer.added_at - question.added_at <= delta:
+            return self.award(answer.author, answer, timestamp)
+        return False
+
+    @classmethod
+    def expire(cls, award):
+        """special method to check if badge should be expired and expire it"""
+        now = timezone.now()
+        expire_date = award.awarded_at + datetime.timedelta(askbot_settings.RAPID_RESPONDER_BADGE_EXPIRES)
+        if now > expire_date:
+            award.delete()
+            return True
+        return False
+
+
 class Expert(Badge):
     """Stub badge"""
     key = 'expert'
@@ -839,7 +872,7 @@ extra badges from stackexchange
 * mortarboard - hit the daily reputation cap for the first time (s)
 * populist - provided an answer that outscored an accepted answer two-fold or by n points, whichever is higher (m)
 * reversal - provided an answer with +n points to a question of -m points
-    (_('Yearling'), 2, _('yearling'), _('Active member for a year'), False, 0),
+   (_('Yearling'), 2, _('yearling'), _('Active member for a year'), False, 0),
 
 
     (_('Generalist'), 2, _('generalist'), _('Active in many different tags'), False, 0),
@@ -899,7 +932,7 @@ EVENTS_TO_BADGES = {
     'edit_answer': (Editor, AssociateEditor),
     'edit_question': (Editor, AssociateEditor),
     'flag_post': (CitizenPatrol,),
-    'post_answer': (Necromancer,),
+    'post_answer': (Necromancer, RapidResponder,),
     'post_comment': (Commentator,),
     'post_question': (),
     'retag_question': (Organizer,),
