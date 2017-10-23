@@ -176,7 +176,7 @@ INSTALLED_APPS = (
 
 
 #setup localcache 
-# Comment with # to disable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
+# Comment with # (Hash) to disable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -189,7 +189,7 @@ CACHES = {
 }
 
 #setup memcached for production use!
-# Uncomment with # to enable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
+# Uncomment # (Hash) to enable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
 #CACHES = {
 #    'default': {
 #        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
