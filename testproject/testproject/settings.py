@@ -175,8 +175,8 @@ INSTALLED_APPS = (
 )
 
 
-#setup memcached for production use!
-# See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
+#setup localcache 
+# Comment with # to disable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -187,6 +187,18 @@ CACHES = {
         'KEY_PREFIX': 'askbot',
     }
 }
+
+#setup memcached for production use!
+# Uncomment with # to enable settings for production use. See http://docs.djangoproject.com/en/1.8/topics/cache/ for details.
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': '127.0.0.1:11211',
+#        'TIMEOUT': 600,
+#        'KEY_PREFIX': 'askbot',
+#    }
+#}
+
 
 #sets a special timeout for livesettings if you want to make them different
 LIVESETTINGS_CACHE_TIMEOUT = CACHES['default']['TIMEOUT']
