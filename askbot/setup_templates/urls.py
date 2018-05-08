@@ -14,6 +14,8 @@ from askbot.views.error import internal_error as handler500
 from django.conf import settings
 from django.contrib import admin
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 admin.autodiscover()
 
 if askbot.is_multilingual():
@@ -39,6 +41,8 @@ urlpatterns += patterns('',
         {'document_root': settings.MEDIA_ROOT.replace('\\','/')},
     ),
 )
+
+urlpatterns += staticfiles_urlpatterns()
 
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
