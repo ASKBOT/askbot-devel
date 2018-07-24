@@ -212,6 +212,9 @@ class LocalizedUserProfile(models.Model):
     def get_reputation(self):
         return self.reputation + const.MIN_REPUTATION
 
+    def get_last_seen(self):
+        return self.last_seen
+
     def update_cache(self):
         key = self.get_cache_key()
         cache.set(key, self)

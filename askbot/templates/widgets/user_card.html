@@ -10,23 +10,30 @@
         {{ macros.user_country_flag(user) }}
 
         <br/>
+        {% if no_rep == 'False' %}
+            {% if settings.KARMA_MODE == 'public' %}
+            <span class="reputation-score">{{ user.get_localized_profile().get_reputation() }}</span>
+            {% endif %}
 
-        {% if settings.KARMA_MODE == 'public' %}
-        <span class="reputation-score">{{ user.get_localized_profile().get_reputation() }}</span>
-        {% endif %}
+            {% if settings.BADGES_MODE == 'public' %}
+            <span class="badges" title="{{ user.get_badge_summary() }}">
+                {% if user.gold %}
+                    <span class='badge1'>&#9679;</span><span class="badgecount">{{ user.gold }}</span>
+                {% endif %}
+                {% if user.silver %}
+                    <span class='badge2'>&#9679;</span><span class="badgecount">{{ user.silver }}</span>
+                {% endif %}
+                {% if user.bronze %}
+                    <span class='badge3'>&#9679;</span><span class="badgecount">{{ user.bronze }}</span>
+                {% endif %}
+            </span>
+            {% endif %}
+        {% else %}
+        <tr>
+        <td><strong>{% trans %}last seen{% endtrans %}</strong></td>
+       <td> <span, class="last-seen">{{ macros.timeago(user.last_seen) }}</span></td>
+        </tr>
 
-        {% if settings.BADGES_MODE == 'public' %}
-        <span class="badges" title="{{ user.get_badge_summary() }}">
-            {% if user.gold %}
-                <span class='badge1'>&#9679;</span><span class="badgecount">{{ user.gold }}</span>
-            {% endif %}
-            {% if user.silver %}
-                <span class='badge2'>&#9679;</span><span class="badgecount">{{ user.silver }}</span>
-            {% endif %}
-            {% if user.bronze %}
-                <span class='badge3'>&#9679;</span><span class="badgecount">{{ user.bronze }}</span>
-            {% endif %}
-        </span>
         {% endif %}
         {{ macros.user_website_link(user) }}
     </div>

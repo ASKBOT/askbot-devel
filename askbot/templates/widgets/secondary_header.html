@@ -32,7 +32,6 @@
                     <td width="1"><a id="homeButton" href="{% url questions %}"><i class="fa fa-home"></i></a></td>
                     <td width="1">{% include "widgets/scope_nav.html" %}</td>
                     {# width * means that the cell takes the remaining table width #}
-                    <td width="*" class="search-bar">{% include "widgets/search_bar.html" %}</td> 
                     {% if settings.ASK_BUTTON_ENABLED %}
                     <td width="1">
                         {% include "widgets/ask_button.html" %}            

@@ -1,0 +1,51 @@
+<a name="{{ answer.id }}"></a>
+{% if answer.old_answer_id %}
+    {# Make old URL anchors/hashes work #}
+    <a class="old_answer_id_anchor" name="{{ answer.old_answer_id }}"></a>
+{% endif %}
+<div
+    id="post-id-{{ answer.id }}"
+    data-post-id="{{ answer.id }}"
+    class="post answer {{ macros.answer_classes(answer, question) }}"
+>
+
+    <div class="vote-buttons">
+        {% include "question/answer_vote_buttons.html" %}
+    </div>
+    <div class="post-content">
+        <div class="post-body">
+            <div class="js-editable-hide-post-body-{{ answer.pk }}">
+                <div class="post-update-info-container">
+                    {% include "question/answer_author_info_norep.html" %}
+                </div>
+                {% if answer.id in published_answer_ids %}
+                    <p><strong>{% trans %}This response is published{% endtrans %}</strong></p>
+                {% endif %}
+                {% if answer.needs_moderation() %}
+                    <p class="moderated">{% trans %}This post is awaiting moderation{% endtrans %}</p>
+                {% endif %}
+            </div>
+            <div class="js-editable"
+                id="js-post-body-{{ answer.pk }}"
+                data-get-text-url="{% url get_post_body %}?post_id={{ answer.pk }}"
+                data-save-text-url="{% url set_post_body %}?post_id={{ answer.pk }}"
+                data-save-text-param-name="body_text"
+                data-validated-text-param-name="body_html"
+                data-min-lines="10"
+                data-editor-type="{{ settings.EDITOR_TYPE }}"
+                data-validator="askbot.validators.answerValidator"
+            >
+                <div class="js-editable-content">{{ answer.summary }}</div>
+                <div class="js-editable-controls"></div>
+            </div>
+        </div>
+        <div class="answer-controls post-controls">
+            {% include "question/answer_controls.html" %}
+        </div>
+        {% if settings.ANSWER_COMMENTS_ENABLED %}
+            {% include "question/answer_comments.html" %}
+        {% endif %}
+    </div>
+    <div class="clean"></div>
+</div>
+<div class="clean"></div>

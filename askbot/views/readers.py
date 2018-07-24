@@ -32,6 +32,7 @@ from django.contrib.humanize.templatetags import humanize
 from django.http import QueryDict
 from django.conf import settings as django_settings
 
+from askbot.conf.settings_wrapper import settings
 from askbot import conf, const, exceptions, models, signals
 from askbot.conf import settings as askbot_settings
 from askbot.forms import AnswerForm
@@ -53,6 +54,7 @@ from askbot.utils.translation import get_language_name
 from askbot.utils.url_utils import reverse_i18n
 from askbot.views import context
 import askbot
+
 
 # used in index page
 #todo: - take these out of const or settings
@@ -381,15 +383,21 @@ def tags(request):#view showing a listing of available tags - plain list
         return render(request, 'tags.html', data)
 
 @csrf.csrf_protect
-def question(request, id):#refactor - long subroutine. display question body, answers and comments
+def question(request, id, no_rep):#refactor - long subroutine. display question body, answers and comments
     """view that displays body of the question and
     all answers to it
 
     todo: convert this view into class
     """
+
     #process url parameters
     #todo: fix inheritance of sort method from questions
     #before = timezone.now()
+    if id == 1:
+        request.session['no_rep'] = 'True'
+    else:
+        request.session['no_rep'] = 'False'
+        
     form = ShowQuestionForm(request.REQUEST)
     form.full_clean()#always valid
     show_answer = form.cleaned_data['show_answer']

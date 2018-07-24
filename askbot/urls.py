@@ -43,7 +43,7 @@ urlpatterns = patterns(
             r'(%s)?' % r'/scope:(?P<scope>\w+)' +
             r'(%s)?' % r'/sort:(?P<sort>[\w\-]+)' +
             r'(%s)?' % r'/tags:(?P<tags>[\w+.#,-]+)' + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
-            r'(%s)?' % r'/author:(?P<author>\d+)' +
+            r'(%s)?' % r'/author:(?P<author>\w+)' +
             r'(%s)?' % r'/page:(?P<page>\d+)' +
             r'(%s)?' % r'/page-size:(?P<page_size>\d+)' +
             r'(%s)?' % r'/query:(?P<query>.+)' +  # INFO: query is last, b/c it can contain slash!!!
@@ -52,10 +52,16 @@ urlpatterns = patterns(
         name='questions'
     ),
     url(
-        r'^%s(?P<id>\d+)/' % QUESTION_PAGE_BASE_URL,
+        r'^%s(?P<id>\d+)/' % QUESTION_PAGE_BASE_URL +
+        r'(%s)?' % r'(?P<no_rep>\w+)',
         views.readers.question,
         name='question'
     ),
+    #  url(
+    #     r'^%s(?P<id>\d+)norep/' % QUESTION_PAGE_BASE_URL,
+    #     views.readers.question_norep,
+    #     name='question_norep'
+    # ),
     url(
         r'^%s$' % pgettext('urls', 'tags/'),
         views.readers.tags,
