@@ -56,12 +56,12 @@
 </script>
 {%- endmacro -%}
 
-{%- macro post_contributor_avatar_and_credentials(revision) -%}
+{%- macro post_contributor_avatar_and_credentials(revision, request=none) -%}
     {% if revision.is_anonymous %}
         <img alt="{% trans %}anonymous user{% endtrans %}" src="{{ '/images/anon.png'|media }} " class="gravatar" width="32" height="32" />
         <p>{{ revision.author.get_anonymous_name() }}</p>
     {% else %}
-        {{ user_card(revision.author) }}
+        {{ user_card(revision.author, request) }}
     {% endif %}
     {% if settings.GROUPS_ENABLED %}
         {{ user_primary_group(revision.author) }}
@@ -80,7 +80,7 @@
     {% endif %}
 {%- endmacro -%}
 
-{%- macro post_last_updater_and_creator_info(post) -%}
+{%- macro post_last_updater_and_creator_info(post, request) -%}
     {% if post.wiki %}
     <div class='post-update-info'>
         <p>
@@ -105,9 +105,9 @@
     {% else %}
         {% set first_rev = post.get_earliest_revision() %}
         {% set last_rev = post.get_latest_revision() %}
-        {{ post_contributor_info(first_rev, "original_author") }}
+        {{ post_contributor_info(first_rev, "original_author", request) }}
         {% if first_rev != last_rev %}
-            {{ post_contributor_info(last_rev, "last_updater") }}
+            {{ post_contributor_info(last_rev, "last_updater", request) }}
         {% endif %}
     {% endif %}
 {%- endmacro -%}
@@ -181,7 +181,7 @@
 </div>
 {%- endmacro -%}
 
-{%- macro post_contributor_info(revision, contributor_type) -%}
+{%- macro post_contributor_info(revision, contributor_type, request=none) -%}
 <div class='post-update-info'>
 {% if contributor_type=="original_author" %}
     {% if revision.post.post_type == 'question' %}
@@ -213,7 +213,7 @@
         original_author != revision.author ))
     %}
     {% if show_user_info %}
-        {{ post_contributor_avatar_and_credentials(revision) }}
+        {{ post_contributor_avatar_and_credentials(revision, request) }}
     {% endif %}
 </div>
 {%- endmacro -%}
@@ -645,7 +645,7 @@ for the purposes of the AJAX comment editor #}
     {{ user_country_name_and_flag(user) }}
 {%- endmacro -%}
 
-{% macro user_card(user) %}
+{% macro user_card(user, request=none) %}
     {% include "widgets/user_card.html" %}
 {% endmacro %}
 

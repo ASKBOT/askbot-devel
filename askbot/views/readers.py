@@ -55,6 +55,10 @@ from askbot.utils.url_utils import reverse_i18n
 from askbot.views import context
 import askbot
 
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+
+
 
 # used in index page
 #todo: - take these out of const or settings
@@ -393,10 +397,10 @@ def question(request, id, no_rep):#refactor - long subroutine. display question 
     #process url parameters
     #todo: fix inheritance of sort method from questions
     #before = timezone.now()
-    if id == 1:
-        request.session['no_rep'] = 'True'
+    if id == '1':
+        request.session['no_rep'] = True
     else:
-        request.session['no_rep'] = 'False'
+        request.session['no_rep'] = False
         
     form = ShowQuestionForm(request.REQUEST)
     form.full_clean()#always valid

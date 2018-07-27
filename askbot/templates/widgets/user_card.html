@@ -10,7 +10,7 @@
         {{ macros.user_country_flag(user) }}
 
         <br/>
-        {% if no_rep == 'False' %}
+        {% if request.session.no_rep == True %}
             {% if settings.KARMA_MODE == 'public' %}
             <span class="reputation-score">{{ user.get_localized_profile().get_reputation() }}</span>
             {% endif %}
