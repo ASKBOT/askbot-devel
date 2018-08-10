@@ -1,0 +1,12 @@
+{% load experiments %}
+
+{% experiment user_card control %}
+{% endexperiment %}
+
+{% experiment user_card activity %}
+{% endexperiment %}
+
+{% experiment_enroll "user_card" "control" "activity" as alternative %}
+{% if alternative == "activity" %}
+	You're in the "activity" alternative!
+{% endif %}

@@ -58,6 +58,8 @@ import askbot
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
+from experiments.utils import participant
+
 
 
 # used in index page
@@ -397,7 +399,8 @@ def question(request, id, no_rep):#refactor - long subroutine. display question 
     #process url parameters
     #todo: fix inheritance of sort method from questions
     #before = timezone.now()
-    if id == '1':
+    participant(request).enroll('user_card', ['activity'])
+    if participant(request).get_alternative('user_card') == 'activity':
         request.session['no_rep'] = True
     else:
         request.session['no_rep'] = False

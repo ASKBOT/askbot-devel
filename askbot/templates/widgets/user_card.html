@@ -8,9 +8,9 @@
     <div class="user-info">
         <a href="{{ user.get_profile_url() }}">{{ user.username|escape }}</a>
         {{ macros.user_country_flag(user) }}
-
+        
         <br/>
-        {% if request.session.no_rep == True %}
+        {% if request.session.no_rep == False %}
             {% if settings.KARMA_MODE == 'public' %}
             <span class="reputation-score">{{ user.get_localized_profile().get_reputation() }}</span>
             {% endif %}

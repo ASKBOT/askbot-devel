@@ -52,8 +52,8 @@ urlpatterns = patterns(
         name='questions'
     ),
     url(
-        r'^%s(?P<id>\d+)/' % QUESTION_PAGE_BASE_URL +
-        r'(%s)?' % r'(?P<no_rep>\w+)',
+        (r'^%s(?P<id>\d+)/' % QUESTION_PAGE_BASE_URL.strip('/') +
+        r'(%s)?' % r'/no-rep:(?P<no_rep>\w+)'),
         views.readers.question,
         name='question'
     ),
