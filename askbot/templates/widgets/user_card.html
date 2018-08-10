@@ -10,8 +10,13 @@
         {{ macros.user_country_flag(user) }}
         
         <br/>
-        {% if request.session.no_rep == False %}
-            {% if settings.KARMA_MODE == 'public' %}
+        {% if request and request.session.no_rep == True %}
+        	<tr>
+        	<td><strong>{% trans %}last seen{% endtrans %}</strong></td>
+       		<td> <span, class="last-seen">{{ macros.timeago(user.last_seen) }}</span></td>
+        	</tr>   
+        {% else %}
+        {% if settings.KARMA_MODE == 'public' %}
             <span class="reputation-score">{{ user.get_localized_profile().get_reputation() }}</span>
             {% endif %}
 
@@ -28,12 +33,6 @@
                 {% endif %}
             </span>
             {% endif %}
-        {% else %}
-        <tr>
-        <td><strong>{% trans %}last seen{% endtrans %}</strong></td>
-       <td> <span, class="last-seen">{{ macros.timeago(user.last_seen) }}</span></td>
-        </tr>
-
         {% endif %}
         {{ macros.user_website_link(user) }}
     </div>
