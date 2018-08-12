@@ -86,7 +86,7 @@ class UserPasswordQueue(models.Model):
     """
     model for new password queue.
     """
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     new_password = models.CharField(max_length=30)
     confirm_key = models.CharField(max_length=40)
 
