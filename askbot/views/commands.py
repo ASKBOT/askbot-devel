@@ -236,6 +236,15 @@ def mark_tag(request, **kwargs):#tagging system
         user = get_object_or_404(models.User, pk=post_data['user'])
     else:
         user = request.user
+    
+    for tag in tagnames:
+        if not models.Tag.objects.filter(name=tag).exists():
+            response_data = {
+                'success': False,
+                'message': "Cannot create tag: " + tag +", reach admin"
+            }
+            data = simplejson.dumps(response_data)
+            return HttpResponse(data, content_type="application/json")
 
     cleaned_tagnames, cleaned_wildcards = user.mark_tags(
                                                      tagnames,
