@@ -324,7 +324,7 @@ def tags(request):#view showing a listing of available tags - plain list
     if query != '':
         query_params['name__icontains'] = query
 
-    tags_qs = Tag.objects.filter(**query_params).exclude(used_count=0)
+    tags_qs = Tag.objects.filter(**query_params)
 
     if sort_method == 'name':
         order_by = 'name'
