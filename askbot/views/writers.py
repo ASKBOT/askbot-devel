@@ -13,6 +13,7 @@ import tempfile
 import time
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -226,6 +227,11 @@ def ask(request):#view used to ask a new question
             post_privately = form.cleaned_data['post_privately']
             group_id = form.cleaned_data.get('group_id', None)
             language = form.cleaned_data.get('language', None)
+
+            for tag in tagnames.split(' '):
+                if not models.Tag.objects.filter(name=tag).exists():
+                    request.user.message_set.create(message="Cannot create tag: " + tag + ", reach admin..!")
+                    return redirect('ask')
 
             if request.user.is_authenticated():
                 drafts = models.DraftQuestion.objects.filter(author=request.user)
