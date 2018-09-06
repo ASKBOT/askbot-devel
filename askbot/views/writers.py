@@ -347,6 +347,14 @@ def retag_question(request, id):
                             'Spam was detected on your post, sorry '
                             'for if this is a mistake'
                         ))
+                    for tag in form.cleaned_data['tags'].split(" "):
+                        if not models.Tag.objects.filter(name=tag).exists():
+                            response_data = {
+                                'success': False,
+                                'message': "Cannot create tag: " + tag + ", reach admin"
+                                }
+                            data = simplejson.dumps(response_data)
+                            return HttpResponse(data, content_type="application/json")
                     request.user.retag_question(question=question, tags=form.cleaned_data['tags'])
                 if request.is_ajax():
                     response_data = {
