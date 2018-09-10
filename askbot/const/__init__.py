@@ -507,7 +507,7 @@ USER_STATUS_CHOICES = (
         ('s', _('suspended')), #suspended user who cannot post new stuff
         ('b', _('blocked')), #blocked
 )
-DEFAULT_USER_STATUS = 'w'
+DEFAULT_USER_STATUS = 'a'
 
 #number of items to show in user views
 USER_VIEW_DATA_SIZE = 50
