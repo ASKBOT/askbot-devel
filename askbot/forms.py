@@ -28,6 +28,7 @@ from askbot.conf import settings as askbot_settings
 from askbot.conf import get_tag_email_filter_strategy_choices
 from tinymce.widgets import TinyMCE
 import logging
+from askbot.models import UserProfile
 
 
 def split_tags(data):
@@ -1469,7 +1470,7 @@ class TagFilterSelectionForm(forms.ModelForm):
         self.fields['email_tag_filter_strategy'].choices = choices
 
     class Meta:
-        model = User
+        model = UserProfile
         fields = ('email_tag_filter_strategy',)
 
     def save(self):
