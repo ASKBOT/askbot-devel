@@ -276,7 +276,7 @@ class Tag(models.Model):
 
     tag_wiki = models.OneToOneField(
                                 'Post',
-                                null=True,
+                                null=True, blank=True,
                                 related_name = 'described_tag'
                             )
 
