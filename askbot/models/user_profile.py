@@ -109,7 +109,7 @@ class UserProfile(models.Model):
                                 related_name='askbot_profile',
                                 primary_key=True
                             )
-    avatar_urls = JSONField(default={})
+    avatar_urls = JSONField(default={}, blank=True)
     status = models.CharField(
                             max_length=2,
                             default=const.DEFAULT_USER_STATUS,
@@ -118,7 +118,7 @@ class UserProfile(models.Model):
                         )
     is_fake = models.BooleanField(default=False)
     email_isvalid = models.BooleanField(default=False)
-    email_key = models.CharField(max_length=32, null=True)
+    email_key = models.CharField(max_length=32, null=True, blank=True)
     #hardcoded initial reputaion of 1, no setting for this one
     reputation = models.PositiveIntegerField(default=const.MIN_REPUTATION, db_index=True)
     gravatar = models.CharField(max_length=32)
@@ -170,8 +170,8 @@ class UserProfile(models.Model):
                             default=django_settings.LANGUAGE_CODE
                         )
 
-    twitter_access_token = models.CharField(max_length=256, default='')
-    twitter_handle = models.CharField(max_length=32, default='')
+    twitter_access_token = models.CharField(max_length=256, default='', blank=True)
+    twitter_handle = models.CharField(max_length=32, default='', blank=True)
     social_sharing_mode = models.IntegerField(
                                 default=const.SHARE_NOTHING,
                                 choices=const.SOCIAL_SHARING_MODE_CHOICES
@@ -191,6 +191,8 @@ class UserProfile(models.Model):
         self.update_cache()
         super(UserProfile, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.auth_user_ptr.username
 
 class LocalizedUserProfile(models.Model):
     auth_user = models.ForeignKey(User, related_name='localized_askbot_profiles')
