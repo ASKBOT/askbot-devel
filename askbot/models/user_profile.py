@@ -150,7 +150,7 @@ class UserProfile(models.Model):
     show_marked_tags = models.BooleanField(default=True)
     email_tag_filter_strategy = models.SmallIntegerField(
             choices=const.TAG_EMAIL_FILTER_FULL_STRATEGY_CHOICES,
-            default=const.EXCLUDE_IGNORED
+            default=const.INCLUDE_INTERESTING
         )
     display_tag_filter_strategy = models.SmallIntegerField(
             choices=const.TAG_DISPLAY_FILTER_STRATEGY_CHOICES,
