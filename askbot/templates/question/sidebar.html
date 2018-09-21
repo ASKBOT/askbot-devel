@@ -138,7 +138,7 @@
         {% trans %}Asked{% endtrans %}: <strong>{{ macros.timeago(question.added_at) }}</strong>
     </p>
     <p> 
-        {% trans %}Seen{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}time{% endtrans %}</strong>
+        {% trans %}Seen{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
     </p>
     <p>
         {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>

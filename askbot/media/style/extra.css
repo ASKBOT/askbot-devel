@@ -27,22 +27,6 @@
   margin-top: 9px;
 }
 
-#header.without-logo search-bar {
-  /* padding: 0 32px 0 15px; */
-  position: relative;
-}
-
-#searchBar {
-  /* Main search form , check widgets/search_bar.html */
-  border: 1px solid #c9c9b5;
-  background: white;
-  height: 10px;
-  z-index: 1000;
-  position: relative;
-  overflow:hidden;
-  /* the guts are absolute-positioned */
-}
-
 #secondaryHeader {
   /* Div containing Home button, scope navigation, search form and ask button, check blocks/secondary_header.html */
   height: 55px;

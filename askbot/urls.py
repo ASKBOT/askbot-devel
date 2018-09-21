@@ -57,11 +57,6 @@ urlpatterns = patterns(
         views.readers.question,
         name='question'
     ),
-    #  url(
-    #     r'^%s(?P<id>\d+)norep/' % QUESTION_PAGE_BASE_URL,
-    #     views.readers.question_norep,
-    #     name='question_norep'
-    # ),
     url(
         r'^%s$' % pgettext('urls', 'tags/'),
         views.readers.tags,

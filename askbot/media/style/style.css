@@ -538,7 +538,7 @@ body.user-messages {
 }
 #metaNav #navUsers,
 #metaNav #navGroups {
-  background: 3px -1px url(../images/sprites.png) no-repeat;
+  background: 3px -133px url(../images/sprites.png) no-repeat;
 }
 #metaNav #navBadges {
   background: 3px -170px url(../images/sprites.png) no-repeat;
@@ -612,10 +612,11 @@ body.user-messages {
 #secondaryHeader td {
   padding: 0;
 }
-/* #secondaryHeader td.search-bar {
+
+ #secondaryHeader td.search-bar {
   padding: 0 32px 0 15px;
   position: relative;
-} */
+} 
 #homeButton {
   border-right: #afaf9e 1px solid;
   height: 54px;

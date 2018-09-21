@@ -46,18 +46,3 @@ settings.register(
         help_text=_('Badges can be either publicly shown or completely hidden')
     )
 )
-
-# settings.register(
-#     livesettings.BooleanValue(
-#         KARMA_AND_BADGE_VISIBILITY,
-#         'HIDE_REP',
-#         default=False,
-#         choices=(
-#             (False, 'show karma and badges on name card'),
-#             (True, 'hide karma and badges on name card')
-#         ),  
-#         description=_("Visibility of karma and badges on name card only"),
-#         clear_cache=True,
-#         help_text=_('Karma and badges can be either publicly shown or completely hidden')
-#     )
-# )

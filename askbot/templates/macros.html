@@ -68,18 +68,6 @@
     {% endif %}
 {%- endmacro -%}
 
-{%- macro post_contributor_avatar_and_credentials_norep(revision) -%}
-    {% if revision.is_anonymous %}
-        <img alt="{% trans %}anonymous user{% endtrans %}" src="{{ '/images/anon.png'|media }} " class="gravatar" width="32" height="32" />
-        <p>{{ revision.author.get_anonymous_name() }}</p>
-    {% else %}
-        {{ user_card_norep(revision.author) }}
-    {% endif %}
-    {% if settings.GROUPS_ENABLED %}
-        {{ user_primary_group(revision.author) }}
-    {% endif %}
-{%- endmacro -%}
-
 {%- macro post_last_updater_and_creator_info(post, request) -%}
     {% if post.wiki %}
     <div class='post-update-info'>
@@ -110,75 +98,6 @@
             {{ post_contributor_info(last_rev, "last_updater", request) }}
         {% endif %}
     {% endif %}
-{%- endmacro -%}
-
-{%- macro post_last_updater_and_creator_info_norep(post) -%}
-    {% if post.wiki %}
-    <div class='post-update-info_norep'>
-        <p>
-           {%- if post.post_type == 'question' -%}
-               {% set action_performed=settings.WORDS_ASKED|escape %}
-           {% elif post.post_type == 'answer' %}
-               {% set action_performed=settings.WORDS_ANSWERED|escape %}
-           {% else %}
-               {%- set action_performed=gettext('posted') %}
-           {% endif %}
-           <strong>{{ timeago(post.added_at, action_performed=action_performed) }}</strong>
-        </p>
-        <img width="35" height="35"
-            src="{{'/images/wiki.png'|media}}"
-            alt="{% trans %}this post is marked as community wiki{% endtrans %}"
-            style="float:left"
-        />
-        {% set wiki_min_rep = settings.MIN_REP_TO_EDIT_WIKI %}
-        <p class="tip">{% trans %}This post is a wiki.
-        Anyone with karma &gt;{{wiki_min_rep}} is welcome to improve it.{% endtrans %}</p>
-    </div>
-    {% else %}
-        {% set first_rev = post.get_earliest_revision() %}
-        {% set last_rev = post.get_latest_revision() %}
-        {{ post_contributor_info_norep(first_rev, "original_author") }}
-        {% if first_rev != last_rev %}
-            {{ post_contributor_info_norep(last_rev, "last_updater") }}
-        {% endif %}
-    {% endif %}
-{%- endmacro -%}
-
-{%- macro post_contributor_info_norep(revision, contributor_type) -%}
-<div class='post-update-info'>
-{% if contributor_type=="original_author" %}
-    {% if revision.post.post_type == 'question' %}
-        {% set action_label = settings.WORDS_ASKED|escape %}
-    {% elif revision.post.post_type == 'answer' %}
-        {% set action_label = settings.WORDS_ANSWERED|escape %}
-    {% else %}
-        {% set action_label = gettext('posted') %}
-    {% endif %}
-{% else %}
-    {% set action_label = gettext('updated') %}
-{% endif %}
-    {% if revision.post.post_type in ('question', 'answer') %}
-        {% set original_author = revision.post.author %}
-    {% else %}
-        {% set original_author = None %}
-    {% endif %}
-    <p style="line-height:12px;">
-        <a 
-        {% if revision.post.post_type == 'question' %}
-            href="{% url question_revisions revision.post.id %}"
-        {% else %}
-            href="{% url answer_revisions revision.post.id %}"
-        {% endif %}
-        ><strong>{{ timeago(revision.revised_at, action_performed=action_label) }}</strong></a>
-    </p>
-    {% set show_user_info = (contributor_type == 'original_author' or 
-        (contributor_type == 'last_updater' and 
-        original_author != revision.author ))
-    %}
-    {% if show_user_info %}
-        {{ post_contributor_avatar_and_credentials_norep(revision) }}
-    {% endif %}
-</div>
 {%- endmacro -%}
 
 {%- macro post_contributor_info(revision, contributor_type, request=none) -%}
@@ -647,10 +566,6 @@ for the purposes of the AJAX comment editor #}
 
 {% macro user_card(user, request=none) %}
     {% include "widgets/user_card.html" %}
-{% endmacro %}
-
-{% macro user_card_norep(user) %}
-    {% include "widgets/user_card_norep.html" %}
 {% endmacro %}
 
 {%- macro user_list(users) -%}
