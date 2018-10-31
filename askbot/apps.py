@@ -1,6 +1,7 @@
 from django.apps import AppConfig
 from django.contrib.auth import get_user_model
 from django.core.signals import request_started
+from django_gravatar.helpers import get_gravatar_url, has_gravatar, get_gravatar_profile_url, calculate_gravatar_hash
 
 BADGES_READY = False
 
