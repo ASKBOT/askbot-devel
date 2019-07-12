@@ -213,7 +213,7 @@ class AskbotSetup:
         # the destination directory
         directory = path_utils.clean_directory(options.dir_name)
         while directory is None:
-            directory = path_utils.get_install_directory(force=options.get('force')) # i.e. ask the user
+            directory = path_utils.get_install_directory(force=options.force) # i.e. ask the user
         options.dir_name = directory
 
         if options.database_engine not in DATABASE_ENGINE_CHOICES:
