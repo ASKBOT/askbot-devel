@@ -10,8 +10,8 @@ import sys
 import askbot
 
 setup(
-    name = "askbot",
-    version = askbot.get_version(),#remember to manually set this correctly
+    name = "sch-askbot",
+    version = "1.0.1",#remember to manually set this correctly
     description = 'Question and Answer forum, like StackOverflow, written in python and Django',
     packages = find_packages(exclude=['testproject']),
     author = 'Evgeny.Fadeev',
