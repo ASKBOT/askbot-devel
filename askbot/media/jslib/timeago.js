@@ -107,7 +107,7 @@
             //how to do this in js???
             return month_date;
         } else {
-            return month_date + ' ' + "'" + date.getYear() % 20;
+            return month_date + ' ' + "'" + date.getYear() % 100;
         }
     } else if (days == 2) {
         return gettext('2 days ago')
