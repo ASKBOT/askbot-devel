@@ -88,11 +88,11 @@
 
     function inWords(date) {
         var distanceMillis = distance(date);
-        var seconds = Math.abs(distanceMillis) / 1000;
-        var minutes = seconds / 60;
-        var hours = minutes / 60;
-        var days = hours / 24;
-        var years = days / 365;
+        var seconds = Math.floor(Math.abs(distanceMillis) / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+        var years = Math.floor(days / 365);
         var months = [
             gettext("Jan"),
             gettext("Feb"),
