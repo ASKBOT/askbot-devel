@@ -26,6 +26,6 @@ func main() {
 
 	type b map[any]any
 	var y b
-	fmt.Println(len(y), y == nil)
+	fmt.Println(len(y), y == nil)//dfef
 
 }
