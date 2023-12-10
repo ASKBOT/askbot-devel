@@ -9,7 +9,6 @@ from askbot.utils.html import replace_links_with_text
 from askbot.utils.html import get_text_from_html
 from askbot.utils.html import sanitize_html
 from askbot.utils import html as html_utils
-from askbot.utils.markup import get_parser
 from askbot.utils.functions import list_directory_files
 from askbot.conf import settings as askbot_settings
 import askbot
@@ -136,16 +135,6 @@ class HTMLUtilsTests(TestCase):
             get_text_from_html('ataoesa uau <a>link</a>aueaotuosu ao <a href="http://cnn.com">CNN!</a>\nnaouaouuau<img> <img src="http://cnn.com/1.png"/> <img src="http://cnn.com/2.png" alt="sometext">'),
             'ataoesa uau linkaueaotuosu ao http://cnn.com (CNN!)\n\nnaouaouuau http://cnn.com/1.png http://cnn.com/2.png (sometext)'
         )
-
-
-class GetParserTest(TestCase):
-    def test_func(self):
-        parser = get_parser()
-        self.assertIsInstance(parser, markdown2.Markdown)
-
-    def test_markdown_class_addr(self):
-        parser = get_parser('askbot.tests.utils.Markdown')
-        self.assertIsInstance(parser, markdown2.Markdown)
 
 
 class SanitizeHtml(TestCase):

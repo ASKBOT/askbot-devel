@@ -1004,13 +1004,20 @@ def user_assert_can_post_text(self, text):
     """Raises exceptions.PermissionDenied, if user does not have
     privilege to post given text, depending on the contents
     """
-    if re.search(URL_RE, text):
-        min_rep = askbot_settings.MIN_REP_TO_SUGGEST_LINK
-        if self.is_authenticated and self.reputation < min_rep:
+    if not re.search(URL_RE, text):
+        return
+
+    min_rep = askbot_settings.MIN_REP_TO_SUGGEST_LINK
+    if self.is_anonymous or self.reputation < min_rep:
+        if self.is_anonymous:
+            message = _(
+                'Could not post, because anonymous users cannot publish links'
+            )
+        else:
             message = _(
                 'Could not post, because your karma is insufficient to publish links'
             )
-            raise django_exceptions.PermissionDenied(message)
+        raise django_exceptions.PermissionDenied(message)
 
 
 def user_assert_can_post_question(self):

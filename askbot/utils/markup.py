@@ -13,6 +13,8 @@ from django.utils.html import urlize
 from django.utils.module_loading import import_string
 from django.urls.exceptions import NoReverseMatch
 
+from markdown_it import MarkdownIt
+
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils.file_utils import store_file
@@ -25,56 +27,24 @@ from askbot.utils.html import urlize_html
 URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))") # pylint: disable=line-too-long
 
 
-def get_parser(markdown_class_addr=None):
+def get_md_converter():
+    """Returns a configured instance of MarkdownIt.
+    Converts markdown with extra features:
+    * link-patterns
+    * video embedding
+    * code-friendly - no underscores to italic (if mathjax or code friendly settings are true)
+    * urlizing of link-like text - this may need to depend on reputation
+
+    code-friendly hints: https://github.com/markdown-it/markdown-it/issues/404
     """
-    Returns an instance of configured :class:`markdown2.Markdown parser.
-
-    :param markdown_class_addr: Path to :class:`markdown2.Markdown` custom
-                                class. (default: `'markdown2.Markdown'`)
-    :type markdown_class_addr: ``str``
-    """
-    if markdown_class_addr is None:
-        from django.conf import settings as django_settings
-        markdown_class_addr = getattr(django_settings, 'ASKBOT_MARKDOWN_CLASS',
-                                      'markdown2.Markdown')
-    markdown_cls = import_string(markdown_class_addr)
-    extras = ['link-patterns', 'video']
-
-    if askbot_settings.ENABLE_MATHJAX or askbot_settings.MARKUP_CODE_FRIENDLY:
-        extras.append('code-friendly')
-
-    # link_patterns = [
-    #     (URL_RE, r'\1'),
-    # ]
-    link_patterns = []
-    if askbot_settings.ENABLE_AUTO_LINKING:
-        pattern_list = askbot_settings.AUTO_LINK_PATTERNS.split('\n')
-        url_list = askbot_settings.AUTO_LINK_URLS.split('\n')
-        pairs = list(zip(pattern_list, url_list))  # always takes equal number of items
-        for item in pairs:
-            if not item[0].strip() or not item[1].strip():
-                continue
-            link_patterns.append(
-                (re.compile(item[0].strip()), item[1].strip())
-            )
-
-        # Check whether  we have matching links for all key terms,
-        # Other wise we ignore the key terms
-        # May be we should do this test in update_callback?
-        # looks like this might be a defect of livesettings
-        # as there seems to be no way
-        # to validate entries that depend on each other
-        if len(pattern_list) != len(url_list):
-            settings_url = askbot_settings.APP_URL+'/settings/AUTOLINK/'
-            msg = "Number of autolink patterns didn't match the number "\
-                  "of url templates, fix this by visiting %s"
-            logging.critical(msg, settings_url)
-
-    return markdown_cls(
-        html4tags=True,
-        extras=extras,
-        link_patterns=link_patterns
-    )
+    md_converter = MarkdownIt('gfm-like')
+    # enable video embedding
+    # enable code-friendly mode
+    # enable link patterns using
+    # * askbot_settings.ENABLE_AUTO_LINKING
+    # * askbot_settings.AUTO_LINK_PATTERNS
+    # * askbot_settings.AUTO_LINK_URLS
+    return md_converter
 
 
 def format_mention_in_html(mentioned_user):
@@ -213,17 +183,11 @@ def plain_text_input_converter(text):
     return sanitize_html(urlize('<p>' + text + '</p>'))
 
 
+MD_CONVERTER = get_md_converter()
+
 def markdown_input_converter(text):
-    """Markdown to html converter.
-    Converts markdown with extra features:
-    * link-patterns
-    * video embedding
-    * code-friendly (drop this?) - no underscores to italic (if mathjax or code friendly settings are true)
-    * urlizing of link-like text - this may need to depend on reputation
-    """
-    text = get_parser().convert(text)
-    text = sanitize_html(text)
-    text = urlize_html(text)
+    """Markdown to html converter"""
+    text = MD_CONVERTER.render(text)
     return sanitize_html(text)
 
 
