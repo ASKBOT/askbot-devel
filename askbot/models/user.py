@@ -18,6 +18,7 @@ from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils import functions
 from askbot.models.base import BaseQuerySetManager
+from askbot.models.analytics import Session
 from collections import defaultdict
 
 PERSONAL_GROUP_NAME_PREFIX = '_personal_'
@@ -297,6 +298,7 @@ class Activity(models.Model):
     We keep some history data for user activities
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True, blank=True)
     recipients = models.ManyToManyField(User, through=ActivityAuditStatus, related_name='incoming_activity')
     activity_type = models.SmallIntegerField(choices=const.TYPE_ACTIVITY, db_index=True)
     active_at = models.DateTimeField(default=timezone.now)
@@ -307,14 +309,15 @@ class Activity(models.Model):
     #todo: remove this denorm question field when Post model is set up
     question = models.ForeignKey('Post', null=True, on_delete=models.CASCADE)
 
-    is_auditted = models.BooleanField(default=False)
+    is_auditted = models.BooleanField(default=False) # todo: this field seems to be unused
     #add summary field.
     summary = models.TextField(default='')
 
     objects = ActivityManager()
 
     def __str__(self):
-        return '[%s] was active at %s' % (self.user.username, self.active_at)
+        activity_type = self.get_activity_type_display()
+        return f'Activity: {self.user.username}@{self.active_at.isoformat()}: {activity_type}'
 
     class Meta:
         app_label = 'askbot'
@@ -782,3 +785,4 @@ class BulkTagSubscription(models.Model):
     class Meta:
         app_label = 'askbot'
         ordering = ['-date_added']
+

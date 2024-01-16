@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models import Q
+from django.db.models import Value, Count
 from django.db.models.functions import Substr, StrIndex
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings as django_settings
-from django.db.models import Value, Count
 from django.contrib.auth import get_user_model
 
 """
@@ -53,12 +55,11 @@ class Session(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     ip_address = models.GenericIPAddressField()
     user_agent = models.CharField(max_length=512)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField() # no auto_now_ad or auto_now for created_at and updated_at
+    updated_at = models.DateTimeField() # because we want to set it manually for the testing purposes
+
+    def __str__(self):
+        return f"Session: {self.user.email} {self.created_at.isoformat()} - {self.updated_at.isoformat()}"
 
 
-class Event(models.Model):
-    """Analytics event"""
-    session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    name = models.CharField(max_length=64, help_text="Name of the event")
-    timestamp = models.DateTimeField(auto_now_add=True)
+# Event model is users.Activity - probably will be moved here

@@ -267,8 +267,8 @@ def generate_random_key(length=16):
     """return random string, length is number of characters"""
     random.seed()
     assert isinstance(length, int)
-    format_string = '%0' + str(2*length) + 'x'
-    return format_string % random.getrandbits(length*8)
+    format_string = '%0' + str(length) + 'x'
+    return format_string % random.getrandbits(length*4)
 
 def list_directory_files(dir_path):
     """Lists all files in the directory,

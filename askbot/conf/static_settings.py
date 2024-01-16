@@ -42,13 +42,14 @@ class AskbotStaticSettings(AppConf):
     ANALYTICS_NON_ADMINS_SLICE_NAME = _('Non-Admins')
     ANALYTICS_NON_ADMINS_SLICE_DESCRIPTION = _('All users, excluding the moderators and admins')
     ANALYTICS_ADMINS_FILTER = None # None or a dictionary applied in the Django ORM filter
+    ANALYTICS_SESSION_TIMEOUT_MINUTES = 30
     CAS_USER_FILTER = None
     CAS_USER_FILTER_DENIED_MSG = None
     CAS_GET_USERNAME = None # python path to function
     CAS_GET_EMAIL = None # python path to function
     CUSTOM_BADGES = None # python path to module with badges
     CUSTOM_USER_PROFILE_TAB = None # dict(NAME, SLUG, CONTEXT_GENERATOR
-                                   # the latter is path to func with 
+                                   # the latter is path to func with
                                    # variables (request, user)
     DEBUG_INCOMING_EMAIL = False
     EXTRA_SKINS_DIR = None #None or path to directory with skins
