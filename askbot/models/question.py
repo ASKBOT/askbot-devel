@@ -75,7 +75,7 @@ def default_title_renderer(thread):
     else:
         attr = None
     if attr is not None:
-        return '%s %s' % (thread.title, str(attr))
+        return f'{thread.title} {str(attr)}'
     else:
         return thread.title
 
@@ -174,7 +174,7 @@ class ThreadManager(BaseQuerySetManager):
         language = language or get_language()
         tagnames = clean_tagnames(tagnames)
 
-        thread = super(ThreadManager, self).create(
+        thread = super().create(
             title=title, tagnames=tagnames, last_activity_at=added_at,
             last_activity_by=author, language_code=language)
 
@@ -1784,7 +1784,7 @@ class FavoriteQuestion(models.Model):
         verbose_name_plural = _("favorite questions")
 
     def __str__(self):
-        return '[%s] favorited at %s' % (self.user, self.added_at)
+        return f'[{self.user}] favorited at {self.added_at}'
 
 
 class DraftQuestion(DraftContent):

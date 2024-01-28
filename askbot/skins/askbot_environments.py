@@ -21,7 +21,7 @@ import askbot.skins.template_backends
 class MultilingualEnvironment(Environment):
     def __init__(self, *args, **kwargs):
         lang_code = kwargs.pop('language_code', None) # atm I don't see this ever becoming None
-        super(MultilingualEnvironment, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # The following caused problems before. Reverting to call set_language() explicitly
         # if lang_code is not None:
         #     self.set_language(lang_code)
@@ -57,7 +57,7 @@ class SkinEnvironment(MultilingualEnvironment):
         key = self.build_sibling_key(this_sibling_key)
         self.__class__.siblings[key] = self
 
-        super(SkinEnvironment, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @classmethod
     def build_sibling_key(cls, parts):

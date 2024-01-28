@@ -13,7 +13,7 @@ class LoginRequired(exceptions.PermissionDenied):
     def __init__(self, msg=None):
         if msg is None:
             msg = _('Sorry, but anonymous visitors cannot access this function')
-        super(LoginRequired, self).__init__(msg)
+        super().__init__(msg)
 
 
 class InsufficientReputation(exceptions.PermissionDenied):

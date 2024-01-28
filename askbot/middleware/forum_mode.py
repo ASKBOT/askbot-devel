@@ -67,7 +67,7 @@ class ForumModeMiddleware:
                     _('Please log in to use %s') % \
                     askbot_settings.APP_SHORT_NAME
                 )
-                redirect_url = '%s?next=%s' % (
+                redirect_url = '{}?next={}'.format(
                     url_utils.get_login_url(),
                     encode_jwt({'next_url': request.get_full_path()})
                 )

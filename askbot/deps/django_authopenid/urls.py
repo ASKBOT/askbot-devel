@@ -17,11 +17,11 @@ urlpatterns = [
     re_path(r'^%s$' % pgettext('urls', 'signout/'), OpenidViews.signout, name='user_signout'),
     #this view is "complete-openid" signin
     re_path(
-        r'^%s%s$' % (pgettext('urls', 'signin/'), pgettext('urls', 'complete/')),
+        r'^{}{}$'.format(pgettext('urls', 'signin/'), pgettext('urls', 'complete/')),
         OpenidViews.complete_openid_signin,
         name='user_complete_openid_signin'),
     re_path(
-        r'^%s%s$' % (pgettext('urls', 'signin/'), pgettext('urls', 'complete-cas/')),
+        r'^{}{}$'.format(pgettext('urls', 'signin/'), pgettext('urls', 'complete-cas/')),
         OpenidViews.complete_cas_signin,
         name='user_complete_cas_signin'),
     re_path(

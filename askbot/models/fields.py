@@ -6,4 +6,4 @@ class LanguageCodeField(models.CharField):
         kwargs['choices'] = django_settings.LANGUAGES
         kwargs['default'] = django_settings.LANGUAGE_CODE
         kwargs['max_length'] = 16
-        super(LanguageCodeField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

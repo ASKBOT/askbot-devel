@@ -193,7 +193,7 @@ class TagManager(BaseQuerySetManager):
         kwargs['name'] = name
         kwargs['status'] = status
 
-        return super(TagManager, self).create(**kwargs)
+        return super().create(**kwargs)
 
     def create_in_bulk(self, tag_names=None, user=None, language_code=None, auto_approve=False):
         """creates tags by names. If user can create tags,
@@ -324,4 +324,4 @@ class TagSynonym(models.Model):
         app_label = 'askbot'
 
     def __str__(self):
-        return '%s -> %s' % (self.source_tag_name, self.target_tag_name)
+        return f'{self.source_tag_name} -> {self.target_tag_name}'

@@ -74,10 +74,10 @@ class DjangoField:
         self.relation = None
 
     def __str__(self):
-        out  = '%s = %s(' % (self.name, types[self.type])
+        out  = f'{self.name} = {types[self.type]}('
         if self.type == 'FK':
             out += "'%s'" % self.relation
-            out += ", related_name='%s_by_%s_set'" % (self.table.name, self.name)
+            out += f", related_name='{self.table.name}_by_{self.name}_set'"
             out += ', null=True'#nullable to make life easier
         elif self.type == 'PK':
             out += 'primary_key=True'
@@ -105,7 +105,7 @@ class DjangoFK(DjangoField):
         bits = source_name.split('Id')
         if len(bits) == 2 and bits[1] == '':
             name = bits[0]
-        super(DjangoFK, self).__init__(name, 'FK')
+        super().__init__(name, 'FK')
         self.set_relation(name)
 
     def set_relation(self, name):

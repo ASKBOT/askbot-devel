@@ -8,7 +8,7 @@ class ProjDirValidator(DirValidator):
     """Implements the .clean method for the proj_name parameter"""
 
     def __init__(self, console, parser, root_dir):
-        super(ProjDirValidator, self).__init__(console, parser)
+        super().__init__(console, parser)
         self.user_prompt = f'Enter {const.PROJ_NAME_HELP}.'
         self.option_name = 'proj_name'
         self.root_dir = root_dir

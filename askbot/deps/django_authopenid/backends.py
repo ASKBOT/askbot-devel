@@ -31,7 +31,7 @@ class AuthBackend:
     """
     def __init__(self, *args, **kwargs):
         self.login_providers = util.get_enabled_login_providers()
-        super(AuthBackend, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def authenticate(self, request, method=None, provider_name=None, **kwargs):
         """this authentication function supports many login methods"""
@@ -143,7 +143,7 @@ class AuthBackend:
             else:
                 #have username collision - so make up a more unique user name
                 #bug: - if user already exists with the new username - we are in trouble
-                new_username = '%s@%s' % (username, provider_name)
+                new_username = f'{username}@{provider_name}'
                 user = User.objects.create_user(new_username, '', password)
                 user_registered.send(None, user=user, request=request)
                 message = _(

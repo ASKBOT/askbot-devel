@@ -21,9 +21,9 @@ def get_admin(seed_user_id = None):
 
     if admin.id != seed_user_id:
         if seed_user_id is None:
-            prompt = """You have not provided user id for the moderator
+            prompt = f"""You have not provided user id for the moderator
 who to assign as the performer this operation, the default moderator is
-%s, id=%s. Will that work?""" % (admin.username, admin.id)
+{admin.username}, id={admin.id}. Will that work?"""
         else:
             prompt = """User with id=%s is not a moderator
 would you like to select default moderator %s, id=%d

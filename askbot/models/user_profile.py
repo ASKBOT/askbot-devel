@@ -230,7 +230,7 @@ class UserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         self.update_cache()
-        super(UserProfile, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class LocalizedUserProfile(models.Model):
@@ -265,7 +265,7 @@ class LocalizedUserProfile(models.Model):
 
     def save(self, *args, **kwargs):
         self.update_cache()
-        super(LocalizedUserProfile, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 def update_user_profile(instance, **kwargs):

@@ -299,8 +299,7 @@ class EmailAlertTests(TransactionTestCase):
         self.assertEqual(len(outbox), expected['message_count'], error_message)
         if expected['message_count'] > 0:
             if len(outbox) > 0:
-                error_message = 'expected recipient %s found %s' % \
-                    (self.target_user.email, outbox[0].recipients()[0])
+                error_message = f'expected recipient {self.target_user.email} found {outbox[0].recipients()[0]}'
                 #verify that target user receives the email
                 self.assertEqual(
                             outbox[0].recipients()[0],
@@ -901,7 +900,7 @@ class AcceptAnswerReminderTests(EmailReminderTestCase):
     command_name = 'send_accept_answer_reminders'
 
     def do_post(self, timestamp):
-        super(AcceptAnswerReminderTests, self).do_post(timestamp)
+        super().do_post(timestamp)
         self.answer = self.post_answer(
             question = self.question,
             user = self.u2,

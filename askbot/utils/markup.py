@@ -82,7 +82,7 @@ def format_mention_in_html(mentioned_user):
     try:
         url = mentioned_user.get_profile_url()
         username = mentioned_user.username
-        return '<a href="%s">@%s</a>' % (url, username)
+        return f'<a href="{url}">@{username}</a>'
     except NoReverseMatch:
         return ""
 

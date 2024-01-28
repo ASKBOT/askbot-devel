@@ -6,7 +6,7 @@ from django.template.context import BaseContext
 class Template(OriginalJinja2Template):
     # backend parameter was added with Django 1.11
     def __init__(self, template, backend=None):
-        super(Template,self).__init__(template, backend)
+        super().__init__(template, backend)
 
     def render(self, context=None, request=None):
         # dict from_context is from django_jinja and I am not sure if we still
@@ -14,6 +14,6 @@ class Template(OriginalJinja2Template):
         if isinstance(context,BaseContext):
             context = dict_from_context(context)
 
-        return super(Template, self).render(context, request)
+        return super().render(context, request)
 
 django.template.backends.jinja2.Template = Template

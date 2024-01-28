@@ -40,13 +40,13 @@ urlpatterns = [
     re_path(
         # Note that all parameters, even if optional, are provided to the view. Non-present ones have None value.
         (r'^%s' % MAIN_PAGE_BASE_URL.strip('/') +
-            r'(%s)?' % r'/scope:(?P<scope>\w+)' +
-            r'(%s)?' % r'/sort:(?P<sort>[\w\-]+)' +
-            r'(%s)?' % r'/tags:(?P<tags>[\w+.#,-]+)' + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
-            r'(%s)?' % r'/author:(?P<author>\d+)' +
-            r'(%s)?' % r'/page:(?P<page>\d+)' +
-            r'(%s)?' % r'/page-size:(?P<page_size>\d+)' +
-            r'(%s)?' % r'/query:(?P<query>.+)' +  # INFO: query is last, b/c it can contain slash!!!
+            r'({})?'.format(r'/scope:(?P<scope>\w+)') +
+            r'({})?'.format(r'/sort:(?P<sort>[\w\-]+)') +
+            r'({})?'.format(r'/tags:(?P<tags>[\w+.#,-]+)') + # Should match: const.TAG_CHARS + ','; TODO: Is `#` char decoded by the time URLs are processed ??
+            r'({})?'.format(r'/author:(?P<author>\d+)') +
+            r'({})?'.format(r'/page:(?P<page>\d+)') +
+            r'({})?'.format(r'/page-size:(?P<page_size>\d+)') +
+            r'({})?'.format(r'/query:(?P<query>.+)') +  # INFO: query is last, b/c it can contain slash!!!
         r'/$'),
         views.readers.questions,
         name='questions'
@@ -72,7 +72,7 @@ urlpatterns = [
         name='users'
     ),
     re_path(
-        r'^%s%s(?P<group_id>\d+)/(?P<group_slug>.*)/$' % (
+        r'^{}{}(?P<group_id>\d+)/(?P<group_slug>.*)/$'.format(
                                             pgettext('urls', 'users/'),
                                             pgettext('urls', 'by-group/')
                                         ),
@@ -82,17 +82,17 @@ urlpatterns = [
     ),
     # TODO: rename as user_edit, b/c that's how template is named
     re_path(
-        r'^%s(?P<id>\d+)/%s$' % (pgettext('urls', 'users/'), pgettext('urls', 'edit/')),
+        r'^{}(?P<id>\d+)/{}$'.format(pgettext('urls', 'users/'), pgettext('urls', 'edit/')),
         views.users.edit_user,
         name='edit_user'
     ),
     service_url(
-        r'^%s(?P<id>\d+)/%s(?P<file_name>.+)/$' % (pgettext('urls', 'users/'), pgettext('urls', 'download-data/')),
+        r'^{}(?P<id>\d+)/{}(?P<file_name>.+)/$'.format(pgettext('urls', 'users/'), pgettext('urls', 'download-data/')),
         views.users.download_user_data,
         name='download_user_data'
     ),
     service_url(#ajax get only
-        r'^%s(?P<id>\d+)/%s$' % (pgettext('urls', 'users/'), pgettext('urls', 'get-todays-backup-file-name/')),
+        r'^{}(?P<id>\d+)/{}$'.format(pgettext('urls', 'users/'), pgettext('urls', 'get-todays-backup-file-name/')),
         views.users.get_todays_backup_file_name,
         name='get_todays_backup_file_name'
     ),
@@ -112,7 +112,7 @@ urlpatterns = [
         name='set_user_description',
     ),
     re_path(
-        r'^%s(?P<id>\d+)/(?P<slug>.+)/%s$' % (
+        r'^{}(?P<id>\d+)/(?P<slug>.+)/{}$'.format(
             pgettext('urls', 'users/'),
             pgettext('urls', 'subscriptions/'),
         ),
@@ -121,7 +121,7 @@ urlpatterns = [
         name='user_subscriptions'
     ),
     re_path(
-        r'^%s%s$' % (
+        r'^{}{}$'.format(
             pgettext('urls', 'users/'),
             pgettext('urls', 'unsubscribe/'),
         ),
@@ -129,7 +129,7 @@ urlpatterns = [
         name='user_unsubscribe'
     ),
     re_path(
-        r'^%s(?P<id>\d+)/(?P<slug>.+)/%s$' % (
+        r'^{}(?P<id>\d+)/(?P<slug>.+)/{}$'.format(
             pgettext('urls', 'users/'),
             pgettext('urls', 'select_languages/'),
         ),
@@ -198,12 +198,12 @@ urlpatterns = [
     ),
     re_path(r'^%s$' % pgettext('urls', 'help/'), views.meta.help_page, name='help'),
     service_url(
-        r'^%s(?P<id>\d+)/%s$' % (pgettext('urls', 'answers/'), pgettext('urls', 'edit/')),
+        r'^{}(?P<id>\d+)/{}$'.format(pgettext('urls', 'answers/'), pgettext('urls', 'edit/')),
         views.writers.edit_answer,
         name='edit_answer'
     ),
     re_path(
-        r'^%s(?P<id>\d+)/%s$' % (pgettext('urls', 'answers/'), pgettext('urls', 'revisions/')),
+        r'^{}(?P<id>\d+)/{}$'.format(pgettext('urls', 'answers/'), pgettext('urls', 'revisions/')),
         views.readers.revisions,
         kwargs={'post_type': 'answer'},
         name='answer_revisions'
@@ -300,27 +300,27 @@ urlpatterns = [
         name='get_post_html'
     ),
     re_path(
-        r'^%s%s$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'ask/')),
+        r'^{}{}$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'ask/')),
         views.writers.ask,
         name='ask'
     ),
     service_url(  # this url is both regular and ajax
-        r'^%s(?P<id>\d+)/%s$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'retag/')),
+        r'^{}(?P<id>\d+)/{}$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'retag/')),
         views.writers.retag_question,
         name='retag_question'
     ),
     re_path(
-        r'^%s%s(?P<id>\d+)$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'close/')),
+        r'^{}{}(?P<id>\d+)$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'close/')),
         views.commands.close,
         name='close'
     ),
     re_path(
-        r'^%s%s(?P<id>\d+)$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'reopen/')),
+        r'^{}{}(?P<id>\d+)$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'reopen/')),
         views.commands.reopen,
         name='reopen'
     ),
     service_url(
-        r'^%s(?P<id>\d+)/%s$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'answer/')),
+        r'^{}(?P<id>\d+)/{}$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'answer/')),
         views.writers.answer,
         name='answer'
     ),
@@ -335,7 +335,7 @@ urlpatterns = [
         name='vote'
     ),
     re_path(
-        r'^%s(?P<id>\d+)/%s$' % (MAIN_PAGE_BASE_URL, pgettext('urls', 'revisions/')),
+        r'^{}(?P<id>\d+)/{}$'.format(MAIN_PAGE_BASE_URL, pgettext('urls', 'revisions/')),
         views.readers.revisions,
         kwargs={'post_type': 'question'},
         name='question_revisions'
@@ -393,12 +393,12 @@ urlpatterns = [
         name='publish_post'
     ),
     service_url(
-        r'^%s%s$' % (pgettext('urls', 'tags/'), pgettext('urls', 'subscriptions/')),
+        r'^{}{}$'.format(pgettext('urls', 'tags/'), pgettext('urls', 'subscriptions/')),
         views.commands.list_bulk_tag_subscription,
         name='list_bulk_tag_subscription'
     ),
     service_url(  # post only
-        r'^%s%s%s$' % (
+        r'^{}{}{}$'.format(
             pgettext('urls', 'tags/'),
             pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'delete/')
@@ -407,7 +407,7 @@ urlpatterns = [
         name='delete_bulk_tag_subscription'
     ),
     service_url(
-        r'^%s%s%s$' % (
+        r'^{}{}{}$'.format(
             pgettext('urls', 'tags/'),
             pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'create/')
@@ -416,7 +416,7 @@ urlpatterns = [
         name='create_bulk_tag_subscription'
     ),
     service_url(
-        r'^%s%s%s(?P<pk>\d+)/$' % (
+        r'^{}{}{}(?P<pk>\d+)/$'.format(
             pgettext('urls', 'tags/'),
             pgettext('urls', 'subscriptions/'),
             pgettext('urls', 'edit/')
@@ -430,25 +430,25 @@ urlpatterns = [
         name='list_suggested_tags'
     ),
     service_url(  # ajax only
-        r'^%s$' % 'moderate-suggested-tag',
+        r'^{}$'.format('moderate-suggested-tag'),
         views.commands.moderate_suggested_tag,
         name='moderate_suggested_tag'
     ),
     # TODO: collapse these three urls and use an extra json data var
     service_url(  # ajax only
-        r'^%s%s$' % ('mark-tag/', 'interesting/'),
+        r'^{}{}$'.format('mark-tag/', 'interesting/'),
         views.commands.mark_tag,
         kwargs={'reason': 'good', 'action': 'add'},
         name='mark_interesting_tag'
     ),
     service_url(  # ajax only
-        r'^%s%s$' % ('mark-tag/', 'ignored/'),
+        r'^{}{}$'.format('mark-tag/', 'ignored/'),
         views.commands.mark_tag,
         kwargs={'reason': 'bad', 'action': 'add'},
         name='mark_ignored_tag'
     ),
     service_url(  # ajax only
-        r'^%s%s$' % ('mark-tag/', 'subscribed/'),
+        r'^{}{}$'.format('mark-tag/', 'subscribed/'),
         views.commands.mark_tag,
         kwargs={'reason': 'subscribed', 'action': 'add'},
         name='mark_subscribed_tag'

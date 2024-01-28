@@ -52,7 +52,7 @@ class DiscourseSsoForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.expected_nonce = kwargs.pop('nonce', None)
-        super(DiscourseSsoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         sso = self.cleaned_data['sso']

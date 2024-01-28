@@ -191,7 +191,7 @@ def ask_openid(
         auth_request = consumer.begin(openid_url)
     except DiscoveryFailure:
         openid_url = html.escape(openid_url)
-        msg = _("OpenID %(openid_url)s is invalid" % {'openid_url':openid_url}) # pylint: disable=consider-using-f-string
+        msg = _("OpenID {openid_url} is invalid".format(openid_url=openid_url)) # pylint: disable=consider-using-f-string
         logging.debug(msg)
         return signin_failure(request, msg)
 
@@ -485,7 +485,7 @@ def signin(request):
 
     if next_url == reverse('user_signin'):
         # the sticky signin page
-        next_url = '%(next_url)s?next=%(next_jwt)s' % {'next_url': next_url, 'next_jwt': next_jwt}
+        next_url = f'{next_url}?next={next_jwt}'
 
     login_form = forms.LoginForm(initial={'next': next_jwt})
 

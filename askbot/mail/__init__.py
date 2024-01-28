@@ -218,7 +218,7 @@ def process_attachment(attachment):
     file storage object
     """
     file_url = store_file(attachment.name, attachment)
-    markdown_link = '[%s](%s) ' % (attachment.name, file_url)
+    markdown_link = f'[{attachment.name}]({file_url}) '
     file_extension = os.path.splitext(attachment.name)[1]
     #todo: this is a hack - use content type
     if file_extension.lower() in ('.png', '.jpg', '.jpeg', '.gif'):

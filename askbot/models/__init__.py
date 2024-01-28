@@ -2918,8 +2918,7 @@ def user_get_languages(self):
 
 
 def get_profile_link(self, text=None):
-    profile_link = '<a href="%s">%s</a>' \
-        % (self.get_profile_url(), escape(text or self.username))
+    profile_link = f'<a href="{self.get_profile_url()}">{escape(text or self.username)}</a>'
 
     return mark_safe(profile_link)
 

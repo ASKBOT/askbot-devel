@@ -94,10 +94,7 @@ class StrippedNonEmptyCharField(forms.CharField):
 
 class NextUrlField(forms.CharField):
     def __init__(self):
-        super(
-            NextUrlField,
-            self
-        ).__init__(
+        super().__init__(
             max_length = 255,
             widget = forms.HiddenInput(),
             required = False
@@ -145,7 +142,7 @@ class UserNameField(StrippedNonEmptyCharField):
             widget_attrs = login_form_widget_attrs
 
         max_length = 30#todo: support custom length of user name MAX_USERNAME_LENGTH()
-        super(UserNameField,self).__init__(
+        super().__init__(
                 max_length=max_length,
                 widget=forms.TextInput(attrs=widget_attrs),
                 label=label,
@@ -168,7 +165,7 @@ class UserNameField(StrippedNonEmptyCharField):
             raise TypeError('user instance must be of type User')
 
         try:
-            username = super(UserNameField, self).clean(username)
+            username = super().clean(username)
         except forms.ValidationError:
             raise forms.ValidationError(self.error_messages['required'])
 
@@ -262,7 +259,7 @@ class UserEmailField(forms.EmailField):
         else:
             widget_class = forms.TextInput
 
-        super(UserEmailField,self).__init__(
+        super().__init__(
             widget=widget_class(
                     attrs=dict(login_form_widget_attrs, maxlength=200)
                 ),
@@ -285,7 +282,7 @@ class UserEmailField(forms.EmailField):
 
         moderated_email_validator(email)
 
-        email = super(UserEmailField,self).clean(email)
+        email = super().clean(email)
         if self.skip_clean:
             return email
 
@@ -320,7 +317,7 @@ class SetPasswordForm(forms.Form):
                             )
 
     def __init__(self, data=None, user=None, *args, **kwargs):
-        super(SetPasswordForm, self).__init__(data, *args, **kwargs)
+        super().__init__(data, *args, **kwargs)
 
     def clean_password2(self):
         """

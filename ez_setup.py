@@ -83,7 +83,7 @@ class ContextualZipFile(zipfile.ZipFile):
         """Construct a ZipFile or ContextualZipFile as appropriate."""
         if hasattr(zipfile.ZipFile, '__exit__'):
             return zipfile.ZipFile(*args, **kwargs)
-        return super(ContextualZipFile, cls).__new__(cls)
+        return super().__new__(cls)
 
 
 @contextlib.contextmanager
@@ -222,8 +222,7 @@ def download_file_powershell(url, target):
     ps_cmd = (
         "[System.Net.WebRequest]::DefaultWebProxy.Credentials = "
         "[System.Net.CredentialCache]::DefaultCredentials; "
-        "(new-object System.Net.WebClient).DownloadFile(%(url)r, %(target)r)"
-        % vars()
+        "(new-object System.Net.WebClient).DownloadFile({url!r}, {target!r})".format(**vars())
     )
     cmd = [
         'powershell',

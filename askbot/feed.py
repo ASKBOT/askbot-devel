@@ -102,9 +102,9 @@ class RssIndividualQuestionFeed(Feed):
         if item.post_type == "question":
             title = item.thread.title
         elif item.post_type == "answer":
-            title = 'Answer by %s for %s ' % (item.author, item.thread._question_post().summary)
+            title = f'Answer by {item.author} for {item.thread._question_post().summary} '
         elif item.post_type == "comment":
-            title = 'Comment by %s for %s' % (item.author, item.parent.summary)
+            title = f'Comment by {item.author} for {item.parent.summary}'
         return title
 
     def item_description(self, item):
@@ -196,4 +196,4 @@ class RssLastestQuestionsFeed(Feed):
     # hack to get the request object into the Feed class
     def get_feed(self, obj, request):
         self.request = request
-        return super(RssLastestQuestionsFeed, self).get_feed(obj, request)
+        return super().get_feed(obj, request)

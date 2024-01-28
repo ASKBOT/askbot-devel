@@ -7,4 +7,4 @@ class SettingsPyCachingSnippet(FileDeployer): # pylint: disable=missing-class-do
     def render(self):
         if self.params['caching_settings']:
             return self.params['caching_settings']
-        return super(SettingsPyCachingSnippet, self).render()
+        return super().render()

@@ -11,8 +11,7 @@ class Command(BaseCommand):
         users = User.objects.all()
         has_avatar = User.objects.exclude(askbot_profile__avatar_type='n').count()
         total_users = users.count()
-        print('%s users in total, %s have valid avatar' \
-           % (total_users, has_avatar))
+        print(f'{total_users} users in total, {has_avatar} have valid avatar')
 
         for count, user in enumerate(users):
             users_left = total_users - count
@@ -23,5 +22,4 @@ class Command(BaseCommand):
 
         print('Updated all the users')
         has_avatar = User.objects.exclude(askbot_profile__avatar_type='n').count()
-        print('%s users in total, %s have real avatar image' \
-            % (total_users, has_avatar))
+        print(f'{total_users} users in total, {has_avatar} have real avatar image')

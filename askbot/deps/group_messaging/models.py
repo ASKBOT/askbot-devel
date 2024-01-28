@@ -224,7 +224,7 @@ class MessageManager(models.Manager):
         kwargs['headline'] = headline[:MAX_HEADLINE_LENGTH]
         kwargs['html'] = parse_message(kwargs['text'])
 
-        message = super(MessageManager, self).create(**kwargs)
+        message = super().create(**kwargs)
         #creator of message saw it by definition
         #crate a "seen" memo for the sender, because we
         #don't want to inform the user about his/her own post

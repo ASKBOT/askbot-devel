@@ -47,11 +47,11 @@ class PageLoadTestCase(AskbotTestCase):
         everyone.save()
         activate_language(settings.LANGUAGE_CODE)
         management.call_command('askbot_add_test_content', verbosity=0, interactive=False)
-        super(PageLoadTestCase, cls).setUpClass()
+        super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
-        super(PageLoadTestCase, cls).tearDownClass()
+        super().tearDownClass()
         management.call_command('flush', verbosity=0, interactive=False)
 
     def _fixture_setup(self):
@@ -91,7 +91,7 @@ class PageLoadTestCase(AskbotTestCase):
         else:
             url_info = 'getting url %s' % url
         if data:
-            url_info += '?' + '&'.join(['%s=%s' % (k, v) for k, v in data.items()])
+            url_info += '?' + '&'.join([f'{k}={v}' for k, v in data.items()])
         # print(url_info)
 
         # if redirect expected, but we wont' follow

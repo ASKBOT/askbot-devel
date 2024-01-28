@@ -50,7 +50,7 @@ class Command(makemessages.Command):
             trans_real.plural_re.pattern + '|' + r"""^-?\s*pluralize(\s+\w+)?\s*-?$""")
 
         try:
-            super(Command, self).handle(*args, **options)
+            super().handle(*args, **options)
         finally:
             trans_real.endblock_re = old_endblock_re
             trans_real.block_re = old_block_re

@@ -139,7 +139,7 @@ class ConfigSettings:
             'livesettings_group',
             setting_name,  # TODO: better use description
             kwargs={'group': group_name},
-            anchor='id_%s__%s__%s' % (group_name, setting_name, get_language())
+            anchor=f'id_{group_name}__{setting_name}__{get_language()}'
         )
         if len(data) == 4:
             return force_str(format_lazy('{} ({})',link, data[3]))

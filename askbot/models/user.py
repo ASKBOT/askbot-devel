@@ -314,7 +314,7 @@ class Activity(models.Model):
     objects = ActivityManager()
 
     def __str__(self):
-        return '[%s] was active at %s' % (self.user.username, self.active_at)
+        return f'[{self.user.username}] was active at {self.active_at}'
 
     class Meta:
         app_label = 'askbot'
@@ -447,7 +447,7 @@ class EmailFeedSetting(models.Model):
             reported_at = "'not yet'"
         else:
             reported_at = '%s' % self.reported_at.strftime('%d/%m/%y %H:%M')
-        return 'Email feed for %s type=%s, frequency=%s, reported_at=%s' % (
+        return 'Email feed for {} type={}, frequency={}, reported_at={}'.format(
                                                      self.subscriber,
                                                      self.feed_type,
                                                      self.frequency,
@@ -462,7 +462,7 @@ class EmailFeedSetting(models.Model):
             .exclude(pk=self.id)
         if similar.exists():
             raise IntegrityError('email feed setting already exists')
-        super(EmailFeedSetting, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def get_previous_report_cutoff_time(self):
         now = timezone.now()
@@ -564,7 +564,7 @@ class GroupManager(BaseQuerySetManager):
             kwargs['group_ptr'] = group_ptr
         except AuthGroup.DoesNotExist:
             pass
-        return super(GroupManager, self).create(**kwargs)
+        return super().create(**kwargs)
 
     def get_or_create(self, name=None, user=None, openness=None):
         """creates a group tag or finds one, if exists"""
@@ -705,7 +705,7 @@ class Group(AuthGroup):
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(Group, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class BulkTagSubscriptionManager(BaseQuerySetManager):
@@ -724,7 +724,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
         user_list = user_list or []
         group_list = group_list or []
 
-        new_object = super(BulkTagSubscriptionManager, self).create(**kwargs)
+        new_object = super().create(**kwargs)
         tag_name_list = []
 
         if tag_names:

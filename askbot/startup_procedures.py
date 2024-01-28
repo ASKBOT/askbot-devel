@@ -46,7 +46,7 @@ class AskbotConfigError(ImproperlyConfigured):
         if sys.__stdin__.isatty():
             #print footer only when askbot is run from the shell
             msg += FOOTER
-            super(AskbotConfigError, self).__init__(msg)
+            super().__init__(msg)
 
 
 def domain_is_bad():
@@ -222,7 +222,7 @@ def try_import(module_name, pypi_package_name, show_requirements_message=True,
 def unparse_requirement(req):
     line = req.name
     if req.specs:
-        specs = ['%s%s' % spec for spec in req.specs]
+        specs = ['{}{}'.format(*spec) for spec in req.specs]
         line += ','.join(specs)
     if req.extras:
         line += ' [%s]' % ','.join(req.extras)

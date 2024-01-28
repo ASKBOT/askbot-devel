@@ -59,7 +59,7 @@ class Vote(models.Model):
         verbose_name_plural = _("votes")
 
     def __str__(self):
-        return '[%s] voted at %s: %s' % (self.user, self.voted_at, self.vote)
+        return f'[{self.user}] voted at {self.voted_at}: {self.vote}'
 
     def __int__(self):
         """1 if upvote -1 if downvote"""
@@ -142,10 +142,10 @@ class BadgeData(models.Model):
         verbose_name_plural = _("badge data")
 
     def __str__(self):
-        return '%s: %s' % (self.get_type_display(), self.slug)
+        return f'{self.get_type_display()}: {self.slug}'
 
     def get_absolute_url(self):
-        return '%s%s/' % (reverse('badge', args=[self.id]), self.slug)
+        return '{}{}/'.format(reverse('badge', args=[self.id]), self.slug)
 
 
 class Award(models.Model):
@@ -159,7 +159,7 @@ class Award(models.Model):
     notified = models.BooleanField(default=False)
 
     def __str__(self):
-        return '[%s] is awarded a badge [%s] at %s' % (self.user.username,
+        return '[{}] is awarded a badge [{}] at {}'.format(self.user.username,
                                                         self.badge.get_name(),
                                                         self.awarded_at)
     def __lt__(self, other):
@@ -222,8 +222,7 @@ class Repute(models.Model):
     objects = ReputeManager()
 
     def __str__(self):
-        return '[%s]\' reputation changed at %s' % (self.user.username,
-                                                     self.reputed_at)
+        return f'[{self.user.username}]\' reputation changed at {self.reputed_at}'
 
     class Meta:
         app_label = 'askbot'
@@ -236,7 +235,7 @@ class Repute(models.Model):
             self.language_code = self.question.language_code
         else:
             self.language_code = get_language()
-        super(Repute, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def get_explanation_snippet(self):
         """returns HTML snippet with a link to related question
@@ -258,7 +257,7 @@ class Repute(models.Model):
                 'question_title': self.question.thread.title
             }
 
-            return '<a href="%(url)s">%(question_title)s</a>' % {
-               'url': self.question.get_absolute_url(),
-               'question_title': escape(self.question.thread.title),
-            }
+            return '<a href="{url}">{question_title}</a>'.format(
+               url=self.question.get_absolute_url(),
+               question_title=escape(self.question.thread.title),
+           )

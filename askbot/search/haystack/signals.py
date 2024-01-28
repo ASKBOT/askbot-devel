@@ -22,10 +22,10 @@ class AskbotRealtimeSignalProcessor(RealtimeSignalProcessor):
             # but still need to update/remove thread when post is removed.
             instance, sender = (instance.thread, Thread)
 
-        super(AskbotRealtimeSignalProcessor, self).handle_delete(sender, instance, **kwargs)
+        super().handle_delete(sender, instance, **kwargs)
 
     def setup(self):
-        super(AskbotRealtimeSignalProcessor, self).setup()
+        super().setup()
 
         try:
             askbot_signals.after_post_removed.connect(self.handle_delete)
@@ -33,7 +33,7 @@ class AskbotRealtimeSignalProcessor(RealtimeSignalProcessor):
             pass
 
     def teardown(self):
-        super(AskbotRealtimeSignalProcessor, self).setup()
+        super().setup()
         #askbot signals
         try:
             askbot_signals.after_post_removed.disconnect(self.handle_delete)

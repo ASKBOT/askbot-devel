@@ -10,7 +10,7 @@ class RootDirValidator(DirValidator):
     by providing the .clean method"""
 
     def __init__(self, console, parser):
-        super(RootDirValidator, self).__init__(console, parser)
+        super().__init__(console, parser)
         self.user_prompt = f'Enter {const.ROOT_DIR_HELP}.'
         self.option_name = 'root_dir'
         self.default = './' + const.DEFAULT_PROJECT_NAME

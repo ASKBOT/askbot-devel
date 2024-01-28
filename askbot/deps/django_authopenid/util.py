@@ -961,7 +961,7 @@ class OAuthConnection:
     def __new__(cls, provider_name):
         if provider_name == 'mediawiki':
             return providers.mediawiki.Provider()
-        return super(OAuthConnection, cls).__new__(cls)
+        return super().__new__(cls)
 
     def __init__(self, provider_name):
         """initializes oauth connection"""

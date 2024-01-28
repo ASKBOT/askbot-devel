@@ -9,4 +9,4 @@ class SettingsPyLoggingSnippet(FileDeployer): # pylint: disable=missing-class-do
         allows override with the --logging-settings parameter"""
         if self.params['logging_settings']:
             return self.params['logging_settings']
-        return super(SettingsPyLoggingSnippet, self).render()
+        return super().render()
