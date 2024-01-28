@@ -712,7 +712,7 @@ class Command(BaseCommand):
         todo: support blank values vs. nulls for strings
         """
         cursor = connection.cursor()
-        cursor.execute('TRUNCATE TABLE "{0}" CASCADE'.format(model._meta.db_table))
+        cursor.execute(f'TRUNCATE TABLE "{model._meta.db_table}" CASCADE')
         xml = self.get_file(file_name)
         items_saved = 0
         for xml_entry in xml.findall(entry_name):

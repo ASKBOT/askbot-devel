@@ -857,7 +857,7 @@ class FeedbackForm(forms.Form):
         return self.cleaned_data
 
 
-class FormWithHideableFields(object):
+class FormWithHideableFields:
     """allows to swap a field widget to HiddenInput() and back"""
 
     def hide_field(self, name):

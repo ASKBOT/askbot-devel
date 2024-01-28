@@ -123,9 +123,9 @@ class OAuth1Provider(BaseProtocol):
             if parsed_response:
                 return parsed_response
             else:
-                raise OAuthError('error obtaining request token {0}'.format(content))
+                raise OAuthError(f'error obtaining request token {content}')
         else:
-            raise OAuthError('response is {0}'.format(response))
+            raise OAuthError(f'response is {response}')
 
     def get_token(self):
         return self.request_token

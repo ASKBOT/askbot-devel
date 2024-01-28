@@ -4,7 +4,7 @@ from django.utils.cache import patch_vary_headers
 from django.utils import translation
 from askbot.conf import settings
 
-class LocaleMiddleware(object):
+class LocaleMiddleware:
     """
     This is a very simple middleware that parses a request
     and decides what translation object to install in the current

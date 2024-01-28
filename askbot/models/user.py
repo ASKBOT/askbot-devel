@@ -22,7 +22,7 @@ from collections import defaultdict
 
 PERSONAL_GROUP_NAME_PREFIX = '_personal_'
 
-class InvitedModerator(object):
+class InvitedModerator:
     """Mock user class to represent invited moderators"""
     def __init__(self, username, email):
         self.username = username
@@ -93,7 +93,7 @@ def remove_email_from_invited_moderators(email):
         askbot_settings.update('INVITED_MODERATORS', value)
 
 
-class MockUser(object):
+class MockUser:
     def __init__(self):
         self.username = ''
 

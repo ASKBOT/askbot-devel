@@ -37,4 +37,4 @@ class Command(BaseCommand):
 
         rebuild_profile_caches(profiles)
 
-        self.stdout.write('Fixed the status of {0} users.'.format(fixed))
+        self.stdout.write(f'Fixed the status of {fixed} users.')

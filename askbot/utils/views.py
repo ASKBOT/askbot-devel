@@ -19,7 +19,7 @@ def is_askbot_view(view_func):
             return True
     return False
 
-class PjaxView(object):
+class PjaxView:
     """custom class-based view
     to be used for pjax use and for generation
     of content in the traditional way, where

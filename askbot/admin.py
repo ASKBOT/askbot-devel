@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :synopsis: connector to standard Django admin interface
 

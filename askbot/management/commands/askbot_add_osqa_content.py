@@ -108,7 +108,7 @@ class Command(BaseImportXMLCommand):
         self.redirect_format = self.get_redirect_format(options['redirect_format'])
 
         dump_file_name = options['xml_file']
-        xml = open(dump_file_name, 'r').read()
+        xml = open(dump_file_name).read()
         self.soup = BeautifulSoup(xml, ['lxml', 'xml', 'lxml-xml'])
 
         # site settings

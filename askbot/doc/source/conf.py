@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Askbot documentation build configuration file, created by
 # sphinx-quickstart on Wed Jun 16 19:22:51 2010.

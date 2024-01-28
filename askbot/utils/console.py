@@ -246,7 +246,7 @@ def print_progress(elapsed, total, nowipe = False):
     output = '%6.2f%%' % (100 * float(elapsed)/float(total))
     print_action(output, nowipe)
 
-class ProgressBar(object):
+class ProgressBar:
     """A wrapper for an iterator, that prints
     a progress bar along the way of iteration
     """
@@ -293,7 +293,7 @@ class ProgressBar(object):
     def finish_progress_bar(self):
         """brint the last bars, to make all bars equal length"""
         self.backspace_progress_percent()
-        sys.stdout.write('-' * int(math.floor((self.max_barlen - self.curr_barlen))))
+        sys.stdout.write('-' * int(math.floor(self.max_barlen - self.curr_barlen)))
 
     def __next__(self):
 

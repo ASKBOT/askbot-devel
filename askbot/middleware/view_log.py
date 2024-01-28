@@ -7,7 +7,7 @@ from askbot import signals
 from django.utils import timezone
 
 
-class ViewLogMiddleware(object):
+class ViewLogMiddleware:
     """
     ViewLogMiddleware sends the site_visited signal
 

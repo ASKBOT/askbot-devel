@@ -343,7 +343,7 @@ MESSAGE_TAGS = {
     message_level.ERROR:    'notification_error',
 }
 
-class DisableMigrations(object):
+class DisableMigrations:
     def __contains__(self, item):
         return True
 

@@ -29,7 +29,7 @@ def get_question():
     return Post.objects.filter(post_type='question')[0]
 
 
-class BaseEmail(object):
+class BaseEmail:
     """Base class for templated emails.
 
     Besides sending formatted emails,

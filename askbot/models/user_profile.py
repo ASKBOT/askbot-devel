@@ -13,7 +13,7 @@ from askbot.models.fields import LanguageCodeField
 # that the parameter is called "user" ...
 def get_profile_cache_key(user):
     if user.pk:
-        return 'askbot-profile-{}'.format(user.pk)
+        return f'askbot-profile-{user.pk}'
     raise ValueError('auth.models.User is not saved, cant make cache key')
 
 

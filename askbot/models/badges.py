@@ -34,7 +34,7 @@ from askbot.utils.functions import format_setting_name
 from askbot.utils.loading import load_module
 
 
-class Badge(object):
+class Badge:
     """base class for the badges
 
     badges must implement method consider_award

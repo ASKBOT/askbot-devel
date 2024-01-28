@@ -30,7 +30,7 @@ def is_view_allowed(func):
 
     return view_path in ALLOWED_VIEWS
 
-class ForumModeMiddleware(object):
+class ForumModeMiddleware:
     """protects forum views is the closed forum mode"""
 
     def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think

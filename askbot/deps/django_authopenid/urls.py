@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings as django_settings
 from django.urls import re_path
 

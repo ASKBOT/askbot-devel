@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Miville
 # Copyright (C) 2008 Société des arts technologiques (SAT)
 # http://www.sat.qc.ca
@@ -149,7 +148,7 @@ def check_for_code(module):
     """
     Check if there's at least one class or one function in the module.
     """
-    fd = open(module, 'r')
+    fd = open(module)
     for line in fd:
         if line.startswith('def ') or line.startswith('class '):
             fd.close()

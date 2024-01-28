@@ -855,7 +855,7 @@ def user_recent(request, user, context):
             if type_id in item:
                 return item[1]
 
-    class Event(object):
+    class Event:
         is_badge = False
         def __init__(self, time, type, title, summary, url):
             self.time = time
@@ -866,7 +866,7 @@ def user_recent(request, user, context):
             slug_title = slugify(title)
             self.title_link = url
 
-    class AwardEvent(object):
+    class AwardEvent:
         is_badge = True
         def __init__(self, time, type, content_object, badge):
             self.time = time

@@ -8,7 +8,7 @@ Add to the MIDDLEWARE:
     'askbot.middleware.remote_ip.SetRemoteIPFromXForwardedFor',
 """
 
-class SetRemoteIPFromXForwardedFor(object):
+class SetRemoteIPFromXForwardedFor:
     def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think
         if get_response is None:
             get_response = lambda x:x

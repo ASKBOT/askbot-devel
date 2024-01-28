@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 try:
@@ -57,7 +56,7 @@ def alias_from_language(language):
     connection_prefix = get_connection_prefix()
 
     if connection_prefix:
-        connection = '{0}_{1}'.format(connection_prefix, language)
+        connection = f'{connection_prefix}_{language}'
     else:
         connection = language
     return connection

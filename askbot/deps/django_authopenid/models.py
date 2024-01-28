@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 
 from django.conf import settings
@@ -52,7 +51,7 @@ class UserAssociation(models.Model):
     provider_name = models.CharField(max_length=64, default='unknown')
     last_used_timestamp = models.DateTimeField(null=True)
 
-    class Meta(object):
+    class Meta:
         unique_together = (
                                 ('user','provider_name'),
                                 ('openid_url', 'provider_name')

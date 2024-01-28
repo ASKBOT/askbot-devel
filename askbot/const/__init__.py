@@ -1,4 +1,3 @@
-# encoding:utf-8
 """
 All constants could be used in other modules
 For reasons that models, views can't have unicode

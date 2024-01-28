@@ -184,7 +184,7 @@ def get_provider_name_by_endpoint(openid_url):
     providers. Returns None if no matching url was found.
     """
     parsed_uri = urllib.parse.urlparse(openid_url)
-    base_url = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
+    base_url = f'{parsed_uri.scheme}://{parsed_uri.netloc}'
     enabled_providers = get_enabled_login_providers()
     for provider_data in enabled_providers.values():
         openid_url_match = (provider_data['type'].startswith('openid') and

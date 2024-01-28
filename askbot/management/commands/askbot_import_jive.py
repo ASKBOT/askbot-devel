@@ -165,7 +165,7 @@ class Command(BaseCommand):
         translation.activate(django_settings.LANGUAGE_CODE)
         assert len(args) == 1, 'Dump file name is required'
         dump_file_name = args[0]
-        xml = open(dump_file_name, 'r').read()
+        xml = open(dump_file_name).read()
         soup = BeautifulSoup(xml, ['lxml', 'xml'])
         self.soup = soup
         url_prop = self.soup.find('Property', attrs={'name': 'jiveURL'})

@@ -50,7 +50,7 @@ def get_table_name(name):
         out += '2'.join(bits)
     return out
 
-class DjangoModel(object):
+class DjangoModel:
     def __init__(self, name):
         self.name = get_table_name(name)
         self.fields = []
@@ -63,7 +63,7 @@ class DjangoModel(object):
             out += '    %s\n' % str(f)
         return out
 
-class DjangoField(object):
+class DjangoField:
     def __init__(self, name, type, restriction = None):
         self.name = camel_to_python(name)
         if self.name == 'class':

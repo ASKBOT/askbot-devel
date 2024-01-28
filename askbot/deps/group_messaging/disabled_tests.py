@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from django.contrib.auth.models import User, Group
 from django.test import TestCase
 from django.utils import timezone
-from mock import Mock
+from unittest.mock import Mock
 import time
 import urllib.parse
 

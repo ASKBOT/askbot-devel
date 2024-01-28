@@ -2,7 +2,7 @@
 from django.conf import settings as django_settings
 #from django.core.signals import request_finished
 
-class DummyTransaction(object):
+class DummyTransaction:
     """Dummy transaction class
     that can be imported instead of the django
     transaction management and debug issues

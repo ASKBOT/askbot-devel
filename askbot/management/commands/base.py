@@ -73,7 +73,7 @@ class BaseImportXMLCommand(BaseCommand):
         """reads xml data int BeautifulSoup instance"""
         if not os.path.isfile(filename):
             raise CommandError(f'File {filename} does not exist') % filename
-        xml = open(filename, 'r', encoding='utf-8').read()
+        xml = open(filename, encoding='utf-8').read()
         self.soup = BeautifulSoup(xml, ['lxml', 'xml'])
 
     def remember_message_ids(self):

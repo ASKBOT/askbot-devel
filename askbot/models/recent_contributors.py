@@ -8,7 +8,7 @@ from askbot.conf import settings as askbot_settings
 from askbot.utils.translation import get_language
 
 
-class AvatarsBlockData(object):
+class AvatarsBlockData:
     """Class managing data for the avatars
     block, displayed on the main page"""
     CACHE_KEY = 'askbot-avatar-block-data'

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Copyright (c) Askbot S.p.A. 2013
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 r"""Converter of Jive markup to markdown,
@@ -78,7 +77,7 @@ def _regularize_eols(text):
     text = re.sub(r'\n{2,}', '\n', text)
     return text.strip('\n')
 
-class JiveConverter(object):
+class JiveConverter:
     """converts Jive Markup into HTML"""
 
     def __init__(self):

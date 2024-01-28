@@ -17,7 +17,7 @@ def dir_has_django_project(directory):
         if file_name.endswith(os.path.sep + 'manage.py'):
             #a hack allowing to install into the project directory
             continue
-        with open(file_name, 'r') as py_file:
+        with open(file_name) as py_file:
             for line in py_file:
                 if IMPORT_RE1.match(line) or IMPORT_RE2.match(line):
                     return True

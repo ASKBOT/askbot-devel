@@ -18,7 +18,7 @@ from askbot.signals import user_registered
 
 LOG = logging.getLogger(__name__)
 
-class AuthBackend(object):
+class AuthBackend:
     """Authenticator's authentication backend class
     for more info, see django doc page:
     http://docs.djangoproject.com/en/dev/topics/auth/#writing-an-authentication-backend

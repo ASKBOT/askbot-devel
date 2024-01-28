@@ -1,4 +1,3 @@
-# encoding:utf-8
 """
 :synopsis: views "read-only" for main textual content
 

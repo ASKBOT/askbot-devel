@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from askbot.deps.django_authopenid import mimeparse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -6,7 +5,7 @@ import logging
 
 __all__ = ["OpenIDMiddleware"]
 
-class OpenIDMiddleware(object):
+class OpenIDMiddleware:
     """
     Populate request.openid. This comes either from cookie or from
     session, depending on the presence of OPENID_USE_SESSIONS.

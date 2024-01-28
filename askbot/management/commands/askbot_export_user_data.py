@@ -37,7 +37,7 @@ class Command(BaseCommand):
         try:
             user = User.objects.get(pk=uid)
         except User.DoesNotExist: # pylint: disable=no-member
-            raise CommandError('User with id {} does not exist'.format(uid))
+            raise CommandError(f'User with id {uid} does not exist')
 
         lang_data = dict()
         for profile in user.localized_askbot_profiles.all():
@@ -104,7 +104,7 @@ class Command(BaseCommand):
         """Zip contents of the temp directory into the desired
         target file"""
         if os.path.exists(file_name):
-            raise CommandError('File {} already exists'.format(file_name))
+            raise CommandError(f'File {file_name} already exists')
         zip_path = os.path.abspath(file_name)
 
         file_paths = list_directory_files(temp_dir)

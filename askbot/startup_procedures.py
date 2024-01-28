@@ -402,7 +402,7 @@ def test_media_url():
         )
 
 
-class SettingsTester(object):
+class SettingsTester:
     """class to test contents of the settings.py file"""
 
     def __init__(self, requirements=None):

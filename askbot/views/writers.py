@@ -1,4 +1,3 @@
-# encoding:utf-8
 """
 :synopsis: views diplaying and processing main content post forms
 
@@ -144,7 +143,7 @@ def __import_se_data(dump_file):
 
     #run a loop where we'll be reading output of the
     #importer tread and yielding it to the caller
-    read_stdout = open(fake_stdout.name, 'r')
+    read_stdout = open(fake_stdout.name)
     file_pos = 0
     fd = read_stdout.fileno()
     yield '<html><body><style>* {font-family: sans;} p {font-size: 12px; line-height: 16px; margin: 0; padding: 0;}</style><h1>Importing your data. This may take a few minutes...</h1>'
@@ -228,7 +227,7 @@ def ask(request):#view used to ask a new question
             #group_id = form.cleaned_data.get('group_id', None)
             language = form.cleaned_data.get('language', None)
 
-            content = '{}\n\n{}\n\n{}'.format(title, tagnames, text)
+            content = f'{title}\n\n{tagnames}\n\n{text}'
             spam_checker_params = spam_checker.get_params_from_request(request)
             enabled = askbot_settings.SPAM_FILTER_ENABLED
             if enabled and spam_checker.is_spam(content, **spam_checker_params):

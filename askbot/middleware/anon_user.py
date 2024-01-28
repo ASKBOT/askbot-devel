@@ -12,7 +12,7 @@ from django.conf import settings as django_settings
 from askbot.user_messages import create_message, get_and_delete_messages
 from askbot.conf import settings as askbot_settings
 
-class AnonymousMessageManager(object):
+class AnonymousMessageManager:
     """message manager for the anonymous user"""
     def __init__(self, request):
         self.request = request
@@ -41,7 +41,7 @@ def connect_messages_to_anon_user(request):
                     request.user.message_set.get_and_delete
 
 
-class ConnectToSessionMessagesMiddleware(object):
+class ConnectToSessionMessagesMiddleware:
     """Middleware that attaches messages to anonymous users, and
     makes sure that anonymous user greeting is shown just once.
     Middleware does not do anything if the anonymous user greeting

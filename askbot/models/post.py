@@ -336,7 +336,7 @@ class PostManager(BaseQuerySetManager):
         #            return comments
 
 
-class MockPost(object):
+class MockPost:
     """Used for special purposes, e.g. to fill
     out the js templates for the posts made via ajax
     """
@@ -1136,7 +1136,7 @@ class Post(models.Model):
             title = title or self.thread.title
             tags = tags or self.thread.tagnames
             body_text = body_text or self.text
-            return '{}\n\n{}\n\n{}'.format(title, tags, body_text)
+            return f'{title}\n\n{tags}\n\n{body_text}'
         return body_text or self.text
 
     def get_snippet(self, max_length=None):

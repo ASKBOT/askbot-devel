@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from haystack import connections
 from haystack.exceptions import NotHandled
 from haystack.query import SearchQuerySet

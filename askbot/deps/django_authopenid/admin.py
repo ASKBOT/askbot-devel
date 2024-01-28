@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from django.contrib import admin
 from askbot.deps.django_authopenid.models import UserAssociation

@@ -119,7 +119,7 @@ class ExportUserDataTests(AskbotTestCase):
         # put three upfiles in place
         paths = list()
         for idx in range(1, 4):
-            path = self.put_upfile('file{}.txt'.format(idx))
+            path = self.put_upfile(f'file{idx}.txt')
             paths.append(path)
 
         # post question with an image
@@ -223,7 +223,7 @@ class ManagementCommandTests(AskbotTestCase):
         subs = models.EmailFeedSetting.objects.filter(
                                                 subscriber = user,
                                             )
-        self.assertEquals(subs.count(), 6)
+        self.assertEqual(subs.count(), 6)
         #try to log in
         user = auth.authenticate(username=username, password=password)
         self.assertTrue(user is not None)

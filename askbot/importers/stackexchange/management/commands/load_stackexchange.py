@@ -63,7 +63,7 @@ ANSWER = {}
 COMMENT = {}
 NUMBERED_NAME_RE = re.compile(r'^(.*)\*(\d+)\*$')
 
-class X(object):#
+class X:#
     """class with methods for handling some details
     of SE --> ASKBOT mapping
     """

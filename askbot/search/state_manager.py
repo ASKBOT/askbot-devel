@@ -82,7 +82,7 @@ def parse_query(query):
         'query_users': query_users
     }
 
-class SearchState(object):
+class SearchState:
 
     @classmethod
     def get_empty(cls):
@@ -275,7 +275,7 @@ class SearchState(object):
         return ss
 
 
-class DummySearchState(object): # Used for caching question/thread summaries
+class DummySearchState: # Used for caching question/thread summaries
 
     def add_tag(self, tag):
         self.tag = tag
