@@ -32,7 +32,7 @@ def get_sso_login_url(request, success_url):
     # (where the Discourse will redirect user after verification).
     # Payload should look like: nonce=NONCE&return_sso_url=RETURN_URL
     return_url = site_url(reverse('user_complete_discourse_signin'))
-    payload = 'nonce={}&return_sso_url={}'.format(nonce, return_url)
+    payload = f'nonce={nonce}&return_sso_url={return_url}'
     # Base64 encode the above raw payload. -> BASE64_PAYLOAD
     base64_payload = base64.b64encode(payload)
     # URL encode the above BASE64_PAYLOAD.
@@ -52,7 +52,7 @@ class DiscourseSsoForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.expected_nonce = kwargs.pop('nonce', None)
-        super(DiscourseSsoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self):
         sso = self.cleaned_data['sso']

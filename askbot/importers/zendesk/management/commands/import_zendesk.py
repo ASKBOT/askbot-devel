@@ -712,7 +712,7 @@ class Command(BaseCommand):
         todo: support blank values vs. nulls for strings
         """
         cursor = connection.cursor()
-        cursor.execute('TRUNCATE TABLE "{0}" CASCADE'.format(model._meta.db_table))
+        cursor.execute(f'TRUNCATE TABLE "{model._meta.db_table}" CASCADE')
         xml = self.get_file(file_name)
         items_saved = 0
         for xml_entry in xml.findall(entry_name):
@@ -999,7 +999,7 @@ class Command(BaseCommand):
         if tags:
             print("Filtering forum posts by tags: %s" % tags)
         if date_filter:
-            print("Filtering forum post by dates between %s and %s" % (date_filter[0], date_filter[1]))
+            print(f"Filtering forum post by dates between {date_filter[0]} and {date_filter[1]}")
         print("Importing forums... ")
         print("="*64)
         for forum in forums:
@@ -1069,7 +1069,7 @@ class Command(BaseCommand):
         if tags:
             print("Filtering tickets by tags: %s" % tags)
         if date_filter:
-            print("Filtering tickets by dates between %s and %s" % (date_filter[0], date_filter[1]))
+            print(f"Filtering tickets by dates between {date_filter[0]} and {date_filter[1]}")
         sys.stdout.write("Importing tickets: ")
         ticket_count = 0
         for ticket in zendesk_models.Ticket.objects.all():

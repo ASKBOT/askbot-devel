@@ -165,7 +165,7 @@ class Command(BaseCommand):
                         tags = tags,
                     )
 
-            self.print_if_verbose("Created Question '%s' with tags: '%s'" % (
+            self.print_if_verbose("Created Question '{}' with tags: '{}'".format(
                                                 active_question.thread.title, tags,)
                                             )
         return active_question

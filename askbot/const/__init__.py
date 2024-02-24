@@ -1,4 +1,3 @@
-# encoding:utf-8
 """
 All constants could be used in other modules
 For reasons that models, views can't have unicode
@@ -179,7 +178,7 @@ UNANSWERED_QUESTION_MEANING_CHOICES = (
 TAG_CHARS = r'\wp{M}+.#-'
 TAG_FIRST_CHARS = r'[\wp{M}]'
 TAG_FORBIDDEN_FIRST_CHARS = r'#'
-TAG_REGEX_BARE = r'%s[%s]+' % (TAG_FIRST_CHARS, TAG_CHARS)
+TAG_REGEX_BARE = rf'{TAG_FIRST_CHARS}[{TAG_CHARS}]+'
 TAG_REGEX = r'^%s$' % TAG_REGEX_BARE
 
 TAG_STRIP_CHARS = ', '

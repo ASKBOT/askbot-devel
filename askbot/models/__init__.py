@@ -146,7 +146,7 @@ def get_users_by_text_query(search_query, users_query_set = None):
         #        models.Q(localized_user_profiles__about__search = search_query)
         #    )
 
-class RelatedObjectSimulator(object):
+class RelatedObjectSimulator:
     '''Objects that simulates the "messages_set" related field
     somehow django does not creates it automatically in django1.4.1'''
 
@@ -272,7 +272,7 @@ def user_get_absolute_url(self, language_code=None):
 def user_get_unsubscribe_url(self):
     url = reverse('user_unsubscribe')
     email_key = self.get_or_create_email_key()
-    return '{0}?key={1}&email={2}'.format(url, email_key, self.email)
+    return f'{url}?key={email_key}&email={self.email}'
 
 
 def user_get_subscriptions_url(self):
@@ -2640,14 +2640,14 @@ def user_get_anonymous_name(self):
 def user_get_anonymized_name(self):
     """Returns name that can be used for anonymized
     account"""
-    anonymized_name = 'anonymous{}'.format(self.pk)
+    anonymized_name = f'anonymous{self.pk}'
     attempt = 0
 
     if self.username == anonymized_name:
         return anonymized_name
 
     while User.objects.filter(username=anonymized_name).exists():
-        seed_name = 'anonymous{}{}'.format(self.pk, attempt)
+        seed_name = f'anonymous{self.pk}{attempt}'
         attempt += 1
     return anonymized_name
 
@@ -2918,8 +2918,7 @@ def user_get_languages(self):
 
 
 def get_profile_link(self, text=None):
-    profile_link = '<a href="%s">%s</a>' \
-        % (self.get_profile_url(), escape(text or self.username))
+    profile_link = f'<a href="{self.get_profile_url()}">{escape(text or self.username)}</a>'
 
     return mark_safe(profile_link)
 

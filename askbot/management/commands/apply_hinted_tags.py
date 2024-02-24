@@ -32,7 +32,7 @@ class Command(BaseCommand):
             raise CommandError('parameter --tags-file is required')
         try:
             tags_input = open(kwargs['tags_file']).read()
-        except IOError:
+        except OSError:
             raise CommandError('file "%s" not found' % kwargs['tags_file'])
 
         tags_list = [v.strip() for v in tags_input.split('\n')]

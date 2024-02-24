@@ -28,7 +28,7 @@ def user_messages(request):
         return { 'user_messages': messages }
     return {}
 
-class LazyMessages(object):
+class LazyMessages:
     """
     Lazy message container, so messages aren't actually retrieved from
     session and deleted until the template asks for them.

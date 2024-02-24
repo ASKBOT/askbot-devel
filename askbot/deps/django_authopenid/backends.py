@@ -18,7 +18,7 @@ from askbot.signals import user_registered
 
 LOG = logging.getLogger(__name__)
 
-class AuthBackend(object):
+class AuthBackend:
     """Authenticator's authentication backend class
     for more info, see django doc page:
     http://docs.djangoproject.com/en/dev/topics/auth/#writing-an-authentication-backend
@@ -31,7 +31,7 @@ class AuthBackend(object):
     """
     def __init__(self, *args, **kwargs):
         self.login_providers = util.get_enabled_login_providers()
-        super(AuthBackend, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def authenticate(self, request, method=None, provider_name=None, **kwargs):
         """this authentication function supports many login methods"""
@@ -143,7 +143,7 @@ class AuthBackend(object):
             else:
                 #have username collision - so make up a more unique user name
                 #bug: - if user already exists with the new username - we are in trouble
-                new_username = '%s@%s' % (username, provider_name)
+                new_username = f'{username}@{provider_name}'
                 user = User.objects.create_user(new_username, '', password)
                 user_registered.send(None, user=user, request=request)
                 message = _(

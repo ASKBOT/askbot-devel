@@ -9,4 +9,4 @@ class SettingsPyAdminsSnippet(FileDeployer): # pylint: disable=missing-class-doc
         """--admin-settings override the default"""
         if self.params['admin_settings']:
             return self.params['admin_settings']
-        return super(SettingsPyAdminsSnippet, self).render()
+        return super().render()

@@ -42,10 +42,10 @@ def choice_dialog(prompt_phrase, choices=None, invalid_phrase=None, default=None
     choices = [str(ch) for ch in choices]
 
     if default is None:
-        prompt = '%s\ntype %s\n> ' % (prompt_phrase, '/'.join(choices))
+        prompt = '{}\ntype {}\n> '.format(prompt_phrase, '/'.join(choices))
     else:
         default = str(default)
-        prompt = '%s\nType %s, press ENTER to select %s\n> ' % (prompt_phrase, '/'.join(choices), default)
+        prompt = '{}\nType {}, press ENTER to select {}\n> '.format(prompt_phrase, '/'.join(choices), default)
 
     while 1:
         response = input(prompt).strip()
@@ -77,9 +77,9 @@ def numeric_choice_dialog(prompt_phrase, choices, default=None):
     assert(not isinstance(choices, str))
     choice_menu = "\n".join(["%d - %s" % (i,x) for i, x in enumerate(choices)])
     if default:
-        prompt_phrase = '%s\n%s\nPress ENTER to select %s> ' % (choice_menu, prompt_phrase, default)
+        prompt_phrase = f'{choice_menu}\n{prompt_phrase}\nPress ENTER to select {default}> '
     else:
-        prompt_phrase = '%s\n%s> ' % (choice_menu, prompt_phrase)
+        prompt_phrase = f'{choice_menu}\n{prompt_phrase}> '
 
     while True:
         response = input(prompt_phrase).strip()
@@ -122,7 +122,7 @@ def numeric_multiple_choice_dialog(prompt_phrase, choices, all_option=False):
     choice_indexes = []
     index = False
     while True:
-        response = input('\n%s\n%s> ' % (choice_menu, prompt_phrase))
+        response = input(f'\n{choice_menu}\n{prompt_phrase}> ')
         selections = response.split()
         print("selections: %s" % selections)
         for c in selections:
@@ -246,7 +246,7 @@ def print_progress(elapsed, total, nowipe = False):
     output = '%6.2f%%' % (100 * float(elapsed)/float(total))
     print_action(output, nowipe)
 
-class ProgressBar(object):
+class ProgressBar:
     """A wrapper for an iterator, that prints
     a progress bar along the way of iteration
     """
@@ -293,7 +293,7 @@ class ProgressBar(object):
     def finish_progress_bar(self):
         """brint the last bars, to make all bars equal length"""
         self.backspace_progress_percent()
-        sys.stdout.write('-' * int(math.floor((self.max_barlen - self.curr_barlen))))
+        sys.stdout.write('-' * int(math.floor(self.max_barlen - self.curr_barlen)))
 
     def __next__(self):
 

@@ -240,7 +240,7 @@ logging.basicConfig(
 ASKBOT_URL = '' #no leading slash, default = '' empty string
 ASKBOT_TRANSLATE_URL = True #translate specific URLs
 _ = lambda v:v #fake translation function for the login url
-LOGIN_URL = '/%s%s%s' % (ASKBOT_URL, _('account/'), _('signin/'))
+LOGIN_URL = '/{}{}{}'.format(ASKBOT_URL, _('account/'), _('signin/'))
 LOGIN_REDIRECT_URL = ASKBOT_URL #adjust, if needed
 #note - it is important that upload dir url is NOT translated!!!
 #also, this url must not have the leading slash
@@ -343,7 +343,7 @@ MESSAGE_TAGS = {
     message_level.ERROR:    'notification_error',
 }
 
-class DisableMigrations(object):
+class DisableMigrations:
     def __contains__(self, item):
         return True
 

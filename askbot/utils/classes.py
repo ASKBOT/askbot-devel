@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 from django.conf import settings as django_settings
 
-class ReminderSchedule(object): #pylint: disable=too-few-public-methods
+class ReminderSchedule: #pylint: disable=too-few-public-methods
     """class that given the three settings:
     * days to wait before sending the reminders
     * frequency of reminders

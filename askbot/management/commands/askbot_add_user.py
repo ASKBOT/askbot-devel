@@ -74,8 +74,7 @@ class Command(BaseCommand):
         status = options['status']
         if status not in 'wamdsb':
             raise CommandError(
-                        'Illegal value of --status %s. Allowed user statuses are: %s' \
-                        % (status, STATUS_INFO)
+                        f'Illegal value of --status {status}. Allowed user statuses are: {STATUS_INFO}'
                     )
 
         user = models.User.objects.create_user(username, email)

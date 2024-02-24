@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Copyright (c) Askbot S.p.A. 2013
 # License: MIT (http://www.opensource.org/licenses/mit-license.php)
 r"""Converter of Jive markup to markdown,
@@ -23,16 +22,8 @@ from random import randint
 import codecs
 
 #---- Python version compat
-if sys.version_info[:2] < (2,4):
-    from sets import Set as set
-    def reversed(sequence):
-        for i in sequence[::-1]:
-            yield i
-    def _unicode_decode(s, encoding, errors='xmlcharrefreplace'):
-        return str(s, encoding, errors)
-else:
-    def _unicode_decode(s, encoding, errors='strict'):
-        return s.decode(encoding, errors)
+def _unicode_decode(s, encoding, errors='strict'):
+    return s.decode(encoding, errors)
 
 
 #---- globals
@@ -78,7 +69,7 @@ def _regularize_eols(text):
     text = re.sub(r'\n{2,}', '\n', text)
     return text.strip('\n')
 
-class JiveConverter(object):
+class JiveConverter:
     """converts Jive Markup into HTML"""
 
     def __init__(self):
@@ -206,14 +197,14 @@ class JiveConverter(object):
         elif num_bits == 1:
             link = link_bits[0]
             if self._url_re.match(link) or not self._email_re.match(link):
-                return '<a href="%s">%s</a>' % (link, link)
+                return f'<a href="{link}">{link}</a>'
         elif num_bits in (2, 3):
             #if self._url_re.match(link_bits[1]):
             if num_bits == 2:
-                return '<a href="%s">%s</a>' % (link_bits[1], link_bits[0])
+                return f'<a href="{link_bits[1]}">{link_bits[0]}</a>'
             else:
                 bits = link_bits
-                return '<a href="%s" title="%s">%s</a>' % (bits[1], bits[2], bits[0])
+                return f'<a href="{bits[1]}" title="{bits[2]}">{bits[0]}</a>'
         return '[' + '|'.join(link_bits) + ']'
 
     _hypertext_link_re2 = re.compile(r'\[url\]%s\[/url\]' % _url_pattern)
@@ -264,7 +255,7 @@ class JiveConverter(object):
     def _h_sub(self, match):
         n = match.group(1)
         text = self._run_span_gamut(match.group(2))
-        html = '<h%s>%s</h%s>' % (n, text, n)
+        html = f'<h{n}>{text}</h{n}>'
         return self._hashed(html)
 
     def _do_headers(self, text):
@@ -392,7 +383,7 @@ class JiveConverter(object):
         text = self._list_item_re.sub(self._list_item_sub, text)
         text = self._nested_list_re.sub(self._nested_list_sub, text)
         tag = (match.group(2) == '*' and 'ul' or 'ol')
-        html = '<%s>\n%s</%s>' % (tag, text, tag)
+        html = f'<{tag}>\n{text}</{tag}>'
         return self._hashed(html)
 
     _list_re = re.compile(
@@ -408,7 +399,7 @@ class JiveConverter(object):
     def _leading_blanks_sub(self, match):
         spaces = match.group(1)
         text = match.group(2)
-        return '%s%s\n' % ('&nbsp;'*len(spaces), text)
+        return '{}{}\n'.format('&nbsp;'*len(spaces), text)
 
     def _preserve_leading_blanks(self, text):
         """replace leading blanks with &nbsp;"""
@@ -437,7 +428,7 @@ class JiveConverter(object):
     def _auto_link_sub(self, match):
         """auto-links are just passed through"""
         link = match.group(1)
-        return '<a href="%s">%s</a>' % (link, link)
+        return f'<a href="{link}">{link}</a>'
 
     _auto_email_link_re = re.compile(r"""
           \[
@@ -448,7 +439,7 @@ class JiveConverter(object):
         """ % _email_pattern, re.I | re.X | re.U)
     def _auto_email_link_sub(self, match):
         email = match.group(1)
-        return '<a href="mailto:%s">%s</a>' % (email, email)
+        return f'<a href="mailto:{email}">{email}</a>'
 
     def _do_auto_links(self, text):
         text = self._auto_link_re.sub(self._auto_link_sub, text)

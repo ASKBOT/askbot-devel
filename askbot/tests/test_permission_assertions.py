@@ -56,7 +56,7 @@ class PermissionAssertionTestCase(AskbotTestCase):
 class SeeOffensiveFlagsPermissionAssertionTests(utils.AskbotTestCase):
 
     def setUp(self):
-        super(SeeOffensiveFlagsPermissionAssertionTests, self).setUp()
+        super().setUp()
         self.create_user()
         self.create_user(username = 'other_user')
         self.min_rep = askbot_settings.MIN_REP_TO_VIEW_OFFENSIVE_FLAGS
@@ -173,10 +173,7 @@ class DeleteAnswerPermissionAssertionTests(utils.AskbotTestCase):
     def post_answer(self, user = None):
         if user is None:
             user = self.user
-        self.answer = super(
-                            DeleteAnswerPermissionAssertionTests,
-                            self
-                        ).post_answer(
+        self.answer = super().post_answer(
                             question = self.question,
                             user = user
                         )
@@ -313,7 +310,7 @@ class DeleteQuestionPermissionAssertionTests(utils.AskbotTestCase):
 class CloseQuestionPermissionAssertionTests(utils.AskbotTestCase):
 
     def setUp(self):
-        super(CloseQuestionPermissionAssertionTests, self).setUp()
+        super().setUp()
         self.create_user()
         self.create_user(username = 'other_user')
         self.question = self.post_question()
@@ -609,10 +606,7 @@ class EditAnswerPermissionAssertionTests(
             EditQuestionPermissionAssertionTests
         ):
     def setUp(self):
-        super(
-                EditAnswerPermissionAssertionTests,
-                self,
-            ).setUp()
+        super().setUp()
         self.post = self.post_answer(question = self.post)
 
     def assert_user_can(
@@ -649,10 +643,7 @@ class RetagQuestionPermissionAssertionTests(
         ):
 
     def setUp(self):
-        super(
-                RetagQuestionPermissionAssertionTests,
-                self,
-            ).setUp()
+        super().setUp()
         self.min_rep = askbot_settings.MIN_REP_TO_RETAG_OTHERS_QUESTIONS
 
     def assert_user_can(

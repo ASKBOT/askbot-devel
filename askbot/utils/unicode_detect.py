@@ -604,7 +604,7 @@ def _compile_scripts_txt():
             idx.append((int(a, 16), int(b or a, 16), names.index(name), cats.index(cat)))
     idx.sort()
 
-    print('script_data = {\n"names":%s,\n"cats":%s,\n"idx":[\n%s\n]}' % (
+    print('script_data = {{\n"names":{},\n"cats":{},\n"idx":[\n{}\n]}}'.format(
         '\n'.join(textwrap.wrap(repr(names), 80)),
         '\n'.join(textwrap.wrap(repr(cats), 80)),
         '\n'.join(textwrap.wrap(', '.join('(0x%x,0x%x,%d,%d)' % c for c in idx), 80))))

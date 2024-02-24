@@ -16,7 +16,7 @@ def mysql_table_supports_full_text_search(table_name):
 
 def get_drop_index_sql(index_name, table_name):
     """returns sql for dropping index by name on table"""
-    return 'ALTER TABLE %s DROP INDEX %s' % (table_name, index_name)
+    return f'ALTER TABLE {table_name} DROP INDEX {index_name}'
 
 
 def get_create_full_text_index_sql(index_name, table_name, column_list):

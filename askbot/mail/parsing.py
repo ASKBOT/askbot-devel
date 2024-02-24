@@ -125,7 +125,7 @@ def strip_leading_empties(text):
 
 def strip_trailing_sender_references(text, email_address):
     server_email = 'ask@' + askbot_settings.REPLY_BY_EMAIL_HOSTNAME
-    email_pattern = '(%s|%s)' % (email_address, server_email)
+    email_pattern = f'({email_address}|{server_email})'
     pattern = r'\n[^\n]*%s[^\n]*$' % email_pattern
     return re.sub(pattern, '', text, re.IGNORECASE)
 

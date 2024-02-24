@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from askbot.utils.forms import get_next_url
 from askbot.utils.http import get_request_params
 
-class CancelActionMiddleware(object):
+class CancelActionMiddleware:
     """Django middleware that redirects to the next url
     if the request has "cancel" parameter."""
 

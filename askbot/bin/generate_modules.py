@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Miville
 # Copyright (C) 2008 Société des arts technologiques (SAT)
 # http://www.sat.qc.ca
@@ -39,7 +38,7 @@ OPTIONS = [
 
 def create_file_name(base, opts):
     """Create file name from base name, path and suffix"""
-    return os.path.join(opts.destdir, "%s.%s" % (base, opts.suffix))
+    return os.path.join(opts.destdir, f"{base}.{opts.suffix}")
 
 
 def write_automodule_directive(module):
@@ -61,13 +60,13 @@ def write_heading(module, kind='Module'):
 
 def write_sub(module, kind='Module'):
     """Create the module subtitle"""
-    sub = title_line('The :mod:`%s` %s' % (module, kind), '-')
+    sub = title_line(f'The :mod:`{module}` {kind}', '-')
     return sub
 
 
 def title_line(title, char):
     """ Underline the title with the character pass, with the right length."""
-    return ':mod:`%s`\n%s\n\n' % (title, len(title) * char)
+    return f':mod:`{title}`\n{len(title) * char}\n\n'
 
 
 def create_module_content(module):
@@ -108,7 +107,7 @@ def create_package_content(package, py_files, sub_packages):
                 # __init__.py of the current module
                 continue
             py_file = os.path.splitext(py_file)[0]
-            text += '* :ref:`%s.%s`\n' % (package, py_file)
+            text += f'* :ref:`{package}.{py_file}`\n'
         text += '\n'
 
     # create links to sub-packages
@@ -119,7 +118,7 @@ def create_package_content(package, py_files, sub_packages):
         text += '\n'
         for sub in sub_packages:
             # TODO - add description here
-            text += '* :ref:`%s.%s`\n' % (package, sub)
+            text += f'* :ref:`{package}.{sub}`\n'
     return text
     # build toctree for the package page
     # text += '.. toctree::\n\n'
@@ -149,7 +148,7 @@ def check_for_code(module):
     """
     Check if there's at least one class or one function in the module.
     """
-    fd = open(module, 'r')
+    fd = open(module)
     for line in fd:
         if line.startswith('def ') or line.startswith('class '):
             fd.close()

@@ -27,7 +27,7 @@ class FileDeployer: #pylint: disable=missing-class-docstring
 
     def get_template(self):
         """Returns string representation of the template"""
-        return open(get_askbot_module_path(self.template_path), 'r').read()
+        return open(get_askbot_module_path(self.template_path)).read()
 
     def deploy_file(self, contents):
         """Writes contents into the target file"""

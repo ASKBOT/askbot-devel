@@ -214,7 +214,7 @@ class DeleteOrRestoreThread(ThreadsList):
 
     def __init__(self, action, *args, **kwargs):
         self.thread_action = action or 'delete'
-        super(DeleteOrRestoreThread, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def post(self, request, thread_id=None):
         """process the post request:

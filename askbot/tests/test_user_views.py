@@ -4,7 +4,7 @@ from askbot.views.users import owner_or_moderator_required
 from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from mock import Mock
+from unittest.mock import Mock
 import urllib.request, urllib.parse, urllib.error
 import urllib.parse
 

@@ -1,4 +1,4 @@
-class BaseProtocol(object):
+class BaseProtocol:
     """Base class for all authentication protocols"""
 
     def __iter__(self):

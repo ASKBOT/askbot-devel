@@ -85,8 +85,8 @@ remove source_tag"""
             source_tag = models.Tag.objects.get(name=source_tag_name, language_code=options['lang'])
         except models.Tag.DoesNotExist:
             if not options.get('is_force', False):
-                prompt = """source tag %s doesn't exist, are you sure you want to create a TagSynonym
-    %s ==> %s?""" % (source_tag_name, source_tag_name, target_tag_name)
+                prompt = """source tag {} doesn't exist, are you sure you want to create a TagSynonym
+    {} ==> {}?""".format(source_tag_name, source_tag_name, target_tag_name)
                 choice = console.choice_dialog(prompt, choices=('yes', 'no'))
                 if choice == 'no':
                     print('Cancled')
@@ -107,9 +107,8 @@ remove source_tag"""
                                                 language_code=options['lang']
                                             )
             if not options.get('is_force', False):
-                prompt = """There exists a TagSynonym %s ==> %s,
-    hence we will create a tag synonym %s ==> %s instead. Proceed?""" % (tag_synonym_tmp.source_tag_name, tag_synonym_tmp.target_tag_name,
-                                                                         source_tag_name, tag_synonym_tmp.target_tag_name)
+                prompt = f"""There exists a TagSynonym {tag_synonym_tmp.source_tag_name} ==> {tag_synonym_tmp.target_tag_name},
+    hence we will create a tag synonym {source_tag_name} ==> {tag_synonym_tmp.target_tag_name} instead. Proceed?"""
                 choice = console.choice_dialog(prompt, choices=('yes', 'no'))
                 if choice == 'no':
                     print('Cancled')

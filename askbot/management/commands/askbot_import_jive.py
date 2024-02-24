@@ -148,7 +148,7 @@ class Command(BaseCommand):
         )
 
     def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         #relax certain settings
         askbot_settings.update('LIMIT_ONE_ANSWER_PER_USER', False)
         askbot_settings.update('MAX_COMMENT_LENGTH', 1000000)
@@ -165,7 +165,7 @@ class Command(BaseCommand):
         translation.activate(django_settings.LANGUAGE_CODE)
         assert len(args) == 1, 'Dump file name is required'
         dump_file_name = args[0]
-        xml = open(dump_file_name, 'r').read()
+        xml = open(dump_file_name).read()
         soup = BeautifulSoup(xml, ['lxml', 'xml'])
         self.soup = soup
         url_prop = self.soup.find('Property', attrs={'name': 'jiveURL'})
@@ -194,7 +194,7 @@ For your reference, the original is [available here|%s]{quote}"""
         for question in ProgressBar(questions.iterator(), count, message):
             thread_id = question.old_question_id
             jive_url = self.jive_url
-            old_url = '%s/thread.jspa?threadID=%s' % (jive_url, thread_id)
+            old_url = f'{jive_url}/thread.jspa?threadID={thread_id}'
             question.text += template % old_url
             question.save()
             transaction.commit()
@@ -309,7 +309,7 @@ For your reference, the original is [available here|%s]{quote}"""
             dest_file = os.path.join(django_settings.MEDIA_ROOT, file_name)
             shutil.copyfile(source_file, dest_file)
             # add link to file to the post text
-            post.text += '# [%s|%s%s]\n' % (name, django_settings.MEDIA_URL, file_name)
+            post.text += f'# [{name}|{django_settings.MEDIA_URL}{file_name}]\n'
 
     def import_thread(self, thread, tag_name):
         """import individual thread"""

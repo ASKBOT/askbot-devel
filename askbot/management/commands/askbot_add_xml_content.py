@@ -200,7 +200,7 @@ class Command(BaseImportXMLCommand):
             #copy the data
             if from_user.username != to_user.username:
                 names = (from_user.username, to_user.username)
-                log_info['notify_user'].append('Your user name has changed from %s to %s' % names)
+                log_info['notify_user'].append('Your user name has changed from {} to {}'.format(*names))
 
             self.copy_string_parameter(from_user, to_user, 'first_name')
             self.copy_string_parameter(from_user, to_user, 'last_name')

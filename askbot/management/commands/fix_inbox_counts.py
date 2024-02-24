@@ -30,4 +30,4 @@ class Command(NoArgsJob):
             'changed_count_message': 'Corrected records for %d users',
             'nothing_changed_message': 'No problems found'
         },)
-        super(Command, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

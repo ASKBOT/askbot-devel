@@ -27,8 +27,7 @@ def get_tags_by_ids(tag_ids):
 def get_similar_tags_from_strings(tag_strings, tag_name):
     """returns a list of tags, similar to tag_name from a set of questions"""
 
-    grab_pattern = r'\b([%(ch)s]*%(nm)s[%(ch)s]*)\b' % \
-                {'ch': const.TAG_CHARS, 'nm': tag_name}
+    grab_pattern = rf'\b([{const.TAG_CHARS}]*{tag_name}[{const.TAG_CHARS}]*)\b'
     grab_re = re.compile(grab_pattern, re.IGNORECASE)
 
     similar_tags = set()
@@ -148,13 +147,13 @@ or repost a bug, if that does not help""")
         formatted_to_tag_names = format_tag_name_list(to_tags)
 
         if not options.get('is_force', False):
-            prompt = 'Rename tags %s --> %s?' % (formatted_from_tag_names, formatted_to_tag_names)
+            prompt = f'Rename tags {formatted_from_tag_names} --> {formatted_to_tag_names}?'
             choice = console.choice_dialog(prompt, choices=('yes', 'no'))
             if choice == 'no':
                 print('Canceled')
                 sys.exit()
         else:
-            print('Renaming tags %s --> %s' % (formatted_from_tag_names, formatted_to_tag_names))
+            print(f'Renaming tags {formatted_from_tag_names} --> {formatted_to_tag_names}')
         sys.stdout.write('Processing:')
 
         from_tag_names = get_tag_names(from_tags)
@@ -167,7 +166,7 @@ or repost a bug, if that does not help""")
                                                 source_tag_name=to_tag_name,
                                                 language_code=lang
                                             )
-               raise CommandError('You gave %s as --to argument, but TagSynonym: %s -> %s exists, probably you want to provide %s as --to argument' % (to_tag_name, tag_synonym.source_tag_name, tag_synonym.target_tag_name, tag_synonym.target_tag_name))
+               raise CommandError(f'You gave {to_tag_name} as --to argument, but TagSynonym: {tag_synonym.source_tag_name} -> {tag_synonym.target_tag_name} exists, probably you want to provide {tag_synonym.target_tag_name} as --to argument')
             except models.TagSynonym.DoesNotExist:
                 pass
 

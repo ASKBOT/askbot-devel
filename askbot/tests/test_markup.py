@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.conf import settings as django_settings
 from django.test import TestCase
 from askbot.utils.markup import markdown_input_converter

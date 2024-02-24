@@ -192,7 +192,7 @@ class CountryField(forms.ChoiceField):
         country_choices = (('unknown', _('select country')),) + tuple(country_choices)
         kwargs['choices'] = kwargs.pop('choices', country_choices)
         kwargs['label'] = kwargs.pop('label', _('Country'))
-        super(CountryField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         """Handles case of 'unknown' country selection
@@ -213,7 +213,7 @@ class CountedWordsField(forms.CharField):
         self.min_words = min_words
         self.max_words = max_words
         self.field_name = field_name
-        super(CountedWordsField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         # TODO: this field must be adapted to work with Chinese, etc.
@@ -244,7 +244,7 @@ class AskbotReCaptchaField(ReCaptchaField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('private_key', askbot_settings.RECAPTCHA_SECRET)
         kwargs.setdefault('public_key', askbot_settings.RECAPTCHA_KEY)
-        super(AskbotReCaptchaField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class LanguageField(forms.ChoiceField):
@@ -252,7 +252,7 @@ class LanguageField(forms.ChoiceField):
     def __init__(self, *args, **kwargs):
         kwargs['choices'] = django_settings.LANGUAGES
         kwargs['label'] = _('Select language')
-        super(LanguageField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class LanguageForm(forms.Form):
@@ -275,7 +275,7 @@ class TranslateUrlForm(forms.Form):
 
 class SuppressEmailField(forms.BooleanField):
     def __init__(self):
-        super(SuppressEmailField, self).__init__()
+        super().__init__()
         self.required = False
         self.label = _("minor edit (don't send alerts)")
 
@@ -298,7 +298,7 @@ class DomainNameField(forms.CharField):
 class TitleField(forms.CharField):
     """Field receiving question title"""
     def __init__(self, *args, **kwargs):
-        super(TitleField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.required = kwargs.get('required', True)
         self.widget = forms.TextInput(
                             attrs={'size': 70, 'autocomplete': 'off'})
@@ -353,7 +353,7 @@ class EditorField(forms.CharField):
         widget_attrs = kwargs.pop('attrs', {})
         widget_attrs.setdefault('id', 'editor')
 
-        super(EditorField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.required = True
         if askbot_settings.EDITOR_TYPE == 'markdown':
             self.widget = forms.Textarea(attrs=widget_attrs)
@@ -389,7 +389,7 @@ class QuestionEditorField(EditorField):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(QuestionEditorField, self).__init__(
+        super().__init__(
                                 user=user, *args, **kwargs)
         self.min_length = askbot_settings.MIN_QUESTION_BODY_LENGTH
 
@@ -398,7 +398,7 @@ class AnswerEditorField(EditorField):
     """Editor field for answers"""
 
     def __init__(self, *args, **kwargs):
-        super(AnswerEditorField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.min_length = askbot_settings.MIN_ANSWER_BODY_LENGTH
 
 
@@ -447,7 +447,7 @@ class TagNamesField(forms.CharField):
     """field that receives AskBot tag names"""
 
     def __init__(self, *args, **kwargs):
-        super(TagNamesField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.required = kwargs.get('required',
                                    askbot_settings.TAGS_ARE_REQUIRED)
         self.widget = forms.TextInput(
@@ -469,7 +469,7 @@ class TagNamesField(forms.CharField):
 
     def clean(self, value):
         from askbot import models
-        value = super(TagNamesField, self).clean(value)
+        value = super().clean(value)
         data = value.strip(const.TAG_STRIP_CHARS)
         if not data:
             if askbot_settings.TAGS_ARE_REQUIRED:
@@ -516,7 +516,7 @@ class WikiField(forms.BooleanField):
     """
 
     def __init__(self, *args, **kwargs):
-        super(WikiField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.required = False
         self.initial = False
         self.label = _(
@@ -532,7 +532,7 @@ class PageField(forms.IntegerField):
 
     def __init__(self, *args, **kwargs):
         self.required = False
-        super(PageField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         try:
@@ -545,7 +545,7 @@ class PageField(forms.IntegerField):
 class SortField(forms.ChoiceField):
     def __init__(self, *args, **kwargs):
         self.default = kwargs.pop('default', '')
-        super(SortField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         value = value or self.default
@@ -557,7 +557,7 @@ class SortField(forms.ChoiceField):
 class SummaryField(forms.CharField):
 
     def __init__(self, *args, **kwargs):
-        super(SummaryField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.required = False
         self.widget = forms.TextInput(
             attrs={'size': 50, 'autocomplete': 'off'})
@@ -575,7 +575,7 @@ class EditorForm(forms.Form):
     in the __init__() function"""
 
     def __init__(self, attrs=None, user=None, editor_attrs=None):
-        super(EditorForm, self).__init__()
+        super().__init__()
         editor_attrs = editor_attrs or {}
         self.fields['editor'] = EditorField(attrs=attrs,
                                             editor_attrs=editor_attrs,
@@ -602,7 +602,7 @@ class ShowQuestionForm(forms.Form):
     page = PageField()
 
     def __init__(self, *args, **kwargs):
-        super(ShowQuestionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # uses livesettings for the default so the 'sort' field
         # must be added in the __init__
         self.fields['sort'] = SortField(
@@ -724,7 +724,7 @@ class ChangeUserStatusForm(forms.Form):
         moderator = kwarg.pop('moderator')
         subject = kwarg.pop('subject')
 
-        super(ChangeUserStatusForm, self).__init__(*arg, **kwarg)
+        super().__init__(*arg, **kwarg)
 
         # Select user_status_choices depending on status of the moderator
         if moderator.is_authenticated:
@@ -827,7 +827,7 @@ class FeedbackForm(forms.Form):
     next = NextUrlField()
 
     def __init__(self, user=None, *args, **kwargs):
-        super(FeedbackForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.user = user
         if should_use_recaptcha(user):
             self.fields['recaptcha'] = AskbotReCaptchaField()
@@ -846,7 +846,7 @@ class FeedbackForm(forms.Form):
         return name
 
     def clean(self):
-        super(FeedbackForm, self).clean()
+        super().clean()
         if self.user and self.user.is_anonymous:
             need_email = not bool(self.cleaned_data.get('no_email', False))
             email = self.cleaned_data.get('email', '').strip()
@@ -857,7 +857,7 @@ class FeedbackForm(forms.Form):
         return self.cleaned_data
 
 
-class FormWithHideableFields(object):
+class FormWithHideableFields:
     """allows to swap a field widget to HiddenInput() and back"""
 
     def hide_field(self, name):
@@ -889,7 +889,7 @@ class PostPrivatelyForm(forms.Form, FormWithHideableFields):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         self._user = user
-        super(PostPrivatelyForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if self.allows_post_privately() == False:
             self.hide_field('post_privately')
 
@@ -1002,7 +1002,7 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.get('user', None)
-        super(AskForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # It's important that this field is set up dynamically
         self.fields['title'] = TitleField()
         self.fields['tags'] = TagNamesField()
@@ -1048,7 +1048,7 @@ class AskWidgetForm(forms.Form, FormWithHideableFields):
 
     def __init__(self, include_text=True, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(AskWidgetForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['title'] = TitleField()
         # hide ask_anonymously field
         if user.is_anonymous or not askbot_settings.ALLOW_ASK_ANONYMOUSLY:
@@ -1073,7 +1073,7 @@ class CreateAskWidgetForm(forms.Form, FormWithHideableFields):
 
     def __init__(self, *args, **kwargs):
         from askbot.models import Group, Tag
-        super(CreateAskWidgetForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['group'] = forms.ModelChoiceField(
             queryset=Group.objects.exclude_personal(), required=False)
         self.fields['tag'] = forms.ModelChoiceField(
@@ -1094,7 +1094,7 @@ class CreateQuestionWidgetForm(forms.Form, FormWithHideableFields):
 
     def __init__(self, *args, **kwargs):
         from askbot.models import Group
-        super(CreateQuestionWidgetForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['tagnames'] = TagNamesField()
         self.fields['group'] = forms.ModelChoiceField(
             queryset=Group.objects.exclude(name__startswith='_internal'),
@@ -1130,7 +1130,7 @@ class AskByEmailForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        super(AskByEmailForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['body_text'] = QuestionEditorField(user=user)
 
     def clean_sender(self):
@@ -1191,7 +1191,7 @@ class AnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
         widget=forms.TextInput(attrs={'size': 40, 'class': 'openid-input'}))
 
     def __init__(self, *args, **kwargs):
-        super(AnswerForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         user = kwargs['user']
         # empty label on purpose
         self.fields['text'] = AnswerEditorField(label='', user=user)
@@ -1233,7 +1233,7 @@ class VoteForm(forms.Form):
 
 class CloseForm(forms.Form):
     def __init__(self, *args, **kwargs): 
-        super(CloseForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         reasons = askbot_settings.QUESTION_CLOSE_REASONS
         close_choices = tuple([tuple([reason, reason]) for reason in reasons])
         self.fields['reason'] = forms.ChoiceField(choices=close_choices)
@@ -1243,7 +1243,7 @@ class RetagQuestionForm(forms.Form):
 
     def __init__(self, question, *args, **kwargs):
         """initialize the default values"""
-        super(RetagQuestionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['tags'] = TagNamesField()
         self.fields['tags'].initial = question.thread.tagnames
 
@@ -1255,15 +1255,14 @@ class RevisionForm(forms.Form):
     revision = forms.ChoiceField(widget=forms.Select())
 
     def __init__(self, post, latest_revision, *args, **kwargs):
-        super(RevisionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         revisions = post.revisions.values_list(
             'revision', 'author__username', 'revised_at', 'summary'
         )
         date_format = '%c'
         rev_choices = list()
         for r in revisions:
-            rev_details = '%s - %s (%s) %s' % (
-                r[0], r[1], r[2].strftime(date_format), r[3])
+            rev_details = f'{r[0]} - {r[1]} ({r[2].strftime(date_format)}) {r[3]}'
             rev_choices.append((r[0], rev_details))
 
         self.fields['revision'].choices = rev_choices
@@ -1278,7 +1277,7 @@ class EditAnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
     def __init__(self, answer, revision, *args, **kwargs):
         self.answer = answer
         user = kwargs.get('user', None)
-        super(EditAnswerForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # it is important to add this field dynamically
         # label is empty on purpose
         self.fields['text'] = AnswerEditorField(label='', user=user)
@@ -1289,7 +1288,7 @@ class EditAnswerForm(PostAsSomeoneForm, PostPrivatelyForm):
             self.fields['recaptcha'] = AskbotReCaptchaField()
 
     def has_changed(self):
-        if super(EditAnswerForm, self).has_changed():
+        if super().has_changed():
             return True
         if askbot_settings.GROUPS_ENABLED:
             return self.answer.is_private() \
@@ -1336,7 +1335,7 @@ class EditUserForm(forms.Form):
         widget=forms.TextInput(attrs={'size': 35}))
 
     def __init__(self, user, *args, **kwargs):
-        super(EditUserForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         logging.debug('initializing the form')
         if askbot_settings.EDITABLE_SCREEN_NAME:
@@ -1396,7 +1395,7 @@ class TagFilterSelectionForm(forms.ModelForm):
         widget=forms.RadioSelect)
 
     def __init__(self, *args, **kwargs):
-        super(TagFilterSelectionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         choices = get_tag_email_filter_strategy_choices()
         self.fields['email_tag_filter_strategy'].choices = choices
 
@@ -1406,7 +1405,7 @@ class TagFilterSelectionForm(forms.ModelForm):
 
     def save(self):
         before = self.instance.email_tag_filter_strategy
-        super(TagFilterSelectionForm, self).save()
+        super().save()
         after = self.instance.email_tag_filter_strategy
         return before != after
 
@@ -1415,7 +1414,7 @@ class EmailFeedSettingField(forms.ChoiceField):
     def __init__(self, *arg, **kwarg):
         kwarg['choices'] = kwarg.get('choices', const.NOTIFICATION_DELIVERY_SCHEDULE_CHOICES)
         kwarg['widget'] = forms.RadioSelect
-        super(EmailFeedSettingField, self).__init__(*arg, **kwarg)
+        super().__init__(*arg, **kwarg)
 
 
 class EditUserEmailFeedsForm(forms.Form):
@@ -1445,7 +1444,7 @@ class EditUserEmailFeedsForm(forms.Form):
     }
 
     def __init__(self, *args, **kwargs):
-        super(EditUserEmailFeedsForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields = OrderedDict((
             ('asked_by_me', EmailFeedSettingField(label=askbot_settings.WORDS_ASKED_BY_ME)),
             ('answered_by_me', EmailFeedSettingField(label=askbot_settings.WORDS_ANSWERED_BY_ME)),
@@ -1548,13 +1547,13 @@ class SubscribeForEmailUpdatesField(forms.ChoiceField):
             ('n', _('no %(sitename)s email please, thanks')
              % {'sitename': askbot_settings.APP_SHORT_NAME})
         )
-        super(SubscribeForEmailUpdatesField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
 
 class SimpleEmailSubscribeForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
-        super(SimpleEmailSubscribeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['subscribe'] = SubscribeForEmailUpdatesField()
 
     def save(self, user=None):
@@ -1628,7 +1627,7 @@ class BulkTagSubscriptionForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         from askbot.models import BulkTagSubscription, Tag, Group
-        super(BulkTagSubscriptionForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['users'] = forms.ModelMultipleChoiceField(queryset=User.objects.all())
         self.fields['tags'] = TagNamesField(label=_("Tags"), help_text=' ')
         if askbot_settings.GROUPS_ENABLED:
@@ -1696,7 +1695,7 @@ class NewCommentForm(forms.Form):
     avatar_size = forms.IntegerField()
 
     def __init__(self, *args, **kwargs):
-        super(NewCommentForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['comment'] = forms.CharField(
             max_length=askbot_settings.MAX_COMMENT_LENGTH)
 

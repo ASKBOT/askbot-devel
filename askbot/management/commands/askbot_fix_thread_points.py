@@ -16,7 +16,7 @@ class Command(BaseCommand):
                      .exclude(points=F('thread__points'))
                      .select_related('thread'))
 
-        self.stdout.write('Fixing {0} threads...'.format(questions.count()))
+        self.stdout.write(f'Fixing {questions.count()} threads...')
 
         for post in questions:
             with override(post.thread.language_code):

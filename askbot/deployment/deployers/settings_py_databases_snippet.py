@@ -10,4 +10,4 @@ class SettingsPyDatabasesSnippet(FileDeployer): # pylint: disable=missing-class-
         `database_settings` parameter"""
         if self.params['database_settings']:
             return self.params['database_settings']
-        return super(SettingsPyDatabasesSnippet, self).render()
+        return super().render()

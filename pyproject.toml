@@ -59,7 +59,7 @@ select = [
     # TODO: "SLF", # flake8-self
     # TODO: "SLOT", # flake8-slots
     # TODO: "TID", # flake8-tidy-imports
-    # ** TODO: "UP",  # pyupgrade
+    "UP",  # pyupgrade
     # ** TODO: "Q",   # flake8-quotes
     # TODO: "TCH", # flake8-type-checking
     # TODO: "T10", # flake8-debugger

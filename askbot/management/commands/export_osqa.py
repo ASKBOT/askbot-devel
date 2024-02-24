@@ -100,7 +100,7 @@ class Command(BaseCommand):
                         continue
                     model = apps.get_model(app_label, model_label)
                     if model is None:
-                        raise CommandError("Unknown model: %s.%s" % (app_label, model_label))
+                        raise CommandError(f"Unknown model: {app_label}.{model_label}")
 
                     if app in list(app_list.keys()):
                         if app_list[app] and model not in app_list[app]:
@@ -205,7 +205,7 @@ def sort_dependencies(app_list):
                 skipped.append((model, deps))
         if not changed:
             raise CommandError("Can't resolve dependencies for %s in serialized app list." %
-                ', '.join('%s.%s' % (model._meta.app_label, model._meta.object_name)
+                ', '.join(f'{model._meta.app_label}.{model._meta.object_name}'
                 for model, deps in sorted(skipped, key=lambda obj: obj[0].__name__))
             )
         model_dependencies = skipped

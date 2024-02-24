@@ -17,7 +17,7 @@ from askbot.models import Post, PostRevision
 TEST_CONTENT = 'Test content'
 TEST_LONG_CONTENT = 'Test content' * 10
 
-class MockPart(object):
+class MockPart:
     def __init__(self, body, content_type='text/plain'):
         self.body = body
         self.content_encoding = {'Content-Type':(content_type,)}

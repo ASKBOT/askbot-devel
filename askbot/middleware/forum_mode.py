@@ -30,7 +30,7 @@ def is_view_allowed(func):
 
     return view_path in ALLOWED_VIEWS
 
-class ForumModeMiddleware(object):
+class ForumModeMiddleware:
     """protects forum views is the closed forum mode"""
 
     def __init__(self, get_response=None): # i think get_reponse is never None. If it's not another middleware it's the view, I think
@@ -67,7 +67,7 @@ class ForumModeMiddleware(object):
                     _('Please log in to use %s') % \
                     askbot_settings.APP_SHORT_NAME
                 )
-                redirect_url = '%s?next=%s' % (
+                redirect_url = '{}?next={}'.format(
                     url_utils.get_login_url(),
                     encode_jwt({'next_url': request.get_full_path()})
                 )

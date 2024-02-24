@@ -14,7 +14,7 @@ class Command(BaseCommand):
         group_ids = Group.objects.values_list('pk', flat=True)
         #3) calc the diff
         missing_group_ids = set(memb_group_ids) - set(group_ids)
-        print('Found {} missing groups'.format(len(missing_group_ids)))
+        print(f'Found {len(missing_group_ids)} missing groups')
         bad_gms = GroupMembership.objects.filter(group_id__in=missing_group_ids)
         print('Deleting bad group memberships')
         bad_gms.delete()

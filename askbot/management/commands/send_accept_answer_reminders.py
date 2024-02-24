@@ -66,7 +66,6 @@ class Command(BaseCommand):
                     })
 
             if DEBUG_THIS_COMMAND:
-                print("User: %s<br>\nSubject:%s<br>\nText: %s<br>\n" % \
-                    (user.email, email.render_subject(), email.render_body()))
+                print(f"User: {user.email}<br>\nSubject:{email.render_subject()}<br>\nText: {email.render_body()}<br>\n")
             else:
                 email.send([user.email],)

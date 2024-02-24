@@ -239,13 +239,13 @@ def users_list(request, by_group=False, group_id=None, group_slug=None):
                             matching_users.order_by('-askbot_profile__reputation'),
                             askbot_settings.USERS_PAGE_SIZE
                         )
-        base_url = request.path + '?query=%s&sort=%s&' % (search_query, sort_method)
+        base_url = request.path + f'?query={search_query}&sort={sort_method}&'
     elif search_query and not cleaned_search_query:
         objects_list = Paginator(
                             models.User.objects.none(),
                             askbot_settings.USERS_PAGE_SIZE
                         )
-        base_url = request.path + '?query=%s&sort=%s&' % (search_query, sort_method)
+        base_url = request.path + f'?query={search_query}&sort={sort_method}&'
     else:
         if sort_method == 'newest':
             order_by_parameter = '-date_joined'
@@ -855,7 +855,7 @@ def user_recent(request, user, context):
             if type_id in item:
                 return item[1]
 
-    class Event(object):
+    class Event:
         is_badge = False
         def __init__(self, time, type, title, summary, url):
             self.time = time
@@ -866,7 +866,7 @@ def user_recent(request, user, context):
             slug_title = slugify(title)
             self.title_link = url
 
-    class AwardEvent(object):
+    class AwardEvent:
         is_badge = True
         def __init__(self, time, type, content_object, badge):
             self.time = time
@@ -1157,12 +1157,12 @@ def user_reputation(request, user, context):
     def format_graph_data(raw_data, user):
         # prepare data for the graph - last values go in first
         final_rep = user.get_localized_profile().reputation + const.MIN_REPUTATION
-        rep_list = ['[%s,%s]' % (calendar.timegm(datetime.datetime.now().timetuple()) * 1000, final_rep)]
+        rep_list = [f'[{calendar.timegm(datetime.datetime.now().timetuple()) * 1000},{final_rep}]']
         for rep in raw_data:
-            rep_list.append('[%s,%s]' % (calendar.timegm(rep.reputed_at.timetuple()) * 1000, rep.reputation))
+            rep_list.append(f'[{calendar.timegm(rep.reputed_at.timetuple()) * 1000},{rep.reputation}]')
 
         #add initial rep point
-        rep_list.append('[%s,%s]' % (calendar.timegm(user.date_joined.timetuple()) * 1000, const.MIN_REPUTATION))
+        rep_list.append(f'[{calendar.timegm(user.date_joined.timetuple()) * 1000},{const.MIN_REPUTATION}]')
         reps = ','.join(rep_list)
         return '[%s]' % reps
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 
 from django.conf import settings
@@ -36,7 +35,7 @@ class Association(models.Model):
     assoc_type = models.TextField(max_length=64)
 
     def __str__(self):
-        return "Association: %s, %s" % (self.server_url, self.handle)
+        return f"Association: {self.server_url}, {self.handle}"
 
 class UserAssociation(models.Model):
     """
@@ -52,14 +51,14 @@ class UserAssociation(models.Model):
     provider_name = models.CharField(max_length=64, default='unknown')
     last_used_timestamp = models.DateTimeField(null=True)
 
-    class Meta(object):
+    class Meta:
         unique_together = (
                                 ('user','provider_name'),
                                 ('openid_url', 'provider_name')
                             )
 
     def __str__(self):
-        return "Openid %s with user %s" % (self.openid_url, self.user)
+        return f"Openid {self.openid_url} with user {self.user}"
 
     def update_timestamp(self):
         self.last_used_timestamp = datetime.datetime.now()
@@ -72,7 +71,7 @@ class UserPasswordQueueManager(models.Manager):
         # The random module is seeded when this Apache child is created.
         # Use SECRET_KEY as added salt.
         while 1:
-            confirm_key = hashlib.md5("%s%s%s%s" % (
+            confirm_key = hashlib.md5("{}{}{}{}".format(
                 random.randint(0, sys.maxsize - 1), os.getpid(),
                 time.time(), settings.SECRET_KEY)).hexdigest()
             try:
@@ -108,7 +107,7 @@ class UserEmailVerifier(models.Model):
             self.expires_on = timezone.now() + \
                     datetime.timedelta(VERIFIER_EXPIRE_DAYS)
 
-        super(UserEmailVerifier, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def has_expired(self):
         now = timezone.now()

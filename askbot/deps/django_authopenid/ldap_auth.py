@@ -187,7 +187,7 @@ def ldap_create_user_default(user_info, request):
     user.is_active = True
     user.save()
     user_registered.send(None, user=user, request=request)
-    LOG.info('Created New User : [{0}]'.format(user_info['ldap_username']))
+    LOG.info('Created New User : [{}]'.format(user_info['ldap_username']))
 
     assoc = UserAssociation()
     assoc.user = user

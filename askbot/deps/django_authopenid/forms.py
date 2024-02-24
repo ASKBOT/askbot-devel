@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright (c) 2007, 2008, Benoît Chesneau
 #
 # All rights reserved.
@@ -53,7 +52,7 @@ from askbot.deps.django_authopenid import util
 
 class ConsentField(forms.BooleanField):
     def __init__(self, *args, **kwargs):
-        super(ConsentField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.label = _('I have read and agree with the terms of service')
         self.required = True
         self.error_messages['required'] = _(
@@ -68,7 +67,7 @@ class LoginProviderField(forms.CharField):
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 64
-        super(LoginProviderField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def clean(self, value):
         """makes sure that login provider name
@@ -301,7 +300,7 @@ class RegistrationForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
-        super(RegistrationForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         email_required = not askbot_settings.BLANK_EMAIL_ALLOWED
         self.fields['email'] = UserEmailField(required=email_required)
         if askbot_settings.TERMS_CONSENT_REQUIRED:
@@ -313,7 +312,7 @@ class RegistrationForm(forms.Form):
     def clean(self):
         if askbot_settings.NEW_REGISTRATIONS_DISABLED:
             raise forms.ValidationError(askbot_settings.NEW_REGISTRATIONS_DISABLED_MESSAGE)
-        return super(RegistrationForm, self).clean()
+        return super().clean()
 
 
 class PasswordRegistrationForm(RegistrationForm, SetPasswordForm):
@@ -361,7 +360,7 @@ class ChangeEmailForm(forms.Form):
     """ change email form """
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, \
             initial=None, user=None):
-        super(ChangeEmailForm, self).__init__(data, files, auto_id,
+        super().__init__(data, files, auto_id,
                 prefix, initial)
         email_required = not askbot_settings.BLANK_EMAIL_ALLOWED
         self.fields['email'] = UserEmailField(skip_clean=True, required=email_required)
@@ -416,7 +415,7 @@ class ChangeopenidForm(forms.Form):
     def __init__(self, data=None, user=None, *args, **kwargs):
         if user is None:
             raise TypeError("Keyword argument 'user' must be supplied")
-        super(ChangeopenidForm, self).__init__(data, *args, **kwargs)
+        super().__init__(data, *args, **kwargs)
         self.user = user
 
 
@@ -428,7 +427,7 @@ class DeleteForm(forms.Form):
 
     def __init__(self, data=None, files=None, auto_id='id_%s',
             prefix=None, initial=None, user=None):
-        super(DeleteForm, self).__init__(data, files, auto_id, prefix, initial)
+        super().__init__(data, files, auto_id, prefix, initial)
         self.test_openid = False
         self.user = user
 
@@ -449,7 +448,7 @@ class EmailPasswordForm(forms.Form):
 
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
             initial=None):
-        super(EmailPasswordForm, self).__init__(data, files, auto_id,
+        super().__init__(data, files, auto_id,
                 prefix, initial)
         self.user_cache = None
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 try:
@@ -24,7 +23,7 @@ def get_base_index():
     required_fields = ['text']
 
     if not all(field in BaseClass.fields for field in required_fields):
-        raise ImproperlyConfigured('ASKBOT_HAYSTACK_INDEX_BASE_CLASS: %s must contain at least these fields: %s' % (index_string, required_fields))
+        raise ImproperlyConfigured(f'ASKBOT_HAYSTACK_INDEX_BASE_CLASS: {index_string} must contain at least these fields: {required_fields}')
     return BaseClass
 
 
@@ -57,7 +56,7 @@ def alias_from_language(language):
     connection_prefix = get_connection_prefix()
 
     if connection_prefix:
-        connection = '{0}_{1}'.format(connection_prefix, language)
+        connection = f'{connection_prefix}_{language}'
     else:
         connection = language
     return connection

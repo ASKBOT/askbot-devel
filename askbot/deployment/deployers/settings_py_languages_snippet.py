@@ -9,4 +9,4 @@ class SettingsPyLanguagesSnippet(FileDeployer): # pylint: disable=missing-class-
         the override with the `language_settings` parameter"""
         if self.params['language_settings']:
             return self.params['language_settings']
-        return super(SettingsPyLanguagesSnippet, self).render()
+        return super().render()

@@ -109,7 +109,7 @@ class AskbotTestCase(TestCase):
     """
 
     def _fixture_setup(self):
-        super(AskbotTestCase, self)._fixture_setup()
+        super()._fixture_setup()
         for app_config in apps.get_app_configs():
             create_contenttypes(app_config)
             create_permissions(app_config)
@@ -120,7 +120,7 @@ class AskbotTestCase(TestCase):
         post_migrate.disconnect(create_contenttypes)
         post_migrate.disconnect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
 
-        super(AskbotTestCase, self)._fixture_teardown()
+        super()._fixture_teardown()
 
         post_migrate.connect(create_contenttypes)
         post_migrate.connect(create_permissions, dispatch_uid="django.contrib.auth.management.create_permissions")
@@ -130,7 +130,7 @@ class AskbotTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         cache.clear()
-        super(AskbotTestCase, cls).setUpClass()
+        super().setUpClass()
 
     def create_user(
                 self,
@@ -170,7 +170,7 @@ class AskbotTestCase(TestCase):
         """a shim for python < 2.7"""
         try:
             #run assertRaisesRegex, if available
-            super(AskbotTestCase, self).assertRaisesRegex(*args, **kwargs)
+            super().assertRaisesRegex(*args, **kwargs)
         except AttributeError:
             #in this case lose testing for the error text
             #second argument is the regex that is supposed

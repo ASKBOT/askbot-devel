@@ -49,7 +49,7 @@ from django.utils.cache import (get_cache_key, get_max_age, has_vary_header,
     learn_cache_key, patch_response_headers)
 
 
-class UpdateCacheMiddleware(object):
+class UpdateCacheMiddleware:
     """
     Response-phase cache middleware that updates the cache if the response is
     cacheable.
@@ -127,7 +127,7 @@ class UpdateCacheMiddleware(object):
         return response
 
 
-class FetchFromCacheMiddleware(object):
+class FetchFromCacheMiddleware:
     """
     Request-phase cache middleware that fetches a page from the cache.
 

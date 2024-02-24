@@ -336,7 +336,7 @@ class PostManager(BaseQuerySetManager):
         #            return comments
 
 
-class MockPost(object):
+class MockPost:
     """Used for special purposes, e.g. to fill
     out the js templates for the posts made via ajax
     """
@@ -598,7 +598,7 @@ class Post(models.Model):
         #this save must precede saving the mention activity
         #as well as assigning groups to the post
         #because generic relation needs primary key of the related object
-        super(Post, self).save(**kwargs)
+        super().save(**kwargs)
 
         # TODO: move this group stuff out of this function
         if self.is_comment():
@@ -1108,7 +1108,7 @@ class Post(models.Model):
             for user in recipients:
                 user.update_response_counts()
 
-        super(Post, self).delete(**kwargs)
+        super().delete(**kwargs)
 
     def __str__(self):
         if self.is_question():
@@ -1117,7 +1117,7 @@ class Post(models.Model):
             return self.html
 
     def save(self, *args, **kwargs):
-        super(Post, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         if self.is_answer() and 'postgres' in askbot.get_database_engine_name():
             # hit the database to trigger update of full text search vector
             self.thread._question_post().save()
@@ -1136,7 +1136,7 @@ class Post(models.Model):
             title = title or self.thread.title
             tags = tags or self.thread.tagnames
             body_text = body_text or self.text
-            return '{}\n\n{}\n\n{}'.format(title, tags, body_text)
+            return f'{title}\n\n{tags}\n\n{body_text}'
         return body_text or self.text
 
     def get_snippet(self, max_length=None):
@@ -2085,7 +2085,7 @@ class Post(models.Model):
             else:
                 attr = None
             if attr is not None:
-                return '%s %s' % (self.thread.title, str(attr))
+                return f'{self.thread.title} {str(attr)}'
             else:
                 return self.thread.title
         raise NotImplementedError
@@ -2175,10 +2175,10 @@ class PostRevisionManager(models.Manager):
                 pending_revs.update(**kwargs)
                 revision = pending_revs[0]
             except AssertionError:
-                revision = super(PostRevisionManager, self).create(*args, **kwargs)
+                revision = super().create(*args, **kwargs)
         else:
             kwargs['revision'] = post.get_latest_revision_number() + 1
-            revision = super(PostRevisionManager, self).create(*args, **kwargs)
+            revision = super().create(*args, **kwargs)
 
             # set default summary
             if revision.summary == '':
@@ -2355,8 +2355,7 @@ class PostRevision(models.Model):
         raise ValueError()
 
     def __str__(self):
-        return '%s - revision %s of %s' % (self.post.post_type, self.revision,
-                                            self.title)
+        return f'{self.post.post_type} - revision {self.revision} of {self.title}'
 
     def parent(self):
         return self.post
@@ -2370,7 +2369,7 @@ class PostRevision(models.Model):
         if not self.ip_addr:
             self.ip_addr = '0.0.0.0'
         self.full_clean()
-        super(PostRevision, self).save(**kwargs)
+        super().save(**kwargs)
 
     def get_absolute_url(self):
 

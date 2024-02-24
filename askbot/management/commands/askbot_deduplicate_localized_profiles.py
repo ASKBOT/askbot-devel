@@ -26,4 +26,4 @@ class Command(BaseCommand):
                 item.delete()
                 deleted_count += 1
 
-        print('deleted {} items'.format(deleted_count))
+        print(f'deleted {deleted_count} items')

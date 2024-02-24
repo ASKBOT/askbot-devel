@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import askbot
 from django.conf import settings
 from django.utils.translation import override
@@ -19,7 +18,7 @@ class BaseIndex(indexes.SearchIndex):
         We set the backend alias to be able to determine language in multilanguage setup.
         """
         self._backend_alias = using
-        return super(BaseIndex, self)._get_backend(using)
+        return super()._get_backend(using)
 
     def get_language(self, obj):
         return None
@@ -57,6 +56,6 @@ class BaseIndex(indexes.SearchIndex):
         current_language = self.get_current_language(using=self._backend_alias, obj=obj)
 
         with override(current_language):
-            self.prepared_data = super(BaseIndex, self).prepare(obj)
+            self.prepared_data = super().prepare(obj)
             self.prepared_data['text'] = ' '.join(self.prepared_data['text'].split())
             return self.prepared_data

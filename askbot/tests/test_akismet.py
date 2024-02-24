@@ -7,8 +7,8 @@ from urllib.parse import parse_qsl
 AKISMET_CLASSIFIER = 'askbot.spam_checker.akismet_spam_checker.is_spam'
 TEXT = 'hello foobar'
 API_KEY = 'foobar'
-CHECK_SPAM_URL = 'https://{}.rest.akismet.com/1.1/comment-check'.format(API_KEY)
-SUBMIT_SPAM_URL = 'https://{}.rest.akismet.com/1.1/submit-spam'.format(API_KEY)
+CHECK_SPAM_URL = f'https://{API_KEY}.rest.akismet.com/1.1/comment-check'
+SUBMIT_SPAM_URL = f'https://{API_KEY}.rest.akismet.com/1.1/submit-spam'
 VERIFY_KEY_URL = 'https://rest.akismet.com/1.1/verify-key'
 USER_AGENT = 'user_agent_string'
 USER_IP = '0.0.0.0'
@@ -16,7 +16,7 @@ COMMENT_AUTHOR = 'bob'
 COMMENT_AUTHOR_EMAIL = 'bob@example.com'
 
 
-class User(object):
+class User:
     def __init__(self, anon=False, username=COMMENT_AUTHOR, email=COMMENT_AUTHOR_EMAIL):
         self.anon = anon
         if anon:
@@ -34,7 +34,7 @@ class User(object):
         return self.anon
 
 
-class AuthRequest(object):
+class AuthRequest:
     environ = {'HTTP_USER_AGENT': USER_AGENT}
     META = {'REMOTE_ADDR': USER_IP}
     def __init__(self, anon=False, username=COMMENT_AUTHOR, email=COMMENT_AUTHOR_EMAIL):

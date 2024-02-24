@@ -87,11 +87,7 @@ class ReplyAddress(models.Model):
     def as_email_address(self, prefix='reply-'):
         """returns email address, prefix is added
         in front of the code"""
-        return '%s%s@%s' % (
-                        prefix,
-                        self.address,
-                        askbot_settings.REPLY_BY_EMAIL_HOSTNAME
-                    )
+        return f'{prefix}{self.address}@{askbot_settings.REPLY_BY_EMAIL_HOSTNAME}'
 
     def edit_post(self, body_text, title=None, edit_response=False):
         """edits the created post upon repeated response

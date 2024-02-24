@@ -119,14 +119,14 @@ class Command(BaseCommand):
         print(message)
         admin_email = askbot_settings.ADMIN_EMAIL
         try:
-            subject_line = "Error processing daily/weekly notification for User '%s' for Site '%s'" % (user.username, SITE_ID)
+            subject_line = f"Error processing daily/weekly notification for User '{user.username}' for Site '{SITE_ID}'"
             send_mail(
                 subject_line=subject_line.encode('utf-8'),
                 body_text=message,
                 recipient_list=[admin_email,]
             )
         except:
-            message = "ERROR: was unable to report this exception to %s: %s" % (admin_email, traceback.format_exc())
+            message = f"ERROR: was unable to report this exception to {admin_email}: {traceback.format_exc()}"
             print(self.format_debug_msg(user, message))
         else:
             message = "Sent email reporting this exception to %s" % admin_email

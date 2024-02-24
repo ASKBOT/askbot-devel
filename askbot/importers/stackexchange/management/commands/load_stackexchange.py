@@ -63,7 +63,7 @@ ANSWER = {}
 COMMENT = {}
 NUMBERED_NAME_RE = re.compile(r'^(.*)\*(\d+)\*$')
 
-class X(object):#
+class X:#
     """class with methods for handling some details
     of SE --> ASKBOT mapping
     """
@@ -155,7 +155,7 @@ class X(object):#
                 if se_m.user.id == -1:
                     return None
                 url = cls.get_user(se_m.user).get_profile_url()
-                return '<a href="%s?sort=responses">%s</a>' % (url,text)
+                return f'<a href="{url}?sort=responses">{text}</a>'
         return None
 
     @classmethod
@@ -199,7 +199,7 @@ class X(object):#
         if len(rev_types) > 1 and all([t in exclusive for t in rev_types]):
             tstr = ','.join(rev_types)
             gstr = ','.join([str(rev.id) for rev in rev_group])
-            msg = 'incompatible revision types %s in PostHistory %s' % (tstr,gstr)
+            msg = f'incompatible revision types {tstr} in PostHistory {gstr}'
             raise Exception(msg)
         return rev_types
 
@@ -872,7 +872,7 @@ it may be helpful to split this procedure in two:\n
         xml_data = self.zipfile.read(xml_path)
 
         tree = et.fromstring(xml_data)
-        print('loading from %s to %s' % (xml_path, table_name))
+        print(f'loading from {xml_path} to {table_name}')
         model = models.get_model('stackexchange', table_name)
         i = 0
         rows = tree.findall('.//row')
@@ -915,7 +915,7 @@ it may be helpful to split this procedure in two:\n
 
             if se_u.password_id is not None:
                 pw = se.Password.objects.get(id = se_u.password_id)
-                u.password = 'sha1$%s$%s' % (pw.salt, pw.password)
+                u.password = f'sha1${pw.salt}${pw.password}'
             else:
                 u.set_unusable_password()
 

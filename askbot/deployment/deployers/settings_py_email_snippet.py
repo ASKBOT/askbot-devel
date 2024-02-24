@@ -11,4 +11,4 @@ class SettingsPyEmailSnippet(FileDeployer): # pylint: disable=missing-class-docs
         parameter"""
         if self.params['email_settings']:
             return self.params['email_settings']
-        return super(SettingsPyEmailSnippet, self).render()
+        return super().render()

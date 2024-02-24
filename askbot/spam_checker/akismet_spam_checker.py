@@ -68,7 +68,7 @@ def call_akismet(text,
         elif command == 'submit_ham':
             return api.submit_ham(ip_addr, user_agent, **data)
         else:
-            raise RuntimeError('unknown akismet method: "{}"'.format(command))
+            raise RuntimeError(f'unknown akismet method: "{command}"')
     except APIKeyError:
         logging.critical('Akismet Key is missing')
     except AkismetError:

@@ -45,7 +45,7 @@ def assert_setting_info_correct(info):
     assert isinstance(info[2], bool)
 
 
-class ConfigSettings(object):
+class ConfigSettings:
     """A very simple Singleton wrapper for settings
     a limitation is that all settings names using this class
     must be distinct, even though they might belong
@@ -139,7 +139,7 @@ class ConfigSettings(object):
             'livesettings_group',
             setting_name,  # TODO: better use description
             kwargs={'group': group_name},
-            anchor='id_%s__%s__%s' % (group_name, setting_name, get_language())
+            anchor=f'id_{group_name}__{setting_name}__{get_language()}'
         )
         if len(data) == 4:
             return force_str(format_lazy('{} ({})',link, data[3]))
@@ -227,7 +227,7 @@ class ConfigSettings(object):
             else:
                 setting_value = cls.__instance[key]
                 if setting_value.localized:
-                    db_key = '{}_{}'.format(key, format_setting_name(get_language()))
+                    db_key = f'{key}_{format_setting_name(get_language())}'
                 else:
                     db_key = key
 
