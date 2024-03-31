@@ -997,6 +997,7 @@ body:not(.with-tabs) main {
 .js-with-sort-descending-icon::before,
 .with-rss-icon::before,
 .with-selected-scope-icon::before,
+.with-life-ring-icon::before,
 .with-search-icon::before,
 .with-home-icon::before,
 .with-times-circle-icon::before,
@@ -1030,7 +1031,7 @@ body:not(.with-tabs) main {
 }
 
 .wmd-help-button::before, .wmd-redo-button::before, .wmd-undo-button::before, .wmd-hr-button::before, .wmd-heading-button::before, .wmd-ulist-button::before, .wmd-olist-button::before, .wmd-attachment-button::before, .wmd-image-button::before, .wmd-code-button::before, .wmd-quote-button::before, .wmd-link-button::before, .wmd-italic-button::before, .wmd-bold-button::before, .with-check-icon::before, .with-slashed-icon::after, .with-bullhorn-icon::before, .with-accept-answer-icon::before, .with-link-icon::before, .with-convert-post-icon::before, .with-comment-upvote-icon::before, .with-merge-icon::before, .with-reopen-icon::after, .with-reopen-icon::before, .with-close-icon::before, .with-flag-icon.js-post-unflag-btn::after, .with-clone-icon::before, .with-anchor-icon::before, .with-flag-icon::before, .with-edit-icon::before, .with-twitter-icon::before, .with-linkedin-icon::before, .with-facebook-icon::before, .with-caret-down-icon::before,
-.with-downvote-icon::before, .with-upvote-icon::before, .with-arrow-left-icon::before, .with-comment-icon::before, .with-caret-right-icon::before, .with-caret-left-icon::before, .with-ellipsis-h-icon::before, .with-globe-icon::before, .with-bars-icon::before, .js-with-sort-ascending-icon::before, .js-with-sort-descending-icon::before, .with-rss-icon::before, .with-selected-scope-icon::before, .with-search-icon::before, .with-home-icon::before, .with-times-circle-icon::before, .with-delete-icon::before,
+.with-downvote-icon::before, .with-upvote-icon::before, .with-arrow-left-icon::before, .with-comment-icon::before, .with-caret-right-icon::before, .with-caret-left-icon::before, .with-ellipsis-h-icon::before, .with-globe-icon::before, .with-bars-icon::before, .js-with-sort-ascending-icon::before, .js-with-sort-descending-icon::before, .with-rss-icon::before, .with-selected-scope-icon::before, .with-life-ring-icon::before, .with-search-icon::before, .with-home-icon::before, .with-times-circle-icon::before, .with-delete-icon::before,
 .with-times-icon::before, .with-bronze-badge-icon::before,
 .with-silver-badge-icon::before,
 .with-gold-badge-icon::before, .with-tags-icon::before, .with-users-icon::before,
@@ -1180,6 +1181,7 @@ body:not(.with-tabs) main {
 .fa-pull-left.js-with-sort-descending-icon::before,
 .fa-pull-left.with-rss-icon::before,
 .fa-pull-left.with-selected-scope-icon::before,
+.fa-pull-left.with-life-ring-icon::before,
 .fa-pull-left.with-search-icon::before,
 .fa-pull-left.with-home-icon::before,
 .fa-pull-left.with-times-circle-icon::before,
@@ -1249,6 +1251,7 @@ body:not(.with-tabs) main {
 .fa-pull-right.js-with-sort-descending-icon::before,
 .fa-pull-right.with-rss-icon::before,
 .fa-pull-right.with-selected-scope-icon::before,
+.fa-pull-right.with-life-ring-icon::before,
 .fa-pull-right.with-search-icon::before,
 .fa-pull-right.with-home-icon::before,
 .fa-pull-right.with-times-circle-icon::before,
@@ -7273,6 +7276,7 @@ readers do not read off random characters that represent icons */
 .js-with-sort-descending-icon::before,
 .with-rss-icon::before,
 .with-selected-scope-icon::before,
+.with-life-ring-icon::before,
 .with-search-icon::before,
 .with-home-icon::before,
 .with-times-circle-icon::before,
@@ -7391,6 +7395,10 @@ readers do not read off random characters that represent icons */
 
 .with-search-icon::before {
   content: "";
+}
+
+.with-life-ring-icon::before {
+  content: "";
 }
 
 .with-selected-scope-icon::before {
@@ -9400,6 +9408,10 @@ ul.tags li {
   color: var(--link-color);
   text-decoration: underline;
   text-decoration-thickness: var(--border-width);
+}
+
+.g-recaptcha {
+  margin-bottom: 0.5rem;
 }
 
 .error-page main {

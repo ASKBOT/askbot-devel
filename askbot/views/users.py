@@ -62,7 +62,7 @@ from askbot.models.post import PostRevision
 from askbot.search.state_manager import SearchState
 from askbot.utils.http import get_request_params
 from askbot.utils import url_utils
-from askbot.utils.loading import load_module
+from askbot.utils.loading import load_function
 from askbot import spam_checker
 
 def owner_or_moderator_required(func):
@@ -1400,8 +1400,8 @@ def user_custom_tab(request, user, context):
     """works only if `ASKBOT_CUSTOM_USER_PROFILE_TAB`
     setting in the ``settings.py`` is properly configured"""
     tab_settings = django_settings.ASKBOT_CUSTOM_USER_PROFILE_TAB
-    module_path = tab_settings['CONTEXT_GENERATOR']
-    context_generator = load_module(module_path)
+    func_python_path = tab_settings['CONTEXT_GENERATOR']
+    context_generator = load_function(func_python_path)
 
     page_title = _('profile - %(section)s') % \
         {'section': tab_settings['NAME']}
@@ -1427,9 +1427,23 @@ USER_VIEW_CALL_TABLE = {
 }
 
 CUSTOM_TAB = getattr(django_settings, 'ASKBOT_CUSTOM_USER_PROFILE_TAB', None)
-if CUSTOM_TAB:
-    CUSTOM_SLUG = CUSTOM_TAB['SLUG']
-    USER_VIEW_CALL_TABLE[CUSTOM_SLUG] = user_custom_tab
+
+
+def user_can_see_custom_tab(request):
+    auth_func = CUSTOM_TAB.get('USER_IS_AUTHORIZED_FUNC')
+    return not auth_func or auth_func(request.user)
+
+
+def get_user_view_func(request, tab_name, default_func=user_stats):
+    """returns a view function for the user profile page"""
+    func = USER_VIEW_CALL_TABLE.get(tab_name)
+    if func:
+        return func
+
+    if CUSTOM_TAB and tab_name == CUSTOM_TAB['SLUG']:
+        if user_can_see_custom_tab(request):
+            return user_custom_tab
+    return default_func
 
 #todo: rename this function - variable named user is everywhere
 def user(request, id, slug=None, tab_name=None):
@@ -1468,7 +1482,7 @@ def user(request, id, slug=None, tab_name=None):
     if can_show_karma == False and tab_name == 'reputation':
         raise Http404
 
-    user_view_func = USER_VIEW_CALL_TABLE.get(tab_name, user_stats)
+    user_view_func = get_user_view_func(request, tab_name, default_func=user_stats)
 
     search_state = SearchState(
         scope=None,
@@ -1487,7 +1501,7 @@ def user(request, id, slug=None, tab_name=None):
         'search_state': search_state,
         'user_follow_feature_on': ('followit' in django_settings.INSTALLED_APPS),
     }
-    if CUSTOM_TAB:
+    if CUSTOM_TAB and user_can_see_custom_tab(request):
         context['custom_tab_name'] = CUSTOM_TAB['NAME']
         context['custom_tab_slug'] = CUSTOM_TAB['SLUG']
     return user_view_func(request, profile_owner, context)

@@ -1232,7 +1232,7 @@ class VoteForm(forms.Form):
 
 
 class CloseForm(forms.Form):
-    def __init__(self, *args, **kwargs): 
+    def __init__(self, *args, **kwargs):
         super(CloseForm, self).__init__(*args, **kwargs)
         reasons = askbot_settings.QUESTION_CLOSE_REASONS
         close_choices = tuple([tuple([reason, reason]) for reason in reasons])

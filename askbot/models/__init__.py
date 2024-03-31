@@ -487,7 +487,7 @@ def user_has_affinity_to_question(self, question = None, affinity_type = None):
 def user_has_group_permission(self, permission): #pylint: disable=missing-docstring
     if not askbot_settings.GROUPS_ENABLED:
         return True
-        
+
     if permission == 'post_questions':
         return self.get_groups().filter(can_post_questions=True).exists()
 
@@ -2228,6 +2228,7 @@ def user_edit_post(self,
             revision_comment=revision_comment,
             by_email=by_email,
             suppress_email=suppress_email,
+            is_private=is_private,
             ip_addr=ip_addr
         )
     elif post.post_type == 'question':
@@ -2994,7 +2995,7 @@ def user_can_post_answer(self, thread=None):
     except django_exceptions.PermissionDenied:
         return False
     return True
-    
+
 
 def user_can_make_group_private_posts(self):
     """simplest implementation: user belongs to at least one group"""
@@ -4472,6 +4473,13 @@ def record_spam_rejection(sender, spam=None, text=None, user=None, ip_addr='unkn
         activity.save()
 
 
+def update_last_seen(sender, user=None, **kwargs):
+    """Updates the user.askbot_profile.last_seen field
+    to the current time."""
+    user.askbot_profile.last_seen = timezone.now()
+    user.askbot_profile.save() # this also updates cache (see UserProfile.save)
+
+
 # signals for User model save changes
 user_signals = [
     signals.GenericSignal(
@@ -4599,8 +4607,16 @@ signals.user_registered.connect(
 signals.user_registered.connect(
         make_invited_moderator,
         dispatch_uid='make_invited_moderator'
-        )
+)
+signals.user_registered.connect(
+        update_last_seen,
+        dispatch_uid='update_last_seen_on_register'
+)
 
+signals.user_logged_in.connect(
+        update_last_seen,
+        dispatch_uid='update_last_seen_on_login'
+)
 signals.user_logged_in.connect(
     complete_pending_tag_subscriptions,
     dispatch_uid='complete_pending_tag_subs_on_user_login'

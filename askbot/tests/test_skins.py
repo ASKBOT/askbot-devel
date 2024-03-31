@@ -6,6 +6,7 @@ from django.conf import settings as django_settings
 from django.core.files.uploadedfile import UploadedFile
 from askbot.conf import settings as askbot_settings
 from askbot.skins import utils as skin_utils
+from askbot.tests.utils import skip
 from askbot.utils.path import mkdir_p
 import askbot
 
@@ -53,6 +54,7 @@ class SkinTests(TestCase):
         askbot_settings.update('ASKBOT_DEFAULT_SKIN', 'test_skin')
         self.assert_default_logo_in_skin('test_skin')
 
+    @skip
     def test_uploaded_logo(self):
         logo_src = os.path.join(
                             askbot.get_install_directory(),

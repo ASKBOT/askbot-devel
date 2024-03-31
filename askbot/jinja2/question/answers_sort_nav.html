@@ -1,5 +1,5 @@
 <div class="answers-header">
-  <h2 class"js-answers-count">
+  <h2 class="js-answers-count">
     {% set pluralized_item_term=settings.WORDS_ANSWERS_COUNTABLE_FORMS|py_pluralize(answer_count)|capitalize|escape %}
     {% set item_count=answer_count %}
     {% trans %}<span class="count">{{ item_count }}</span> {{ pluralized_item_term }}{% endtrans %}

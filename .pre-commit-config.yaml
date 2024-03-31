@@ -1,0 +1,90 @@
+# See http://pre-commit.com/#python
+# See https://github.com/pre-commit/pre-commit-hooks
+# Run 'pre-commit install' to install the pre-commit hooks
+repos:
+
+# TODO: enable
+#- repo: https://github.com/adamchainz/django-upgrade
+#  rev: 1.15.0
+#  hooks:
+#    - id: django-upgrade
+#      args: [--target-version, "4.2"]
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+  - id: check-added-large-files
+  - id: check-ast
+  - id: check-case-conflict
+  # TODO: enable check-docstring-first
+  # - id: check-docstring-first
+  - id: check-merge-conflict
+  - id: check-symlinks
+  - id: debug-statements
+  - id: detect-private-key
+  # ruff format will handle quoting
+  # - id: double-quote-string-fixer
+  # TODO: enable each of these, one at a time:
+  # - id: end-of-file-fixer
+  # - id: mixed-line-ending
+  # - id: trailing-whitespace
+  #   exclude: (.csv|.tsv)$
+  # - id: pretty-format-json
+  #   args: ['--no-sort-keys', '--autofix']
+  # don't commit directly to main or master
+  - id: no-commit-to-branch
+
+# TODO: enable auto-formatting of Django templates (html, css, js)
+#- repo: https://github.com/rtts/djhtml
+#  rev: '3.0.6'
+#  hooks:
+#    - id: djhtml
+#    - id: djcss
+#    - id: djjs
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.1.5
+  hooks:
+    - id: ruff
+      args: ["--fix"]
+    # TODO: ruff-format
+    # - id: ruff-format
+
+# ruff does not re-implement all of pylint, see https://github.com/astral-sh/ruff/issues/970
+# TODO: put back pylint
+#- repo: https://github.com/PyCQA/pylint
+#  rev: v3.0.1
+#  hooks:
+#    - id: pylint
+#      args:
+#        # black is controlling line length:
+#        - --disable=line-too-long
+#        # let's not worry too much right now about dup code.
+#        - --disable=duplicate-code
+#        - --disable=fixme
+#        - --disable=import-error
+#        - --disable=logging-fstring-interpolation
+#        - --disable=missing-class-docstring
+#        - --disable=missing-function-docstring
+#        - --disable=missing-module-docstring
+#        - --disable=too-few-public-methods
+#        - --disable=too-many-arguments
+#        # - --disable=too-many-branches
+#        - --disable=too-many-locals
+#        # isort is taking care of import order:
+#        - --disable=wrong-import-order
+#        # re-enable these args
+#        - --disable=unused-argument
+#        - --disable=invalid-name
+#        - --disable=raise-missing-from
+
+#- repo: https://github.com/Lucas-C/pre-commit-hooks
+#  rev: v1.5.4
+#  hooks:
+#  # TODO: enable forbid-crlf and forbid-tabs
+#  # - id: forbid-crlf
+#  # don't remove-crlf, seems dangerous
+#  # - id: remove-crlf
+#  # - id: forbid-tabs
+#  # don't remove-tabs, seems dangerous
+#  # - id: remove-tabs

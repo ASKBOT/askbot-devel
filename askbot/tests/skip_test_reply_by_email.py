@@ -1,3 +1,6 @@
+# TODO: fix django-lamson to use lamson more recent than 1.1,
+#  which only supports python 2.  Then restore this test (by removing "skip_").
+
 from django.utils.translation import gettext_lazy as _
 from askbot.models import ReplyAddress
 from askbot.mail.lamson_handlers import PROCESS, VALIDATE_EMAIL, get_parts

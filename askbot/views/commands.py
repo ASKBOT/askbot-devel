@@ -688,7 +688,10 @@ def set_post_body(request):
         message = _('Spam was detected in the post')
         raise exceptions.PermissionDenied(message)
 
-    request.user.edit_post(post, body_text=body_text, suppress_email=suppress_email)
+    request.user.edit_post(post,
+                           body_text=body_text,
+                           suppress_email=suppress_email,
+                           is_private=post.is_private()) # maintain privacy
     return {'body_html': post.html}
 
 
@@ -1426,7 +1429,7 @@ def publish_post(request):
     # privately to a group - i.e. the question was visible to the
     # inquirer and the group only. When the answer was published
     # it was shared with the enquirer
-    # Now the code is switched to a simpler mode - 
+    # Now the code is switched to a simpler mode -
     # "published" === visible to the "everyone" group.
     # (and used to be "published" -> visible to the enquirer).
     #enquirer = answer.thread._question_post().author
@@ -1439,7 +1442,7 @@ def publish_post(request):
                 post.thread.make_public()
             else:
                 post.make_public()
-                
+
             message = _('The post is now published')
         else:
             #answer.remove_from_groups([enquirer_group])

@@ -21,14 +21,16 @@ Branch `0.7.x` - is the latest version supporting Django 1.5
 
 ## Installation
 
-Installation was tested with Python 3.7 with the following commands:
+Install as follows:
 
-        pip install --upgrade pip
-        pip install setuptools-rust
-        python setup.py install
-        askbot-setup # answer the questions or use parameters to askbot-setup
-        cd <root_dir> # substitute <root_dir> with the actual directory, default is `askbot_site`
-        python manage.py migrate # assumes that the database specified by askbot-setup is available
+```
+pip install --upgrade pip
+pip install setuptools-rust
+python -m pip install .
+askbot-setup # answer the questions or use parameters to askbot-setup
+cd <root_dir> # substitute <root_dir> with the actual directory, default is `askbot_site`
+python manage.py migrate # assumes that the database specified by askbot-setup is available
+```
 
 The last command above will create a working Django project in the project root
 directory that you specify with the `askbot-setup` script.
@@ -51,6 +53,19 @@ All documentation is in the directory askbot/doc
 
 Follow https://help.github.com/articles/fork-a-repo to to learn how to use
 `fetch` and `push` as well as other help on using git.
+
+pre-commit
+==========
+
+This repository uses [pre-commit](https://pre-commit.com/) to check
+some code rules, so please install it:
+
+```
+$ pre-commit install
+```
+
+It will then check the rules upon `git commit`.
+
 
 License, copyright and trademarks
 =================================

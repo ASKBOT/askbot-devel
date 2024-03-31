@@ -21,7 +21,7 @@ from django.db import connection
 from django.core.cache import cache
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
-from askbot.utils.loading import load_module
+from askbot.utils.loading import load_function, load_module
 from askbot.utils.functions import enumerate_string_list
 from askbot.utils.url_utils import urls_equal
 
@@ -711,9 +711,9 @@ def test_custom_user_profile_tab():
                 "%s['SLUG'] must be url safe, make it simple" % setting_name)
 
         try:
-            func = load_module(func_name)
+            func = load_function(func_name)
         except ImportError:
-            errors.append("%s['CONTENT_GENERATOR'] must be a dotted path to a function" % setting_name)
+            errors.append("%s['CONTEXT_GENERATOR'] must be a dotted path to a function" % setting_name)
         header = 'Custom user profile tab is configured incorrectly in your settings.py file'
         footer = 'Please carefully read about adding a custom user profile tab.'
         print_errors(errors, header=header, footer=footer)

@@ -2,6 +2,6 @@ factory_boy
 coverage
 dj_database_url
 tblib
--e git+https://github.com/dcollinsn/lamson#egg=lamson
+lamson==1.1
 django-lamson
 psycopg2-binary

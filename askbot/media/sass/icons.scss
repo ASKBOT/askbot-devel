@@ -102,6 +102,12 @@
   content: fa-content($fa-var-search);
 }
 
+.with-life-ring-icon::before {
+  @extend %fa-icon;
+  @extend .fas;
+  content: fa-content($fa-var-life-ring);
+}
+
 .with-selected-scope-icon::before {
   @extend %fa-icon;
   @extend .fas;
@@ -341,7 +347,7 @@
   @extend .fas;
   content: fa-content($fa-var-bold);
 }
-  
+
 .wmd-italic-button::before {
   @extend %fa-icon;
   @extend .fas;
@@ -419,4 +425,5 @@
   @extend .fas;
   content: fa-content($fa-var-question);
 }
+
 /* end wmd icons */
