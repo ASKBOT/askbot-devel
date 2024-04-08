@@ -48,6 +48,9 @@ class Command(BaseCommand): #pylint: disable=missing-docstring
         except Post.DoesNotExist: # pylint: disable=no-member
             pass
         else:
+            if not answer:
+                return
+
             question = answer.thread._question_post() # pylint: disable=protected-access
             Activity.objects.create(user=user,
                                     activity_type=const.TYPE_ACTIVITY_QUESTION_VIEWED,
@@ -65,8 +68,6 @@ class Command(BaseCommand): #pylint: disable=missing-docstring
         for act in activities.only('id', 'active_at').iterator():
             timestamp = act.active_at
             session = self.get_session(user, timestamp)
-            #print(act)
-            #print(session)
             Session.objects.filter(id=session.id).update(updated_at=timestamp) # pylint: disable=no-member
             Activity.objects.filter(id=act.id).update(session=session) # pylint: disable=no-member
             count += 1
@@ -98,6 +99,5 @@ class Command(BaseCommand): #pylint: disable=missing-docstring
             sessions = Session.objects.filter(user=user, # pylint: disable=no-member
                                               created_at__lte=timestamp,
                                               updated_at__gt=timestamp - timeout_delta)
-            import pdb; pdb.set_trace()
         return session
 

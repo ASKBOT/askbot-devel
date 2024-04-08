@@ -298,7 +298,6 @@ class Activity(models.Model):
     We keep some history data for user activities
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    session = models.ForeignKey(Session, on_delete=models.SET_NULL, null=True, blank=True)
     recipients = models.ManyToManyField(User, through=ActivityAuditStatus, related_name='incoming_activity')
     activity_type = models.SmallIntegerField(choices=const.TYPE_ACTIVITY, db_index=True)
     active_at = models.DateTimeField(default=timezone.now)
