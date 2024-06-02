@@ -1,7 +1,7 @@
 {% extends "one_column_body.html" %}
 <!-- template logout.html -->
 {% block title %}{% filter trim %}{% trans %}Logout{% endtrans %}{% endfilter %}{% endblock %}
-{% block page_class %}logout-page{% endblock %}
+{% block layout_class %}logout-page{% endblock %}
 {% block content %}
 <h1>{% trans %}You have successfully logged out{% endtrans %}</h1>
 {% if have_federated_login_methods %}

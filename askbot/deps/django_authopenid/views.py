@@ -83,6 +83,31 @@ except ImportError:
     pass
 
 
+def email_is_acceptable(email):
+    email = email.strip()
+
+    is_blank = (email == '')
+    is_blank_and_ok = is_blank \
+                        and askbot_settings.BLANK_EMAIL_ALLOWED \
+                        and askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing'
+    if is_blank_and_ok:
+        return True
+
+    blacklisting_on = askbot_settings.BLACKLISTED_EMAIL_PATTERNS_MODE != 'disabled'
+    is_blacklisted = blacklisting_on and util.email_is_blacklisted(email)
+    is_good = not is_blacklisted
+
+    is_available = User.objects.filter(email__iexact=email).count() == 0
+
+    return is_available and is_good
+
+
+def username_is_acceptable(username):
+    if username.strip() == '':
+        return False
+    return User.objects.filter(username__iexact=username).count() == 0
+
+
 def create_authenticated_user_account(
     username=None, email=None, password=None,
     user_identifier=None, login_provider_name=None,
@@ -1097,30 +1122,6 @@ def register(request, login_provider_name=None,
 
     #1) handle "one-click registration"
     if registration_enabled and login_provider_name:
-
-        def email_is_acceptable(email):
-            email = email.strip()
-
-            is_blank = (email == '')
-            is_blank_and_ok = is_blank \
-                                and askbot_settings.BLANK_EMAIL_ALLOWED \
-                                and askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing'
-            if is_blank_and_ok:
-                return True
-
-            blacklisting_on = askbot_settings.BLACKLISTED_EMAIL_PATTERNS_MODE != 'disabled'
-            is_blacklisted = blacklisting_on and util.email_is_blacklisted(email)
-            is_good = not is_blacklisted
-
-            is_available = User.objects.filter(email__iexact=email).count() == 0
-
-            return is_available and is_good
-
-        def username_is_acceptable(username):
-            if username.strip() == '':
-                return False
-            return User.objects.filter(username__iexact=username).count() == 0
-
         #new style login providers support one click registration
         providers = util.get_enabled_login_providers()
         provider_data = providers.get(login_provider_name)

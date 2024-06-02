@@ -19,7 +19,7 @@ parameters:
 #}
 {% block head %}{% endblock %}
 {% block title %}{% filter trim %}{% trans %}Complete registration{% endtrans %}{% endfilter %}{% endblock %}
-{% block page_class %}registration-page{% endblock %}
+{% block layout_class %}registration-page{% endblock %}
 {% block content %}
 <div class="flip-tabs">
     <div class="login complete-registration flip-content flip-content-active">
@@ -69,8 +69,14 @@ parameters:
                     {% if openid_register_form.email.errors %}
                         <p class="error">{{ openid_register_form.email.errors|join(", ") }}</p>
                     {% endif %}
+                    {% if not settings.FEDERATED_LOGIN_EMAIL_EDITABLE %}
+                        <p class="info">
+                            {% trans %}Email cannot be changed{% endtrans %}
+                        </p>
+                    {% endif %}
                     <input class="required login" id="id_email" maxlength="200"
                         name="email" type="text"
+                        {% if not settings.FEDERATED_LOGIN_EMAIL_EDITABLE %}readonly{% endif %}
                         {% if openid_register_form.email.value() %}
                             value="{{ openid_register_form.email.value()|escape }}"
                         {% endif %}

@@ -310,6 +310,24 @@ class RegistrationForm(forms.Form):
             self.fields['recaptcha'] = AskbotReCaptchaField()
 
 
+    def clean_email(self):
+        email_from_form = self.fields['email'].clean(self.cleaned_data['email'].strip())
+
+        if django_settings.ASKBOT_FEDERATED_LOGIN_EMAIL_EDITABLE:
+            return email_from_form
+
+        email_from_session = self.request.session.get('email', None)
+        if email_from_session is None:
+            logging.critical('federated login email not found in the session')
+            raise forms.ValidationError(_('The email cannot be changed'))
+
+        email_from_session = email_from_session.strip()
+        if email_from_form.lower() != email_from_session.lower():
+            raise forms.ValidationError(_('The email cannot be changed'))
+
+        return email_from_form
+
+
     def clean(self):
         if askbot_settings.NEW_REGISTRATIONS_DISABLED:
             raise forms.ValidationError(askbot_settings.NEW_REGISTRATIONS_DISABLED_MESSAGE)
@@ -319,6 +337,10 @@ class RegistrationForm(forms.Form):
 class PasswordRegistrationForm(RegistrationForm, SetPasswordForm):
     """Password registration form.
     Fields are inherited from the parent classes"""
+
+    def clean_email(self):
+        """Only clean the email field, as defined in the UserEmailField class"""
+        return self.fields['email'].clean(self.cleaned_data['email'])
 
 
 class ChangePasswordForm(forms.Form):

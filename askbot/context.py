@@ -85,6 +85,7 @@ def application_settings(request):
     my_settings['SEARCH_FRONTEND_SRC_URL'] = settings.ASKBOT_SEARCH_FRONTEND_SRC_URL
     my_settings['SEARCH_FRONTEND_CSS_URL'] = settings.ASKBOT_SEARCH_FRONTEND_CSS_URL
     my_settings['LOGOUT_REDIRECT_URL'] = url_utils.get_logout_redirect_url()
+    my_settings['FEDERATED_LOGIN_EMAIL_EDITABLE'] = settings.ASKBOT_FEDERATED_LOGIN_EMAIL_EDITABLE
 
     current_language = get_language()
 

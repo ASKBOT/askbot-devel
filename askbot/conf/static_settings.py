@@ -80,6 +80,7 @@ class AskbotStaticSettings(AppConf):
     SEARCH_FRONTEND_SRC_URL = None
     SEARCH_FRONTEND_CSS_URL = None
     WHITELISTED_IPS = tuple() # a tuple of whitelisted ips for moderation
+    FEDERATED_LOGIN_EMAIL_EDITABLE = True
 
     class Meta:
         prefix = 'askbot'
