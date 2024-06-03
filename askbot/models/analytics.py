@@ -109,7 +109,7 @@ class Session(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=512, null=True, blank=True)
-    created_at = models.DateTimeField() # no auto_now_ad or auto_now for created_at and updated_at
+    created_at = models.DateTimeField() # no auto_now_add or auto_now for created_at and updated_at
     updated_at = models.DateTimeField() # b/c we want to set it manually for the testing purposes
 
     def __str__(self):
@@ -122,7 +122,7 @@ class Event(models.Model):
     """Analytics event"""
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     event_type = models.CharField(max_length=64, choices=EVENT_TYPES)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField() # no auto_now_add or auto_now for created_at and updated_at
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(db_index=True)
     content_object = GenericForeignKey('content_type', 'object_id')

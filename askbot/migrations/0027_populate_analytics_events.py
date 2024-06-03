@@ -3,6 +3,7 @@
 # pylint: disable=missing-docstring, invalid-name
 from datetime import timedelta
 from django.db import migrations
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from askbot.utils.console import ProgressBar
 
@@ -28,17 +29,58 @@ def delete_analytics_objects(apps, schema_editor): #pylint: disable=missing-docs
     Session.objects.all().delete()
 
 
-def get_user_session(user_id, timestamp, apps): #pylint: disable=missing-docstring
+def consolidate_sessions(sessions):
+    """
+    Selects the earliest session to keep.
+    Updates the updated_at to the latest of all.
+    Assigns all events from other sessions to the selected one.
+    Deletes other sessions.
+    Returns the selected session.
+    """
+    session = min(sessions, key=lambda sess: sess.created_at)
+    session.updated_at = max(sessions, key=lambda sess: sess.updated_at).updated_at
+    other_sessions = filter(session.__ne__, sessions)
+    for sess in other_sessions:
+        events = sess.event_set.all()
+        events.update(session=session)
+        sess.delete()
+
+    return session
+
+
+def update_session_timestamps(session, timestamp):
+    """Updates session's updated_at and created_at fields"""
+    session.updated_at = max(timestamp, session.updated_at)
+    session.created_at = min(timestamp, session.created_at)
+    session.save()
+
+
+def get_consolidated_user_session(user_id, timestamp, apps): #pylint: disable=missing-docstring
     """Returns first user session which is within SESSION_IDLE_TIMEOUT of the given timestamp
     for this user.
-    If such session does not exist, creates it"""
+    If such session does not exist, creates it.
+    Sessions are glued together if they are within SESSION_IDLE_TIMEOUT of each other.
+    """
     Session = apps.get_model('askbot', 'Session')
     dt_range = (timestamp - SESSION_IDLE_TIMEOUT, timestamp + SESSION_IDLE_TIMEOUT)
-    sessions = Session.objects.filter(user_id=user_id, updated_at__range=dt_range)
-    if sessions.exists():
-        return sessions[0]
+    user_q = Q(user_id=user_id)
+    updated_at_q = Q(updated_at__range=dt_range)
+    created_at_q = Q(created_at__range=dt_range)
+    sessions = Session.objects.filter(user_q & (updated_at_q | created_at_q))
+    sessions_count = sessions.count()
 
-    return Session.objects.create(user_id=user_id, created_at=timestamp, updated_at=timestamp)
+    if sessions_count > 1:
+        session = consolidate_sessions(sessions)
+        update_session_timestamps(session, timestamp)
+    elif sessions_count == 1:
+        session = sessions[0]
+        update_session_timestamps(session, timestamp)
+    else:
+        session = Session.objects.create(user_id=user_id,
+                                         created_at=timestamp,
+                                         updated_at=timestamp)
+
+    return session
 
 
 def populate_user_registered_events(apps): #pylint: disable=missing-docstring
@@ -55,7 +97,7 @@ def populate_user_registered_events(apps): #pylint: disable=missing-docstring
     message = 'Populating user registered events'
     for user in ProgressBar(users.iterator(), count, message):
         timestamp = user.date_joined
-        session = get_user_session(user.pk, timestamp, apps)
+        session = get_consolidated_user_session(user.pk, timestamp, apps)
         Event.objects.create(
             session=session,
             event_type=1,
@@ -79,7 +121,7 @@ def populate_question_viewed_events(apps): #pylint: disable=missing-docstring
     message = 'Populating Question View events'
     for view in ProgressBar(views.iterator(), count, message):
         timestamp = view.when
-        session = get_user_session(view.who_id, timestamp, apps)
+        session = get_consolidated_user_session(view.who_id, timestamp, apps)
         Event.objects.create(
             session=session,
             event_type=4,
@@ -102,7 +144,7 @@ def populate_voted_events(apps, activity_type=None, event_type=None, message=Non
     acts = Activity.objects.filter(activity_type=activity_type).only(*activity_fields)
     count = acts.count()
     for act in ProgressBar(acts.iterator(), count, message):
-        session = get_user_session(act.user_id, act.active_at, apps)
+        session = get_consolidated_user_session(act.user_id, act.active_at, apps)
 
         if act.content_type.model != 'vote':
             continue
@@ -134,7 +176,7 @@ def populate_posted_events(apps, post_type=None, event_type=None, message=None):
     count = posts.count()
     for post in ProgressBar(posts.iterator(), count, message):
         timestamp = post.added_at
-        session = get_user_session(post.author_id, timestamp, apps)
+        session = get_consolidated_user_session(post.author_id, timestamp, apps)
         Event.objects.create(
             session=session,
             event_type=event_type,
@@ -157,7 +199,7 @@ def populate_commented_events(apps, parent_post_type=None, event_type=None, mess
     count = comments.count()
     for question in ProgressBar(comments.iterator(), count, message):
         timestamp = question.added_at
-        session = get_user_session(question.author_id, timestamp, apps)
+        session = get_consolidated_user_session(question.author_id, timestamp, apps)
         Event.objects.create(
             session=session,
             event_type=event_type,
@@ -181,7 +223,7 @@ def populate_retagged_question_events(apps): #pylint: disable=missing-docstring
         if act.content_type_id != post_content_type_id:
             continue
 
-        session = get_user_session(act.user_id, act.active_at, apps)
+        session = get_consolidated_user_session(act.user_id, act.active_at, apps)
         Event.objects.create(
             session=session,
             event_type=13,

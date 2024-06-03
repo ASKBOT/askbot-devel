@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('event_type', models.CharField(choices=[(1, 'registered'), (2, 'logged in'), (3, 'logged out'), (4, 'question viewed'), (5, 'answer viewed'), (6, 'upvoted'), (7, 'downvoted'), (8, 'canceled vote'), (9, 'asked'), (10, 'answered'), (11, 'commented question'), (12, 'commented answer'), (13, 'retagged question'), (14, 'searched')], max_length=64)),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
+                ('timestamp', models.DateTimeField()),
                 ('object_id', models.PositiveIntegerField(db_index=True)),
                 ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.contenttype')),
                 ('session', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='askbot.session')),
