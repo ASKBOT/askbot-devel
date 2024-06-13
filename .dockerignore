@@ -1,0 +1,6 @@
+.git/
+.tox/
+askbot.egg-info/
+dist/
+build/
+

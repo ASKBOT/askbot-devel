@@ -3,9 +3,10 @@
 import os
 import sys
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'askbot_app.settings')
-
 project_dir = os.environ.get('ASKBOT_SITE')
+app_dir = os.environ.get('ASKBOT_APP', 'askbot_app')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'{app_dir}.settings')
+
 os.chdir(project_dir)
 if project_dir not in sys.path:
     sys.path = [ '', project_dir ] + sys.path[1:]
@@ -81,7 +82,7 @@ if do_make_admin is True:
 
 if do_uwsgi_ini is True:
     print('Preparing uwsgi.ini')
-    with open(os.path.join(project_dir,'askbot_app','uwsgi.ini'), 'a') as ini:
+    with open(os.path.join(project_dir, app_dir, 'uwsgi.ini'), 'a') as ini:
         ini.write("\n")
         for rule in [ f'pythonpath = {p}' for p in sys.path]:
             ini.write(rule + "\n")
