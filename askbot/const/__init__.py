@@ -179,11 +179,11 @@ UNANSWERED_QUESTION_MEANING_CHOICES = (
 TAG_CHARS = r'\wp{M}+.#-'
 TAG_FIRST_CHARS = r'[\wp{M}]'
 TAG_FORBIDDEN_FIRST_CHARS = r'#'
-TAG_REGEX_BARE = r'%s[%s]+' % (TAG_FIRST_CHARS, TAG_CHARS)
-TAG_REGEX = r'^%s$' % TAG_REGEX_BARE
+TAG_REGEX_BARE = rf'{TAG_FIRST_CHARS}[{TAG_CHARS}]+'
+TAG_REGEX = rf'^{TAG_REGEX_BARE}$'
 
 TAG_STRIP_CHARS = ', '
-TAG_SPLIT_REGEX = r'[%s]+' % TAG_STRIP_CHARS
+TAG_SPLIT_REGEX = rf'[{TAG_STRIP_CHARS}]+'
 TAG_SEP = ',' # has to be valid TAG_SPLIT_REGEX char and MUST NOT be in const.TAG_CHARS
 #!!! see const.message_keys.TAG_WRONG_CHARS_MESSAGE
 
@@ -649,3 +649,15 @@ a {
 """
 
 PROFILE_WEBSITE_URL_MAX_LENGTH = 200
+
+GROUP_VISIBILITY_ADMINS = 0
+GROUP_VISIBILITY_MODS = 1
+GROUP_VISIBILITY_MEMBERS = 2
+GROUP_VISIBILITY_PUBLIC = 3
+
+GROUP_VISIBILITY_CHOICES = (
+    (GROUP_VISIBILITY_ADMINS, _('Visible to administrators')),
+    (GROUP_VISIBILITY_MODS, _('Visible to moderators and administrators')),
+    (GROUP_VISIBILITY_MEMBERS, _('Visible to own members, moderators and administrators')),
+    (GROUP_VISIBILITY_PUBLIC, _('Visible to everyone')),
+)

@@ -8,6 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings as django_settings
 from django.utils.translation import gettext_lazy as _
+from askbot.models.user import Group as AskbotGroup
 
 #for convenience, here are the activity types from used in the Activity object
 #TYPE_ACTIVITY_ASK_QUESTION = 1
@@ -118,6 +119,7 @@ class Session(models.Model):
         email = self.user.email # pylint: disable=no-member
         return f"Session: {email} {created_at} - {updated_at}"
 
+
 class Event(models.Model):
     """Analytics event"""
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
@@ -129,4 +131,39 @@ class Event(models.Model):
 
     def __str__(self):
         timestamp = self.timestamp.isoformat() # pylint: disable=no-member
-        return f"Event: {self.event_type_display} {timestamp}"
+        return f"Event: {self.event_type_display} {timestamp}" # pylint: disable=no-member
+
+
+class BaseSummary(models.Model):
+    """
+    An abstract model for per-interval summaries.
+    An interval name is defined in the subclass.
+    """
+    num_questions = models.PositiveIntegerField()
+    num_answers = models.PositiveIntegerField()
+    num_upvotes = models.PositiveIntegerField()
+    num_downvotes = models.PositiveIntegerField()
+    question_views = models.PositiveIntegerField()
+    time_on_site = models.DurationField()
+
+    class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
+        abstract = True
+
+
+class DailySummary(BaseSummary):
+    """An abstract class for daily summaries."""
+    date = models.DateField(db_index=True)
+
+    class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
+        abstract = True
+
+
+class UserDailySummary(DailySummary):
+    """User summary for each day with activity."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class GroupDailySummary(DailySummary):
+    """Group summary for each day with activity."""
+    group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
+    num_users = models.PositiveIntegerField()

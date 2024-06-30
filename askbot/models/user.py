@@ -1,27 +1,32 @@
 import datetime
 import logging
-import re
+from collections import defaultdict
 from django.db import models
-from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import fields
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group as AuthGroup
 from django.core import exceptions
-from django.forms import EmailField, URLField
+from django.forms import EmailField
 from django.utils import translation, timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
-from django.utils.html import strip_tags
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils import functions
 from askbot.models.base import BaseQuerySetManager
-from askbot.models.analytics import Session
-from collections import defaultdict
+from askbot.models.tag import get_tags_by_names, Tag
 
 PERSONAL_GROUP_NAME_PREFIX = '_personal_'
+
+def get_organization_name_from_domain(domain):
+    """Returns organization name from domain.
+    The organization name is the second level domain name,
+    sentence-cased.
+    """
+    base_domain = domain.split('.')[-2]
+    return base_domain.capitalize()
 
 class InvitedModerator(object):
     """Mock user class to represent invited moderators"""
@@ -606,6 +611,9 @@ class Group(AuthGroup):
     can_upload_images = models.BooleanField(default=False)
 
     openness = models.SmallIntegerField(default=CLOSED, choices=OPENNESS_CHOICES)
+    visibility = models.SmallIntegerField(default=const.GROUP_VISIBILITY_PUBLIC,
+                                          choices=const.GROUP_VISIBILITY_CHOICES)
+
     # preapproved email addresses and domain names to auto-join groups
     # trick - the field is padded with space and all tokens are space separated
     preapproved_emails = models.TextField(
@@ -710,7 +718,8 @@ class Group(AuthGroup):
         super(Group, self).save(*args, **kwargs)
 
 
-class BulkTagSubscriptionManager(BaseQuerySetManager):
+class BulkTagSubscriptionManager(BaseQuerySetManager): # pylint: disable=too-few-public-methods
+    """Manager class for the BulkTagSubscription model"""
 
     def create(
                 self,
@@ -730,7 +739,6 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
         tag_name_list = []
 
         if tag_names:
-            from askbot.models.tag import get_tags_by_names
             tags, new_tag_names = get_tags_by_names(tag_names, language_code)
             if new_tag_names:
                 assert(tag_author)
@@ -738,7 +746,6 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
             tags_id_list= [tag.id for tag in tags]
             tag_name_list = [tag.name for tag in tags]
 
-            from askbot.models.tag import Tag
             new_tags = Tag.objects.create_in_bulk(
                                 tag_names=new_tag_names,
                                 user=tag_author,
@@ -771,6 +778,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
 
 
 class BulkTagSubscription(models.Model):
+    """Subscribes users in bulk to a list of tags"""
     date_added = models.DateField(auto_now_add=True)
     tags = models.ManyToManyField('Tag')
     users = models.ManyToManyField(User)
@@ -779,9 +787,10 @@ class BulkTagSubscription(models.Model):
     objects = BulkTagSubscriptionManager()
 
     def tag_list(self):
-        return [tag.name for tag in self.tags.all()]
+        """Returns list of tag names"""
+        return [tag.name for tag in self.tags.all()] # pylint: disable=no-member
 
-    class Meta:
+    class Meta: # pylint: disable=too-few-public-methods, missing-docstring
         app_label = 'askbot'
         ordering = ['-date_added']
 

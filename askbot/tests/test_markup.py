@@ -130,4 +130,7 @@ replace that <a href="http://example.com">example.com</a>
 """
         """<a href="http://example.com"><div>http://example.com</div></a>
         """
-        self.assertHTMLEqual(self.conv(text), expected)
+        import pdb
+        pdb.set_trace()
+        converted = self.conv(text)
+        self.assertHTMLEqual(converted, expected)
