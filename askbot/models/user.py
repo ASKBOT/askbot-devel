@@ -89,7 +89,7 @@ def remove_email_from_invited_moderators(email):
     """Update the `INVITED_MODERATORS` setting by removing
     the matching email entry"""
     lines = askbot_settings.INVITED_MODERATORS.strip().split('\n')
-    clean_lines = list()
+    clean_lines = []
     prefix = email + ' '
     for line in lines:
         if not line.startswith(prefix):
@@ -157,7 +157,7 @@ class ActivityQuerySet(models.query.QuerySet):
         """return a dictionary where keys are activity ids
         and values - content objects"""
         content_object_ids = defaultdict(list)# lists of c.object ids by c.types
-        activity_type_ids = dict()#links c.objects back to activity objects
+        activity_type_ids = {} #links c.objects back to activity objects
         for act in self:
             content_type_id = act.content_type_id
             object_id = act.object_id
@@ -165,7 +165,7 @@ class ActivityQuerySet(models.query.QuerySet):
             activity_type_ids[(content_type_id, object_id)] = act.id
 
         #3) get links from activity objects to content objects
-        objects_by_activity = dict()
+        objects_by_activity = {}
         for content_type_id, object_id_list in list(content_object_ids.items()):
             content_type = ContentType.objects.get_for_id(content_type_id)
             model_class = content_type.model_class()
@@ -193,7 +193,7 @@ class ActivityManager(BaseQuerySetManager):
             ):
 
         #todo: automate this using python inspect module
-        kwargs = dict()
+        kwargs = {}
 
         kwargs['activity_type'] = const.TYPE_ACTIVITY_MENTION
 
@@ -241,7 +241,7 @@ class ActivityManager(BaseQuerySetManager):
         todo: implement better rich field lookups
         """
 
-        kwargs = dict()
+        kwargs = {}
 
         kwargs['activity_type'] = const.TYPE_ACTIVITY_MENTION
 
@@ -571,21 +571,26 @@ class GroupManager(BaseQuerySetManager):
             kwargs['group_ptr'] = group_ptr
         except AuthGroup.DoesNotExist:
             pass
-        return super(GroupManager, self).create(**kwargs)
+        return super().create(**kwargs)
 
-    def get_or_create(self, name=None, user=None, openness=None):
+    def get_or_create(self, name=None, user=None, openness=None, visibility=None):
         """creates a group tag or finds one, if exists"""
         #todo: here we might fill out the group profile
         try:
-            #iexact is important!!! b/c we don't want case variants
-            #of tags
+            #iexact is important!!! b/c we don't want case variants of groups
             group = self.get(name__iexact = name)
+            created = False
         except self.model.DoesNotExist:
+            default_visibility = askbot_settings.PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY
+            if visibility is None:
+                visibility = default_visibility
+
             if openness is None:
-                group = self.create(name=name)
-            else:
-                group = self.create(name=name, openness=openness)
-        return group
+                openness = self.model.DEFAULT_OPENNESS
+
+            group = self.create(name=name, openness=openness, visibility=visibility)
+            created = True
+        return group, created
 
 
 class Group(AuthGroup):
@@ -593,6 +598,7 @@ class Group(AuthGroup):
     OPEN = 0
     MODERATED = 1
     CLOSED = 2
+    DEFAULT_OPENNESS = CLOSED
     OPENNESS_CHOICES = (
         (OPEN, 'open'),
         (MODERATED, 'moderated'),
@@ -610,7 +616,7 @@ class Group(AuthGroup):
     can_upload_attachments = models.BooleanField(default=False)
     can_upload_images = models.BooleanField(default=False)
 
-    openness = models.SmallIntegerField(default=CLOSED, choices=OPENNESS_CHOICES)
+    openness = models.SmallIntegerField(default=DEFAULT_OPENNESS, choices=OPENNESS_CHOICES)
     visibility = models.SmallIntegerField(default=const.GROUP_VISIBILITY_PUBLIC,
                                           choices=const.GROUP_VISIBILITY_CHOICES)
 
@@ -695,27 +701,27 @@ class Group(AuthGroup):
         emails = functions.split_list(self.preapproved_emails)
         email_field = EmailField()
         try:
-            list(map(lambda v: email_field.clean(v), emails))
-        except exceptions.ValidationError:
+            list(map(email_field.clean, emails))
+        except exceptions.ValidationError as exc:
             raise exceptions.ValidationError(
                 _('Please give a list of valid email addresses.')
-            )
+            ) from exc
         self.preapproved_emails = ' ' + '\n'.join(emails) + ' '
 
         domains = functions.split_list(self.preapproved_email_domains)
         from askbot.forms import DomainNameField
         domain_field = DomainNameField()
         try:
-            list(map(lambda v: domain_field.clean(v), domains))
-        except exceptions.ValidationError:
+            list(map(domain_field.clean, domains))
+        except exceptions.ValidationError as exc:
             raise exceptions.ValidationError(
                 _('Please give a list of valid email domain names.')
-            )
+            ) from exc
         self.preapproved_email_domains = ' ' + '\n'.join(domains) + ' '
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(Group, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 class BulkTagSubscriptionManager(BaseQuerySetManager): # pylint: disable=too-few-public-methods
@@ -735,7 +741,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager): # pylint: disable=too-few
         user_list = user_list or []
         group_list = group_list or []
 
-        new_object = super(BulkTagSubscriptionManager, self).create(**kwargs)
+        new_object = super().create(**kwargs)
         tag_name_list = []
 
         if tag_names:

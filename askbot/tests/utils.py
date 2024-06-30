@@ -316,9 +316,7 @@ class AskbotTestCase(TestCase):
         return tag
 
     def create_group(self, group_name=None, openness=models.Group.OPEN):
-        return models.Group.objects.get_or_create(
-                    name='private', openness=openness
-                )
+        return models.Group.objects.get_or_create(name='private', openness=openness)[0]
 
     def post_comment(
                 self,

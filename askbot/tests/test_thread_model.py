@@ -29,7 +29,7 @@ class ThreadModelTestsWithGroupsEnabled(AskbotTestCase):
         self.user.new_response_count = 0
         self.user.seen_response_count = 0
         self.user.save()
-        self.group = models.Group.objects.get_or_create(name='jockeys')
+        self.group = models.Group.objects.get_or_create(name='jockeys')[0]
         self.group.can_post_questions = True
         self.group.can_post_answers = True
         self.group.can_post_comments = True

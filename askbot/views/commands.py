@@ -5,36 +5,32 @@ This module contains most (but not all) processors for Ajax requests.
 Not so clear if this subdivision was necessary as separation of Ajax and non-ajax views
 is not always very clean.
 """
+import json
 import logging
 from bs4 import BeautifulSoup
-from django.conf import settings as django_settings
 from django.core import exceptions
 #from django.core.management import call_command
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.http import HttpResponse
-from django.http import HttpResponseBadRequest
 from django.http import HttpResponseRedirect
 from django.http import HttpResponseForbidden
-from django.forms import ValidationError, IntegerField, CharField
+from django.forms import IntegerField, CharField, ValidationError
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.views.decorators import csrf
-import json
+from django.urls import resolve, Resolver404, NoReverseMatch
 from django.utils import timezone
 from django.utils import translation
-from django.utils.encoding import force_str
 from django.utils.html import escape
 from django.utils.translation import gettext as _
-from django.utils.translation import ngettext
 from askbot.utils.slug import slugify
 from askbot import models
 from askbot import forms
 from askbot import conf
 from askbot import const
-from askbot import mail
 from askbot.conf import settings as askbot_settings
 from askbot.utils import category_tree
 from askbot.utils import decorators
@@ -42,9 +38,8 @@ from askbot.utils import url_utils
 from askbot.utils.forms import get_db_object_or_404
 from askbot.utils.functions import decode_and_loads
 from askbot.utils.html import get_login_link
-from askbot.utils.http import is_ajax
+from askbot.utils.http import is_ajax, can_save_draft
 from askbot import spam_checker
-from django.template import RequestContext
 from askbot.skins.shortcuts import render_into_skin_as_string
 from askbot.skins.shortcuts import render_text_into_skin
 from askbot.models.tag import get_tags_by_names
@@ -511,7 +506,7 @@ def subscribe_for_tags(request):
 def list_bulk_tag_subscription(request):
     if askbot_settings.SUBSCRIBED_TAG_SELECTOR_ENABLED is False:
         raise Http404
-    object_list = models.BulkTagSubscription.objects.all()
+    object_list = models.BulkTagSubscription.objects.all() # pylint: disable=no-member
     data = {'object_list': object_list}
     return render(request, 'tags/list_bulk_tag_subscription.html', data)
 
@@ -718,7 +713,7 @@ def api_get_questions(request):
     if askbot_settings.GROUPS_ENABLED:
         threads = models.Thread.objects.get_visible(user=request.user)
     else:
-        threads = models.Thread.objects.all()
+        threads = models.Thread.objects.all() # pylint: disable=no-member
 
     if tag_name:
         threads = threads.filter(tags__name=tag_name)
@@ -729,7 +724,7 @@ def api_get_questions(request):
     #todo: filter out deleted threads, for now there is no way
     threads = threads.distinct()[:30]
 
-    thread_list = list()
+    thread_list = []
     for thread in threads:#todo: this is a temp hack until thread model is fixed
         try:
             thread_list.append({
@@ -941,7 +936,7 @@ def save_group_logo_url(request):
     if form.is_valid():
         group_id = form.cleaned_data['group_id']
         image_url = form.cleaned_data['image_url']
-        group = models.Group.objects.get(id = group_id)
+        group = models.Group.objects.get(id=group_id)
         group.logo_url = image_url
         group.save()
     else:
@@ -954,7 +949,7 @@ def save_group_logo_url(request):
 def add_group(request):
     group_name = request.POST.get('group')
     if group_name:
-        group = models.Group.objects.get_or_create(
+        group, _ = models.Group.objects.get_or_create(
                             name=group_name,
                             openness=models.Group.OPEN,
                             user=request.user,
@@ -972,7 +967,7 @@ def add_group(request):
 @decorators.moderators_only
 def delete_group_logo(request):
     group_id = IntegerField().clean(int(request.POST['group_id']))
-    group = models.Group.objects.get(id = group_id)
+    group = models.Group.objects.get(id=group_id) # pylint: disable=no-member
     group.logo_url = None
     group.save()
 
@@ -983,7 +978,7 @@ def delete_group_logo(request):
 @decorators.moderators_only
 def delete_post_reject_reason(request):
     reason_id = IntegerField().clean(int(request.POST['reason_id']))
-    reason = models.PostFlagReason.objects.get(id = reason_id)
+    reason = models.PostFlagReason.objects.get(id=reason_id) # pylint: disable=no-member
     reason.delete()
 
 
@@ -1090,26 +1085,27 @@ def save_post_reject_reason(request):
     otherwise a reason with the given id is edited and saved
     """
     form = forms.EditRejectReasonForm(request.POST)
+
     if form.is_valid():
-        title = form.cleaned_data['title']
-        details = form.cleaned_data['details']
-        if form.cleaned_data['reason_id'] is None:
-            reason = request.user.create_post_reject_reason(
-                title = title, details = details
-            )
-        else:
-            reason_id = form.cleaned_data['reason_id']
-            reason = models.PostFlagReason.objects.get(id = reason_id)
-            request.user.edit_post_reject_reason(
-                reason, title = title, details = details
-            )
-        return {
-            'reason_id': reason.id,
-            'title': title,
-            'details': details
-        }
+        raise ValidationError(forms.format_form_errors(form))
+
+    title = form.cleaned_data['title']
+    details = form.cleaned_data['details']
+    if form.cleaned_data['reason_id'] is None:
+        reason = request.user.create_post_reject_reason(
+            title = title, details = details
+        )
     else:
-        raise Exception(forms.format_form_errors(form))
+        reason_id = form.cleaned_data['reason_id']
+        reason = models.PostFlagReason.objects.get(id = reason_id) # pylint: disable=no-member
+        request.user.edit_post_reject_reason(
+            reason, title = title, details = details
+        )
+    return {
+        'reason_id': reason.id,
+        'title': title,
+        'details': details
+    }
 
 @csrf.csrf_protect
 @decorators.ajax_only
@@ -1122,51 +1118,52 @@ def moderate_suggested_tag(request):
     otherwise the decision applies to all threads
     """
     form = forms.ModerateTagForm(request.POST)
+
     if form.is_valid():
-        tag_id = form.cleaned_data['tag_id']
-        thread_id = form.cleaned_data.get('thread_id', None)
+        raise ValidationError(forms.format_form_errors(form))
 
-        lang = translation.get_language()
+    tag_id = form.cleaned_data['tag_id']
+    thread_id = form.cleaned_data.get('thread_id', None)
 
-        try:
-            tag = models.Tag.objects.get(
-                                    id=tag_id,
-                                    language_code=lang
-                                )#can tag not exist?
-        except models.Tag.DoesNotExist:
-            return
+    lang = translation.get_language()
 
-        if thread_id:
-            threads = models.Thread.objects.filter(
-                                            id=thread_id,
-                                            language_code=lang
-                                        )
-        else:
-            threads = tag.threads.none()
+    try:
+        tag = models.Tag.objects.get( # pylint: disable=no-member
+                                id=tag_id,
+                                language_code=lang
+                            )#can tag not exist?
+    except models.Tag.DoesNotExist: # pylint: disable=no-member
+        return
 
-        if form.cleaned_data['action'] == 'accept':
-            #todo: here we lose ability to come back
-            #to the tag moderation and approve tag to
-            #other threads later for the case where tag.used_count > 1
-            tag.status = models.Tag.STATUS_ACCEPTED
-            tag.save()
-            for thread in threads:
-                thread.add_tag(
-                    tag_name=tag.name,
-                    user=tag.created_by,
-                    timestamp=timezone.now(),
-                    silent=True
-                )
-        else:
-            if tag.threads.count() > len(threads):
-                for thread in threads:
-                    thread.tags.remove(tag)
-                tag.used_count = tag.threads.count()
-                tag.save()
-            elif tag.status == models.Tag.STATUS_SUGGESTED:
-                tag.delete()
+    if thread_id:
+        threads = models.Thread.objects.filter( # pylint: disable=no-member
+                                        id=thread_id,
+                                        language_code=lang
+                                    )
     else:
-        raise Exception(forms.format_form_errors(form))
+        threads = tag.threads.none()
+
+    if form.cleaned_data['action'] == 'accept':
+        #todo: here we lose ability to come back
+        #to the tag moderation and approve tag to
+        #other threads later for the case where tag.used_count > 1
+        tag.status = models.Tag.STATUS_ACCEPTED
+        tag.save()
+        for thread in threads:
+            thread.add_tag(
+                tag_name=tag.name,
+                user=tag.created_by,
+                timestamp=timezone.now(),
+                silent=True
+            )
+    else:
+        if tag.threads.count() > len(threads):
+            for thread in threads:
+                thread.tags.remove(tag)
+            tag.used_count = tag.threads.count()
+            tag.save()
+        elif tag.status == models.Tag.STATUS_SUGGESTED:
+            tag.delete()
 
 
 @csrf.csrf_protect
@@ -1174,31 +1171,27 @@ def moderate_suggested_tag(request):
 @decorators.post_only
 def save_draft_question(request):
     """saves draft questions"""
-    #todo: maybe allow drafts for anonymous users
-    if request.user.is_anonymous \
-        or request.user.is_read_only() \
-        or askbot_settings.READ_ONLY_MODE_ENABLED \
-        or request.user.is_active == False \
-        or request.user.is_blocked() \
-        or request.user.is_suspended():
+    if not can_save_draft(request):
         return
 
     form = forms.DraftQuestionForm(request.POST)
-    if form.is_valid():
-        title = form.cleaned_data.get('title', '')
-        text = form.cleaned_data.get('text', '')
-        tagnames = form.cleaned_data.get('tagnames', '')
-        if title or text or tagnames:
-            try:
-                draft = models.DraftQuestion.objects.get(author=request.user)
-            except models.DraftQuestion.DoesNotExist:
-                draft = models.DraftQuestion()
+    if not form.is_valid():
+        return
 
-            draft.title = title
-            draft.text = text
-            draft.tagnames = tagnames
-            draft.author = request.user
-            draft.save()
+    title = form.cleaned_data.get('title', '')
+    text = form.cleaned_data.get('text', '')
+    tagnames = form.cleaned_data.get('tagnames', '')
+    if title or text or tagnames:
+        try:
+            draft = models.DraftQuestion.objects.get(author=request.user) # pylint: disable=no-member
+        except models.DraftQuestion.DoesNotExist: # pylint: disable=no-member
+            draft = models.DraftQuestion()
+
+        draft.title = title
+        draft.text = text
+        draft.tagnames = tagnames
+        draft.author = request.user
+        draft.save()
 
 
 @csrf.csrf_protect
@@ -1207,33 +1200,30 @@ def save_draft_question(request):
 def save_draft_answer(request):
     """saves draft answers"""
     #todo: maybe allow drafts for anonymous users
-    if request.user.is_anonymous \
-        or request.user.is_read_only() \
-        or askbot_settings.READ_ONLY_MODE_ENABLED \
-        or request.user.is_active == False \
-        or request.user.is_blocked() \
-        or request.user.is_suspended():
+    if not can_save_draft(request.user):
         return
 
     form = forms.DraftAnswerForm(request.POST)
-    if form.is_valid():
-        thread_id = form.cleaned_data['thread_id']
-        try:
-            thread = models.Thread.objects.get(id=thread_id)
-        except models.Thread.DoesNotExist:
-            return
-        try:
-            draft = models.DraftAnswer.objects.get(
-                                            thread=thread,
-                                            author=request.user
-                                    )
-        except models.DraftAnswer.DoesNotExist:
-            draft = models.DraftAnswer()
+    if not form.is_valid():
+        return
 
-        draft.author = request.user
-        draft.thread = thread
-        draft.text = form.cleaned_data.get('text', '')
-        draft.save()
+    thread_id = form.cleaned_data['thread_id']
+    try:
+        thread = models.Thread.objects.get(id=thread_id) # pylint: disable=no-member
+    except models.Thread.DoesNotExist: # pylint: disable=no-member
+        return
+    try:
+        draft = models.DraftAnswer.objects.get( # pylint: disable=no-member
+                                        thread=thread,
+                                        author=request.user
+                                )
+    except models.DraftAnswer.DoesNotExist: # pylint: disable=no-member
+        draft = models.DraftAnswer()
+
+    draft.author = request.user
+    draft.thread = thread
+    draft.text = form.cleaned_data.get('text', '')
+    draft.save()
 
 @decorators.get_only
 def get_users_info(request):
@@ -1261,84 +1251,86 @@ def get_users_info(request):
 def share_question_with_group(request):
     form = forms.ShareQuestionForm(request.POST)
     try:
-        if form.is_valid():
+        if not form.is_valid():
+            raise ValueError('invalid form data')
 
-            thread_id = form.cleaned_data['thread_id']
-            group_name = form.cleaned_data['recipient_name']
+        thread_id = form.cleaned_data['thread_id']
+        group_name = form.cleaned_data['recipient_name']
 
-            thread = models.Thread.objects.get(id=thread_id)
-            question_post = thread._question_post()
+        thread = models.Thread.objects.get(id=thread_id)
+        question_post = thread._question_post() # pylint: disable=protected-access
 
-            #get notif set before
-            sets1 = question_post.get_notify_sets(
-                                    mentioned_users=list(),
-                                    exclude_list=[request.user,]
-                                )
+        #get notif set before
+        sets1 = question_post.get_notify_sets(
+                                mentioned_users=[],
+                                exclude_list=[request.user,]
+                            )
 
-            #share the post
-            if group_name == askbot_settings.GLOBAL_GROUP_NAME:
-                thread.make_public(recursive=True)
-            else:
-                group = models.Group.objects.get(name=group_name)
-                thread.add_to_groups((group,), recursive=True)
+        #share the post
+        if group_name == askbot_settings.GLOBAL_GROUP_NAME:
+            thread.make_public(recursive=True)
+        else:
+            group = models.Group.objects.get(name=group_name)
+            thread.add_to_groups((group,), recursive=True)
 
-            #get notif sets after
-            sets2 = question_post.get_notify_sets(
-                                    mentioned_users=list(),
-                                    exclude_list=[request.user,]
-                                )
+        #get notif sets after
+        sets2 = question_post.get_notify_sets(
+                                mentioned_users=[],
+                                exclude_list=[request.user,]
+                            )
 
-            notify_sets = {
-                'for_mentions': sets2['for_mentions'] - sets1['for_mentions'],
-                'for_email': sets2['for_email'] - sets1['for_email'],
-                'for_inbox': sets2['for_inbox'] - sets1['for_inbox']
-            }
+        notify_sets = {
+            'for_mentions': sets2['for_mentions'] - sets1['for_mentions'],
+            'for_email': sets2['for_email'] - sets1['for_email'],
+            'for_inbox': sets2['for_inbox'] - sets1['for_inbox']
+        }
 
-            question_post.issue_update_notifications(
-                updated_by=request.user,
-                notify_sets=notify_sets,
-                activity_type=const.TYPE_ACTIVITY_POST_SHARED,
-                timestamp=timezone.now()
-            )
+        question_post.issue_update_notifications(
+            updated_by=request.user,
+            notify_sets=notify_sets,
+            activity_type=const.TYPE_ACTIVITY_POST_SHARED,
+            timestamp=timezone.now()
+        )
 
-            return HttpResponseRedirect(thread.get_absolute_url())
-    except Exception:
+    except Exception: # pylint: disable=broad-except
         error_message = _('Sorry, looks like sharing request was invalid')
         request.user.message_set.create(message=error_message)
-        return HttpResponseRedirect(thread.get_absolute_url())
+
+    return HttpResponseRedirect(thread.get_absolute_url())
 
 @csrf.csrf_protect
 def share_question_with_user(request):
     form = forms.ShareQuestionForm(request.POST)
     try:
-        if form.is_valid():
+        if not form.is_valid():
+            raise ValueError('invalid form data')
 
-            thread_id = form.cleaned_data['thread_id']
-            username = form.cleaned_data['recipient_name']
+        thread_id = form.cleaned_data['thread_id']
+        username = form.cleaned_data['recipient_name']
 
-            thread = models.Thread.objects.get(id=thread_id)
-            user = models.User.objects.get(username=username)
-            group = user.get_personal_group()
-            thread.add_to_groups([group], recursive=True)
-            #notify the person
-            #todo: see if user could already see the post - b/f the sharing
-            notify_sets = {
-                'for_inbox': set([user]),
-                'for_mentions': set([user]),
-                'for_email': set([user])
-            }
-            thread._question_post().issue_update_notifications(
-                updated_by=request.user,
-                notify_sets=notify_sets,
-                activity_type=const.TYPE_ACTIVITY_POST_SHARED,
-                timestamp=timezone.now()
-            )
+        thread = models.Thread.objects.get(id=thread_id)
+        user = models.User.objects.get(username=username)
+        group = user.get_personal_group()
+        thread.add_to_groups([group], recursive=True)
+        #notify the person
+        #todo: see if user could already see the post - b/f the sharing
+        notify_sets = {
+            'for_inbox': set([user]),
+            'for_mentions': set([user]),
+            'for_email': set([user])
+        }
+        thread._question_post().issue_update_notifications( # pylint: disable=protected-access
+            updated_by=request.user,
+            notify_sets=notify_sets,
+            activity_type=const.TYPE_ACTIVITY_POST_SHARED,
+            timestamp=timezone.now()
+        )
 
-            return HttpResponseRedirect(thread.get_absolute_url())
-    except Exception:
+    except Exception: # pylint: disable=broad-except
         error_message = _('Sorry, looks like sharing request was invalid')
         request.user.message_set.create(message=error_message)
-        return HttpResponseRedirect(thread.get_absolute_url())
+
+    return HttpResponseRedirect(thread.get_absolute_url())
 
 @csrf.csrf_protect
 def moderate_group_join_request(request):
@@ -1352,7 +1344,7 @@ def moderate_group_join_request(request):
     applicant = activity.user
 
     if group.has_moderator(request.user):
-        group_membership = models.GroupMembership.objects.get(
+        group_membership = models.GroupMembership.objects.get( # pylint: disable=no-member
                                             user=applicant, group=group
                                         )
         if action == 'approve':
@@ -1394,7 +1386,7 @@ def get_editor(request):
     #we need that, because js needs to be added in a special way
     html_soup = BeautifulSoup(editor_html, 'html5lib')
 
-    parsed_scripts = list()
+    parsed_scripts = []
     for script in html_soup.find_all('script'):
         parsed_scripts.append({
             'contents': script.string,
@@ -1479,10 +1471,10 @@ def merge_questions(request):
 @decorators.ajax_only
 @decorators.get_only
 def translate_url(request):
+    """Attempts to return url specific to the requested language"""
     form = forms.TranslateUrlForm(request.GET)
     match = None
     if form.is_valid():
-        from django.urls import resolve, Resolver404, NoReverseMatch
         try:
             match = resolve(form.cleaned_data['url'])
         except Resolver404:
@@ -1494,14 +1486,11 @@ def translate_url(request):
         site_lang = translation.get_language()
         translation.activate(lang)
 
-        if match.url_name == 'questions' and None in list(match.kwargs.values()):
-            #???
-            url = models.get_feed_url(match.kwargs['feed'])
-        else:
-            try:
-                url = reverse(match.url_name, args=match.args, kwargs=match.kwargs)
-            except:
-                pass
+        try:
+            url = reverse(match.url_name, args=match.args, kwargs=match.kwargs)
+        except NoReverseMatch:
+            pass
+
         translation.activate(site_lang)
 
     return {'url': url}
@@ -1520,8 +1509,8 @@ def reorder_badges(request):
     if form.is_valid():
         badge_id = form.cleaned_data['badge_id']
         position = form.cleaned_data['position']
-        badge = models.BadgeData.objects.get(id=badge_id)
-        badges = list(models.BadgeData.objects.all())
+        badge = models.BadgeData.objects.get(id=badge_id) # pylint: disable=no-member
+        badges = list(models.BadgeData.objects.all()) # pylint: disable=no-member
         badges = [v for v in badges if v.is_enabled()]
         badges.remove(badge)
         badges.insert(position, badge)

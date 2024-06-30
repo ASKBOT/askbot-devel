@@ -1,8 +1,8 @@
 """A management command that creates groups for each email domain in the database."""
 from django.core.management.base import BaseCommand
-from askbot.conf import settings
-from askbot.models import User
-from askbot.models.analytics import get_organization_domains
+from askbot.conf import settings as askbot_settings
+from askbot.models import Group, User
+from askbot.models.analytics import get_unique_user_email_domains_qs
 from askbot.models.user import get_organization_name_from_domain
 from askbot.utils.console import ProgressBar
 
@@ -14,14 +14,31 @@ class Command(BaseCommand): # pylint: disable=missing-docstring
         Creates a group for each domain name, if such group does not exist.
         Group visibility is set to the value of settings.PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY.
         """
-        domains = get_organization_domains()
+        domains = get_unique_user_email_domains_qs()
         count = len(domains)
-        message = 'Initializing groups by the email address domain names'
-        for domain in ProgressBar(domains, count, message):
-            organization_name = get_organization_name_from_domain(domain)
-            group = User.objects.get_or_create_group(
-                organization_name,
-                visibility=settings.PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY
+        message = 'Creating groups by the email address domain names'
+        created_groups = []
+        unchanged_groups = []
+        done_lowercased_domains = []
+        for domain in ProgressBar(domains.iterator(), count, message):
+
+            domain_name = domain['domain']
+            if domain_name.lower in done_lowercased_domains:
+                continue
+            else:
+                done_lowercased_domains.append(domain_name.lower())
+
+            organization_name = get_organization_name_from_domain(domain_name)
+            group, created = Group.objects.get_or_create(
+                name=organization_name,
+                visibility=askbot_settings.PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY
             )
-            print('Group {0} created.'.format(group.name))
+            users = User.objects.filter(email__endswith='@' + domain_name)
+            for user in users.iterator():
+                user.join_group(group, force=True)
+
+            if created:
+                created_groups.append(group)
+            else:
+                unchanged_groups.append(group)
 

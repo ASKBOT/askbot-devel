@@ -376,3 +376,15 @@ class ManagementCommandTests(AskbotTestCase):
         #command sends alerts to three moderators at a time
         self.assertEqual(len(mail.outbox), 2)
         self.assertTrue('moderation' in mail.outbox[0].subject)
+
+
+    def test_askbot_create_per_email_domain_groups(self):
+        user1 = self.create_user('org1', 'user@org1.com')
+        user2 = self.create_user('org2', 'user@org2.com')
+        count = models.Group.objects.filter(name__in=('Org1', 'Org2')).count()
+        self.assertEqual(count, 0)
+        management.call_command('askbot_create_per_email_domain_groups')
+        count = models.Group.objects.filter(name__in=('Org1', 'Org2')).count()
+        self.assertEqual(count, 2)
+
+

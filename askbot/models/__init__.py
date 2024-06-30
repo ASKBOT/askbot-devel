@@ -2946,7 +2946,7 @@ def user_join_default_groups(self):
     group = Group.objects.get_global_group()
     self.join_group(group, force=True)
     group_name = format_personal_group_name(self)
-    group = Group.objects.get_or_create(name=group_name, user=self)
+    group, _ = Group.objects.get_or_create(name=group_name, user=self)
     self.join_group(group, force=True)
 
 def user_get_personal_group(self):

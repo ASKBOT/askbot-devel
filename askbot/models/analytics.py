@@ -90,7 +90,7 @@ def get_non_admins_count():
     return non_admins.count()
 
 
-def get_organization_domains():
+def get_unique_user_email_domains_qs():
     """Returns the query set of organization domain names"""
     domain_annotation = Substr('email', StrIndex('email', Value('@')) + 1)
     return User.objects.annotate(domain=domain_annotation).values('domain').distinct()
@@ -102,7 +102,12 @@ def get_organizations_count():
     """
     if not django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
         return 0
-    return get_organization_domains().count()
+    return get_unique_user_email_domains_qs().count()
+
+
+def get_unique_user_email_domains():
+    """Returns a list of unique email domain names"""
+    return list(get_user_organization_domains_qs().values_list('domain', flat=True))
 
 
 class Session(models.Model):

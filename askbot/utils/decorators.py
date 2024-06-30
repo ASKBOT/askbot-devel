@@ -87,7 +87,7 @@ def ajax_only(view_func):
             data = view_func(request, *args, **kwargs)
             if data is None:
                 data = {}
-        except Exception as e:
+        except Exception as e: # pylint: disable=broad-except
             #todo: also check field called "message"
             if hasattr(e, 'messages'):
                 if len(e.messages) > 1:
