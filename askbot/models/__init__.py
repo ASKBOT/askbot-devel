@@ -2932,10 +2932,11 @@ def get_profile_link(self, text=None):
 
     return mark_safe(profile_link)
 
-def user_get_groups(self, private=False):
+def user_get_groups(self, private=False, used_for_analytics=False):
     """returns a query set of groups to which user belongs"""
     #todo: maybe cache this query
-    return Group.objects.get_for_user(self, private=private)
+    return Group.objects.get_for_user(self, private=private,
+                                      used_for_analytics=used_for_analytics)
 
 def user_join_default_groups(self):
     """adds user to "global" and "personal" groups"""

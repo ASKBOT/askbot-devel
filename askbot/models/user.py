@@ -12,6 +12,7 @@ from django.forms import EmailField
 from django.utils import translation, timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
+import tldextract
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils import functions
@@ -25,8 +26,9 @@ def get_organization_name_from_domain(domain):
     The organization name is the second level domain name,
     sentence-cased.
     """
-    base_domain = domain.split('.')[-2]
-    return base_domain.capitalize()
+    result = tldextract.extract(domain)
+    raw_name = result.domain
+    return '-'.join(part.capitalize() for part in raw_name.split('-'))
 
 class InvitedModerator(object):
     """Mock user class to represent invited moderators"""
@@ -531,13 +533,13 @@ class GroupQuerySet(models.query.QuerySet):
             name__startswith=PERSONAL_GROUP_NAME_PREFIX
         )
 
-    def get_for_user(self, user=None, private=False):
+    def get_for_user(self, user=None, private=False, used_for_analytics=False):
         gms = GroupMembership.objects.filter(user=user)
         if private:
             global_group = Group.objects.get_global_group()
             gms = gms.exclude(group=global_group)
         group_ids = gms.values_list('group_id', flat=True)
-        return Group.objects.filter(pk__in=group_ids)
+        return Group.objects.filter(pk__in=group_ids, used_for_analytics=used_for_analytics)
 
     def get_by_name(self, group_name = None):
         from askbot.models.tag import clean_group_name#todo - delete this
@@ -573,7 +575,9 @@ class GroupManager(BaseQuerySetManager):
             pass
         return super().create(**kwargs)
 
-    def get_or_create(self, name=None, user=None, openness=None, visibility=None):
+    def get_or_create(self, name=None,
+                      user=None, openness=None,
+                      visibility=None, used_for_analytics=False):
         """creates a group tag or finds one, if exists"""
         #todo: here we might fill out the group profile
         try:
@@ -588,7 +592,10 @@ class GroupManager(BaseQuerySetManager):
             if openness is None:
                 openness = self.model.DEFAULT_OPENNESS
 
-            group = self.create(name=name, openness=openness, visibility=visibility)
+            group = self.create(name=name,
+                                openness=openness,
+                                visibility=visibility,
+                                used_for_analytics=used_for_analytics)
             created = True
         return group, created
 
@@ -619,6 +626,7 @@ class Group(AuthGroup):
     openness = models.SmallIntegerField(default=DEFAULT_OPENNESS, choices=OPENNESS_CHOICES)
     visibility = models.SmallIntegerField(default=const.GROUP_VISIBILITY_PUBLIC,
                                           choices=const.GROUP_VISIBILITY_CHOICES)
+    used_for_analytics = models.BooleanField(default=False)
 
     # preapproved email addresses and domain names to auto-join groups
     # trick - the field is padded with space and all tokens are space separated

@@ -1,4 +1,5 @@
 """Models for the Analytics feature"""
+import datetime
 from django.db import models
 from django.db.models import Q
 from django.db.models import Value
@@ -47,21 +48,36 @@ from askbot.models.user import Group as AskbotGroup
 #TYPE_ACTIVITY_QUESTION_VIEWED = 52
 #TYPE_ACTIVITY_ANSWER_VIEWED = 53
 
+EVENT_TYPE_USER_REGISTERED = 1
+EVENT_TYPE_LOGGED_IN = 2
+EVENT_TYPE_LOGGED_OUT = 3
+EVENT_TYPE_QUESTION_VIEWED = 4
+EVENT_TYPE_ANSWER_VIEWED = 5
+EVENT_TYPE_UPVOTED = 6
+EVENT_TYPE_DOWNVOTED = 7
+EVENT_TYPE_VOTE_CANCELED = 8
+EVENT_TYPE_ASKED = 9
+EVENT_TYPE_ANSWERED = 10
+EVENT_TYPE_QUESTION_COMMENTED = 11
+EVENT_TYPE_ANSWER_COMMENTED = 12
+EVENT_TYPE_QUESTION_RETAGGED = 13
+EVENT_TYPE_SEARCHED = 14
+
 EVENT_TYPES = (
-    (1, _('registered')), # Activity.activity_type == 51
-    (2, _('logged in')),
-    (3, _('logged out')),
-    (4, _('question viewed')), # Activity.activity_type == 52
-    (5, _('answer viewed')), # Activity.activity_type == 53
-    (6, _('upvoted')), # Activity.activity_type == 9
-    (7, _('downvoted')), # Activity.activity_type == 10
-    (8, _('canceled vote')), # Activity.activity_type == 11
-    (9, _('asked')), # Activity.activity_type == 1
-    (10, _('answered')), # Activity.activity_type == 2
-    (11, _('commented question')), # Activity.activity_type == 3
-    (12, _('commented answer')), # Activity.activity_type == 4
-    (13, _('retagged question')), # Activity.activity_type == 15
-    (14, _('searched')),
+    (EVENT_TYPE_USER_REGISTERED, _('registered')), # Activity.activity_type == 51
+    (EVENT_TYPE_LOGGED_IN, _('logged in')),
+    (EVENT_TYPE_LOGGED_OUT, _('logged out')),
+    (EVENT_TYPE_QUESTION_VIEWED, _('question viewed')), # Activity.activity_type == 52
+    (EVENT_TYPE_ANSWER_VIEWED, _('answer viewed')), # Activity.activity_type == 53
+    (EVENT_TYPE_UPVOTED, _('upvoted')), # Activity.activity_type == 9
+    (EVENT_TYPE_DOWNVOTED, _('downvoted')), # Activity.activity_type == 10
+    (EVENT_TYPE_VOTE_CANCELED, _('canceled vote')), # Activity.activity_type == 11
+    (EVENT_TYPE_ASKED, _('asked')), # Activity.activity_type == 1
+    (EVENT_TYPE_ANSWERED, _('answered')), # Activity.activity_type == 2
+    (EVENT_TYPE_QUESTION_COMMENTED, _('commented question')), # Activity.activity_type == 3
+    (EVENT_TYPE_ANSWER_COMMENTED, _('commented answer')), # Activity.activity_type == 4
+    (EVENT_TYPE_QUESTION_RETAGGED, _('retagged question')), # Activity.activity_type == 15
+    (EVENT_TYPE_SEARCHED, _('searched')),
 )
 
 # Dimension and Metric would make a generic implementation of the analytics feature
@@ -107,7 +123,7 @@ def get_organizations_count():
 
 def get_unique_user_email_domains():
     """Returns a list of unique email domain names"""
-    return list(get_user_organization_domains_qs().values_list('domain', flat=True))
+    return list(get_unique_user_email_domains_qs().values_list('domain', flat=True))
 
 
 class Session(models.Model):
@@ -133,6 +149,8 @@ class Event(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(db_index=True)
     content_object = GenericForeignKey('content_type', 'object_id')
+    compiled = models.BooleanField(default=False,
+                                   help_text="True if the event is compiled into a summary")
 
     def __str__(self):
         timestamp = self.timestamp.isoformat() # pylint: disable=no-member
@@ -144,15 +162,41 @@ class BaseSummary(models.Model):
     An abstract model for per-interval summaries.
     An interval name is defined in the subclass.
     """
-    num_questions = models.PositiveIntegerField()
-    num_answers = models.PositiveIntegerField()
-    num_upvotes = models.PositiveIntegerField()
-    num_downvotes = models.PositiveIntegerField()
-    question_views = models.PositiveIntegerField()
-    time_on_site = models.DurationField()
+    num_questions = models.PositiveIntegerField(default=0)
+    num_answers = models.PositiveIntegerField(default=0)
+    num_upvotes = models.PositiveIntegerField(default=0)
+    num_downvotes = models.PositiveIntegerField(default=0)
+    question_views = models.PositiveIntegerField(default=0)
+    time_on_site = models.DurationField(default=datetime.timedelta(0))
+    compiled = models.BooleanField(default=False)
 
     class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
         abstract = True
+
+
+    def add_event(self, event):
+        """Increments the attribute appropriate for the event type"""
+        if event.event_type == EVENT_TYPE_ASKED:
+            self.num_questions += 1
+        elif event.event_type == EVENT_TYPE_ANSWERED:
+            self.num_answers += 1
+        elif event.event_type == EVENT_TYPE_UPVOTED:
+            self.num_upvotes += 1
+        elif event.event_type == EVENT_TYPE_DOWNVOTED:
+            self.num_downvotes += 1
+        elif event.event_type == EVENT_TYPE_QUESTION_VIEWED:
+            self.question_views += 1
+
+
+    def __add__(self, other):
+        """Adds the attributes of two summaries"""
+        self.num_questions += other.num_questions
+        self.num_answers += other.num_answers
+        self.num_upvotes += other.num_upvotes
+        self.num_downvotes += other.num_downvotes
+        self.question_views += other.question_views
+        self.time_on_site += other.time_on_site
+        return self
 
 
 class DailySummary(BaseSummary):
@@ -161,6 +205,16 @@ class DailySummary(BaseSummary):
 
     class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
         abstract = True
+
+    def add_event(self, event):
+        """Increments the attribute appropriate for the event type.
+        In addition adds up the time on site for all matching sessions.
+        """
+        super().add_event(event)
+        # todo: get all sessions intersecting the date
+        # for each session, calculate the intersection with the date
+        # add up those intervals
+        # assumes that sessions do not overlap
 
 
 class UserDailySummary(DailySummary):
@@ -171,4 +225,8 @@ class UserDailySummary(DailySummary):
 class GroupDailySummary(DailySummary):
     """Group summary for each day with activity."""
     group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
-    num_users = models.PositiveIntegerField()
+    num_users = models.PositiveIntegerField(default=0)
+
+
+    def add_event(self, event):
+        raise RuntimeError("Cannot add events to GroupDailySummary")

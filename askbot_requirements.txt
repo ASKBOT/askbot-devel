@@ -34,5 +34,6 @@ regex
 requests-oauthlib>=1.2.0
 requirements-parser>=0.2.0
 responses>=0.9.0,<=0.23.1
+tldextract==5.1.2
 unidecode
 urllib3<1.27,>=1.21.1

@@ -12,7 +12,7 @@ import askbot
 from django.core import management, mail
 from django.conf import settings as django_settings
 from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group as AuthGroup
 from askbot.utils.html import site_url
 from askbot.utils.url_utils import reload_urlconf
 from askbot.tests.utils import AskbotTestCase
@@ -386,5 +386,7 @@ class ManagementCommandTests(AskbotTestCase):
         management.call_command('askbot_create_per_email_domain_groups')
         count = models.Group.objects.filter(name__in=('Org1', 'Org2')).count()
         self.assertEqual(count, 2)
+        self.assertEqual(AuthGroup.objects.filter(name='Org1').count(), 1)
+        self.assertEqual(AuthGroup.objects.filter(name='Org2').count(), 1)
 
 

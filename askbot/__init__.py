@@ -54,6 +54,7 @@ REQUIREMENTS = {
     'requirements': 'requirements-parser>=0.2.0',
     'robots': 'django-robots==5.0',
     'regex': 'regex',
+    'tldextract': 'tldextract==5.1.2',
     'unidecode': 'unidecode',
     'urllib3': 'urllib3<1.27,>=1.21.1'
 }

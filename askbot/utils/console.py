@@ -165,7 +165,7 @@ def simple_dialog(prompt_phrase, required=False, default=None):
 
         if response or required is False:
             return response
-        
+
         time.sleep(.1)
 
 
@@ -250,14 +250,15 @@ class ProgressBar(object):
     """A wrapper for an iterator, that prints
     a progress bar along the way of iteration
     """
-    def __init__(self, iterable, length, message = ''):
+    def __init__(self, iterable, length, message = '', silent=False):
         self.iterable = iterable
         self.length = length
         self.counter = float(0)
         self.max_barlen = 60
         self.curr_barlen: float = 0
         self.progress = ''
-        if message and length > 0:
+        self.silent = silent
+        if message and length > 0 and not self.silent:
             print(message)
 
 
@@ -286,6 +287,8 @@ class ProgressBar(object):
 
     def print_progress_percent(self):
         """prints percent of achieved progress"""
+        if self.silent:
+            return
         self.progress = ' %.2f%%' % (100 * (self.counter/self.length))
         sys.stdout.write(self.progress)
         sys.stdout.flush()
@@ -300,12 +303,14 @@ class ProgressBar(object):
         try:
             result = next(self.iterable)
         except StopIteration:
-            if self.length > 0:
+            if self.length > 0 and not self.silent:
                 self.finish_progress_bar()
                 self.print_progress_percent()
                 sys.stdout.write('\n')
             raise
 
-        self.print_progress_bar()
+        if not self.silent:
+            self.print_progress_bar()
+
         self.counter += 1
         return result
