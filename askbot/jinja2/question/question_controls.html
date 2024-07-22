@@ -4,7 +4,7 @@
     class="action-link js-edit with-edit-icon"
   >{% trans %}edit{% endtrans %}</span>
   {{ macros.post_flag_buttons(question) }}
-  {% if request.user.is_authenticated and request.user.is_post_moderator(question) %}
+  {% if settings.GROUPS_ENABLED %}
     {% set is_published=(not question.is_private()) %}
     <span
       id="js-post-publish-btn-{{question.pk}}"
@@ -17,6 +17,11 @@
         {% trans %}publish{% endtrans %}</a>
       {% endif %}
     </span>
+    {% if request.user.is_anonymous or not request.user.can_publish_group_private_post(question) %}
+      <script type="text/javascript">
+        document.getElementById("js-post-publish-btn-" + '{{question.pk}}').remove();
+      </script>
+    {% endif %}
   {% endif %}
   {% if thread.closed %}
     <a id="js-question-close-btn-{{question.id}}"
@@ -29,7 +34,7 @@
       href="{{ url('close',  question.id ) }}"
     >{% trans %}close{% endtrans %}</a>
   {% endif %}
-  <a 
+  <a
     id="js-question-merge-btn-{{question.id}}"
     class="action-link js-question-merge-btn with-merge-icon"
   >{% trans %}merge{% endtrans %}</a>
@@ -40,6 +45,5 @@
   >{% if question.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}</a>
   <script type="text/javascript">
     askbot.functions.renderPostControls('{{question.id}}'{{ ', true' if question.wiki }});
-    askbot.functions.hidePublishPostLinks();
   </script>
 </div>

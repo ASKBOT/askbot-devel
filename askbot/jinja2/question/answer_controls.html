@@ -11,7 +11,7 @@
   >
     {% if answer.deleted %}{% trans %}undelete{% endtrans %}{% else %}{% trans %}delete{% endtrans %}{% endif %}
   </span>
-  {% if request.user.is_authenticated and request.user.is_post_moderator(answer) %}
+  {% if settings.GROUPS_ENABLED %}
     {% set is_published=(answer.id in published_answer_ids) %}
     <span
       id="js-post-publish-btn-{{answer.id}}"
@@ -24,6 +24,11 @@
         {% trans %}publish{% endtrans %}</a>
       {% endif %}
     </span>
+    {% if request.user.is_anonymous or not request.user.can_publish_group_private_post(question) %}
+      <script type="text/javascript">
+        document.getElementById("js-post-publish-btn-" + '{{answer.pk}}').remove();
+      </script>
+    {% endif %}
   {% endif %}
   <a class="action-link with-link-icon"
     href="{{ answer.get_absolute_url(question_post=question) }}"

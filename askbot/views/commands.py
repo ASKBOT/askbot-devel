@@ -1405,32 +1405,33 @@ def get_editor(request):
 @decorators.post_only
 def publish_post(request):
     """will publish or unpublish post"""
-    denied_msg = _('Sorry, only thread moderators can use this function')
+    denied_msg = _('Sorry, only thread moderators or post owners can use this function')
+
+    if request.user.is_anonymous:
+        raise exceptions.PermissionDenied(denied_msg)
 
     if request.user.is_authenticated:
         if request.user.is_administrator_or_moderator() is False:
             raise exceptions.PermissionDenied(denied_msg)
 
-    #todo: assert permission
     post_id = IntegerField().clean(request.POST['post_id'])
     post = models.Post.objects.get(pk=post_id)
 
-    if post.thread.has_moderator(request.user) is False:
+    if not request.user.can_publish_group_private_post(post):
         raise exceptions.PermissionDenied(denied_msg)
 
     # there used to be an experiment where questions were asked
     # privately to a group - i.e. the question was visible to the
     # inquirer and the group only. When the answer was published
-    # it was shared with the enquirer
+    # it was shared with the inquirer
     # Now the code is switched to a simpler mode -
     # "published" === visible to the "everyone" group.
     # (and used to be "published" -> visible to the enquirer).
-    #enquirer = answer.thread._question_post().author
-    #enquirer_group = enquirer.get_personal_group()
-
+    #inquirer = answer.thread._question_post().author
+    #inquirer_group = enquirer.get_personal_group()
     if askbot_settings.GROUPS_ENABLED:
         if post.is_private():
-            #answer.add_to_groups([enquirer_group])
+            #answer.add_to_groups([inquirer_group])
             if post.post_type == 'question':
                 post.thread.make_public()
             else:
@@ -1438,7 +1439,7 @@ def publish_post(request):
 
             message = _('The post is now published')
         else:
-            #answer.remove_from_groups([enquirer_group])
+            #answer.remove_from_groups([inquirer_group])
             if post.post_type == 'question':
                 post.thread.make_private(request.user)
             else:

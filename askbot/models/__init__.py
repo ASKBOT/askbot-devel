@@ -3003,6 +3003,30 @@ def user_can_make_group_private_posts(self):
     return (self.get_primary_group() != None)
 
 
+def user_can_publish_group_private_post(self, post):
+    """
+    Users not belonging to a non-personal private group
+    cannot publish group private posts.
+
+    Of the users who have private group,
+    admins/mods and the author of the post can publish/unpublish.
+
+    Note: there may be unexpected consequences if the site
+    has > 1 "private groups".
+
+    A private post for one group may be taken over by the admins
+    of other group.
+    """
+    group = self.get_primary_group()
+    if not group:
+        return False
+
+    if self.is_administrator_or_moderator():
+        return True
+
+    return post.author_id == self.pk
+
+
 def user_request_account_termination(self):
     """Notifies admins about user account termination"""
     msg_template = _('User %(username)s, id=%(id)s, %(email)s '
@@ -3727,6 +3751,7 @@ User.add_to_class('can_post_answer', user_can_post_answer)
 User.add_to_class('can_post_comment', user_can_post_comment)
 User.add_to_class('can_post_question', user_can_post_question)
 User.add_to_class('can_make_group_private_posts', user_can_make_group_private_posts)
+User.add_to_class('can_publish_group_private_post', user_can_publish_group_private_post)
 User.add_to_class('is_administrator', user_is_administrator)
 User.add_to_class('is_administrator_or_moderator', user_is_administrator_or_moderator)
 User.add_to_class('is_admin_or_mod', user_is_administrator_or_moderator) #shorter version

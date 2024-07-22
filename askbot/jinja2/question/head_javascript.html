@@ -116,7 +116,7 @@
           if (vote === -1){
             var downvoteBtn = document.getElementById('js-post-downvote-btn-' + postId);
             downvoteBtn.className += ' js-active';
-          } 
+          }
           if (vote === 1){
             var upvoteBtn = document.getElementById('js-post-upvote-btn-' + postId);
             upvoteBtn.className += ' js-active';
@@ -158,15 +158,6 @@
       //if the whole control is empty - remove it
       if (extraOptsList.getElementsByTagName('li').length === 0) {
         extraOpts.parentNode.removeChild(extraOpts);
-      }
-    }
-
-    function hidePublishPostLinks() {
-      if (data['userIsThreadModerator'] === false) {
-        document.querySelectorAll('.js-publish-post')
-          .forEach(function(el) { el.remove(); });
-        document.querySelectorAll('.js-unpublish-post')
-          .forEach(function(el) { el.remove(); });
       }
     }
 
@@ -339,6 +330,5 @@
     askbot['functions']['renderAddAnswerButton'] = renderAddAnswerButton;
     askbot['functions']['hideConvertLinks'] = hideConvertLinks;
     askbot['functions']['hideConvertAnswerLinks'] = hideConvertAnswerLinks;
-    askbot['functions']['hidePublishPostLinks'] = hidePublishPostLinks;
   })();
 </script>
