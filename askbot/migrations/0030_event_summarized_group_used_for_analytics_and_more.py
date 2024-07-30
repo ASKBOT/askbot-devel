@@ -12,8 +12,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='event',
-            name='compiled',
-            field=models.BooleanField(default=False, help_text='True if the event is compiled into a summary'),
+            name='summarized',
+            field=models.BooleanField(default=False, help_text='True if the event is included into a summary'),
         ),
         migrations.AddField(
             model_name='group',
@@ -21,13 +21,13 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='groupdailysummary',
-            name='compiled',
+            model_name='dailygroupsummary',
+            name='summarized',
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='userdailysummary',
-            name='compiled',
+            model_name='dailyusersummary',
+            name='summarized',
             field=models.BooleanField(default=False),
         ),
     ]

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('askbot', '0028_userdailysummary_groupdailysummary'),
+        ('askbot', '0028_dailyusersummary_dailygroupsummary'),
     ]
 
     operations = [

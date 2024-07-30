@@ -133,6 +133,7 @@ class Session(models.Model):
     user_agent = models.CharField(max_length=512, null=True, blank=True)
     created_at = models.DateTimeField() # no auto_now_add or auto_now for created_at and updated_at
     updated_at = models.DateTimeField() # b/c we want to set it manually for the testing purposes
+    last_summarized_at = models.DateTimeField() # used for calculating the time on site
 
     def __str__(self):
         created_at = self.created_at.isoformat() # pylint: disable=no-member
@@ -149,8 +150,8 @@ class Event(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(db_index=True)
     content_object = GenericForeignKey('content_type', 'object_id')
-    compiled = models.BooleanField(default=False,
-                                   help_text="True if the event is compiled into a summary")
+    summarized = models.BooleanField(default=False,
+                                   help_text="True if the event is included into a summary")
 
     def __str__(self):
         timestamp = self.timestamp.isoformat() # pylint: disable=no-member
@@ -168,7 +169,7 @@ class BaseSummary(models.Model):
     num_downvotes = models.PositiveIntegerField(default=0)
     question_views = models.PositiveIntegerField(default=0)
     time_on_site = models.DurationField(default=datetime.timedelta(0))
-    compiled = models.BooleanField(default=False)
+    summarized = models.BooleanField(default=False)
 
     class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
         abstract = True
@@ -199,6 +200,25 @@ class BaseSummary(models.Model):
         return self
 
 
+class HourlySummary(BaseSummary):
+    """An abstract class for hourly summaries."""
+    hour = models.DateTimeField(db_index=True)
+
+    class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
+        abstract = True
+
+
+class HourlyUserSummary(HourlySummary):
+    """User summary for each hour with activity."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class HourlyGroupSummary(HourlySummary):
+    """Group summary for each hour with activity."""
+    group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
+    num_users = models.PositiveIntegerField(default=0)
+
+
 class DailySummary(BaseSummary):
     """An abstract class for daily summaries."""
     date = models.DateField(db_index=True)
@@ -206,27 +226,17 @@ class DailySummary(BaseSummary):
     class Meta: # pylint: disable=too-few-public-methods, missing-class-docstring
         abstract = True
 
-    def add_event(self, event):
-        """Increments the attribute appropriate for the event type.
-        In addition adds up the time on site for all matching sessions.
-        """
-        super().add_event(event)
-        # todo: get all sessions intersecting the date
-        # for each session, calculate the intersection with the date
-        # add up those intervals
-        # assumes that sessions do not overlap
 
-
-class UserDailySummary(DailySummary):
+class DailyUserSummary(DailySummary):
     """User summary for each day with activity."""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-class GroupDailySummary(DailySummary):
+class DailyGroupSummary(DailySummary):
     """Group summary for each day with activity."""
     group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
     num_users = models.PositiveIntegerField(default=0)
 
 
     def add_event(self, event):
-        raise RuntimeError("Cannot add events to GroupDailySummary")
+        raise RuntimeError("Cannot add events to DailyGroupSummary")
