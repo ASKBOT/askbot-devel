@@ -250,7 +250,7 @@ class ProgressBar(object):
     """A wrapper for an iterator, that prints
     a progress bar along the way of iteration
     """
-    def __init__(self, iterable, length, message = '', silent=False):
+    def __init__(self, iterable, length, message='', silent=False):
         self.iterable = iterable
         self.length = length
         self.counter = float(0)

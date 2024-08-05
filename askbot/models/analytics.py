@@ -216,7 +216,14 @@ class HourlyUserSummary(HourlySummary):
 class HourlyGroupSummary(HourlySummary):
     """Group summary for each hour with activity."""
     group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
-    num_users = models.PositiveIntegerField(default=0)
+    num_users = models.PositiveIntegerField(
+        default=0,
+        help_text="Number of users in the group by the end of the hour"
+    )
+    num_users_added = models.PositiveIntegerField(
+        default=0,
+        help_text="Number of users added to the group during the hour"
+    )
 
 
 class DailySummary(BaseSummary):
@@ -235,8 +242,21 @@ class DailyUserSummary(DailySummary):
 class DailyGroupSummary(DailySummary):
     """Group summary for each day with activity."""
     group = models.ForeignKey(AskbotGroup, on_delete=models.CASCADE)
-    num_users = models.PositiveIntegerField(default=0)
-
+    num_users = models.PositiveIntegerField(
+        default=0,
+        help_text="Number of users in the group by the end of the day"
+    )
+    num_users_added = models.PositiveIntegerField(
+        default=0,
+        help_text="Number of users added to the group during the day"
+    )
 
     def add_event(self, event):
         raise RuntimeError("Cannot add events to DailyGroupSummary")
+
+    def __add__(self, other):
+        if not isinstance(other, HourlyGroupSummary):
+            raise RuntimeError("Only HourlyGroupSummary can be added to DailyGroupSummary")
+        super().__add__(other)
+        self.num_users = other.num_users # assume that the last value is the correct one
+        self.num_users_added += other.num_users_added
