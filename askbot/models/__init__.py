@@ -527,6 +527,11 @@ def user_has_badge(self, badge):
 def user_can_anonymize_account(self, user):
     """`True`, if `self` can anonymize and disable account of `user`"""
     perm = askbot_settings.WHO_CAN_ANONYMIZE_ACCOUNTS
+
+    # non-admins cannot remove admins or moderators
+    if not self.is_administrator() and user.is_administrator_or_moderator():
+        return False
+    
     if perm == 'admins':
         return self.is_administrator() and self.pk != user.pk
     elif self.is_administrator_or_moderator():
