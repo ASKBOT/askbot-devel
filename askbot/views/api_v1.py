@@ -1,8 +1,8 @@
 """/api/v1 views"""
+import json
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, Http404
-import json
 from askbot import models
 from askbot.models import User, UserProfile
 from askbot.conf import settings as askbot_settings
@@ -131,32 +131,19 @@ def user(request, user_id): #pylint: disable=unused-argument
 
 def users(request):
     """Returns data of the most active or latest users."""
-    allowed_sort_map = { #GET value -> Django query
-      'recent'    : '-pk__date_joined',
-      'oldest'    : 'pk__date_joined',
-      'reputation': '-reputation',
-      'username'  : 'pk__username'
-    }
-
     page = request.GET.get("page", '1')
-    sort = request.GET.get('sort', 'reputation')
 
     try:
         page = int(page)
-        order_by = allowed_sort_map[sort]
     except ValueError: # cast failed
         page = 1
-    except KeyError:   # lookup failed
-        raise Http404
+    except KeyError as exc: # lookup failed
+        raise Http404 from exc
 
-    profiles = UserProfile.objects.exclude(status='b').order_by('-reputation')
+    user_ids = UserProfile.objects.values_list('pk', flat=True) # pylint: disable=no-member
+    users_objects = User.objects.filter(id__in=user_ids).order_by('id')
 
-    #FIXME: Shouldn't we reuse profiles here?
-    #FIXME: Does this cause 2 DB querys? Should we merge the following 2 lines?
-    user_ids = UserProfile.objects.values_list('pk', flat=True)
-    users = User.objects.filter(id__in=user_ids).order_by('id')
-
-    paginator = Paginator(users, 10)
+    paginator = Paginator(users_objects, 10)
 
     try:
         user_objects = paginator.page(page)
@@ -165,8 +152,8 @@ def users(request):
 
     user_list = []
     #serializing to json
-    for user in user_objects:
-        user_dict = get_user_data(user)
+    for user_object in user_objects:
+        user_dict = get_user_data(user_object)
         user_list.append(dict.copy(user_dict))
 
     response_dict = {
@@ -236,7 +223,7 @@ def questions(request):
         search_state.page = 1
     page = paginator.page(search_state.page)
 
-    question_list = list()
+    question_list = []
     for thread in page.object_list:
         datum = get_question_data(thread)
         question_list.append(datum)

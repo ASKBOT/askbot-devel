@@ -1,14 +1,15 @@
+from appconf import AppConf
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from appconf import AppConf
-import os
-from askbot import const
-
 if settings.ASKBOT_TRANSLATE_URL:
     from django.utils.translation import pgettext
 else:
-    pgettext = lambda context, value: value
+    def pgettext(_context, value):
+        return value
+
+from askbot import const # pylint: disable=wrong-import-position
+
 
 class AskbotStaticSettings(AppConf):
     ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif',
@@ -43,6 +44,7 @@ class AskbotStaticSettings(AppConf):
     ANALYTICS_NON_ADMINS_SLICE_DESCRIPTION = _('All users, excluding the moderators and admins')
     ANALYTICS_ADMINS_FILTER = None # None or a dictionary applied in the Django ORM filter
     ANALYTICS_SESSION_TIMEOUT_MINUTES = 30
+    ANALYTICS_VIP_GROUP_IDS = []
     CAS_USER_FILTER = None
     CAS_USER_FILTER_DENIED_MSG = None
     CAS_GET_USERNAME = None # python path to function
@@ -82,6 +84,5 @@ class AskbotStaticSettings(AppConf):
     WHITELISTED_IPS = tuple() # a tuple of whitelisted ips for moderation
     FEDERATED_LOGIN_EMAIL_EDITABLE = True
 
-    class Meta:
+    class Meta: # pylint: disable=too-few-public-methods
         prefix = 'askbot'
-

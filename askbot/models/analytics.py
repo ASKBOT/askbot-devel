@@ -260,3 +260,4 @@ class DailyGroupSummary(DailySummary):
         super().__add__(other)
         self.num_users = other.num_users # assume that the last value is the correct one
         self.num_users_added += other.num_users_added
+        return self

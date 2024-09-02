@@ -1,10 +1,29 @@
 {% extends "one_column_body.html" %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
+{% block forestyle %}
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.5rem;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tbody td:not(:first-child) {
+      text-align: center;
+    }
+  </style>
+{% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
 {% block forum_header %}{% endblock %}
 {% block content %}
-<h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %}</h1>
-<div class="analytics-summary">
+<h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %} / {% trans %}General statistics{% endtrans %}</h1>
+<div class="analytics-summary" style="margin-bottom: 1.5rem;">
   <div class="analytics-summary-number">
     <div>{% trans %}All:{% endtrans %} {{ all_users_count }}</div>
     <p>{% trans %}All users{% endtrans %}</p>
@@ -24,7 +43,51 @@
       <p>{% trans %}According to the email domain names{% endtrans %}</p>
     </div>
   {% endif %}
-<div>
-
 </div>
+<table>
+  <thead>
+    <tr>
+      <th>{% trans %}Group{% endtrans %}</th>
+      <th>{% trans %}Num Users{% endtrans %}</th>
+      <th>{% trans %}Users Added{% endtrans %}</th>
+      <th>{% trans %}Questions{% endtrans %}</th>
+      <th>{% trans %}Answers{% endtrans %}</th>
+      <th>{% trans %}Upvotes{% endtrans %}</th>
+      <th>{% trans %}Downvotes{% endtrans %}</th>
+      <th>{% trans %}Time on Site{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{% trans %}All{% endtrans %}</td>
+      <td>{{ vip_data['num_users'] + customer_data['num_users'] }}</td>
+      <td>{{ vip_data['num_users_added'] + customer_data['num_users_added'] }}</td>
+      <td>{{ vip_data['num_questions'] + customer_data['num_questions'] }}</td>
+      <td>{{ vip_data['num_answers'] + customer_data['num_answers'] }}</td>
+      <td>{{ vip_data['num_upvotes'] + customer_data['num_upvotes'] }}</td>
+      <td>{{ vip_data['num_downvotes'] + customer_data['num_downvotes'] }}</td>
+      <td>{{ vip_data['time_on_site'] + customer_data['time_on_site'] }}</td>
+    </tr>
+    <tr>
+      <td>WindRiver</td>
+      <td>{{ vip_data['num_users'] }}</td>
+      <td>{{ vip_data['num_users_added'] }}</td>
+      <td>{{ vip_data['num_questions'] }}</td>
+      <td>{{ vip_data['num_answers'] }}</td>
+      <td>{{ vip_data['num_upvotes'] }}</td>
+      <td>{{ vip_data['num_downvotes'] }}</td>
+      <td>{{ vip_data['time_on_site'] }}</td>
+    </tr>
+    <tr>
+      <td>{% trans %}Customers{% endtrans %}</td>
+      <td>{{ customer_data['num_users'] }}</td>
+      <td>{{ customer_data['num_users_added'] }}</td>
+      <td>{{ customer_data['num_questions'] }}</td>
+      <td>{{ customer_data['num_answers'] }}</td>
+      <td>{{ customer_data['num_upvotes'] }}</td>
+      <td>{{ customer_data['num_downvotes'] }}</td>
+      <td>{{ customer_data['time_on_site'] }}</td>
+    </tr>
+  </tbody>
+</table>
 {% endblock %}
