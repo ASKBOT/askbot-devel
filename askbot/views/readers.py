@@ -619,7 +619,8 @@ def question(request, id):#refactor - long subroutine. display question body, an
     signals.question_visited.send(None,
                     request=request,
                     question=question_post,
-                )
+                    timestamp=timezone.now()
+                    )
 
     paginator_data = {
         'is_paginated' : (objects_list.count > const.ANSWERS_PAGE_SIZE),

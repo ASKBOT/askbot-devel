@@ -8,8 +8,12 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.conf import settings as django_settings
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from askbot.models.user import Group as AskbotGroup
+from askbot.models.repute import Vote
+from askbot import signals
 
 #for convenience, here are the activity types from used in the Activity object
 #TYPE_ACTIVITY_ASK_QUESTION = 1
@@ -126,6 +130,27 @@ def get_unique_user_email_domains():
     return list(get_unique_user_email_domains_qs().values_list('domain', flat=True))
 
 
+class SessionManager(models.Manager):
+    """Manager for the Session model"""
+    def create_session(self, user, ip_address, user_agent):
+        """Creates a new session"""
+        now = timezone.now()
+        return self.create(user=user,
+                           ip_address=ip_address,
+                           user_agent=user_agent,
+                           created_at=now,
+                           updated_at=now,
+                           last_summarized_at=now)
+
+    def get_active_session(self, user):
+        """Filters out the session that has not expired and returns the first one,
+        if there isn't one - returns None
+        """
+        timeout_minutes = django_settings.ASKBOT_ANALYTICS_SESSION_TIMEOUT_MINUTES
+        timeout = datetime.timedelta(minutes=timeout_minutes)
+        sessions = self.filter(user=user, updated_at__gte=timezone.now() - timeout)
+        return sessions.first()
+
 class Session(models.Model):
     """Analytics session"""
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -135,11 +160,18 @@ class Session(models.Model):
     updated_at = models.DateTimeField() # b/c we want to set it manually for the testing purposes
     last_summarized_at = models.DateTimeField() # used for calculating the time on site
 
+    objects = SessionManager()
+
     def __str__(self):
         created_at = self.created_at.isoformat() # pylint: disable=no-member
         updated_at = self.updated_at.isoformat() # pylint: disable=no-member
         email = self.user.email # pylint: disable=no-member
         return f"Session: {email} {created_at} - {updated_at}"
+
+    def touch(self):
+        """Updates the updated_at field"""
+        self.updated_at = timezone.now()
+        self.save()
 
 
 class Event(models.Model):
@@ -261,3 +293,165 @@ class DailyGroupSummary(DailySummary):
         self.num_users = other.num_users # assume that the last value is the correct one
         self.num_users_added += other.num_users_added
         return self
+
+
+@receiver(signals.user_registered)
+def record_user_registration(sender, user, **kwargs): # pylint: disable=unused-argument
+    """Records user registration event"""
+    session = Session.objects.get_active_session(user)
+    if not session:
+        return
+
+    event = Event(
+        session=Session.objects.get_active_session(user),
+        event_type=EVENT_TYPE_USER_REGISTERED,
+        timestamp=user.date_joined,
+        content_object=user
+    )
+    event.save()
+
+
+@receiver(signals.user_logged_in)
+def record_user_login(sender, user, **kwargs):
+    """Records user login event"""
+    session = Session.objects.get_active_session(user)
+    if not session:
+        return
+
+    event = Event(
+        session=session,
+        event_type=EVENT_TYPE_LOGGED_IN,
+        timestamp=timezone.now(),
+        content_object=user
+    )
+    event.save()
+
+
+@receiver(signals.voted)
+def record_user_vote(sender, user=None, vote_type=None, canceled=None, post=None, timestamp=None, **kwargs): # pylint: disable=unused-argument
+    """Records user vote event
+    Event types:
+    * EVENT_TYPE_UPVOTED = 6
+    * EVENT_TYPE_DOWNVOTED = 7
+    * EVENT_TYPE_VOTE_CANCELED = 8
+    """
+    session = Session.objects.get_active_session(user)
+    if not session:
+        return
+
+    if canceled:
+        event_type = EVENT_TYPE_VOTE_CANCELED
+    elif vote_type == Vote.VOTE_UP:
+        event_type = EVENT_TYPE_UPVOTED
+    elif vote_type == Vote.VOTE_DOWN:
+        event_type = EVENT_TYPE_DOWNVOTED
+    else:
+        return
+
+    event = Event(
+        session=session,
+        event_type=event_type,
+        timestamp=timestamp,
+        content_object=post
+    )
+    event.save()
+
+
+@receiver(signals.new_question_posted)
+def record_new_question(sender, question, **kwargs): # pylint: disable=unused-argument
+    """Records new question event"""
+    session = Session.objects.get_active_session(question.author)
+    if not session:
+        return
+
+    event = Event(
+        session=session,
+        event_type=EVENT_TYPE_ASKED,
+        timestamp=question.added_at,
+        content_object=question
+    )
+    event.save()
+
+
+@receiver(signals.new_answer_posted)
+def record_new_answer(sender, answer, **kwargs): # pylint: disable=unused-argument
+    """Records new answer event"""
+    session = Session.objects.get_active_session(answer.author)
+    if not session:
+        return
+
+    event = Event(
+        session=session,
+        event_type=EVENT_TYPE_ANSWERED,
+        timestamp=answer.added_at,
+        content_object=answer
+    )
+    event.save()
+
+
+@receiver(signals.new_comment_posted)
+def record_new_comment(sender, comment, **kwargs): # pylint: disable=unused-argument
+    """Records new comment event
+    Event types:
+    * EVENT_TYPE_QUESTION_COMMENTED = 11
+    * EVENT_TYPE_ANSWER_COMMENTED = 12
+    """
+    session = Session.objects.get_active_session(comment.author)
+    if not session:
+        return
+
+    parent_type = comment.parent.post_type
+    if parent_type == 'question':
+        event_type = EVENT_TYPE_QUESTION_COMMENTED
+    elif parent_type == 'answer':
+        event_type = EVENT_TYPE_ANSWER_COMMENTED
+    else:
+        return
+
+    event = Event(
+        session=session,
+        event_type=event_type,
+        timestamp=comment.added_at,
+        content_object=comment
+    )
+    event.save()
+
+
+@receiver(signals.tags_updated)
+def record_tag_update(sender, thread=None, user=None, timestamp=None, **kwargs): # pylint: disable=unused-argument
+    """Records tag update event"""
+    session = Session.objects.get_active_session(user)
+    if not session:
+        return
+
+    event = Event(
+        session=session,
+        event_type=EVENT_TYPE_QUESTION_RETAGGED,
+        timestamp=timestamp,
+        content_object=thread
+    )
+
+
+@receiver(signals.question_visited)
+def record_question_visit(sender, request, question, timestamp, **kwargs): # pylint: disable=unused-argument
+    """Records question visit event"""
+    if not request.user.is_authenticated:
+        return
+
+    session = Session.objects.get_active_session(request.user)
+    if not session:
+        return
+
+    event = Event(
+        session=session,
+        event_type=EVENT_TYPE_QUESTION_VIEWED,
+        timestamp=timestamp,
+        content_object=question
+    )
+    event.save()
+
+
+"""
+EVENT_TYPE_ANSWER_VIEWED = 5
+EVENT_TYPE_SEARCHED = 14
+"""

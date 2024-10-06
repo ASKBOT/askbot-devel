@@ -35,6 +35,7 @@ new_question_posted = django.dispatch.Signal()
 new_comment_posted = django.dispatch.Signal()
 answer_edited = django.dispatch.Signal()
 question_visited = django.dispatch.Signal()
+voted = django.dispatch.Signal()
 
 post_updated = django.dispatch.Signal()
 
@@ -85,13 +86,14 @@ def pop_all_db_signal_receivers():
         post_updated,
         award_badges_signal,
         posts_marked_as_spam,
+        question_visited,
+        voted,
         # django signals
         pre_save,
         post_save,
         pre_delete,
         post_delete,
         post_migrate,
-        question_visited,
     )
     if 'm2m_changed' in globals():
         signals += (m2m_changed, )

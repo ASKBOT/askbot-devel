@@ -3286,6 +3286,8 @@ def _process_vote(user, post, timestamp=None, cancel=False, vote_type=None):
         else:
             auth.onDownVoted(vote, post, user, timestamp)
 
+    signals.voted.send(None, user=user, vote_type=vote_type, canceled=cancel, post=post, timestamp=timestamp)
+
     post.thread.reset_cached_data()
 
     if post.post_type == 'question':
@@ -4072,7 +4074,7 @@ def record_user_visit(user, timestamp, **kwargs):
     profile.update_cache()
 
 
-def record_question_visit(request, question, **kwargs):
+def record_question_visit(request, question, timestamp, **kwargs):
     if functions.not_a_robot_request(request):
         #todo: split this out into a subroutine
         #todo: merge view counts per user and per session
@@ -4094,7 +4096,7 @@ def record_question_visit(request, question, **kwargs):
             else:
                 update_view_count = True
 
-        request.session['question_view_times'][question.id] = timezone.now()
+        request.session['question_view_times'][question.id] = timestamp
         #2) run the slower jobs in a celery task
         from askbot import tasks
         defer_celery_task(
