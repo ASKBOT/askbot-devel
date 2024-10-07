@@ -177,7 +177,7 @@ class Session(models.Model):
 class Event(models.Model):
     """Analytics event"""
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    event_type = models.CharField(max_length=64, choices=EVENT_TYPES)
+    event_type = models.SmallIntegerField(choices=EVENT_TYPES)
     timestamp = models.DateTimeField() # no auto_now_add or auto_now for created_at and updated_at
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(db_index=True)
@@ -312,7 +312,7 @@ def record_user_registration(sender, user, **kwargs): # pylint: disable=unused-a
 
 
 @receiver(signals.user_logged_in)
-def record_user_login(sender, user, **kwargs):
+def record_user_login(sender, user, **kwargs): # pylint: disable=unused-argument
     """Records user login event"""
     session = Session.objects.get_active_session(user)
     if not session:
@@ -328,7 +328,8 @@ def record_user_login(sender, user, **kwargs):
 
 
 @receiver(signals.voted)
-def record_user_vote(sender, user=None, vote_type=None, canceled=None, post=None, timestamp=None, **kwargs): # pylint: disable=unused-argument
+def record_user_vote(sender, user=None, vote_type=None, canceled=None, # pylint: disable=unused-argument, too-many-arguments
+                     post=None, timestamp=None, **kwargs): # pylint: disable=unused-argument
     """Records user vote event
     Event types:
     * EVENT_TYPE_UPVOTED = 6
@@ -430,7 +431,7 @@ def record_tag_update(sender, thread=None, user=None, timestamp=None, **kwargs):
         timestamp=timestamp,
         content_object=thread
     )
-
+    event.save()
 
 @receiver(signals.question_visited)
 def record_question_visit(sender, request, question, timestamp, **kwargs): # pylint: disable=unused-argument
