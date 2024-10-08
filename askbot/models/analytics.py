@@ -187,7 +187,7 @@ class Event(models.Model):
 
     def __str__(self):
         timestamp = self.timestamp.isoformat() # pylint: disable=no-member
-        return f"Event: {self.event_type_display} {timestamp}" # pylint: disable=no-member
+        return f"Event: {self.get_event_type_display()} {timestamp}" # pylint: disable=no-member
 
 
 class BaseSummary(models.Model):

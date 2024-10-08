@@ -224,7 +224,10 @@ class ThreadManager(BaseQuerySetManager):
             thread.make_public()
 
         # INFO: Question has to be saved before update_tags() is called
-        thread.update_tags(tagnames=tagnames, user=author, timestamp=added_at)
+        thread.update_tags(tagnames=tagnames,
+                           user=author,
+                           timestamp=added_at,
+                           without_signal=True) # no retag signal on thread creation
 
         # TODO: this is handled in signal because models for posts
         # are too spread out
@@ -1524,7 +1527,8 @@ class Thread(models.Model):
         self.tags.remove(*removed_tags)
         return removed_tags
 
-    def update_tags(self, tagnames=None, user=None, timestamp=None):
+    def update_tags(self, tagnames=None, user=None,
+                    timestamp=None, without_signal=False):
         """
         Updates Tag associations for a thread to match the given
         tagname string.
@@ -1569,7 +1573,7 @@ class Thread(models.Model):
 
         # modified tags go on to recounting their use
         # TODO - this can actually be done asynchronously - not so important
-        modified_tags, unused_tags = separate_unused_tags(removed_tags)
+        modified_tags, _unused_tags = separate_unused_tags(removed_tags)
 
         modified_tags = removed_tags
         # add new tags to the relation
@@ -1626,8 +1630,12 @@ class Thread(models.Model):
         modified_tags = set(modified_tags)
         if modified_tags:
             Tag.objects.update_use_counts(modified_tags)
-            signals.tags_updated.send(None, thread=self, tags=modified_tags,
-                                      user=user, timestamp=timestamp)
+            if not without_signal:
+                signals.tags_updated.send(None,
+                                          thread=self,
+                                          tags=modified_tags,
+                                          user=user,
+                                          timestamp=timestamp)
             return True
 
         return False

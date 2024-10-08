@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import time_machine
 from django.test.utils import override_settings
 from django.http import HttpRequest
@@ -14,7 +14,7 @@ class TestAnalytics(AskbotTestCase):
         Creates a session. Sends the registration and login signals.
         Returns the user object and session.
         """
-        user = self.create_user(email='test@test.com')
+        user = self.create_user(email=email)
         self.client.force_login(user)
         # fake django request
         request = HttpRequest()
@@ -28,6 +28,19 @@ class TestAnalytics(AskbotTestCase):
         signals.user_logged_in.send(None, user=user, request=request, session_key='test')
         return user, session
 
+    def post_question_and_answer(self, session, answer_delay, tags='test'):
+        question = self.post_question(user=session.user, tags=tags)
+        session.touch()
+        signals.new_question_posted.send(None, question=question)
+
+        time3 = datetime.now() + answer_delay
+        with time_machine.travel(time3):
+            answer = self.post_answer(user=session.user, question=question)
+            session.touch()
+            signals.new_answer_posted.send(None, answer=answer)
+
+        return question, answer
+
 
     @override_settings(ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED=True)
     def test_simple_session(self):
@@ -39,17 +52,12 @@ class TestAnalytics(AskbotTestCase):
         self.assertEqual(Event.objects.count(), 2) # pylint: disable=no-member
 
         time2 = '2024-02-29 12:15:00'
+        answer_delay = timedelta(minutes=30)
         with time_machine.travel(time2):
-            question = self.post_question(user=user)
-            session.touch()
-            signals.new_question_posted.send(None, question=question)
-
-        time3 = '2024-02-29 12:44:00'
-        with time_machine.travel(time3):
-            answer = self.post_answer(user=user, question=question)
-            session.touch()
-            signals.new_answer_posted.send(None, answer=answer)
-
+            self.post_question_and_answer(session,
+                                          answer_delay,
+                                          tags='tag1 tag2')
+        
         self.assertEqual(Session.objects.count(), 1) # pylint: disable=no-member
         self.assertEqual(Event.objects.count(), 4) # pylint: disable=no-member
 
@@ -64,8 +72,8 @@ class TestAnalytics(AskbotTestCase):
         self.assertEqual(hgs.count(), 1)
         self.assertEqual(hus[0].hour, hgs[0].hour)
         self.assertEqual(hus[0].hour.hour, 12)
-        expected_time_on_site = datetime.strptime(time3, '%Y-%m-%d %H:%M:%S') \
-                                - datetime.strptime(time1, '%Y-%m-%d %H:%M:%S')
+        time3 = datetime.strptime(time2, '%Y-%m-%d %H:%M:%S') + answer_delay
+        expected_time_on_site = time3 - datetime.strptime(time1, '%Y-%m-%d %H:%M:%S')
         self.assertAlmostEqual(hus[0].time_on_site.total_seconds(),
                                expected_time_on_site.total_seconds(),
                                delta=2)
