@@ -531,7 +531,7 @@ def user_can_anonymize_account(self, user):
     # non-admins cannot remove admins or moderators
     if not self.is_administrator() and user.is_administrator_or_moderator():
         return False
-    
+
     if perm == 'admins':
         return self.is_administrator() and self.pk != user.pk
     elif self.is_administrator_or_moderator():
@@ -1872,6 +1872,7 @@ def user_accept_best_answer(
         auth.onAnswerAcceptCanceled(accepted_answer, self)
 
     auth.onAnswerAccept(answer, self, timestamp=timestamp)
+    signals.best_answer_accepted.send(None, answer=answer, user=self, timestamp=timestamp)
     award_badges_signal.send(None,
                              event='accept_best_answer',
                              actor=self,
@@ -1888,6 +1889,7 @@ def user_unaccept_best_answer(
         self.assert_can_unaccept_best_answer(answer)
     if not answer.endorsed:
         return
+    signals.best_answer_unaccepted.send(None, answer=answer, user=self, timestamp=timestamp)
     auth.onAnswerAcceptCanceled(answer, self)
 
 @auto_now_timestamp
