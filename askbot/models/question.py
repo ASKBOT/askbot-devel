@@ -1,5 +1,4 @@
 import collections
-import datetime
 import logging
 import operator
 import regex as re
@@ -20,8 +19,6 @@ from django.utils import timezone
 
 import askbot
 from askbot.conf import settings as askbot_settings
-from askbot import mail
-from askbot.mail import messages
 from askbot.models.tag import Tag, TagSynonym
 from askbot.models.tag import get_tags_by_names
 from askbot.models.tag import filter_accepted_tags, filter_suggested_tags
@@ -35,7 +32,6 @@ from askbot import const
 from askbot.utils.lists import LazyList
 from askbot.utils.loading import load_plugin
 from askbot.search import mysql
-from askbot.utils.slug import slugify
 from askbot.utils import translation as translation_utils
 from askbot.search.state_manager import DummySearchState
 
