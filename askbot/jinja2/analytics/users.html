@@ -17,13 +17,22 @@
     tbody td:not(:first-child) {
       text-align: center;
     }
+    .title-row {
+      align-items: center;
+    }
+    .analytics-summary {
+      margin-bottom: 2rem;
+    }
   </style>
 {% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
 {% block forum_header %}{% endblock %}
 {% block content %}
-<h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %} / {% trans %}General statistics{% endtrans %}</h1>
-<div class="analytics-summary" style="margin-bottom: 1.5rem;">
+<div class="title-row">
+  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %} / {% trans %}General statistics{% endtrans %}</h1>
+  {% include "analytics/date_selector.html" %}
+</div>
+<div class="analytics-summary">
   <div class="analytics-summary-number">
     <div>{% trans %}All:{% endtrans %} {{ all_users_count }}</div>
     <p>{% trans %}All users{% endtrans %}</p>

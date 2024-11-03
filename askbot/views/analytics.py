@@ -2,7 +2,11 @@
 from datetime import timedelta
 from django.conf import settings as django_settings
 from django.db import models
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from django.urls import reverse
+from django.utils.translation import gettext as _
+from django.utils.html import escape
+from askbot.forms import AnalyticsDatesForm
 from askbot.models import User, Group
 from askbot.models.analytics import (get_non_admins_count,
                                      get_organizations_count,
@@ -14,7 +18,7 @@ def analytics_index(request):
     return render(request, 'analytics/index.html')
 
 
-def analytics_users(request):
+def analytics_users(request, dates='all-time'):
     """User analytics page"""
     non_admins_slice = django_settings.ASKBOT_ANALYTICS_NON_ADMINS_SLICE_DESCRIPTION
     data = {'all_users_count': User.objects.exclude(askbot_profile__status='b').count(),
@@ -25,11 +29,18 @@ def analytics_users(request):
     vip_groups = Group.objects.filter(group_ptr__id__in=django_settings.ASKBOT_ANALYTICS_VIP_GROUP_IDS)
     vip_summaries = DailyGroupSummary.objects.filter(group__in=vip_groups) # pylint: disable=no-member
     vip_summaries = vip_summaries.order_by('-date')
-    last_summary = vip_summaries.first()
-    last_date = last_summary.date
-    from_date = last_date - timedelta(days=30)
-    vip_summaries = vip_summaries.filter(date__gt=from_date, date__lte=last_date)
-    customer_summaries = DailyGroupSummary.objects.filter(date__gt=from_date, date__lte=last_date)
+    earliest_summary = vip_summaries.last()
+
+    dates_form = AnalyticsDatesForm({'dates': dates}, earliest_possible_date=earliest_summary.date)
+    if not dates_form.is_valid():
+        escaped_range = escape(dates)
+        request.user.message_set.create(message=_('Date range {range} is invalid.').format(range=escaped_range))
+        return HttpResponseRedirect(reverse('analytics_users', kwargs={'dates': 'all-time'}))
+
+    start_date, end_date = dates_form.cleaned_data['dates']
+
+    vip_summaries = vip_summaries.filter(date__gt=start_date, date__lte=end_date)
+    customer_summaries = DailyGroupSummary.objects.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
     customer_summaries = customer_summaries.exclude(id__in=vip_summaries.values_list('id', flat=True))
 
     def get_aggregated_data(summaries):
@@ -60,6 +71,9 @@ def analytics_users(request):
 
     data['vip_data'] = get_aggregated_data(vip_summaries)
     data['customer_data'] = get_aggregated_data(customer_summaries)
+    data['start_date'] = start_date
+    data['end_date'] = end_date
+    data['dates_url_param'] = dates
 
     if django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
         data['orgs_count'] = get_organizations_count()

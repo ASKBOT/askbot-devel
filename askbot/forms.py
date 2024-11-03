@@ -1,6 +1,7 @@
 """Forms, custom form fields and related utility functions
 used in Askbot"""
 from collections import OrderedDict
+from datetime import timedelta
 import logging
 import unicodedata
 import regex as re #todo: make explicit import
@@ -1720,3 +1721,64 @@ class ConvertCommentForm(forms.Form):
 class ReorderBadgesForm(forms.Form):
     badge_id = forms.IntegerField()
     position = forms.IntegerField()
+
+
+class AnalyticsDatesForm(forms.Form):
+    """dates is a string that accepts a list of pre-approved values
+    Such as last-7-days, this-year, etc., as defined in the analytics dates
+    selector dropdown template.
+    """
+    dates = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        self.earliest_date = kwargs.pop('earliest_possible_date')
+        super(AnalyticsDatesForm, self).__init__(*args, **kwargs)
+
+    def clean_dates(self):
+        dates = self.cleaned_data['dates']
+        if dates == 'last-7-days':
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=7)
+            return start_date, end_date
+        if dates == 'last-30-days':
+            end_date = timezone.now().date()
+            start_date = end_date - timedelta(days=30)
+            return start_date, end_date
+        if dates == 'this-month':
+            end_date = timezone.now().date()
+            start_date = end_date.replace(day=1)
+            return start_date, end_date
+        if dates == 'last-month':
+            now = timezone.now().date()
+            this_month_start = now.replace(day=1)
+            last_month_end = this_month_start - timedelta(days=1)
+            last_month_start = last_month_end.replace(day=1)
+            return last_month_start, last_month_end
+        if dates == 'last-3-months':
+            now = timezone.now().date()
+            this_month_start = now.replace(day=1)
+            last_month_end = this_month_start - timedelta(days=1)
+            three_months_ago_approx_end = last_month_end - timedelta(days=62)
+            three_months_ago_start = three_months_ago_approx_end.replace(day=1)
+            return three_months_ago_start, last_month_end
+        if dates == 'last-6-months':
+            now = timezone.now().date()
+            this_month_start = now.replace(day=1)
+            last_month_end = this_month_start - timedelta(days=1)
+            six_months_ago_approx_end = last_month_end - timedelta(days=155)
+            six_months_ago_start = six_months_ago_approx_end.replace(day=1)
+            return six_months_ago_start, last_month_end
+        if dates == 'this-year':
+            now = timezone.now().date()
+            this_year_start = now.replace(month=1, day=1)
+            return this_year_start, now
+        if dates == 'last-year':
+            now = timezone.now().date()
+            last_year_start = now.replace(year=now.year - 1, month=1, day=1)
+            last_year_end = last_year_start.replace(year=now.year - 1, month=12, day=31)
+            return last_year_start, last_year_end
+
+        if dates == 'all-time':
+            return self.earliest_date, timezone.now().date()
+
+        raise forms.ValidationError('Invalid date range')

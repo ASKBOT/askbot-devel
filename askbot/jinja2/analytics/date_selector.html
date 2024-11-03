@@ -1,0 +1,72 @@
+<style>
+  .date-selector {
+    cursor: pointer;
+    border: var(--border-width) var(--border-style) var(--editor-border-color);
+    padding: 0.5rem;
+    position: relative;
+  }
+  svg.calendar-icon {
+    color: var(--link-color);
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .date-selector .js-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .date-selector .js-dropdown-target {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(calc(-1 * var(--border-width)), 100%);
+    list-style: none;
+    border: var(--border-width) var(--border-style) var(--editor-border-color);
+    width: calc(100% + 2 * var(--border-width));
+  }
+  .date-selector .js-dropdown-target li {
+    height: 2rem;
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+  .date-selector a {
+    display: block;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  .date-selector .js-dropdown-target li:hover,
+  .date-selector .js-dropdown-target li.js-selected {
+    background: var(--toolbar-dropdown-menu-item-hover-bg);
+    color: white;
+    transition: background 0.1s ease-in-out;
+  }
+</style>
+
+<div class="date-selector js-dropdown-menu">
+  <div class="js-dropdown-trigger">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 15 15" class="calendar-icon">
+      <path fill="currentColor" fill-rule="evenodd" d="M4.5 1a.5.5 0 0 1 .5.5V2h5v-.5a.5.5 0 0 1 1 0V2h1.5A1.5 1.5 0 0 1 14 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 12.5v-9A1.5 1.5 0 0 1 2.5 2H4v-.5a.5.5 0 0 1 .5-.5ZM10 3v.5a.5.5 0 0 0 1 0V3h1.5a.5.5 0 0 1 .5.5V5H2V3.5a.5.5 0 0 1 .5-.5H4v.5a.5.5 0 0 0 1 0V3h5ZM2 6v6.5a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V6H2Zm5 1.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0ZM9.5 7a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1Zm1.5.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0Zm.5 1.5a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1ZM9 9.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0ZM7.5 9a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1ZM5 9.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0ZM3.5 9a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1ZM3 11.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0Zm2.5-.5a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1Zm1.5.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0Zm2.5-.5a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1Z" clip-rule="evenodd"/>
+    </svg>
+    {{ start_date.strftime('%b %d, %Y') }} - {{ end_date.strftime('%b %d, %Y') }}
+  </div>
+  <ul class="js-dropdown-target">
+    {% for date_range in [
+      ('last-7-days', _('Last 7 days')),
+      ('last-30-days', _('Last 30 days')),
+      ('this-month', _('This month')),
+      ('last-month', _('Last month')),
+      ('last-3-months', _('Last 3 months')),
+      ('last-6-months', _('Last 6 months')),
+      ('this-year', _('This year')),
+      ('last-year', _('Last year')),
+      ('all-time', _('All time')),
+    ] %}
+      <li {% if dates_url_param == date_range[0] %}class="js-selected"{% endif %}>
+        <a href="{{ url('analytics_users', dates=date_range[0]) }}">{{ date_range[1] }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>
