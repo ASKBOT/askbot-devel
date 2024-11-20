@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Ahmad Harthi <aalharthi@kacst.edu.sa>, 2013
 # Ahmad Khayyat <akhayyat@gmail.com>, 2013
@@ -12,14 +12,16 @@ msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-16 13:08-0500\n"
-"PO-Revision-Date: 2020-08-16 19:55+0000\n"
-"Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
+"PO-Revision-Date: 2023-06-18 08:09+0100\n"
+"Last-Translator: Mustafa Albazy <mustafa@albazy.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/askbot/askbot/language/ar/)\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ar\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 "
+"&& n%100<=99 ? 4 : 5;\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: media/js/editors/folded_editor.js:38 media/js/post.js:4949
 msgid "Sorry, you have only read access"
@@ -27,20 +29,18 @@ msgstr "عذراً، لديك صلاحيات قراءة فقط"
 
 #: media/js/group_messaging.js:132
 msgid "Type a message"
-msgstr ""
+msgstr "اكتب رسالة"
 
 #: media/js/group_messaging.js:141
 msgid "Add a recipient"
-msgstr ""
+msgstr "اضف المستقبل"
 
 #: media/js/group_messaging.js:171
 msgid "message sent"
 msgstr "تم ارسال الرسالة"
 
 #: media/js/group_messaging.js:187
-msgid ""
-"Did you mean to send your message to muliple users? Use comma instead of "
-"whitespaces"
+msgid "Did you mean to send your message to muliple users? Use comma instead of whitespaces"
 msgstr ""
 
 #: media/js/group_messaging.js:191
@@ -68,21 +68,20 @@ msgstr "من فضلك قم بإضافة أحد وسائل الدخول؟"
 
 #: media/js/jquery-openid/jquery.authenticator.js:93
 msgid ""
-"You don't have a method to log in right now, please add one or more by "
-"clicking any of the icons below."
+"You don't have a method to log in right now, please add one or more by clicking any of the icons below."
 msgstr "لا يوجد لديك وسيلة للدخول، يمكنك إختيار واحدة مما يلي."
 
 #: media/js/jquery-openid/jquery.authenticator.js:147
 msgid "enter username"
-msgstr ""
+msgstr "ادخل معرف المستخدم"
 
 #: media/js/jquery-openid/jquery.authenticator.js:149
 msgid "enter username or email"
-msgstr ""
+msgstr "ادخل المعرف او البريد الالكتروني"
 
 #: media/js/jquery-openid/jquery.authenticator.js:158
 msgid "enter password"
-msgstr ""
+msgstr "ادخل كلمة المرور"
 
 #: media/js/jquery-openid/jquery.authenticator.js:180
 msgid "passwords do not match"
@@ -127,8 +126,7 @@ msgstr "إنشاء جساب محمي بكلمة مرور"
 msgid "loading..."
 msgstr "تحميل..."
 
-#: media/js/post.js:137 media/js/post.js:176 media/js/post.js:229
-#: media/js/post.js:253
+#: media/js/post.js:137 media/js/post.js:176 media/js/post.js:229 media/js/post.js:253
 msgid "enter > %(length)s character"
 msgid_plural "enter > %(length)s characters"
 msgstr[0] ""
@@ -175,10 +173,9 @@ msgstr ""
 
 #: media/js/post.js:420
 msgid "Merge"
-msgstr ""
+msgstr "دمج"
 
-#: media/js/post.js:511 media/js/utils/modal_dialog.js:9
-#: media/js/utils/text_property_editor.js:48
+#: media/js/post.js:511 media/js/utils/modal_dialog.js:9 media/js/utils/text_property_editor.js:48
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -292,8 +289,8 @@ msgstr "يرجى إدخال %s حرفاً إضافياً على الأقل"
 msgid "maximum comment length reached"
 msgstr ""
 
-#: media/js/post.js:2451 media/js/post.js:3370 media/js/post.js:4921
-#: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:323
+#: media/js/post.js:2451 media/js/post.js:3370 media/js/post.js:4921 media/js/user/group_adder_widget.js:17
+#: media/js/utils/editable.js:323
 msgid "cancel"
 msgstr "إلغاء"
 
@@ -321,8 +318,7 @@ msgstr "هل تريد ازالة التعليق؟"
 msgid "please sign in or register to post comments"
 msgstr "الرجاء التسجيل لاضافة تعليق"
 
-#: media/js/post.js:3364 media/js/post.js:4185 media/js/post.js:4378
-#: media/js/utils/editable.js:318
+#: media/js/post.js:3364 media/js/post.js:4185 media/js/post.js:4378 media/js/utils/editable.js:318
 msgid "save"
 msgstr "حفظ"
 
@@ -464,11 +460,11 @@ msgstr ""
 
 #: media/js/user/manage_account.js:37
 msgid "Remove Account"
-msgstr ""
+msgstr "ازالة الحساب"
 
 #: media/js/user/manage_account.js:38
 msgid "Yes, remove account"
-msgstr ""
+msgstr "نعم، ازل الحساب"
 
 #: media/js/user/manage_account.js:46
 msgid "All content will be irreversibly deleted."
@@ -494,8 +490,8 @@ msgstr "قم بتوفير ما يكفي من التفاصيل"
 msgid "A reason must be selected to delete one."
 msgstr "يجب ان تختار سبب لحذف الاخر "
 
-#: media/js/user/post_moderation_controls.js:77
-#: media/js/user/response_notifs.js:30 media/js/user/response_notifs.js:107
+#: media/js/user/post_moderation_controls.js:77 media/js/user/response_notifs.js:30
+#: media/js/user/response_notifs.js:107
 msgid "Please select at least one item"
 msgstr "فضلاً اختر عنصراً واحداً علي الأقل"
 
@@ -558,8 +554,7 @@ msgstr "اختر صورة  للادخال"
 msgid "Allowed file types are:"
 msgstr "أنواع الملفات المسموح بها هي '%(file_types)s'"
 
-#: media/js/utils/file_upload_dialog.js:249
-#: media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
+#: media/js/utils/file_upload_dialog.js:249 media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
 msgid "Or paste file url here"
 msgstr "أو الصق الرابط هنا"
 
@@ -582,7 +577,7 @@ msgstr "موافق"
 #: media/js/utils/paginator.js:115
 #, javascript-format
 msgid "page %s"
-msgstr ""
+msgstr "صفحة %s"
 
 #: media/js/utils/tag.js:122
 #, javascript-format
@@ -820,14 +815,10 @@ msgstr ""
 #~ msgstr "sorry, you cannot accept your own answer"
 
 #~ msgid "please confirm offensive"
-#~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ msgstr "are you sure this post is offensive, contains spam, advertising, malicious remarks, etc.?"
 
 #~ msgid "please confirm removal of offensive flag"
-#~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ msgstr "are you sure this post is offensive, contains spam, advertising, malicious remarks, etc.?"
 
 #~ msgid "Post deleted"
 #~ msgstr "your post has been deleted"
