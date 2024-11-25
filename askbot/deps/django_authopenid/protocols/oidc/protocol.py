@@ -1,5 +1,6 @@
 """OpenId Connect protocol"""
 import asyncio
+import logging
 import requests
 from django.core.cache import cache
 from askbot.deps.django_authopenid.protocols.oidc.jwt_verifier import JwtVerifier
@@ -22,12 +23,14 @@ class OidcProtocol:
                  client_secret=None,
                  provider_url=None,
                  trust_email=False,
+                 authorization_function=None,
                  audience=None):
         self.protocol_type = 'oidc'
         self.audience = audience
         self.client_id = client_id
         self.client_secret = client_secret
         self.provider_url = provider_url
+        self.authorization_function = authorization_function
         self.trust_email = trust_email
         discovery = self.load_discovery_data()
         self.authenticate_url = discovery['authorization_endpoint']
@@ -83,6 +86,14 @@ class OidcProtocol:
     def get_email(self, id_token):
         payload = get_jwt_payload(id_token)
         return payload['email']
+
+    def is_user_authorized(self, id_token):
+        payload = get_jwt_payload(id_token)
+        try:
+            return self.authorization_function(payload)
+        except Exception as error:
+            logging.critical('Error in authorization function: %s', error)
+            return False
 
     def is_access_token_valid(self, access_token):
         """Validates the OIDC access token"""

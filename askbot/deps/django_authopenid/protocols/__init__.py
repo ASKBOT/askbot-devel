@@ -12,6 +12,7 @@ def get_protocol(provider_name):
                             client_id=params['oidc_client_id'],
                             client_secret=params['oidc_client_secret'],
                             provider_url=params['oidc_provider_url'],
+                            authorization_function=params['oidc_authorization_function'],
                             trust_email=params['trust_email'])
 
     raise NotImplementedError(f'Not implemented for  protocol {protocol_type}')
