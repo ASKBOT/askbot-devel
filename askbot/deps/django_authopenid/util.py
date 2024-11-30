@@ -337,6 +337,11 @@ class LoginMethod:
             else:
                 self.oidc_authorization_function = lambda parsed_token: True
 
+            if hasattr(self.mode, 'OIDC_CUSTOM_SCOPES'):
+                self.oidc_custom_scopes = self.mod.OIDC_CUSTOM_SCOPES
+            else:
+                self.oidc_custom_scopes = []
+
         if self.login_type.startswith('openid'):
             self.openid_endpoint = self.get_required_attr('OPENID_ENDPOINT', 'custom OpenID login')
             if self.login_type == 'openid-username':
@@ -361,7 +366,8 @@ class LoginMethod:
             'check_password', 'auth_endpoint', 'token_endpoint',
             'resource_endpoint', 'response_parser', 'token_transport',
             'trust_email', 'oidc_provider_url', 'oidc_client_id',
-            'oidc_client_secret', 'oidc_audience', 'oidc_authorization_function'
+            'oidc_client_secret', 'oidc_audience', 'oidc_authorization_function',
+            'oidc_custom_scopes'
         )
         #some parameters in the class have different names from those
         #in the dictionary
