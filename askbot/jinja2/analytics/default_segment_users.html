@@ -1,0 +1,64 @@
+{% extends "one_column_body.html" %}
+{% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
+{% block forestyle %}
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.5rem;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tbody td:not(:first-child) {
+      text-align: center;
+    }
+    .title-row {
+      align-items: center;
+    }
+    .analytics-summary {
+      margin-bottom: 2rem;
+    }
+  </style>
+{% endblock %}
+{% block layout_class %}{{ super() }} analytics-page{% endblock %}
+{% block forum_header %}{% endblock %}
+{% block content %}
+<div class="title-row">
+  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / <a href="{{ url('analytics_users',
+          dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {% trans %}Customers{% endtrans %}</h1>
+  {% include "analytics/date_selector.html" %}
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>{% trans %}Organization{% endtrans %}</th>
+      <th>{% trans %}Num Users{% endtrans %}</th>
+      <th>{% trans %}Users Added{% endtrans %}</th>
+      <th>{% trans %}Questions{% endtrans %}</th>
+      <th>{% trans %}Answers{% endtrans %}</th>
+      <th>{% trans %}Upvotes{% endtrans %}</th>
+      <th>{% trans %}Downvotes{% endtrans %}</th>
+      <th>{% trans %}Time on Site{% endtrans %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for group_data in groups %}
+      <tr>
+        <td><a href="{{ url('analytics_users', dates=dates_url_param, users_segment='group:' + group_data["group"].id | string) }}">{{ group_data["group"].name }}</a></td>
+        <td>{{ group_data["num_users"] }}</td>
+        <td>{{ group_data["num_users_added"] }}</td>
+        <td>{{ group_data["num_questions"] }}</td>
+        <td>{{ group_data["num_answers"] }}</td>
+        <td>{{ group_data["num_upvotes"] }}</td>
+        <td>{{ group_data["num_downvotes"] }}</td>
+        <td>{{ group_data['time_on_site'] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

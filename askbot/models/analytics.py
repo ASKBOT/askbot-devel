@@ -1,7 +1,6 @@
 """Models for the Analytics feature"""
 import datetime
 from django.db import models
-from django.db.models import Q
 from django.db.models import Value
 from django.db.models.functions import Substr, StrIndex
 from django.contrib.auth.models import User
@@ -51,64 +50,6 @@ from askbot import signals
 #TYPE_ACTIVITY_USER_REGISTERED = 51
 #TYPE_ACTIVITY_QUESTION_VIEWED = 52
 #TYPE_ACTIVITY_ANSWER_VIEWED = 53
-
-EVENT_TYPE_USER_REGISTERED = 1
-EVENT_TYPE_LOGGED_IN = 2
-EVENT_TYPE_LOGGED_OUT = 3
-EVENT_TYPE_QUESTION_VIEWED = 4
-EVENT_TYPE_ANSWER_VIEWED = 5
-EVENT_TYPE_UPVOTED = 6
-EVENT_TYPE_DOWNVOTED = 7
-EVENT_TYPE_VOTE_CANCELED = 8
-EVENT_TYPE_ASKED = 9
-EVENT_TYPE_ANSWERED = 10
-EVENT_TYPE_QUESTION_COMMENTED = 11
-EVENT_TYPE_ANSWER_COMMENTED = 12
-EVENT_TYPE_QUESTION_RETAGGED = 13
-EVENT_TYPE_SEARCHED = 14
-
-EVENT_TYPES = (
-    (EVENT_TYPE_USER_REGISTERED, _('registered')), # Activity.activity_type == 51
-    (EVENT_TYPE_LOGGED_IN, _('logged in')),
-    (EVENT_TYPE_LOGGED_OUT, _('logged out')),
-    (EVENT_TYPE_QUESTION_VIEWED, _('question viewed')), # Activity.activity_type == 52
-    (EVENT_TYPE_ANSWER_VIEWED, _('answer viewed')), # Activity.activity_type == 53
-    (EVENT_TYPE_UPVOTED, _('upvoted')), # Activity.activity_type == 9
-    (EVENT_TYPE_DOWNVOTED, _('downvoted')), # Activity.activity_type == 10
-    (EVENT_TYPE_VOTE_CANCELED, _('canceled vote')), # Activity.activity_type == 11
-    (EVENT_TYPE_ASKED, _('asked')), # Activity.activity_type == 1
-    (EVENT_TYPE_ANSWERED, _('answered')), # Activity.activity_type == 2
-    (EVENT_TYPE_QUESTION_COMMENTED, _('commented question')), # Activity.activity_type == 3
-    (EVENT_TYPE_ANSWER_COMMENTED, _('commented answer')), # Activity.activity_type == 4
-    (EVENT_TYPE_QUESTION_RETAGGED, _('retagged question')), # Activity.activity_type == 15
-    (EVENT_TYPE_SEARCHED, _('searched')),
-)
-
-# Dimension and Metric would make a generic implementation of the analytics feature
-# however it is more complex.
-#class Dimension(models.Model):
-#    name = models.CharField(max_length=64, help_text="Name of the dimension")
-#    description = models.TextField(blank=True, null=True, help_text="Description of the dimension")
-#    query = models.CharField(max_length=256, help_text="Django ORM query, Python code string")
-#    created_at = models.DateTimeField(auto_now_add=True)
-#    updated_at = models.DateTimeField(auto_now=True)
-#
-#class Metric(models.Model):
-#    name = models.CharField(max_length=64, help_text="Name of the metric")
-#    description = models.TextField(blank=True, null=True, help_text="Description of the metric")
-#    query = models.CharField(max_length=256, help_text="Django ORM query, Python code string")
-#    created_at = models.DateTimeField(auto_now_add=True)
-#    updated_at = models.DateTimeField(auto_now=True)
-
-def get_non_admins_count():
-    """Returns the count of non-admin users, as relevant for Askbot analytics"""
-    non_admins = User.objects.exclude(Q(is_superuser=True) | Q(is_staff=True))
-    non_admins = non_admins.exclude(Q(askbot_profile__status='d') | Q(askbot_profile__status='m'))
-    admin_filter = django_settings.ASKBOT_ANALYTICS_ADMINS_FILTER
-    if admin_filter:
-        non_admins = non_admins.exclude(**admin_filter)
-    return non_admins.count()
-
 
 def get_unique_user_email_domains_qs():
     """Returns the query set of organization domain names"""
@@ -176,6 +117,38 @@ class Session(models.Model):
 
 class Event(models.Model):
     """Analytics event"""
+    EVENT_TYPE_USER_REGISTERED = 1
+    EVENT_TYPE_LOGGED_IN = 2
+    EVENT_TYPE_LOGGED_OUT = 3
+    EVENT_TYPE_QUESTION_VIEWED = 4
+    EVENT_TYPE_ANSWER_VIEWED = 5
+    EVENT_TYPE_UPVOTED = 6
+    EVENT_TYPE_DOWNVOTED = 7
+    EVENT_TYPE_VOTE_CANCELED = 8
+    EVENT_TYPE_ASKED = 9
+    EVENT_TYPE_ANSWERED = 10
+    EVENT_TYPE_QUESTION_COMMENTED = 11
+    EVENT_TYPE_ANSWER_COMMENTED = 12
+    EVENT_TYPE_QUESTION_RETAGGED = 13
+    EVENT_TYPE_SEARCHED = 14
+
+    EVENT_TYPES = (
+        (EVENT_TYPE_USER_REGISTERED, _('registered')), # Activity.activity_type == 51
+        (EVENT_TYPE_LOGGED_IN, _('logged in')),
+        (EVENT_TYPE_LOGGED_OUT, _('logged out')),
+        (EVENT_TYPE_QUESTION_VIEWED, _('question viewed')), # Activity.activity_type == 52
+        (EVENT_TYPE_ANSWER_VIEWED, _('answer viewed')), # Activity.activity_type == 53
+        (EVENT_TYPE_UPVOTED, _('upvoted')), # Activity.activity_type == 9
+        (EVENT_TYPE_DOWNVOTED, _('downvoted')), # Activity.activity_type == 10
+        (EVENT_TYPE_VOTE_CANCELED, _('canceled vote')), # Activity.activity_type == 11
+        (EVENT_TYPE_ASKED, _('asked')), # Activity.activity_type == 1
+        (EVENT_TYPE_ANSWERED, _('answered')), # Activity.activity_type == 2
+        (EVENT_TYPE_QUESTION_COMMENTED, _('commented question')), # Activity.activity_type == 3
+        (EVENT_TYPE_ANSWER_COMMENTED, _('commented answer')), # Activity.activity_type == 4
+        (EVENT_TYPE_QUESTION_RETAGGED, _('retagged question')), # Activity.activity_type == 15
+        (EVENT_TYPE_SEARCHED, _('searched')),
+    )
+
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     event_type = models.SmallIntegerField(choices=EVENT_TYPES)
     timestamp = models.DateTimeField() # no auto_now_add or auto_now for created_at and updated_at
@@ -209,15 +182,15 @@ class BaseSummary(models.Model):
 
     def add_event(self, event):
         """Increments the attribute appropriate for the event type"""
-        if event.event_type == EVENT_TYPE_ASKED:
+        if event.event_type == Event.EVENT_TYPE_ASKED:
             self.num_questions += 1
-        elif event.event_type == EVENT_TYPE_ANSWERED:
+        elif event.event_type == Event.EVENT_TYPE_ANSWERED:
             self.num_answers += 1
-        elif event.event_type == EVENT_TYPE_UPVOTED:
+        elif event.event_type == Event.EVENT_TYPE_UPVOTED:
             self.num_upvotes += 1
-        elif event.event_type == EVENT_TYPE_DOWNVOTED:
+        elif event.event_type == Event.EVENT_TYPE_DOWNVOTED:
             self.num_downvotes += 1
-        elif event.event_type == EVENT_TYPE_QUESTION_VIEWED:
+        elif event.event_type == Event.EVENT_TYPE_QUESTION_VIEWED:
             self.question_views += 1
 
 
@@ -304,7 +277,7 @@ def record_user_registration(sender, user, **kwargs): # pylint: disable=unused-a
 
     event = Event(
         session=Session.objects.get_active_session(user),
-        event_type=EVENT_TYPE_USER_REGISTERED,
+        event_type=Event.EVENT_TYPE_USER_REGISTERED,
         timestamp=user.date_joined,
         content_object=user
     )
@@ -320,7 +293,7 @@ def record_user_login(sender, user, **kwargs): # pylint: disable=unused-argument
 
     event = Event(
         session=session,
-        event_type=EVENT_TYPE_LOGGED_IN,
+        event_type=Event.EVENT_TYPE_LOGGED_IN,
         timestamp=timezone.now(),
         content_object=user
     )
@@ -341,11 +314,11 @@ def record_user_vote(sender, user=None, vote_type=None, canceled=None, # pylint:
         return
 
     if canceled:
-        event_type = EVENT_TYPE_VOTE_CANCELED
+        event_type = Event.EVENT_TYPE_VOTE_CANCELED
     elif vote_type == Vote.VOTE_UP:
-        event_type = EVENT_TYPE_UPVOTED
+        event_type = Event.EVENT_TYPE_UPVOTED
     elif vote_type == Vote.VOTE_DOWN:
-        event_type = EVENT_TYPE_DOWNVOTED
+        event_type = Event.EVENT_TYPE_DOWNVOTED
     else:
         return
 
@@ -367,7 +340,7 @@ def record_new_question(sender, question, **kwargs): # pylint: disable=unused-ar
 
     event = Event(
         session=session,
-        event_type=EVENT_TYPE_ASKED,
+        event_type=Event.EVENT_TYPE_ASKED,
         timestamp=question.added_at,
         content_object=question
     )
@@ -383,7 +356,7 @@ def record_new_answer(sender, answer, **kwargs): # pylint: disable=unused-argume
 
     event = Event(
         session=session,
-        event_type=EVENT_TYPE_ANSWERED,
+        event_type=Event.EVENT_TYPE_ANSWERED,
         timestamp=answer.added_at,
         content_object=answer
     )
@@ -403,9 +376,9 @@ def record_new_comment(sender, comment, **kwargs): # pylint: disable=unused-argu
 
     parent_type = comment.parent.post_type
     if parent_type == 'question':
-        event_type = EVENT_TYPE_QUESTION_COMMENTED
+        event_type = Event.EVENT_TYPE_QUESTION_COMMENTED
     elif parent_type == 'answer':
-        event_type = EVENT_TYPE_ANSWER_COMMENTED
+        event_type = Event.EVENT_TYPE_ANSWER_COMMENTED
     else:
         return
 
@@ -427,7 +400,7 @@ def record_tag_update(sender, thread=None, user=None, timestamp=None, **kwargs):
 
     event = Event(
         session=session,
-        event_type=EVENT_TYPE_QUESTION_RETAGGED,
+        event_type=Event.EVENT_TYPE_QUESTION_RETAGGED,
         timestamp=timestamp,
         content_object=thread
     )
@@ -445,7 +418,7 @@ def record_question_visit(sender, request, question, timestamp, **kwargs): # pyl
 
     event = Event(
         session=session,
-        event_type=EVENT_TYPE_QUESTION_VIEWED,
+        event_type=Event.EVENT_TYPE_QUESTION_VIEWED,
         timestamp=timestamp,
         content_object=question
     )

@@ -29,7 +29,7 @@
 {% block forum_header %}{% endblock %}
 {% block content %}
 <div class="title-row">
-  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %} / {% trans %}General statistics{% endtrans %}</h1>
+  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %} / {% trans %}All Users{% endtrans %}</h1>
   {% include "analytics/date_selector.html" %}
 </div>
 <div class="analytics-summary">
@@ -39,11 +39,11 @@
   </div>
   <div class="analytics-summary-number">
     <div>
-        {{ non_admins_slice_name }}:
-        {{ non_admins_count }}
+        {{ default_segment_name }}:
+        {{ default_segment_data['num_users'] }}
     </div>
     <p>
-      {{ non_admins_slice_description }}
+      {{ default_segment_description }}
     </p>
   </div>
   {% if orgs_enabled %}
@@ -56,7 +56,7 @@
 <table>
   <thead>
     <tr>
-      <th>{% trans %}Group{% endtrans %}</th>
+      <th>{% trans %}Group/Organization{% endtrans %}</th>
       <th>{% trans %}Num Users{% endtrans %}</th>
       <th>{% trans %}Users Added{% endtrans %}</th>
       <th>{% trans %}Questions{% endtrans %}</th>
@@ -69,33 +69,35 @@
   <tbody>
     <tr>
       <td>{% trans %}All{% endtrans %}</td>
-      <td>{{ vip_data['num_users'] + customer_data['num_users'] }}</td>
-      <td>{{ vip_data['num_users_added'] + customer_data['num_users_added'] }}</td>
-      <td>{{ vip_data['num_questions'] + customer_data['num_questions'] }}</td>
-      <td>{{ vip_data['num_answers'] + customer_data['num_answers'] }}</td>
-      <td>{{ vip_data['num_upvotes'] + customer_data['num_upvotes'] }}</td>
-      <td>{{ vip_data['num_downvotes'] + customer_data['num_downvotes'] }}</td>
-      <td>{{ vip_data['time_on_site'] + customer_data['time_on_site'] }}</td>
+      <td>{{ all_data['num_users'] }}</td>
+      <td>{{ all_data['num_users_added'] }}</td>
+      <td>{{ all_data['num_questions'] }}</td>
+      <td>{{ all_data['num_answers'] }}</td>
+      <td>{{ all_data['num_upvotes'] }}</td>
+      <td>{{ all_data['num_downvotes'] }}</td>
+      <td>{{ all_data['time_on_site'] }}</td>
     </tr>
+    {% for named_segment_data in named_segments_data %}
     <tr>
-      <td>WindRiver</td>
-      <td>{{ vip_data['num_users'] }}</td>
-      <td>{{ vip_data['num_users_added'] }}</td>
-      <td>{{ vip_data['num_questions'] }}</td>
-      <td>{{ vip_data['num_answers'] }}</td>
-      <td>{{ vip_data['num_upvotes'] }}</td>
-      <td>{{ vip_data['num_downvotes'] }}</td>
-      <td>{{ vip_data['time_on_site'] }}</td>
+      <td><a href="{{ url('analytics_users', dates=dates_url_param, users_segment=named_segment_data['slug']) }}">{{ named_segment_data['name'] }}</a></td>
+      <td>{{ named_segment_data['num_users'] }}</td>
+      <td>{{ named_segment_data['num_users_added'] }}</td>
+      <td>{{ named_segment_data['num_questions'] }}</td>
+      <td>{{ named_segment_data['num_answers'] }}</td>
+      <td>{{ named_segment_data['num_upvotes'] }}</td>
+      <td>{{ named_segment_data['num_downvotes'] }}</td>
+      <td>{{ named_segment_data['time_on_site'] }}</td>
     </tr>
+    {% endfor %}
     <tr>
-      <td>{% trans %}Customers{% endtrans %}</td>
-      <td>{{ customer_data['num_users'] }}</td>
-      <td>{{ customer_data['num_users_added'] }}</td>
-      <td>{{ customer_data['num_questions'] }}</td>
-      <td>{{ customer_data['num_answers'] }}</td>
-      <td>{{ customer_data['num_upvotes'] }}</td>
-      <td>{{ customer_data['num_downvotes'] }}</td>
-      <td>{{ customer_data['time_on_site'] }}</td>
+      <td><a href="{{ url('analytics_users', dates=dates_url_param, users_segment=default_segment_data['slug']) }}">{{ default_segment_data['name'] }}</a></td>
+      <td>{{ default_segment_data['num_users'] }}</td>
+      <td>{{ default_segment_data['num_users_added'] }}</td>
+      <td>{{ default_segment_data['num_questions'] }}</td>
+      <td>{{ default_segment_data['num_answers'] }}</td>
+      <td>{{ default_segment_data['num_upvotes'] }}</td>
+      <td>{{ default_segment_data['num_downvotes'] }}</td>
+      <td>{{ default_segment_data['time_on_site'] }}</td>
     </tr>
   </tbody>
 </table>

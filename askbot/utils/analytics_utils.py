@@ -1,0 +1,24 @@
+from django.conf import settings as django_settings
+
+def is_named_segment(segment_slug):
+    """True, if segment_slug is in the slugs of any of the named segments"""
+    conf_items = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    return any(segment_slug == item['slug'] for item in conf_items)
+
+
+def get_all_named_segment_group_ids():
+    """Returns a list of group_ids for all named segments"""
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    group_ids = []
+    for segment_config in named_segment_configs:
+        group_ids.extend(segment_config['group_ids'])
+    return group_ids
+
+
+def get_named_segment_config(segment_slug):
+    """Returns a list of group_ids for a named segment"""
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    for segment_config in named_segment_configs:
+        if segment_config['slug'] == segment_slug:
+            return segment_config
+    return None

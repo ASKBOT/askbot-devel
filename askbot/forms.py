@@ -1723,26 +1723,43 @@ class ReorderBadgesForm(forms.Form):
     position = forms.IntegerField()
 
 
-class AnalyticsDatesForm(forms.Form):
+class AnalyticsUsersForm(forms.Form):
     """dates is a string that accepts a list of pre-approved values
     Such as last-7-days, this-year, etc., as defined in the analytics dates
     selector dropdown template.
     """
     dates = forms.CharField()
+    users_segment = forms.CharField()
 
     def __init__(self, *args, **kwargs):
         self.earliest_date = kwargs.pop('earliest_possible_date')
-        super(AnalyticsDatesForm, self).__init__(*args, **kwargs)
+        super(AnalyticsUsersForm, self).__init__(*args, **kwargs)
+
+    def clean_users_segment(self):
+        users_segment = self.cleaned_data['users_segment']
+        default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+        named_segment_slugs = [segment['slug'] for segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS]
+        allowed_segment_slugs = ['all', default_segment_slug] + named_segment_slugs
+        if users_segment in allowed_segment_slugs:
+            return users_segment
+
+        if re.match(r'group:\d+', users_segment):
+            return users_segment
+
+        if re.match(r'user:\d+', users_segment):
+            return users_segment
+
+        raise forms.ValidationError('Invalid users segment')
 
     def clean_dates(self):
         dates = self.cleaned_data['dates']
         if dates == 'last-7-days':
             end_date = timezone.now().date()
-            start_date = end_date - timedelta(days=7)
+            start_date = end_date - timedelta(days=6)
             return start_date, end_date
         if dates == 'last-30-days':
             end_date = timezone.now().date()
-            start_date = end_date - timedelta(days=30)
+            start_date = end_date - timedelta(days=29)
             return start_date, end_date
         if dates == 'this-month':
             end_date = timezone.now().date()

@@ -1,0 +1,88 @@
+{% macro full_date(timestamp) %}
+  at {{ timestamp|date('H:i') }} on {{ timestamp|date('m/d/Y') }}
+{% endmacro %}
+
+{% macro event_user_registered(event) %}
+  <div class="analytics-event">
+    Registered {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_user_logged_in(event) %}
+  <div class="analytics-event">
+    Logged in {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_user_logged_out(event) %}
+  <div class="analytics-event">
+    Logged out {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_question_viewed(event) %}
+  <div class="analytics-event">
+    Viewed question <em>{{ event.content_object.thread.title }}</em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_answer_viewed(event) %}
+  <div class="analytics-event">
+    Viewed answer <em>{{ event.content_object.thread.title }}</em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_upvoted(event) %}
+  <div class="analytics-event">
+    upvoted
+  </div>
+{% endmacro %}
+
+{% macro event_downvoted(event) %}
+  <div class="analytics-event">
+    downvoted
+  </div>
+{% endmacro %}
+
+{% macro event_vote_canceled(event) %}
+  <div class="analytics-event">
+    vote canceled
+  </div>
+{% endmacro %}
+
+{% macro event_asked(event) %}
+  <div class="analytics-event">
+    Asked: <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_answered(event) %}
+  <div class="analytics-event">
+    answered
+  </div>
+{% endmacro %}
+
+{% macro event_question_commented(event) %}
+  <div class="analytics-event">
+    Commented question <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+    <div class="comment-text">{{ event.content_object.html|safe }}</div>
+  </div>
+{% endmacro %}
+
+{% macro event_answer_commented(event) %}
+  <div class="analytics-event">
+    Commented answer <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_question_retagged(event) %}
+  <div class="analytics-event">
+    Retagged question <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }} 
+  </div>
+{% endmacro %}
+
+{% macro event_searched(event) %}
+  <div class="analytics-event">
+    searched
+  </div>
+{% endmacro %}

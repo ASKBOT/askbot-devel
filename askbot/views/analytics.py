@@ -6,76 +6,262 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils.html import escape
-from askbot.forms import AnalyticsDatesForm
+from askbot.utils import analytics_utils
+from askbot.forms import AnalyticsUsersForm
 from askbot.models import User, Group
-from askbot.models.analytics import (get_non_admins_count,
-                                     get_organizations_count,
-                                     Event,
-                                     DailyGroupSummary)
+from askbot.models.analytics import (get_organizations_count,
+                                     DailyGroupSummary,
+                                     DailyUserSummary,
+                                     Event)
 
 def analytics_index(request):
     """analytics home page"""
     return render(request, 'analytics/index.html')
 
 
-def analytics_users(request, dates='all-time'):
-    """User analytics page"""
-    non_admins_slice = django_settings.ASKBOT_ANALYTICS_NON_ADMINS_SLICE_DESCRIPTION
-    data = {'all_users_count': User.objects.exclude(askbot_profile__status='b').count(),
-            'non_admins_count': get_non_admins_count(),
-            'non_admins_slice_name': django_settings.ASKBOT_ANALYTICS_NON_ADMINS_SLICE_NAME,
-            'non_admins_slice_description': non_admins_slice}
+def get_aggregated_group_data(summaries):
+    if summaries.count() == 0:
+        return {
+            'num_users': 0,
+            'num_users_added': 0,
+            'num_questions': 0,
+            'num_answers': 0,
+            'num_upvotes': 0,
+            'num_downvotes': 0,
+            'question_views': 0,
+            'time_on_site': timedelta(seconds=0),
+        }
 
-    vip_groups = Group.objects.filter(group_ptr__id__in=django_settings.ASKBOT_ANALYTICS_VIP_GROUP_IDS)
-    vip_summaries = DailyGroupSummary.objects.filter(group__in=vip_groups) # pylint: disable=no-member
-    vip_summaries = vip_summaries.order_by('-date')
-    earliest_summary = vip_summaries.last()
+    data = summaries.aggregate(
+        num_questions=models.Sum('num_questions'),
+        num_answers=models.Sum('num_answers'),
+        num_upvotes=models.Sum('num_upvotes'),
+        num_downvotes=models.Sum('num_downvotes'),
+        question_views=models.Sum('question_views'),
+        time_on_site=models.Sum('time_on_site'),
+        num_users_added=models.Sum('num_users_added')
+    )
+    return data
 
-    dates_form = AnalyticsDatesForm({'dates': dates}, earliest_possible_date=earliest_summary.date)
-    if not dates_form.is_valid():
-        escaped_range = escape(dates)
-        request.user.message_set.create(message=_('Date range {range} is invalid.').format(range=escaped_range))
-        return HttpResponseRedirect(reverse('analytics_users', kwargs={'dates': 'all-time'}))
 
-    start_date, end_date = dates_form.cleaned_data['dates']
+def get_aggregated_user_data(summaries):
+    if summaries.count() == 0:
+        return {
+            'num_questions': 0,
+            'num_answers': 0,
+            'num_upvotes': 0,
+            'num_downvotes': 0,
+            'question_views': 0,
+            'time_on_site': timedelta(seconds=0),
+        }
 
-    vip_summaries = vip_summaries.filter(date__gt=start_date, date__lte=end_date)
-    customer_summaries = DailyGroupSummary.objects.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
-    customer_summaries = customer_summaries.exclude(id__in=vip_summaries.values_list('id', flat=True))
+    return summaries.aggregate(
+        num_questions=models.Sum('num_questions'),
+        num_answers=models.Sum('num_answers'),
+        num_upvotes=models.Sum('num_upvotes'),
+        num_downvotes=models.Sum('num_downvotes'),
+        question_views=models.Sum('question_views'),
+        time_on_site=models.Sum('time_on_site')
+    )
 
-    def get_aggregated_data(summaries):
-        if summaries.count() == 0:
-            return {
-                'num_users': 0,
-                'num_users_added': 0,
-                'num_questions': 0,
-                'num_answers': 0,
-                'num_upvotes': 0,
-                'num_downvotes': 0,
-                'question_views': 0,
-                'time_on_site': timedelta(seconds=0),
-            }
 
-        data = summaries.aggregate(
-            num_questions=models.Sum('num_questions'),
-            num_answers=models.Sum('num_answers'),
-            num_upvotes=models.Sum('num_upvotes'),
-            num_downvotes=models.Sum('num_downvotes'),
-            question_views=models.Sum('question_views'),
-            time_on_site=models.Sum('time_on_site'),
-            num_users_added=models.Sum('num_users_added')
-        )
-        first_summary = summaries.order_by('date').first()
-        data['num_users'] = first_summary.num_users if first_summary else 0
-        return data
+def non_routed_render_all_users(request, data):
+    """Renders the all users page"""
+    default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
+    data.update({
+        'all_users_count': User.objects.exclude(askbot_profile__status='b').count(),
+        'default_segment_name': default_segment_config['name'],
+        'default_segment_description': default_segment_config['description'],
+    })
 
-    data['vip_data'] = get_aggregated_data(vip_summaries)
-    data['customer_data'] = get_aggregated_data(customer_summaries)
-    data['start_date'] = start_date
-    data['end_date'] = end_date
-    data['dates_url_param'] = dates
+    #1) get data for all users
+    all_data = {
+        'num_users': data['all_users_count'],
+        'num_users_added': User.objects.filter(date_joined__gt=data['start_date'],
+                                               date_joined__lte=data['end_date']).count(),
+        # remaining fields will be added as sum of all segments
+        # symmetrically - for the default segment
+        # we will obtain the above numbers by subtraction
+    }
+
+    #2) get data for all named segments
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    named_segments_data = []
+    for segment_config in named_segment_configs:
+        group_ids = segment_config['group_ids']
+        named_segment_summaries = DailyGroupSummary.objects.filter(group__id__in=group_ids) # pylint: disable=no-member
+        named_segment_summaries = named_segment_summaries.filter(date__lte=data['end_date'])
+        latest_summary = named_segment_summaries.order_by('-date').first()
+        named_segment_summaries = named_segment_summaries.filter(date__gt=data['start_date'])
+
+        datum = get_aggregated_group_data(named_segment_summaries)
+        datum['num_users'] = latest_summary.num_users if latest_summary else 0
+        datum['slug'] = segment_config['slug']
+        datum['name'] = segment_config['name']
+        named_segments_data.append(datum)
+
+
+    #2) for the default segment, subtract the numbers for 2) from 1)
+    named_segment_group_ids = analytics_utils.get_all_named_segment_group_ids()
+    default_segment_summaries = DailyGroupSummary.objects.exclude(group__id__in=named_segment_group_ids) # pylint: disable=no-member
+    default_segment_summaries = default_segment_summaries.filter(date__gt=data['start_date'],
+                                                                 date__lte=data['end_date'])
+
+    default_segment_data = get_aggregated_group_data(default_segment_summaries)
+    default_segment_data['slug'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+    default_segment_data['name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
+    # here goes the symmetrical calculation of the missing fields - see step 1)
+    named_segments_users_added = sum(datum['num_users_added'] for datum in named_segments_data)
+    default_segment_data['num_users_added'] = all_data['num_users_added'] - named_segments_users_added
+    named_segments_num_users = sum(datum['num_users'] for datum in named_segments_data)
+    default_segment_data['num_users'] = all_data['num_users'] - named_segments_num_users
+
+    # finally calculate the remaining fields for the all_data
+    all_data['num_questions'] = default_segment_data['num_questions'] + \
+                                sum(datum['num_questions'] for datum in named_segments_data)
+
+    all_data['num_answers'] = default_segment_data['num_answers'] + \
+                              sum(datum['num_answers'] for datum in named_segments_data)
+
+    all_data['num_upvotes'] = default_segment_data['num_upvotes'] + \
+                              sum(datum['num_upvotes'] for datum in named_segments_data)
+
+    all_data['num_downvotes'] = default_segment_data['num_downvotes'] + \
+                                sum(datum['num_downvotes'] for datum in named_segments_data)
+
+    all_data['question_views'] = default_segment_data['question_views'] + \
+                                 sum(datum['question_views'] for datum in named_segments_data)
+
+    all_data['time_on_site'] = default_segment_data['time_on_site'] + \
+                               sum((datum['time_on_site'] for datum in named_segments_data),
+                                   start=timedelta(seconds=0))
+
+    data['all_data'] = all_data
+    data['named_segments_data'] = named_segments_data
+    data['default_segment_data'] = default_segment_data
 
     if django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
         data['orgs_count'] = get_organizations_count()
         data['orgs_enabled'] = True
-    return render(request, 'analytics/users.html', data)
+    return render(request, 'analytics/all_users.html', data)
+
+
+def non_routed_render_default_segment_users(request, data):
+    """Renders the non vip users page -- a.k.a. customers"""
+    named_segment_group_ids = analytics_utils.get_all_named_segment_group_ids()
+    vip_groups = Group.objects.filter(group_ptr__id__in=named_segment_group_ids)
+    all_customer_summaries = DailyGroupSummary.objects.exclude(group__id__in=vip_groups) # pylint: disable=no-member
+    start_date = data['start_date']
+    end_date = data['end_date']
+    customer_summaries = all_customer_summaries.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
+    customer_group_ids = customer_summaries.values_list('group_id', flat=True).distinct()
+    data['groups'] = []
+
+    for group_id in customer_group_ids[:20]:
+        group_summaries = customer_summaries.filter(group_id=group_id)
+        group_data = get_aggregated_group_data(group_summaries)
+        group_data['group'] = Group.objects.get(id=group_id)
+        group_data['num_users'] = all_customer_summaries.filter(group_id=group_id, date__lte=end_date).order_by('date').last().num_users
+        data['groups'].append(group_data)
+
+    return render(request, 'analytics/default_segment_users.html', data)
+
+
+def non_routed_render_group_users(request,
+                                  data,
+                                  group_ids=None,
+                                  segment_slug=None,
+                                  segment_name=None,
+                                  is_named_segment=False):
+    """Renders the group users page"""
+    users = User.objects.filter(groups__id__in=group_ids)
+    users_data = []
+    for user in users[:20]:
+        user_summaries = DailyUserSummary.objects.filter(user=user) # pylint: disable=no-member
+        user_data = get_aggregated_user_data(user_summaries)
+        user_data['user'] = user
+        users_data.append(user_data)
+
+    data['users'] = users_data
+    data['segment_slug'] = segment_slug
+    data['segment_name'] = segment_name
+    data['is_named_segment'] = is_named_segment
+    if is_named_segment:
+        data['group_name'] = segment_name
+    else:
+        assert len(group_ids) == 1
+        group = Group.objects.get(id=group_ids[0])
+        data['group_name'] = group.name
+
+    return render(request, 'analytics/group_users.html', data)
+
+
+def non_routed_render_user_activity(request, data, user_id):
+    """Renders the user activity page"""
+    user = User.objects.get(id=user_id)
+    events = Event.objects.filter(session__user=user, # pylint: disable=no-member
+                                  timestamp__gt=data['start_date'],
+                                  timestamp__lte=data['end_date'])
+    data['events'] = events.order_by('-timestamp')
+    data['Event'] = Event
+    data['user'] = user
+    return render(request, 'analytics/user_activity.html', data)
+
+
+def analytics_users(request, dates='all-time', users_segment='all'):
+    """User analytics page"""
+    earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
+    users_form = AnalyticsUsersForm({'dates': dates,
+                                     'users_segment': users_segment},
+                                     earliest_possible_date=earliest_summary.date)
+
+    if not users_form.is_valid():
+        escaped_range = escape(dates)
+        message = _('Date range {range} is invalid.').format(range=escaped_range)
+        request.user.message_set.create(message=message)
+        return HttpResponseRedirect(reverse('analytics_users',
+                                            kwargs={'dates': 'all-time',
+                                                    'users_segment': 'all'}))
+
+    start_date, end_date = users_form.cleaned_data['dates']
+    users_segment = users_form.cleaned_data['users_segment']
+    data = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'users_segment': users_segment,
+        'dates_url_param': dates
+    }
+    if users_segment == 'all':
+        return non_routed_render_all_users(request, data)
+
+    if analytics_utils.is_named_segment(users_segment):
+        segment_config = analytics_utils.get_named_segment_config(users_segment)
+        return non_routed_render_group_users(
+            request,
+            data,
+            group_ids=segment_config['group_ids'],
+            segment_slug=users_segment,
+            segment_name=segment_config['name'],
+            is_named_segment=True
+        )
+
+    if users_segment == django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']:
+        return non_routed_render_default_segment_users(request, data)
+
+    if users_segment.startswith('group:'):
+        group_id = int(users_segment.split(':')[1])
+        default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
+        return non_routed_render_group_users(
+            request,
+            data,
+            group_ids=[group_id],
+            segment_slug=default_segment_config['slug'],
+            segment_name=default_segment_config['name']
+        )
+
+    if users_segment.startswith('user:'):
+        user_id = int(users_segment.split(':')[1])
+        return non_routed_render_user_activity(request, data, user_id)
+
+    raise ValueError(f"Invalid users segment: {users_segment}")
+

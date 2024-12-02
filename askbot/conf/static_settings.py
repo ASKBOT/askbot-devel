@@ -39,12 +39,18 @@ class AskbotStaticSettings(AppConf):
     }
 
     AUTO_INIT_BADGES = True
+
     ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED = False
-    ANALYTICS_NON_ADMINS_SLICE_NAME = _('Non-Admins')
-    ANALYTICS_NON_ADMINS_SLICE_DESCRIPTION = _('All users, excluding the moderators and admins')
     ANALYTICS_ADMINS_FILTER = None # None or a dictionary applied in the Django ORM filter
     ANALYTICS_SESSION_TIMEOUT_MINUTES = 30
-    ANALYTICS_VIP_GROUP_IDS = []
+    # a list of dictionaries, each dictionary has keys: name, slug, description, group_ids
+    # these segments will be ordered the same way they are defined in the list
+    ANALYTICS_NAMED_SEGMENTS = []
+    # a dictionary with keys: name, slug, description - includes all users except
+    # the users belonging to the named segments
+    # this segment will be ordered after all named segments
+    ANALYTICS_DEFAULT_SEGMENT = {}
+
     CAS_USER_FILTER = None
     CAS_USER_FILTER_DENIED_MSG = None
     CAS_GET_USERNAME = None # python path to function
