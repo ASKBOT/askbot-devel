@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils.html import escape
 from askbot.utils import analytics_utils
+from askbot.utils.functions import get_paginated_list
 from askbot.forms import AnalyticsUsersForm
 from askbot.models import User, Group
 from askbot.models.analytics import (get_organizations_count,
@@ -65,7 +66,7 @@ def get_aggregated_user_data(summaries):
     )
 
 
-def non_routed_render_all_users(request, data):
+def non_routed_per_segment_stats(request, data):
     """Renders the all users page"""
     default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
     data.update({
@@ -143,10 +144,10 @@ def non_routed_render_all_users(request, data):
     if django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
         data['orgs_count'] = get_organizations_count()
         data['orgs_enabled'] = True
-    return render(request, 'analytics/all_users.html', data)
+    return render(request, 'analytics/per_segment_stats.html', data)
 
 
-def non_routed_render_default_segment_users(request, data):
+def non_routed_per_group_in_segment_stats(request, data):
     """Renders the non vip users page -- a.k.a. customers"""
     named_segment_group_ids = analytics_utils.get_all_named_segment_group_ids()
     vip_groups = Group.objects.filter(group_ptr__id__in=named_segment_group_ids)
@@ -156,33 +157,46 @@ def non_routed_render_default_segment_users(request, data):
     customer_summaries = all_customer_summaries.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
     customer_group_ids = customer_summaries.values_list('group_id', flat=True).distinct()
     data['groups'] = []
+    data['default_segment_name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
 
-    for group_id in customer_group_ids[:20]:
+    customer_group_ids, paginator_context = get_paginated_list(request, customer_group_ids, 20)
+    data['paginator_context'] = paginator_context
+
+    for group_id in customer_group_ids:
         group_summaries = customer_summaries.filter(group_id=group_id)
         group_data = get_aggregated_group_data(group_summaries)
         group_data['group'] = Group.objects.get(id=group_id)
         group_data['num_users'] = all_customer_summaries.filter(group_id=group_id, date__lte=end_date).order_by('date').last().num_users
         data['groups'].append(group_data)
 
-    return render(request, 'analytics/default_segment_users.html', data)
+    return render(request, 'analytics/per_group_in_segment_stats.html', data)
 
 
-def non_routed_render_group_users(request,
-                                  data,
-                                  group_ids=None,
-                                  segment_slug=None,
-                                  segment_name=None,
-                                  is_named_segment=False):
+def non_routed_per_user_in_group_stats(request,
+                              data,
+                              group_ids=None,
+                              segment_slug=None,
+                              segment_name=None,
+                              is_named_segment=False):
     """Renders the group users page"""
     users = User.objects.filter(groups__id__in=group_ids)
     users_data = []
-    for user in users[:20]:
-        user_summaries = DailyUserSummary.objects.filter(user=user) # pylint: disable=no-member
+
+    daily_user_summaries = DailyUserSummary.objects.filter(user__in=users) # pylint: disable=no-member
+    daily_user_summaries = daily_user_summaries.filter(date__gt=data['start_date'], date__lte=data['end_date']) # pylint: disable=no-member
+
+    user_ids_with_activity = daily_user_summaries.values_list('user_id', flat=True).distinct()
+    users = users.filter(id__in=user_ids_with_activity).order_by('username')
+
+    users, paginator_context = get_paginated_list(request, users, 20)
+    for user in users:
+        user_summaries = daily_user_summaries.filter(user=user) # pylint: disable=no-member
         user_data = get_aggregated_user_data(user_summaries)
         user_data['user'] = user
         users_data.append(user_data)
 
     data['users'] = users_data
+    data['paginator_context'] = paginator_context
     data['segment_slug'] = segment_slug
     data['segment_name'] = segment_name
     data['is_named_segment'] = is_named_segment
@@ -192,8 +206,9 @@ def non_routed_render_group_users(request,
         assert len(group_ids) == 1
         group = Group.objects.get(id=group_ids[0])
         data['group_name'] = group.name
+        data['org_id'] = group.id
 
-    return render(request, 'analytics/group_users.html', data)
+    return render(request, 'analytics/per_user_in_group_stats.html', data)
 
 
 def non_routed_render_user_activity(request, data, user_id):
@@ -204,7 +219,16 @@ def non_routed_render_user_activity(request, data, user_id):
                                   timestamp__lte=data['end_date'])
     data['events'] = events.order_by('-timestamp')
     data['Event'] = Event
+    data['segment_slug'] = request.GET.get('segment')
+    data['segment_name'] = analytics_utils.get_segment_name(data['segment_slug'])
     data['user'] = user
+
+    data['is_default_segment'] = not analytics_utils.is_named_segment(data['segment_slug'])
+    if data['is_default_segment']:
+        group = Group.objects.get(id=request.GET.get('org_id'))
+        data['group_name'] = group.name
+        data['group_id'] = group.id
+
     return render(request, 'analytics/user_activity.html', data)
 
 
@@ -232,11 +256,11 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         'dates_url_param': dates
     }
     if users_segment == 'all':
-        return non_routed_render_all_users(request, data)
+        return non_routed_per_segment_stats(request, data)
 
     if analytics_utils.is_named_segment(users_segment):
         segment_config = analytics_utils.get_named_segment_config(users_segment)
-        return non_routed_render_group_users(
+        return non_routed_per_user_in_group_stats(
             request,
             data,
             group_ids=segment_config['group_ids'],
@@ -246,12 +270,12 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         )
 
     if users_segment == django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']:
-        return non_routed_render_default_segment_users(request, data)
+        return non_routed_per_group_in_segment_stats(request, data)
 
     if users_segment.startswith('group:'):
         group_id = int(users_segment.split(':')[1])
         default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
-        return non_routed_render_group_users(
+        return non_routed_per_user_in_group_stats(
             request,
             data,
             group_ids=[group_id],

@@ -1,0 +1,60 @@
+.analytics-page {
+  h1, section {
+    margin: 0 0 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.25rem;
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  th, td {
+    padding: 0.5rem;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  tbody td:not(:first-child) {
+    text-align: center;
+  }
+
+  tbody tr.paginator-row {
+    background-color: transparent;
+  }
+
+  tbody tr.no-activity-row td {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .paginator {
+    padding-top: 1rem;
+    justify-content: center;
+  }
+
+  .analytics-summary {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+
+  .analytics-summary-number {
+    margin-right: 3rem;
+    div {
+      font-size: 1.25rem;
+      white-space: nowrap;
+    }
+  }
+}

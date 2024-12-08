@@ -480,3 +480,21 @@ def strip_website_url(url):
     elif url.startswith('http://'):
         url =  url.lstrip('http://')
     return url.rstrip('/')
+
+
+@register.filter
+def format_time_on_site(timedelta_obj):
+    seconds = timedelta_obj.total_seconds()
+    days = int(seconds // 86400)
+    hours = int((seconds % 86400) // 3600)
+    minutes = int((seconds % 3600) // 60)
+    duration = ''
+    if days > 0:    
+        duration += f"{days} days "
+    if hours > 0:
+        duration += f"{hours} hours "
+    if minutes > 0:
+        duration += f"{minutes} mins"
+    if not duration:
+        duration = '<1 min'
+    return duration

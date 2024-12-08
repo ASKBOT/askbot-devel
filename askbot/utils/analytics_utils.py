@@ -22,3 +22,13 @@ def get_named_segment_config(segment_slug):
         if segment_config['slug'] == segment_slug:
             return segment_config
     return None
+
+def get_segment_name(segment_slug):
+    """Returns the name of the segment"""
+    segment_config = get_named_segment_config(segment_slug)
+    if segment_config:
+        return segment_config['name']
+    default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
+    if segment_slug == default_segment_config['slug']:
+        return default_segment_config['name']
+    return None

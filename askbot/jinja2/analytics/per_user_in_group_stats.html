@@ -1,30 +1,6 @@
+{% from "macros.html" import paginator %}
 {% extends "one_column_body.html" %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
-{% block forestyle %}
-  <style>
-    table {
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.5rem;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    tbody tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    tbody td:not(:first-child) {
-      text-align: center;
-    }
-    .title-row {
-      align-items: center;
-    }
-    .analytics-summary {
-      margin-bottom: 2rem;
-    }
-  </style>
-{% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
 {% block forum_header %}{% endblock %}
 {% block content %}
@@ -50,19 +26,35 @@
       <th>{% trans %}Time on Site{% endtrans %}</th>
     </tr>
   </thead>
-  <tbody>
-    {% for user_data in users %}
-      <tr>
+    {% if org_id %}
+      {% set org_id_param = '&org_id=' ~ org_id %}
+    {% else %}
+      {% set org_id_param = '' %}
+    {% endif %}
+    <tbody>
+      {% for user_data in users %}
+        <tr>
         <td>
-            <a href={{ url('analytics_users', dates=dates_url_param, users_segment='user:' ~ user_data['user'].id) }}>{{ user_data['user'].username }}</a>
+            <a href={{ url('analytics_users', dates=dates_url_param, users_segment='user:' ~ user_data['user'].id) ~ '?segment=' ~ segment_slug ~ org_id_param }}>{{ user_data['user'].username }}</a>
         </td>
         <td>{{ user_data["num_questions"] }}</td>
         <td>{{ user_data["num_answers"] }}</td>
         <td>{{ user_data["num_upvotes"] }}</td>
         <td>{{ user_data["num_downvotes"] }}</td>
-        <td>{{ user_data['time_on_site'] }}</td>
+        <td>{{ user_data['time_on_site']|format_time_on_site }}</td>
+      </tr>
+    {% else %}
+      <tr class="no-activity-row">
+        <td colspan="6">{% trans %}There has been no activity in this time period{% endtrans %}</td>
       </tr>
     {% endfor %}
+    {% if paginator_context.is_paginated %}
+      <tr class="paginator-row">
+        <td colspan="6">
+        {{ paginator(paginator_context) }}
+        </td>
+      </tr>
+    {% endif %}
   </tbody>
 </table>
 {% endblock %}

@@ -13,13 +13,13 @@ import zlib
 import zipfile
 import jwt
 from django.conf import settings as django_settings
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.core.validators import validate_email
 from django.utils.translation import gettext as _
 from django.utils.translation import ngettext
 from django.utils.html import escape
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
-from django.utils import timezone
 from django import forms
 
 mark_safe_lazy = lazy(mark_safe, str) #pylint: disable=invalid-name
@@ -254,6 +254,27 @@ def setup_paginator(context):
                 "in_trailing_range" : in_trailing_range,
                 "pages_outside_leading_range": pages_outside_leading_range,
                 "pages_outside_trailing_range": pages_outside_trailing_range}
+
+
+def get_paginated_list(request, objects, page_size):
+    """Returns paginated objects and the paginator context"""
+    paginator = Paginator(objects, page_size)
+    from askbot.forms import PageField
+    page_no = PageField().clean(request.GET.get('page'))
+
+    try:
+        page = paginator.page(page_no)
+    except (EmptyPage, InvalidPage):
+        page = paginator.page(paginator.num_pages)
+
+    paginator_context = setup_paginator({
+        'is_paginated' : paginator.num_pages > 1,
+        'pages': paginator.num_pages,
+        'current_page_number': page_no,
+        'page_object': page,
+        'base_url' : request.path + '?'
+    })
+    return page.object_list, paginator_context
 
 def get_admin():
     """Returns an admin users, usefull for raising flags"""

@@ -1,9 +1,11 @@
 {% extends "one_column_body.html" %}
+{% from "macros.html" import paginator %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
     table {
       border-collapse: collapse;
+      margin-bottom: 1rem;
     }
     th, td {
       padding: 0.5rem;
@@ -30,7 +32,7 @@
 {% block content %}
 <div class="title-row">
   <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / <a href="{{ url('analytics_users',
-          dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {% trans %}Customers{% endtrans %}</h1>
+          dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
   {% include "analytics/date_selector.html" %}
 </div>
 <table>
@@ -56,9 +58,20 @@
         <td>{{ group_data["num_answers"] }}</td>
         <td>{{ group_data["num_upvotes"] }}</td>
         <td>{{ group_data["num_downvotes"] }}</td>
-        <td>{{ group_data['time_on_site'] }}</td>
+        <td>{{ group_data['time_on_site']|format_time_on_site }}</td>
+      </tr>
+    {% else %}
+      <tr class="no-activity-row">
+        <td colspan="8">{% trans %}There has been no activity in this time period{% endtrans %}</td>
       </tr>
     {% endfor %}
+    {% if paginator_context.is_paginated %}
+      <tr class="paginator-row">
+        <td colspan="8">
+        {{ paginator(paginator_context) }}
+        </td>
+      </tr>
+    {% endif %}
   </tbody>
 </table>
 {% endblock %}

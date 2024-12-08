@@ -1,30 +1,5 @@
 {% extends "one_column_body.html" %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
-{% block forestyle %}
-  <style>
-    table {
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.5rem;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    tbody tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    tbody td:not(:first-child) {
-      text-align: center;
-    }
-    .title-row {
-      align-items: center;
-    }
-    .analytics-summary {
-      margin-bottom: 2rem;
-    }
-  </style>
-{% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
 {% block forum_header %}{% endblock %}
 {% block content %}
@@ -75,7 +50,7 @@
       <td>{{ all_data['num_answers'] }}</td>
       <td>{{ all_data['num_upvotes'] }}</td>
       <td>{{ all_data['num_downvotes'] }}</td>
-      <td>{{ all_data['time_on_site'] }}</td>
+      <td>{{ all_data['time_on_site']|format_time_on_site }}</td>
     </tr>
     {% for named_segment_data in named_segments_data %}
     <tr>
@@ -86,7 +61,7 @@
       <td>{{ named_segment_data['num_answers'] }}</td>
       <td>{{ named_segment_data['num_upvotes'] }}</td>
       <td>{{ named_segment_data['num_downvotes'] }}</td>
-      <td>{{ named_segment_data['time_on_site'] }}</td>
+      <td>{{ named_segment_data['time_on_site']|format_time_on_site }}</td>
     </tr>
     {% endfor %}
     <tr>
@@ -97,7 +72,7 @@
       <td>{{ default_segment_data['num_answers'] }}</td>
       <td>{{ default_segment_data['num_upvotes'] }}</td>
       <td>{{ default_segment_data['num_downvotes'] }}</td>
-      <td>{{ default_segment_data['time_on_site'] }}</td>
+      <td>{{ default_segment_data['time_on_site']|format_time_on_site }}</td>
     </tr>
   </tbody>
 </table>

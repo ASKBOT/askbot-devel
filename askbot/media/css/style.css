@@ -10787,15 +10787,45 @@ a.badge-page-link {
   font-size: 1.25rem;
   margin: 0 0 0.25rem;
 }
-
-.analytics-summary {
+.analytics-page .title-row {
   display: flex;
+  align-items: center;
 }
-
-.analytics-summary-number {
+.analytics-page table {
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+.analytics-page th, .analytics-page td {
+  padding: 0.5rem;
+}
+.analytics-page th {
+  background-color: #f2f2f2;
+}
+.analytics-page tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.analytics-page tbody td:not(:first-child) {
+  text-align: center;
+}
+.analytics-page tbody tr.paginator-row {
+  background-color: transparent;
+}
+.analytics-page tbody tr.no-activity-row td {
+  padding: 1rem;
+  text-align: center;
+}
+.analytics-page .paginator {
+  padding-top: 1rem;
+  justify-content: center;
+}
+.analytics-page .analytics-summary {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.analytics-page .analytics-summary-number {
   margin-right: 3rem;
 }
-.analytics-summary-number div {
+.analytics-page .analytics-summary-number div {
   font-size: 1.25rem;
   white-space: nowrap;
 }

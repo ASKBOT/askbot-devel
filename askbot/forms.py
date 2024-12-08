@@ -1799,3 +1799,6 @@ class AnalyticsUsersForm(forms.Form):
             return self.earliest_date, timezone.now().date()
 
         raise forms.ValidationError('Invalid date range')
+
+class PaginationForm(forms.Form):
+    page = PageField()
