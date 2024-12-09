@@ -45,27 +45,6 @@ def get_aggregated_group_data(summaries):
     return data
 
 
-def get_aggregated_user_data(summaries):
-    if summaries.count() == 0:
-        return {
-            'num_questions': 0,
-            'num_answers': 0,
-            'num_upvotes': 0,
-            'num_downvotes': 0,
-            'question_views': 0,
-            'time_on_site': timedelta(seconds=0),
-        }
-
-    return summaries.aggregate(
-        num_questions=models.Sum('num_questions'),
-        num_answers=models.Sum('num_answers'),
-        num_upvotes=models.Sum('num_upvotes'),
-        num_downvotes=models.Sum('num_downvotes'),
-        question_views=models.Sum('question_views'),
-        time_on_site=models.Sum('time_on_site')
-    )
-
-
 def non_routed_per_segment_stats(request, data):
     """Renders the all users page"""
     default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
@@ -159,21 +138,38 @@ def non_routed_per_group_in_segment_stats(request, data):
     start_date = data['start_date']
     end_date = data['end_date']
     customer_summaries = all_customer_summaries.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
-    customer_group_ids = customer_summaries.values_list('group_id', flat=True).distinct()
     data['groups'] = []
     data['default_segment_name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
     data['default_segment_slug'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
 
-    query_params = {'query': data['query']} if data['query'] else None
-    customer_group_ids, paginator_context = get_paginated_list(request, customer_group_ids, 20, query_params)
+    customer_summaries = customer_summaries.values('group_id')
+    customer_summaries = customer_summaries.annotate(
+        num_users_added=models.Sum('num_users_added'),
+        num_questions=models.Sum('num_questions'),
+        num_answers=models.Sum('num_answers'),
+        num_upvotes=models.Sum('num_upvotes'),
+        num_downvotes=models.Sum('num_downvotes'),
+        question_views=models.Sum('question_views'),
+        time_on_site=models.Sum('time_on_site'),
+        orgname=models.F('group__name')
+    )
+
+    customer_summaries = customer_summaries.order_by(data['order_by'])
+
+    query_params = {}
+    if data['query']:
+        query_params['query'] = data['query']
+
+    query_params['sort_by'] = data['sort_by']
+    query_params['sort_order'] = data['sort_order']
+    customer_summaries, paginator_context = get_paginated_list(request, customer_summaries, 20, query_params or None)
     data['paginator_context'] = paginator_context
 
-    for group_id in customer_group_ids:
-        group_summaries = customer_summaries.filter(group_id=group_id)
-        group_data = get_aggregated_group_data(group_summaries)
-        group_data['group'] = Group.objects.get(id=group_id)
-        group_data['num_users'] = all_customer_summaries.filter(group_id=group_id, date__lte=end_date).order_by('date').last().num_users
-        data['groups'].append(group_data)
+    for summary in customer_summaries:
+        group = Group.objects.get(id=summary['group_id'])
+        summary['group'] = group
+        summary['num_users'] = all_customer_summaries.filter(group_id=group.id, date__lte=end_date).order_by('date').last().num_users
+        data['groups'].append(summary)
 
     return render(request, 'analytics/per_group_in_segment_stats.html', data)
 

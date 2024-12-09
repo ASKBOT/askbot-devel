@@ -1,5 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import paginator %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
@@ -35,9 +36,10 @@
           dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
   {% include "analytics/date_selector.html" %}
 </div>
+{% set base_url = url('analytics_users', dates=dates_url_param, users_segment=default_segment_slug) %}
 <form
   class="search-form"
-  action="{{ url('analytics_users', dates=dates_url_param, users_segment=default_segment_slug) }}"
+  action="{{ base_url }}"
   method="get"
 >
   <input
@@ -47,19 +49,63 @@
     placeholder="Search organizations"
     value="{{ query|escape }}"
   />
+  <input type="hidden" name="sort_by" value="{{ sort_by }}">
+  <input type="hidden" name="sort_order" value="{{ sort_order }}">
   <button class="btn btn-primary" type="submit">Search</button>
 </form>
 <table>
   <thead>
     <tr>
-      <th>{% trans %}Organization{% endtrans %}</th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='orgname', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='orgname', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Organization{% endtrans %}
+        </a>
+      </th>
       <th>{% trans %}Num Users{% endtrans %}</th>
-      <th>{% trans %}Users Added{% endtrans %}</th>
-      <th>{% trans %}Questions{% endtrans %}</th>
-      <th>{% trans %}Answers{% endtrans %}</th>
-      <th>{% trans %}Upvotes{% endtrans %}</th>
-      <th>{% trans %}Downvotes{% endtrans %}</th>
-      <th>{% trans %}Time on Site{% endtrans %}</th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='num_users_added', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='num_users_added', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Users Added{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='num_questions', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='num_questions', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Questions{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='num_answers', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='num_answers', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Answers{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='num_upvotes', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='num_upvotes', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Upvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='num_downvotes', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='num_downvotes', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Downvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='time_on_site', current_sort_order=sort_order) }}"
+          href="{{ format_query_string(query=query, desired_sort_by='time_on_site', current_sort_by=sort_by, current_sort_order=sort_order) }}">
+          {% trans %}Time on Site{% endtrans %}
+        </a>
+      </th>
     </tr>
   </thead>
   <tbody>

@@ -1747,10 +1747,12 @@ class AnalyticsUsersForm(forms.Form):
     def clean_sort_by(self):
         sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
         if sort_by  not in ('username',
+                            'orgname',
                             'num_questions',
                             'num_answers',
                             'num_upvotes',
                             'num_downvotes',
+                            'num_users_added',
                             'time_on_site'):
             return 'time_on_site'
         return sort_by
