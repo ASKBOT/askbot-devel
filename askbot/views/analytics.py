@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.conf import settings as django_settings
 from django.db import models
 from django.shortcuts import render, HttpResponseRedirect
+from django.http import HttpResponseForbidden
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils.html import escape
@@ -83,7 +84,8 @@ def non_routed_per_segment_stats(request, data):
 
     #2) for the default segment, subtract the numbers for 2) from 1)
     named_segment_group_ids = analytics_utils.get_all_named_segment_group_ids()
-    default_segment_summaries = DailyGroupSummary.objects.exclude(group__id__in=named_segment_group_ids) # pylint: disable=no-member
+    default_segment_summaries = DailyGroupSummary.objects.exclude( # pylint: disable=no-member
+                                    group__id__in=named_segment_group_ids)
     default_segment_summaries = default_segment_summaries.filter(date__gt=data['start_date'],
                                                                  date__lte=data['end_date'])
 
@@ -92,7 +94,8 @@ def non_routed_per_segment_stats(request, data):
     default_segment_data['name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
     # here goes the symmetrical calculation of the missing fields - see step 1)
     named_segments_users_added = sum(datum['num_users_added'] for datum in named_segments_data)
-    default_segment_data['num_users_added'] = all_data['num_users_added'] - named_segments_users_added
+    default_segment_data['num_users_added'] = all_data['num_users_added']\
+                                              - named_segments_users_added
     named_segments_num_users = sum(datum['num_users'] for datum in named_segments_data)
     default_segment_data['num_users'] = all_data['num_users'] - named_segments_num_users
 
@@ -162,13 +165,20 @@ def non_routed_per_group_in_segment_stats(request, data):
 
     query_params['sort_by'] = data['sort_by']
     query_params['sort_order'] = data['sort_order']
-    customer_summaries, paginator_context = get_paginated_list(request, customer_summaries, 20, query_params or None)
+    customer_summaries, paginator_context = get_paginated_list(request,
+                                                               customer_summaries,
+                                                               20,
+                                                               query_params or None)
     data['paginator_context'] = paginator_context
 
     for summary in customer_summaries:
         group = Group.objects.get(id=summary['group_id'])
         summary['group'] = group
-        summary['num_users'] = all_customer_summaries.filter(group_id=group.id, date__lte=end_date).order_by('date').last().num_users
+        summary['num_users'] = all_customer_summaries.filter(group_id=group.id,
+                                                             date__lte=end_date) \
+                                                            .order_by('date') \
+                                                            .last() \
+                                                            .num_users
         data['groups'].append(summary)
 
     return render(request, 'analytics/per_group_in_segment_stats.html', data)
@@ -185,7 +195,8 @@ def non_routed_per_user_in_group_stats(request,
     users_data = []
 
     daily_user_summaries = DailyUserSummary.objects.filter(user__in=users) # pylint: disable=no-member
-    daily_user_summaries = daily_user_summaries.filter(date__gt=data['start_date'], date__lte=data['end_date']) # pylint: disable=no-member
+    daily_user_summaries = daily_user_summaries.filter(date__gt=data['start_date'],
+                                                       date__lte=data['end_date']) # pylint: disable=no-member
 
     if data['query']:
         daily_user_summaries = daily_user_summaries.filter(user__username__icontains=data['query'])
@@ -252,6 +263,10 @@ def non_routed_render_user_activity(request, data, user_id):
 
 def analytics_users(request, dates='all-time', users_segment='all'):
     """User analytics page"""
+
+    if not request.user.is_authenticated or not request.user.is_admin_or_mod():
+        return HttpResponseForbidden()
+
     earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
     query_data = request.GET.copy()
     query_data.update({'dates': dates, 'users_segment': users_segment})
@@ -310,4 +325,3 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         return non_routed_render_user_activity(request, data, user_id)
 
     raise ValueError(f"Invalid users segment: {users_segment}")
-
