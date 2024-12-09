@@ -57,4 +57,10 @@
       white-space: nowrap;
     }
   }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 }

@@ -35,6 +35,20 @@
           dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
   {% include "analytics/date_selector.html" %}
 </div>
+<form
+  class="search-form"
+  action="{{ url('analytics_users', dates=dates_url_param, users_segment=default_segment_slug) }}"
+  method="get"
+>
+  <input
+    type="text"
+    id="search-input"
+    name="query"
+    placeholder="Search organizations"
+    value="{{ query|escape }}"
+  />
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
 <table>
   <thead>
     <tr>

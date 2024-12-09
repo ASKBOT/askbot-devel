@@ -1730,6 +1730,7 @@ class AnalyticsUsersForm(forms.Form):
     """
     dates = forms.CharField()
     users_segment = forms.CharField()
+    query = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         self.earliest_date = kwargs.pop('earliest_possible_date')

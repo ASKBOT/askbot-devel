@@ -15,6 +15,25 @@
   </h1>
   {% include "analytics/date_selector.html" %}
 </div>
+{% if is_named_segment %}
+  {% set users_segment = segment_slug %}
+{% else %}
+  {% set users_segment = 'group:' + org_id | string %}
+{% endif %}
+<form
+  class="search-form"
+  action="{{ url('analytics_users', dates=dates_url_param, users_segment=users_segment) }}"
+  method="get"
+>
+  <input
+    type="text"
+    id="search-input"
+    name="query"
+    placeholder="Search users"
+    value="{{ query|escape }}"
+  />
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
 <table>
   <thead>
     <tr>

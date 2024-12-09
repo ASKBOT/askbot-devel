@@ -12,6 +12,7 @@ import warnings
 import zlib
 import zipfile
 import jwt
+from urllib.parse import urlencode
 from django.conf import settings as django_settings
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.core.validators import validate_email
@@ -256,7 +257,7 @@ def setup_paginator(context):
                 "pages_outside_trailing_range": pages_outside_trailing_range}
 
 
-def get_paginated_list(request, objects, page_size):
+def get_paginated_list(request, objects, page_size, search_params=None):
     """Returns paginated objects and the paginator context"""
     paginator = Paginator(objects, page_size)
     from askbot.forms import PageField
@@ -272,7 +273,7 @@ def get_paginated_list(request, objects, page_size):
         'pages': paginator.num_pages,
         'current_page_number': page_no,
         'page_object': page,
-        'base_url' : request.path + '?'
+        'base_url' : request.path + '?' + (urlencode(search_params) + '&' if search_params else '')
     })
     return page.object_list, paginator_context
 

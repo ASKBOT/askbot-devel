@@ -10829,5 +10829,10 @@ a.badge-page-link {
   font-size: 1.25rem;
   white-space: nowrap;
 }
+.analytics-page .search-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
 /*# sourceMappingURL=style.css.map */
