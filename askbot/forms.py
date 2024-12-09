@@ -1731,10 +1731,29 @@ class AnalyticsUsersForm(forms.Form):
     dates = forms.CharField()
     users_segment = forms.CharField()
     query = forms.CharField(required=False)
+    sort_by = forms.CharField(required=False)
+    sort_order = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
         self.earliest_date = kwargs.pop('earliest_possible_date')
         super(AnalyticsUsersForm, self).__init__(*args, **kwargs)
+
+    def clean_sort_order(self):
+        sort_order = self.cleaned_data.get('sort_order', 'desc')
+        if sort_order not in ('asc', 'desc'):
+            return 'desc'
+        return sort_order
+
+    def clean_sort_by(self):
+        sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
+        if sort_by  not in ('username',
+                            'num_questions',
+                            'num_answers',
+                            'num_upvotes',
+                            'num_downvotes',
+                            'time_on_site'):
+            return 'time_on_site'
+        return sort_by
 
     def clean_users_segment(self):
         users_segment = self.cleaned_data['users_segment']
@@ -1800,6 +1819,16 @@ class AnalyticsUsersForm(forms.Form):
             return self.earliest_date, timezone.now().date()
 
         raise forms.ValidationError('Invalid date range')
+
+    def clean(self):
+        sort_order = self.cleaned_data.get('sort_order', 'desc')
+        sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
+        if sort_order == 'desc':
+            order_by = '-' + sort_by
+        else:
+            order_by = sort_by
+        self.cleaned_data['order_by'] = order_by
+        return self.cleaned_data
 
 class PaginationForm(forms.Form):
     page = PageField()

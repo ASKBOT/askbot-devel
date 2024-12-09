@@ -86,3 +86,28 @@
     searched
   </div>
 {% endmacro %}
+
+{%- macro format_query_string(query=None, desired_sort_by=None, current_sort_by=None, current_sort_order=None) -%}
+  {%- if query or desired_sort_by -%}?{%- endif -%}
+  {%- if query -%}
+    query={{ query }}&
+  {%- endif -%}
+  {%- if desired_sort_by -%}
+    sort_by={{ desired_sort_by }}&
+  {%- endif -%}
+  {%- if current_sort_by == desired_sort_by -%}
+    sort_order={{ 'desc' if current_sort_order == 'asc' else 'asc' }}
+  {%- else -%}
+    sort_order=desc
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro sort_icon_class(desired_sort_by=None, current_sort_by=None, current_sort_order=None) -%}
+  {%- if desired_sort_by == current_sort_by -%}
+    {%- if current_sort_order == 'asc' -%}
+      js-with-sort-descending-icon
+    {%- else -%}
+      js-with-sort-ascending-icon
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro -%}

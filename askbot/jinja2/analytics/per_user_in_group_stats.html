@@ -1,4 +1,5 @@
 {% from "macros.html" import paginator %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class %}
 {% extends "one_column_body.html" %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
@@ -20,9 +21,10 @@
 {% else %}
   {% set users_segment = 'group:' + org_id | string %}
 {% endif %}
+{% set base_url = url('analytics_users', dates=dates_url_param, users_segment=users_segment) %}
 <form
   class="search-form"
-  action="{{ url('analytics_users', dates=dates_url_param, users_segment=users_segment) }}"
+  action="{{ base_url }}"
   method="get"
 >
   <input
@@ -32,17 +34,85 @@
     placeholder="Search users"
     value="{{ query|escape }}"
   />
+  <input type="hidden" name="sort_by" value="{{ sort_by }}">
+  <input type="hidden" name="sort_order" value="{{ sort_order }}">
   <button class="btn btn-primary" type="submit">Search</button>
 </form>
 <table>
   <thead>
     <tr>
-      <th>{% trans %}User{% endtrans %}</th>
-      <th>{% trans %}Questions{% endtrans %}</th>
-      <th>{% trans %}Answers{% endtrans %}</th>
-      <th>{% trans %}Upvotes{% endtrans %}</th>
-      <th>{% trans %}Downvotes{% endtrans %}</th>
-      <th>{% trans %}Time on Site{% endtrans %}</th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='username',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                  desired_sort_by='username',
+                                                  current_sort_by=sort_by,
+                                                  current_sort_order=sort_order) }}">
+          {% trans %}User{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_questions',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_questions',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Questions{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_answers',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_answers',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Answers{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_upvotes',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_upvotes',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Upvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_downvotes',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_downvotes',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Downvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='time_on_site',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='time_on_site',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Time on Site{% endtrans %}
+        </a>
+      </th>
     </tr>
   </thead>
     {% if org_id %}
@@ -54,7 +124,7 @@
       {% for user_data in users %}
         <tr>
         <td>
-            <a href={{ url('analytics_users', dates=dates_url_param, users_segment='user:' ~ user_data['user'].id) ~ '?segment=' ~ segment_slug ~ org_id_param }}>{{ user_data['user'].username }}</a>
+            <a href={{ url('analytics_users', dates=dates_url_param, users_segment='user:' ~ user_data['user_id']) ~ '?segment=' ~ segment_slug ~ org_id_param }}>{{ user_data['username']}}</a>
         </td>
         <td>{{ user_data["num_questions"] }}</td>
         <td>{{ user_data["num_answers"] }}</td>

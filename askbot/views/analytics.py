@@ -194,16 +194,28 @@ def non_routed_per_user_in_group_stats(request,
     if data['query']:
         daily_user_summaries = daily_user_summaries.filter(user__username__icontains=data['query'])
 
-    user_ids_with_activity = daily_user_summaries.values_list('user_id', flat=True).distinct()
-    users = users.filter(id__in=user_ids_with_activity).order_by('username')
+    daily_user_summaries = daily_user_summaries.values('user_id')
+    daily_user_summaries = daily_user_summaries.annotate(
+        username=models.F('user__username'),
+        num_questions=models.Sum('num_questions'),
+        num_answers=models.Sum('num_answers'),
+        num_upvotes=models.Sum('num_upvotes'),
+        num_downvotes=models.Sum('num_downvotes'),
+        question_views=models.Sum('question_views'),
+        time_on_site=models.Sum('time_on_site')
+    )
 
-    search_params = {'query': data['query']} if data['query'] else None
-    users, paginator_context = get_paginated_list(request, users, 20, search_params)
-    for user in users:
-        user_summaries = daily_user_summaries.filter(user=user) # pylint: disable=no-member
-        user_data = get_aggregated_user_data(user_summaries)
-        user_data['user'] = user
-        users_data.append(user_data)
+    daily_user_summaries = daily_user_summaries.order_by(data['order_by'])
+    search_params = {}
+    if data['query']:
+        search_params['query'] = data['query']
+
+    search_params['sort_by'] = data['sort_by']
+    search_params['sort_order'] = data['sort_order']
+    users_data, paginator_context = get_paginated_list(request,
+                                                       daily_user_summaries,
+                                                       20,
+                                                       search_params or None)
 
     data['users'] = users_data
     data['paginator_context'] = paginator_context
@@ -245,10 +257,9 @@ def non_routed_render_user_activity(request, data, user_id):
 def analytics_users(request, dates='all-time', users_segment='all'):
     """User analytics page"""
     earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
-    users_form = AnalyticsUsersForm({'dates': dates,
-                                     'users_segment': users_segment,
-                                     'query': request.GET.get('query')},
-                                     earliest_possible_date=earliest_summary.date)
+    query_data = request.GET.copy()
+    query_data.update({'dates': dates, 'users_segment': users_segment})
+    users_form = AnalyticsUsersForm(query_data, earliest_possible_date=earliest_summary.date)
 
     if not users_form.is_valid():
         escaped_range = escape(dates)
@@ -265,7 +276,10 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         'end_date': end_date,
         'users_segment': users_segment,
         'dates_url_param': dates,
-        'query': users_form.cleaned_data['query']
+        'query': users_form.cleaned_data['query'],
+        'order_by': users_form.cleaned_data['order_by'],
+        'sort_by': users_form.cleaned_data['sort_by'],
+        'sort_order': users_form.cleaned_data['sort_order']
     }
     if users_segment == 'all':
         return non_routed_per_segment_stats(request, data)
