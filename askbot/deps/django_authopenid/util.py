@@ -337,7 +337,7 @@ class LoginMethod:
             else:
                 self.oidc_authorization_function = lambda parsed_token: True
 
-            if hasattr(self.mode, 'OIDC_CUSTOM_SCOPES'):
+            if hasattr(self.mod, 'OIDC_CUSTOM_SCOPES'):
                 self.oidc_custom_scopes = self.mod.OIDC_CUSTOM_SCOPES
             else:
                 self.oidc_custom_scopes = []
