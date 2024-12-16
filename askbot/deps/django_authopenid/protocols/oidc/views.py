@@ -42,13 +42,16 @@ def complete_oidc_signin(request): #pylint: disable=too-many-return-statements
 
     id_token = token_info["id_token"]
 
-    #access_token = token_info["access_token"]
     #if not oidc.is_access_token_valid(access_token):
     #    return HttpResponseBadRequest("Access token is invalid")
 
     auth_csrf_token = request.session.pop('auth_csrf_token')
     if not oidc.is_id_token_valid(id_token, auth_csrf_token):
         return HttpResponseBadRequest("ID token is invalid")
+
+    access_token = token_info["access_token"]
+    if not oidc.is_user_authorized(access_token):
+        return HttpResponseBadRequest("You do not have access to this resource")
 
     user_id = oidc.get_user_id(id_token)
 

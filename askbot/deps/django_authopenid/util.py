@@ -332,6 +332,15 @@ class LoginMethod:
             self.oidc_client_id = self.get_required_attr('OIDC_CLIENT_ID', for_what)
             self.oidc_client_secret = self.get_required_attr('OIDC_CLIENT_SECRET', for_what)
             self.oidc_audience = self.get_required_attr('OIDC_AUDIENCE', for_what)
+            if hasattr(self.mod, 'OIDC_AUTHORIZATION_FUNCTION'):
+                self.oidc_authorization_function = self.mod.OIDC_AUTHORIZATION_FUNCTION
+            else:
+                self.oidc_authorization_function = lambda parsed_token: True
+
+            if hasattr(self.mode, 'OIDC_CUSTOM_SCOPES'):
+                self.oidc_custom_scopes = self.mod.OIDC_CUSTOM_SCOPES
+            else:
+                self.oidc_custom_scopes = []
 
         if self.login_type.startswith('openid'):
             self.openid_endpoint = self.get_required_attr('OPENID_ENDPOINT', 'custom OpenID login')
@@ -357,7 +366,8 @@ class LoginMethod:
             'check_password', 'auth_endpoint', 'token_endpoint',
             'resource_endpoint', 'response_parser', 'token_transport',
             'trust_email', 'oidc_provider_url', 'oidc_client_id',
-            'oidc_client_secret', 'oidc_audience'
+            'oidc_client_secret', 'oidc_audience', 'oidc_authorization_function',
+            'oidc_custom_scopes'
         )
         #some parameters in the class have different names from those
         #in the dictionary

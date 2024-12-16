@@ -1,5 +1,6 @@
 """OpenId Connect protocol"""
 import asyncio
+import logging
 import requests
 from django.core.cache import cache
 from askbot.deps.django_authopenid.protocols.oidc.jwt_verifier import JwtVerifier
@@ -22,12 +23,16 @@ class OidcProtocol:
                  client_secret=None,
                  provider_url=None,
                  trust_email=False,
+                 authorization_function=None,
+                 custom_scopes=None,
                  audience=None):
         self.protocol_type = 'oidc'
         self.audience = audience
         self.client_id = client_id
         self.client_secret = client_secret
         self.provider_url = provider_url
+        self.authorization_function = authorization_function
+        self.custom_scopes = custom_scopes
         self.trust_email = trust_email
         discovery = self.load_discovery_data()
         self.authenticate_url = discovery['authorization_endpoint']
@@ -45,12 +50,23 @@ class OidcProtocol:
         return discovery_data
 
 
+    def get_scopes(self):
+        """Merges the default scopes with the custom scopes"""
+        scopes = ['openid', 'email', 'profile']
+        if self.custom_scopes:
+            for scope in self.custom_scopes:
+                if scope not in scopes:
+                    scopes.append(scope)
+
+        return ' '.join(scopes)
+
+
     def get_authentication_url(self, redirect_url, csrf_token=None):
         """Returns url at which OpenId-Connect service starts the user authentication"""
         query_params = {
             'client_id': self.client_id,
             'redirect_uri': redirect_url,
-            'scope': 'openid email profile',
+            'scope': self.get_scopes(),
             'nonce': csrf_token,
             'response_type': 'code',
             'response_mode': 'query',
@@ -83,6 +99,14 @@ class OidcProtocol:
     def get_email(self, id_token):
         payload = get_jwt_payload(id_token)
         return payload['email']
+
+    def is_user_authorized(self, id_token):
+        payload = get_jwt_payload(id_token)
+        try:
+            return self.authorization_function(payload)
+        except Exception as error:
+            logging.critical('Error in authorization function: %s', error)
+            return False
 
     def is_access_token_valid(self, access_token):
         """Validates the OIDC access token"""

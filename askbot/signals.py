@@ -36,6 +36,8 @@ new_comment_posted = django.dispatch.Signal()
 answer_edited = django.dispatch.Signal()
 question_visited = django.dispatch.Signal()
 voted = django.dispatch.Signal()
+best_answer_accepted = django.dispatch.Signal()
+best_answer_unaccepted = django.dispatch.Signal()
 
 post_updated = django.dispatch.Signal()
 
