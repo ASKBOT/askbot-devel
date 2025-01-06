@@ -46,6 +46,17 @@ def get_aggregated_group_data(summaries):
     return data
 
 
+def get_total_users_in_groups_by_date(group_ids, date):
+    """Returns total number of users in groups, specified by ids at a given date"""
+    total_users = 0
+    for group_id in group_ids:
+        named_segment_summaries = DailyGroupSummary.objects.filter(group__id=group_id) # pylint: disable=no-member
+        named_segment_summaries = named_segment_summaries.filter(date__lte=date)
+        latest_segment = named_segment_summaries.order_by('-date').first()
+        total_users += latest_segment.num_users if latest_segment else 0
+    return total_users
+
+
 def non_routed_per_segment_stats(request, data):
     """Renders the all users page"""
     default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
@@ -72,11 +83,10 @@ def non_routed_per_segment_stats(request, data):
         group_ids = segment_config['group_ids']
         named_segment_summaries = DailyGroupSummary.objects.filter(group__id__in=group_ids) # pylint: disable=no-member
         named_segment_summaries = named_segment_summaries.filter(date__lte=data['end_date'])
-        latest_summary = named_segment_summaries.order_by('-date').first()
         named_segment_summaries = named_segment_summaries.filter(date__gt=data['start_date'])
 
         datum = get_aggregated_group_data(named_segment_summaries)
-        datum['num_users'] = latest_summary.num_users if latest_summary else 0
+        datum['num_users'] = get_total_users_in_groups_by_date(group_ids, data['end_date'])
         datum['slug'] = segment_config['slug']
         datum['name'] = segment_config['name']
         named_segments_data.append(datum)
