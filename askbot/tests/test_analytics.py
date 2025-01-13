@@ -7,9 +7,7 @@ from askbot.tests.utils import AskbotTestCase
 from askbot import signals
 from askbot.models.analytics import (Session, Event, HourlyUserSummary,
                                      HourlyGroupSummary, DailyUserSummary,
-                                     DailyGroupSummary,
-                                     EVENT_TYPE_UPVOTED,
-                                     EVENT_TYPE_DOWNVOTED)
+                                     DailyGroupSummary)
 
 class TestAnalytics(AskbotTestCase):
 
@@ -70,7 +68,7 @@ class TestAnalytics(AskbotTestCase):
             self.post_question_and_answer(session,
                                           answer_delay,
                                           tags='tag1 tag2')
-        
+
         self.assertEqual(Session.objects.count(), 1) # pylint: disable=no-member
         self.assertEqual(Event.objects.count(), 4) # pylint: disable=no-member
 
@@ -144,10 +142,10 @@ class TestAnalytics(AskbotTestCase):
             user2.upvote(question)
             user2.downvote(answer)
 
-        self.assertEqual(Event.objects.filter(
-            event_type=EVENT_TYPE_UPVOTED).count(), 1) # pylint: disable=no-member
-        self.assertEqual(Event.objects.filter(
-            event_type=EVENT_TYPE_DOWNVOTED).count(), 1) # pylint: disable=no-member
+        self.assertEqual(Event.objects.filter( # pylint: disable=no-member
+            event_type=Event.EVENT_TYPE_UPVOTED).count(), 1) # pylint: disable=no-member
+        self.assertEqual(Event.objects.filter( # pylint: disable=no-member
+            event_type=Event.EVENT_TYPE_DOWNVOTED).count(), 1) # pylint: disable=no-member
 
         time4 = '2024-02-29 13:15:00'
         with time_machine.travel(time4):

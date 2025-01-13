@@ -1410,10 +1410,6 @@ def publish_post(request):
     if request.user.is_anonymous:
         raise exceptions.PermissionDenied(denied_msg)
 
-    if request.user.is_authenticated:
-        if request.user.is_administrator_or_moderator() is False:
-            raise exceptions.PermissionDenied(denied_msg)
-
     post_id = IntegerField().clean(request.POST['post_id'])
     post = models.Post.objects.get(pk=post_id)
 
