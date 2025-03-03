@@ -11,15 +11,11 @@ from askbot.utils import analytics_utils
 from askbot.utils.functions import get_paginated_list
 from askbot.forms import AnalyticsUsersForm
 from askbot.models import User, Group
+from askbot.views.analytics.utils import get_date_selector_url_func
 from askbot.models.analytics import (get_organizations_count,
                                      DailyGroupSummary,
                                      DailyUserSummary,
                                      Event)
-
-def analytics_index(request):
-    """analytics home page"""
-    return render(request, 'analytics/index.html')
-
 
 def get_aggregated_group_data(summaries):
     if summaries.count() == 0:
@@ -136,6 +132,8 @@ def non_routed_per_segment_stats(request, data):
     if django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
         data['orgs_count'] = get_organizations_count()
         data['orgs_enabled'] = True
+    data['date_selector_url_func'] = get_date_selector_url_func('analytics_users',
+                                                                users_segment=data['users_segment'])
     return render(request, 'analytics/per_segment_stats.html', data)
 
 
@@ -191,6 +189,8 @@ def non_routed_per_group_in_segment_stats(request, data):
                                                             .num_users
         data['groups'].append(summary)
 
+    data['date_selector_url_func'] = get_date_selector_url_func('analytics_users',
+                                                                users_segment=data['users_segment'])
     return render(request, 'analytics/per_group_in_segment_stats.html', data)
 
 
@@ -247,6 +247,9 @@ def non_routed_per_user_in_group_stats(request,
         data['group_name'] = group.name
         data['org_id'] = group.id
 
+    data['date_selector_url_func'] = get_date_selector_url_func('analytics_users',
+                                                                users_segment=data['users_segment'])
+
     return render(request, 'analytics/per_user_in_group_stats.html', data)
 
 
@@ -267,6 +270,9 @@ def non_routed_render_user_activity(request, data, user_id):
         group = Group.objects.get(id=request.GET.get('org_id'))
         data['group_name'] = group.name
         data['group_id'] = group.id
+
+    data['date_selector_url_func'] = get_date_selector_url_func('analytics_users',
+                                                                users_segment=data['users_segment'])
 
     return render(request, 'analytics/user_activity.html', data)
 

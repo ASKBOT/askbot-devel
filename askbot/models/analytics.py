@@ -163,6 +163,37 @@ class Event(models.Model):
         return f"Event: {self.get_event_type_display()} {timestamp}" # pylint: disable=no-member
 
 
+def filter_events_by_users_segment(events, users_segment):
+    """Filters events by users segment"""
+    if users_segment == 'all':
+        return events
+
+    if users_segment.startswith('group:'):
+        group_id = int(users_segment.split(':')[1])
+        return events.filter(session__user__groups__id__in=[group_id])
+    if users_segment.startswith('user:'):
+        user_id = int(users_segment.split(':')[1])
+        return events.filter(session__user__id=user_id)
+
+    default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+    if users_segment == default_segment_slug:
+        # default segment is all groups used for analytics except named segments
+        named_segments_config = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+        named_segments_group_ids = []
+        for named_segment in named_segments_config:
+            named_segments_group_ids.extend(named_segment['group_ids'])
+        groups = AskbotGroup.objects.filter(used_for_analytics=True).exclude(id__in=named_segments_group_ids)
+        return events.filter(session__user__groups__in=groups)
+
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    for named_segment_config in named_segment_configs:
+        if named_segment_config['slug'] == users_segment:
+            group_ids = named_segment_config['group_ids']
+            return events.filter(session__user__groups__in=group_ids)
+
+    return events
+
+
 class BaseSummary(models.Model):
     """
     An abstract model for per-interval summaries.

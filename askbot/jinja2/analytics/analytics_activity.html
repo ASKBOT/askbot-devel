@@ -1,0 +1,75 @@
+{% extends "one_column_body.html" %}
+{% from "macros.html" import paginator, timeago %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date %}
+{% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
+{% block forestyle %}
+  <style>
+    table {
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    th, td {
+      padding: 0.5rem;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tbody td:not(:first-child) {
+      text-align: center;
+    }
+    td {
+        text-align: left !important;
+    }
+    .title-row {
+      align-items: center;
+    }
+    .analytics-summary {
+      margin-bottom: 2rem;
+    }
+  </style>
+{% endblock %}
+{% block layout_class %}{{ super() }} analytics-page{% endblock %}
+{% block forum_header %}{% endblock %}
+{% block content %}
+<div class="title-row">
+  <h1>
+    Analytics / Activity 
+  </h1>
+  {% include "analytics/date_selector.html" %}
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Event</th>
+      <th>Date</th>
+  </thead>
+  <tbody>
+    {% for content_event in events %}
+      <tr>
+        <td>{{ content_event.session.user.username }}</td>
+        <td>
+            <em>{{ content_event.get_event_type_display() }}</em>
+            {% if content_event.event_type == 'visit' %}
+                {% set post = content_event.content_object %}
+                <a href={{ post.get_absolute_url() }}>
+                    {{ post.thread.title }}
+                </a>
+            {% endif %}
+        </td>
+        <td>{{ full_date(content_event.timestamp) }}</td>
+      </tr>
+    {% endfor %}
+    {% if paginator_context.is_paginated %}
+      <tr class="paginator-row">
+        <td colspan="3">
+        {{ paginator(paginator_context) }}
+        </td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

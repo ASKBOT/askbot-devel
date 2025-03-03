@@ -627,8 +627,10 @@ urlpatterns = [
         {'domain': 'djangojs', 'packages': str.join('+',['askbot'])},
         name='askbot_jsi18n'
     ),
-    re_path(r'^analytics/$', views.analytics.analytics_index, name='analytics_index'),
-    re_path(r'^analytics/users/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics.analytics_users, name='analytics_users'),
+    re_path(r'^analytics/$', views.analytics_home.analytics_index, name='analytics_index'),
+    re_path(r'^analytics/users/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics_users.analytics_users, name='analytics_users'),
+    re_path(r'^analytics/activity/(?P<activity_segment>.+)/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics.analytics_activity.analytics_activity, name='analytics_activity'),
+    re_path(r'^analytics/content/(?P<content_segment>.+)/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics.analytics_content.analytics_content, name='analytics_content'),
     #service_url(r'^private-messages/', include('askbot.deps.group_messaging.urls')),
     re_path(r'^settings/', include('livesettings.urls')),
     re_path(r'^preview-emails/$', views.emails.list_emails, name='list_emails'),

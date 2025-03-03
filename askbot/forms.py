@@ -1723,42 +1723,17 @@ class ReorderBadgesForm(forms.Form):
     position = forms.IntegerField()
 
 
-class AnalyticsUsersForm(forms.Form):
-    """dates is a string that accepts a list of pre-approved values
-    Such as last-7-days, this-year, etc., as defined in the analytics dates
-    selector dropdown template.
+class AnalyticsUsersSegmentField(forms.CharField):
     """
-    dates = forms.CharField()
-    users_segment = forms.CharField()
-    query = forms.CharField(required=False)
-    sort_by = forms.CharField(required=False)
-    sort_order = forms.CharField(required=False)
-
-    def __init__(self, *args, **kwargs):
-        self.earliest_date = kwargs.pop('earliest_possible_date')
-        super(AnalyticsUsersForm, self).__init__(*args, **kwargs)
-
-    def clean_sort_order(self):
-        sort_order = self.cleaned_data.get('sort_order', 'desc')
-        if sort_order not in ('asc', 'desc'):
-            return 'desc'
-        return sort_order
-
-    def clean_sort_by(self):
-        sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
-        if sort_by  not in ('username',
-                            'orgname',
-                            'num_questions',
-                            'num_answers',
-                            'num_upvotes',
-                            'num_downvotes',
-                            'num_users_added',
-                            'time_on_site'):
-            return 'time_on_site'
-        return sort_by
-
-    def clean_users_segment(self):
-        users_segment = self.cleaned_data['users_segment']
+    A field that accepts a string that is a valid users segment.
+    Valid segments are:
+    - 'all'
+    - the default segment
+    - group:<group_id>
+    - user:<user_id>
+    - named segments
+    """
+    def clean(self, users_segment):
         default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
         named_segment_slugs = [segment['slug'] for segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS]
         allowed_segment_slugs = ['all', default_segment_slug] + named_segment_slugs
@@ -1773,8 +1748,25 @@ class AnalyticsUsersForm(forms.Form):
 
         raise forms.ValidationError('Invalid users segment')
 
-    def clean_dates(self):
-        dates = self.cleaned_data['dates']
+
+class AnalyticsDatesField(forms.CharField):
+    """
+    A field that accepts a string that is a valid date range.
+    Valid date ranges are:
+    - last-7-days
+    - last-30-days
+    - this-month
+    - last-month
+    - last-3-months
+    - this-year
+    - last-year
+    - all-time
+    """
+    def __init__(self, earliest_date, *args, **kwargs):
+        super(AnalyticsDatesField, self).__init__(*args, **kwargs)
+        self.earliest_date = earliest_date
+
+    def clean(self, dates):
         if dates == 'last-7-days':
             end_date = timezone.now().date()
             start_date = end_date - timedelta(days=6)
@@ -1822,6 +1814,71 @@ class AnalyticsUsersForm(forms.Form):
 
         raise forms.ValidationError('Invalid date range')
 
+
+class AnalyticsActivityField(forms.CharField):
+    """
+    A field that accepts a string that is a valid activity segment.
+    After validation, the field returns list of event types as defined in the Events model
+    """
+    def clean(self, activity_segment):
+        from askbot.models.analytics import Event
+        if activity_segment == 'all':
+            return [Event.EVENT_TYPE_USER_REGISTERED,
+                    Event.EVENT_TYPE_LOGGED_IN,
+                    Event.EVENT_TYPE_LOGGED_OUT,
+                    Event.EVENT_TYPE_QUESTION_VIEWED,
+                    Event.EVENT_TYPE_ANSWER_VIEWED,
+                    Event.EVENT_TYPE_UPVOTED,
+                    Event.EVENT_TYPE_DOWNVOTED,
+                    Event.EVENT_TYPE_VOTE_CANCELED,
+                    Event.EVENT_TYPE_SEARCHED]
+        if activity_segment == 'registered':
+            return [Event.EVENT_TYPE_USER_REGISTERED]
+        if activity_segment == 'logged-in':
+            return [Event.EVENT_TYPE_LOGGED_IN]
+        if activity_segment == 'logged-out':
+            return [Event.EVENT_TYPE_LOGGED_OUT]
+        if activity_segment == 'content-viewed':
+            return [Event.EVENT_TYPE_QUESTION_VIEWED, Event.EVENT_TYPE_ANSWER_VIEWED]
+        if activity_segment == 'content-voted':
+            return [Event.EVENT_TYPE_UPVOTED, Event.EVENT_TYPE_DOWNVOTED, Event.EVENT_TYPE_VOTE_CANCELED]
+        raise forms.ValidationError('Invalid activity segment')
+
+
+class AnalyticsUsersForm(forms.Form):
+    """dates is a string that accepts a list of pre-approved values
+    Such as last-7-days, this-year, etc., as defined in the analytics dates
+    selector dropdown template.
+    """
+    users_segment = AnalyticsUsersSegmentField()
+    query = forms.CharField(required=False)
+    sort_by = forms.CharField(required=False)
+    sort_order = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        earliest_possible_date = kwargs.pop('earliest_possible_date')
+        super(AnalyticsUsersForm, self).__init__(*args, **kwargs)
+        self.fields['dates'] = AnalyticsDatesField(earliest_date=earliest_possible_date)
+
+    def clean_sort_order(self):
+        sort_order = self.cleaned_data.get('sort_order', 'desc')
+        if sort_order not in ('asc', 'desc'):
+            return 'desc'
+        return sort_order
+
+    def clean_sort_by(self):
+        sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
+        if sort_by  not in ('username',
+                            'orgname',
+                            'num_questions',
+                            'num_answers',
+                            'num_upvotes',
+                            'num_downvotes',
+                            'num_users_added',
+                            'time_on_site'):
+            return 'time_on_site'
+        return sort_by
+
     def clean(self):
         sort_order = self.cleaned_data.get('sort_order', 'desc')
         sort_by = self.cleaned_data.get('sort_by', 'time_on_site')
@@ -1831,6 +1888,34 @@ class AnalyticsUsersForm(forms.Form):
             order_by = sort_by
         self.cleaned_data['order_by'] = order_by
         return self.cleaned_data
+
+
+class AnalyticsContentForm(forms.Form):
+    content_segment = forms.CharField()
+    users_segment = AnalyticsUsersSegmentField()
+
+
+    def __init__(self, *args, **kwargs):
+        earliest_possible_date = kwargs.pop('earliest_possible_date')
+        super(AnalyticsContentForm, self).__init__(*args, **kwargs)
+        self.fields['dates'] = AnalyticsDatesField(earliest_date=earliest_possible_date)
+
+
+    def clean_content_segment(self):
+        content_segment = self.cleaned_data.get('content_segment')
+        if content_segment not in ('questions', 'answers', 'comments', 'all'):
+            raise forms.ValidationError('Invalid content segment')
+        return content_segment
+
+
+class AnalyticsActivityForm(forms.Form):
+    activity_segment = AnalyticsActivityField()
+    users_segment = AnalyticsUsersSegmentField()
+
+    def __init__(self, *args, **kwargs):
+        earliest_possible_date = kwargs.pop('earliest_possible_date')
+        super(AnalyticsActivityForm, self).__init__(*args, **kwargs)
+        self.fields['dates'] = AnalyticsDatesField(earliest_date=earliest_possible_date)
 
 class PaginationForm(forms.Form):
     page = PageField()

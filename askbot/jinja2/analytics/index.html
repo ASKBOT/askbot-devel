@@ -11,8 +11,11 @@
   <p>General statistics of user activity, split by organizations and the group memberships</p>
 </section>
 <section>
-  <h2>Content</h2>
-  <p>Rates of answers, accepting answers as correct, by major tags</p>
+  <h2><a href="{{ url('analytics_content', content_segment='all', dates='all-time', users_segment='all') }}">{% trans %}Content{% endtrans %}</a></h2>
+  <p>All content, including questions, answers, and comments</p>
+<section>
+  <h2><a href="{{ url('analytics_activity', activity_segment='all', dates='all-time', users_segment='all') }}">{% trans %}Activity{% endtrans %}</a></h2>
+  <p>All user activity, including visits to posts</p>
 </section>
 <section>
   <h2>Searches</h2>

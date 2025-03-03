@@ -68,7 +68,7 @@
       ('all-time', _('All time')),
     ] %}
       <li {% if dates_url_param == date_range[0] %}class="js-selected"{% endif %}>
-        <a href="{{ url('analytics_users', dates=date_range[0], users_segment=users_segment) }}">{{ date_range[1] }}</a>
+        <a href="{{ date_selector_url_func(date_range[0]) }}">{{ date_range[1] }}</a>
       </li>
     {% endfor %}
   </ul>

@@ -1,7 +1,10 @@
 """
 :synopsis: django view functions for the askbot project
 """
-from askbot.views import analytics
+from askbot.views.analytics import analytics_users
+from askbot.views.analytics import analytics_activity
+from askbot.views.analytics import analytics_content
+from askbot.views.analytics import analytics_home
 from askbot.views import api_v1
 from askbot.views import commands
 from askbot.views import emails
