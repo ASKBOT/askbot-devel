@@ -35,9 +35,7 @@
 {% block forum_header %}{% endblock %}
 {% block content %}
 <div class="title-row">
-  <h1>
-    Analytics / Content
-  </h1>
+  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / Content</h1>
   {% include "analytics/date_selector.html" %}
 </div>
 <div class="analytics-summary">

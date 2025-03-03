@@ -36,7 +36,7 @@
 {% block content %}
 <div class="title-row">
   <h1>
-    Analytics / Activity 
+    <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / Activity
   </h1>
   {% include "analytics/date_selector.html" %}
 </div>
