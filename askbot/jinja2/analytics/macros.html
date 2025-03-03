@@ -111,3 +111,9 @@
     {%- endif -%}
   {%- endif -%}
 {%- endmacro -%}
+
+{% macro analytics_user_link(user, dates) %}
+  <a href="{{ user.get_analytics_url(dates) }}">
+    {{ user.username }}
+  </a>
+{% endmacro %}

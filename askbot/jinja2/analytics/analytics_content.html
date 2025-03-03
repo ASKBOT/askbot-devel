@@ -1,6 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import paginator, timeago %}
-{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_link %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
@@ -97,7 +97,7 @@
     {% for content_event in content_events %}
       {% set post=content_event.content_object %}
       <tr>
-        <td>{{ content_event.session.user.username }}</td>
+        <td>{{ analytics_user_link(content_event.session.user, dates) }}</td>
         <td>
             <a href={{ post.get_absolute_url() }}>
                 {{ post.post_type[0].upper() }}:

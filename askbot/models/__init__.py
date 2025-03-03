@@ -270,6 +270,25 @@ def user_get_absolute_url(self, language_code=None):
     return self.get_profile_url(language_code=language_code)
 
 
+def user_get_analytics_url(self, dates):
+    url = reverse('analytics_users', kwargs={'users_segment': 'user:' + str(self.id), 'dates': dates})
+    # if user belongs to a named segment, add the segment slug as segment
+    from askbot.views.analytics.utils import get_named_segment_group_ids, get_named_segment_slug
+    group_ids = get_named_segment_group_ids()
+    analytics_group = Group.objects.filter(used_for_analytics=True, user=self).first()
+
+    if not analytics_group:
+        # for some reason the user does not have the analytics group!!!
+        return ''
+
+    if analytics_group and analytics_group.id in group_ids:
+        return url + '?segment=' + get_named_segment_slug(analytics_group.id)
+
+    # otherwise, find the first analytics group to which this user belongs and
+    # add seggment = slug of the default segment and org_id = id of the group
+    return url + '?segment=' + django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug'] + '&org_id=' + str(analytics_group.id)
+
+
 def user_get_unsubscribe_url(self):
     url = reverse('user_unsubscribe')
     email_key = self.get_or_create_email_key()
@@ -3680,6 +3699,7 @@ User.add_to_class(
     user_subscribe_for_followed_question_alerts
 )
 User.add_to_class('get_absolute_url', user_get_absolute_url)
+User.add_to_class('get_analytics_url', user_get_analytics_url)
 User.add_to_class('get_avatar_type', user_get_avatar_type)
 User.add_to_class('get_avatar_url', user_get_avatar_url)
 User.add_to_class('can_terminate_account', user_can_terminate_account)

@@ -2,6 +2,54 @@
 Utilities for use in the analytics views
 """
 from django.urls import reverse
+from django.conf import settings as django_settings
+from askbot.models.user import Group as AskbotGroup
+
+def get_named_segment_group_ids():
+    """Returns the list of group ids for named segments"""
+    named_segments_config = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    group_ids = []
+    for named_segment in named_segments_config:
+        group_ids.extend(named_segment['group_ids'])
+    return group_ids
+
+
+def filter_events_by_users_segment(events, users_segment):
+    """Filters events by users segment"""
+    if users_segment == 'all':
+        return events
+
+    if users_segment.startswith('group:'):
+        group_id = int(users_segment.split(':')[1])
+        return events.filter(session__user__groups__id__in=[group_id])
+    if users_segment.startswith('user:'):
+        user_id = int(users_segment.split(':')[1])
+        return events.filter(session__user__id=user_id)
+
+    default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+    if users_segment == default_segment_slug:
+        # default segment is all groups used for analytics except named segments
+        group_ids = get_named_segment_group_ids()
+        groups = AskbotGroup.objects.filter(used_for_analytics=True).exclude(id__in=group_ids)
+        return events.filter(session__user__groups__in=groups)
+
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    for named_segment_config in named_segment_configs:
+        if named_segment_config['slug'] == users_segment:
+            group_ids = named_segment_config['group_ids']
+            return events.filter(session__user__groups__in=group_ids)
+
+    return events
+
+
+def get_named_segment_slug(group_id):
+    """Returns the slug for a named segment"""
+    named_segments_config = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    for named_segment_config in named_segments_config:
+        if group_id in named_segment_config['group_ids']:
+            return named_segment_config['slug']
+    return None
+
 
 def get_date_selector_url_func(view_name, **fixed_params):
     """

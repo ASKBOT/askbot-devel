@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from askbot.forms import AnalyticsActivityForm
-from askbot.models.analytics import DailyGroupSummary, Event, filter_events_by_users_segment
+from askbot.models.analytics import DailyGroupSummary, Event
 from askbot.utils.functions import get_paginated_list
-from askbot.views.analytics.utils import get_date_selector_url_func
+from askbot.views.analytics.utils import get_date_selector_url_func, filter_events_by_users_segment
 
 def analytics_activity(request, activity_segment=None, users_segment=None, dates=None):
     """analytics activity page"""
@@ -29,6 +29,7 @@ def analytics_activity(request, activity_segment=None, users_segment=None, dates
     events, paginator_context = get_paginated_list(request, events, 20)
 
     data = {
+        'Event': Event,
         'events': events,
         'event_types': event_types,
         'users_segment': users_segment,

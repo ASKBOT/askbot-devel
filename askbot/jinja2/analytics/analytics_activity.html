@@ -1,6 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import paginator, timeago %}
-{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_link %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
@@ -50,13 +50,20 @@
   <tbody>
     {% for content_event in events %}
       <tr>
-        <td>{{ content_event.session.user.username }}</td>
         <td>
-            <em>{{ content_event.get_event_type_display() }}</em>
-            {% if content_event.event_type == 'visit' %}
+           {{ analytics_user_link(content_event.session.user, dates )}}
+        </td>
+        <td>
+            <em>{{ content_event.get_event_type_display() }}</em>&nbsp;
+            {% if content_event.event_type in (Event.EVENT_TYPE_QUESTION_VIEWED, Event.EVENT_TYPE_ANSWER_VIEWED) %}
                 {% set post = content_event.content_object %}
                 <a href={{ post.get_absolute_url() }}>
-                    {{ post.thread.title }}
+                    {{ post.text|truncate(30) }}
+                </a>
+            {% elif content_event.event_type in (Event.EVENT_TYPE_UPVOTED, Event.EVENT_TYPE_DOWNVOTED, Event.EVENT_TYPE_VOTE_CANCELED) %}
+                {% set post = content_event.content_object %}
+                <a href={{ post.get_absolute_url() }}>
+                    {{ post.text|truncate(30) }}
                 </a>
             {% endif %}
         </td>

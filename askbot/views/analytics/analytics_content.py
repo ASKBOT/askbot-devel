@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from askbot.forms import AnalyticsContentForm
-from askbot.models.analytics import DailyGroupSummary, Event, filter_events_by_users_segment
+from askbot.models.analytics import DailyGroupSummary, Event
 from askbot.utils.functions import get_paginated_list
-from askbot.views.analytics.utils import get_date_selector_url_func
+from askbot.views.analytics.utils import get_date_selector_url_func, filter_events_by_users_segment
 
 CONTENT_EVENT_TYPES = [
     Event.EVENT_TYPE_ASKED,
