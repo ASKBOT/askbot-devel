@@ -136,7 +136,11 @@
         </td>
         <td>{{ group_data["num_upvotes"] }}</td>
         <td>{{ group_data["num_downvotes"] }}</td>
-        <td>{{ group_data['time_on_site']|format_time_on_site }}</td>
+        <td>
+          <a href={{url('analytics_activity', activity_segment='all', users_segment='group:' + group_data["group"].id | string, dates=dates_url_param)}}>
+            {{ group_data['time_on_site']|format_time_on_site }}
+          </a>
+        </td>
       </tr>
     {% else %}
       <tr class="no-activity-row">

@@ -153,7 +153,11 @@
         </td>
         <td>{{ user_data["num_upvotes"] }}</td>
         <td>{{ user_data["num_downvotes"] }}</td>
-        <td>{{ user_data['time_on_site']|format_time_on_site }}</td>
+        <td>
+          <a href={{url('analytics_activity', activity_segment='all', users_segment='user:' ~ user_data['user_id'], dates=dates_url_param)}}>
+            {{ user_data['time_on_site']|format_time_on_site }}
+          </a>
+        </td>
       </tr>
     {% else %}
       <tr class="no-activity-row">

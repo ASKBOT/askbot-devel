@@ -68,7 +68,11 @@
       </td>
       <td>{{ all_data['num_upvotes'] }}</td>
       <td>{{ all_data['num_downvotes'] }}</td>
-      <td>{{ all_data['time_on_site']|format_time_on_site }}</td>
+      <td>
+        <a href={{url('analytics_activity', activity_segment='all', users_segment='all', dates=dates_url_param)}}>
+           {{ all_data['time_on_site']|format_time_on_site }}
+        </a>
+      </td>
     </tr>
     {% for named_segment_data in named_segments_data %}
     <tr>
@@ -95,7 +99,11 @@
           {{ named_segment_data['num_answers'] }}
       <td>{{ named_segment_data['num_upvotes'] }}</td>
       <td>{{ named_segment_data['num_downvotes'] }}</td>
-      <td>{{ named_segment_data['time_on_site']|format_time_on_site }}</td>
+      <td>
+        <a href={{url('analytics_activity', activity_segment='all', users_segment=named_segment_data['slug'], dates=dates_url_param)}}>
+          {{ named_segment_data['time_on_site']|format_time_on_site }}
+        </a>
+      </td>
     </tr>
     {% endfor %}
     <tr>
@@ -124,7 +132,11 @@
       </td>
       <td>{{ default_segment_data['num_upvotes'] }}</td>
       <td>{{ default_segment_data['num_downvotes'] }}</td>
-      <td>{{ default_segment_data['time_on_site']|format_time_on_site }}</td>
+      <td>
+        <a href="{{ url('analytics_activity', activity_segment='all', users_segment=default_segment_data['slug'], dates=dates_url_param) }}">
+          {{ default_segment_data['time_on_site']|format_time_on_site }}
+        </a>
+      </td>
     </tr>
   </tbody>
 </table>

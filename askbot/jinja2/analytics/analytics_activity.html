@@ -36,7 +36,17 @@
 {% block content %}
 <div class="title-row">
   <h1>
-    <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / Activity
+    <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a>
+    / 
+    <a href="{{ url('analytics_activity', activity_segment='all', users_segment='all', dates=dates) }}">
+        {% trans %}Activity{% endtrans %}
+    </a>
+    /
+    {% if users_segment == 'all' %}
+        {% trans %}All Users{% endtrans %}
+    {% else %}
+        {{ users_segment }}
+    {% endif %}
   </h1>
   {% include "analytics/date_selector.html" %}
 </div>
