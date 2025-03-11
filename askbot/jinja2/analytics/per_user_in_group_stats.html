@@ -8,7 +8,7 @@
 <div class="title-row">
   <h1>
     <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> /
-    <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> /
+    <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> /
     {% if not is_named_segment %}
       <a href="{{ url('analytics_users', dates=dates_url_param, users_segment=segment_slug) }}">{{ segment_name }}</a> /
     {% endif %}
@@ -102,6 +102,9 @@
         </a>
       </th>
       <th>
+        {% trans %}All Events{% endtrans %}
+      </th>
+      <th>
         <a
           class="{{ sort_icon_class(desired_sort_by='time_on_site',
                                     current_sort_by=sort_by,
@@ -132,8 +135,9 @@
           </a>
         </td>
         <td>
-          <a href={{ url('analytics_content',
-                        content_segment='questions',
+          <a href={{ url('analytics_activity',
+                        content_segment='all-content',
+                        activity_segment='question-posted',
                         dates=dates_url_param,
                         users_segment='user:' ~ user_data['user_id'])
                   }}
@@ -142,8 +146,9 @@
           </a>
         </td>
         <td>
-          <a href={{ url('analytics_content',
-                        content_segment='answers',
+          <a href={{ url('analytics_activity',
+                        content_segment='all-content',
+                        activity_segment='answer-posted',
                         dates=dates_url_param,
                         users_segment='user:' ~ user_data['user_id'])
                   }}
@@ -154,9 +159,12 @@
         <td>{{ user_data["num_upvotes"] }}</td>
         <td>{{ user_data["num_downvotes"] }}</td>
         <td>
-          <a href={{url('analytics_activity', activity_segment='all', users_segment='user:' ~ user_data['user_id'], dates=dates_url_param)}}>
-            {{ user_data['time_on_site']|format_time_on_site }}
+          <a href={{url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment='user:' ~ user_data['user_id'], dates=dates_url_param)}}>
+            {% include "analytics/arrow_right.html" %}
           </a>
+        </td>
+        <td>
+          {{ user_data['time_on_site']|format_time_on_site }}
         </td>
       </tr>
     {% else %}

@@ -10,7 +10,6 @@ from django.conf import settings as django_settings
 from django.core.exceptions import PermissionDenied
 from django.forms.utils import ErrorList
 from django.utils import timezone
-from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from askbot.utils.translation import get_language
@@ -1736,7 +1735,7 @@ class AnalyticsUsersSegmentField(forms.CharField):
     def clean(self, users_segment):
         default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
         named_segment_slugs = [segment['slug'] for segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS]
-        allowed_segment_slugs = ['all', default_segment_slug] + named_segment_slugs
+        allowed_segment_slugs = ['all-users', default_segment_slug] + named_segment_slugs
         if users_segment in allowed_segment_slugs:
             return users_segment
 
@@ -1820,9 +1819,24 @@ class AnalyticsActivityField(forms.CharField):
     A field that accepts a string that is a valid activity segment.
     After validation, the field returns list of event types as defined in the Events model
     """
+    ALL_ACTIVITY = 'all-activity'
+    REGISTERED = 'registered'
+    LOGGED_IN = 'logged-in'
+    LOGGED_OUT = 'logged-out'
+    QUESTION_VIEWED = 'question-viewed'
+    ANSWER_VIEWED = 'answer-viewed'
+    CONTENT_VOTED = 'content-voted'
+    QUESTION_POSTED = 'question-posted'
+    ANSWER_POSTED = 'answer-posted'
+    QUESTION_COMMENTED = 'question-commented'
+    ANSWER_COMMENTED = 'answer-commented'
+    CONTENT_COMMENTED = 'content-commented'
+    QUESTION_RETAGGED = 'question-retagged'
+    ANY_CONTENT_POSTED = 'any-content-posted'
+
     def clean(self, activity_segment):
         from askbot.models.analytics import Event
-        if activity_segment == 'all':
+        if activity_segment == self.ALL_ACTIVITY:
             return [Event.EVENT_TYPE_USER_REGISTERED,
                     Event.EVENT_TYPE_LOGGED_IN,
                     Event.EVENT_TYPE_LOGGED_OUT,
@@ -1831,18 +1845,96 @@ class AnalyticsActivityField(forms.CharField):
                     Event.EVENT_TYPE_UPVOTED,
                     Event.EVENT_TYPE_DOWNVOTED,
                     Event.EVENT_TYPE_VOTE_CANCELED,
-                    Event.EVENT_TYPE_SEARCHED]
-        if activity_segment == 'registered':
+                    Event.EVENT_TYPE_ASKED,
+                    Event.EVENT_TYPE_ANSWERED,
+                    Event.EVENT_TYPE_QUESTION_COMMENTED,
+                    Event.EVENT_TYPE_ANSWER_COMMENTED,
+                    Event.EVENT_TYPE_QUESTION_RETAGGED]
+        if activity_segment == self.REGISTERED:
             return [Event.EVENT_TYPE_USER_REGISTERED]
-        if activity_segment == 'logged-in':
+        if activity_segment == self.LOGGED_IN:
             return [Event.EVENT_TYPE_LOGGED_IN]
-        if activity_segment == 'logged-out':
+        if activity_segment == self.LOGGED_OUT:
             return [Event.EVENT_TYPE_LOGGED_OUT]
-        if activity_segment == 'content-viewed':
-            return [Event.EVENT_TYPE_QUESTION_VIEWED, Event.EVENT_TYPE_ANSWER_VIEWED]
-        if activity_segment == 'content-voted':
+        if activity_segment == self.QUESTION_VIEWED:
+            return [Event.EVENT_TYPE_QUESTION_VIEWED]
+        if activity_segment == self.ANSWER_VIEWED:
+            return [Event.EVENT_TYPE_ANSWER_VIEWED]
+        if activity_segment == self.CONTENT_VOTED:
             return [Event.EVENT_TYPE_UPVOTED, Event.EVENT_TYPE_DOWNVOTED, Event.EVENT_TYPE_VOTE_CANCELED]
+        if activity_segment == self.QUESTION_POSTED:
+            return [Event.EVENT_TYPE_ASKED]
+        if activity_segment == self.ANSWER_POSTED:
+            return [Event.EVENT_TYPE_ANSWERED]
+        if activity_segment == self.QUESTION_COMMENTED:
+            return [Event.EVENT_TYPE_QUESTION_COMMENTED]
+        if activity_segment == self.CONTENT_COMMENTED:
+            return [Event.EVENT_TYPE_ANSWER_COMMENTED, Event.EVENT_TYPE_QUESTION_COMMENTED]
+        if activity_segment == self.ANSWER_COMMENTED:
+            return [Event.EVENT_TYPE_ANSWER_COMMENTED]
+        if activity_segment == self.QUESTION_RETAGGED:
+            return [Event.EVENT_TYPE_QUESTION_RETAGGED]
+        if activity_segment == self.ANY_CONTENT_POSTED:
+            return [Event.EVENT_TYPE_ASKED, Event.EVENT_TYPE_ANSWERED, Event.EVENT_TYPE_QUESTION_COMMENTED, Event.EVENT_TYPE_ANSWER_COMMENTED]
         raise forms.ValidationError('Invalid activity segment')
+
+    @classmethod
+    def get_field_display(cls, activity_segment):
+        if activity_segment == cls.ALL_ACTIVITY:
+            return _('All Events')
+        if activity_segment == cls.REGISTERED:
+            return _('User Registered')
+        if activity_segment == cls.LOGGED_IN:
+            return _('User Logged In')
+        if activity_segment == cls.LOGGED_OUT:
+            return _('User Logged Out')
+        if activity_segment == cls.QUESTION_VIEWED:
+            return _('Question Viewed')
+        if activity_segment == cls.ANSWER_VIEWED:
+            return _('Answer Viewed')
+        if activity_segment == cls.CONTENT_VOTED:
+            return _('Content Voted')
+        if activity_segment == cls.QUESTION_POSTED:
+            return _('Question Posted')
+        if activity_segment == cls.ANSWER_POSTED:
+            return _('Answer Posted')
+        if activity_segment == cls.QUESTION_COMMENTED:
+            return _('Question Commented')
+        if activity_segment == cls.ANSWER_COMMENTED:
+            return _('Answer Commented')
+        if activity_segment == cls.QUESTION_RETAGGED:
+            return _('Question Retagged')
+        if activity_segment == cls.ANY_CONTENT_POSTED:
+            return _('Any Content Posted')
+        raise ValueError('Invalid activity segment')
+
+
+class AnalyticsContentField(forms.CharField):
+    """
+    A field that accepts a string that is a valid content segment.
+    If the field is valid, just returns the value.
+    Otherwise, raises a validation error.
+    """
+    def clean(self, content_segment):
+        if re.match('thread:\d+', content_segment):
+            return content_segment
+        if re.match('post:\d+', content_segment):
+            return content_segment
+        if content_segment == 'all-content':
+            return content_segment
+        # it will be very hard to filter events by the post type,
+        # because the post relation from the event is generic
+        raise forms.ValidationError('Invalid content segment')
+
+    @staticmethod
+    def get_field_display(content_segment):
+        if re.match('thread:\d+', content_segment):
+            return _('Selected Thread')
+        if re.match('post:\d+', content_segment):
+            return _('Selected Post')
+        if content_segment == 'all-content':
+            return _('All Content')
+        raise ValueError('Invalid content segment')
 
 
 class AnalyticsUsersForm(forms.Form):
@@ -1890,26 +1982,9 @@ class AnalyticsUsersForm(forms.Form):
         return self.cleaned_data
 
 
-class AnalyticsContentForm(forms.Form):
-    content_segment = forms.CharField()
-    users_segment = AnalyticsUsersSegmentField()
-
-
-    def __init__(self, *args, **kwargs):
-        earliest_possible_date = kwargs.pop('earliest_possible_date')
-        super(AnalyticsContentForm, self).__init__(*args, **kwargs)
-        self.fields['dates'] = AnalyticsDatesField(earliest_date=earliest_possible_date)
-
-
-    def clean_content_segment(self):
-        content_segment = self.cleaned_data.get('content_segment')
-        if content_segment not in ('questions', 'answers', 'comments', 'all'):
-            raise forms.ValidationError('Invalid content segment')
-        return content_segment
-
-
 class AnalyticsActivityForm(forms.Form):
     activity_segment = AnalyticsActivityField()
+    content_segment = AnalyticsContentField()
     users_segment = AnalyticsUsersSegmentField()
 
     def __init__(self, *args, **kwargs):

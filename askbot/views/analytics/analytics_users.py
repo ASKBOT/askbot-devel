@@ -219,7 +219,7 @@ def non_routed_per_user_in_group_stats(request,
         num_upvotes=models.Sum('num_upvotes'),
         num_downvotes=models.Sum('num_downvotes'),
         question_views=models.Sum('question_views'),
-        time_on_site=models.Sum('time_on_site')
+        time_on_site=models.Sum('time_on_site'),
     )
 
     daily_user_summaries = daily_user_summaries.order_by(data['order_by'])
@@ -277,7 +277,7 @@ def non_routed_render_user_activity(request, data, user_id):
     return render(request, 'analytics/user_activity.html', data)
 
 
-def analytics_users(request, dates='all-time', users_segment='all'):
+def analytics_users(request, dates='all-time', users_segment='all-users'):
     """User analytics page"""
 
     if not request.user.is_authenticated or not request.user.is_admin_or_mod():
@@ -294,7 +294,7 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         request.user.message_set.create(message=message)
         return HttpResponseRedirect(reverse('analytics_users',
                                             kwargs={'dates': 'all-time',
-                                                    'users_segment': 'all'}))
+                                                    'users_segment': 'all-users'}))
 
     start_date, end_date = users_form.cleaned_data['dates']
     users_segment = users_form.cleaned_data['users_segment']
@@ -308,11 +308,11 @@ def analytics_users(request, dates='all-time', users_segment='all'):
         'sort_by': users_form.cleaned_data['sort_by'],
         'sort_order': users_form.cleaned_data['sort_order']
     }
-    if users_segment == 'all':
+    if users_segment == 'all-users':
         return non_routed_per_segment_stats(request, data)
 
     if analytics_utils.is_named_segment(users_segment):
-        segment_config = analytics_utils.get_named_segment_config(users_segment)
+        segment_config = analytics_utils.get_named_segment_config_by_slug(users_segment)
         return non_routed_per_user_in_group_stats(
             request,
             data,

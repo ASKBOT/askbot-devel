@@ -3,6 +3,8 @@ Utilities for use in the analytics views
 """
 from django.urls import reverse
 from django.conf import settings as django_settings
+from django.contrib.contenttypes.models import ContentType
+from askbot.models import Post
 from askbot.models.user import Group as AskbotGroup
 
 def get_named_segment_group_ids():
@@ -16,7 +18,7 @@ def get_named_segment_group_ids():
 
 def filter_events_by_users_segment(events, users_segment):
     """Filters events by users segment"""
-    if users_segment == 'all':
+    if users_segment == 'all-users':
         return events
 
     if users_segment.startswith('group:'):
@@ -39,6 +41,24 @@ def filter_events_by_users_segment(events, users_segment):
             group_ids = named_segment_config['group_ids']
             return events.filter(session__user__groups__in=group_ids)
 
+    return events
+
+
+def filter_events_by_content_segment(events, content_segment):
+    """Filters events by content segment"""
+    if content_segment.startswith('thread:'):
+        thread_id = int(content_segment.split(':')[1])
+        # get all post ids for the thread
+        post_ids = Post.objects.filter(thread_id=thread_id).values_list('id', flat=True)
+        post_content_type = ContentType.objects.get_for_model(Post)
+        return events.filter(object_id__in=post_ids, content_type=post_content_type)
+
+    if content_segment.startswith('post:'):
+        post_id = int(content_segment.split(':')[1])
+        post_content_type = ContentType.objects.get_for_model(Post)
+        return events.filter(object_id=post_id, content_type=post_content_type)
+
+    assert content_segment == 'all-content'
     return events
 
 

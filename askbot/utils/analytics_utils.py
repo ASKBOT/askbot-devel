@@ -15,7 +15,7 @@ def get_all_named_segment_group_ids():
     return group_ids
 
 
-def get_named_segment_config(segment_slug):
+def get_named_segment_config_by_slug(segment_slug):
     """Returns a list of group_ids for a named segment"""
     named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
     for segment_config in named_segment_configs:
@@ -23,9 +23,18 @@ def get_named_segment_config(segment_slug):
             return segment_config
     return None
 
+
+def get_named_segment_config_by_group_id(group_id):
+    """Returns the named segment config for a given group_id or None"""
+    named_segment_configs = django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS
+    for segment_config in named_segment_configs:
+        if group_id in segment_config['group_ids']:
+            return segment_config
+    return None
+
 def get_segment_name(segment_slug):
     """Returns the name of the segment"""
-    segment_config = get_named_segment_config(segment_slug)
+    segment_config = get_named_segment_config_by_slug(segment_slug)
     if segment_config:
         return segment_config['name']
     default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT

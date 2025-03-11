@@ -33,7 +33,7 @@
 {% block content %}
 <div class="title-row">
   <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / <a href="{{ url('analytics_users',
-          dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
+          dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
   {% include "analytics/date_selector.html" %}
 </div>
 {% set base_url = url('analytics_users', dates=dates_url_param, users_segment=default_segment_slug) %}
@@ -100,6 +100,9 @@
         </a>
       </th>
       <th>
+        {% trans %}All Events{% endtrans %}
+      </th>
+      <th>
         <a
           class="{{ sort_icon_class(current_sort_by=sort_by, desired_sort_by='time_on_site', current_sort_order=sort_order) }}"
           href="{{ format_query_string(query=query, desired_sort_by='time_on_site', current_sort_by=sort_by, current_sort_order=sort_order) }}">
@@ -115,8 +118,9 @@
         <td>{{ group_data["num_users"] }}</td>
         <td>{{ group_data["num_users_added"] }}</td>
         <td>
-          <a href={{ url('analytics_content',
-                        content_segment='questions',
+          <a href={{ url('analytics_activity',
+                        content_segment='all-content',
+                        activity_segment='question-posted',
                         dates=dates_url_param,
                         users_segment='group:' + group_data["group"].id | string)
                   }}
@@ -125,8 +129,9 @@
           </a>
         </td>
         <td>
-          <a href={{ url('analytics_content',
-                        content_segment='answers',
+          <a href={{ url('analytics_activity',
+                        content_segment='all-content',
+                        activity_segment='answer-posted',
                         dates=dates_url_param,
                         users_segment='group:' + group_data["group"].id | string)
                   }}
@@ -137,9 +142,12 @@
         <td>{{ group_data["num_upvotes"] }}</td>
         <td>{{ group_data["num_downvotes"] }}</td>
         <td>
-          <a href={{url('analytics_activity', activity_segment='all', users_segment='group:' + group_data["group"].id | string, dates=dates_url_param)}}>
-            {{ group_data['time_on_site']|format_time_on_site }}
+          <a href={{url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment='group:' + group_data["group"].id | string, dates=dates_url_param)}}>
+            {% include "analytics/arrow_right.html" %}
           </a>
+        </td>
+        <td>
+          {{ group_data['time_on_site']|format_time_on_site }}
         </td>
       </tr>
     {% else %}

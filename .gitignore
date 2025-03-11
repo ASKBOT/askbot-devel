@@ -67,5 +67,6 @@ htmlcov
 node_modules
 bower_components/
 .tox
+.history
 /activity.txt
 /askbot/media/jslib/katex/

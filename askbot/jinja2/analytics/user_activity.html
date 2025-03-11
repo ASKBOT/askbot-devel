@@ -22,7 +22,7 @@
 <div class="title-row">
   <h1>
     <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> /
-    <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all') }}">{% trans %}Users{% endtrans %}</a> /
+    <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> /
     <a href="{{ url('analytics_users', dates=dates_url_param, users_segment=segment_slug) }}">{{ segment_name }}</a> /
     {% if is_default_segment %}
       <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='group:' ~ group_id) }}">{{ group_name }}</a> /
