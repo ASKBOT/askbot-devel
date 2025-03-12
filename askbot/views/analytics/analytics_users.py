@@ -253,30 +253,6 @@ def non_routed_per_user_in_group_stats(request,
     return render(request, 'analytics/per_user_in_group_stats.html', data)
 
 
-def non_routed_render_user_activity(request, data, user_id):
-    """Renders the user activity page"""
-    user = User.objects.get(id=user_id)
-    events = Event.objects.filter(session__user=user, # pylint: disable=no-member
-                                  timestamp__gt=data['start_date'],
-                                  timestamp__lte=data['end_date'])
-    data['events'] = events.order_by('-timestamp')
-    data['Event'] = Event
-    data['segment_slug'] = request.GET.get('segment')
-    data['segment_name'] = analytics_utils.get_segment_name(data['segment_slug'])
-    data['user'] = user
-
-    data['is_default_segment'] = not analytics_utils.is_named_segment(data['segment_slug'])
-    if data['is_default_segment']:
-        group = Group.objects.get(id=request.GET.get('org_id'))
-        data['group_name'] = group.name
-        data['group_id'] = group.id
-
-    data['date_selector_url_func'] = get_date_selector_url_func('analytics_users',
-                                                                users_segment=data['users_segment'])
-
-    return render(request, 'analytics/user_activity.html', data)
-
-
 def analytics_users(request, dates='all-time', users_segment='all-users'):
     """User analytics page"""
 
@@ -335,9 +311,5 @@ def analytics_users(request, dates='all-time', users_segment='all-users'):
             segment_slug=default_segment_config['slug'],
             segment_name=default_segment_config['name']
         )
-
-    if users_segment.startswith('user:'):
-        user_id = int(users_segment.split(':')[1])
-        return non_routed_render_user_activity(request, data, user_id)
 
     raise ValueError(f"Invalid users segment: {users_segment}")

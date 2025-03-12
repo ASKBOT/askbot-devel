@@ -54,19 +54,26 @@
     {% for content_event in events %}
       <tr>
         <td>
-           {{ analytics_user_link(content_event.session.user, dates )}}
+          <a href={{ url('analytics_activity',
+                         content_segment='all-content',
+                         activity_segment='all-activity',
+                         dates=dates,
+                         users_segment='user:' ~ content_event.session.user.id)
+                  }}
+          >
+            {{ content_event.session.user.username }}
+          </a>
         </td>
         <td>
             <em>{{ content_event.get_event_type_display() }}</em>&nbsp;
-            {% if content_event.event_type in (Event.EVENT_TYPE_QUESTION_VIEWED, Event.EVENT_TYPE_ANSWER_VIEWED) %}
+            {% if content_event.content_type == post_content_type %}
                 {% set post = content_event.content_object %}
                 <a href={{ post.get_absolute_url() }}>
+                  {% if post.post_type == 'question' %}
+                    {{ post.thread.title|truncate(30) }}
+                  {% else %}
                     {{ post.text|truncate(30) }}
-                </a>
-            {% elif content_event.event_type in (Event.EVENT_TYPE_UPVOTED, Event.EVENT_TYPE_DOWNVOTED, Event.EVENT_TYPE_VOTE_CANCELED) %}
-                {% set post = content_event.content_object %}
-                <a href={{ post.get_absolute_url() }}>
-                    {{ post.text|truncate(30) }}
+                  {% endif %}
                 </a>
             {% endif %}
         </td>

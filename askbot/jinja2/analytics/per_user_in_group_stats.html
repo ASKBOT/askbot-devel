@@ -127,9 +127,12 @@
       {% for user_data in users %}
         <tr>
         <td>
-          <a href={{ url('analytics_users',
+          <a href={{ url('analytics_activity',
+                         content_segment='all-content',
+                         activity_segment='all-activity',
                          dates=dates_url_param,
-                         users_segment='user:' ~ user_data['user_id']) ~ '?segment=' ~ segment_slug ~ org_id_param }}
+                         users_segment='user:' ~ user_data['user_id'])
+                  }}
           >
             {{ user_data['username']}}
           </a>

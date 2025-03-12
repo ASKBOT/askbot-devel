@@ -1,5 +1,5 @@
 {% macro full_date(timestamp) %}
-  at {{ timestamp|date('H:i') }} on {{ timestamp|date('m/d/Y') }}
+  {{ timestamp|date('m/d/Y') }} {{ timestamp|date('H:i') }}
 {% endmacro %}
 
 {% macro event_user_registered(event) %}
@@ -111,9 +111,3 @@
     {%- endif -%}
   {%- endif -%}
 {%- endmacro -%}
-
-{% macro analytics_user_link(user, dates) %}
-  <a href="{{ user.get_analytics_url(dates) }}">
-    {{ user.username }}
-  </a>
-{% endmacro %}

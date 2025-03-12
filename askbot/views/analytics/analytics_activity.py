@@ -1,3 +1,4 @@
+from django.conf import settings as django_settings
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -7,7 +8,8 @@ from askbot.forms import (
     AnalyticsActivityField,
     AnalyticsContentField
 )
-from askbot.models import User, Group
+from django.contrib.contenttypes.models import ContentType
+from askbot.models import User, Group, Post
 from askbot.models.analytics import DailyGroupSummary, Event
 from askbot.utils.functions import get_paginated_list
 from askbot.utils.analytics_utils import get_named_segment_config_by_group_id, get_segment_name
@@ -78,13 +80,14 @@ def get_group_breadcrumb(group, dates):
 
 def get_default_segment_breadcrumb(dates):   
     """get breadcrumb for default segment"""
+    default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
     return {
         'url': reverse('analytics_activity',
                         kwargs={'activity_segment': 'all-activity',
                                 'content_segment': 'all-content',
-                                'users_segment': 'all-users',
+                                'users_segment': default_segment_config['slug'],
                                 'dates': dates}),
-        'name': _('All Users')
+        'name': default_segment_config['name']
     }
 
 
@@ -187,6 +190,7 @@ def analytics_activity(request, activity_segment=None, content_segment=None, use
     data = {
         'Event': Event,
         'events': events,
+        'post_content_type': ContentType.objects.get_for_model(Post),
         'event_types': event_types,
         'users_url_segment': users_url_segment,
         'dates': dates,
