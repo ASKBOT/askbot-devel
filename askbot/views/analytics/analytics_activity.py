@@ -24,7 +24,8 @@ def get_activity_segment_breadcrumb(activity_segment, dates):
     """get breadcrumb for activity segment"""
     return {
         'url': reverse('analytics_activity', kwargs={'activity_segment': activity_segment, 'content_segment': 'all-content', 'users_segment': 'all-users', 'dates': dates}),
-        'name': AnalyticsActivityField.get_field_display(activity_segment)
+        'name': AnalyticsActivityField.get_field_display(activity_segment),
+        'is_global_segment': activity_segment == 'all-activity'
     }
 
 
@@ -32,7 +33,8 @@ def get_content_segment_breadcrumb(activity_segment, content_segment, dates):
     """get breadcrumb for content segment"""
     return {
         'url': reverse('analytics_activity', kwargs={'activity_segment': activity_segment, 'content_segment': content_segment, 'users_segment': 'all-users', 'dates': dates}),
-        'name': AnalyticsContentField.get_field_display(content_segment)
+        'name': AnalyticsContentField.get_field_display(content_segment),
+        'is_global_segment': content_segment == 'all-content'
     }
 
 
@@ -51,7 +53,8 @@ def get_named_segment_breadcrumb(named_segment_config, dates):
                             'content_segment': 'all-content',
                             'users_segment': named_segment_config['slug'],
                             'dates': dates}),
-        'name': named_segment_config['name']
+        'name': named_segment_config['name'],
+        'is_global_segment': False
     }
 
 
@@ -63,7 +66,8 @@ def get_user_breadcrumb(user, dates):
                                 'content_segment': 'all-content',
                                 'users_segment': 'user:' + str(user.id),
                                 'dates': dates}),
-        'name': user.username
+        'name': user.username,
+        'is_global_segment': False
     }
 
 def get_group_breadcrumb(group, dates):
@@ -74,7 +78,8 @@ def get_group_breadcrumb(group, dates):
                                 'content_segment': 'all-content',
                                 'users_segment': 'group:' + str(group.id),
                                 'dates': dates}),
-        'name': group.name
+        'name': group.name,
+        'is_global_segment': False
     }
 
 
@@ -87,7 +92,8 @@ def get_default_segment_breadcrumb(dates):
                                 'content_segment': 'all-content',
                                 'users_segment': default_segment_config['slug'],
                                 'dates': dates}),
-        'name': default_segment_config['name']
+        'name': default_segment_config['name'],
+        'is_global_segment': False 
     }
 
 
@@ -106,7 +112,11 @@ def get_users_segment_breadcrumbs(activity_segment, content_segment, users_segme
         users_segment_name = get_segment_name(users_segment)
 
     if users_segment_name:
-        return [{'url': url, 'name': users_segment_name}]
+        return [{
+            'url': url,
+            'name': users_segment_name,
+            'is_global_segment': users_segment == 'all-users'
+        }]
 
     if users_segment.startswith('user:'):
         # get first analytics group to which this user belongs
@@ -114,7 +124,9 @@ def get_users_segment_breadcrumbs(activity_segment, content_segment, users_segme
         group = user.get_groups(used_for_analytics=True).first()
 
         if not group:
-            return [{'url': url, 'name': user.username}]
+            return [{'url': url,
+                     'name': user.username,
+                     'is_global_segment': False}]
 
         named_segment_config = get_named_segment_config_by_group_id(group.id)
         if named_segment_config:
@@ -142,18 +154,52 @@ def get_users_segment_breadcrumbs(activity_segment, content_segment, users_segme
                 
     return []
 
+
+def collapse_redundant_breadcrumbs(breadcrumbs):
+    """
+    Going in reverse order, towards the first breadcrumb,
+    remove all items which have "is_global_segment" set to True.
+    Keep only one item for each group of items with "is_global_segment" set to True.
+
+    Then remove all items which have redurndant urls.
+    """
+    # find the index of the last breadcrumb to keep
+    count = len(breadcrumbs)
+    idx_to_keep = count - 1
+    for idx in range(count - 1, -1, -1):
+        if breadcrumbs[idx]['is_global_segment'] == False:
+            break
+        idx_to_keep = idx
+        if idx == 1:
+            break
+
+    breadcrumbs = breadcrumbs[:idx_to_keep + 1]
+
+    # now remove all items which have redurndant urls
+    urls_visited = set()
+    filtered_breadcrumbs = []
+    for breadcrumb in breadcrumbs:
+        if breadcrumb['url'] in urls_visited:
+            continue
+        filtered_breadcrumbs.append(breadcrumb)
+        urls_visited.add(breadcrumb['url'])
+    return filtered_breadcrumbs
+
+
 def get_breadcrumbs(activity_segment, content_segment, users_segment, dates):
     """get breadcrumbs for analytics activity page
     """
     breadcrumbs = [
         {
             'url': reverse('analytics_index'),
-            'name': _('Analytics')
+            'name': _('Analytics'),
+            'is_global_segment': True
         },
         get_activity_segment_breadcrumb(activity_segment, dates),
         get_content_segment_breadcrumb(activity_segment, content_segment, dates),
     ]
     breadcrumbs.extend(get_users_segment_breadcrumbs(activity_segment, content_segment, users_segment, dates))
+    breadcrumbs = collapse_redundant_breadcrumbs(breadcrumbs)
     return breadcrumbs
 
 

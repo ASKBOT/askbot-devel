@@ -37,8 +37,11 @@
 <div class="title-row">
   <h1>
     {% for breadcrumb in breadcrumbs %}
-      <a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a>
-      {% if not loop.last %} / {% endif %}
+      {% if loop.last %}
+        {{ breadcrumb.name }}
+      {% else %}
+        <a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a> /
+      {% endif %}
     {% endfor %}
   </h1>
   {% include "analytics/date_selector.html" %}
