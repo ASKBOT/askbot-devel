@@ -39,7 +39,7 @@
 
 {#% include "question/sidebar_sharing_tools.html" %#}
 
-{% if settings.SIDEBAR_QUESTION_SHOW_META %}
+{% if show_public_question_stats %}
 <div class="sidebar-box">
     <h2>{% trans %}Stats{% endtrans %}</h2>
     <p>
@@ -47,6 +47,39 @@
     </p>
     <p>
         {% trans %}Seen{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
+    </p>
+    <p>
+        {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>
+    </p>
+</div>
+{% endif %}
+
+{% if show_admin_question_stats %}
+<div class="sidebar-box">
+    <h2>{% trans %}Stats{% endtrans %}</h2>
+    <p>
+        {% trans %}Asked{% endtrans %}: <strong>{{ macros.timeago(question.added_at) }}</strong>
+    </p>
+    <p>
+        {% trans %}Unique Views{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
+    </p>
+    <p>
+        <a href="{{ url('analytics_activity',
+                        activity_segment=analytics_activity_field.QUESTION_VIEWED,
+                        content_segment='thread:' ~ thread.id|string,
+                        users_segment='all-users',
+                        dates='all-time') }}">
+            {% trans %}See all visits{% endtrans %}
+        </a>
+    </p>
+    <p>
+        <a href="{{ url('analytics_activity',
+                        activity_segment=analytics_activity_field.ALL_ACTIVITY,
+                        content_segment='thread:' ~ thread.id|string,
+                        users_segment='all-users',
+                        dates='all-time') }}">
+            {% trans %}See all activity{% endtrans %}
+        </a>
     </p>
     <p>
         {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>

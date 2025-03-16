@@ -1,6 +1,6 @@
 from django.conf import settings as django_settings
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from askbot.forms import (
@@ -213,6 +213,9 @@ def get_breadcrumbs(activity_segment, content_segment, users_segment, dates):
 
 def analytics_activity(request, activity_segment=None, content_segment=None, users_segment=None, dates=None):
     """analytics activity page"""
+    if not request.user.is_authenticated or not request.user.is_admin_or_mod():
+        return HttpResponseForbidden()
+
     earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
     form = AnalyticsActivityForm({
         'activity_segment': activity_segment,

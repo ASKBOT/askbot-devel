@@ -36,12 +36,12 @@ from django.conf import settings as django_settings
 
 from askbot import conf, const, exceptions, models, signals
 from askbot.conf import settings as askbot_settings
-from askbot.forms import AnswerForm
-from askbot.forms import GetDataForPostForm
-from askbot.forms import GetUserItemsForm
-from askbot.forms import ShowTagsForm
-from askbot.forms import ShowQuestionForm
-from askbot.forms import SearchPostsForm
+from askbot.forms import (AnswerForm,
+                          GetUserItemsForm,
+                          ShowTagsForm,
+                          ShowQuestionForm,
+                          SearchPostsForm,
+                          AnalyticsActivityField)
 from askbot.models.post import MockPost
 from askbot.models.tag import Tag
 from askbot.models.recent_contributors import AvatarsBlockData
@@ -681,6 +681,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
     #answer posting is impossible
     request.session['askbot_write_intent'] = True
 
+    user_is_mod = request.user.is_authenticated and request.user.is_admin_or_mod()
     data = {
         'active_tab': 'questions',
         'answer' : answer_form,
@@ -711,7 +712,10 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'user_post_id_list': user_post_id_list,
         'user_flag_counts_by_post_id': thread.get_flag_counts_by_post_id(request.user),
         'user_can_post_comment': user_can_post_comment,#in general
-        'question_detail_page': True
+        'question_detail_page': True,
+        'show_public_question_stats': not user_is_mod and askbot_settings.SIDEBAR_QUESTION_SHOW_META,
+        'show_admin_question_stats': user_is_mod,
+        'analytics_activity_field': AnalyticsActivityField
     }
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
