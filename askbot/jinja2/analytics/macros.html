@@ -111,3 +111,11 @@
     {%- endif -%}
   {%- endif -%}
 {%- endmacro -%}
+
+{% macro linked_number_if_positive(number, url) %}
+  {% if number > 0 %}
+    <a href="{{ url }}">{{ number }}</a>
+  {% else %}
+    {{ number }}
+  {% endif %}
+{% endmacro %}

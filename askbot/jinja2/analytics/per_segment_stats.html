@@ -1,4 +1,5 @@
 {% extends "one_column_body.html" %}
+{% from "analytics/macros.html" import linked_number_if_positive %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block layout_class %}{{ super() }} analytics-page{% endblock %}
 {% block forum_header %}{% endblock %}
@@ -45,32 +46,54 @@
   <tbody>
     <tr>
       <td>{% trans %}All{% endtrans %}</td>
-      <td>{{ all_data['num_users'] }}</td>
-      <td>{{ all_data['num_users_added'] }}</td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='question-posted',
-                        dates=dates_url_param,
-                        users_segment='all-users')
-                }}
-        >
-          {{ all_data['num_questions'] }}
-        </a>
+          {{ all_data['num_users'] }}
       </td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='answer-posted',
-                        dates=dates_url_param,
-                        users_segment='all-users')
-                }}
-        >
-          {{ all_data['num_answers'] }}
-        </a>
+        {{ linked_number_if_positive(all_data["num_users_added"],
+                                     url('analytics_activity',
+                                         dates=dates_url_param,
+                                         activity_segment=analytics_activity_field.REGISTERED,
+                                         content_segment='all-content',
+                                         users_segment='all-users'))
+        }}
       </td>
-      <td>{{ all_data['num_upvotes'] }}</td>
-      <td>{{ all_data['num_downvotes'] }}</td>
+      <td>
+        {{ linked_number_if_positive(all_data["num_questions"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.QUESTION_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment='all-users'))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(all_data["num_answers"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.ANSWER_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment='all-users'))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(all_data["num_upvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_UPVOTED,
+                                         dates=dates_url_param,
+                                         users_segment='all-users'))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(all_data["num_downvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_DOWNVOTED,
+                                         dates=dates_url_param,
+                                         users_segment='all-users'))
+        }}
+      </td>
       <td>
         <a href={{url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment='all-users', dates=dates_url_param)}}>
           {% include "analytics/arrow_right.html" %}
@@ -84,29 +107,51 @@
     <tr>
       <td><a href="{{ url('analytics_users', dates=dates_url_param, users_segment=named_segment_data['slug']) }}">{{ named_segment_data['name'] }}</a></td>
       <td>{{ named_segment_data['num_users'] }}</td>
-      <td>{{ named_segment_data['num_users_added'] }}</td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='question-posted',
-                        dates=dates_url_param,
-                        users_segment=named_segment_data['slug'])
-                }}
-        >
-          {{ named_segment_data['num_questions'] }}
-        </a>
+        {{ linked_number_if_positive(named_segment_data["num_users_added"],
+                                     url('analytics_activity',
+                                         dates=dates_url_param,
+                                         activity_segment=analytics_activity_field.REGISTERED,
+                                         content_segment='all-content',
+                                         users_segment=named_segment_data['slug']))
+        }}
       </td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='answer-posted',
-                        dates=dates_url_param,
-                        users_segment=named_segment_data['slug'])
-                }}
-        >
-          {{ named_segment_data['num_answers'] }}
-      <td>{{ named_segment_data['num_upvotes'] }}</td>
-      <td>{{ named_segment_data['num_downvotes'] }}</td>
+        {{ linked_number_if_positive(named_segment_data["num_questions"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.QUESTION_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment=named_segment_data['slug']))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(named_segment_data["num_answers"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.ANSWER_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment=named_segment_data['slug']))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(named_segment_data["num_upvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_UPVOTED,
+                                         dates=dates_url_param,
+                                         users_segment=named_segment_data['slug']))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(named_segment_data["num_downvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_DOWNVOTED,
+                                         dates=dates_url_param,
+                                         users_segment=named_segment_data['slug']))
+        }}
+      </td>
       <td>
         <a href={{url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment=named_segment_data['slug'], dates=dates_url_param)}}>
           {% include "analytics/arrow_right.html" %}
@@ -120,31 +165,51 @@
     <tr>
       <td><a href="{{ url('analytics_users', dates=dates_url_param, users_segment=default_segment_data['slug']) }}">{{ default_segment_data['name'] }}</a></td>
       <td>{{ default_segment_data['num_users'] }}</td>
-      <td>{{ default_segment_data['num_users_added'] }}</td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='question-posted',
-                        dates=dates_url_param,
-                        users_segment=default_segment_data['slug'])
-                }}
-        >
-          {{ default_segment_data['num_questions'] }}
-        </a>
+        {{ linked_number_if_positive(default_segment_data["num_users_added"],
+                                     url('analytics_activity',
+                                         dates=dates_url_param,
+                                         activity_segment=analytics_activity_field.REGISTERED,
+                                         content_segment='all-content',
+                                         users_segment=default_segment_data['slug']))
+        }}
       </td>
       <td>
-        <a href={{ url('analytics_activity',
-                        content_segment='all-content',
-                        activity_segment='answer-posted',
-                        dates=dates_url_param,
-                        users_segment=default_segment_data['slug'])
-                }}
-        >
-          {{ default_segment_data['num_answers'] }}
-        </a>
+        {{ linked_number_if_positive(default_segment_data["num_questions"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.QUESTION_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment=default_segment_data['slug']))
+        }}
       </td>
-      <td>{{ default_segment_data['num_upvotes'] }}</td>
-      <td>{{ default_segment_data['num_downvotes'] }}</td>
+      <td>
+        {{ linked_number_if_positive(default_segment_data["num_answers"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.ANSWER_POSTED,
+                                         dates=dates_url_param,
+                                         users_segment=default_segment_data['slug']))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(default_segment_data["num_upvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_UPVOTED,
+                                         dates=dates_url_param,
+                                         users_segment=default_segment_data['slug']))
+        }}
+      </td>
+      <td>
+        {{ linked_number_if_positive(default_segment_data["num_downvotes"],
+                                     url('analytics_activity',
+                                         content_segment='all-content',
+                                         activity_segment=analytics_activity_field.CONTENT_DOWNVOTED,
+                                         dates=dates_url_param,
+                                         users_segment=default_segment_data['slug']))
+        }}
+      </td>
       <td>
         <a href="{{ url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment=default_segment_data['slug'], dates=dates_url_param) }}">
           {% include "analytics/arrow_right.html" %}

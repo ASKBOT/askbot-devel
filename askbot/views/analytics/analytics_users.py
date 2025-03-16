@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from django.utils.html import escape
 from askbot.utils import analytics_utils
 from askbot.utils.functions import get_paginated_list
-from askbot.forms import AnalyticsUsersForm
+from askbot.forms import AnalyticsUsersForm, AnalyticsActivityField
 from askbot.models import User, Group
 from askbot.views.analytics.utils import get_date_selector_url_func
 from askbot.models.analytics import (get_organizations_count,
@@ -282,7 +282,8 @@ def analytics_users(request, dates='all-time', users_segment='all-users'):
         'query': users_form.cleaned_data['query'],
         'order_by': users_form.cleaned_data['order_by'],
         'sort_by': users_form.cleaned_data['sort_by'],
-        'sort_order': users_form.cleaned_data['sort_order']
+        'sort_order': users_form.cleaned_data['sort_order'],
+        'analytics_activity_field': AnalyticsActivityField
     }
     if users_segment == 'all-users':
         return non_routed_per_segment_stats(request, data)

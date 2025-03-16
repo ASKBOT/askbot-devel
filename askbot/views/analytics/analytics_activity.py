@@ -195,6 +195,14 @@ def get_breadcrumbs(activity_segment, content_segment, users_segment, dates):
             'name': _('Analytics'),
             'is_global_segment': True
         },
+        {
+            'url': reverse('analytics_activity', kwargs={'activity_segment': 'all-activity',
+                                                         'content_segment': 'all-content',
+                                                         'users_segment': 'all-users',
+                                                         'dates': dates}),
+            'name': AnalyticsActivityField.get_field_display('all-activity'),
+            'is_global_segment': True
+        },
         get_activity_segment_breadcrumb(activity_segment, dates),
         get_content_segment_breadcrumb(activity_segment, content_segment, dates),
     ]

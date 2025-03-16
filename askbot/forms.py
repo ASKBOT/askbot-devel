@@ -1826,6 +1826,8 @@ class AnalyticsActivityField(forms.CharField):
     QUESTION_VIEWED = 'question-viewed'
     ANSWER_VIEWED = 'answer-viewed'
     CONTENT_VOTED = 'content-voted'
+    CONTENT_UPVOTED = 'content-upvoted'
+    CONTENT_DOWNVOTED = 'content-downvoted'
     QUESTION_POSTED = 'question-posted'
     ANSWER_POSTED = 'answer-posted'
     QUESTION_COMMENTED = 'question-commented'
@@ -1862,6 +1864,10 @@ class AnalyticsActivityField(forms.CharField):
             return [Event.EVENT_TYPE_ANSWER_VIEWED]
         if activity_segment == self.CONTENT_VOTED:
             return [Event.EVENT_TYPE_UPVOTED, Event.EVENT_TYPE_DOWNVOTED, Event.EVENT_TYPE_VOTE_CANCELED]
+        if activity_segment == self.CONTENT_UPVOTED:
+            return [Event.EVENT_TYPE_UPVOTED]
+        if activity_segment == self.CONTENT_DOWNVOTED:
+            return [Event.EVENT_TYPE_DOWNVOTED]
         if activity_segment == self.QUESTION_POSTED:
             return [Event.EVENT_TYPE_ASKED]
         if activity_segment == self.ANSWER_POSTED:
@@ -1894,6 +1900,10 @@ class AnalyticsActivityField(forms.CharField):
             return _('Answer Viewed')
         if activity_segment == cls.CONTENT_VOTED:
             return _('Content Voted')
+        if activity_segment == cls.CONTENT_UPVOTED:
+            return _('Content Upvoted')
+        if activity_segment == cls.CONTENT_DOWNVOTED:
+            return _('Content Downvoted')
         if activity_segment == cls.QUESTION_POSTED:
             return _('Question Posted')
         if activity_segment == cls.ANSWER_POSTED:
