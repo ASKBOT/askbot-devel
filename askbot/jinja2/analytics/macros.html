@@ -2,6 +2,28 @@
   {{ timestamp|date('m/d/Y') }} {{ timestamp|date('H:i') }}
 {% endmacro %}
 
+{% macro analytics_user_activity_link(user, dates=dates, show_org=False) %}
+  <a href={{ url('analytics_activity',
+                  content_segment='all-content',
+                  activity_segment='all-activity',
+                  dates=dates,
+                  users_segment='user:' ~ user.id)
+          }}
+  >
+    {{ user.username }}
+  </a> {% if show_org and settings.GROUPS_ENABLED %}
+   {% set analytics_group = user.get_analytics_group() %}
+   {% if analytics_group %}
+     @<a href={{ url('analytics_activity',
+                     dates=dates,
+                     activity_segment='all-activity',
+                     content_segment='all-content',
+                     users_segment='group:' ~ analytics_group.id)
+              }}>{{ analytics_group.name }}</a>
+   {% endif %}
+  {% endif %}
+{% endmacro %}
+
 {% macro event_user_registered(event) %}
   <div class="analytics-event">
     Registered {{ full_date(event.timestamp) }}

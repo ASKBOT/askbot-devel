@@ -2969,6 +2969,18 @@ def user_get_groups(self, private=False, used_for_analytics=False):
     return Group.objects.get_for_user(self, private=private,
                                       used_for_analytics=used_for_analytics)
 
+def user_get_analytics_group(self):
+    """returns the group that should be used for analytics"""
+    if not askbot_settings.GROUPS_ENABLED:
+        return None
+
+    groups = self.get_groups(used_for_analytics=True)
+    if groups.count() == 0:
+        return None
+
+    return groups.first()
+
+
 def user_join_default_groups(self):
     """adds user to "global" and "personal" groups"""
     #needs to be run when Askbot is added to pre-existing site
@@ -3717,6 +3729,7 @@ User.add_to_class('get_or_create_fake_user', user_get_or_create_fake_user)
 User.add_to_class('get_marked_tags', user_get_marked_tags)
 User.add_to_class('get_marked_tag_names', user_get_marked_tag_names)
 User.add_to_class('get_groups', user_get_groups)
+User.add_to_class('get_analytics_group', user_get_analytics_group)
 User.add_to_class('get_foreign_groups', user_get_foreign_groups)
 User.add_to_class('get_group_membership', user_get_group_membership)
 User.add_to_class('get_personal_group', user_get_personal_group)

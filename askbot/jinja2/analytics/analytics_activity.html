@@ -1,6 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import paginator, timeago %}
-{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_link %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_activity_link %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
@@ -58,15 +58,11 @@
     {% for content_event in events %}
       <tr>
         <td>
-          <a href={{ url('analytics_activity',
-                         content_segment='all-content',
-                         activity_segment='all-activity',
-                         dates=dates,
-                         users_segment='user:' ~ content_event.session.user.id)
-                  }}
-          >
-            {{ content_event.session.user.username }}
-          </a>
+          {{ analytics_user_activity_link(content_event.session.user,
+                                          dates=dates,
+                                          show_org=(not users_url_segment.startswith('group:')
+                                                    and not users_url_segment.startswith('user:')))
+          }}
         </td>
         <td>
             <em>{{ content_event.get_event_type_display() }}</em>&nbsp;
