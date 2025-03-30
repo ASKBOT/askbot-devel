@@ -44,7 +44,7 @@ class Command(BaseCommand): # pylint: disable=missing-docstring
                     group.used_for_analytics = True
                     group.save()
 
-            users = User.objects.filter(email__endswith='@' + domain_name)
+            users = User.objects.filter(email__iendswith='@' + domain_name)
             for user in users.iterator():
                 user.join_group(group, force=True)
 
