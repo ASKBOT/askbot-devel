@@ -332,6 +332,18 @@ settings.register(
 )
 
 settings.register(
+    livesettings.StringValue(
+        FORUM_DATA_RULES,
+        'ADMIN_TAGS',
+        description=_('Admin tags'),
+        default='',
+        help_text=_(
+            'Admin tags can be added or removed only by the site administrators or moderators.'
+        )
+    )
+)
+
+settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'FORCE_LOWERCASE_TAGS',

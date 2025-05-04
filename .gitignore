@@ -70,3 +70,4 @@ bower_components/
 coverage_html_report
 /activity.txt
 /askbot/media/jslib/katex/
+.history
