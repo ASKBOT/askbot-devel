@@ -8159,6 +8159,7 @@ form.repost-comment-as-answer {
   position: absolute;
   width: 200px;
   z-index: 10000;
+  cursor: pointer;
 }
 .js-error-popup .js-error-popup-hint {
   font-size: var(--small-font-size);
@@ -9989,6 +9990,10 @@ ul.tags li {
 }
 .ask-page .proxy-author-inputs {
   margin-bottom: 1rem;
+}
+.ask-page .errorlist {
+  list-style: none;
+  color: var(--clr-danger);
 }
 
 .tags-page .tags {

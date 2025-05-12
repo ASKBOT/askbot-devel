@@ -682,16 +682,62 @@ class RetagQuestionPermissionAssertionTests(
         self.assertFalse(
             template_filters.can_edit_post(user, self.post)
         )
-    def test_medium_rep_user_can_edit_others_wiki(self):
-        pass
-    def test_low_rep_user_can_edit_own_wiki(self):
-        pass
-    def test_low_rep_user_cannot_edit_others_wiki(self):
-        pass
-    def test_high_rep_blocked_cannot_edit_others_wiki(self):
-        pass
+
     def test_medium_rep_user_cannot_edit_others_post(self):
+        # this test from the parent class must be silenced,
+        # because this wiki-rep rule for retagging is not implemented
         pass
+
+    def test_medium_rep_user_can_edit_others_post(self):
+        # this test is replacing the test `test_medium_rep_user_cannot_edit_others_post`
+        self.other_user.reputation = self.min_rep_wiki
+        self.assert_other_can()
+
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_admin_can_add_admin_tag(self):
+        user = self.create_user('admin', status='d')
+        question = self.post_question(user=user)
+        user.assert_can_retag_question(question, 'admin')
+
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_admin_can_remove_admin_tag(self):
+        user = self.create_user('admin', status='d')
+        question = self.post_question(user=user, tags='admin')
+        user.assert_can_retag_question(question, 'one two')
+
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_cannot_add_admin_tag(self):
+        user = self.create_user('nonadmin', status='a')
+        question = self.post_question(user=user)
+        self.assertRaises(exceptions.PermissionDenied, user.assert_can_retag_question, question, 'admin')
+
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_cannot_remove_admin_tag(self):
+        admin = self.create_user('admin', status='d')
+        question = self.post_question(user=admin, tags='admin')
+        user = self.create_user('nonadmin', status='a', reputation=self.min_rep)
+        self.assertRaises(exceptions.PermissionDenied, user.assert_can_retag_question, question, 'one two')
+
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_can_add_non_admin_tag(self):
+        admin = self.create_user('admin', status='d')
+        question = self.post_question(user=admin, tags='admin')
+        user = self.create_user('nonadmin', status='a', reputation=self.min_rep)
+        user.assert_can_retag_question(question, 'admin one two')
+    
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_can_remove_non_admin_tag(self):
+        admin = self.create_user('admin', status='d')
+        question = self.post_question(user=admin, tags='admin one two')
+        user = self.create_user('nonadmin', status='a', reputation=self.min_rep)
+        user.assert_can_retag_question(question, 'admin')
+    
+    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_cannot_add_admin_tag(self):
+        admin = self.create_user('admin', status='d')
+        question = self.post_question(user=admin, tags='one two')
+        user = self.create_user('nonadmin', status='a', reputation=self.min_rep)
+        self.assertRaises(exceptions.PermissionDenied, user.assert_can_retag_question, question, 'one two admin')
 
 class FlagOffensivePermissionAssertionTests(PermissionAssertionTestCase):
 

@@ -1002,6 +1002,7 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.get('user', None)
+        self.user = user
         super(AskForm, self).__init__(*args, **kwargs)
         # It's important that this field is set up dynamically
         self.fields['title'] = TitleField()
@@ -1032,6 +1033,23 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
         if not askbot_settings.ALLOW_ASK_ANONYMOUSLY:
             self.cleaned_data['ask_anonymously'] = False
         return self.cleaned_data['ask_anonymously']
+
+    def clean_tags(self):
+        tags = TagNamesField().clean(self.cleaned_data['tags'])
+        if not askbot_settings.ADMIN_TAS_ENABLED:
+            return tags
+
+        if self.user and self.user.is_authenticated and self.user.is_admin_or_mod():
+            return tags
+        admin_tags = set(split_tags(askbot_settings.ADMIN_TAGS))
+        bad_tags = set(split_tags(tags)) & admin_tags
+        if bad_tags:
+            if len(bad_tags) == 1:
+                message = _('Only administrators and moderators can add the tag "%s"') % bad_tags.pop()
+            else:
+                message = _('Only administrators and moderators can add the tags "%s"') % ', '.join(bad_tags)
+            raise forms.ValidationError(message)
+        return tags
 
 ASK_BY_EMAIL_SUBJECT_HELP = _(
     'Subject line is expected in the format: '

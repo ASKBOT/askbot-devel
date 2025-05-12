@@ -1466,17 +1466,20 @@ def user_assert_can_retag_question(self, question = None, new_tags=None):
         min_rep_setting=askbot_settings.MIN_REP_TO_RETAG_OTHERS_QUESTIONS
     )
 
+    if not askbot_settings.ADMIN_TAS_ENABLED:
+        return
+
     if not new_tags:
         return
 
     if self.is_admin_or_mod():
         return
 
-    if not self.ADMIN_TAGS.strip():
+    if not askbot_settings.ADMIN_TAGS.strip():
         return
 
 
-    old_tags = {tag_string.lower() for tag_string in question.tags.strip().split()}
+    old_tags = {tag_string.lower() for tag_string in question.thread.tagnames.strip().split()}
     new_tags = {tag_string.lower() for tag_string in new_tags.strip().split()}
     added_tags = new_tags - old_tags
     removed_tags = old_tags - new_tags
@@ -1492,8 +1495,6 @@ def user_assert_can_retag_question(self, question = None, new_tags=None):
         else:
             error_message = _('Only administrators and moderators can add/remove the tags "%s"') % ', '.join(forbidden_tags)
         raise django_exceptions.PermissionDenied(error_message)
-
-
 
 
 def user_assert_can_delete_comment(self, comment = None):
