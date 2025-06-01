@@ -183,7 +183,7 @@ class AskFormTests(AskbotTestCase):
         self.setup_data(ask_anonymously=False)
         self.assert_anon_is(False)
 
-    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
     def test_admin_can_add_admin_tag(self):
         user = self.create_user('admin', status='d')
         form_data = {
@@ -195,7 +195,7 @@ class AskFormTests(AskbotTestCase):
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['tags'], 'admin')
 
-    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
     def test_admin_can_add_non_admin_tag(self):
         user = self.create_user('admin', status='d')
         form_data = {
@@ -207,7 +207,7 @@ class AskFormTests(AskbotTestCase):
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['tags'], 'non-admin-tag')
 
-    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
     def test_non_admin_cannot_add_admin_tag(self):
         user = self.create_user('admin', status='a')
         form_data = {
@@ -219,7 +219,7 @@ class AskFormTests(AskbotTestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('tags', form.errors)
 
-    @with_settings(ADMIN_TAS_ENABLED=True, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
     def test_non_admin_can_add_non_admin_tag(self):
         user = self.create_user('admin', status='a')
         form_data = {
@@ -231,7 +231,7 @@ class AskFormTests(AskbotTestCase):
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['tags'], 'non-admin-tag')
 
-    @with_settings(ADMIN_TAS_ENABLED=False, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=False, ADMIN_TAGS='admin')
     def test_anonymous_user_cannot_add_admin_tag(self):
         user = AnonymousUser()
         form_data = {
@@ -243,7 +243,7 @@ class AskFormTests(AskbotTestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('tags', form.errors)
 
-    @with_settings(ADMIN_TAS_ENABLED=False, ADMIN_TAGS='admin')
+    @with_settings(ADMIN_TAGS_ENABLED=False, ADMIN_TAGS='admin')
     def test_anonymous_user_can_add_non_admin_tag(self):
         user = AnonymousUser()
         form_data = {

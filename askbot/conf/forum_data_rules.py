@@ -334,7 +334,7 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
-        'ADMIN_TAS_ENABLED',
+        'ADMIN_TAGS_ENABLED',
         default=False,
         description=_('Enable admin tags'),
     )

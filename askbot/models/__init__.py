@@ -1466,7 +1466,7 @@ def user_assert_can_retag_question(self, question = None, new_tags=None):
         min_rep_setting=askbot_settings.MIN_REP_TO_RETAG_OTHERS_QUESTIONS
     )
 
-    if not askbot_settings.ADMIN_TAS_ENABLED:
+    if not askbot_settings.ADMIN_TAGS_ENABLED:
         return
 
     if not new_tags:

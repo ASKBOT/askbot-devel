@@ -34,7 +34,6 @@ from askbot import models
 from askbot import forms
 from askbot import conf
 from askbot import const
-from askbot import mail
 from askbot.conf import settings as askbot_settings
 from askbot.utils import category_tree
 from askbot.utils import decorators
@@ -343,9 +342,19 @@ def get_tag_list(request):
                         language_code=translation.get_language()
                     )
 
-    tag_names = tags.values_list(
-                        'name', flat = True
-                    )
+    tag_names = list(tags.values_list('name', flat = True))
+
+    is_authenticated = request.user.is_authenticated
+    is_admin = is_authenticated and request.user.is_admin_or_mod()
+    if askbot_settings.ADMIN_TAGS_ENABLED and not is_admin:
+        admin_tags_lower = [tag.lower() for tag in forms.split_tags(askbot_settings.ADMIN_TAGS)]
+
+        filtered_tag_names = []
+        for tag in tag_names:
+            if tag.lower() not in admin_tags_lower:
+                filtered_tag_names.append(tag)
+
+        tag_names = filtered_tag_names
 
     output = '\n'.join(map(escape, tag_names))
     return HttpResponse(output, content_type='text/plain')

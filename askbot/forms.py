@@ -1036,7 +1036,7 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
 
     def clean_tags(self):
         tags = TagNamesField().clean(self.cleaned_data['tags'])
-        if not askbot_settings.ADMIN_TAS_ENABLED:
+        if not askbot_settings.ADMIN_TAGS_ENABLED:
             return tags
 
         if self.user and self.user.is_authenticated and self.user.is_admin_or_mod():
