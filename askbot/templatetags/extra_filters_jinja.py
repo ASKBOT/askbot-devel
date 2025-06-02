@@ -52,6 +52,19 @@ def add_tz_offset(datetime_object):
     return str(datetime_object) + ' ' + TIMEZONE_STR
 
 @register.filter
+def is_admin_tag(tag):
+    if not askbot_settings.ADMIN_TAGS_ENABLED:
+        return False
+
+    def admin_tags_lower():
+        for tag in askbot_settings.ADMIN_TAGS.split():
+            yield tag.lower()
+
+    if tag.lower() in admin_tags_lower():
+        return True
+    return False
+
+@register.filter
 def as_js_bool(some_object):
     if bool(some_object):
         return 'true'
