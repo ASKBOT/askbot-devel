@@ -99,11 +99,19 @@ Tag.prototype.decodeTagName = function (encoded_name) {
     return encoded_name.replace('\u273d', '*');
 };
 
+Tag.prototype.isAdminTag = function () {
+    var nameLower = this.getName().toLowerCase();
+    return askbot.data['adminTagsLowerCased'].includes(nameLower);
+};
+
 Tag.prototype.createDom = function () {
     this._element = getTemplate('.js-tag');
+    if (this.isAdminTag()) {
+        this._element.addClass('js-admin-tag');
+    }
     //render the outer element
     var deleter = this._element.find('.js-delete-icon');
-    if (!this._deletable) {
+    if (!this.isDeletable()) {
         this._element.removeClass('js-deletable-tag');
         deleter.remove();
     } else {

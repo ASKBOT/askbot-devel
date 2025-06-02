@@ -83,7 +83,7 @@ TagEditor.prototype.cleanTag = function (tag_name, reject_dupe) {
 TagEditor.prototype.addTag = function (tag_name) {
     var tag = new Tag();
     tag.setName(tag_name);
-    tag.setDeletable(true);
+    tag.setDeletable(!tag.isAdminTag() || askbot.data["userIsAdminOrMod"]);
     tag.setLinkable(true);
     tag.setDeleteHandler(this.getTagDeleteHandler(tag));
     var li = this.makeElement('li');

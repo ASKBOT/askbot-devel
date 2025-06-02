@@ -414,7 +414,7 @@ function pickedTags() {
             setupTagFilterControl('display');
             setupTagFilterControl('email');
             var ac = new AutoCompleter({
-                url: askbot.urls.get_tag_list,
+                url: askbot.urls.get_tag_list + '?include_admin_tags=true',
                 minChars: 1,
                 useCache: true,
                 matchInside: true,
