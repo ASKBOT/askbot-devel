@@ -431,9 +431,10 @@ def delete_tag(request):
             # path[1] == 0 means that the new category is a descendant of the admin tags category
             # we need to update the admin tags setting to include the new category
             admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
-            admin_tags.remove(tag_name)
-            admin_tags_string = ' '.join(sorted(list(admin_tags)))
-            askbot_settings.update('ADMIN_TAGS', admin_tags_string)
+            if tag_name in admin_tags:
+                admin_tags.remove(tag_name)
+                admin_tags_string = ' '.join(sorted(list(admin_tags)))
+                askbot_settings.update('ADMIN_TAGS', admin_tags_string)
 
     except Exception:
         if 'tag_name' in locals():
