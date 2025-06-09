@@ -5,6 +5,7 @@
     askbot['data']['userIsAuthenticated'] = {{ request.user.is_authenticated|as_js_bool }};
     askbot['data']['userIsWatched'] = {{ (request.user.is_authenticated and request.user.status == 'w')|as_js_bool }};
     askbot['data']['languageCode'] = '{{ current_language_code|escapejs }}';
+    askbot['data']['adminTagsEnabled'] = {{ settings.ADMIN_TAGS_ENABLED|as_js_bool }};
     {% if settings.ADMIN_TAGS_ENABLED %}
         askbot['data']['adminTagsLowerCased'] = {{ settings.ADMIN_TAGS|lower|split(" ")|as_json }};
     {% else %}

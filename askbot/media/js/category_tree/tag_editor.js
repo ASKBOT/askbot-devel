@@ -126,8 +126,8 @@ TagEditor.prototype.getAddTagHandler = function () {
             return;
         }
         try {
-            var clean_tag_name = me.cleanTag($.trim(tag_name));
-            me.addTag(clean_tag_name);
+            var cleanTagName = me.cleanTag($.trim(tag_name));
+            me.addTag(cleanTagName);
             me.clearNewTagInput();
             me.fixHeight();
         } catch (error) {

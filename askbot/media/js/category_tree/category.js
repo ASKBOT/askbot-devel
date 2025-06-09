@@ -7,9 +7,16 @@
 var Category = function () {
     SelectBoxItem.call(this);
     this._state = 'display';
+    this._isAdminTagsRoot = false;
     this._settings = JSON.parse(askbot.settings.tag_editor);
 };
 inherits(Category, SelectBoxItem);
+
+Category.prototype.getData = function () {
+    var data = SelectBoxItem.prototype.getData.call(this);
+    data.isAdminTagsRoot = this._isAdminTagsRoot;
+    return data;
+};
 
 Category.prototype.setCategoryTree = function (tree) {
     this._tree = tree;
@@ -28,6 +35,7 @@ Category.prototype.getPath = function () {
 };
 
 Category.prototype.setState = function (state) {
+    if (this._isAdminTagsRoot && state !== 'display') return; // admin root cannot be edited or deleted
     this._state = state;
     if (!this._element) {
         return;
@@ -230,8 +238,13 @@ Category.prototype.getOriginalName = function () {
 Category.prototype.createDom = function () {
     Category.superClass_.createDom.call(this);
     this.addControls();
+    var name = this.getName();
+    if (name === 'ADMIN TAGS') { // special name, not editable
+        this.setName(gettext('Admin Tags')); // display value for the admin tags selector
+        this._isAdminTagsRoot = true;
+    }
     this.setState('display');
-    this._original_name = this.getName();
+    this._original_name = name;
 };
 
 Category.prototype.decorate = function (element) {

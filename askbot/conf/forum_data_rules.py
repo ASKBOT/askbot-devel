@@ -1,11 +1,13 @@
 """
 Settings for askbot data display and entry
 """
+from django.core.cache import cache
 from django.utils.translation import gettext_lazy as _
 from askbot.conf.settings_wrapper import settings
 from livesettings import values as livesettings
 from askbot import const
 from askbot.conf.super_groups import DATA_AND_FORMATTING
+from askbot.utils import category_tree
 
 FORUM_DATA_RULES = livesettings.ConfigurationGroup(
     'FORUM_DATA_RULES',
@@ -331,17 +333,31 @@ settings.register(
     )
 )
 
+def update_admin_tags_in_category_tree(_, new_value):
+    if new_value == True:
+        try:
+            tree = category_tree.get_data()
+            cat = tree[0][1][0][0] # find the first category in the tree
+            if cat != 'ADMIN TAGS':
+                category_tree.add_category(tree, 'ADMIN TAGS', [0])
+                category_tree.save_data(tree)
+                cache.clear()
+        except Exception as e:
+            pass
+    return new_value
+
 settings.register(
     livesettings.BooleanValue(
         FORUM_DATA_RULES,
         'ADMIN_TAGS_ENABLED',
         default=False,
         description=_('Enable admin tags'),
+        update_callback=update_admin_tags_in_category_tree,
     )
 )
 
 settings.register(
-    livesettings.StringValue(
+    livesettings.LongStringValue(
         FORUM_DATA_RULES,
         'ADMIN_TAGS',
         description=_('Admin tags'),
