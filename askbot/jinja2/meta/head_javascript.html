@@ -30,7 +30,7 @@
         askbot['data']['userCanUploadImage'] = false;
     {% endif %}
     askbot['urls'] = {};
-    askbot['settings'] = {};
+    askbot['settings'] = {'adminTagsCategoryRoot': '{{ ADMIN_TAGS_CATEGORY_ROOT }}'};
     askbot['messages'] = {};
 </script>
 <script type="text/javascript" src="{{ url('askbot_jsi18n') }}"></script>

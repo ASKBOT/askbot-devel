@@ -239,7 +239,7 @@ Category.prototype.createDom = function () {
     Category.superClass_.createDom.call(this);
     this.addControls();
     var name = this.getName();
-    if (name === 'ADMIN TAGS') { // special name, not editable
+    if (name === askbot.settings.adminTagsCategoryRoot) { // special name, not editable
         this.setName(gettext('Admin Tags')); // display value for the admin tags selector
         this._isAdminTagsRoot = true;
     }

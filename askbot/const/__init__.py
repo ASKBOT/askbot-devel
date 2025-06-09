@@ -169,6 +169,7 @@ UNANSWERED_QUESTION_MEANING_CHOICES = (
 #    ('NO_UPVOTED_ANSWERS',),
 #)
 
+ADMIN_TAGS_CATEGORY_ROOT = "000ADMIN_TAGS_ROOT" # alhpa-numeric sorting will put this first
 #todo:
 #this probably needs to be language-specific
 #and selectable/changeable from the admin interface

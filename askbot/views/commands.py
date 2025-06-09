@@ -426,6 +426,15 @@ def delete_tag(request):
         tree = category_tree.get_data()
         category_tree.delete_category(tree, tag_name, path)
         category_tree.save_data(tree)
+
+        if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and  path[1] == 0:
+            # path[1] == 0 means that the new category is a descendant of the admin tags category
+            # we need to update the admin tags setting to include the new category
+            admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
+            admin_tags.remove(tag_name)
+            admin_tags_string = ' '.join(sorted(list(admin_tags)))
+            askbot_settings.update('ADMIN_TAGS', admin_tags_string)
+
     except Exception:
         if 'tag_name' in locals():
             logging.critical('could not delete tag %s' % tag_name)
@@ -455,6 +464,13 @@ def add_tag_category(request):
 
     post_data = decode_and_loads(request.body)
     category_name = forms.clean_tag(post_data['new_category_name'])
+
+    if category_name.startswith('000'):
+        # an edge case, to guarantee that
+        # the category root is in the first position
+        # see const.ADMIN_TAGS_CATEGORY_ROOT
+        raise ValueError('Category name cannot start with 000')
+
     path = post_data['path']
 
     tree = category_tree.get_data()
@@ -463,6 +479,15 @@ def add_tag_category(request):
         raise ValueError('category insertion path is invalid')
 
     new_path = category_tree.add_category(tree, category_name, path)
+
+    if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and  path[1] == 0:
+        # path[1] == 0 means that the new category is a descendant of the admin tags category
+        # we need to update the admin tags setting to include the new category
+        admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
+        admin_tags.add(category_name)
+        admin_tags_string = ' '.join(sorted(list(admin_tags)))
+        askbot_settings.update('ADMIN_TAGS', admin_tags_string)
+
     category_tree.save_data(tree)
     return {
         'tree_data': tree,

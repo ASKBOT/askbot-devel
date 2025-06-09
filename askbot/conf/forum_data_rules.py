@@ -338,8 +338,8 @@ def update_admin_tags_in_category_tree(_, new_value):
         try:
             tree = category_tree.get_data()
             cat = tree[0][1][0][0] # find the first category in the tree
-            if cat != 'ADMIN TAGS':
-                category_tree.add_category(tree, 'ADMIN TAGS', [0])
+            if cat != const.ADMIN_TAGS_CATEGORY_ROOT:
+                category_tree.add_category(tree, const.ADMIN_TAGS_CATEGORY_ROOT, [0])
                 category_tree.save_data(tree)
                 cache.clear()
         except Exception as e:

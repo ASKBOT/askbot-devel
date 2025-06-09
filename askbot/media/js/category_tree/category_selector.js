@@ -58,7 +58,7 @@ CategorySelector.prototype.filterAdminTags = function (data) {
     }
 
     function selectPublicTags(item) {
-        if (item[0] === 'ADMIN TAGS') return false;
+        if (item[0] === askbot.settings.adminTagsCategoryRoot) return false;
         item[1] = item[1].filter(selectPublicTags);
         return true;
     }

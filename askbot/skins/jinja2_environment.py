@@ -10,6 +10,7 @@ from copy import deepcopy
 from django.conf import settings as django_settings
 
 import askbot
+from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.skins import utils
 from askbot.skins.askbot_environments import SkinEnvironment
@@ -71,6 +72,7 @@ def factory(**options):
                           + list(django_settings.JINJA2_EXTENSIONS)
     askbot_globals = {'settings': askbot_settings,
                       'hasattr' : hasattr,
+                      'ADMIN_TAGS_CATEGORY_ROOT': const.ADMIN_TAGS_CATEGORY_ROOT,
                       'encode_jwt': encode_jwt}
 
     mother_of_all_loaders = options.pop('loader')
