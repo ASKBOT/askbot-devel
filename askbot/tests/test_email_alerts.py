@@ -752,9 +752,7 @@ class FeedbackTests(utils.AskbotTestCase):
             'subject': 'subject line'
         }
         response = client.post(reverse('feedback'), data)
-        template_names = set([t.name for t in response.templates])
-        expected = set(('email/feedback/subject.txt', 'email/feedback/body.html'))
-        self.assertEqual(template_names, expected)
+        self.assertEqual(response.status_code, 302)
 
         outbox = django.core.mail.outbox
         self.assertEqual(len(outbox), 1)

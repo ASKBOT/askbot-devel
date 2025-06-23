@@ -767,6 +767,9 @@ body:not(.with-tabs) main {
   --tag-delete-btn-fg-hover-color: var(--bg-color);
   --tags-gap: 0.3625rem;
   --tags-input-margin: 0 0 0.5rem;
+  --admin-tag-bg: var(--clr-neutral-90);
+  --admin-tag-fg-color: var(--tag-fg-color);
+  --admin-tag-border-color: var(--clr-neutral-50);
   --autocompleter-hover-bg: var(--clr-blue-65);
   --post-vote-controls-width: 1.25rem;
   --post-vote-controls-margin: 0 0.75rem 0 3px;
@@ -7792,6 +7795,7 @@ input[type=reset] input[type=button].action-link {
 }
 .js-category-selector li input[type=text] {
   height: 100%;
+  width: 100%;
 }
 
 .js-category-btns {
@@ -8159,6 +8163,7 @@ form.repost-comment-as-answer {
   position: absolute;
   width: 200px;
   z-index: 10000;
+  cursor: pointer;
 }
 .js-error-popup .js-error-popup-hint {
   font-size: var(--small-font-size);
@@ -9141,6 +9146,11 @@ ul.tags li {
   text-decoration: none;
   white-space: nowrap;
 }
+.js-tag.js-admin-tag .js-tag-name {
+  background: var(--admin-tag-bg) !important;
+  border: var(--input-border-width) var(--input-border-style) var(--admin-tag-border-color) !important;
+  color: var(--admin-tag-fg-color) !important;
+}
 .js-tag .js-tag-extra-content {
   font-size: var(--tag-font-size);
   padding-bottom: 0.125rem;
@@ -9989,6 +9999,10 @@ ul.tags li {
 }
 .ask-page .proxy-author-inputs {
   margin-bottom: 1rem;
+}
+.ask-page .errorlist {
+  list-style: none;
+  color: var(--clr-danger);
 }
 
 .tags-page .tags {

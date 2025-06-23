@@ -6,6 +6,7 @@
   position: absolute;
   width: 200px;
   z-index: 10000;
+  cursor: pointer;
   .js-error-popup-hint {
     font-size: var(--small-font-size);
     padding-top: 0.25rem;

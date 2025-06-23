@@ -82,8 +82,8 @@
             notify.show(json.message);
           }
         } else {
-          me._onCanceled();
-          showMessage(tagsList, json.message);
+          me.showAndFocus(tagsList);
+          showMessage(me.getInputElement(), json.message);
         }
       },
       error: function () {

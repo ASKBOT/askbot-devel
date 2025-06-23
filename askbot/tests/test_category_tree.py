@@ -48,6 +48,17 @@ class CategoryTreeTests(unittest.TestCase):
             True
         )
 
+    def test_insert_duplicate_category_raises(self):
+        self.assertRaises(ValueError, ct.add_category, self.tree, 'cars', [0, 2, 3])
+
+    def test_rename_to_existing_category_raises(self):
+        self.assertRaises(ValueError,
+                          ct.rename_category,
+                          self.tree, 
+                          from_name='cars',
+                          to_name='cats',
+                          path=[0, 2, 3])
+
     def test_deep_level_subcat_is_there(self):
         self.assertEqual(
             ct.has_category(self.tree, 'download'),

@@ -183,6 +183,79 @@ class AskFormTests(AskbotTestCase):
         self.setup_data(ask_anonymously=False)
         self.assert_anon_is(False)
 
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_admin_can_add_admin_tag(self):
+        user = self.create_user('admin', status='d')
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'admin',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['tags'], 'admin')
+
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_admin_can_add_non_admin_tag(self):
+        user = self.create_user('admin', status='d')
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'non-admin-tag',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['tags'], 'non-admin-tag')
+
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_cannot_add_admin_tag(self):
+        user = self.create_user('admin', status='a')
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'admin',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertFalse(form.is_valid())
+        self.assertIn('tags', form.errors)
+
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_non_admin_can_add_non_admin_tag(self):
+        user = self.create_user('admin', status='a')
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'non-admin-tag',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['tags'], 'non-admin-tag')
+
+    @with_settings(ADMIN_TAGS_ENABLED=True, ADMIN_TAGS='admin')
+    def test_anonymous_user_cannot_add_admin_tag(self):
+        user = AnonymousUser()
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'admin',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertFalse(form.is_valid())
+        self.assertIn('tags', form.errors)
+
+    @with_settings(ADMIN_TAGS_ENABLED=False, ADMIN_TAGS='admin')
+    def test_anonymous_user_can_add_non_admin_tag(self):
+        user = AnonymousUser()
+        form_data = {
+            'title': 'test title admin',
+            'text': 'test content admin',
+            'tags': 'non-admin-tag',
+        }
+        form = forms.AskForm(data=form_data, user=user)
+        self.assertTrue(form.is_valid())
+        self.assertEqual(form.cleaned_data['tags'], 'non-admin-tag')
+
+
 
 class UserStatusFormTest(AskbotTestCase):
     def setup_data(self, status):

@@ -1478,7 +1478,7 @@ def user_assert_can_remove_all_flags_offensive(self, post = None):
     raise django_exceptions.PermissionDenied(permission_denied_message)
 
 
-def user_assert_can_retag_question(self, question = None):
+def user_assert_can_retag_question(self, question = None, new_tags=None):
 
     if question.deleted == True:
         self.assert_can_edit_deleted_post(question)
@@ -1492,6 +1492,36 @@ def user_assert_can_retag_question(self, question = None):
         suspended_user_cannot=True,
         min_rep_setting=askbot_settings.MIN_REP_TO_RETAG_OTHERS_QUESTIONS
     )
+
+    if not askbot_settings.ADMIN_TAGS_ENABLED:
+        return
+
+    if not new_tags:
+        return
+
+    if self.is_admin_or_mod():
+        return
+
+    if not askbot_settings.ADMIN_TAGS.strip():
+        return
+
+
+    old_tags = {tag_string.lower() for tag_string in question.thread.tagnames.strip().split()}
+    new_tags = {tag_string.lower() for tag_string in new_tags.strip().split()}
+    added_tags = new_tags - old_tags
+    removed_tags = old_tags - new_tags
+    admin_tags = {tag_string.lower() for tag_string in askbot_settings.ADMIN_TAGS.strip().split()}
+
+    forbidden_added_tags = added_tags & admin_tags
+    forbidden_removed_tags = removed_tags & admin_tags
+    forbidden_tags = forbidden_added_tags | forbidden_removed_tags
+
+    if forbidden_tags:
+        if len(forbidden_tags) == 1:
+            error_message = _('Only administrators and moderators can add/remove the tag "%s"') % forbidden_tags.pop()
+        else:
+            error_message = _('Only administrators and moderators can add/remove the tags "%s"') % ', '.join(forbidden_tags)
+        raise django_exceptions.PermissionDenied(error_message)
 
 
 def user_assert_can_delete_comment(self, comment = None):
@@ -1834,7 +1864,7 @@ def user_retag_question(
                     timestamp = None,
                     silent = False
                 ):
-    self.assert_can_retag_question(question)
+    self.assert_can_retag_question(question, tags)
     question.thread.retag(
         retagged_by = self,
         retagged_at = timestamp,

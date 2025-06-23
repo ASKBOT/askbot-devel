@@ -344,7 +344,6 @@ def retag_question(request, id):
     question = get_object_or_404(models.Post, id=id)
 
     try:
-        request.user.assert_can_retag_question(question)
         form = forms.RetagQuestionForm(question, request.POST)
 
         if not form.is_valid():
@@ -354,6 +353,8 @@ def retag_question(request, id):
             }
             data = json.dumps(response_data)
             return HttpResponse(data, content_type="application/json")
+
+        request.user.assert_can_retag_question(question, form.cleaned_data['tags'])
 
         if form.has_changed():
             text = question.get_text_content(tags=form.cleaned_data['tags'])

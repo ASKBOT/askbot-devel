@@ -23,6 +23,11 @@ ul.tags {
     text-decoration: none;
     white-space: nowrap;
   }
+  &.js-admin-tag .js-tag-name {
+    background: var(--admin-tag-bg) !important;
+    border: var(--input-border-width) var(--input-border-style) var(--admin-tag-border-color) !important;
+    color: var(--admin-tag-fg-color) !important;
+  }
   .js-tag-extra-content {
     font-size: var(--tag-font-size);
     padding-bottom: 0.125rem;

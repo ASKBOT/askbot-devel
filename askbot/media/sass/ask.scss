@@ -52,4 +52,9 @@
   .proxy-author-inputs {
     margin-bottom: 1rem;
   }
+
+  .errorlist {
+    list-style: none;
+    color: var(--clr-danger);
+  }
 }

@@ -303,7 +303,7 @@
       {% set search_state=search_state|get_empty_search_state %}
   {% endif %}
   {% filter trim %}
-    <div class="js-tag {% if deletable %} js-deletable-tag{% endif %}">
+    <div class="js-tag{% if tag|is_admin_tag %} js-admin-tag{% endif %}{% if deletable %} js-deletable-tag{% endif %}">
         <{% if is_link %}a{% else %}span{% endif %}
             class="js-tag-name{% if css_class %} {{ css_class }}{% endif %}"
             rel="tag"

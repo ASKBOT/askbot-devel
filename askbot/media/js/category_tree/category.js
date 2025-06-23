@@ -7,9 +7,16 @@
 var Category = function () {
     SelectBoxItem.call(this);
     this._state = 'display';
+    this._isAdminTagsRoot = false;
     this._settings = JSON.parse(askbot.settings.tag_editor);
 };
 inherits(Category, SelectBoxItem);
+
+Category.prototype.getData = function () {
+    var data = SelectBoxItem.prototype.getData.call(this);
+    data.isAdminTagsRoot = this._isAdminTagsRoot;
+    return data;
+};
 
 Category.prototype.setCategoryTree = function (tree) {
     this._tree = tree;
@@ -28,6 +35,7 @@ Category.prototype.getPath = function () {
 };
 
 Category.prototype.setState = function (state) {
+    if (this._isAdminTagsRoot && state !== 'display') return; // admin root cannot be edited or deleted
     this._state = state;
     if (!this._element) {
         return;
@@ -108,15 +116,13 @@ Category.prototype.getDeleteHandler = function () {
     return function () {
         if (confirm(gettext('Delete category?'))) {
             var tree = me.getCategoryTree();
-            $.ajax({
-                type: 'POST',
+            $.ajax({url: askbot.urls.delete_tag, type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify({
                     tag_name: me.getName(),
                     path: me.getPath()
                 }),
                 cache: false,
-                url: askbot.urls.delete_tag,
                 success: function (data) {
                     if (data.success) {
                         //rebuild category tree based on data
@@ -147,12 +153,10 @@ Category.prototype.getSaveHandler = function () {
                 to_name: to_name,
                 path: me.getPath()
             };
-            $.ajax({
-                type: 'POST',
+            $.ajax({url: askbot.urls.rename_tag, type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(data),
                 cache: false,
-                url: askbot.urls.rename_tag,
                 success: function (data) {
                     if (data.success) {
                         me.setName(to_name);
@@ -230,8 +234,13 @@ Category.prototype.getOriginalName = function () {
 Category.prototype.createDom = function () {
     Category.superClass_.createDom.call(this);
     this.addControls();
+    var name = this.getName();
+    if (name === askbot.settings.adminTagsCategoryRoot) { // special name, not editable
+        this.setName(gettext('Admin Tags')); // display value for the admin tags selector
+        this._isAdminTagsRoot = true;
+    }
     this.setState('display');
-    this._original_name = this.getName();
+    this._original_name = name;
 };
 
 Category.prototype.decorate = function (element) {

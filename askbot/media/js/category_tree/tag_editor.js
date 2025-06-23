@@ -83,7 +83,7 @@ TagEditor.prototype.cleanTag = function (tag_name, reject_dupe) {
 TagEditor.prototype.addTag = function (tag_name) {
     var tag = new Tag();
     tag.setName(tag_name);
-    tag.setDeletable(true);
+    tag.setDeletable(!tag.isAdminTag() || askbot.data["userIsAdminOrMod"]);
     tag.setLinkable(true);
     tag.setDeleteHandler(this.getTagDeleteHandler(tag));
     var li = this.makeElement('li');
@@ -126,8 +126,8 @@ TagEditor.prototype.getAddTagHandler = function () {
             return;
         }
         try {
-            var clean_tag_name = me.cleanTag($.trim(tag_name));
-            me.addTag(clean_tag_name);
+            var cleanTagName = me.cleanTag($.trim(tag_name));
+            me.addTag(cleanTagName);
             me.clearNewTagInput();
             me.fixHeight();
         } catch (error) {
@@ -220,9 +220,7 @@ TagEditor.prototype.getTagInputKeyHandler = function () {
             if (tag_name.length > 0) {
                 try {
                     tag_name = me.cleanTag(tag_name, true);
-                    $.ajax({
-                        type: 'POST',
-                        url: askbot['urls']['cleanTagName'],
+                    $.ajax({url: askbot['urls']['cleanTagName'], type: 'POST',
                         data: {'tag_name': tag_name},
                         dataType: 'json',
                         cache: false,

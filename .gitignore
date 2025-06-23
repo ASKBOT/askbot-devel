@@ -70,3 +70,4 @@ bower_components/
 .history
 /activity.txt
 /askbot/media/jslib/katex/
+.history

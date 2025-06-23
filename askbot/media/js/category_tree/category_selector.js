@@ -50,12 +50,29 @@ CategorySelector.prototype.applyToDataItems = function (func) {
     }
 };
 
+CategorySelector.prototype.filterAdminTags = function (data) {
+    var enabled = askbot.data['adminTagsEnabled'];
+    var isMod = askbot.data['userIsAdminOrMod'];
+    if (enabled && isMod) {
+        return data;
+    }
+
+    function selectPublicTags(item) {
+        if (item[0] === askbot.settings.adminTagsCategoryRoot) return false;
+        item[1] = item[1].filter(selectPublicTags);
+        return true;
+    }
+
+    return data.filter(selectPublicTags);
+};
+
 CategorySelector.prototype.setData = function (data) {
-    this._data = data;
+    this._data = this.filterAdminTags(data);
     var tree = this;
     function attachCategory(item) {
+        var name = item[0];
         var cat = new Category();
-        cat.setName(item[0]);
+        cat.setName(name);
         cat.setCategoryTree(tree);
         item[2] = cat;
     }
@@ -177,23 +194,25 @@ CategorySelector.prototype.getEditorToggle = function () {
 
 CategorySelector.prototype.getSelectHandler = function (level) {
     var me = this;
-    return function (item_data) {
+    return function (itemData) {
         if (me.getState() === 'editing') {
             return;//don't navigate when editing
         }
         //1) run the assigned select handler
-        var tag_name = item_data.title;
+        var tagName = itemData.title;
         if (me.getState() === 'select') {
             /* this one will actually select the tag
              * maybe a bit too implicit
              */
-            me.getSelectHandlerInternal()(tag_name);
+            if (!itemData.isAdminTagsRoot) {
+                me.getSelectHandlerInternal()(tagName);
+            }
         }
         //2) if appropriate, populate the higher level
         if (level < 2) {
-            var current_path = me.getSelectedPath(level);
-            me.setCurrentPath(current_path);
-            me.populateCategoryLevel(current_path);
+            var currentPath = me.getSelectedPath(level);
+            me.setCurrentPath(currentPath);
+            me.populateCategoryLevel(currentPath);
         }
     };
 };
