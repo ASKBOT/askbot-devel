@@ -220,9 +220,7 @@ TagEditor.prototype.getTagInputKeyHandler = function () {
             if (tag_name.length > 0) {
                 try {
                     tag_name = me.cleanTag(tag_name, true);
-                    $.ajax({
-                        type: 'POST',
-                        url: askbot['urls']['cleanTagName'],
+                    $.ajax({url: askbot['urls']['cleanTagName'], type: 'POST',
                         data: {'tag_name': tag_name},
                         dataType: 'json',
                         cache: false,

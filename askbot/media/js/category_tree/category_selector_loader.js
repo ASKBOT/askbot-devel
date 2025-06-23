@@ -72,11 +72,9 @@ CategorySelectorLoader.prototype.getOnLoadHandler = function () {
 
 CategorySelectorLoader.prototype.startLoadingHTML = function (on_load) {
     var me = this;
-    $.ajax({
-        type: 'GET',
+    $.ajax({url: askbot.urls.get_html_template, type: 'GET',
         dataType: 'json',
         data: { template_name: 'widgets/tag_category_selector.html' },
-        url: askbot.urls.get_html_template,
         cache: true,
         success: function (data) {
             if (data.success) {
@@ -130,9 +128,7 @@ CategorySelectorLoader.prototype.getSaveHandler = function () {
     var me = this;
     return function () {
         var tagInput = $('input[name="tags"]');
-        $.ajax({
-            type: 'POST',
-            url: askbot.urls.retag,
+        $.ajax({url: askbot.urls.retag, type: 'POST',
             dataType: 'json',
             data: { tags: getUniqueWords(tagInput.val()).join(' ') },
             success: function (json) {

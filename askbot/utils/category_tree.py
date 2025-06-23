@@ -1,5 +1,5 @@
-"""This is temporary code to parse category
-tree, stored in the settings.
+"""
+Parsess the category tree, stored in the settings.
 The tree is plain text, with levels of branching
 reflected by indentation (2 spaces per level).
 example of desired structure, when input is parsed
@@ -25,8 +25,9 @@ example of desired structure, when input is parsed
         ]
     ]
 """
-from askbot.conf import settings as askbot_settings
 import json
+from askbot.conf import settings as askbot_settings
+from django.utils.translation import gettext as _
 
 def get_leaf_index(tree, leaf_name):
     children = tree[1]
@@ -90,6 +91,11 @@ def path_is_valid(tree, path):
         return False
 
 def add_category(tree, category_name, path):
+    # check if the new name is already in the tree
+    crumbs = get_category_breadcrumbs(tree, category_name)
+    if crumbs:
+        position = '->'.join(crumbs)
+        raise ValueError(_('Category "%s" already exists') % position)
     subtree = get_subtree(tree, path)
     children = subtree[1]
     children.append([category_name, []])
@@ -102,24 +108,39 @@ def add_category(tree, category_name, path):
     new_path.append(new_item_index)
     return new_path
 
-def _has_category(tree, category_name):
+def get_breadcrumbs(tree, category_name):
     for item in tree:
         if item[0] == category_name:
-            return True
-        if _has_category(item[1], category_name):
-            return True
-    return False
+            return [item[0]]
+        relative_crumbs = get_breadcrumbs(item[1], category_name)
+        if relative_crumbs:
+            return [item[0]] + relative_crumbs
+    return []
+
+def get_category_breadcrumbs(tree, category_name):
+    """returns list of category names from the root to the category.
+    If the category does not exist, returns an empty list.
+    """
+    return get_breadcrumbs(tree[0][1], category_name)
 
 def has_category(tree, category_name):
     """true if category is in tree"""
     #skip the dummy
-    return _has_category(tree[0][1], category_name)
+    return len(get_category_breadcrumbs(tree, category_name)) > 0
 
 def rename_category(
     tree, from_name = None, to_name = None, path = None
 ):
+    # don't do anything if the names are the same
     if to_name == from_name:
         return
+
+    # check if the new name is already in the tree
+    crumbs = get_category_breadcrumbs(tree, to_name)
+    if crumbs:
+        position = '->'.join(crumbs)
+        raise ValueError(_('Category "%s" already exists') % position)
+
     subtree = get_subtree(tree, path[:-1])
     from_index = get_leaf_index(subtree, from_name)
     #todo possibly merge if to_name exists on the same level

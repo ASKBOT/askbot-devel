@@ -90,14 +90,12 @@ CategoryAdder.prototype.startAdding = function () {
     var tree = this._tree;
     var adder_path = this.getPath();
 
-    $.ajax({
-        type: 'POST',
+    $.ajax({url: askbot.urls.add_tag_category, type: 'POST',
         dataType: 'json',
         data: JSON.stringify({
             path: adder_path,
             new_category_name: name
         }),
-        url: askbot.urls.add_tag_category,
         cache: false,
         success: function (data) {
             if (data.success) {

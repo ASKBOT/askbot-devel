@@ -389,6 +389,7 @@ def save_object_description(request):
 @decorators.ajax_only
 @decorators.post_only
 def rename_tag(request):
+    """Renames a tag in the category tree."""
     if request.user.is_anonymous \
         or not request.user.is_administrator_or_moderator():
         raise exceptions.PermissionDenied()
@@ -396,6 +397,9 @@ def rename_tag(request):
     to_name = forms.clean_tag(post_data['to_name'])
     from_name = forms.clean_tag(post_data['from_name'])
     path = post_data['path']
+
+    # todo: fail, if this tag is already present elsewhere in the tree
+    # the error message should tell where to find the duplicate tag
 
     #kwargs = {'from': old_name, 'to': new_name}
     #call_command('rename_tags', **kwargs)
@@ -408,6 +412,17 @@ def rename_tag(request):
         path = path
     )
     category_tree.save_data(tree)
+
+    if askbot_settings.ADMIN_TAGS_ENABLED:
+        # we need to update the admin tags setting to include the new category
+        admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
+        if from_name not in admin_tags:
+            return
+        admin_tags.remove(from_name)
+        admin_tags.add(to_name)
+        admin_tags_string = ' '.join(sorted(list(admin_tags)))
+        askbot_settings.update('ADMIN_TAGS', admin_tags_string)
+
 
 @csrf.csrf_protect
 @decorators.ajax_only
@@ -427,7 +442,7 @@ def delete_tag(request):
         category_tree.delete_category(tree, tag_name, path)
         category_tree.save_data(tree)
 
-        if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and  path[1] == 0:
+        if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and path[0] == 0 and path[1] == 0:
             # path[1] == 0 means that the new category is a descendant of the admin tags category
             # we need to update the admin tags setting to include the new category
             admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
@@ -466,6 +481,7 @@ def add_tag_category(request):
     post_data = decode_and_loads(request.body)
     category_name = forms.clean_tag(post_data['new_category_name'])
 
+    # fail, if the category name starts with 000
     if category_name.startswith('000'):
         # an edge case, to guarantee that
         # the category root is in the first position
@@ -474,6 +490,16 @@ def add_tag_category(request):
 
     path = post_data['path']
 
+    # todo: fail, if this tag is already present elsewhere in the tree
+    # the error message should tell where to find the duplicate tag
+
+    if askbot_settings.ADMIN_TAGS_ENABLED:
+        non_admin_path = not (len(path) > 1 and path[0] == 0 and path[1] == 0)
+        # we won't allow adding admin tags at non-admin tag position
+        admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))
+        if non_admin_path and category_name in admin_tags:
+            raise ValueError(_('Admin tag %s cannot be added at this position') % category_name)
+
     tree = category_tree.get_data()
 
     if category_tree.path_is_valid(tree, path) == False:
@@ -481,7 +507,7 @@ def add_tag_category(request):
 
     new_path = category_tree.add_category(tree, category_name, path)
 
-    if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and  path[1] == 0:
+    if askbot_settings.ADMIN_TAGS_ENABLED and len(path) > 1 and path[0] == 0 and path[1] == 0:
         # path[1] == 0 means that the new category is a descendant of the admin tags category
         # we need to update the admin tags setting to include the new category
         admin_tags = set(forms.split_tags(askbot_settings.ADMIN_TAGS))

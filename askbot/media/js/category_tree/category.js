@@ -116,15 +116,13 @@ Category.prototype.getDeleteHandler = function () {
     return function () {
         if (confirm(gettext('Delete category?'))) {
             var tree = me.getCategoryTree();
-            $.ajax({
-                type: 'POST',
+            $.ajax({url: askbot.urls.delete_tag, type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify({
                     tag_name: me.getName(),
                     path: me.getPath()
                 }),
                 cache: false,
-                url: askbot.urls.delete_tag,
                 success: function (data) {
                     if (data.success) {
                         //rebuild category tree based on data
@@ -155,12 +153,10 @@ Category.prototype.getSaveHandler = function () {
                 to_name: to_name,
                 path: me.getPath()
             };
-            $.ajax({
-                type: 'POST',
+            $.ajax({url: askbot.urls.rename_tag, type: 'POST',
                 dataType: 'json',
                 data: JSON.stringify(data),
                 cache: false,
-                url: askbot.urls.rename_tag,
                 success: function (data) {
                     if (data.success) {
                         me.setName(to_name);

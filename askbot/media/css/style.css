@@ -7795,6 +7795,7 @@ input[type=reset] input[type=button].action-link {
 }
 .js-category-selector li input[type=text] {
   height: 100%;
+  width: 100%;
 }
 
 .js-category-btns {
