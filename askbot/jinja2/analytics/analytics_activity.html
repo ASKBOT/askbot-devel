@@ -1,6 +1,6 @@
 {% extends "one_column_body.html" %}
 {% from "macros.html" import paginator, timeago %}
-{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_activity_link %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, full_date, analytics_user_activity_link, analytics_group_activity_link %}
 {% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
 {% block forestyle %}
   <style>
@@ -22,6 +22,9 @@
     }
     td {
         text-align: left !important;
+    }
+    td.org-name {
+        text-align: center !important;
     }
     .title-row {
       align-items: center;
@@ -47,9 +50,11 @@
   {% include "analytics/date_selector.html" %}
 </div>
 <table>
+  {% set show_org=settings.GROUPS_ENABLED %} {#and not users_url_segment.startswith('group:') and not users_url_segment.startswith('user:')) #}
   <thead>
     <tr>
       <th>User</th>
+      {% if show_org %}<th>Organization</th>{% endif %}
       <th>Event</th>
       <th>Date</th>
     </tr>
@@ -58,12 +63,11 @@
     {% for content_event in events %}
       <tr>
         <td>
-          {{ analytics_user_activity_link(content_event.session.user,
-                                          dates=dates,
-                                          show_org=(not users_url_segment.startswith('group:')
-                                                    and not users_url_segment.startswith('user:')))
-          }}
+          {{ analytics_user_activity_link(content_event.session.user, dates=dates) }}
         </td>
+        {% if show_org %}
+          <td class="org-name">{{ analytics_group_activity_link(content_event.session.user, dates=dates) }}</td>
+        {% endif %}
         <td>
             <em>{{ content_event.get_event_type_display() }}</em>&nbsp;
             {% if content_event.content_type == post_content_type %}
