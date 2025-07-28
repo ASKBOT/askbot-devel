@@ -524,6 +524,11 @@ def user_has_badge(self, badge):
     return Award.objects.filter(user=self, badge=badge).count() > 0
 
 
+def user_can_manage_admin_tags(self):
+    """True, if user can manage admin tags"""
+    return django_settings.ASKBOT_USER_CAN_MANAGE_ADMIN_TAGS_FUNCTION(self)
+
+
 def user_can_anonymize_account(self, user):
     """`True`, if `self` can anonymize and disable account of `user`"""
     perm = askbot_settings.WHO_CAN_ANONYMIZE_ACCOUNTS
@@ -1472,7 +1477,7 @@ def user_assert_can_retag_question(self, question = None, new_tags=None):
     if not new_tags:
         return
 
-    if self.is_admin_or_mod():
+    if self.can_manage_admin_tags():
         return
 
     if not askbot_settings.ADMIN_TAGS.strip():
@@ -3777,6 +3782,7 @@ User.add_to_class('mark_tags', user_mark_tags)
 User.add_to_class('merge_duplicate_questions', user_merge_duplicate_questions)
 User.add_to_class('update_response_counts', user_update_response_counts)
 User.add_to_class('can_anonymize_account', user_can_anonymize_account)
+User.add_to_class('can_manage_admin_tags', user_can_manage_admin_tags)
 User.add_to_class('can_create_tags', user_can_create_tags)
 User.add_to_class('can_have_strong_url', user_can_have_strong_url)
 User.add_to_class('can_post_by_email', user_can_post_by_email)

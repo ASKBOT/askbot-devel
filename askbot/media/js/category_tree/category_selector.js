@@ -52,7 +52,7 @@ CategorySelector.prototype.applyToDataItems = function (func) {
 
 CategorySelector.prototype.filterAdminTags = function (data) {
     var enabled = askbot.data['adminTagsEnabled'];
-    var isMod = askbot.data['userIsAdminOrMod'];
+    var isMod = askbot.data['userCanManageAdminTags'];
     if (enabled && isMod) {
         return data;
     }

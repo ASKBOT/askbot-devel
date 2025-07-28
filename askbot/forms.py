@@ -1039,7 +1039,7 @@ class AskForm(PostAsSomeoneForm, PostPrivatelyForm):
         if not askbot_settings.ADMIN_TAGS_ENABLED:
             return tags
 
-        if self.user and self.user.is_authenticated and self.user.is_admin_or_mod():
+        if self.user and self.user.is_authenticated and self.user.can_manage_admin_tags():
             return tags
         admin_tags = set(split_tags(askbot_settings.ADMIN_TAGS))
         bad_tags = set(split_tags(tags)) & admin_tags

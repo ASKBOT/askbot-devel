@@ -9,6 +9,18 @@ if settings.ASKBOT_TRANSLATE_URL:
 else:
     pgettext = lambda context, value: value
 
+def default_user_can_manage_admin_tags(user):
+    """True, if user can manage admin tags"""
+    try:
+        if user.is_anonymous:
+            return False
+        if user.is_administrator_or_moderator():
+            return True
+    except AttributeError:
+        return False
+
+    return False
+
 class AskbotStaticSettings(AppConf):
     ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif',
                                 '.bmp', '.png', '.tiff')
@@ -69,6 +81,7 @@ class AskbotStaticSettings(AppConf):
     SPAM_CHECKER_API_URL = None
     SPAM_CHECKER_TIMEOUT_SECONDS = 1
     TRANSLATE_URL = True # set true to localize urls
+    USER_CAN_MANAGE_ADMIN_TAGS_FUNCTION = default_user_can_manage_admin_tags
     USER_DATA_EXPORT_DIR = const.DEFAULT_USER_DATA_EXPORT_DIR
     USE_LOCAL_FONTS = False
     SEARCH_FRONTEND_SRC_URL = None

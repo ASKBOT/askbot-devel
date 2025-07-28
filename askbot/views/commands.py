@@ -348,7 +348,7 @@ def get_tag_list(request):
         pass
     else:
         is_authenticated = request.user.is_authenticated
-        is_admin = is_authenticated and request.user.is_admin_or_mod()
+        is_admin = is_authenticated and request.user.can_manage_admin_tags()
         if askbot_settings.ADMIN_TAGS_ENABLED and not is_admin:
             admin_tags_lower = [tag.lower() for tag in forms.split_tags(askbot_settings.ADMIN_TAGS)]
 
