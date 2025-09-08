@@ -419,7 +419,7 @@ class EditorFieldTests(AskbotTestCase):
         )
 
 
-class CleanTagTest(AskbotTestCase):
+class CleanTagTests(AskbotTestCase):
     def test_look_in_db_true(self):
         tag_name = u'foo'
         new_name = forms.clean_tag(tag_name, look_in_db=True)
@@ -434,3 +434,33 @@ class CleanTagTest(AskbotTestCase):
         tag_name = u'foo' * askbot_settings.MAX_TAG_LENGTH
         with self.assertRaises(forms.forms.ValidationError):
             forms.clean_tag(tag_name, look_in_db=True)
+
+
+class EditUserFormTests(AskbotTestCase):
+    @with_settings(BLACKLISTED_EMAIL_PATTERNS_MODE='strict', BLACKLISTED_EMAIL_PATTERNS='outlook.com')
+    def test_disallowed_email(self):
+        user = self.create_user('testuser', email='user@gmail.com', reputation=1)
+        data = {
+            'email': 'user@outlook.com',
+            'username': 'testuser',
+        }
+        form = forms.EditUserForm(user=user, data=data)
+        form.full_clean()
+        self.assertIn('email', form.errors)
+        email_error = form.errors['email'][0]
+        self.assertEqual(email_error, 'this email address is not authorized')
+
+
+    @with_settings(BLACKLISTED_EMAIL_PATTERNS_MODE='strict',
+        BLACKLISTED_EMAIL_PATTERNS='outlook.com',
+        MIN_REPUTATION_TO_USE_ANY_EMAIL=10)
+    def test_disallowed_email_bypass(self):
+        rep = askbot_settings.MIN_REPUTATION_TO_USE_ANY_EMAIL
+        user = self.create_user('testuser', email='user@gmail.com', reputation=rep)
+        data = {
+            'email': 'user@outlook.com',
+            'username': 'testuser',
+        }
+        form = forms.EditUserForm(user=user, data=data)
+        form.full_clean()
+        self.assertNotIn('email', form.errors)
