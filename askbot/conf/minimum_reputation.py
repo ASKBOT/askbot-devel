@@ -234,3 +234,12 @@ settings.register(
         help_text=_('Reduces spam')
     )
 )
+
+settings.register(
+    livesettings.IntegerValue(
+        MIN_REP,
+        'MIN_REPUTATION_TO_USE_ANY_EMAIL',
+        default=10,
+        description=_('Use any email address, bypassing the disallowed email filter')
+    )
+)

@@ -1440,7 +1440,8 @@ class EditUserForm(forms.Form):
             self.cleaned_data['email'] = ''
             return self.cleaned_data['email']
 
-        moderated_email_validator(email)
+        if not self.user or self.user.reputation < askbot_settings.MIN_REPUTATION_TO_USE_ANY_EMAIL:
+            moderated_email_validator(email)
 
         if email != self.user.email:
             # TODO dry it, there is a similar thing in openidauth
