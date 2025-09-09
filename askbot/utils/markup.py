@@ -138,6 +138,70 @@ def extract_mentioned_name_seeds(text):
     return extra_name_seeds
 
 
+def extract_unquoted_mention(text, pos, anticipated_authors):
+    """`pos` is the position of the @ symbol"""
+    mentioned_author = None
+    rendered_text = ''
+    if pos > 0:
+        if text[pos-1] in const.TWITTER_STYLE_MENTION_TERMINATION_CHARS:
+            # if there is a termination character before @mention
+            # indeed try to find a matching person
+            text = text[pos+1:]
+            mentioned_author, text = extract_first_matching_mentioned_author(
+                text, anticipated_authors)
+        else:
+            # if there isn't, i.e. text goes like something@mention,
+            # do not look up people
+            text = text[pos+1:]
+    else:
+        # do this if @ is the first character
+        text = text[1:]
+        mentioned_author, text = \
+            extract_first_matching_mentioned_author(
+                text, anticipated_authors)
+
+    if mentioned_author:
+        rendered_text = format_mention_in_html(mentioned_author)
+    else:
+        rendered_text = '@'
+
+    return text, rendered_text, mentioned_author
+
+
+def extract_quoted_mention(text, pos):
+    """`pos` is the position of the @ symbol"""
+    # find the next quote
+    assert text[pos+1] in const.ASKBOT_MULTIWORD_MENTION_QUOTE_CHARS
+    rendered_text = ''
+    mentioned_author = None
+
+    try:
+        quote_char = text[pos+1]
+
+        # pos + 2 would be the beginning of the user name
+        if quote_char not in text[pos+2:]:
+            raise ValueError('No closing quote found')
+
+        # pos + 2 would be the beginning of the user name
+        next_quote_pos = text.index(quote_char, pos+2) # find the closing quote
+        potential_user_name = text[pos+2:next_quote_pos] # get the user name
+
+        if len(potential_user_name.strip()) == 0:
+            raise ValueError('Empty user name')
+
+        from askbot.models.user import User
+        mentioned_author = User.objects.filter(username__iexact=potential_user_name).first()
+        if mentioned_author:
+            formatted_mention = format_mention_in_html(mentioned_author)
+            text = text[next_quote_pos+1:]
+            return text, formatted_mention, mentioned_author
+    except ValueError:
+        pass
+
+    # in the case of error or missing user, render only the @ character and move on
+    return text[pos+1:], '@', None
+
+
 def mentionize_text(text, anticipated_authors):
     """Returns a tuple of two items:
     * modified text where @mentions are
@@ -149,6 +213,7 @@ def mentionize_text(text, anticipated_authors):
     while '@' in text:
         # the purpose of this loop is to convert any occurance of
         # '@mention ' syntax
+        # or @`Long Mention` or @"Long Mention" or @'Long Mention' syntax
         # to user account links leading space is required unless @ is the first
         # character in whole text, also, either a punctuation or
         # a ' ' char is required after the name
@@ -163,37 +228,16 @@ def mentionize_text(text, anticipated_authors):
             text = ''
             break
 
-        if pos > 0:
-
-            if text[pos-1] in const.TWITTER_STYLE_MENTION_TERMINATION_CHARS:
-                # if there is a termination character before @mention
-                # indeed try to find a matching person
-                text = text[pos+1:]
-                mentioned_author, text = \
-                    extract_first_matching_mentioned_author(
-                        text, anticipated_authors)
-                if mentioned_author:
-                    mentioned_authors.append(mentioned_author)
-                    output += format_mention_in_html(mentioned_author)
-                else:
-                    output += '@'
-
-            else:
-                # if there isn't, i.e. text goes like something@mention,
-                # do not look up people
-                output += '@'
-                text = text[pos+1:]
+        next_pos = pos + 1
+        if len(text) > next_pos and text[next_pos] in const.ASKBOT_MULTIWORD_MENTION_QUOTE_CHARS:
+            text, rendered_text, mentioned_author = extract_quoted_mention(text, pos)
         else:
-            # do this if @ is the first character
-            text = text[1:]
-            mentioned_author, text = \
-                extract_first_matching_mentioned_author(
-                    text, anticipated_authors)
-            if mentioned_author:
-                mentioned_authors.append(mentioned_author)
-                output += format_mention_in_html(mentioned_author)
-            else:
-                output += '@'
+            text, rendered_text, mentioned_author = extract_unquoted_mention(text, pos, anticipated_authors)
+
+        output += rendered_text
+
+        if mentioned_author:
+            mentioned_authors.append(mentioned_author)
 
     # append the rest of text that did not have @ symbols
     output += text
