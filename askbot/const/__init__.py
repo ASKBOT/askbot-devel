@@ -503,6 +503,7 @@ AVATAR_TYPE_CHOICES = AVATAR_TYPE_CHOICES_FOR_NEW_USERS + (
 
 #chars that can go before or after @mention
 TWITTER_STYLE_MENTION_TERMINATION_CHARS = '\n ;:,.!?<>"\''
+ASKBOT_MULTIWORD_MENTION_QUOTE_CHARS = ('"', "'") # for @'Long Mention' or @"Long Mention" or @'Long Mention' syntax in post markdown
 
 COMMENT_HARD_MAX_LENGTH = 2048
 

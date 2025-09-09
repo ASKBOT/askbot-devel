@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings as django_settings
 from django.test import TestCase
+from askbot import const
 from askbot.utils.markup import markdown_input_converter
 from askbot.tests.utils import AskbotTestCase
 from askbot.utils import markup
@@ -20,6 +21,64 @@ class MarkupTest(AskbotTestCase):
         mentioned_authors, output = markup.mentionize_text(text, anticipated_authors)
         self.assertTrue(self.u1 in mentioned_authors)
         self.assertEquals(output, expected_output % {'user_url': self.u1.get_profile_url()})
+
+    def test_mentionize_double_at_sign(self):
+        text = "Hello @@user1 how are you?"
+        expected_output = "Hello @@user1 how are you?"
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
+
+    def test_mentionize_text_missing_user(self):
+        text = "Hello @Jean, how are you?"
+        expected_output = 'Hello @Jean, how are you?'
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
+
+    def test_multiword_mention_symbols(self):
+        symbols = const.ASKBOT_MULTIWORD_MENTION_QUOTE_CHARS
+        self.assertTrue(len(symbols) == 2)
+        self.assertIn("'", symbols)
+        self.assertIn('"', symbols)
+
+    def test_mentionize_text_with_quote_quoted_mention(self):
+        user = self.create_user('John Doe')
+        text = "Hello  @'John Doe' how are you?"
+        expected_output = 'Hello  <a href="%(user_url)s">@John Doe</a> how are you?'
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertTrue(user in mentioned_authors)
+        self.assertEqual(len(mentioned_authors), 1)
+        self.assertEquals(output, expected_output % {'user_url': user.get_profile_url()})
+
+    def test_mentionize_text_with_malformed_quote_quoted_mention(self):
+        self.create_user('John Doe')
+        text = "Hello  @'John Doe how are you?"
+        expected_output = 'Hello  @\'John Doe how are you?'
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
+
+    def test_mentionize_text_with_quotes_missing_user(self):
+        text = "Hello  @'Jean-Claude Van Damme' how are you?"
+        expected_output = "Hello  @'Jean-Claude Van Damme' how are you?"
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
+
+    def test_mentionize_text_with_quotes_empty_name(self):
+        text = "Hello  @'' how are you?"
+        expected_output = "Hello  @'' how are you?"
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
+
+    def test_mentionize_text_with_quotes_empty_name2(self):
+        text = "Hello  @' ' how are you?"
+        expected_output = "Hello  @' ' how are you?"
+        mentioned_authors, output = markup.mentionize_text(text, [])
+        self.assertEquals(output, expected_output)
+        self.assertEqual(len(mentioned_authors), 0)
 
     def test_extract_mentioned_name_seeds(self):
         text = "oh hai @user1 how are you?"
