@@ -1,0 +1,5 @@
+* disallow headings
+* toggle allow/disallow footnotes
+* toggle for tasklist plugin
+* test all plugins in real life, see if ux is any good
+* tests for footnote may be inconsistent

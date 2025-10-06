@@ -27,6 +27,7 @@ settings.py
 *.iml
 lint
 env
+env-md
 .vagrant
 /Vagrantfile
 /custom_settings

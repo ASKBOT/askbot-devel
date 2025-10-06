@@ -20,13 +20,16 @@ django>=3.0,<5.0
 html5lib==1.1
 jsonfield>=2.0.0
 jinja2-simple-tags==0.5.0
-markdown2<=2.3.9
+linkify-it-py==2.0.2
+markdown-it-py==4.0.0
 markupsafe
+mdit-py-plugins==0.5.0
 mock==3.0.5
 oauth2<=1.9.0.post1
 okta-jwt-verifier==0.2.3
 premailer==3.10.0
 psycopg2-binary==2.9.6
+pygments>=2.15.0
 pyjwt<=1.7.1
 python-cas==1.4.0,<1.7
 python-openid2>=3.0

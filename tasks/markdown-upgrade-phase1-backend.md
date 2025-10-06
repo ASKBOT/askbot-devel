@@ -1,9 +1,10 @@
 # Phase 1: Backend Implementation
 
-**Status**: 🟡 Planning
+**Status**: 🟢 In Progress
 **Duration**: 2 weeks
 **Prerequisites**: None
 **Blocks**: Phase 2 (Frontend Migration)
+**Virtual Environment**: `env-md/` (must be activated for all work)
 
 ## Overview
 
@@ -24,24 +25,48 @@ Upgrade Python markdown backend to markdown-it-py 4.0.0 with complete feature pa
 
 Before starting, ensure your development environment is set up:
 
+### Create Dedicated Virtual Environment for Migration
+
+**IMPORTANT**: This migration requires a separate virtual environment to avoid conflicts with the existing setup.
+
 ```bash
-# Clone/navigate to project root
+# Navigate to project root
 cd /path/to/askbot-master
 
-# Activate Python virtual environment
-source env/bin/activate
+# Create dedicated virtual environment for markdown migration
+# Using pyenv Python 3.11.11
+~/.pyenv/versions/3.11.11/bin/python -m venv env-md
+
+# Activate the migration environment
+source env-md/bin/activate
 
 # Verify you're in the correct environment
-which python  # Should point to env/bin/python
+which python  # Should point to env-md/bin/python
+python --version  # Should show Python 3.11.11
 
-# Install current dependencies
+# Upgrade pip and install build dependencies
+pip install --upgrade pip setuptools-rust
+
+# Install askbot with updated dependencies
 pip install -e .
 
 # Verify installation
 python -c "import askbot; print(askbot.get_version())"
+python -c "import markdown_it; print(markdown_it.__version__)"  # Should print 4.0.0
 ```
 
-**Note**: All commands in this phase assume you have activated the virtual environment with `source env/bin/activate`.
+### Environment Information
+- **System Python Manager**: pyenv v2.5.5
+- **Python Version**: 3.11.11
+- **Virtual Environment**: `env-md/` (dedicated for this migration)
+- **Original Environment**: `env/` (preserved, do not modify)
+
+**⚠️ CRITICAL**: Always activate `env-md` when working on this migration:
+```bash
+source env-md/bin/activate
+```
+
+All commands in this phase assume you have activated the `env-md` virtual environment.
 
 ## Task Breakdown
 
@@ -64,8 +89,9 @@ python -c "import askbot; print(askbot.get_version())"
 REQUIREMENTS = {
     # ... other dependencies ...
     'markdown_it': 'markdown-it-py==4.0.0',
-    'mdit_py_plugins': 'mdit-py-plugins==0.4.2',
+    'mdit_py_plugins': 'mdit-py-plugins==0.5.0',  # v0.5.0 supports markdown-it-py 4.x
     'linkify_it': 'linkify-it-py==2.0.2',
+    'pygments': 'pygments>=2.15.0',
     # Remove: 'markdown2': 'markdown2>=2.4.0',
 }
 ```
@@ -74,22 +100,22 @@ REQUIREMENTS = {
 ```
 # Replace markdown2>=2.4.0 with:
 markdown-it-py==4.0.0
-mdit-py-plugins==0.4.2
+mdit-py-plugins==0.5.0  # v0.5.0 supports markdown-it-py 4.x
 linkify-it-py==2.0.2
 pygments>=2.15.0  # For syntax highlighting
 ```
 
 #### Validation
 ```bash
-# Activate virtual environment
-source env/bin/activate
+# Activate migration virtual environment
+source env-md/bin/activate
 
 # Install updated dependencies
 pip install -e .
 
 # Verify versions
 python -c "import markdown_it; print(markdown_it.__version__)"  # Should print 4.0.0
-python -c "import mdit_py_plugins; print(mdit_py_plugins.__version__)"  # Should print 0.4.2
+python -c "import mdit_py_plugins; print(mdit_py_plugins.__version__)"  # Should print 0.5.0
 ```
 
 ---
@@ -1067,11 +1093,12 @@ def example():
 
 #### Commands
 ```bash
-# Activate virtual environment
-source env/bin/activate
+# Activate migration virtual environment
+source env-md/bin/activate
 
 # Find existing markdown-related tests
-cd testproject/
+# Note: Use askbot_site directory which has manage.py
+cd askbot_site/
 python manage.py test askbot.tests.test_utils -v 2
 python manage.py test askbot.tests -k markdown -v 2
 

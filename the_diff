@@ -1,0 +1,923 @@
+* askbot_requirements.txt, askbot/__init__.py: markdown2 -> markdown_it 4.0.0, + mdit_py_plugins, pygments
+* askbot/tests/test_markdown_integration.py: markdown plugin tests
+* askbot/tests/test_markdown_link_patterns_plugin.py: test for the link patterns plugin
+* askbot/tests/test_markdown_link_patterns_plugin.py
+new file mode 100644
+index 000000000..d5caca180
+--- /dev/null
++++ b/askbot/tests/test_markdown_link_patterns_plugin.py
+@@ -0,0 +1,105 @@
++"""Tests for the custom link patterns plugin."""
++from django.test import TestCase
++from markdown_it import MarkdownIt
++from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
++
++
++class TestLinkPatternsPlugin(TestCase):
++
++    def test_simple_pattern(self):
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': r'#bug(\d+)',
++            'urls': r'https://bugs.example.com/\1',
++        })
++
++        text = "Fixed #bug123 yesterday"
++        html = md.render(text)
++
++        self.assertIn('<a href="https://bugs.example.com/123">#bug123</a>', html)
++        self.assertIn('Fixed', html)
++        self.assertIn('yesterday', html)
++
++    def test_multiple_patterns(self):
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': '#bug(\\d+)\n@(\\w+)',
++            'urls': 'https://bugs.example.com/\\1\nhttps://github.com/\\1',
++        })
++
++        text = "Fixed #bug456 by @alice"
++        html = md.render(text)
++
++        self.assertIn('bugs.example.com/456', html)
++        self.assertIn('github.com/alice', html)
++
++    def test_disabled_plugin(self):
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': False,
++            'patterns': r'#bug(\d+)',
++            'urls': r'https://bugs.example.com/\1',
++        })
++
++        text = "Fixed #bug123"
++        html = md.render(text)
++
++        # Should not create links
++        self.assertNotIn('bugs.example.com', html)
++        self.assertIn('#bug123', html)
++
++    def test_overlapping_matches(self):
++        # Only first match should be linkified
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': 'bug(\\d+)\n#bug(\\d+)',  # Use actual newline, not raw string
++            'urls': 'https://example1.com/\\1\nhttps://example2.com/\\1',
++        })
++
++        text = "#bug123"
++        html = md.render(text)
++
++        # Should only match the second pattern since it starts earlier
++        self.assertIn('example2.com/123', html)
++        self.assertNotIn('example1.com', html)
++
++    def test_pattern_in_code_block_not_linkified(self):
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': r'#bug(\d+)',
++            'urls': r'https://bugs.example.com/\1',
++        })
++
++        text = "Text #bug123 and `code #bug456` here"
++        html = md.render(text)
++
++        # #bug123 should be linked (in text)
++        self.assertIn('bugs.example.com/123', html)
++
++        # #bug456 should NOT be linked (in code)
++        self.assertNotIn('bugs.example.com/456', html)
++
++    def test_invalid_regex_ignored(self):
++        # Plugin should not crash on invalid regex
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': r'[invalid(regex',  # Missing closing ]
++            'urls': r'https://example.com',
++        })
++
++        text = "Some text"
++        html = md.render(text)
++        self.assertIn('Some text', html)  # Should still render
++
++    def test_mismatched_pattern_url_count(self):
++        # Should disable auto-linking if counts don't match
++        md = MarkdownIt().use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': r'#bug(\d+)\n@(\w+)',
++            'urls': r'https://bugs.example.com/\1',  # Only one URL
++        })
++
++        text = "Fixed #bug123"
++        html = md.render(text)
++
++        # Should not create links due to mismatch
++        self.assertNotIn('bugs.example.com', html)
+diff --git a/askbot/tests/test_markdown_video_plugin.py b/askbot/tests/test_markdown_video_plugin.py
+new file mode 100644
+index 000000000..08c90fd27
+--- /dev/null
++++ b/askbot/tests/test_markdown_video_plugin.py
+@@ -0,0 +1,55 @@
++"""Tests for the video embedding plugin."""
++from django.test import TestCase
++from markdown_it import MarkdownIt
++from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
++
++
++class TestVideoEmbedPlugin(TestCase):
++
++    def setUp(self):
++        self.md = MarkdownIt().use(video_embed_plugin)
++
++    def test_youtube_embed(self):
++        text = "@[youtube](dQw4w9WgXcQ)"
++        html = self.md.render(text)
++        self.assertIn('https://www.youtube.com/embed/dQw4w9WgXcQ', html)
++        self.assertIn('iframe', html)
++        self.assertIn('video-embed-youtube', html)
++
++    def test_vimeo_embed(self):
++        text = "@[vimeo](123456789)"
++        html = self.md.render(text)
++        self.assertIn('https://player.vimeo.com/video/123456789', html)
++        self.assertIn('iframe', html)
++
++    def test_dailymotion_embed(self):
++        text = "@[dailymotion](x8abcdef)"
++        html = self.md.render(text)
++        self.assertIn('dailymotion.com/embed/video/x8abcdef', html)
++
++    def test_unsupported_service_ignored(self):
++        text = "@[tiktok](12345)"
++        html = self.md.render(text)
++        # Unsupported service - no iframe should be created
++        # Note: markdown-it will parse [tiktok](12345) as a regular link
++        self.assertNotIn('iframe', html)
++        self.assertNotIn('video-embed', html)
++
++    def test_invalid_video_id_ignored(self):
++        # IDs with spaces or special chars should be rejected
++        text = "@[youtube](invalid id!)"
++        html = self.md.render(text)
++        self.assertNotIn('iframe', html)
++
++    def test_video_in_paragraph(self):
++        text = "Check this out: @[youtube](dQw4w9WgXcQ) cool right?"
++        html = self.md.render(text)
++        self.assertIn('Check this out:', html)
++        self.assertIn('youtube.com/embed', html)
++        self.assertIn('cool right?', html)
++
++    def test_multiple_videos(self):
++        text = "@[youtube](abc123)\n\n@[vimeo](456789)"
++        html = self.md.render(text)
++        self.assertIn('youtube.com/embed/abc123', html)
++        self.assertIn('vimeo.com/video/456789', html)
+diff --git a/askbot/tests/test_utils.py b/askbot/tests/test_utils.py
+index 3d082d380..a9a7a17eb 100644
+--- a/askbot/tests/test_utils.py
++++ b/askbot/tests/test_utils.py
+@@ -1,5 +1,4 @@
+ import os
+-import markdown2
+ from django.conf import settings as django_settings
+ from django.test import TestCase
+ from askbot.tests.utils import with_settings
+diff --git a/askbot/tests/utils.py b/askbot/tests/utils.py
+index a2b8945ed..36fb24439 100644
+--- a/askbot/tests/utils.py
++++ b/askbot/tests/utils.py
+@@ -1,7 +1,6 @@
+ """utility functions used by Askbot test cases
+ """
+ from functools import wraps
+-from markdown2 import Markdown
+ from django.apps import apps
+ from django.contrib.auth.management import create_permissions
+ from django.contrib.sites.management import create_default_site
+diff --git a/askbot/utils/markdown_plugins/__init__.py b/askbot/utils/markdown_plugins/__init__.py
+new file mode 100644
+index 000000000..240a6bf6b
+--- /dev/null
++++ b/askbot/utils/markdown_plugins/__init__.py
+@@ -0,0 +1 @@
++"""Custom markdown-it plugins for askbot."""
+diff --git a/askbot/utils/markdown_plugins/link_patterns.py b/askbot/utils/markdown_plugins/link_patterns.py
+new file mode 100644
+index 000000000..d3a40f9fa
+--- /dev/null
++++ b/askbot/utils/markdown_plugins/link_patterns.py
+@@ -0,0 +1,218 @@
++"""
++Custom link patterns plugin for markdown-it-py.
++
++Automatically converts text matching regex patterns to links.
++
++Example:
++    Settings:
++        AUTO_LINK_PATTERNS = "#bug(\\d+)"
++        AUTO_LINK_URLS = "https://bugs.example.com/show?id=\\1"
++
++    Text:
++        "Fixed #bug123"
++
++    Output:
++        Fixed <a href="https://bugs.example.com/show?id=123">#bug123</a>
++
++Based on askbot settings:
++    - ENABLE_AUTO_LINKING (bool)
++    - AUTO_LINK_PATTERNS (multiline string of regexes)
++    - AUTO_LINK_URLS (multiline string of URL templates)
++"""
++
++import re
++import logging
++from markdown_it import MarkdownIt
++from markdown_it.rules_core import StateCore
++from markdown_it.token import Token
++
++
++logger = logging.getLogger('askbot.markdown.link_patterns')
++
++
++def parse_pattern_config(patterns_str, urls_str):
++    """
++    Parse pattern and URL configuration strings.
++
++    Args:
++        patterns_str: Newline-separated regex patterns
++        urls_str: Newline-separated URL templates
++
++    Returns:
++        List of (compiled_regex, url_template) tuples
++    """
++    if not patterns_str or not urls_str:
++        return []
++
++    pattern_lines = [p.strip() for p in patterns_str.strip().split('\n') if p.strip()]
++    url_lines = [u.strip() for u in urls_str.strip().split('\n') if u.strip()]
++
++    if len(pattern_lines) != len(url_lines):
++        logger.warning(
++            f"Pattern count ({len(pattern_lines)}) != URL count ({len(url_lines)}). "
++            f"Auto-linking disabled."
++        )
++        return []
++
++    rules = []
++    for idx, (pattern_str, url_template) in enumerate(zip(pattern_lines, url_lines)):
++        try:
++            compiled_pattern = re.compile(pattern_str)
++            rules.append((compiled_pattern, url_template))
++        except re.error as e:
++            logger.error(
++                f"Invalid regex pattern at line {idx+1}: {pattern_str}. Error: {e}"
++            )
++            continue
++
++    return rules
++
++
++def apply_link_patterns(state: StateCore, rules):
++    """
++    Traverse token tree and replace matching text with links.
++    """
++    if not rules:
++        return
++
++    for block_idx, block_token in enumerate(state.tokens):
++        if block_token.type != 'inline' or not block_token.children:
++            continue
++
++        new_children = []
++
++        for child_token in block_token.children:
++            if child_token.type != 'text':
++                new_children.append(child_token)
++                continue
++
++            text = child_token.content
++            processed_tokens = process_text_with_patterns(text, rules, state)
++            new_children.extend(processed_tokens)
++
++        block_token.children = new_children
++
++
++def process_text_with_patterns(text, rules, state):
++    """
++    Process a text string, replacing pattern matches with link tokens.
++
++    Returns:
++        List of tokens (text and link tokens)
++    """
++    tokens = []
++
++    # Track all matches across all patterns
++    all_matches = []
++    for pattern, url_template in rules:
++        for match in pattern.finditer(text):
++            all_matches.append({
++                'start': match.start(),
++                'end': match.end(),
++                'matched_text': match.group(0),
++                'url_template': url_template,
++                'groups': match.groups(),
++            })
++
++    # Sort matches by start position
++    all_matches.sort(key=lambda m: m['start'])
++
++    # Merge overlapping matches (keep first)
++    merged_matches = []
++    for match in all_matches:
++        if not merged_matches:
++            merged_matches.append(match)
++            continue
++
++        last_match = merged_matches[-1]
++        if match['start'] < last_match['end']:
++            # Overlapping, skip this match
++            continue
++
++        merged_matches.append(match)
++
++    # Build token list
++    last_pos = 0
++    for match in merged_matches:
++        # Add text before match
++        if match['start'] > last_pos:
++            text_token = Token('text', '', 0)
++            text_token.content = text[last_pos:match['start']]
++            tokens.append(text_token)
++
++        # Build URL from template
++        url = match['url_template']
++        for idx, group in enumerate(match['groups'], start=1):
++            if group is not None:
++                # Replace \1, \2, etc. with captured groups
++                url = url.replace(f'\\{idx}', group)
++
++        # Create link tokens
++        link_open = Token('link_open', 'a', 1)
++        link_open.attrs = {'href': url}
++        link_open.markup = 'autolink'
++        tokens.append(link_open)
++
++        link_text = Token('text', '', 0)
++        link_text.content = match['matched_text']
++        tokens.append(link_text)
++
++        link_close = Token('link_close', 'a', -1)
++        tokens.append(link_close)
++
++        last_pos = match['end']
++
++    # Add remaining text
++    if last_pos < len(text):
++        text_token = Token('text', '', 0)
++        text_token.content = text[last_pos:]
++        tokens.append(text_token)
++
++    # If no matches, return original text as single token
++    if not tokens:
++        text_token = Token('text', '', 0)
++        text_token.content = text
++        return [text_token]
++
++    return tokens
++
++
++def link_patterns_plugin(md: MarkdownIt, config: dict) -> MarkdownIt:
++    """
++    Plugin to auto-link text matching custom patterns.
++
++    Args:
++        config: Dictionary with keys:
++            - enabled (bool): Whether plugin is active
++            - patterns (str): Newline-separated regex patterns
++            - urls (str): Newline-separated URL templates
++
++    Usage:
++        md = MarkdownIt()
++        md.use(link_patterns_plugin, {
++            'enabled': True,
++            'patterns': '#bug(\\\\d+)',
++            'urls': 'https://bugs.example.com/\\\\1'
++        })
++    """
++    if not config.get('enabled', False):
++        return md
++
++    patterns_str = config.get('patterns', '')
++    urls_str = config.get('urls', '')
++
++    rules = parse_pattern_config(patterns_str, urls_str)
++
++    if not rules:
++        logger.info("No valid link pattern rules configured")
++        return md
++
++    logger.info(f"Loaded {len(rules)} link pattern rules")
++
++    def link_patterns_core_rule(state: StateCore):
++        apply_link_patterns(state, rules)
++
++    # Run after linkify but before other core rules
++    md.core.ruler.after('linkify', 'custom_link_patterns', link_patterns_core_rule)
++
++    return md
+diff --git a/askbot/utils/markdown_plugins/video_embed.py b/askbot/utils/markdown_plugins/video_embed.py
+new file mode 100644
+index 000000000..cb97b4f05
+--- /dev/null
++++ b/askbot/utils/markdown_plugins/video_embed.py
+@@ -0,0 +1,139 @@
++"""
++Video embedding plugin for markdown-it-py.
++
++Syntax:
++    @[youtube](video_id)
++    @[vimeo](video_id)
++    @[dailymotion](video_id)
++
++Renders as iframe embed for supported services.
++
++Based on: https://github.com/CenterForOpenScience/markdown-it-video
++"""
++
++import re
++from markdown_it import MarkdownIt
++from markdown_it.rules_inline import StateInline
++
++
++VIDEO_SERVICES = {
++    'youtube': {
++        'url': 'https://www.youtube.com/embed/{0}',
++        'width': 640,
++        'height': 390,
++    },
++    'vimeo': {
++        'url': 'https://player.vimeo.com/video/{0}',
++        'width': 640,
++        'height': 360,
++    },
++    'dailymotion': {
++        'url': 'https://www.dailymotion.com/embed/video/{0}',
++        'width': 640,
++        'height': 360,
++    },
++}
++
++
++def video_embed_rule(state: StateInline, silent: bool) -> bool:
++    """
++    Parse video embed syntax: @[service](video_id)
++
++    Returns True if pattern matches and token created.
++    """
++    pos = state.pos
++    maximum = state.posMax
++
++    # Must start with @[
++    if state.src[pos:pos+2] != '@[':
++        return False
++
++    # Find closing ]
++    service_start = pos + 2
++    service_end = state.src.find(']', service_start)
++
++    if service_end == -1 or service_end >= maximum:
++        return False
++
++    service = state.src[service_start:service_end].strip().lower()
++
++    # Check if it's a supported service
++    if service not in VIDEO_SERVICES:
++        return False
++
++    # Must have opening (
++    if service_end + 1 >= maximum or state.src[service_end + 1] != '(':
++        return False
++
++    # Find closing )
++    id_start = service_end + 2
++    id_end = state.src.find(')', id_start)
++
++    if id_end == -1 or id_end >= maximum:
++        return False
++
++    video_id = state.src[id_start:id_end].strip()
++
++    # Validate video ID (alphanumeric, dashes, underscores)
++    if not re.match(r'^[a-zA-Z0-9_-]+$', video_id):
++        return False
++
++    if not silent:
++        token = state.push('video_embed', '', 0)
++        token.meta = {
++            'service': service,
++            'id': video_id,
++        }
++        token.markup = state.src[pos:id_end+1]
++
++    state.pos = id_end + 1
++    return True
++
++
++def render_video_embed(self, tokens, idx, options, env):
++    """
++    Render video embed token as iframe.
++    """
++    token = tokens[idx]
++    service = token.meta['service']
++    video_id = token.meta['id']
++
++    config = VIDEO_SERVICES[service]
++    url = config['url'].format(video_id)
++    width = config['width']
++    height = config['height']
++
++    # Security: Only allow whitelisted domains
++    # HTML escaping handled by renderer
++
++    iframe = (
++        f'<div class="video-embed video-embed-{service}">'
++        f'<iframe '
++        f'width="{width}" '
++        f'height="{height}" '
++        f'src="{url}" '
++        f'frameborder="0" '
++        f'allowfullscreen '
++        f'loading="lazy"'
++        f'></iframe>'
++        f'</div>'
++    )
++
++    return iframe
++
++
++def video_embed_plugin(md: MarkdownIt) -> MarkdownIt:
++    """
++    Plugin to enable video embedding in markdown.
++
++    Usage:
++        md = MarkdownIt()
++        md.use(video_embed_plugin)
++    """
++    # Register inline rule before 'link' to give it priority
++    md.inline.ruler.before('link', 'video_embed', video_embed_rule)
++
++    # Register renderer
++    md.add_render_rule('video_embed', render_video_embed)
++
++    return md
+diff --git a/askbot/utils/markup.py b/askbot/utils/markup.py
+index 7736d5f21..30f02fecc 100644
+--- a/askbot/utils/markup.py
++++ b/askbot/utils/markup.py
+@@ -14,8 +14,16 @@ from django.utils.module_loading import import_string
+ from django.urls.exceptions import NoReverseMatch
+ 
+ from markdown_it import MarkdownIt
++from mdit_py_plugins.footnote import footnote_plugin
++from mdit_py_plugins.tasklists import tasklists_plugin
++from pygments import highlight as pygments_highlight
++from pygments.lexers import get_lexer_by_name, guess_lexer
++from pygments.formatters import HtmlFormatter
++from pygments.util import ClassNotFound
+ 
+ from askbot import const
++from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
++from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
+ from askbot.conf import settings as askbot_settings
+ from askbot.utils.file_utils import store_file
+ from askbot.utils.functions import split_phrases
+@@ -27,24 +35,117 @@ from askbot.utils.html import urlize_html
+ URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))") # pylint: disable=line-too-long
+ 
+ 
++def highlight_code(code, lang, attrs):
++    """
++    Syntax highlighting using Pygments.
++
++    Args:
++        code: Source code string
++        lang: Language identifier (e.g., 'python', 'javascript')
++        attrs: Additional attributes (unused, for markdown-it compatibility)
++
++    Returns:
++        HTML string with syntax highlighting
++    """
++    if not lang:
++        # No language specified, return plain code block
++        return f'<pre><code>{code}</code></pre>'
++
++    try:
++        lexer = get_lexer_by_name(lang, stripall=True)
++        formatter = HtmlFormatter(
++            cssclass='highlight',
++            noclasses=False,  # Use CSS classes instead of inline styles
++            linenos=False
++        )
++        highlighted = pygments_highlight(code, lexer, formatter)
++        return highlighted
++    except ClassNotFound:
++        # Unknown language, try guessing
++        try:
++            lexer = guess_lexer(code)
++            formatter = HtmlFormatter(cssclass='highlight', noclasses=False)
++            return pygments_highlight(code, lexer, formatter)
++        except Exception:  # pylint: disable=broad-except
++            # Give up, return plain code
++            return f'<pre><code class="language-{lang}">{code}</code></pre>'
++    except Exception as e:  # pylint: disable=broad-except
++        # Log error but don't break rendering
++        logger = logging.getLogger('askbot.markdown')
++        logger.warning(f"Pygments highlighting failed for lang={lang}: {e}")
++        return f'<pre><code class="language-{lang}">{code}</code></pre>'
++
++
++# Singleton pattern - create converter once
++_MD_CONVERTER = None
++
+ def get_md_converter():
+-    """Returns a configured instance of MarkdownIt.
+-    Converts markdown with extra features:
+-    * link-patterns
+-    * video embedding
+-    * code-friendly - no underscores to italic (if mathjax or code friendly settings are true)
+-    * urlizing of link-like text - this may need to depend on reputation
++    """
++    Returns a configured instance of MarkdownIt.
+ 
+-    code-friendly hints: https://github.com/markdown-it/markdown-it/issues/404
++    Converts markdown with extra features:
++    * Tables (GFM-like preset)
++    * Footnotes
++    * Task lists
++    * Syntax highlighting (Pygments)
++    * Video embedding (@[youtube](id))
++    * Custom link patterns (#bug123 -> links)
++    * Code-friendly mode (disable underscore emphasis)
++    * Linkify URLs
++
++    Uses singleton pattern for performance.
+     """
+-    md_converter = MarkdownIt('gfm-like')
+-    # enable video embedding
+-    # enable code-friendly mode
+-    # enable link patterns using
+-    # * askbot_settings.ENABLE_AUTO_LINKING
+-    # * askbot_settings.AUTO_LINK_PATTERNS
+-    # * askbot_settings.AUTO_LINK_URLS
+-    return md_converter
++    global _MD_CONVERTER
++
++    if _MD_CONVERTER is not None:
++        return _MD_CONVERTER
++
++    # Create markdown-it instance with GFM-like preset
++    # Includes: tables, strikethrough, linkify
++    md = MarkdownIt('gfm-like')
++
++    # Configure syntax highlighting
++    md.options['highlight'] = highlight_code
++
++    # Enable standard plugins
++    md.use(footnote_plugin)
++    md.use(tasklists_plugin)
++
++    # Enable video embedding
++    md.use(video_embed_plugin)
++
++    # Enable custom link patterns
++    md.use(link_patterns_plugin, {
++        'enabled': askbot_settings.ENABLE_AUTO_LINKING,
++        'patterns': askbot_settings.AUTO_LINK_PATTERNS,
++        'urls': askbot_settings.AUTO_LINK_URLS,
++    })
++
++    # Code-friendly mode: disable underscore emphasis for MathJax compatibility
++    # and programming discussions
++    if askbot_settings.MARKUP_CODE_FRIENDLY or askbot_settings.ENABLE_MATHJAX:
++        # Disable emphasis (handles both * and _)
++        # Re-enable just * by adding custom rule
++        md.disable('emphasis')
++        # TODO: Add custom rule to re-enable * only if needed
++
++    # Math delimiter protection for MathJax support
++    # Protect $...$ (inline) and $$...$$ (display) from markdown processing
++    if askbot_settings.ENABLE_MATHJAX:
++        # Add plugin to treat math blocks as verbatim text
++        # This prevents markdown from processing content inside math delimiters
++        # Example: $a_b$ should NOT become $a<sub>b</sub>$
++        # TODO: Implement math delimiter protection plugin
++        pass
++
++    _MD_CONVERTER = md
++    return _MD_CONVERTER
++
++
++def reset_md_converter():
++    """Reset the singleton converter (used in tests when settings change)"""
++    global _MD_CONVERTER
++    _MD_CONVERTER = None
+ 
+ 
+ def format_mention_in_html(mentioned_user):
+@@ -183,11 +284,11 @@ def plain_text_input_converter(text):
+     return sanitize_html(urlize('<p>' + text + '</p>'))
+ 
+ 
+-MD_CONVERTER = get_md_converter()
+-
+ def markdown_input_converter(text):
+     """Markdown to html converter"""
+-    text = MD_CONVERTER.render(text)
++    # Get converter lazily to avoid accessing settings at module load time
++    md = get_md_converter()
++    text = md.render(text)
+     return sanitize_html(text)
+ 
+ 
+diff --git a/askbot_requirements.txt b/askbot_requirements.txt
+index 4005182b0..01cb2dade 100644
+--- a/askbot_requirements.txt
++++ b/askbot_requirements.txt
+@@ -20,13 +20,16 @@ django>=3.0,<5.0
+ html5lib==1.1
+ jsonfield>=2.0.0
+ jinja2-simple-tags==0.5.0
+-markdown2<=2.3.9
++linkify-it-py==2.0.2
++markdown-it-py==4.0.0
+ markupsafe
++mdit-py-plugins==0.5.0
+ mock==3.0.5
+ oauth2<=1.9.0.post1
+ okta-jwt-verifier==0.2.3
+ premailer==3.10.0
+ psycopg2-binary==2.9.6
++pygments>=2.15.0
+ pyjwt<=1.7.1
+ python-cas==1.4.0,<1.7
+ python-openid2>=3.0
+diff --git a/tasks/markdown-upgrade-phase1-backend.md b/tasks/markdown-upgrade-phase1-backend.md
+index 3f67d1f4a..211eb3733 100644
+--- a/tasks/markdown-upgrade-phase1-backend.md
++++ b/tasks/markdown-upgrade-phase1-backend.md
+@@ -1,9 +1,10 @@
+ # Phase 1: Backend Implementation
+ 
+-**Status**: 🟡 Planning
++**Status**: 🟢 In Progress
+ **Duration**: 2 weeks
+ **Prerequisites**: None
+ **Blocks**: Phase 2 (Frontend Migration)
++**Virtual Environment**: `env-md/` (must be activated for all work)
+ 
+ ## Overview
+ 
+@@ -24,24 +25,48 @@ Upgrade Python markdown backend to markdown-it-py 4.0.0 with complete feature pa
+ 
+ Before starting, ensure your development environment is set up:
+ 
++### Create Dedicated Virtual Environment for Migration
++
++**IMPORTANT**: This migration requires a separate virtual environment to avoid conflicts with the existing setup.
++
+ ```bash
+-# Clone/navigate to project root
++# Navigate to project root
+ cd /path/to/askbot-master
+ 
+-# Activate Python virtual environment
+-source env/bin/activate
++# Create dedicated virtual environment for markdown migration
++# Using pyenv Python 3.11.11
++~/.pyenv/versions/3.11.11/bin/python -m venv env-md
++
++# Activate the migration environment
++source env-md/bin/activate
+ 
+ # Verify you're in the correct environment
+-which python  # Should point to env/bin/python
++which python  # Should point to env-md/bin/python
++python --version  # Should show Python 3.11.11
+ 
+-# Install current dependencies
++# Upgrade pip and install build dependencies
++pip install --upgrade pip setuptools-rust
++
++# Install askbot with updated dependencies
+ pip install -e .
+ 
+ # Verify installation
+ python -c "import askbot; print(askbot.get_version())"
++python -c "import markdown_it; print(markdown_it.__version__)"  # Should print 4.0.0
++```
++
++### Environment Information
++- **System Python Manager**: pyenv v2.5.5
++- **Python Version**: 3.11.11
++- **Virtual Environment**: `env-md/` (dedicated for this migration)
++- **Original Environment**: `env/` (preserved, do not modify)
++
++**⚠️ CRITICAL**: Always activate `env-md` when working on this migration:
++```bash
++source env-md/bin/activate
+ ```
+ 
+-**Note**: All commands in this phase assume you have activated the virtual environment with `source env/bin/activate`.
++All commands in this phase assume you have activated the `env-md` virtual environment.
+ 
+ ## Task Breakdown
+ 
+@@ -64,8 +89,9 @@ python -c "import askbot; print(askbot.get_version())"
+ REQUIREMENTS = {
+     # ... other dependencies ...
+     'markdown_it': 'markdown-it-py==4.0.0',
+-    'mdit_py_plugins': 'mdit-py-plugins==0.4.2',
++    'mdit_py_plugins': 'mdit-py-plugins==0.5.0',  # v0.5.0 supports markdown-it-py 4.x
+     'linkify_it': 'linkify-it-py==2.0.2',
++    'pygments': 'pygments>=2.15.0',
+     # Remove: 'markdown2': 'markdown2>=2.4.0',
+ }
+ ```
+@@ -74,22 +100,22 @@ REQUIREMENTS = {
+ ```
+ # Replace markdown2>=2.4.0 with:
+ markdown-it-py==4.0.0
+-mdit-py-plugins==0.4.2
++mdit-py-plugins==0.5.0  # v0.5.0 supports markdown-it-py 4.x
+ linkify-it-py==2.0.2
+ pygments>=2.15.0  # For syntax highlighting
+ ```
+ 
+ #### Validation
+ ```bash
+-# Activate virtual environment
+-source env/bin/activate
++# Activate migration virtual environment
++source env-md/bin/activate
+ 
+ # Install updated dependencies
+ pip install -e .
+ 
+ # Verify versions
+ python -c "import markdown_it; print(markdown_it.__version__)"  # Should print 4.0.0
+-python -c "import mdit_py_plugins; print(mdit_py_plugins.__version__)"  # Should print 0.4.2
++python -c "import mdit_py_plugins; print(mdit_py_plugins.__version__)"  # Should print 0.5.0
+ ```
+ 
+ ---
+@@ -1067,11 +1093,12 @@ def example():
+ 
+ #### Commands
+ ```bash
+-# Activate virtual environment
+-source env/bin/activate
++# Activate migration virtual environment
++source env-md/bin/activate
+ 
+ # Find existing markdown-related tests
+-cd testproject/
++# Note: Use askbot_site directory which has manage.py
++cd askbot_site/
+ python manage.py test askbot.tests.test_utils -v 2
+ python manage.py test askbot.tests -k markdown -v 2
+ 
+diff --git a/tasks/markdown-upgrade-phase3-testing.md b/tasks/markdown-upgrade-phase3-testing.md
+index a249258fc..097e21c50 100644
+--- a/tasks/markdown-upgrade-phase3-testing.md
++++ b/tasks/markdown-upgrade-phase3-testing.md
+@@ -32,13 +32,16 @@ source env/bin/activate
+ python -c "import markdown_it; print(markdown_it.__version__)"  # Should be 4.0.0
+ python -c "from askbot.utils.markdown_plugins.video_embed import video_embed_plugin; print('OK')"
+ 
+-# Navigate to testproject for running tests
+-cd testproject/
++# Navigate to askbot_site directory for running tests (this directory has manage.py)
++cd askbot_site/
+ 
+ # Verify database is accessible
+ python manage.py check
+ ```
+ 
++If a clean environment is needed, the system has pyenv v2.5.5 installed,
++use Python 3.11.11 for this new environment.
++
+ **Note**: All Python commands in this phase assume you have activated the virtual environment with `source env/bin/activate`.
+ 
+ ## Task Breakdown
+@@ -428,8 +431,8 @@ class Command(BaseCommand):
+ # Activate virtual environment
+ source env/bin/activate
+ 
+-# Navigate to testproject
+-cd testproject/
++# Navigate to askbot_site directory (this directory has manage.py)
++cd askbot_site/
+ 
+ # Test 100 random posts
+ python manage.py test_markdown_migration --sample 100

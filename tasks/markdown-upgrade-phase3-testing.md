@@ -32,12 +32,15 @@ source env/bin/activate
 python -c "import markdown_it; print(markdown_it.__version__)"  # Should be 4.0.0
 python -c "from askbot.utils.markdown_plugins.video_embed import video_embed_plugin; print('OK')"
 
-# Navigate to testproject for running tests
-cd testproject/
+# Navigate to askbot_site directory for running tests (this directory has manage.py)
+cd askbot_site/
 
 # Verify database is accessible
 python manage.py check
 ```
+
+If a clean environment is needed, the system has pyenv v2.5.5 installed,
+use Python 3.11.11 for this new environment.
 
 **Note**: All Python commands in this phase assume you have activated the virtual environment with `source env/bin/activate`.
 
@@ -428,8 +431,8 @@ class Command(BaseCommand):
 # Activate virtual environment
 source env/bin/activate
 
-# Navigate to testproject
-cd testproject/
+# Navigate to askbot_site directory (this directory has manage.py)
+cd askbot_site/
 
 # Test 100 random posts
 python manage.py test_markdown_migration --sample 100

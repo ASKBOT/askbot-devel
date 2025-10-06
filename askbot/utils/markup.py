@@ -14,8 +14,16 @@ from django.utils.module_loading import import_string
 from django.urls.exceptions import NoReverseMatch
 
 from markdown_it import MarkdownIt
+from mdit_py_plugins.footnote import footnote_plugin
+from mdit_py_plugins.tasklists import tasklists_plugin
+from pygments import highlight as pygments_highlight
+from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.formatters import HtmlFormatter
+from pygments.util import ClassNotFound
 
 from askbot import const
+from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
+from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
 from askbot.conf import settings as askbot_settings
 from askbot.utils.file_utils import store_file
 from askbot.utils.functions import split_phrases
@@ -27,24 +35,117 @@ from askbot.utils.html import urlize_html
 URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))") # pylint: disable=line-too-long
 
 
-def get_md_converter():
-    """Returns a configured instance of MarkdownIt.
-    Converts markdown with extra features:
-    * link-patterns
-    * video embedding
-    * code-friendly - no underscores to italic (if mathjax or code friendly settings are true)
-    * urlizing of link-like text - this may need to depend on reputation
-
-    code-friendly hints: https://github.com/markdown-it/markdown-it/issues/404
+def highlight_code(code, lang, attrs):
     """
-    md_converter = MarkdownIt('gfm-like')
-    # enable video embedding
-    # enable code-friendly mode
-    # enable link patterns using
-    # * askbot_settings.ENABLE_AUTO_LINKING
-    # * askbot_settings.AUTO_LINK_PATTERNS
-    # * askbot_settings.AUTO_LINK_URLS
-    return md_converter
+    Syntax highlighting using Pygments.
+
+    Args:
+        code: Source code string
+        lang: Language identifier (e.g., 'python', 'javascript')
+        attrs: Additional attributes (unused, for markdown-it compatibility)
+
+    Returns:
+        HTML string with syntax highlighting
+    """
+    if not lang:
+        # No language specified, return plain code block
+        return f'<pre><code>{code}</code></pre>'
+
+    try:
+        lexer = get_lexer_by_name(lang, stripall=True)
+        formatter = HtmlFormatter(
+            cssclass='highlight',
+            noclasses=False,  # Use CSS classes instead of inline styles
+            linenos=False
+        )
+        highlighted = pygments_highlight(code, lexer, formatter)
+        return highlighted
+    except ClassNotFound:
+        # Unknown language, try guessing
+        try:
+            lexer = guess_lexer(code)
+            formatter = HtmlFormatter(cssclass='highlight', noclasses=False)
+            return pygments_highlight(code, lexer, formatter)
+        except Exception:  # pylint: disable=broad-except
+            # Give up, return plain code
+            return f'<pre><code class="language-{lang}">{code}</code></pre>'
+    except Exception as e:  # pylint: disable=broad-except
+        # Log error but don't break rendering
+        logger = logging.getLogger('askbot.markdown')
+        logger.warning(f"Pygments highlighting failed for lang={lang}: {e}")
+        return f'<pre><code class="language-{lang}">{code}</code></pre>'
+
+
+# Singleton pattern - create converter once
+_MD_CONVERTER = None
+
+def get_md_converter():
+    """
+    Returns a configured instance of MarkdownIt.
+
+    Converts markdown with extra features:
+    * Tables (GFM-like preset)
+    * Footnotes
+    * Task lists
+    * Syntax highlighting (Pygments)
+    * Video embedding (@[youtube](id))
+    * Custom link patterns (#bug123 -> links)
+    * Code-friendly mode (disable underscore emphasis)
+    * Linkify URLs
+
+    Uses singleton pattern for performance.
+    """
+    global _MD_CONVERTER
+
+    if _MD_CONVERTER is not None:
+        return _MD_CONVERTER
+
+    # Create markdown-it instance with GFM-like preset
+    # Includes: tables, strikethrough, linkify
+    md = MarkdownIt('gfm-like')
+
+    # Configure syntax highlighting
+    md.options['highlight'] = highlight_code
+
+    # Enable standard plugins
+    md.use(footnote_plugin)
+    md.use(tasklists_plugin)
+
+    # Enable video embedding
+    md.use(video_embed_plugin)
+
+    # Enable custom link patterns
+    md.use(link_patterns_plugin, {
+        'enabled': askbot_settings.ENABLE_AUTO_LINKING,
+        'patterns': askbot_settings.AUTO_LINK_PATTERNS,
+        'urls': askbot_settings.AUTO_LINK_URLS,
+    })
+
+    # Code-friendly mode: disable underscore emphasis for MathJax compatibility
+    # and programming discussions
+    if askbot_settings.MARKUP_CODE_FRIENDLY or askbot_settings.ENABLE_MATHJAX:
+        # Disable emphasis (handles both * and _)
+        # Re-enable just * by adding custom rule
+        md.disable('emphasis')
+        # TODO: Add custom rule to re-enable * only if needed
+
+    # Math delimiter protection for MathJax support
+    # Protect $...$ (inline) and $$...$$ (display) from markdown processing
+    if askbot_settings.ENABLE_MATHJAX:
+        # Add plugin to treat math blocks as verbatim text
+        # This prevents markdown from processing content inside math delimiters
+        # Example: $a_b$ should NOT become $a<sub>b</sub>$
+        # TODO: Implement math delimiter protection plugin
+        pass
+
+    _MD_CONVERTER = md
+    return _MD_CONVERTER
+
+
+def reset_md_converter():
+    """Reset the singleton converter (used in tests when settings change)"""
+    global _MD_CONVERTER
+    _MD_CONVERTER = None
 
 
 def format_mention_in_html(mentioned_user):
@@ -183,11 +284,11 @@ def plain_text_input_converter(text):
     return sanitize_html(urlize('<p>' + text + '</p>'))
 
 
-MD_CONVERTER = get_md_converter()
-
 def markdown_input_converter(text):
     """Markdown to html converter"""
-    text = MD_CONVERTER.render(text)
+    # Get converter lazily to avoid accessing settings at module load time
+    md = get_md_converter()
+    text = md.render(text)
     return sanitize_html(text)
 
 
