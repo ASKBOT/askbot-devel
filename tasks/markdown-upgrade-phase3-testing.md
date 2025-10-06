@@ -657,92 +657,169 @@ python askbot/tests/benchmark_markdown.py
 """
 Edge case tests for markdown rendering.
 """
-import pytest
-from askbot.utils.markup import get_md_converter
+from django.test import TestCase
+from askbot.tests.utils import with_settings
+from askbot.utils.markup import get_md_converter, reset_md_converter
 
 
-class TestMarkdownEdgeCases:
+class TestMarkdownEdgeCases(TestCase):
 
-    @pytest.fixture
-    def md(self):
-        return get_md_converter()
+    def tearDown(self):
+        """Reset singleton between tests"""
+        reset_md_converter()
+        super().tearDown()
 
-    def test_empty_input(self, md):
-        assert md.render('') == ''
+    def test_empty_input(self):
+        md = get_md_converter()
+        self.assertEqual(md.render(''), '')
 
-    def test_only_whitespace(self, md):
+    def test_only_whitespace(self):
+        md = get_md_converter()
         result = md.render('   \n\n  \t  ')
-        assert result.strip() == ''
+        self.assertEqual(result.strip(), '')
 
-    def test_unicode_characters(self, md):
+    def test_unicode_characters(self):
+        md = get_md_converter()
         text = "Unicode: 你好 мир 🚀"
         html = md.render(text)
-        assert '你好' in html
-        assert 'мир' in html
-        assert '🚀' in html
+        self.assertIn('你好', html)
+        self.assertIn('мир', html)
+        self.assertIn('🚀', html)
 
-    def test_malformed_table(self, md):
+    def test_malformed_table(self):
+        md = get_md_converter()
         text = "| Header |\n| Cell 1 | Cell 2 |"  # Mismatched columns
         html = md.render(text)
         # Should not crash, handle gracefully
-        assert html is not None
+        self.assertIsNotNone(html)
 
-    def test_nested_emphasis(self, md):
+    def test_nested_emphasis(self):
+        md = get_md_converter()
         text = "***bold and italic***"
         html = md.render(text)
-        assert '<strong>' in html or '<em>' in html
+        self.assertTrue('<strong>' in html or '<em>' in html)
 
-    def test_html_injection_attempt(self, md):
+    def test_html_injection_attempt(self):
+        md = get_md_converter()
         text = '<script>alert("XSS")</script>'
         html = md.render(text)
         # HTML should be escaped (markdown-it has html: false)
-        assert '<script>' not in html or '&lt;script&gt;' in html
+        self.assertTrue('<script>' not in html or '&lt;script&gt;' in html)
 
-    def test_very_deep_nesting(self, md):
+    def test_very_deep_nesting(self):
+        md = get_md_converter()
         # Deeply nested lists
         text = '\n'.join(['  ' * i + '- Item' for i in range(100)])
         html = md.render(text)
-        assert html is not None
+        self.assertIsNotNone(html)
 
-    def test_extremely_long_line(self, md):
+    def test_extremely_long_line(self):
+        md = get_md_converter()
         text = 'a' * 100000  # 100k characters
         html = md.render(text)
-        assert 'a' in html
+        self.assertIn('a', html)
 
-    def test_mixed_line_endings(self, md):
+    def test_mixed_line_endings(self):
+        md = get_md_converter()
         text = "Line 1\nLine 2\r\nLine 3\rLine 4"
         html = md.render(text)
-        assert 'Line 1' in html
-        assert 'Line 4' in html
+        self.assertIn('Line 1', html)
+        self.assertIn('Line 4', html)
 
-    def test_math_with_underscores(self, md):
+    @with_settings(MARKUP_CODE_FRIENDLY=True)
+    def test_math_with_underscores(self):
+        reset_md_converter()
+        md = get_md_converter()
         # If code-friendly mode is on, underscores should not create emphasis
         text = "variable_name_with_underscores"
         html = md.render(text)
-        # Depends on MARKUP_CODE_FRIENDLY setting
-        # If enabled: should NOT have <em> tags
+        # Should NOT have <em> tags
+        self.assertNotIn('<em>', html)
 
-    def test_link_in_heading(self, md):
+    def test_link_in_heading(self):
+        md = get_md_converter()
         text = "# [Link](http://example.com)"
         html = md.render(text)
-        assert '<h1>' in html
-        assert '<a href="http://example.com">' in html
+        self.assertIn('<h1>', html)
+        self.assertIn('<a href="http://example.com">', html)
 
-    def test_code_block_with_backticks_inside(self, md):
+    def test_code_block_with_backticks_inside(self):
+        md = get_md_converter()
         text = "```\ncode with ` backtick\n```"
         html = md.render(text)
-        assert 'backtick' in html
+        self.assertIn('backtick', html)
 
-    def test_autolink_with_special_chars(self, md):
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_inline_math_preserved(self):
+        """Test inline math delimiters are preserved"""
+        reset_md_converter()
+        md = get_md_converter()
+
+        text = "The formula $E = mc^2$ is famous"
+        html = md.render(text)
+
+        # Math delimiters must be preserved exactly
+        self.assertIn('$E = mc^2$', html)
+        # Should not have any emphasis tags
+        self.assertNotIn('<em>', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_display_math_preserved(self):
+        """Test display math delimiters are preserved"""
+        reset_md_converter()
+        md = get_md_converter()
+
+        text = "$$\\int_0^1 x dx = \\frac{1}{2}$$"
+        html = md.render(text)
+
+        # Display math delimiters must be preserved
+        self.assertIn('$$', html)
+        self.assertTrue('\\int' in html or r'\int' in html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_underscores_not_processed(self):
+        """Test underscores in math don't trigger emphasis/subscript"""
+        reset_md_converter()
+        md = get_md_converter()
+
+        text = "$a_b$ and $x_{123}$"
+        html = md.render(text)
+
+        # Math content should be verbatim
+        self.assertIn('$a_b$', html)
+        self.assertIn('$x_{123}$', html)
+        # No HTML tags inside math
+        self.assertNotIn('<sub>', html)
+        self.assertNotIn('<em>', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_complex_latex(self):
+        """Test complex LaTeX expressions"""
+        reset_md_converter()
+        md = get_md_converter()
+
+        text = "$$\\sum_{i=1}^{n} i^2 = \\frac{n(n+1)(2n+1)}{6}$$"
+        html = md.render(text)
+
+        # Complex LaTeX should be preserved
+        self.assertTrue('\\sum_{i=1}^{n}' in html or r'\sum_{i=1}^{n}' in html)
+        self.assertTrue('\\frac' in html or r'\frac' in html)
+        # No subscript/superscript HTML tags
+        self.assertNotIn('<sub>', html)
+        self.assertNotIn('<sup>', html)
+
+    def test_autolink_with_special_chars(self):
+        md = get_md_converter()
         text = "Visit http://example.com/path?param=value&other=123"
         html = md.render(text)
-        assert 'example.com' in html
+        self.assertIn('example.com', html)
 
-    def test_multiple_blank_lines(self, md):
+    def test_multiple_blank_lines(self):
+        md = get_md_converter()
         text = "Para 1\n\n\n\n\nPara 2"
         html = md.render(text)
-        assert 'Para 1' in html
-        assert 'Para 2' in html
+        self.assertIn('Para 1', html)
+        self.assertIn('Para 2', html)
 ```
 
 ---

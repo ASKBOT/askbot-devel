@@ -207,11 +207,103 @@ converter.scheduleMathJaxRendering();  // Queues MathJax re-render
         var settings = window.askbot.settings || {};
 
         // Code-friendly mode: disable underscore emphasis
+        // This is critical for MathJax: prevents $a_b$ from becoming $a<sub>b</sub>$
         if (settings.markupCodeFriendly || settings.mathjaxEnabled) {
             // Disable emphasis rule (both * and _)
             this._md.disable('emphasis');
             // TODO: Re-enable just asterisk if needed
         }
+
+        // Math delimiter protection for MathJax
+        // Protect $...$ and $$...$$ from being processed by markdown
+        if (settings.mathjaxEnabled) {
+            // Add custom inline rule to skip math delimiters
+            // This ensures LaTeX content is preserved verbatim
+            this._protectMathDelimiters();
+        }
+    };
+
+    /**
+     * Protect math delimiters from markdown processing
+     * Ensures $...$ and $$...$$ are treated as verbatim text
+     */
+    AskbotMarkdownConverter.prototype._protectMathDelimiters = function() {
+        // Add inline rule to detect and skip math blocks
+        // This prevents markdown from processing LaTeX syntax
+        // Example: $a_b$ stays as-is, doesn't become $a<sub>b</sub>$
+
+        var md = this._md;
+
+        // Inline math rule: $...$
+        function mathInlineRule(state, silent) {
+            var pos = state.pos;
+            var max = state.posMax;
+
+            // Must start with $
+            if (state.src.charCodeAt(pos) !== 0x24 /* $ */) {
+                return false;
+            }
+
+            // Find closing $
+            var closingPos = state.src.indexOf('$', pos + 1);
+            if (closingPos === -1 || closingPos >= max) {
+                return false;
+            }
+
+            // Don't match $$...$$ (display math)
+            if (state.src.charCodeAt(pos + 1) === 0x24 /* $ */) {
+                return false;
+            }
+
+            if (!silent) {
+                var token = state.push('math_inline', '', 0);
+                token.content = state.src.slice(pos, closingPos + 1);
+                token.markup = '$';
+            }
+
+            state.pos = closingPos + 1;
+            return true;
+        }
+
+        // Display math rule: $$...$$
+        function mathBlockRule(state, silent) {
+            var pos = state.pos;
+            var max = state.posMax;
+
+            // Must start with $$
+            if (state.src.charCodeAt(pos) !== 0x24 /* $ */ ||
+                state.src.charCodeAt(pos + 1) !== 0x24 /* $ */) {
+                return false;
+            }
+
+            // Find closing $$
+            var closingPos = state.src.indexOf('$$', pos + 2);
+            if (closingPos === -1) {
+                return false;
+            }
+
+            if (!silent) {
+                var token = state.push('math_block', '', 0);
+                token.content = state.src.slice(pos, closingPos + 2);
+                token.markup = '$$';
+            }
+
+            state.pos = closingPos + 2;
+            return true;
+        }
+
+        // Render math tokens as plain text (MathJax will process them later)
+        md.renderer.rules.math_inline = function(tokens, idx) {
+            return tokens[idx].content;
+        };
+
+        md.renderer.rules.math_block = function(tokens, idx) {
+            return tokens[idx].content;
+        };
+
+        // Register rules before other inline rules
+        md.inline.ruler.before('escape', 'math_inline', mathInlineRule);
+        md.inline.ruler.before('escape', 'math_block', mathBlockRule);
     };
 
     /**
@@ -819,7 +911,10 @@ window.askbot.settings = {
 
 6. **MathJax** (if enabled)
    - Type: `$E = mc^2$`
-   - Should render math
+   - Should render math formula
+   - Type: `$a_b$ and $x_{123}$`
+   - Underscores should NOT become `<sub>` tags
+   - Math delimiters should be preserved for MathJax
 
 7. **Backend/Frontend Match**
    - Save post with complex markdown

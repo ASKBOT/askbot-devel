@@ -776,6 +776,7 @@ class TestLinkPatternsPlugin:
 - [ ] Enable standard plugins (footnotes, tasklists)
 - [ ] Add video embedding plugin
 - [ ] Add link patterns plugin with settings
+- [ ] **Implement math delimiter protection (for MathJax)**
 - [ ] Implement code-friendly mode
 - [ ] Test complete integration
 
@@ -858,6 +859,15 @@ def get_md_converter():
         md.disable('emphasis')
         # TODO: Add custom rule to re-enable * only if needed
 
+    # Math delimiter protection for MathJax support
+    # Protect $...$ (inline) and $$...$$ (display) from markdown processing
+    if askbot_settings.ENABLE_MATHJAX:
+        # Add plugin to treat math blocks as verbatim text
+        # This prevents markdown from processing content inside math delimiters
+        # Example: $a_b$ should NOT become $a<sub>b</sub>$
+        # TODO: Implement math delimiter protection plugin
+        pass
+
     _MD_CONVERTER = md
     return _MD_CONVERTER
 
@@ -892,27 +902,27 @@ def reset_md_converter():
 """
 Integration tests for complete markdown-it-py setup with all plugins.
 """
-import pytest
+from django.test import TestCase
+from askbot.tests.utils import AskbotTestCase, with_settings
 from askbot.utils.markup import get_md_converter, reset_md_converter
 from askbot.conf import settings as askbot_settings
 
 
-class TestMarkdownIntegration:
+class TestMarkdownIntegration(TestCase):
 
-    @pytest.fixture(autouse=True)
-    def reset_converter(self):
+    def tearDown(self):
         """Reset singleton between tests"""
-        yield
         reset_md_converter()
+        super().tearDown()
 
     def test_basic_markdown(self):
         md = get_md_converter()
         text = "# Hello\n\nThis is **bold** and *italic*."
         html = md.render(text)
 
-        assert '<h1>Hello</h1>' in html
-        assert '<strong>bold</strong>' in html
-        assert '<em>italic</em>' in html
+        self.assertIn('<h1>Hello</h1>', html)
+        self.assertIn('<strong>bold</strong>', html)
+        self.assertIn('<em>italic</em>', html)
 
     def test_tables(self):
         md = get_md_converter()
@@ -922,52 +932,49 @@ class TestMarkdownIntegration:
 | Cell 1   | Cell 2   |
 """
         html = md.render(text)
-        assert '<table>' in html
-        assert '<th>Header 1</th>' in html
-        assert '<td>Cell 1</td>' in html
+        self.assertIn('<table>', html)
+        self.assertIn('<th>Header 1</th>', html)
+        self.assertIn('<td>Cell 1</td>', html)
 
     def test_footnotes(self):
         md = get_md_converter()
         text = "Text with footnote[^1]\n\n[^1]: Footnote content"
         html = md.render(text)
-        assert 'footnote' in html.lower()
+        self.assertIn('footnote', html.lower())
 
     def test_task_lists(self):
         md = get_md_converter()
         text = "- [ ] Unchecked\n- [x] Checked"
         html = md.render(text)
-        assert 'checkbox' in html.lower() or 'task' in html.lower()
+        self.assertTrue('checkbox' in html.lower() or 'task' in html.lower())
 
     def test_syntax_highlighting(self):
         md = get_md_converter()
         text = "```python\ndef hello():\n    pass\n```"
         html = md.render(text)
-        assert 'highlight' in html
+        self.assertIn('highlight', html)
 
     def test_video_embedding(self):
         md = get_md_converter()
         text = "Check this: @[youtube](dQw4w9WgXcQ)"
         html = md.render(text)
-        assert 'youtube.com/embed/dQw4w9WgXcQ' in html
-        assert 'iframe' in html
+        self.assertIn('youtube.com/embed/dQw4w9WgXcQ', html)
+        self.assertIn('iframe', html)
 
-    @pytest.mark.django_db
+    @with_settings(ENABLE_AUTO_LINKING=True,
+                   AUTO_LINK_PATTERNS=r'#bug(\d+)',
+                   AUTO_LINK_URLS=r'https://bugs.example.com/\1')
     def test_link_patterns_enabled(self):
-        # Set up settings
-        askbot_settings.update('ENABLE_AUTO_LINKING', True)
-        askbot_settings.update('AUTO_LINK_PATTERNS', r'#bug(\d+)')
-        askbot_settings.update('AUTO_LINK_URLS', r'https://bugs.example.com/\1')
         reset_md_converter()
 
         md = get_md_converter()
         text = "Fixed #bug123"
         html = md.render(text)
 
-        assert 'bugs.example.com/123' in html
+        self.assertIn('bugs.example.com/123', html)
 
-    @pytest.mark.django_db
+    @with_settings(MARKUP_CODE_FRIENDLY=True)
     def test_code_friendly_mode(self):
-        askbot_settings.update('MARKUP_CODE_FRIENDLY', True)
         reset_md_converter()
 
         md = get_md_converter()
@@ -975,8 +982,40 @@ class TestMarkdownIntegration:
         html = md.render(text)
 
         # Underscores should NOT create emphasis
-        assert '<em>' not in html
-        assert 'variable_name' in html
+        self.assertNotIn('<em>', html)
+        self.assertIn('variable_name', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_math_delimiters_preserved(self):
+        """Test that math delimiters are preserved for MathJax"""
+        reset_md_converter()
+
+        md = get_md_converter()
+
+        # Inline math
+        text = "The equation $E = mc^2$ is famous"
+        html = md.render(text)
+        self.assertTrue('$E = mc^2$' in html or '$E = mc^2$' in html.replace('&nbsp;', ' '))
+
+        # Display math
+        text = "$$\\int_0^1 x dx = \\frac{1}{2}$$"
+        html = md.render(text)
+        self.assertIn('$$', html)
+        self.assertTrue('\\int_0^1' in html or r'\int_0^1' in html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mathjax_underscores_not_emphasis(self):
+        """Test that underscores in math don't create emphasis"""
+        reset_md_converter()
+
+        md = get_md_converter()
+        text = "$a_b$ and $x_{123}$"
+        html = md.render(text)
+
+        # Should NOT have <em> or <sub> tags inside math
+        # Math content should be preserved verbatim
+        self.assertTrue('$a_b$' in html or '$a_b$' in html.replace('&nbsp;', ' '))
+        self.assertTrue('<em>' not in html or html.count('<em>') == 0)
 
     def test_combined_features(self):
         """Test document using multiple features"""
@@ -1005,11 +1044,11 @@ def example():
         html = md.render(text)
 
         # Check all features rendered
-        assert '<h1>Title</h1>' in html
-        assert '<strong>bold text</strong>' in html
-        assert 'youtube.com/embed/abc123' in html
-        assert 'highlight' in html or 'class="language-python"' in html
-        assert '<table>' in html
+        self.assertIn('<h1>Title</h1>', html)
+        self.assertIn('<strong>bold text</strong>', html)
+        self.assertIn('youtube.com/embed/abc123', html)
+        self.assertTrue('highlight' in html or 'class="language-python"' in html)
+        self.assertIn('<table>', html)
 ```
 
 ---
