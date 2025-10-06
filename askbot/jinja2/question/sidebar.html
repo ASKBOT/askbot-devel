@@ -60,9 +60,12 @@
     <p>
         {% trans %}Asked{% endtrans %}: <strong>{{ macros.timeago(question.added_at) }}</strong>
     </p>
+    <h3>{% trans %}Visits{% endtrans %}</h3>
+    {% for segment in views_per_segment_name %}
     <p>
-        {% trans %}Unique Views{% endtrans %}: <strong>{{ thread.view_count|intcomma }} {% trans %}times{% endtrans %}</strong>
+        {{ segment.segment_name }}: <strong>{{ segment.views_count|intcomma }} {% trans %}times{% endtrans %}</strong>
     </p>
+    {% endfor %}
     <p>
         <a href="{{ url('analytics_activity',
                         activity_segment=analytics_activity_field.QUESTION_VIEWED,

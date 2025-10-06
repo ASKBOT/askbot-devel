@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from askbot.models.user import Group as AskbotGroup
 from askbot.models.repute import Vote
+from askbot.utils.analytics_utils import get_all_named_segment_group_ids
 from askbot import signals
 
 #for convenience, here are the activity types from used in the Activity object
@@ -115,6 +116,29 @@ class Session(models.Model):
         self.save()
 
 
+class EventManager(models.Manager):
+    """Manager for the Event model"""
+    def get_question_visits_count_by_group_ids(self, question_post, group_ids):
+        """Returns the count of visits by group ids"""
+        assert question_post.is_question()
+        return self.filter(event_type=self.model.EVENT_TYPE_QUESTION_VIEWED,
+                           content_type=ContentType.objects.get_for_model(question_post),
+                           object_id=question_post.id,
+                           session__user__groups__in=group_ids).distinct().count()
+
+
+    def get_question_visits_count_by_default_segment(self, question_post):
+        """Returns the count of visits by default segment"""
+        assert question_post.is_question()
+        # get all named segment group ids
+        group_ids = get_all_named_segment_group_ids()
+        # get all groups used for analytics except named segments
+        all_visits = self.model.objects.filter(event_type=self.model.EVENT_TYPE_QUESTION_VIEWED,
+                                               content_type=ContentType.objects.get_for_model(question_post),
+                                               object_id=question_post.id)
+        return all_visits.exclude(session__user__groups__in=group_ids).distinct().count()
+
+
 class Event(models.Model):
     """Analytics event"""
     EVENT_TYPE_USER_REGISTERED = 1
@@ -157,6 +181,8 @@ class Event(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     summarized = models.BooleanField(default=False,
                                    help_text="True if the event is included into a summary")
+
+    objects = EventManager()
 
     def __str__(self):
         timestamp = self.timestamp.isoformat() # pylint: disable=no-member

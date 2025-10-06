@@ -717,6 +717,24 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'show_admin_question_stats': user_is_mod,
         'analytics_activity_field': AnalyticsActivityField
     }
+    # users that have access to analytics will see number of views per major analytics segment
+    # in the sidebar of the question, if the organizations for analytics are enabled
+    if user_is_mod and django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
+        # for each named segment, get views of this question [{"segment_name": <string>, views_count": <num>},]
+        from askbot.models.analytics import Event
+        views_per_segment_name = []
+        for named_segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS:
+            views_per_segment_name.append({
+                'segment_name': named_segment['name'],
+                'views_count': Event.objects.get_question_visits_count_by_group_ids(question_post, named_segment['group_ids'])
+            })
+            
+        views_per_segment_name.append({
+            'segment_name': django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name'],
+            'views_count': Event.objects.get_question_visits_count_by_default_segment(question_post)
+        })
+        data['views_per_segment_name'] = views_per_segment_name
+
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
         data['sharing_info'] = thread.get_sharing_info()

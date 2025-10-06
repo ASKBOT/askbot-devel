@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from askbot.forms import (
     AnalyticsActivityForm,
     AnalyticsActivityField,
@@ -236,6 +237,9 @@ def analytics_activity(request, activity_segment=None, content_segment=None, use
     event_types = form.cleaned_data['activity_segment']
     users_url_segment = form.cleaned_data['users_segment']
     start_date, end_date = form.cleaned_data['dates']
+
+    if end_date == timezone.now().date():
+        end_date = timezone.now()
 
     events = Event.objects.filter(timestamp__gte=start_date, timestamp__lte=end_date)
     events = events.order_by('-timestamp')
