@@ -12,7 +12,7 @@ from askbot.conf.static_settings import settings as django_settings
 import askbot
 import django
 import os
-import pkg_resources
+import importlib
 import re
 import sys
 import urllib.request, urllib.parse, urllib.error
@@ -262,7 +262,7 @@ def test_specs(req):
 
     if not req.specs:
         return
-    mod_ver = pkg_resources.get_distribution(req.name).version
+    mod_ver = importlib.metadata.version(req.name)
     mod_ver = map_int(mod_ver.split('.'))
     try:
         for spec in req.specs:
@@ -904,11 +904,13 @@ def test_versions():
     if dj_ver < (3, 0) or dj_ver >= (5, 0):
         errors.append('This version of Askbot supports django 3.x - 4.x ' + upgrade_msg)
     elif py_ver[:3] < (3, 6, 0):
-        errors.append('Askbot requires Python 3.6 - 3.10')
-    elif py_ver[:3] >= (3, 12, 0):
-        errors.append("""Askbot was not tested with Python > 3.11.x
-Try adding ASKBOT_SELF_TEST = False to the settings.py
-to test if your version of Python works and please let us know.""")
+        errors.append('Askbot requires Python 3.6 - 3.12')
+    elif py_ver[:3] >= (3, 13, 0):
+        errors.append(
+            'Askbot was not tested with Python > 3.12.x\n'
+            'Try adding ASKBOT_SELF_TEST = False to the settings.py\n'
+            'to test if your version of Python works and please let us know.'
+        )
 
     print_errors(errors)
 

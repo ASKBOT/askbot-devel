@@ -23,7 +23,7 @@ REQUIREMENTS = {
     'bleach': 'bleach==5.0.1',
     'bs4': 'beautifulsoup4<=4.7.1',
     'compressor': 'django-compressor>=3.0,<=4.4',
-    'celery': 'celery==5.2.7',
+    'celery': 'celery==5.3.0',
     'django': 'django>=3.0,<5.0',
     'django_countries': 'django-countries>=3.3',
     'django_jinja': 'django-jinja>=2.0',

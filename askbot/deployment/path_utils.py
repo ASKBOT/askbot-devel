@@ -3,7 +3,7 @@ import os
 import os.path
 import re
 import glob
-import imp
+import importlib
 
 
 IMPORT_RE1 = re.compile(r'from django.*import')
@@ -28,7 +28,7 @@ def is_dir_python_module(directory):
     """True if directory is not taken by another python module"""
     dir_name = os.path.basename(directory)
     try:
-        imp.find_module(dir_name)
+        importlib.find_module(dir_name)
         return True
     except ImportError:
         return False
