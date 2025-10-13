@@ -1,4 +1,5 @@
 """Tests for the custom link patterns plugin."""
+from bs4 import BeautifulSoup
 from django.test import TestCase
 from markdown_it import MarkdownIt
 from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
@@ -30,8 +31,26 @@ class TestLinkPatternsPlugin(TestCase):
         text = "Fixed #bug456 by @alice"
         html = md.render(text)
 
-        self.assertIn('bugs.example.com/456', html)
-        self.assertIn('github.com/alice', html)
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Should have exactly 2 links
+        links = soup.find_all('a')
+        self.assertEqual(len(links), 2)
+
+        # Verify bug link
+        bug_link = [l for l in links if 'bugs.example.com' in l['href']][0]
+        self.assertEqual(bug_link['href'], 'https://bugs.example.com/456')
+        self.assertEqual(bug_link.text, '#bug456')
+
+        # Verify mention link
+        mention_link = [l for l in links if 'github.com' in l['href']][0]
+        self.assertEqual(mention_link['href'], 'https://github.com/alice')
+        self.assertEqual(mention_link.text, '@alice')
+
+        # Verify surrounding text preserved
+        paragraph = soup.find('p')
+        self.assertIn('Fixed', paragraph.text)
+        self.assertIn('by', paragraph.text)
 
     def test_disabled_plugin(self):
         md = MarkdownIt().use(link_patterns_plugin, {
@@ -72,11 +91,21 @@ class TestLinkPatternsPlugin(TestCase):
         text = "Text #bug123 and `code #bug456` here"
         html = md.render(text)
 
-        # #bug123 should be linked (in text)
-        self.assertIn('bugs.example.com/123', html)
+        soup = BeautifulSoup(html, 'html5lib')
 
-        # #bug456 should NOT be linked (in code)
-        self.assertNotIn('bugs.example.com/456', html)
+        # Should have exactly 1 link (the one in text, not in code)
+        links = soup.find_all('a')
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'https://bugs.example.com/123')
+
+        # Verify code element exists and contains unlinked pattern
+        code = soup.find('code')
+        self.assertIsNotNone(code)
+        self.assertIn('#bug456', code.text)
+
+        # Ensure no link inside code element
+        code_links = code.find_all('a')
+        self.assertEqual(len(code_links), 0)
 
     def test_invalid_regex_ignored(self):
         # Plugin should not crash on invalid regex
@@ -88,7 +117,17 @@ class TestLinkPatternsPlugin(TestCase):
 
         text = "Some text"
         html = md.render(text)
-        self.assertIn('Some text', html)  # Should still render
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Verify text rendered properly in paragraph
+        paragraph = soup.find('p')
+        self.assertIsNotNone(paragraph)
+        self.assertEqual(paragraph.text.strip(), 'Some text')
+
+        # Verify no links created due to invalid regex
+        links = soup.find_all('a')
+        self.assertEqual(len(links), 0)
 
     def test_mismatched_pattern_url_count(self):
         # Should disable auto-linking if counts don't match

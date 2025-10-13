@@ -100,9 +100,12 @@ def get_md_converter():
     if _MD_CONVERTER is not None:
         return _MD_CONVERTER
 
-    # Create markdown-it instance with GFM-like preset
-    # Includes: tables, strikethrough, linkify
-    md = MarkdownIt('gfm-like')
+    # Create markdown-it instance with commonmark preset
+    # We'll manually enable GFM features except linkify (handled by urlize_html)
+    md = MarkdownIt('commonmark', {'linkify': False, 'typographer': False})
+
+    # Enable GFM features: tables and strikethrough
+    md.enable(['table', 'strikethrough'])
 
     # Configure syntax highlighting
     md.options['highlight'] = highlight_code
@@ -289,7 +292,10 @@ def markdown_input_converter(text):
     # Get converter lazily to avoid accessing settings at module load time
     md = get_md_converter()
     text = md.render(text)
-    return sanitize_html(text)
+    # Urlize any remaining plain URLs in HTML (e.g., inside <p> tags)
+    # while preserving links in <a>, <pre>, <code> tags
+    text = urlize_html(text, trim_url_limit=40)
+    return text  # urlize_html already sanitizes
 
 
 def convert_text(text):

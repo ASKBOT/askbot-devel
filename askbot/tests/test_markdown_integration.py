@@ -1,6 +1,7 @@
 """
 Integration tests for complete markdown-it-py setup with all plugins.
 """
+from bs4 import BeautifulSoup
 from django.test import TestCase
 from askbot.tests.utils import with_settings
 from askbot.utils.markup import get_md_converter, reset_md_converter
@@ -38,26 +39,88 @@ class TestMarkdownIntegration(TestCase):
         md = get_md_converter()
         text = "Text with footnote[^1]\n\n[^1]: Footnote content"
         html = md.render(text)
-        self.assertIn('footnote', html.lower())
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Check for footnote reference (superscript with link)
+        footnote_refs = soup.find_all('sup', class_='footnote-ref')
+        self.assertEqual(len(footnote_refs), 1)
+
+        # Check for footnote section at bottom
+        footnote_section = soup.find('section', class_='footnotes')
+        self.assertIsNotNone(footnote_section)
+
+        # Check footnote content
+        footnote_list = footnote_section.find('ol')
+        self.assertIsNotNone(footnote_list)
+        footnote_items = footnote_list.find_all('li')
+        self.assertEqual(len(footnote_items), 1)
+        self.assertIn('Footnote content', footnote_items[0].text)
 
     def test_task_lists(self):
         md = get_md_converter()
         text = "- [ ] Unchecked\n- [x] Checked"
         html = md.render(text)
-        self.assertTrue('checkbox' in html.lower() or 'task' in html.lower())
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Find all checkbox inputs
+        checkboxes = soup.find_all('input', type='checkbox')
+        self.assertEqual(len(checkboxes), 2)
+
+        # Verify unchecked box
+        self.assertFalse(checkboxes[0].has_attr('checked'))
+
+        # Verify checked box
+        self.assertTrue(checkboxes[1].has_attr('checked'))
+
+        # Verify task list classes
+        task_list = soup.find('ul', class_='contains-task-list')
+        self.assertIsNotNone(task_list)
+
+        task_items = soup.find_all('li', class_='task-list-item')
+        self.assertEqual(len(task_items), 2)
 
     def test_syntax_highlighting(self):
         md = get_md_converter()
         text = "```python\ndef hello():\n    pass\n```"
         html = md.render(text)
-        self.assertIn('highlight', html)
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Check for pre > code structure
+        pre_tag = soup.find('pre')
+        self.assertIsNotNone(pre_tag)
+
+        code_tag = pre_tag.find('code')
+        self.assertIsNotNone(code_tag)
+
+        # Verify language class
+        self.assertTrue(
+            'language-python' in code_tag.get('class', []) or
+            'highlight' in code_tag.get('class', [])
+        )
+
+        # Verify code content is present
+        self.assertIn('def hello():', code_tag.text)
+        self.assertIn('pass', code_tag.text)
 
     def test_video_embedding(self):
         md = get_md_converter()
         text = "Check this: @[youtube](dQw4w9WgXcQ)"
         html = md.render(text)
-        self.assertIn('youtube.com/embed/dQw4w9WgXcQ', html)
-        self.assertIn('iframe', html)
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Find iframe element
+        iframe = soup.find('iframe')
+        self.assertIsNotNone(iframe)
+
+        # Verify src attribute
+        self.assertIn('youtube.com/embed/dQw4w9WgXcQ', iframe['src'])
+
+        # Verify surrounding text
+        self.assertIn('Check this:', html)
 
     @with_settings(ENABLE_AUTO_LINKING=True,
                    AUTO_LINK_PATTERNS=r'#bug(\d+)',
@@ -69,7 +132,19 @@ class TestMarkdownIntegration(TestCase):
         text = "Fixed #bug123"
         html = md.render(text)
 
-        self.assertIn('bugs.example.com/123', html)
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Find the link
+        links = soup.find_all('a')
+        self.assertEqual(len(links), 1)
+
+        link = links[0]
+        self.assertEqual(link['href'], 'https://bugs.example.com/123')
+        self.assertEqual(link.text.strip(), '#bug123')
+
+        # Verify surrounding text preserved
+        paragraph = soup.find('p')
+        self.assertIn('Fixed', paragraph.text)
 
     @with_settings(MARKUP_CODE_FRIENDLY=True)
     def test_code_friendly_mode(self):
@@ -93,13 +168,28 @@ class TestMarkdownIntegration(TestCase):
         # Inline math
         text = "The equation $E = mc^2$ is famous"
         html = md.render(text)
-        self.assertTrue('$E = mc^2$' in html or '$E = mc^2$' in html.replace('&nbsp;', ' '))
+
+        soup = BeautifulSoup(html, 'html5lib')
+        paragraph = soup.find('p')
+        self.assertIsNotNone(paragraph)
+
+        # Verify math delimiters are preserved (not converted to HTML)
+        para_html = str(paragraph)
+        self.assertIn('$E = mc^2$', para_html)
+        self.assertNotIn('<em>', para_html)  # No emphasis tags in math
+        self.assertIn('famous', paragraph.text)
 
         # Display math
         text = "$$\\int_0^1 x dx = \\frac{1}{2}$$"
         html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Display math should be in its own block
         self.assertIn('$$', html)
-        self.assertTrue('\\int_0^1' in html or r'\int_0^1' in html)
+        # Verify LaTeX commands preserved
+        self.assertIn('\\int_0^1', html)
+        self.assertIn('\\frac{1}{2}', html)
 
     @with_settings(ENABLE_MATHJAX=True)
     def test_mathjax_underscores_not_emphasis(self):
@@ -110,10 +200,19 @@ class TestMarkdownIntegration(TestCase):
         text = "$a_b$ and $x_{123}$"
         html = md.render(text)
 
-        # Should NOT have <em> or <sub> tags inside math
-        # Math content should be preserved verbatim
-        self.assertTrue('$a_b$' in html or '$a_b$' in html.replace('&nbsp;', ' '))
-        self.assertTrue('<em>' not in html or html.count('<em>') == 0)
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Verify no em or sub tags created
+        em_tags = soup.find_all('em')
+        sub_tags = soup.find_all('sub')
+        self.assertEqual(len(em_tags), 0, "Found emphasis tags in math content")
+        self.assertEqual(len(sub_tags), 0, "Found subscript tags in math content")
+
+        # Verify math delimiters preserved
+        paragraph = soup.find('p')
+        para_html = str(paragraph)
+        self.assertIn('$a_b$', para_html)
+        self.assertIn('$x_{123}$', para_html)
 
     def test_combined_features(self):
         """Test document using multiple features"""
@@ -141,9 +240,42 @@ def example():
 """
         html = md.render(text)
 
-        # Check all features rendered
-        self.assertIn('<h1>Title</h1>', html)
-        self.assertIn('<strong>bold text</strong>', html)
-        self.assertIn('youtube.com/embed/abc123', html)
-        self.assertTrue('highlight' in html or 'class="language-python"' in html)
-        self.assertIn('<table>', html)
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Verify heading
+        h1 = soup.find('h1')
+        self.assertIsNotNone(h1)
+        self.assertEqual(h1.text.strip(), 'Title')
+
+        # Verify bold text
+        strong = soup.find('strong')
+        self.assertIsNotNone(strong)
+        self.assertEqual(strong.text, 'bold text')
+
+        # Verify video iframe
+        iframe = soup.find('iframe')
+        self.assertIsNotNone(iframe)
+        self.assertIn('abc123', iframe['src'])
+
+        # Verify code block with language class
+        pre = soup.find('pre')
+        self.assertIsNotNone(pre)
+        code = pre.find('code')
+        self.assertIsNotNone(code)
+        self.assertTrue(
+            'language-python' in code.get('class', []) or
+            'highlight' in str(pre)
+        )
+        self.assertIn('def example():', code.text)
+
+        # Verify table structure
+        table = soup.find('table')
+        self.assertIsNotNone(table)
+        th_cells = table.find_all('th')
+        self.assertEqual(len(th_cells), 2)
+
+        # Verify task list
+        checkboxes = soup.find_all('input', type='checkbox')
+        self.assertEqual(len(checkboxes), 2)
+        self.assertTrue(checkboxes[0].has_attr('checked'))  # First is checked
+        self.assertFalse(checkboxes[1].has_attr('checked'))  # Second unchecked

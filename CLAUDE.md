@@ -24,7 +24,7 @@ python manage.py migrate  # Run twice for askbot and django_authopenid apps
 ### Development Environment
 - Test project available at: `testproject/` for development and testing
 - Working site example at: `askbot_site/`
-- Virtual environment typically in: `env/`
+- Virtual environment typically in: `env/`, but the specific environment to use might be passed to you in the task file; pay attention to the task at hand.
 
 ### Pre-commit Hooks
 ```bash
