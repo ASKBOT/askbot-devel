@@ -279,3 +279,46 @@ def example():
         self.assertEqual(len(checkboxes), 2)
         self.assertTrue(checkboxes[0].has_attr('checked'))  # First is checked
         self.assertFalse(checkboxes[1].has_attr('checked'))  # Second unchecked
+
+    def test_linkify_with_truncation(self):
+        """Test that URL auto-linkification and truncation work together."""
+        md = get_md_converter()
+
+        text = """
+Check out example.com for details.
+
+Here's a longer URL: https://github.com/executablebooks/markdown-it-py-documentation
+
+And a markdown link: [GitHub](https://github.com/executablebooks/markdown-it-py)
+
+Code should not be linkified: `http://example.com`
+"""
+        html = md.render(text)
+        soup = BeautifulSoup(html, 'html5lib')
+
+        links = soup.find_all('a')
+        # Should have 3 links (fuzzy matched, long auto-linkified, markdown link)
+        self.assertEqual(len(links), 3, "Should have exactly 3 links")
+
+        # Link 1: Fuzzy matched example.com (short, no truncation)
+        self.assertEqual(links[0]['href'], "http://example.com")
+        self.assertEqual(links[0].string, "example.com")
+        self.assertNotIn('title', links[0].attrs, "Short URL should not have title attribute")
+
+        # Link 2: Long auto-linkified URL (truncated with title)
+        long_url = "https://github.com/executablebooks/markdown-it-py-documentation"
+        self.assertEqual(links[1]['href'], long_url)
+        self.assertTrue(links[1].string.endswith("…"), "Long URL should be truncated with ellipsis")
+        self.assertEqual(links[1]['title'], long_url, "Truncated URL should have title with full URL")
+        self.assertEqual(len(links[1].string), 40, "Truncated URL should be exactly 40 chars")
+
+        # Link 3: Markdown link (not truncated, no title from truncation)
+        self.assertEqual(links[2]['href'], "https://github.com/executablebooks/markdown-it-py")
+        self.assertEqual(links[2].string, "GitHub")
+        self.assertNotIn('title', links[2].attrs, "Markdown link should not have title attribute")
+
+        # Verify code block is not linkified
+        code = soup.find('code')
+        self.assertIsNotNone(code)
+        code_links = code.find_all('a')
+        self.assertEqual(len(code_links), 0, "URLs in code should not be linkified")

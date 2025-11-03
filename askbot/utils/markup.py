@@ -24,12 +24,12 @@ from pygments.util import ClassNotFound
 from askbot import const
 from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
 from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
+from askbot.utils.markdown_plugins.truncate_links import truncate_links_plugin
 from askbot.conf import settings as askbot_settings
 from askbot.utils.file_utils import store_file
 from askbot.utils.functions import split_phrases
 from askbot.utils.html import sanitize_html
 from askbot.utils.html import strip_tags
-from askbot.utils.html import urlize_html
 
 # URL taken from http://regexlib.com/REDetails.aspx?regexp_id=501
 URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*))") # pylint: disable=line-too-long
@@ -91,7 +91,7 @@ def get_md_converter():
     * Video embedding (@[youtube](id))
     * Custom link patterns (#bug123 -> links)
     * Code-friendly mode (disable underscore emphasis)
-    * Linkify URLs
+    * Linkify URLs (automatic URL detection with truncation)
 
     Uses singleton pattern for performance.
     """
@@ -101,11 +101,14 @@ def get_md_converter():
         return _MD_CONVERTER
 
     # Create markdown-it instance with commonmark preset
-    # We'll manually enable GFM features except linkify (handled by urlize_html)
-    md = MarkdownIt('commonmark', {'linkify': False, 'typographer': False})
+    # Enable linkify for automatic URL detection
+    md = MarkdownIt('commonmark', {'linkify': True, 'typographer': False})
 
     # Enable GFM features: tables and strikethrough
     md.enable(['table', 'strikethrough'])
+
+    # Explicitly enable linkify feature for automatic URL detection
+    md.enable('linkify')
 
     # Configure syntax highlighting
     md.options['highlight'] = highlight_code
@@ -122,6 +125,12 @@ def get_md_converter():
         'enabled': askbot_settings.ENABLE_AUTO_LINKING,
         'patterns': askbot_settings.AUTO_LINK_PATTERNS,
         'urls': askbot_settings.AUTO_LINK_URLS,
+    })
+
+    # Enable URL truncation for auto-linkified URLs
+    # Truncates display text to prevent layout issues, adds title attribute for accessibility
+    md.use(truncate_links_plugin, {
+        'trim_limit': 40  # Match Django's urlize trim_url_limit
     })
 
     # Code-friendly mode: disable underscore emphasis for MathJax compatibility
@@ -292,10 +301,9 @@ def markdown_input_converter(text):
     # Get converter lazily to avoid accessing settings at module load time
     md = get_md_converter()
     text = md.render(text)
-    # Urlize any remaining plain URLs in HTML (e.g., inside <p> tags)
-    # while preserving links in <a>, <pre>, <code> tags
-    text = urlize_html(text, trim_url_limit=40)
-    return text  # urlize_html already sanitizes
+    # Sanitize HTML to prevent XSS and enforce allowed tags/attributes
+    text = sanitize_html(text)
+    return text
 
 
 def convert_text(text):
