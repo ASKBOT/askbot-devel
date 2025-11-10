@@ -25,6 +25,7 @@ from askbot import const
 from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
 from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
 from askbot.utils.markdown_plugins.truncate_links import truncate_links_plugin
+from askbot.utils.markdown_plugins.math_protect import math_protect_plugin
 from askbot.conf import settings as askbot_settings
 from askbot.utils.file_utils import store_file
 from askbot.utils.functions import split_phrases
@@ -110,10 +111,17 @@ def get_md_converter():
     # Explicitly enable linkify feature for automatic URL detection
     md.enable('linkify')
 
+    # CRITICAL: Math delimiter protection MUST run FIRST
+    # This ensures math content is converted to special tokens before
+    # linkify, patterns, emphasis, and other plugins process the text.
+    # Without this, URLs/patterns inside math would be incorrectly linkified.
+    if askbot_settings.ENABLE_MATHJAX:
+        md.use(math_protect_plugin)
+
     # Configure syntax highlighting
     md.options['highlight'] = highlight_code
 
-    # Enable standard plugins
+    # Enable standard plugins (these will skip math tokens)
     md.use(footnote_plugin)
     md.use(tasklists_plugin)
 
@@ -133,22 +141,15 @@ def get_md_converter():
         'trim_limit': 40  # Match Django's urlize trim_url_limit
     })
 
-    # Code-friendly mode: disable underscore emphasis for MathJax compatibility
-    # and programming discussions
+    # Code-friendly mode: disable underscore emphasis for programming discussions
+    # When MathJax is enabled, math content is already protected as special tokens,
+    # so underscores in math won't trigger emphasis. However, we still disable
+    # underscore emphasis for code-friendly mode compatibility.
     if askbot_settings.MARKUP_CODE_FRIENDLY or askbot_settings.ENABLE_MATHJAX:
         # Disable emphasis (handles both * and _)
-        # Re-enable just * by adding custom rule
         md.disable('emphasis')
+        # Note: With math protection, asterisk emphasis could be re-enabled safely
         # TODO: Add custom rule to re-enable * only if needed
-
-    # Math delimiter protection for MathJax support
-    # Protect $...$ (inline) and $$...$$ (display) from markdown processing
-    if askbot_settings.ENABLE_MATHJAX:
-        # Add plugin to treat math blocks as verbatim text
-        # This prevents markdown from processing content inside math delimiters
-        # Example: $a_b$ should NOT become $a<sub>b</sub>$
-        # TODO: Implement math delimiter protection plugin
-        pass
 
     _MD_CONVERTER = md
     return _MD_CONVERTER
