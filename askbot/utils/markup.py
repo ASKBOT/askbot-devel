@@ -297,13 +297,56 @@ def plain_text_input_converter(text):
 
 
 def markdown_input_converter(text):
-    """Markdown to html converter"""
+    """
+    Markdown to HTML converter with MathJax support.
+
+    Implements hybrid approach for MathJax:
+    1. Protect code dollars (prevent false math detection in code)
+    2. Extract math to tokens (Stack Exchange approach)
+    3. Escape dollars in text regions (\$ → &dollar;)
+    4. Standard markdown processing
+    5. Restore code dollars (reverse step 1)
+    6. Restore math from tokens
+    7. Sanitize HTML
+    """
     # Get converter lazily to avoid accessing settings at module load time
     md = get_md_converter()
-    text = md.render(text)
-    # Sanitize HTML to prevent XSS and enforce allowed tags/attributes
-    text = sanitize_html(text)
-    return text
+
+    # MathJax preprocessing (only if MathJax is enabled)
+    math_blocks = []
+    if askbot_settings.ENABLE_MATHJAX:
+        from askbot.utils.markdown_plugins.math_extract import (
+            extract_math, restore_math, protect_code_dollars, restore_code_dollars
+        )
+        from askbot.utils.markdown_plugins.dollar_escape import escape_dollars
+
+        # Phase 1: Protect $ in code spans
+        text = protect_code_dollars(text)
+
+        # Phase 2: Extract math to tokens
+        text, math_blocks = extract_math(text)
+
+        # Phase 3: Escape dollars in text regions
+        text = escape_dollars(text)
+
+    # Phase 4: Standard markdown processing
+    html = md.render(text)
+
+    # MathJax postprocessing (only if MathJax is enabled)
+    if askbot_settings.ENABLE_MATHJAX:
+        from askbot.utils.markdown_plugins.math_extract import restore_math, restore_code_dollars
+
+        # Phase 5: Restore code dollars
+        html = restore_code_dollars(html)
+
+        # Phase 6: Restore math from tokens
+        if math_blocks:
+            html = restore_math(html, math_blocks)
+
+    # Phase 7: Sanitize HTML to prevent XSS and enforce allowed tags/attributes
+    html = sanitize_html(html)
+
+    return html
 
 
 def convert_text(text):
