@@ -88,3 +88,23 @@ class MarkdownTestCase(TestCase):
     def test_anchor_stays_untouched(self):
         text = """text <a href="http://example.com/">link</a> text"""
         self.assertHTMLEqual(self.conv(text), '<p>' + text + '</p>\n')
+
+    def test_javascript_url_not_linked(self):
+        """javascript: URLs should NOT be auto-linked (XSS prevention)"""
+        text = "Click javascript:alert('xss') here"
+        html = self.conv(text)
+        # Should NOT create a link with javascript: href
+        self.assertNotIn('href="javascript:', html)
+
+    def test_javascript_url_variations(self):
+        """Various javascript: URL forms should all be rejected"""
+        variants = [
+            "javascript:alert(1)",
+            "JAVASCRIPT:alert(1)",
+            "JavaScript:void(0)",
+        ]
+        for variant in variants:
+            text = f"Test {variant} here"
+            html = self.conv(text)
+            self.assertNotIn('href="javascript:', html.lower(),
+                f"javascript: URL should not be linked: {variant}")
