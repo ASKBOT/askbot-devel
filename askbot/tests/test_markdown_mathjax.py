@@ -505,3 +505,110 @@ end"""
         self.assertNotIn('https://issues.example.com/999', html)
         # The #999 should remain as text inside math
         self.assertIn('#999', html)
+
+
+class MathEmphasisProtectionTests(TestCase):
+    """Test that math content is protected from emphasis processing.
+
+    The MathJax preprocessing extracts math to @@N@@ tokens BEFORE markdown
+    processing, then restores after. This protects emphasis markers
+    (underscores and asterisks) inside math from being converted to
+    <em> or <strong> tags.
+    """
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_underscore_inside_math_not_emphasis(self):
+        """Underscores inside math should not become emphasis"""
+        text = "Formula $a_b + c_d$ here"
+        html = markdown_input_converter(text)
+        # Underscores should be preserved, not converted to <em>
+        self.assertNotIn('<em>', html)
+        # The math content should be preserved intact
+        self.assertIn('$a_b + c_d$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_asterisk_inside_math_not_emphasis(self):
+        """Asterisks inside math should not become emphasis"""
+        text = "Formula $a * b * c$ here"
+        html = markdown_input_converter(text)
+        # Should not have emphasis tags wrapping content
+        self.assertNotIn('<em>b</em>', html)
+        # Math should be preserved
+        self.assertIn('$a * b * c$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_double_underscore_inside_math_not_strong(self):
+        """Double underscores inside math should not become strong"""
+        text = "Formula $a__b__c$ here"
+        html = markdown_input_converter(text)
+        self.assertNotIn('<strong>', html)
+        # Math content preserved
+        self.assertIn('$a__b__c$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_double_asterisk_inside_math_not_strong(self):
+        """Double asterisks inside math should not become strong"""
+        text = "Formula $a ** b ** c$ here"
+        html = markdown_input_converter(text)
+        self.assertNotIn('<strong>', html)
+        # Math content preserved
+        self.assertIn('$a ** b ** c$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_multiline_display_math_underscore_not_emphasis(self):
+        """Underscores inside multiline display math should not become emphasis"""
+        text = """Formula:
+$$
+x_1 + y_2 = z_n
+$$
+end"""
+        html = markdown_input_converter(text)
+        self.assertNotIn('<em>', html)
+        # Underscores preserved in math
+        self.assertIn('x_1', html)
+        self.assertIn('y_2', html)
+        self.assertIn('z_n', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_multiline_display_math_asterisk_not_emphasis(self):
+        """Asterisks inside multiline display math should not become emphasis"""
+        text = """Formula:
+$$
+a * b * c
+$$
+end"""
+        html = markdown_input_converter(text)
+        self.assertNotIn('<em>', html)
+        # Asterisks preserved in math
+        self.assertIn('a * b * c', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_latex_environment_underscore_protected(self):
+        r"""Underscores in LaTeX environments should not become emphasis"""
+        text = r"""\begin{align}
+x_1 &= a_1 + b_1 \\
+y_2 &= a_2 + b_2
+\end{align}"""
+        html = markdown_input_converter(text)
+        self.assertNotIn('<em>', html)
+        # Underscores preserved
+        self.assertIn('x_1', html)
+        self.assertIn('a_1', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_mixed_math_and_text_emphasis_disabled_with_mathjax(self):
+        """When MathJax is enabled, emphasis is disabled for code-friendly mode.
+
+        Note: The markdown converter disables ALL emphasis (both * and _)
+        when MathJax is enabled to avoid conflicts with math notation.
+        This test verifies that math is protected AND that emphasis is
+        correctly disabled in this mode.
+        """
+        text = "Math $a_b$ and *emphasized text* here"
+        html = markdown_input_converter(text)
+        # Math underscores should NOT become emphasis
+        self.assertIn('$a_b$', html)
+        # With MathJax enabled, emphasis is disabled (code-friendly mode)
+        # so asterisks remain literal
+        self.assertNotIn('<em>', html)
+        self.assertIn('*emphasized text*', html)
