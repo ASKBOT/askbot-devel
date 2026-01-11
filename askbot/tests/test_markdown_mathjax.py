@@ -8,7 +8,7 @@ combined with server-side dollar escape (backslash-dollar -> dollar).
 from django.test import TestCase
 
 from askbot.tests.utils import with_settings
-from askbot.utils.markup import markdown_input_converter
+from askbot.utils.markup import markdown_input_converter, reset_md_converter
 from askbot.utils.markdown_plugins.math_extract import (
     extract_math, restore_math, protect_code_dollars
 )
@@ -427,3 +427,81 @@ end"""
         html = markdown_input_converter(text)
         self.assertNotIn('<a href="http://example.com">', html)
         self.assertIn('http://example.com', html)
+
+    @with_settings(ENABLE_MATHJAX=True,
+                   ENABLE_AUTO_LINKING=True,
+                   AUTO_LINK_PATTERNS=r'#(\d+)',
+                   AUTO_LINK_URLS=r'https://issues.example.com/\1')
+    def test_link_pattern_inside_math_not_processed(self):
+        """Link patterns inside math should not become links.
+
+        The MathJax preprocessing extracts math to @@N@@ tokens BEFORE
+        markdown processing (including link patterns), then restores after.
+        This should protect patterns like #123 inside math from being linked.
+        """
+        reset_md_converter()
+
+        # #123 inside inline math should NOT become a link
+        text = "Formula $x #123 y$ here"
+        html = markdown_input_converter(text)
+
+        # The math content should be preserved with #123 as literal text
+        self.assertIn('$x #123 y$', html)
+        # Should NOT have a link to issues.example.com
+        self.assertNotIn('https://issues.example.com/123', html)
+
+    @with_settings(ENABLE_MATHJAX=True,
+                   ENABLE_AUTO_LINKING=True,
+                   AUTO_LINK_PATTERNS=r'#(\d+)',
+                   AUTO_LINK_URLS=r'https://issues.example.com/\1')
+    def test_link_pattern_outside_math_still_works(self):
+        """Link patterns outside math should still be converted to links.
+
+        Verifies that the protection only applies inside math delimiters,
+        not to the entire document.
+        """
+        reset_md_converter()
+
+        # #456 outside math SHOULD become a link
+        text = "See #456 for details"
+        html = markdown_input_converter(text)
+
+        # Should have a link to issues.example.com
+        self.assertIn('https://issues.example.com/456', html)
+        self.assertIn('<a ', html)
+
+    @with_settings(ENABLE_MATHJAX=True,
+                   ENABLE_AUTO_LINKING=True,
+                   AUTO_LINK_PATTERNS=r'#(\d+)',
+                   AUTO_LINK_URLS=r'https://issues.example.com/\1')
+    def test_link_pattern_inside_display_math_not_processed(self):
+        """Link patterns inside display math should not become links."""
+        reset_md_converter()
+
+        text = "Formula $$x #789 y$$ here"
+        html = markdown_input_converter(text)
+
+        # The math content should be preserved
+        self.assertIn('$$x #789 y$$', html)
+        # Should NOT have a link
+        self.assertNotIn('https://issues.example.com/789', html)
+
+    @with_settings(ENABLE_MATHJAX=True,
+                   ENABLE_AUTO_LINKING=True,
+                   AUTO_LINK_PATTERNS=r'#(\d+)',
+                   AUTO_LINK_URLS=r'https://issues.example.com/\1')
+    def test_link_pattern_inside_multiline_math_not_processed(self):
+        """Link patterns inside multiline display math should not become links."""
+        reset_md_converter()
+
+        text = """Formula:
+$$
+x = #999
+$$
+end"""
+        html = markdown_input_converter(text)
+
+        # Should NOT have a link to issues.example.com
+        self.assertNotIn('https://issues.example.com/999', html)
+        # The #999 should remain as text inside math
+        self.assertIn('#999', html)
