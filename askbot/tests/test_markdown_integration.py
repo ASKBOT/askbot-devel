@@ -409,6 +409,47 @@ Code should not be linkified: `http://example.com`
         code_links = code.find_all('a')
         self.assertEqual(len(code_links), 0, "URLs in code should not be linkified")
 
+    def test_linkify_url_with_quotes(self):
+        """URLs containing quotes should be linked with proper encoding."""
+        md = get_md_converter()
+        text = 'http://example.com/quotes-are-"part"'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        # Quotes should be URL-encoded in href
+        self.assertEqual(links[0]['href'], 'http://example.com/quotes-are-%22part%22')
+
+    def test_linkify_unicode_domain(self):
+        """Unicode domains should be linked with punycode href."""
+        md = get_md_converter()
+        text = '✪df.ws/1234'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        # Unicode domain should be converted to punycode in href
+        self.assertEqual(links[0]['href'], 'http://xn--df-oiy.ws/1234')
+        # Original unicode should appear in link text
+        self.assertEqual(links[0].string, '✪df.ws/1234')
+
+    def test_linkify_bare_domain_with_trailing_slash(self):
+        """Bare domain with trailing slash should be auto-linked."""
+        md = get_md_converter()
+        text = 'example.com/'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        # Should add http:// and create a link
+        self.assertEqual(links[0]['href'], 'http://example.com/')
+
     def test_script_in_code_block_escaped(self):
         """Script tags in code blocks should be escaped (full pipeline test)."""
         text = '''```html

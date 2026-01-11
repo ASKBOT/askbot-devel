@@ -73,11 +73,6 @@ Should fail against:
     filename.txt
 
 
-Known to fail against:
-    http://example.com/quotes-are-“part”
-    ✪df.ws/1234
-    example.com
-    example.com/
 """
 
 class MarkdownTestCase(TestCase):
