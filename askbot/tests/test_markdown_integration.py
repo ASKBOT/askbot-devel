@@ -280,6 +280,58 @@ def example():
         self.assertTrue(checkboxes[0].has_attr('checked'))  # First is checked
         self.assertFalse(checkboxes[1].has_attr('checked'))  # Second unchecked
 
+    def test_email_autolink(self):
+        """Email addresses should be converted to mailto links."""
+        md = get_md_converter()
+        text = "Contact user@example.com for help"
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'mailto:user@example.com')
+        self.assertEqual(links[0].string, 'user@example.com')
+
+    def test_email_autolink_at_start(self):
+        """Email at beginning of text should be linked."""
+        md = get_md_converter()
+        text = "user@example.com is my email"
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'mailto:user@example.com')
+        self.assertEqual(links[0].string, 'user@example.com')
+
+    def test_email_autolink_with_plus(self):
+        """Email with + sign in username should be linked."""
+        md = get_md_converter()
+        text = "Contact user+tag@example.com for help"
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'mailto:user+tag@example.com')
+        self.assertEqual(links[0].string, 'user+tag@example.com')
+
+    def test_email_autolink_multiple(self):
+        """Multiple email addresses should all be linked."""
+        md = get_md_converter()
+        text = "Email alice@example.com or bob@test.org"
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 2)
+        self.assertEqual(links[0]['href'], 'mailto:alice@example.com')
+        self.assertEqual(links[1]['href'], 'mailto:bob@test.org')
+
     def test_linkify_with_truncation(self):
         """Test that URL auto-linkification and truncation work together."""
         md = get_md_converter()
