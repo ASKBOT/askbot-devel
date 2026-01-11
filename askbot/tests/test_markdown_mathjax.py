@@ -596,19 +596,18 @@ y_2 &= a_2 + b_2
         self.assertIn('a_1', html)
 
     @with_settings(ENABLE_MATHJAX=True)
-    def test_mixed_math_and_text_emphasis_disabled_with_mathjax(self):
-        """When MathJax is enabled, emphasis is disabled for code-friendly mode.
+    def test_mixed_math_and_text_emphasis_works_with_mathjax(self):
+        """MathJax does NOT need emphasis disabled - math is protected via token extraction.
 
-        Note: The markdown converter disables ALL emphasis (both * and _)
-        when MathJax is enabled to avoid conflicts with math notation.
-        This test verifies that math is protected AND that emphasis is
-        correctly disabled in this mode.
+        The math extraction pipeline (extract -> markdown -> restore) replaces
+        math content with @@N@@ tokens BEFORE markdown runs. This protects math
+        from emphasis processing, so we don't need to disable emphasis globally.
+
+        This allows users to have both math and formatted text in the same post.
         """
         text = "Math $a_b$ and *emphasized text* here"
         html = markdown_input_converter(text)
-        # Math underscores should NOT become emphasis
+        # Math content is protected by token extraction, underscores preserved
         self.assertIn('$a_b$', html)
-        # With MathJax enabled, emphasis is disabled (code-friendly mode)
-        # so asterisks remain literal
-        self.assertNotIn('<em>', html)
-        self.assertIn('*emphasized text*', html)
+        # Emphasis should work normally (asterisks converted to <em>)
+        self.assertIn('<em>emphasized text</em>', html)

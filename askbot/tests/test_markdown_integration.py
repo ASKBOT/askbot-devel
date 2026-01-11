@@ -158,6 +158,40 @@ class TestMarkdownIntegration(TestCase):
         self.assertNotIn('<em>', html)
         self.assertIn('variable_name', html)
 
+    @with_settings(MARKUP_CODE_FRIENDLY=True)
+    def test_code_friendly_mode_underscore_emphasis_disabled(self):
+        """Code-friendly mode: underscore emphasis syntax should be disabled."""
+        reset_md_converter()
+
+        md = get_md_converter()
+
+        # _italic_ should NOT become <em>italic</em>
+        html = md.render('This is _italic_ text')
+        self.assertNotIn('<em>', html)
+        self.assertIn('_italic_', html)
+
+        # __bold__ should NOT become <strong>bold</strong>
+        html2 = md.render('This is __bold__ text')
+        self.assertNotIn('<strong>', html2)
+        self.assertIn('__bold__', html2)
+
+    @with_settings(MARKUP_CODE_FRIENDLY=True)
+    def test_code_friendly_mode_asterisk_emphasis_works(self):
+        """Code-friendly mode: asterisk emphasis should still work."""
+        reset_md_converter()
+
+        md = get_md_converter()
+        text = "variable_name and *emphasized* and **bold** text"
+        html = md.render(text)
+
+        # Underscores should NOT create emphasis
+        self.assertNotIn('_name', html.replace('variable_name', ''))
+        self.assertIn('variable_name', html)
+
+        # Asterisks SHOULD create emphasis
+        self.assertIn('<em>emphasized</em>', html)
+        self.assertIn('<strong>bold</strong>', html)
+
     @with_settings(ENABLE_MATHJAX=True)
     def test_mathjax_math_delimiters_preserved(self):
         """Test that math delimiters are preserved for MathJax"""

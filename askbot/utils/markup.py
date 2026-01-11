@@ -133,21 +133,13 @@ def get_md_converter():
         'trim_limit': 40  # Match Django's urlize trim_url_limit
     })
 
-    # Code-friendly mode: disable underscore emphasis for MathJax compatibility
-    # and programming discussions
-    if askbot_settings.MARKUP_CODE_FRIENDLY or askbot_settings.ENABLE_MATHJAX:
-        # Disable emphasis (handles both * and _)
-        # Re-enable just * by adding custom rule
-        md.disable('emphasis')
-        # TODO: Add custom rule to re-enable * only if needed
-
-    # Math delimiter protection for MathJax support
-    # Protect $...$ (inline) and $$...$$ (display) from markdown processing
-    if askbot_settings.ENABLE_MATHJAX:
-        # Add plugin to treat math blocks as verbatim text
-        # This prevents markdown from processing content inside math delimiters
-        # Example: $a_b$ should NOT become $a<sub>b</sub>$
-        pass
+    # Code-friendly mode: disable underscore emphasis, keep asterisk
+    # This prevents issues with snake_case variables while preserving *italic* and **bold**
+    # Note: MathJax does NOT need emphasis disabled - math is extracted to @@N@@ tokens
+    # before markdown runs, so emphasis never touches math content
+    if askbot_settings.MARKUP_CODE_FRIENDLY:
+        from askbot.utils.markdown_plugins.asterisk_emphasis import asterisk_emphasis_plugin
+        md.use(asterisk_emphasis_plugin)
 
     _MD_CONVERTER = md
     return _MD_CONVERTER
