@@ -383,3 +383,47 @@ class EdgeCaseTests(TestCase):
         # Implementation dependent - just verify no crash
         self.assertIsInstance(tokenized, str)
         self.assertIsInstance(math_blocks, list)
+
+
+class MathLinkifyProtectionTests(TestCase):
+    """Test that math content is protected from linkify processing.
+
+    The MathJax preprocessing extracts math to @@N@@ tokens BEFORE markdown
+    processing, then restores after. This protects math content from linkify.
+    """
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_url_inside_math_not_linkified(self):
+        """URLs inside math delimiters should not become links"""
+        text = "See $http://example.com$ for formula"
+        html = markdown_input_converter(text)
+        self.assertNotIn('<a href="http://example.com">', html)
+        self.assertIn('$http://example.com$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_www_inside_math_not_linkified(self):
+        """www URLs inside math should not become links"""
+        text = "Check $www.example.com$ here"
+        html = markdown_input_converter(text)
+        self.assertNotIn('<a href="http://www.example.com">', html)
+        self.assertIn('$www.example.com$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_url_inside_display_math_not_linkified(self):
+        """URLs inside display math should not become links"""
+        text = "See $$http://example.com$$ for formula"
+        html = markdown_input_converter(text)
+        self.assertNotIn('<a href="http://example.com">', html)
+        self.assertIn('$$http://example.com$$', html)
+
+    @with_settings(ENABLE_MATHJAX=True)
+    def test_url_inside_multiline_display_math_not_linkified(self):
+        """URLs inside multiline display math should not become links"""
+        text = """Formula:
+$$
+http://example.com
+$$
+end"""
+        html = markdown_input_converter(text)
+        self.assertNotIn('<a href="http://example.com">', html)
+        self.assertIn('http://example.com', html)
