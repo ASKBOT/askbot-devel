@@ -22,9 +22,12 @@ pre-commit install
 # Tox (recommended)
 tox
 
+Use virtual environment `env-md`
+
 # Direct
-cd testproject/
-python manage.py test --parallel 8 askbot.tests askbot.deps.django_authopenid.tests
+cd askbot_site/
+
+../env-md/bin/python manage.py test --parallel 8 askbot.tests askbot.deps.django_authopenid.tests
 
 # Database config (if needed)
 DB_TYPE=postgres DB_USER=askbot DB_PASS=askB0T! DB_HOST=localhost DB_PORT=5432 DB_NAME=askbotfortox
