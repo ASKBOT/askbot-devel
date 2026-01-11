@@ -4,7 +4,7 @@ Integration tests for complete markdown-it-py setup with all plugins.
 from bs4 import BeautifulSoup
 from django.test import TestCase
 from askbot.tests.utils import with_settings
-from askbot.utils.markup import get_md_converter, reset_md_converter
+from askbot.utils.markup import get_md_converter, reset_md_converter, markdown_input_converter
 
 
 class TestMarkdownIntegration(TestCase):
@@ -374,3 +374,26 @@ Code should not be linkified: `http://example.com`
         self.assertIsNotNone(code)
         code_links = code.find_all('a')
         self.assertEqual(len(code_links), 0, "URLs in code should not be linkified")
+
+    def test_script_in_code_block_escaped(self):
+        """Script tags in code blocks should be escaped (full pipeline test)."""
+        text = '''```html
+<script>alert('xss')</script>
+```'''
+        html = markdown_input_converter(text)
+
+        # Verify raw script tag is NOT present (would be XSS)
+        self.assertNotIn('<script>', html)
+
+        # Verify the content is escaped - angle brackets should be entity-encoded
+        # Pygments may split tags across spans but < and > must still be escaped
+        self.assertIn('&lt;', html, "< should be escaped as &lt;")
+        self.assertIn('&gt;', html, "> should be escaped as &gt;")
+
+    def test_script_in_inline_code_escaped(self):
+        """Script tags in inline code should be escaped (full pipeline test)."""
+        text = "Use `<script>alert('xss')</script>` carefully"
+        html = markdown_input_converter(text)
+
+        # Verify raw script tag is NOT present (would be XSS)
+        self.assertNotIn('<script>', html)
