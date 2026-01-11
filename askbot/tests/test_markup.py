@@ -108,3 +108,54 @@ class MarkdownTestCase(TestCase):
             html = self.conv(text)
             self.assertNotIn('href="javascript:', html.lower(),
                 f"javascript: URL should not be linked: {variant}")
+
+    def test_data_url_not_linked(self):
+        """data: URLs should NOT be auto-linked (XSS prevention)"""
+        text = "See data:text/html,<script>alert(1)</script> here"
+        html = self.conv(text)
+        self.assertNotIn('href="data:', html)
+
+    def test_data_url_variations(self):
+        """Various data: URL case forms should all be rejected"""
+        variants = [
+            "data:text/html,<script>alert(1)</script>",
+            "DATA:text/html,<script>alert(1)</script>",
+            "Data:text/html,<b>test</b>",
+        ]
+        for variant in variants:
+            text = f"Test {variant} here"
+            html = self.conv(text)
+            self.assertNotIn('href="data:', html.lower(),
+                f"data: URL should not be linked: {variant}")
+
+    def test_data_url_base64_not_linked(self):
+        """Base64-encoded data: URLs should NOT be auto-linked"""
+        # PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== decodes to <script>alert(1)</script>
+        text = "See data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg== here"
+        html = self.conv(text)
+        self.assertNotIn('href="data:', html)
+
+    def test_data_url_in_markdown_link_sanitized(self):
+        """Markdown links with data: URLs should be sanitized"""
+        text = "[click me](data:text/html,<script>alert(1)</script>)"
+        html = self.conv(text)
+        # Link should either be removed or href sanitized
+        self.assertNotIn('href="data:', html)
+
+    def test_data_url_in_html_anchor_sanitized(self):
+        """Hand-coded HTML anchors with data: URLs should be sanitized"""
+        text = '<a href="data:text/html,<script>alert(1)</script>">click</a>'
+        html = self.conv(text)
+        self.assertNotIn('href="data:', html)
+
+    def test_javascript_url_in_html_anchor_sanitized(self):
+        """Hand-coded HTML anchors with javascript: URLs should be sanitized"""
+        text = '<a href="javascript:alert(1)">click</a>'
+        html = self.conv(text)
+        self.assertNotIn('href="javascript:', html.lower())
+
+    def test_vbscript_url_not_linked(self):
+        """vbscript: URLs should NOT be auto-linked (XSS prevention)"""
+        text = "Click vbscript:msgbox(1) here"
+        html = self.conv(text)
+        self.assertNotIn('href="vbscript:', html.lower())

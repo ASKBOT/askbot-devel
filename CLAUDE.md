@@ -33,6 +33,8 @@ cd askbot_site/
 DB_TYPE=postgres DB_USER=askbot DB_PASS=askB0T! DB_HOST=localhost DB_PORT=5432 DB_NAME=askbotfortox
 ```
 
+**Before writing new tests:** Check if the desired test already exists. Search existing test files for similar test cases. If a test exists, inform the developer. If not, plan the new test.
+
 ## Issue Tracking
 
 This project uses **bd** (beads). Run `bd onboard` to get started.
