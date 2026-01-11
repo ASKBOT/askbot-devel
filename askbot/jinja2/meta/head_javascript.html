@@ -9,7 +9,7 @@
     {% if settings.ADMIN_TAGS_ENABLED %}
         askbot['data']['adminTagsLowerCased'] = {{ settings.ADMIN_TAGS|lower|split(" ")|as_json }};
         {% if request.user.is_authenticated %}
-            askbot['data']['userCanManageAdminTags'] = {{ request.user.user_can_manage_admin_tags()|as_js_bool }};
+            askbot['data']['userCanManageAdminTags'] = {{ request.user.can_manage_admin_tags()|as_js_bool }};
         {% else %}
             askbot['data']['userCanManageAdminTags'] = false;
         {% endif %}
