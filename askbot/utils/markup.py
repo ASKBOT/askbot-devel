@@ -147,7 +147,6 @@ def get_md_converter():
         # Add plugin to treat math blocks as verbatim text
         # This prevents markdown from processing content inside math delimiters
         # Example: $a_b$ should NOT become $a<sub>b</sub>$
-        # TODO: Implement math delimiter protection plugin
         pass
 
     _MD_CONVERTER = md
