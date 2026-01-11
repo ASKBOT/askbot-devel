@@ -44,6 +44,8 @@ bd update <id> --status in_progress  # Claim work
 bd close <id>         # Complete work
 bd sync               # Sync with git
 bd new "<title>"      # Create a new issue
+bd comments <id>      # List comments on an issue
+bd comments add <id> "message"  # Add a comment
 ```
 
 Dependencies: `bd dep <blocker> --blocks <blocked>` | `bd dep tree <id>`
