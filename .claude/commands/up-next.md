@@ -5,7 +5,8 @@ Find the next available issue to work on and present it for approval.
 ## Workflow
 
 1. **List ready issues** - Run `bd ready` to see available work
-2. **Pick the top issue** - Select the first ready issue from the list
+2. **Pick the top issue** - Select the first ready issue from the list - importantly the issue must not be in_progress,
+   but must be available
 3. **Get issue details** - Run `bd show <id>` to get full context
 4. **Present the issue** - Explain to the user:
    - Issue ID and title

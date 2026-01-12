@@ -105,10 +105,12 @@ class TestMarkdownIntegration(TestCase):
         self.assertIn('def hello():', code_tag.text)
         self.assertIn('pass', code_tag.text)
 
+    @with_settings(ENABLE_VIDEO_EMBEDDING=True)
     def test_video_embedding(self):
-        md = get_md_converter()
+        # Video embedding uses extraction/restoration pattern, so must use
+        # the full markdown_input_converter pipeline (not just md.render)
         text = "Check this: @[youtube](dQw4w9WgXcQ)"
-        html = md.render(text)
+        html = markdown_input_converter(text)
 
         soup = BeautifulSoup(html, 'html5lib')
 
@@ -248,9 +250,10 @@ class TestMarkdownIntegration(TestCase):
         self.assertIn('$a_b$', para_html)
         self.assertIn('$x_{123}$', para_html)
 
+    @with_settings(ENABLE_VIDEO_EMBEDDING=True)
     def test_combined_features(self):
         """Test document using multiple features"""
-        md = get_md_converter()
+        # Uses markdown_input_converter for full pipeline including video extraction
         text = """
 # Title
 
@@ -272,7 +275,7 @@ def example():
 - [x] Task done
 - [ ] Task pending
 """
-        html = md.render(text)
+        html = markdown_input_converter(text)
 
         soup = BeautifulSoup(html, 'html5lib')
 

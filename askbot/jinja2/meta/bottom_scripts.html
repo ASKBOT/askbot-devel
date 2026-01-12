@@ -35,6 +35,13 @@
   askbot['settings']['static_url'] = '{{ settings.STATIC_URL }}';
   askbot['settings']['minSearchWordLength'] = {{ min_search_word_length }};
   askbot['settings']['mathjaxEnabled'] = {{ settings.ENABLE_MATHJAX|as_js_bool }};
+  askbot['settings']['markupCodeFriendly'] = {{ settings.MARKUP_CODE_FRIENDLY|as_js_bool }};
+  askbot['settings']['videoEmbeddingEnabled'] = {{ settings.ENABLE_VIDEO_EMBEDDING|as_js_bool }};
+  askbot['settings']['autoLinkEnabled'] = {{ settings.ENABLE_AUTO_LINKING|as_js_bool }};
+  {% if settings.ENABLE_AUTO_LINKING %}
+    askbot['settings']['autoLinkPatterns'] = {{ settings.AUTO_LINK_PATTERNS|tojson }};
+    askbot['settings']['autoLinkUrls'] = {{ settings.AUTO_LINK_URLS|tojson }};
+  {% endif %}
   askbot['settings']['sharingSuffixText'] = '{{ settings.SHARING_SUFFIX_TEXT|escape }}';
   askbot['settings']['errorPlacement'] = 'after-label';
   askbot['data']['maxCommentLength'] = {{ settings.MAX_COMMENT_LENGTH }};

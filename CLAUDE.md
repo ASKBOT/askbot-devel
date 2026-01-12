@@ -35,6 +35,21 @@ DB_TYPE=postgres DB_USER=askbot DB_PASS=askB0T! DB_HOST=localhost DB_PORT=5432 D
 
 **Before writing new tests:** Check if the desired test already exists. Search existing test files for similar test cases. If a test exists, inform the developer. If not, plan the new test.
 
+## Running One-Off Python Scripts
+
+Use `manage.py shell` with heredoc for one-off scripts that need Django context:
+
+```bash
+cd askbot_site && ../env-md/bin/python manage.py shell << 'EOF'
+from askbot.utils.markup import markdown_input_converter
+
+result = markdown_input_converter("**test**")
+print(result)
+EOF
+```
+
+This properly initializes Django settings and all app configurations.
+
 ## Issue Tracking
 
 This project uses **bd** (beads). Run `bd onboard` to get started.
@@ -51,6 +66,9 @@ bd comments add <id> "message"  # Add a comment
 ```
 
 Dependencies: `bd dep <blocker> --blocks <blocked>` | `bd dep tree <id>`
+
+**Making issues part of an epic** If I ask an issue X to be part of certain epic E, the issue in question must be blocking
+the said epic issue - i.e. `bd dep <X-id> --blocks <E-id>`
 
 **Creating issues:** Issues must be self-sufficient—include all necessary context, acceptance criteria, and relevant file paths so that implementing them requires no additional hand-typed context (e.g., "implement issue X" should be enough).
 

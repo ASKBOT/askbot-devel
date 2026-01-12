@@ -22,7 +22,9 @@ from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
 from askbot import const
-from askbot.utils.markdown_plugins.video_embed import video_embed_plugin
+from askbot.utils.markdown_plugins.video_extract import (
+    extract_video_embeds, restore_video_embeds
+)
 from askbot.utils.markdown_plugins.link_patterns import link_patterns_plugin
 from askbot.utils.markdown_plugins.truncate_links import truncate_links_plugin
 from askbot.conf import settings as askbot_settings
@@ -39,24 +41,31 @@ def highlight_code(code, lang, attrs):
     """
     Syntax highlighting using Pygments.
 
+    markdown-it-py's highlight callback should return just the inner HTML content.
+    markdown-it wraps the result in <pre><code class="language-X">...</code></pre>.
+
+    We use nowrap=True to get just the <span> elements from Pygments.
+    The CSS styles target pre code spans for syntax coloring.
+
     Args:
         code: Source code string
         lang: Language identifier (e.g., 'python', 'javascript')
         attrs: Additional attributes (unused, for markdown-it compatibility)
 
     Returns:
-        HTML string with syntax highlighting
+        HTML string with syntax highlighting (just spans, no wrapper)
     """
+    from html import escape
+
     if not lang:
-        # No language specified, return plain code block
-        return f'<pre><code>{code}</code></pre>'
+        # No language specified, return escaped code (markdown-it wraps it)
+        return escape(code)
 
     try:
-        lexer = get_lexer_by_name(lang, stripall=True)
+        lexer = get_lexer_by_name(lang)
         formatter = HtmlFormatter(
-            cssclass='highlight',
-            noclasses=False,  # Use CSS classes instead of inline styles
-            linenos=False
+            nowrap=True,  # Return just spans, no <div>/<pre> wrapper
+            noclasses=False,  # Use CSS classes
         )
         highlighted = pygments_highlight(code, lexer, formatter)
         return highlighted
@@ -64,16 +73,16 @@ def highlight_code(code, lang, attrs):
         # Unknown language, try guessing
         try:
             lexer = guess_lexer(code)
-            formatter = HtmlFormatter(cssclass='highlight', noclasses=False)
+            formatter = HtmlFormatter(nowrap=True, noclasses=False)
             return pygments_highlight(code, lexer, formatter)
         except Exception:  # pylint: disable=broad-except
-            # Give up, return plain code
-            return f'<pre><code class="language-{lang}">{code}</code></pre>'
+            # Give up, return escaped code
+            return escape(code)
     except Exception as e:  # pylint: disable=broad-except
         # Log error but don't break rendering
         logger = logging.getLogger('askbot.markdown')
         logger.warning(f"Pygments highlighting failed for lang={lang}: {e}")
-        return f'<pre><code class="language-{lang}">{code}</code></pre>'
+        return escape(code)
 
 
 # Singleton pattern - create converter once
@@ -117,8 +126,8 @@ def get_md_converter():
     md.use(footnote_plugin)
     md.use(tasklists_plugin)
 
-    # Enable video embedding
-    md.use(video_embed_plugin)
+    # Note: Video embedding is handled by extract/restore pattern in
+    # markdown_input_converter() for security (iframes after sanitization)
 
     # Enable custom link patterns
     md.use(link_patterns_plugin, {
@@ -289,19 +298,24 @@ def plain_text_input_converter(text):
 
 def markdown_input_converter(text):
     """
-    Markdown to HTML converter with MathJax support.
+    Markdown to HTML converter with MathJax and video embed support.
 
-    Implements hybrid approach for MathJax:
-    1. Protect code dollars (prevent false math detection in code)
-    2. Extract math to tokens (Stack Exchange approach)
-    3. Escape dollars in text regions (\$ → &dollar;)
-    4. Standard markdown processing
-    5. Restore code dollars (reverse step 1)
-    6. Restore math from tokens
-    7. Sanitize HTML
+    Implements token-based extraction for safe content handling:
+    1. Extract video embeds to tokens (@[youtube](id) → @@VIDEO0@@)
+    2. MathJax preprocessing (protect code dollars, extract math, escape dollars)
+    3. Standard markdown processing
+    4. MathJax postprocessing (restore code dollars, restore math)
+    5. Sanitize HTML (no iframes allowed - they're still tokens!)
+    6. Restore video tokens to iframes (safe - after sanitization)
     """
     # Get converter lazily to avoid accessing settings at module load time
     md = get_md_converter()
+
+    # Phase 1: Extract video embeds to tokens (before any processing)
+    # This happens BEFORE sanitization, tokens restored AFTER
+    video_blocks = []
+    if askbot_settings.ENABLE_VIDEO_EMBEDDING:
+        text, video_blocks = extract_video_embeds(text)
 
     # MathJax preprocessing (only if MathJax is enabled)
     math_blocks = []
@@ -311,31 +325,37 @@ def markdown_input_converter(text):
         )
         from askbot.utils.markdown_plugins.dollar_escape import escape_dollars
 
-        # Phase 1: Protect $ in code spans
+        # Phase 2a: Protect $ in code spans
         text = protect_code_dollars(text)
 
-        # Phase 2: Extract math to tokens
+        # Phase 2b: Extract math to tokens
         text, math_blocks = extract_math(text)
 
-        # Phase 3: Escape dollars in text regions
+        # Phase 2c: Escape dollars in text regions
         text = escape_dollars(text)
 
-    # Phase 4: Standard markdown processing
+    # Phase 3: Standard markdown processing
     html = md.render(text)
 
     # MathJax postprocessing (only if MathJax is enabled)
     if askbot_settings.ENABLE_MATHJAX:
         from askbot.utils.markdown_plugins.math_extract import restore_math, restore_code_dollars
 
-        # Phase 5: Restore code dollars
+        # Phase 4a: Restore code dollars
         html = restore_code_dollars(html)
 
-        # Phase 6: Restore math from tokens
+        # Phase 4b: Restore math from tokens
         if math_blocks:
             html = restore_math(html, math_blocks)
 
-    # Phase 7: Sanitize HTML to prevent XSS and enforce allowed tags/attributes
+    # Phase 5: Sanitize HTML to prevent XSS and enforce allowed tags/attributes
+    # Video tokens (@@VIDEO0@@) pass through safely as plain text
     html = sanitize_html(html)
+
+    # Phase 6: Restore video tokens to iframes (AFTER sanitization)
+    # This is the key security improvement - iframes are never subject to sanitization
+    if video_blocks:
+        html = restore_video_embeds(html, video_blocks)
 
     return html
 

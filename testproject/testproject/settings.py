@@ -136,7 +136,6 @@ MIDDLEWARE = (
     'askbot.middleware.cancel.CancelActionMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'askbot.middleware.view_log.ViewLogMiddleware',
-    'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
 ATOMIC_REQUESTS = True

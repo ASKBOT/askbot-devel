@@ -1,0 +1,70 @@
+// Pygments syntax highlighting styles
+// Targets code blocks rendered by markdown-it with Pygments highlighting
+// Structure: <pre><code class="language-X">...spans...</code></pre>
+
+pre code {
+  display: block;
+  background: #f8f8f8;
+  padding: 1em;
+  overflow-x: auto;
+  border-radius: 4px;
+  white-space: pre;        // Preserve newlines and spaces
+  word-wrap: normal;       // Don't wrap long lines
+
+  // Comments (gray)
+  .c, .ch, .cm, .cp, .cpf, .c1, .cs { color: #888; }
+
+  // Keywords (bold blue)
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #008; font-weight: 700; }
+
+  // Strings (dark red)
+  .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl { color: #b22; }
+
+  // Numbers (dark red)
+  .m, .mb, .mf, .mh, .mi, .mo, .il { color: #b22; }
+
+  // Names - base color
+  .n, .na, .nc, .nd, .ne, .ni, .nl, .nn, .no, .nv, .nx { color: #333; }
+  .bp, .fm, .py, .vc, .vg, .vi, .vm { color: #333; }
+
+  // Functions (bold)
+  .nf { color: #00a; font-weight: 700; }
+
+  // Tags (bold)
+  .nt { color: #008; font-weight: 700; }
+
+  // Operators/Symbols
+  .o, .ow { color: #666; }
+
+  // Literals (green)
+  .l, .ld { color: #080; }
+
+  // Built-ins (teal)
+  .nb { color: #007070; }
+
+  // Punctuation
+  .p, .pm { color: #333; }
+
+  // Generic tokens (diffs, prompts, etc.)
+  .g { color: #333; }
+  .gd { color: #a00; background: #fee; }  // deleted
+  .ge { font-style: italic; }              // emphasis
+  .ges { font-style: italic; font-weight: 700; }
+  .gh { color: #333; font-weight: 700; }   // heading
+  .gi { color: #0a0; background: #dfd; }   // inserted
+  .go { color: #888; }                     // output
+  .gp { color: #555; font-weight: 700; }   // prompt
+  .gr { color: #a00; }                     // error
+  .gs { font-weight: 700; }                // strong
+  .gt { color: #a00; }                     // traceback
+  .gu { color: #606; font-weight: 700; }   // subheading
+
+  // Error token
+  .err { color: #a00; background: #fee; }
+
+  // Whitespace (invisible)
+  .w { color: transparent; }
+
+  // Escape sequences
+  .esc { color: #666; }
+}
