@@ -1227,6 +1227,22 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
 
 			makeSpritedButtonRow();
 
+			// Initialize the Svelte help panel if available
+			if (typeof EditorHelpPanel !== 'undefined') {
+				var buttonRow = document.getElementById(util.makeId("wmd-button-row"));
+				var helpPanelContainer = document.createElement('div');
+				helpPanelContainer.className = 'editor-help-panel-container';
+				helpPanelContainer.id = util.makeId("editor-help-panel");
+				// Insert after button bar, before any existing help content
+				buttonBar.parentNode.insertBefore(helpPanelContainer, buttonBar.nextSibling);
+				// Mount the Svelte component
+				new EditorHelpPanel({
+					target: helpPanelContainer,
+					props: {
+						buttonRow: buttonRow
+					}
+				});
+			}
 
 			var keyEvent = "keydown";
 			if (global.isOpera) {

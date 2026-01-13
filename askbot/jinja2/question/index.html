@@ -32,9 +32,6 @@
   {{ comment_widget(blank_comment) }}
   {{ moderated_post_warning(blank_comment) }}
   {% include "editors/simple.html" %}
-  {% if settings.EDITOR_TYPE == 'markdown' %}
-    {% include "editors/wmd_help.html" %}
-  {% endif %}
   {% include "components/bent_arrow.html" %}
   {{ tag_widget('none', deletable=True) }}
 {% endblock %}
