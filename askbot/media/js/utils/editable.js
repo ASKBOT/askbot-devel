@@ -90,7 +90,7 @@ Editable.prototype.startEditingText = function (text) {
   }
   var onFocus = function () {
     ed.setText(text);
-    ed.putCursorAtEnd();
+    ed.putCursorAtStart();
   };
   ed.focus(onFocus);
 }

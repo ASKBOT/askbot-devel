@@ -23,7 +23,7 @@ FoldedEditor.prototype.onAfterOpenHandler = function () {
     if (editor) {
         editor.start();
         editor.focus(function(){
-            editor.putCursorAtEnd()
+            editor.putCursorAtStart();
             $(document).trigger('askbot.FoldedEditor.afterOpened', [this]);
         });
     }
