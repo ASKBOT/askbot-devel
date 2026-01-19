@@ -3,29 +3,29 @@
 </script>
 
 <div class="help-content">
-    <p class="help-intro">Display code with syntax highlighting.</p>
+    <p class="help-intro">{gettext('Display code with syntax highlighting.')}</p>
 
     <div class="help-section">
-        <h4>Inline code</h4>
-        <code class="code-example">`inline code`</code>
-        <p class="help-note">Wrap with single backticks.</p>
+        <h4>{gettext('Inline code')}</h4>
+        <code class="code-example">`{gettext('inline code')}`</code>
+        <p class="help-note">{gettext('Wrap with single backticks.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Code block</h4>
-        <code class="code-example">```<br/>code block<br/>```</code>
-        <p class="help-note">Wrap with triple backticks on separate lines.</p>
+        <h4>{gettext('Code block')}</h4>
+        <code class="code-example">```<br/>{gettext('code block')}<br/>```</code>
+        <p class="help-note">{gettext('Wrap with triple backticks on separate lines.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Syntax highlighting</h4>
+        <h4>{gettext('Syntax highlighting')}</h4>
         <code class="code-example">```python<br/>def hello():<br/>    print("Hello")<br/>```</code>
-        <p class="help-note">Add language name after opening backticks.</p>
+        <p class="help-note">{gettext('Add language name after opening backticks.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Toolbar shortcut</h4>
-        <p class="help-note">Select code and click <span class="wmd-code-button"></span> to format it.</p>
+        <h4>{gettext('Toolbar shortcut')}</h4>
+        <p class="help-note">{gettext('Select code and click the code button to format it.')}</p>
     </div>
 </div>
 

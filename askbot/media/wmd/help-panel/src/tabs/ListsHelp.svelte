@@ -3,29 +3,29 @@
 </script>
 
 <div class="help-content">
-    <p class="help-intro">Create ordered, unordered, and task lists.</p>
+    <p class="help-intro">{gettext('Create ordered, unordered, and task lists.')}</p>
 
     <div class="help-section">
-        <h4>Unordered list</h4>
-        <code class="code-example">- First item<br/>- Second item<br/>- Third item</code>
-        <p class="help-note">Also works with <code>*</code> or <code>+</code></p>
+        <h4>{gettext('Unordered list')}</h4>
+        <code class="code-example">- {gettext('First item')}<br/>- {gettext('Second item')}<br/>- {gettext('Third item')}</code>
+        <p class="help-note">{gettext('Also works with * or +')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Ordered list</h4>
-        <code class="code-example">1. First item<br/>2. Second item<br/>3. Third item</code>
+        <h4>{gettext('Ordered list')}</h4>
+        <code class="code-example">1. {gettext('First item')}<br/>2. {gettext('Second item')}<br/>3. {gettext('Third item')}</code>
     </div>
 
     <div class="help-section">
-        <h4>Task list</h4>
-        <code class="code-example">- [ ] Unchecked task<br/>- [x] Completed task</code>
-        <p class="help-note">Creates interactive checkboxes.</p>
+        <h4>{gettext('Task list')}</h4>
+        <code class="code-example">- [ ] {gettext('Unchecked task')}<br/>- [x] {gettext('Completed task')}</code>
+        <p class="help-note">{gettext('Creates interactive checkboxes.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Nested lists</h4>
-        <code class="code-example">- Item<br/>  - Nested item<br/>  - Another nested</code>
-        <p class="help-note">Indent with 2 spaces for nesting.</p>
+        <h4>{gettext('Nested lists')}</h4>
+        <code class="code-example">- {gettext('Item')}<br/>  - {gettext('Nested item')}<br/>  - {gettext('Another nested')}</code>
+        <p class="help-note">{gettext('Indent with 2 spaces for nesting.')}</p>
     </div>
 </div>
 

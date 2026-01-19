@@ -3,26 +3,26 @@
 </script>
 
 <div class="help-content">
-    <p class="help-intro">Some HTML tags are allowed in posts.</p>
+    <p class="help-intro">{gettext('Some HTML tags are allowed in posts.')}</p>
 
     <div class="help-section">
-        <h4>Allowed tags</h4>
+        <h4>{gettext('Allowed tags')}</h4>
         <p class="help-note"><code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code></p>
     </div>
 
     <div class="help-section">
-        <h4>Structure tags</h4>
+        <h4>{gettext('Structure tags')}</h4>
         <p class="help-note"><code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></p>
     </div>
 
     <div class="help-section">
-        <h4>Tables</h4>
+        <h4>{gettext('Tables')}</h4>
         <p class="help-note"><code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></p>
     </div>
 
     <div class="help-section">
-        <h4>Note</h4>
-        <p class="help-note">Scripts, iframes, and other potentially unsafe tags are filtered out for security.</p>
+        <h4>{gettext('Note')}</h4>
+        <p class="help-note">{gettext('Scripts, iframes, and other potentially unsafe tags are filtered out for security.')}</p>
     </div>
 </div>
 

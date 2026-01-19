@@ -3,23 +3,23 @@
 </script>
 
 <div class="help-content">
-    <p class="help-intro">Embed images in your post.</p>
+    <p class="help-intro">{gettext('Embed images in your post.')}</p>
 
     <div class="help-section">
-        <h4>Image syntax</h4>
+        <h4>{gettext('Image syntax')}</h4>
         <code class="code-example">![alt text](https://example.com/image.jpg)</code>
-        <p class="help-note">Alt text describes the image for accessibility.</p>
+        <p class="help-note">{gettext('Alt text describes the image for accessibility.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Image with title</h4>
-        <code class="code-example">![alt text](url "Title text")</code>
-        <p class="help-note">Title appears when hovering over the image.</p>
+        <h4>{gettext('Image with title')}</h4>
+        <code class="code-example">![alt text](url {gettext('"Title text"')}</code>
+        <p class="help-note">{gettext('Title appears when hovering over the image.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>Uploading images</h4>
-        <p class="help-note">Click the <span class="wmd-image-button"></span> button in the toolbar to upload an image from your computer.</p>
+        <h4>{gettext('Uploading images')}</h4>
+        <p class="help-note">{gettext('Click the image button in the toolbar to upload an image from your computer.')}</p>
     </div>
 </div>
 

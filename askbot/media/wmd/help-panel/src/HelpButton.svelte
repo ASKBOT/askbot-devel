@@ -21,8 +21,8 @@
     class:active={isOpen}
     role="button"
     tabindex="0"
-    title="Formatting help"
-    aria-label="Toggle formatting help"
+    title={gettext('Formatting help')}
+    aria-label={gettext('Toggle formatting help')}
     aria-expanded={isOpen}
     on:click={handleClick}
     on:keydown={handleKeydown}

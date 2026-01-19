@@ -14,5 +14,5 @@ for locale in locales:
         'python ../manage.py jinja2_makemessages -l %s -e html,py,txt' % locale
     )
     call_command(
-        'python ../manage.py makemessages -l %s -d djangojs' % locale
+        'python ../manage.py makemessages -l %s -d djangojs -e js,svelte' % locale
     )

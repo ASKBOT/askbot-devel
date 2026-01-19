@@ -10,7 +10,10 @@
     "sass": "^1.34.0"
   },
   "scripts": {
-    "sass": "sass ./sass/style.scss ./css/style.css --watch"
+    "sass": "sass ./sass/style.scss ./css/style.css --watch",
+    "sass:build": "sass ./sass/style.scss ./css/style.css",
+    "build": "npm run sass:build && npm run build:help-panel",
+    "build:help-panel": "cd wmd/help-panel/src && npm run build"
   },
   "devDependencies": {
     "eslint": "^7.31.0"
