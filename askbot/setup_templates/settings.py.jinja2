@@ -43,10 +43,10 @@ DATABASES = {
 {%- endif %}
 }
 
-db_url = dj_database_url.config(default='sqlite:///db.data')
+db_config_dict = dj_database_url.config(default='sqlite:///' + os.path.join(PROJECT_ROOT,"askbot.sqlite"))
 
-if db_url:
-    DATABASES['default'] = db_url
+if len(db_config_dict):
+    DATABASES['default'] = db_config_dict
     DATABASES['default'].update({ 'TEST': {
         'CHARSET': 'utf8',  # Setting the character set and collation to utf-8
     }})
@@ -84,7 +84,7 @@ ASKBOT_LANGUAGE_MODE = 'single-lang' #'single-lang', 'url-lang', 'user-lang'
 
 # Absolute path to the directory that holds uploaded media
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'askbot', 'upfiles')
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'upfiles')
 MEDIA_URL = '/upfiles/' # url to uploaded media. This is expected to start with a /
 STATIC_URL = '/m/'#this must be different from MEDIA_URL
 
@@ -189,7 +189,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django.contrib.sites',
-    {{ staticfiles_app }}
+    'django.contrib.staticfiles',
 
     ## extra packages
     'avatar',
@@ -212,7 +212,6 @@ CACHES = {
     'locmem': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'askbot',
-        'TIMEOUT': 6000,
     }
 }
 
@@ -224,7 +223,6 @@ CACHES['redis'] = {
         '{{ node }}',
     {% endfor %}
         ],
-        'TIMEOUT': 6000,
         'OPTIONS': {
             'DB': '{{ cache_db }}',
             {% if cache_password %}
@@ -248,7 +246,6 @@ CACHES['memcached'] = {
         '{{ node }}',
     {% endfor %}
         ],
-        'TIMEOUT': 6000,
     }
 cache_select_default = 'memcached'
 {% else %}
@@ -259,7 +256,7 @@ CACHES['default'] = CACHES[cache_select]
 
 # Chose a unique KEY_PREFIX to avoid clashes with other applications
 # using the same cache (e.g. a shared memcache instance).
-CACHES['default'].update({'KEY_PREFIX': 'askbot',})
+CACHES['default'].update({'KEY_PREFIX': 'askbot', 'TIMEOUT': 6000})
 
 #sets a special timeout for livesettings if you want to make them different
 LIVESETTINGS_CACHE_TIMEOUT = CACHES['default']['TIMEOUT']

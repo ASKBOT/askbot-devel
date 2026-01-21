@@ -1,0 +1,11 @@
+
+socket = /tmp/uwsgi.sock
+chown-socket = nginx:nginx
+chmod-socket = 664
+# Graceful shutdown on SIGTERM, see https://github.com/unbit/uwsgi/issues/849#issuecomment-118869386
+hook-master-start = unix_signal:15 gracefully_kill_them_all
+need-app = true
+die-on-term = true
+plugin = python3
+# For debugging and testing
+show-config = true

@@ -1,1 +1,0 @@
-0 * * * * /{{ askbot_site }}/{{ askbot_app }}/cron-askbot.sh
