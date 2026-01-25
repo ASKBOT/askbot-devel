@@ -1,5 +1,5 @@
 <script>
-    // Styling help content
+    import { settings } from '../settings.js';
 </script>
 
 <div class="help-content">
@@ -8,13 +8,17 @@
     <div class="help-section">
         <h4>{gettext('Bold')}</h4>
         <code class="code-example">**{gettext('bold text')}**</code>
-        <p class="help-note">{gettext('Or use __bold text__')}</p>
+        {#if !$settings.codeFriendlyEnabled}
+            <p class="help-note">{gettext('Or use __bold text__')}</p>
+        {/if}
     </div>
 
     <div class="help-section">
         <h4>{gettext('Italic')}</h4>
         <code class="code-example">*{gettext('italic text')}*</code>
-        <p class="help-note">{gettext('Or use _italic text_')}</p>
+        {#if !$settings.codeFriendlyEnabled}
+            <p class="help-note">{gettext('Or use _italic text_')}</p>
+        {/if}
     </div>
 
     <div class="help-section">

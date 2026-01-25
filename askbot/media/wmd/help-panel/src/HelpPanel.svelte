@@ -14,7 +14,6 @@
     import TablesHelp from './tabs/TablesHelp.svelte';
     import VideoHelp from './tabs/VideoHelp.svelte';
     import MathHelp from './tabs/MathHelp.svelte';
-    import AutoLinkHelp from './tabs/AutoLinkHelp.svelte';
 
     $: isOpen = $isPanelOpen;
 
@@ -29,8 +28,7 @@
         html: HtmlHelp,
         tables: TablesHelp,
         video: VideoHelp,
-        math: MathHelp,
-        autolink: AutoLinkHelp
+        math: MathHelp
     };
 
     $: currentComponent = tabComponents[$activeTab] || LinksHelp;
