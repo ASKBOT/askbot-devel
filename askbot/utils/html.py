@@ -27,6 +27,32 @@ from askbot.utils.url_utils import get_login_url
 # Note: Video embeds (iframes) are handled via token-based extraction in
 # markup.py - iframes are inserted AFTER sanitization, so no iframe
 # whitelist is needed here. This is more secure than allowing iframes.
+
+# Users are allowed to enter these tags in Markdown input
+ALLOWED_HTML_ELEMENTS = ('a', 'abbr', 'acronym', 'address', 'b', 'big',
+    'blockquote', 'br', 'caption', 'center', 'cite', 'code', 'col',
+    'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em',
+    'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'kbd',
+    'li', 'ol', 'p', 'pre', 'q', 's', 'samp', 'small', 'span', 'strike',
+    'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead',
+    'tr', 'tt', 'u', 'ul', 'var', 'param')
+
+# Users are allowed to enter these html attributes in Markdown input
+ALLOWED_HTML_ATTRIBUTES = {
+    'a': ['href', 'title'],
+    'abbr': ['title'],
+    'acronym': ['title'],
+    'td': ['colspan', 'rowspan'],
+    'th': ['colspan', 'rowspan'],
+    'col': ['span'],
+    'colgroup': ['span'],
+    'img': ['alt', 'src'],
+    'blockquote': ['cite'],
+    'del': ['cite', 'datetime'],
+    'ins': ['cite', 'datetime'],
+    'q': ['cite'],
+}
+
 MARKDOWN_EXTRA_TAGS = ('input',)
 MARKDOWN_EXTRA_ATTRIBUTES = {
     'span': ['class'],  # For Pygments syntax highlighting
@@ -50,10 +76,10 @@ def sanitize_html(html_string):
     more secure than allowing arbitrary iframes through sanitization.
     """
     # Extend base allowed tags with markdown-specific ones
-    tags = tuple(django_settings.ASKBOT_ALLOWED_HTML_ELEMENTS) + MARKDOWN_EXTRA_TAGS
+    tags = ALLOWED_HTML_ELEMENTS + MARKDOWN_EXTRA_TAGS
 
     # Merge base attributes with markdown-specific ones
-    attributes = dict(django_settings.ASKBOT_ALLOWED_HTML_ATTRIBUTES)
+    attributes = ALLOWED_HTML_ATTRIBUTES
     for tag, attrs in MARKDOWN_EXTRA_ATTRIBUTES.items():
         if tag in attributes:
             existing = set(attributes[tag])

@@ -8148,6 +8148,56 @@ form.repost-comment-as-answer {
   padding-left: 1rem;
 }
 
+.editor-help-panel-container {
+  overflow: hidden;
+}
+
+.help-panel-content .help-content {
+  font-size: var(--small-font-size);
+  max-width: 100%;
+  min-width: 100%;
+  overflow: hidden;
+}
+.help-panel-content .help-intro {
+  margin: 0 0 0.5rem;
+  color: var(--fg-color);
+}
+.help-panel-content .help-section {
+  margin: 0 0 0.625rem;
+}
+.help-panel-content .help-section:last-child {
+  margin-bottom: 0;
+}
+.help-panel-content .help-section h4 {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.25rem;
+}
+.help-panel-content .code-example {
+  display: block;
+  font-family: monospace;
+  background: var(--clr-neutral-95);
+  padding: 0.25rem 0.5rem;
+  margin: 0 0 0.125rem;
+  font-size: var(--small-font-size);
+  white-space: pre;
+}
+.help-panel-content .help-note {
+  margin: 0;
+  color: var(--action-link-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.help-panel-content code {
+  font-family: monospace;
+  background: var(--clr-neutral-95);
+  padding: 0.125rem 0.25rem;
+}
+.help-panel-content code strong {
+  color: var(--link-color);
+  font-weight: var(--font-weight-bold);
+}
+
 .empty-content-box {
   display: flex;
   align-items: center;

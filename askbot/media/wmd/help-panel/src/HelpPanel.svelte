@@ -59,5 +59,6 @@
         padding: var(--info-box-padding);
         color: var(--info-box-color);
         font-size: var(--info-box-font-size);
+        overflow: hidden;
     }
 </style>

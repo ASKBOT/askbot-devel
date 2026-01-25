@@ -1,63 +1,61 @@
 <script>
-    // HTML help content
+    import { settings } from '../settings.js';
+
+    // Define tag categories with their display names
+    const TAG_CATEGORIES = [
+        {
+            id: 'formatting',
+            labelKey: 'Formatting tags',
+            tags: ['b', 'i', 'em', 'strong', 'code', 'pre', 'blockquote', 'br', 'hr',
+                   'u', 's', 'strike', 'del', 'ins', 'sub', 'sup', 'small', 'big',
+                   'kbd', 'samp', 'tt', 'var', 'cite', 'dfn', 'abbr', 'acronym',
+                   'q', 'address', 'center']
+        },
+        {
+            id: 'structure',
+            labelKey: 'Structure tags',
+            tags: ['p', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+                   'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'dir']
+        },
+        {
+            id: 'tables',
+            labelKey: 'Tables',
+            tags: ['table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
+                   'caption', 'col', 'colgroup']
+        },
+        {
+            id: 'media',
+            labelKey: 'Media',
+            tags: ['a', 'img', 'param']
+        }
+    ];
+
+    // Filter categories to only show tags that are allowed
+    $: allowedSet = new Set($settings.allowedHtmlElements || []);
+    $: visibleCategories = TAG_CATEGORIES
+        .map(category => ({
+            ...category,
+            allowedTags: category.tags.filter(tag => allowedSet.has(tag))
+        }))
+        .filter(category => category.allowedTags.length > 0);
 </script>
 
 <div class="help-content">
     <p class="help-intro">{gettext('Some HTML tags are allowed in posts.')}</p>
 
-    <div class="help-section">
-        <h4>{gettext('Allowed tags')}</h4>
-        <p class="help-note"><code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code></p>
-    </div>
-
-    <div class="help-section">
-        <h4>{gettext('Structure tags')}</h4>
-        <p class="help-note"><code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code></p>
-    </div>
-
-    <div class="help-section">
-        <h4>{gettext('Tables')}</h4>
-        <p class="help-note"><code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></p>
-    </div>
+    {#each visibleCategories as category}
+        <div class="help-section">
+            <h4>{gettext(category.labelKey)}</h4>
+            <p class="help-note">
+                {#each category.allowedTags as tag, index}
+                    <code>&lt;{tag}&gt;</code>{#if index < category.allowedTags.length - 1}, {/if}
+                {/each}
+            </p>
+        </div>
+    {/each}
 
     <div class="help-section">
         <h4>{gettext('Note')}</h4>
         <p class="help-note">{gettext('Scripts, iframes, and other potentially unsafe tags are filtered out for security.')}</p>
     </div>
 </div>
-
-<style>
-    .help-content {
-        font-size: var(--small-font-size);
-    }
-
-    .help-intro {
-        margin: 0 0 0.5rem;
-        color: var(--fg-color);
-    }
-
-    .help-section {
-        margin: 0 0 0.5rem;
-    }
-
-    .help-section:last-child {
-        margin-bottom: 0;
-    }
-
-    .help-section h4 {
-        font-size: var(--small-font-size);
-        font-weight: var(--font-weight-bold);
-        margin: 0 0 0.125rem;
-    }
-
-    .help-note {
-        margin: 0;
-        color: var(--action-link-color);
-    }
-
-    code {
-        font-family: monospace;
-        background: var(--clr-neutral-95);
-        padding: 0.125rem 0.25rem;
-    }
-</style>

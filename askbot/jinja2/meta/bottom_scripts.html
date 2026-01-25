@@ -47,6 +47,7 @@
   askbot['data']['maxCommentLength'] = {{ settings.MAX_COMMENT_LENGTH }};
   askbot['settings']['editorType'] = '{{ settings.EDITOR_TYPE }}';
   askbot['settings']['commentsEditorType'] = '{{ settings.COMMENTS_EDITOR_TYPE|escapejs }}';
+  askbot['settings']['allowedHtmlElements'] = {{ ALLOWED_HTML_ELEMENTS|tojson }};
   askbot['messages']['askYourQuestion'] = '{{ settings.WORDS_ASK_YOUR_QUESTION|escapejs }}';
   askbot['messages']['acceptOwnAnswer'] = '{{ settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER|escapejs }}';
   askbot['messages']['followQuestions'] = '{{ settings.WORDS_FOLLOW_QUESTIONS|escapejs }}';

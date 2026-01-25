@@ -4,11 +4,14 @@ import { writable, derived } from 'svelte/store';
 function getAskbotSettings() {
     const settings = (typeof askbot !== 'undefined' && askbot.settings) || {};
     const data = (typeof askbot !== 'undefined' && askbot.data) || {};
+    const allowedHtmlElements = settings.allowedHtmlElements || [];
     return {
         mathjaxEnabled: settings.mathjaxEnabled || false,
         videoEmbeddingEnabled: settings.videoEmbeddingEnabled || false,
         autoLinkEnabled: settings.autoLinkEnabled || false,
-        userCanUploadImage: data.userCanUploadImage || false
+        userCanUploadImage: data.userCanUploadImage || false,
+        allowedHtmlElements: allowedHtmlElements,
+        hasAllowedHtmlElements: allowedHtmlElements.length > 0
     };
 }
 
@@ -23,7 +26,7 @@ const TAB_DEFINITIONS = [
     { id: 'lists', label: gettext('Lists'), always: true },
     { id: 'blockquotes', label: gettext('Quotes'), always: true },
     { id: 'code', label: gettext('Code'), always: true },
-    { id: 'html', label: gettext('HTML'), always: true },
+    { id: 'html', label: gettext('HTML'), condition: 'hasAllowedHtmlElements' },
     { id: 'tables', label: gettext('Tables'), always: true },
     { id: 'video', label: gettext('Video'), condition: 'videoEmbeddingEnabled' },
     { id: 'math', label: gettext('Math'), condition: 'mathjaxEnabled' },
