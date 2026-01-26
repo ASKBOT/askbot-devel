@@ -2282,38 +2282,52 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
 		var hasTextBefore = /\S[ ]*$/.test(chunk.before);
 		var hasTextAfter = /^[ ]*\S/.test(chunk.after);
 
-		// Use 'four space' markdown if the selection is on its own
+		// Use fenced code blocks if the selection is on its own
 		// line or is multiline.
 		if((!hasTextAfter && !hasTextBefore) || /\n/.test(chunk.selection)){
 
-			chunk.before = chunk.before.replace(/[ ]{4}$/,
-				function(totalMatch){
-					chunk.selection = totalMatch + chunk.selection;
-					return "";
+			// Check if already wrapped in fenced code block (toggle off)
+			var fenceBeforeMatch = /```\s*\n$/.test(chunk.before);
+			var fenceAfterMatch = /^\n?```/.test(chunk.after);
+
+			if(fenceBeforeMatch && fenceAfterMatch){
+				// Remove existing fences (toggle off)
+				chunk.before = chunk.before.replace(/```\s*\n$/, "");
+				chunk.after = chunk.after.replace(/^\n?```/, "");
+			}
+			else{
+				// Check if selection is an indented code block (convert to fenced)
+				var lines = chunk.selection.split('\n');
+				var allIndented = lines.length > 0 && lines.every(function(line) {
+					return line.length === 0 || /^[ \t]/.test(line);
 				});
 
-			var nLinesBack = 1;
-			var nLinesForward = 1;
+				if(allIndented && chunk.selection.length > 0){
+					// Find minimum indentation (ignoring empty lines)
+					var minIndent = Infinity;
+					lines.forEach(function(line) {
+						if(line.length > 0){
+							var match = line.match(/^([ \t]*)/);
+							if(match && match[1].length < minIndent){
+								minIndent = match[1].length;
+							}
+						}
+					});
 
-			if(/\n(\t|[ ]{4,}).*\n$/.test(chunk.before)){
-				nLinesBack = 0;
-			}
-			if(/^\n(\t|[ ]{4,})/.test(chunk.after)){
-				nLinesForward = 0;
-			}
-
-			chunk.skipLines(nLinesBack, nLinesForward);
-
-			if(!chunk.selection){
-				chunk.startTag = "    ";
-				chunk.selection = gettext("enter code here");
-			}
-			else {
-				if(/^[ ]{0,3}\S/m.test(chunk.selection)){
-					chunk.selection = chunk.selection.replace(/^/gm, "    ");
+					// Remove the common indentation
+					if(minIndent > 0 && minIndent !== Infinity){
+						chunk.selection = lines.map(function(line) {
+							return line.substring(minIndent);
+						}).join('\n');
+					}
 				}
-				else{
-					chunk.selection = chunk.selection.replace(/^[ ]{4}/gm, "");
+
+				// Add fenced code block
+				chunk.skipLines(1, 1);
+				chunk.startTag = "```\n";
+				chunk.endTag = "\n```";
+				if(!chunk.selection){
+					chunk.selection = gettext("enter code here");
 				}
 			}
 		}
