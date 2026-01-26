@@ -3,22 +3,25 @@
 </script>
 
 <div class="help-content">
-    <p class="help-intro">{gettext('Embed videos from supported platforms.')}</p>
+    <p class="help-intro">{gettext('Embed videos from supported platforms. Videos appear as clickable links that open in a player.')}</p>
 
     <div class="help-section">
-        <h4>{gettext('YouTube')}</h4>
-        <code class="code-example">@[youtube](dQw4w9WgXcQ)</code>
-        <p class="help-note">{gettext('Use the video ID from the YouTube URL.')}</p>
+        <h4>{gettext('Basic syntax')}</h4>
+        <code class="code-example">@[youtube](VIDEO_ID)</code>
+        <p class="help-note">{gettext('Creates a video link. Click to open the player.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>{gettext('Vimeo')}</h4>
-        <code class="code-example">@[vimeo](123456789)</code>
+        <h4>{gettext('With title')}</h4>
+        <code class="code-example">@[youtube](VIDEO_ID "Video Title")</code>
+        <p class="help-note">{gettext('Add an optional title that displays in the link and player header.')}</p>
     </div>
 
     <div class="help-section">
-        <h4>{gettext('Dailymotion')}</h4>
-        <code class="code-example">@[dailymotion](x8abcdef)</code>
+        <h4>{gettext('Supported platforms')}</h4>
+        <p class="help-note"><strong>YouTube:</strong> <code>@[youtube](dQw4w9WgXcQ)</code></p>
+        <p class="help-note"><strong>Vimeo:</strong> <code>@[vimeo](123456789)</code></p>
+        <p class="help-note"><strong>Dailymotion:</strong> <code>@[dailymotion](x8abcdef)</code></p>
     </div>
 
     <div class="help-section">

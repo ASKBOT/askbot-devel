@@ -41,14 +41,9 @@
   box-sizing: border-box;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.75);
-  text-align: center;
-}
-.blocker::before{
-  content: "";
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -0.05em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .blocker.behind {
@@ -57,7 +52,6 @@
 
 .modal {
   display: none;
-  vertical-align: middle;
   position: relative;
   z-index: 2;
   max-width: 500px;

@@ -18,14 +18,26 @@ var ModalDialog = function () {
     this._content_element = undefined;
     this._headerEnabled = true;
     this._className = undefined;
+    this._escHandler = null;
 };
 inherits(ModalDialog, WrappedElement);
 
 ModalDialog.prototype.show = function () {
+    var me = this;
+    this._escHandler = function(evt) {
+        if (evt.keyCode === 27) { // ESC
+            me.hide();
+        }
+    };
+    $(document).on('keydown.modalDialog', this._escHandler);
     this._element.modal('show');
 };
 
 ModalDialog.prototype.hide = function () {
+    if (this._escHandler) {
+        $(document).off('keydown.modalDialog', this._escHandler);
+        this._escHandler = null;
+    }
     $.modal.close();
 };
 
@@ -53,7 +65,7 @@ ModalDialog.prototype.appendContent = function (content) {
 
 ModalDialog.prototype.setHeadingText = function (text) {
     this._heading_text = text;
-    if (this._title) this._title.html(text);
+    if (this._title) this._title.text(text);
 };
 
 ModalDialog.prototype.setAcceptButtonText = function (text) {
@@ -138,7 +150,7 @@ ModalDialog.prototype.createDom = function () {
         header.append(close_link);
         */
         var title = this.makeElement('h3');
-        title.html(this._heading_text);
+        title.text(this._heading_text);
         header.append(title);
         this._title = title;
     }
