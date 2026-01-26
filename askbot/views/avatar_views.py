@@ -9,7 +9,7 @@ from avatar.signals import avatar_updated
 from django.conf import settings as django_settings
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.encoding import force_str
 from django.utils.translation import gettext as _
@@ -21,11 +21,19 @@ def admin_or_owner_required(func):
     call the view function"""
     @functools.wraps(func)
     def wrapped(request, user_id=None):
-        if request.user.is_authenticated:
-            if request.user.is_administrator() or request.user.id == user_id:
-                return func(request, user_id)
-        #delegate to do redirect to the login_required
-        return login_required(func)(request, user_id)
+        if not request.user.is_authenticated:
+            return login_required(func)(request, user_id)
+
+        # Convert user_id to int for proper comparison (URL params are strings)
+        try:
+            user_id_int = int(user_id) if user_id is not None else None
+        except (ValueError, TypeError):
+            return HttpResponseForbidden("Invalid user ID")
+
+        if request.user.is_administrator() or request.user.id == user_id_int:
+            return func(request, user_id)
+
+        return HttpResponseForbidden("Access denied")
     return wrapped
 
 
