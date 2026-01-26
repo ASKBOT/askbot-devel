@@ -1,0 +1,62 @@
+Added help icon hint to sidebar markdown help in askbot/jinja2/components/markdown_help.html. New list item at the bottom of the markdown basics list tells users to click the ? icon in the editor for more help. Uses {% trans %} for i18n support and <strong> to highlight the ? icon.
+
+********
+
+## Feature Complete: Video Embedding UX Improvements
+
+### Overview
+Transformed video embedding from inline iframes to clickable links that open in a modal player, with optional title support.
+
+**Before:** `@[youtube](id)` → inline `<iframe>` embedded in content
+**After:** `@[youtube](id)` → `(Video ▶)` clickable link → modal player
+**With title:** `@[youtube](id "Title")` → `(Video "Title" ▶)` link
+
+### Implementation
+
+#### Python Backend (`video_extract.py`)
+- Updated regex to support optional title syntax: `@[service](id "title")`
+- Added `render_video_link(service, video_id, title)` function for HTML generation
+- `restore_video_embeds()` now uses `render_video_link()` - no code duplication
+- Deleted unused `video_embed.py` markdown-it plugin
+
+#### JavaScript (`video_extract.js`, `video_modal.js`)
+- Ported Python changes to JS for live preview support
+- Created `VideoModal` class extending `ModalDialog` (singleton pattern)
+- Supports YouTube, Vimeo, Dailymotion services
+- Event delegation on `document` for dynamic content support
+- Feature-flagged: only active when `videoEmbeddingEnabled` is true
+
+#### Base ModalDialog Enhancement (`modal_dialog.js`)
+- Added ESC key handling to base `ModalDialog` class
+- Handler attaches on `show()`, detaches on `hide()` to prevent accumulation
+- Uses namespaced event (`keydown.modalDialog`) for clean removal
+- All ModalDialog subclasses now benefit from ESC-to-close
+
+#### CSS Styling (`video_embed.scss`)
+- Service-specific link colors (YouTube red, Vimeo blue, Dailymotion blue)
+- Dark-themed modal with CSS variables from `colors.scss`
+- Responsive 16:9 aspect ratio iframe wrapper
+- Uses project font variables (`--extra-large-font-size`, `--font-weight-bold`)
+
+#### Help Panel (`VideoHelp.svelte`)
+- Updated documentation with new syntax examples
+- Shows both basic and titled video embed syntax
+
+#### Tests (`test_markdown_video_plugin.py`)
+- 21 tests covering:
+  - `TestRenderVideoLink` - render function (all services, XSS escaping)
+  - `TestExtractVideoEmbeds` - extraction (titles, invalid input, case handling)
+  - `TestRestoreVideoEmbeds` - restoration (multiple videos, HTML preservation)
+  - `TestFullExtractRestoreFlow` - integration tests
+
+### Files Modified
+- `askbot/utils/markdown_plugins/video_extract.py`
+- `askbot/utils/markdown_plugins/video_embed.py` (deleted)
+- `askbot/media/wmd/markdown-it/plugins/video_extract.js`
+- `askbot/media/js/utils/video_modal.js` (new)
+- `askbot/media/js/utils/modal_dialog.js`
+- `askbot/jinja2/meta/bottom_scripts.html`
+- `askbot/media/sass/components/video_embed.scss`
+- `askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte`
+- `askbot/tests/test_markdown_video_plugin.py`
+********
