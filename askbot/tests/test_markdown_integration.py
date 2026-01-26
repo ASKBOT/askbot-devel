@@ -114,12 +114,13 @@ class TestMarkdownIntegration(TestCase):
 
         soup = BeautifulSoup(html, 'html5lib')
 
-        # Find iframe element
-        iframe = soup.find('iframe')
-        self.assertIsNotNone(iframe)
+        # Find video link element (video embedding now uses clickable links)
+        link = soup.find('a', class_='js-video-link')
+        self.assertIsNotNone(link)
 
-        # Verify src attribute
-        self.assertIn('youtube.com/embed/dQw4w9WgXcQ', iframe['src'])
+        # Verify data attributes
+        self.assertEqual(link['data-video-service'], 'youtube')
+        self.assertEqual(link['data-video-id'], 'dQw4w9WgXcQ')
 
         # Verify surrounding text
         self.assertIn('Check this:', html)
@@ -289,10 +290,11 @@ def example():
         self.assertIsNotNone(strong)
         self.assertEqual(strong.text, 'bold text')
 
-        # Verify video iframe
-        iframe = soup.find('iframe')
-        self.assertIsNotNone(iframe)
-        self.assertIn('abc123', iframe['src'])
+        # Verify video link (video embedding now uses clickable links)
+        link = soup.find('a', class_='js-video-link')
+        self.assertIsNotNone(link)
+        self.assertEqual(link['data-video-service'], 'youtube')
+        self.assertEqual(link['data-video-id'], 'abc123')
 
         # Verify code block with language class
         pre = soup.find('pre')
