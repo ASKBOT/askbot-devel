@@ -18,7 +18,7 @@ setup(
     name = "askbot",
     version = askbot.get_version(),#remember to manually set this correctly
     description = 'Question and Answer forum, like StackOverflow, written in python and Django',
-    packages = find_packages(exclude=['testproject']),
+    packages = find_packages(exclude=['testproject', 'askbot_site']),
     author = 'Evgeny.Fadeev',
     author_email = 'evgeny.fadeev@gmail.com',
     license = 'GPLv3',
