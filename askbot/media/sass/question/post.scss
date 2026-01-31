@@ -9,6 +9,7 @@
     font-size: var(--question-detail-title-font-size);
     line-height: var(--question-detail-title-line-height);
     margin: var(--question-detail-title-margin);
+    overflow-wrap: break-word;
     .js-editable-content,
     .js-editable-controls,
     .js-edit {
