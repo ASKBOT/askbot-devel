@@ -8018,6 +8018,8 @@ form.repost-comment-as-answer {
 
 .wmd-container {
   margin: var(--wmd-margin);
+  overflow: hidden;
+  width: 100%;
 }
 
 .wmd-input {
@@ -8150,6 +8152,7 @@ form.repost-comment-as-answer {
 
 .editor-help-panel-container {
   overflow: hidden;
+  width: 100%;
 }
 
 .help-panel-content .help-content {
@@ -8686,12 +8689,12 @@ code.hljs {
 }
 
 .hljs {
-  background: #f0f0f0;
+  background: #f3f3f3;
   color: #444;
 }
 
 .hljs-comment {
-  color: #888;
+  color: #697070;
 }
 
 .hljs-punctuation, .hljs-tag {
@@ -8716,11 +8719,11 @@ code.hljs {
 }
 
 .hljs-link, .hljs-operator, .hljs-regexp, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-symbol, .hljs-template-variable, .hljs-variable {
-  color: #bc6060;
+  color: #ab5656;
 }
 
 .hljs-literal {
-  color: #78a960;
+  color: #695;
 }
 
 .hljs-addition, .hljs-built_in, .hljs-bullet, .hljs-code {
@@ -8732,7 +8735,7 @@ code.hljs {
 }
 
 .hljs-meta .hljs-string {
-  color: #4d99bf;
+  color: #38a;
 }
 
 .hljs-emphasis {
@@ -8745,7 +8748,8 @@ code.hljs {
 
 pre code {
   display: block;
-  background: #f8f8f8;
+  background: #F3F3F3;
+  color: #444;
   padding: 1em;
   overflow-x: auto;
   border-radius: 4px;
@@ -8753,95 +8757,92 @@ pre code {
   word-wrap: normal;
 }
 pre code .c, pre code .ch, pre code .cm, pre code .cp, pre code .cpf, pre code .c1, pre code .cs {
-  color: #888;
+  color: #697070;
 }
 pre code .k, pre code .kc, pre code .kd, pre code .kn, pre code .kp, pre code .kr, pre code .kt {
-  color: #008;
-  font-weight: 700;
+  color: #444;
+  font-weight: bold;
 }
 pre code .s, pre code .s1, pre code .s2, pre code .sa, pre code .sb, pre code .sc, pre code .sd, pre code .se, pre code .sh, pre code .si, pre code .sr, pre code .ss, pre code .sx, pre code .dl {
-  color: #b22;
+  color: #880000;
 }
 pre code .m, pre code .mb, pre code .mf, pre code .mh, pre code .mi, pre code .mo, pre code .il {
-  color: #b22;
+  color: #880000;
 }
 pre code .n, pre code .na, pre code .nc, pre code .nd, pre code .ne, pre code .ni, pre code .nl, pre code .nn, pre code .no, pre code .nv, pre code .nx {
-  color: #333;
+  color: #444;
 }
 pre code .bp, pre code .fm, pre code .py, pre code .vc, pre code .vg, pre code .vi, pre code .vm {
-  color: #333;
+  color: #444;
 }
 pre code .nf {
-  color: #00a;
-  font-weight: 700;
+  color: #880000;
+  font-weight: bold;
 }
 pre code .nt {
-  color: #008;
-  font-weight: 700;
+  color: #444;
+  font-weight: bold;
 }
 pre code .o, pre code .ow {
-  color: #666;
+  color: #ab5656;
 }
 pre code .l, pre code .ld {
-  color: #080;
+  color: #695;
 }
 pre code .nb {
-  color: #007070;
+  color: #397300;
 }
 pre code .p, pre code .pm {
-  color: #333;
+  color: rgba(68, 68, 68, 0.67);
 }
 pre code .g {
-  color: #333;
+  color: #444;
 }
 pre code .gd {
-  color: #a00;
-  background: #fee;
+  color: #880000;
 }
 pre code .ge {
   font-style: italic;
 }
 pre code .ges {
   font-style: italic;
-  font-weight: 700;
+  font-weight: bold;
 }
 pre code .gh {
-  color: #333;
-  font-weight: 700;
+  color: #880000;
+  font-weight: bold;
 }
 pre code .gi {
-  color: #0a0;
-  background: #dfd;
+  color: #397300;
 }
 pre code .go {
-  color: #888;
+  color: #697070;
 }
 pre code .gp {
-  color: #555;
-  font-weight: 700;
+  color: #444;
+  font-weight: bold;
 }
 pre code .gr {
-  color: #a00;
+  color: #880000;
 }
 pre code .gs {
-  font-weight: 700;
+  font-weight: bold;
 }
 pre code .gt {
-  color: #a00;
+  color: #880000;
 }
 pre code .gu {
-  color: #606;
-  font-weight: 700;
+  color: #1f7199;
+  font-weight: bold;
 }
 pre code .err {
-  color: #a00;
-  background: #fee;
+  color: #880000;
 }
 pre code .w {
   color: transparent;
 }
 pre code .esc {
-  color: #666;
+  color: #ab5656;
 }
 
 .info-box {
@@ -9996,6 +9997,7 @@ ul.tags li {
 
 .post-content {
   flex-grow: 1;
+  width: 100%;
   max-width: calc(100% - var(--post-vote-controls-width) - var(--layout-horizontal-padding));
 }
 .post-content .js-editable-content {

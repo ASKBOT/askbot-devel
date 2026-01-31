@@ -47,10 +47,12 @@
     .help-panel {
         background: var(--info-box-bg);
         border: var(--info-box-border);
-        border-radius: var(--info-box-border-radius);
+        border-bottom: 0;
+        border-radius: var(--input-border-radius) var(--input-border-radius) 0 0;
         box-shadow: var(--info-box-box-shadow);
-        margin: 0 0 0.5rem;
+        margin: 0;
         overflow: hidden;
+        width: 100%;
     }
 
     .help-panel-content {

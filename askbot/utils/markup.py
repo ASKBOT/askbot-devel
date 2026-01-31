@@ -17,7 +17,7 @@ from markdown_it import MarkdownIt
 from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 from pygments import highlight as pygments_highlight
-from pygments.lexers import get_lexer_by_name, guess_lexer
+from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
 from pygments.util import ClassNotFound
 
@@ -39,13 +39,17 @@ URL_RE = re.compile("((?<!(href|.src|data)=['\"])((http|https|ftp)\://([a-zA-Z0-
 
 def highlight_code(code, lang, attrs):
     """
-    Syntax highlighting using Pygments.
+    Syntax highlighting using Pygments with highlight.js-style auto-detection.
 
     markdown-it-py's highlight callback should return just the inner HTML content.
     markdown-it wraps the result in <pre><code class="language-X">...</code></pre>.
 
     We use nowrap=True to get just the <span> elements from Pygments.
     The CSS styles target pre code spans for syntax coloring.
+
+    When no language is specified, we use the highlight.js detection algorithm
+    (ported to Python) to auto-detect the language. This ensures consistent
+    detection between backend and frontend highlighting.
 
     Args:
         code: Source code string
@@ -56,9 +60,16 @@ def highlight_code(code, lang, attrs):
         HTML string with syntax highlighting (just spans, no wrapper)
     """
     from html import escape
+    from askbot.utils.hljs_detect import detect_language
 
     if not lang:
-        # No language specified, return escaped code (markdown-it wraps it)
+        # Auto-detect using highlight.js algorithm
+        detected_lang, relevance = detect_language(code)
+        if detected_lang and relevance > 0:
+            lang = detected_lang
+
+    if not lang:
+        # Still no language, return escaped code
         return escape(code)
 
     try:
@@ -70,14 +81,9 @@ def highlight_code(code, lang, attrs):
         highlighted = pygments_highlight(code, lexer, formatter)
         return highlighted
     except ClassNotFound:
-        # Unknown language, try guessing
-        try:
-            lexer = guess_lexer(code)
-            formatter = HtmlFormatter(nowrap=True, noclasses=False)
-            return pygments_highlight(code, lexer, formatter)
-        except Exception:  # pylint: disable=broad-except
-            # Give up, return escaped code
-            return escape(code)
+        # Unknown language - don't use guess_lexer to ensure consistency
+        # with frontend highlight.js detection
+        return escape(code)
     except Exception as e:  # pylint: disable=broad-except
         # Log error but don't break rendering
         logger = logging.getLogger('askbot.markdown')
@@ -121,6 +127,27 @@ def get_md_converter():
 
     # Configure syntax highlighting
     md.options['highlight'] = highlight_code
+
+    # Custom renderer for indented code blocks to enable auto-detection
+    # By default, markdown-it only calls the highlight callback for fenced blocks.
+    # This custom rule makes indented blocks also use the highlight callback.
+    def render_code_block_with_highlight(self, tokens, idx, options, env):
+        """Render indented code blocks with syntax highlighting."""
+        from html import escape
+        token = tokens[idx]
+        code = token.content
+
+        # Call the highlight callback if available (same as fence blocks do)
+        if options.get('highlight'):
+            highlighted = options['highlight'](code, '', '')  # No language specified
+            if highlighted:
+                # Wrap in pre/code tags (highlight returns inner content only)
+                return f'<pre><code>{highlighted}</code></pre>\n'
+
+        # Fallback to default escaped output
+        return f'<pre><code>{escape(code)}</code></pre>\n'
+
+    md.add_render_rule('code_block', render_code_block_with_highlight)
 
     # Enable standard plugins
     md.use(footnote_plugin)

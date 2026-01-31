@@ -47,7 +47,32 @@ AskbotMarkdownConverter.prototype._createMarkdownInstance = function() {
         return hljs.highlight(code, {language: lang}).value;
       } catch (_) {}
     }
-    return ''; // Let markdown-it escape the code
+    // Auto-detect language when not specified
+    try {
+      return hljs.highlightAuto(code).value;
+    } catch (_) {}
+    return ''; // Fallback: let markdown-it escape the code
+  };
+
+  // Custom renderer for indented code blocks to enable auto-detection
+  // By default, markdown-it only calls the highlight callback for fenced blocks.
+  // This custom rule makes indented blocks also use the highlight callback.
+  md.renderer.rules.code_block = function(tokens, idx, options, env, self) {
+    var token = tokens[idx];
+    var code = token.content;
+
+    // Call the highlight callback if available (same as fence blocks do)
+    if (options.highlight) {
+      var highlighted = options.highlight(code, '');  // No language specified
+      if (highlighted) {
+        // Escape any HTML entities that might be in the highlighted result
+        // and wrap in pre/code tags
+        return '<pre><code>' + highlighted + '</code></pre>\n';
+      }
+    }
+
+    // Fallback to default escaped output
+    return '<pre><code>' + md.utils.escapeHtml(code) + '</code></pre>\n';
   };
 
   // Apply plugins in order (matching Python backend)

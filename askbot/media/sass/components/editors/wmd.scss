@@ -1,5 +1,7 @@
 .wmd-container {
   margin: var(--wmd-margin);
+  overflow: hidden;
+  width: 100%;
 }
 
 .wmd-input { 

@@ -105,6 +105,40 @@ class TestMarkdownIntegration(TestCase):
         self.assertIn('def hello():', code_tag.text)
         self.assertIn('pass', code_tag.text)
 
+    def test_syntax_highlighting_indented_code_block_autodetect(self):
+        """Indented code blocks (4-space) should get language auto-detection."""
+        md = get_md_converter()
+        # Indented Python code (4 spaces) - should be auto-detected as Python
+        text = """Here is some code:
+
+    def fibonacci(n):
+        if n <= 1:
+            return n
+        return fibonacci(n-1) + fibonacci(n-2)
+
+More text after."""
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+
+        # Check for pre > code structure
+        pre_tag = soup.find('pre')
+        self.assertIsNotNone(pre_tag, "Should have a <pre> tag for code block")
+
+        code_tag = pre_tag.find('code')
+        self.assertIsNotNone(code_tag, "Should have a <code> tag inside <pre>")
+
+        # Verify code content is present
+        self.assertIn('def fibonacci', code_tag.text)
+        self.assertIn('return', code_tag.text)
+
+        # Verify syntax highlighting was applied (Pygments adds <span> elements)
+        spans = code_tag.find_all('span')
+        self.assertGreater(
+            len(spans), 0,
+            "Indented code block should have syntax highlighting spans from auto-detection"
+        )
+
     @with_settings(ENABLE_VIDEO_EMBEDDING=True)
     def test_video_embedding(self):
         # Video embedding uses extraction/restoration pattern, so must use

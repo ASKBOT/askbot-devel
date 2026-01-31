@@ -5,11 +5,17 @@
 
     // Props
     export let buttonRow = null;
+    export let editorInput = null;
 
     // Local state
     let helpButton = null;
+    let containerEl = null;
+    let wrapperEl = null;
 
     $: isOpen = $isPanelOpen;
+
+    // Toggle class on container when panel opens/closes
+    $: containerEl && containerEl.classList.toggle('js-help-panel-open', isOpen);
 
     function handleButtonClick() {
         togglePanel();
@@ -36,9 +42,18 @@
     // Subscribe to store changes
     const unsubscribe = isPanelOpen.subscribe(value => {
         updateButtonState(value);
+        // Toggle class on editor input
+        if (editorInput) {
+            editorInput.classList.toggle('js-help-panel-open', value);
+        }
     });
 
     onMount(() => {
+        // Get reference to the container element (parent of our wrapper)
+        if (wrapperEl) {
+            containerEl = wrapperEl.parentElement;
+        }
+
         if (buttonRow) {
             // Create the help button element
             helpButton = document.createElement('li');
@@ -71,7 +86,9 @@
     });
 </script>
 
-<HelpPanel />
+<div bind:this={wrapperEl}>
+    <HelpPanel />
+</div>
 
 <style>
     :global(.wmd-help-button) {
@@ -81,5 +98,10 @@
     :global(.wmd-help-button.active::before) {
         color: var(--wmd-button-hover-color) !important;
         background: var(--wmd-button-hover-bg) !important;
+    }
+
+    :global(textarea.js-help-panel-open) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
     }
 </style>

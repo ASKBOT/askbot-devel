@@ -1239,7 +1239,8 @@ util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
 				new EditorHelpPanel({
 					target: helpPanelContainer,
 					props: {
-						buttonRow: buttonRow
+						buttonRow: buttonRow,
+						editorInput: inputBox
 					}
 				});
 			}

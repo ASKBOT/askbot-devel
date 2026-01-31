@@ -1,70 +1,71 @@
 // Pygments syntax highlighting styles
-// Targets code blocks rendered by markdown-it with Pygments highlighting
+// Matched to highlight.js v11.11.1 default theme for frontend/backend parity
 // Structure: <pre><code class="language-X">...spans...</code></pre>
 
 pre code {
   display: block;
-  background: #f8f8f8;
+  background: #F3F3F3;
+  color: #444;
   padding: 1em;
   overflow-x: auto;
   border-radius: 4px;
   white-space: pre;        // Preserve newlines and spaces
   word-wrap: normal;       // Don't wrap long lines
 
-  // Comments (gray)
-  .c, .ch, .cm, .cp, .cpf, .c1, .cs { color: #888; }
+  // Comments - hljs-comment: #697070
+  .c, .ch, .cm, .cp, .cpf, .c1, .cs { color: #697070; }
 
-  // Keywords (bold blue)
-  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #008; font-weight: 700; }
+  // Keywords - hljs-keyword: bold, base color
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: #444; font-weight: bold; }
 
-  // Strings (dark red)
-  .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl { color: #b22; }
+  // Strings - hljs-string: #880000
+  .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl { color: #880000; }
 
-  // Numbers (dark red)
-  .m, .mb, .mf, .mh, .mi, .mo, .il { color: #b22; }
+  // Numbers - hljs-number: #880000
+  .m, .mb, .mf, .mh, .mi, .mo, .il { color: #880000; }
 
-  // Names - base color
-  .n, .na, .nc, .nd, .ne, .ni, .nl, .nn, .no, .nv, .nx { color: #333; }
-  .bp, .fm, .py, .vc, .vg, .vi, .vm { color: #333; }
+  // Names - base color #444
+  .n, .na, .nc, .nd, .ne, .ni, .nl, .nn, .no, .nv, .nx { color: #444; }
+  .bp, .fm, .py, .vc, .vg, .vi, .vm { color: #444; }
 
-  // Functions (bold)
-  .nf { color: #00a; font-weight: 700; }
+  // Functions - hljs-title: #880000 bold
+  .nf { color: #880000; font-weight: bold; }
 
-  // Tags (bold)
-  .nt { color: #008; font-weight: 700; }
+  // Tags - hljs-tag .hljs-name: #444, bold from hljs-name
+  .nt { color: #444; font-weight: bold; }
 
-  // Operators/Symbols
-  .o, .ow { color: #666; }
+  // Operators/Symbols - hljs-operator: #ab5656
+  .o, .ow { color: #ab5656; }
 
-  // Literals (green)
-  .l, .ld { color: #080; }
+  // Literals - hljs-literal: #695
+  .l, .ld { color: #695; }
 
-  // Built-ins (teal)
-  .nb { color: #007070; }
+  // Built-ins - hljs-built_in: #397300
+  .nb { color: #397300; }
 
-  // Punctuation
-  .p, .pm { color: #333; }
+  // Punctuation - hljs-punctuation: #444a
+  .p, .pm { color: rgba(68, 68, 68, 0.67); }
 
   // Generic tokens (diffs, prompts, etc.)
-  .g { color: #333; }
-  .gd { color: #a00; background: #fee; }  // deleted
-  .ge { font-style: italic; }              // emphasis
-  .ges { font-style: italic; font-weight: 700; }
-  .gh { color: #333; font-weight: 700; }   // heading
-  .gi { color: #0a0; background: #dfd; }   // inserted
-  .go { color: #888; }                     // output
-  .gp { color: #555; font-weight: 700; }   // prompt
-  .gr { color: #a00; }                     // error
-  .gs { font-weight: 700; }                // strong
-  .gt { color: #a00; }                     // traceback
-  .gu { color: #606; font-weight: 700; }   // subheading
+  .g { color: #444; }
+  .gd { color: #880000; }                  // deleted - hljs-deletion
+  .ge { font-style: italic; }              // emphasis - hljs-emphasis
+  .ges { font-style: italic; font-weight: bold; }
+  .gh { color: #880000; font-weight: bold; }   // heading - hljs-section
+  .gi { color: #397300; }                  // inserted - hljs-addition
+  .go { color: #697070; }                  // output
+  .gp { color: #444; font-weight: bold; }  // prompt
+  .gr { color: #880000; }                  // error
+  .gs { font-weight: bold; }               // strong - hljs-strong
+  .gt { color: #880000; }                  // traceback
+  .gu { color: #1f7199; font-weight: bold; }   // subheading - hljs-meta
 
   // Error token
-  .err { color: #a00; background: #fee; }
+  .err { color: #880000; }
 
   // Whitespace (invisible)
   .w { color: transparent; }
 
-  // Escape sequences
-  .esc { color: #666; }
+  // Escape sequences - hljs-variable/symbol: #ab5656
+  .esc { color: #ab5656; }
 }
