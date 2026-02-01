@@ -44,7 +44,7 @@ body {
 
 pre {
   overflow-x: scroll;
-  padding: var(--pre-padding);
+  padding: var(--pre-v-padding) var(--pre-h-padding);
 }
 
 a,

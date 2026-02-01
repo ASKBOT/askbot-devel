@@ -91,28 +91,3 @@
   padding: var(--wmd-preview-toggle-padding);
   margin: var(--wmd-preview-toggle-margin);
 }
-
-.wmd-preview,
-.js-editable-content {
-  padding: var(--wmd-preview-padding);
-  margin: var(--wmd-preview-margin);
-  ul, ol {
-    padding: var(--wmd-preview-list-padding);
-  }
-  ul, ol, p, pre {
-    margin: var(--wmd-preview-block-margin);
-  }
-
-  & > :last-child {
-    margin-bottom: 0;
-  }
-}
-
-.js-editable-content {
-  padding-left: 0;
-}
-
-.wmd-preview {
-  background: var(--wmd-preview-background) !important;
-  border: var(--wmd-preview-border);
-}

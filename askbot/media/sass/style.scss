@@ -23,8 +23,9 @@
 @use './components/footer.scss';
 @use './components/forum_header.scss';
 @use './components/header.scss';
-@use './components/highlight.min.css';
-@use './components/pygments-compat.scss';
+@use './user-content/syntax-highlighting.scss';
+@use './user-content/block-elements.scss';
+@use './user-content/images.scss';
 @use './components/info_box.scss';
 @use './components/input_with_button.scss';
 @use './components/jquery.modal.scss';

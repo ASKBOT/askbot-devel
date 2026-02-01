@@ -265,11 +265,12 @@
   --wmd-preview-list-padding: 0 0 0 1.5rem;
   --wmd-preview-padding: 0.5rem 0.75rem;
   --wmd-preview-margin: 0 0 0.5rem;
-  --wmd-preview-background: var(--clr-neutral-95);
+  --wmd-preview-background: var(--clr-neutral-85);
   --wmd-preview-border: var(--border-width) var(--border-style) var(--clr-neutral-80);
   --wmd-preview-toggle-padding: 0 0 0.5rem;
   --wmd-preview-toggle-margin: 0;
-  --pre-padding: 0.5rem;
+  --pre-v-padding: 0.5rem;
+  --pre-h-padding: 0;
 
   --badge-text-color: white;
   --badge-bg: var(--clr-neutral-30);
@@ -277,4 +278,22 @@
   --badge-padding: 0.125rem 0.5rem;
   --badge-border: none;
   --badge-border-radius: 0.25rem;
+
+  // Syntax highlighting (code blocks)
+  --code-bg: #f3f3f3;
+  --code-fg: #444;
+  --code-padding: 1em;
+  --code-border-radius: 4px;
+  --code-comment: #697070;
+  --code-keyword: #444;
+  --code-string: #880000;
+  --code-function: #880000;
+  --code-operator: #ab5656;
+  --code-literal: #669955;
+  --code-builtin: #397300;
+  --code-meta: #1f7199;
+  --code-meta-string: #3388aa;
+  --code-punctuation: rgba(68, 68, 68, 0.67);
+  --code-deletion: #880000;
+  --code-addition: #397300;
 }

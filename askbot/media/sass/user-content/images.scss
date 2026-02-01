@@ -1,0 +1,7 @@
+// Image handling for user-contributed content
+// Ensures images don't overflow their containers
+
+.post-body img,
+.js-editable-content img {
+  max-width: 100%;
+}
