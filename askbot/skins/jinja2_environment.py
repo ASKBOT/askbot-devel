@@ -17,7 +17,7 @@ from askbot.skins.askbot_environments import SkinEnvironment
 from askbot.templatetags.textwrap import TextWrapExtension
 from askbot.templatetags.premail import PremailerExtension
 from askbot.utils.functions import encode_jwt
-from askbot.utils.html import ALLOWED_HTML_ELEMENTS
+from askbot.utils.html import ALLOWED_HTML_ELEMENTS, HIDDEN_HELP_HTML_ELEMENTS
 from askbot.utils.translation import HAS_ASKBOT_LOCALE_MIDDLEWARE
 from askbot.utils.translation import get_language
 
@@ -75,7 +75,8 @@ def factory(**options):
                       'hasattr' : hasattr,
                       'ADMIN_TAGS_CATEGORY_ROOT': const.ADMIN_TAGS_CATEGORY_ROOT,
                       'encode_jwt': encode_jwt,
-                      'ALLOWED_HTML_ELEMENTS': ALLOWED_HTML_ELEMENTS}
+                      'ALLOWED_HTML_ELEMENTS': [t for t in ALLOWED_HTML_ELEMENTS
+                                                if t not in HIDDEN_HELP_HTML_ELEMENTS]}
 
     mother_of_all_loaders = options.pop('loader')
 

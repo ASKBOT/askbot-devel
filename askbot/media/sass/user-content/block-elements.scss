@@ -6,15 +6,101 @@
 .js-editable-content {
   padding: var(--wmd-preview-padding);
   margin: var(--wmd-preview-margin);
+
+  pre code {
+    display: block;
+    font-size: var(--small-font-size);
+    padding: var(--code-padding);
+    overflow-x: auto;
+    border-radius: var(--code-border-radius);
+    white-space: pre;
+    word-wrap: normal;
+  }
+
   ul, ol {
     padding: var(--wmd-preview-list-padding);
   }
-  ul, ol, p, pre {
+
+  ul, ol, p, pre, blockquote, dl, dd, table, details, hr {
     margin: var(--wmd-preview-block-margin);
   }
 
   & > :last-child {
     margin-bottom: 0;
+  }
+
+  // Headings
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--heading-font-weight);
+    margin: var(--wmd-preview-block-margin) !important;
+    line-height: var(--wmd-preview-line-height);
+  }
+
+  h1 { font-size: var(--extra-large-font-size); }
+  h2 { font-size: var(--large-font-size); }
+  h3 { font-size: calc(1.125 * var(--font-size)); }
+  h4, h5, h6 { font-size: var(--font-size); }
+
+  // Blockquote
+  blockquote {
+    border-left: var(--blockquote-tag-border-width) solid var(--blockquote-tag-border-color);
+    padding-left: var(--blockquote-tag-before-padding);
+    color: var(--blockquote-tag-color);
+  }
+
+  // Horizontal rule
+  hr {
+    border: none;
+    border-top: var(--border-width) var(--border-style) var(--hr-tag-color);
+  }
+
+  // Definition lists
+  dl {
+    margin-left: 0;
+  }
+
+  dt {
+    font-weight: var(--font-weight-bold);
+  }
+
+  dd {
+    margin-left: var(--dd-tag-before-margin);
+  }
+
+  // Tables
+  table {
+    border-collapse: collapse;
+    width: auto;
+  }
+
+  th, td {
+    border: var(--border-width) var(--border-style) var(--td-tag-border-color);
+    padding: var(--td-tag-padding);
+    text-align: var(--td-tag-text-align);
+  }
+
+  th {
+    background: var(--th-tag-bg);
+    font-weight: var(--font-weight-bold);
+  }
+
+  // Collapsible details/summary
+  details {
+    border: var(--border-width) var(--border-style) var(--details-tag-border-color);
+    border-radius: var(--border-radius);
+    padding: var(--details-tag-padding);
+    & > :last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+  }
+
+  details[open] summary {
+    margin-bottom: 0.5rem;
   }
 }
 

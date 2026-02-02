@@ -1,19 +1,6 @@
 // Syntax highlighting for code blocks
 // Supports both highlight.js (frontend) and Pygments (backend) classes
 // Colors controlled via CSS variables in variables.scss
-
-// Base code block styles
-pre code {
-  display: block;
-  background: var(--code-bg);
-  color: var(--code-fg);
-  padding: var(--code-padding);
-  overflow-x: auto;
-  border-radius: var(--code-border-radius);
-  white-space: pre;
-  word-wrap: normal;
-}
-
 code.hljs {
   padding: var(--code-padding);
 }
@@ -21,6 +8,14 @@ code.hljs {
 // ===========================================
 // HIGHLIGHT.JS CLASSES
 // ===========================================
+.wmd-preview,
+.js-editable-content {
+  pre code {
+    display: block;
+    background: var(--code-bg);
+    color: var(--code-fg);
+  }
+}
 
 .hljs-comment {
   color: var(--code-comment);
