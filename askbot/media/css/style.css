@@ -862,39 +862,35 @@ body:not(.with-tabs) main {
   --wmd-spacer-height: 1.25rem;
   --wmd-spacer-margin: 0 0.25rem;
   --wmd-spacer-background: var(--clr-neutral-50);
-  --wmd-preview-block-margin: 0 0 0.75rem;
-  --wmd-preview-list-padding: 0 0 0 1.5rem;
   --wmd-preview-padding: 0.5rem 0.75rem;
   --wmd-preview-margin: 0 0 0.5rem;
   --wmd-preview-background: var(--clr-neutral-85);
   --wmd-preview-border: var(--border-width) var(--border-style) var(--clr-neutral-80);
   --wmd-preview-toggle-padding: 0 0 0.5rem;
   --wmd-preview-toggle-margin: 0;
-  --wmd-preview-line-height: 1.25;
   --badge-text-color: white;
   --badge-bg: var(--clr-neutral-30);
   --badge-height: 2rem;
   --badge-padding: 0.125rem 0.5rem;
   --badge-border: none;
   --badge-border-radius: 0.25rem;
-  --kbd-tag-padding: 0.125rem 0.25rem;
-  --sup-tag-top: -0.5rem;
-  --sub-tag-bottom: 0.25rem;
-  --blockquote-tag-before-padding: 0.5rem;
-  --blockquote-tag-border-width: 0.25rem;
-  --blockquote-tag-border-color: var(--clr-neutral-70);
-  --blockquote-tag-color: var(--clr-neutral-40);
-  --hr-tag-color: var(--clr-neutral-70);
-  --td-tag-border-color: var(--clr-neutral-70);
-  --td-tag-padding: 0.5rem;
-  --td-tag-text-align: left;
-  --th-tag-bg: var(--clr-neutral-95);
-  --details-tag-border-color: var(--clr-neutral-70);
-  --details-tag-padding: 0.5rem;
-  --dd-tag-before-margin: 1rem;
+  --uc-margin: 0 0 0.75rem;
+  --uc-list-padding: 0 0 0 1.5rem;
+  --uc-h-tag-line-height: 1.25;
+  --uc-border-color: var(--clr-neutral-70);
+  --uc-box-padding: 0.5rem;
+  --uc-kbd-tag-padding: 0.125rem 0.25rem;
+  --uc-sup-tag-top: -0.375rem;
+  --uc-sub-tag-bottom: -0.25rem;
+  --uc-bq-tag-padding-left: 0.5rem;
+  --uc-bq-tag-border-width: 0.25rem;
+  --uc-bq-tag-color: var(--clr-neutral-40);
+  --uc-td-tag-text-align: left;
+  --uc-th-tag-bg: var(--clr-neutral-95);
+  --uc-dd-tag-indent: 1rem;
   --code-bg: #f3f3f3;
   --code-fg: #444;
-  --code-padding: 1em;
+  --code-padding: 0.875rem;
   --code-border-radius: 4px;
   --code-comment: #697070;
   --code-keyword: #444;
@@ -8871,7 +8867,7 @@ pre code .esc {
 .wmd-preview ul, .wmd-preview ol,
 .js-editable-content ul,
 .js-editable-content ol {
-  padding: var(--wmd-preview-list-padding);
+  padding: var(--uc-list-padding);
 }
 .wmd-preview ul, .wmd-preview ol, .wmd-preview p, .wmd-preview pre, .wmd-preview blockquote, .wmd-preview dl, .wmd-preview dd, .wmd-preview table, .wmd-preview details, .wmd-preview hr,
 .js-editable-content ul,
@@ -8884,7 +8880,7 @@ pre code .esc {
 .js-editable-content table,
 .js-editable-content details,
 .js-editable-content hr {
-  margin: var(--wmd-preview-block-margin);
+  margin: var(--uc-margin);
 }
 .wmd-preview > :last-child,
 .js-editable-content > :last-child {
@@ -8898,8 +8894,8 @@ pre code .esc {
 .js-editable-content h5,
 .js-editable-content h6 {
   font-weight: var(--heading-font-weight);
-  margin: var(--wmd-preview-block-margin) !important;
-  line-height: var(--wmd-preview-line-height);
+  margin: var(--uc-margin) !important;
+  line-height: var(--uc-h-tag-line-height);
 }
 .wmd-preview h1,
 .js-editable-content h1 {
@@ -8921,14 +8917,14 @@ pre code .esc {
 }
 .wmd-preview blockquote,
 .js-editable-content blockquote {
-  border-left: var(--blockquote-tag-border-width) solid var(--blockquote-tag-border-color);
-  padding-left: var(--blockquote-tag-before-padding);
-  color: var(--blockquote-tag-color);
+  border-left: var(--uc-bq-tag-border-width) solid var(--uc-border-color);
+  padding-left: var(--uc-bq-tag-padding-left);
+  color: var(--uc-bq-tag-color);
 }
 .wmd-preview hr,
 .js-editable-content hr {
   border: none;
-  border-top: var(--border-width) var(--border-style) var(--hr-tag-color);
+  border-top: var(--border-width) var(--border-style) var(--uc-border-color);
 }
 .wmd-preview dl,
 .js-editable-content dl {
@@ -8940,7 +8936,7 @@ pre code .esc {
 }
 .wmd-preview dd,
 .js-editable-content dd {
-  margin-left: var(--dd-tag-before-margin);
+  margin-left: var(--uc-dd-tag-indent);
 }
 .wmd-preview table,
 .js-editable-content table {
@@ -8950,20 +8946,20 @@ pre code .esc {
 .wmd-preview th, .wmd-preview td,
 .js-editable-content th,
 .js-editable-content td {
-  border: var(--border-width) var(--border-style) var(--td-tag-border-color);
-  padding: var(--td-tag-padding);
-  text-align: var(--td-tag-text-align);
+  border: var(--border-width) var(--border-style) var(--uc-border-color);
+  padding: var(--uc-box-padding);
+  text-align: var(--uc-td-tag-text-align);
 }
 .wmd-preview th,
 .js-editable-content th {
-  background: var(--th-tag-bg);
+  background: var(--uc-th-tag-bg);
   font-weight: var(--font-weight-bold);
 }
 .wmd-preview details,
 .js-editable-content details {
-  border: var(--border-width) var(--border-style) var(--details-tag-border-color);
+  border: var(--border-width) var(--border-style) var(--uc-border-color);
   border-radius: var(--border-radius);
-  padding: var(--details-tag-padding);
+  padding: var(--uc-box-padding);
 }
 .wmd-preview details > :last-child,
 .js-editable-content details > :last-child {
@@ -9022,7 +9018,7 @@ pre code .esc {
   background: var(--tag-bg);
   border: var(--border-width) var(--border-style) var(--tag-border-color);
   border-radius: var(--border-radius);
-  padding: var(--kbd-tag-padding);
+  padding: var(--uc-kbd-tag-padding);
   box-shadow: inset 0 -1px 0 var(--clr-neutral-70);
 }
 .wmd-preview sub, .wmd-preview sup,
@@ -9035,11 +9031,11 @@ pre code .esc {
 }
 .wmd-preview sup,
 .js-editable-content sup {
-  top: var(--sup-tag-top);
+  top: var(--uc-sup-tag-top);
 }
 .wmd-preview sub,
 .js-editable-content sub {
-  bottom: var(--sub-tag-bottom);
+  bottom: var(--uc-sub-tag-bottom);
 }
 
 .post-body img,
@@ -11216,10 +11212,10 @@ a.badge-page-link {
   overflow: hidden;
 }
 .moderation-queue-page .js-message ul, .moderation-queue-page .js-message ol {
-  padding: var(--wmd-preview-list-padding);
+  padding: var(--uc-list-padding);
 }
 .moderation-queue-page .js-message ul, .moderation-queue-page .js-message ol, .moderation-queue-page .js-message p, .moderation-queue-page .js-message pre {
-  margin: var(--wmd-preview-block-margin);
+  margin: var(--uc-margin);
 }
 .moderation-queue-page .js-message .post-content > :last-child {
   margin-bottom: 0 !important;

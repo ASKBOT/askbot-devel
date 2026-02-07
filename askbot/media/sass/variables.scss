@@ -262,15 +262,12 @@
 	--wmd-spacer-height: 1.25rem;
   --wmd-spacer-margin: 0 0.25rem;
 	--wmd-spacer-background: var(--clr-neutral-50);
-  --wmd-preview-block-margin: 0 0 0.75rem;
-  --wmd-preview-list-padding: 0 0 0 1.5rem;
   --wmd-preview-padding: 0.5rem 0.75rem;
   --wmd-preview-margin: 0 0 0.5rem;
   --wmd-preview-background: var(--clr-neutral-85);
   --wmd-preview-border: var(--border-width) var(--border-style) var(--clr-neutral-80);
   --wmd-preview-toggle-padding: 0 0 0.5rem;
   --wmd-preview-toggle-margin: 0;
-  --wmd-preview-line-height: 1.25;
 
   --badge-text-color: white;
   --badge-bg: var(--clr-neutral-30);
@@ -279,27 +276,28 @@
   --badge-border: none;
   --badge-border-radius: 0.25rem;
 
-  // User content html tags
-  --kbd-tag-padding: 0.125rem 0.25rem; //mostly tag styles used, but needs padding b/c it's inline
-  --sup-tag-top: -0.5rem;
-  --sub-tag-bottom: 0.25rem;
-  --blockquote-tag-before-padding: 0.5rem;
-  --blockquote-tag-border-width: 0.25rem;
-  --blockquote-tag-border-color:  var(--clr-neutral-70);
-  --blockquote-tag-color: var(--clr-neutral-40);
-  --hr-tag-color: var(--clr-neutral-70);
-  --td-tag-border-color: var(--clr-neutral-70);
-  --td-tag-padding: 0.5rem;
-  --td-tag-text-align: left;
-  --th-tag-bg: var(--clr-neutral-95);
-  --details-tag-border-color: var(--clr-neutral-70);
-  --details-tag-padding: 0.5rem;
-  --dd-tag-before-margin: 1rem;
+  // User content - shared
+  --uc-margin: 0 0 0.75rem;
+  --uc-list-padding: 0 0 0 1.5rem;
+  --uc-h-tag-line-height: 1.25;
+  --uc-border-color: var(--clr-neutral-70);
+  --uc-box-padding: 0.5rem;
+
+  // User content - tag-specific
+  --uc-kbd-tag-padding: 0.125rem 0.25rem;
+  --uc-sup-tag-top: -0.375rem;
+  --uc-sub-tag-bottom: -0.25rem;
+  --uc-bq-tag-padding-left: 0.5rem;
+  --uc-bq-tag-border-width: 0.25rem;
+  --uc-bq-tag-color: var(--clr-neutral-40);
+  --uc-td-tag-text-align: left;
+  --uc-th-tag-bg: var(--clr-neutral-95);
+  --uc-dd-tag-indent: 1rem;
 
   // Syntax highlighting (code blocks)
   --code-bg: #f3f3f3;
   --code-fg: #444;
-  --code-padding: 1em;
+  --code-padding: 0.875rem;
   --code-border-radius: 4px;
   --code-comment: #697070;
   --code-keyword: #444;
