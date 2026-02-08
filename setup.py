@@ -6,7 +6,7 @@ import askbot
 PYTHON_VERSION_INFO = \
 """
 ERROR: This version of Askbot only works with Python 3,
-       if you need Askbot to work with Python 2, 
+       if you need Askbot to work with Python 2,
        try versions 0.10.x and earlier.
 """
 
@@ -52,9 +52,10 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
     long_description_content_type='text/markdown',
-    long_description = """Askbot will work alone or with other django apps (with some limitations, please see below), Django 2.2, PostgresQL(recommended) and MySQL >5.6
+    long_description = """Askbot will work alone or with other django apps (with some limitations, please see below),
+    Django 3-4, PostgresQL(recommended) and MySQL >5.6
 
-    This version of Askbot supports only Django 2 and Python 3. Versions 0.10.x and earlier support Python 2.
+    This version of Askbot supports only Django 3 and 4 and Python 3. Versions 0.10.x and earlier support Python 2.
 
     To upgrade, or select version of Askbot working with earlier versions of Django,
     please follow instructions at
