@@ -9,6 +9,7 @@
     font-size: var(--question-detail-title-font-size);
     line-height: var(--question-detail-title-line-height);
     margin: var(--question-detail-title-margin);
+    overflow-wrap: break-word;
     .js-editable-content,
     .js-editable-controls,
     .js-edit {
@@ -40,9 +41,6 @@
 
 .post-body {
   margin: var(--post-body-margin);
-  img {
-    max-width: 100%;
-  }
 }
 
 .post-vote-controls {
@@ -55,6 +53,7 @@
 
 .post-content {
   flex-grow: 1;
+  width: 100%;
   max-width: calc(100% - var(--post-vote-controls-width) - var(--layout-horizontal-padding));
   .js-editable-content {
     margin-bottom: 0.75rem;

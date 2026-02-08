@@ -165,7 +165,6 @@ def test_middleware():
     #    )
     required_middleware.extend([
         'askbot.middleware.view_log.ViewLogMiddleware',
-        'askbot.middleware.spaceless.SpacelessMiddleware',
     ])
     found_middleware = [x for x in django_settings.MIDDLEWARE
                         if x in required_middleware]

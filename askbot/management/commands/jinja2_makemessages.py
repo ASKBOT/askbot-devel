@@ -31,7 +31,7 @@ http://stackoverflow.com/questions/2090717/getting-translation-strings-for-jinja
 
 import re
 from django.core.management.commands import makemessages
-from django.utils.translation import trans_real
+from django.utils.translation import template as trans_real
 
 
 class Command(makemessages.Command):

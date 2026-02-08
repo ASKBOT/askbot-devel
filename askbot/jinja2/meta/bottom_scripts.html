@@ -35,11 +35,19 @@
   askbot['settings']['static_url'] = '{{ settings.STATIC_URL }}';
   askbot['settings']['minSearchWordLength'] = {{ min_search_word_length }};
   askbot['settings']['mathjaxEnabled'] = {{ settings.ENABLE_MATHJAX|as_js_bool }};
+  askbot['settings']['markupCodeFriendly'] = {{ settings.MARKUP_CODE_FRIENDLY|as_js_bool }};
+  askbot['settings']['videoEmbeddingEnabled'] = {{ settings.ENABLE_VIDEO_EMBEDDING|as_js_bool }};
+  askbot['settings']['autoLinkEnabled'] = {{ settings.ENABLE_AUTO_LINKING|as_js_bool }};
+  {% if settings.ENABLE_AUTO_LINKING %}
+    askbot['settings']['autoLinkPatterns'] = {{ settings.AUTO_LINK_PATTERNS|tojson }};
+    askbot['settings']['autoLinkUrls'] = {{ settings.AUTO_LINK_URLS|tojson }};
+  {% endif %}
   askbot['settings']['sharingSuffixText'] = '{{ settings.SHARING_SUFFIX_TEXT|escape }}';
   askbot['settings']['errorPlacement'] = 'after-label';
   askbot['data']['maxCommentLength'] = {{ settings.MAX_COMMENT_LENGTH }};
   askbot['settings']['editorType'] = '{{ settings.EDITOR_TYPE }}';
   askbot['settings']['commentsEditorType'] = '{{ settings.COMMENTS_EDITOR_TYPE|escapejs }}';
+  askbot['settings']['allowedHtmlElements'] = {{ ALLOWED_HTML_ELEMENTS|tojson }};
   askbot['messages']['askYourQuestion'] = '{{ settings.WORDS_ASK_YOUR_QUESTION|escapejs }}';
   askbot['messages']['acceptOwnAnswer'] = '{{ settings.WORDS_ACCEPT_OR_UNACCEPT_OWN_ANSWER|escapejs }}';
   askbot['messages']['followQuestions'] = '{{ settings.WORDS_FOLLOW_QUESTIONS|escapejs }}';
@@ -90,6 +98,7 @@
   <script src="{{ '/js/utils/modal_dialog.js'|media }}"></script>
   <script src="{{ '/js/utils/confirm_dialog.js'|media }}"></script>
   <script src="{{ '/js/utils/file_upload_dialog.js'|media }}"></script>
+  <script src="{{ '/js/utils/video_modal.js'|media }}"></script>
   <script src="{{ '/js/utils/toggle.js'|media }}"></script>
   <script src="{{ '/js/utils/ajax_toggle.js'|media }}"></script>
   <script src="{{ '/js/utils/dropdown_menu.js'|media }}"></script>

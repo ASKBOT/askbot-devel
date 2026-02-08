@@ -1,0 +1,17 @@
+{
+  "name": "askbot-markdown-parity-tests",
+  "version": "1.0.0",
+  "description": "Node.js runner for markdown parity tests between Python and JavaScript",
+  "private": true,
+  "scripts": {
+    "test": "node markdown_parity_runner.js"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "highlight.js": "^11.11.1",
+    "dompurify": "^3.2.3",
+    "jsdom": "^25.0.1"
+  }
+}

@@ -25,29 +25,6 @@ class AskbotStaticSettings(AppConf):
     ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif',
                                 '.bmp', '.png', '.tiff')
 
-    ALLOWED_HTML_ELEMENTS = ('a', 'abbr', 'acronym', 'address', 'b', 'big',
-        'blockquote', 'br', 'caption', 'center', 'cite', 'code', 'col',
-        'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em',
-        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'ins', 'kbd',
-        'li', 'ol', 'p', 'pre', 'q', 's', 'samp', 'small', 'span', 'strike',
-        'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead',
-        'tr', 'tt', 'u', 'ul', 'var', 'param')
-
-    ALLOWED_HTML_ATTRIBUTES = {
-        'a': ['href', 'title'],
-        'abbr': ['title'],
-        'acronym': ['title'],
-        'td': ['colspan', 'rowspan'],
-        'th': ['colspan', 'rowspan'],
-        'col': ['span'],
-        'colgroup': ['span'],
-        'img': ['alt', 'src'],
-        'blockquote': ['cite'],
-        'del': ['cite', 'datetime'],
-        'ins': ['cite', 'datetime'],
-        'q': ['cite'],
-    }
-
     AUTO_INIT_BADGES = True
     CAS_USER_FILTER = None
     CAS_USER_FILTER_DENIED_MSG = None

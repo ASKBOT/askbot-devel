@@ -1,8 +1,27 @@
-<script src="{{ '/wmd/Markdown.Converter.js'|media }}"></script>
-<script src="{{ '/wmd/Markdown.Sanitizer.js'|media }}"></script>
+<!-- Syntax highlighting -->
+<script src="{{ '/jslib/highlight.min.js'|media }}"></script>
+
+<!-- markdown-it vendor libraries -->
+<script src="{{ '/wmd/markdown-it/vendor/markdown-it.min.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/vendor/markdown-it-footnote.min.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/vendor/markdown-it-task-lists.min.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/vendor/purify.min.js'|media }}"></script>
+
+<!-- markdown-it custom plugins -->
+<script src="{{ '/wmd/markdown-it/plugins/truncate_links.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/plugins/video_extract.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/plugins/link_patterns.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/plugins/asterisk_emphasis.js'|media }}"></script>
+<script src="{{ '/wmd/markdown-it/plugins/math_extract.js'|media }}"></script>
+
+<!-- Askbot markdown converter -->
+<script src="{{ '/wmd/sanitize_config.js'|media }}"></script>
 <script src="{{ '/wmd/askbot_converter.js'|media }}"></script>
+
+<!-- WMD editor -->
 <script src="{{ '/js/utils/expander_toggle.js'|media }}"></script>
 <script src="{{ '/js/editors/wmd_expander_toggle.js'|media }}"></script>
 <script src="{{ '/js/editors/simple_editor.js'|media }}"></script>
 <script src="{{ '/js/editors/wmd.js'|media }}"></script>
+<script src="{{ '/wmd/help-panel/editor_help_panel.js'|media }}"></script>
 <script src="{{ '/wmd/wmd.js'|media }}"></script>

@@ -17,14 +17,45 @@ from django.utils.translation import gettext as _
 from askbot.conf import settings as askbot_settings
 from askbot.utils.url_utils import get_login_url
 
+from askbot.const.sanitizer_config import (
+    ALLOWED_HTML_ELEMENTS,
+    ALLOWED_HTML_ATTRIBUTES,
+    MARKDOWN_EXTRA_TAGS,
+    MARKDOWN_EXTRA_ATTRIBUTES,
+    HIDDEN_HELP_HTML_ELEMENTS,
+)
+
 
 def sanitize_html(html_string):
-    """Sanitizes an HTML fragment.
-    from forbidden markup
+    """Sanitizes an HTML fragment from forbidden markup.
+
+    Extends the base allowed tags/attributes from settings with
+    markdown-specific needs:
+    - span.class for Pygments syntax highlighting
+    - code.class for markdown-it language classes
+    - input[type,checked,disabled] for task list checkboxes
+
+    Note: Video embeds (iframes) are NOT whitelisted here. They are
+    handled via token-based extraction - iframes are inserted AFTER
+    sanitization in markup.py/markdown_input_converter(). This is
+    more secure than allowing arbitrary iframes through sanitization.
     """
+    # Extend base allowed tags with markdown-specific ones
+    tags = ALLOWED_HTML_ELEMENTS + MARKDOWN_EXTRA_TAGS
+
+    # Merge base attributes with markdown-specific ones
+    attributes = ALLOWED_HTML_ATTRIBUTES
+    for tag, attrs in MARKDOWN_EXTRA_ATTRIBUTES.items():
+        if tag in attributes:
+            existing = set(attributes[tag])
+            existing.update(attrs)
+            attributes[tag] = list(existing)
+        else:
+            attributes[tag] = attrs
+
     return bleach.clean(html_string,
-                        tags=django_settings.ASKBOT_ALLOWED_HTML_ELEMENTS,
-                        attributes=django_settings.ASKBOT_ALLOWED_HTML_ATTRIBUTES,
+                        tags=tags,
+                        attributes=attributes,
                         strip=True)
 
 

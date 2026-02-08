@@ -27,6 +27,7 @@ settings.py
 *.iml
 lint
 env
+env-md
 .vagrant
 /Vagrantfile
 /custom_settings
@@ -71,3 +72,5 @@ coverage_html_report
 /activity.txt
 /askbot/media/jslib/katex/
 .history
+env312
+pyrightconfig.json

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Extract Plugin Tests</title>
+    <script src="../dist/markdown-it.min.js"></script>
+    <script src="math_extract.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        h2 { color: #555; margin-top: 30px; }
+        .test-section {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .test-case {
+            border-left: 4px solid #ddd;
+            padding: 10px 15px;
+            margin: 10px 0;
+            background: #fafafa;
+        }
+        .test-case.pass { border-left-color: #4caf50; }
+        .test-case.fail { border-left-color: #f44336; }
+        .test-title { font-weight: bold; margin-bottom: 5px; }
+        .input, .expected, .actual { margin: 5px 0; }
+        .label { font-size: 11px; color: #666; text-transform: uppercase; }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        .output-preview {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .summary {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 100;
+        }
+        .summary.all-pass { background: #4caf50; color: white; }
+        .summary.has-fail { background: #f44336; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Math Extract Plugin Tests</h1>
+    <p>Testing <code>math_extract.js</code> - MathJax preprocessing for markdown-it</p>
+
+    <div id="summary" class="summary"></div>
+    <div id="results"></div>
+
+    <script>
+        var mathExtract = window.markdownitMathExtract;
+        var md = window.markdownit({ linkify: true });
+
+        var results = [];
+        var resultsDiv = document.getElementById('results');
+
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function runTest(name, fn) {
+            try {
+                var result = fn();
+                results.push({ name: name, pass: result.pass, message: result.message, details: result.details });
+            } catch (e) {
+                results.push({ name: name, pass: false, message: e.message, details: null });
+            }
+        }
+
+        function assertEqual(actual, expected, message) {
+            if (actual === expected) {
+                return { pass: true, message: message || 'OK' };
+            }
+            return {
+                pass: false,
+                message: message || 'Mismatch',
+                details: { expected: expected, actual: actual }
+            };
+        }
+
+        function assertContains(text, substring, message) {
+            if (text.indexOf(substring) !== -1) {
+                return { pass: true, message: message || 'OK' };
+            }
+            return {
+                pass: false,
+                message: message || 'Missing: ' + substring,
+                details: { expected: 'contains "' + substring + '"', actual: text }
+            };
+        }
+
+        function assertNotContains(text, substring, message) {
+            if (text.indexOf(substring) === -1) {
+                return { pass: true, message: message || 'OK' };
+            }
+            return {
+                pass: false,
+                message: message || 'Should not contain: ' + substring,
+                details: { expected: 'not contains "' + substring + '"', actual: text }
+            };
+        }
+
+        // =================================================================
+        // protectCodeDollars tests
+        // =================================================================
+
+        runTest('protectCodeDollars: basic case', function() {
+            var input = 'Text `$variable` here';
+            var result = mathExtract.protectCodeDollars(input);
+            return assertEqual(result, 'Text `~Dvariable` here');
+        });
+
+        runTest('protectCodeDollars: multiple dollars', function() {
+            var input = 'Code `$a + $b` here';
+            var result = mathExtract.protectCodeDollars(input);
+            return assertEqual(result, 'Code `~Da + ~Db` here');
+        });
+
+        runTest('protectCodeDollars: double backticks', function() {
+            var input = 'Text ``$var`` here';
+            var result = mathExtract.protectCodeDollars(input);
+            return assertEqual(result, 'Text ``~Dvar`` here');
+        });
+
+        runTest('protectCodeDollars: no code spans', function() {
+            var input = 'Text $math$ here';
+            var result = mathExtract.protectCodeDollars(input);
+            return assertEqual(result, 'Text $math$ here', 'Math should not be affected');
+        });
+
+        runTest('protectCodeDollars: unclosed backtick', function() {
+            var input = 'Text `$incomplete here';
+            var result = mathExtract.protectCodeDollars(input);
+            return assertEqual(result, 'Text `$incomplete here', 'Unclosed should be unchanged');
+        });
+
+        // =================================================================
+        // extractMath tests
+        // =================================================================
+
+        runTest('extractMath: inline math', function() {
+            var input = 'Text $x = 5$ here';
+            var result = mathExtract.extractMath(input);
+            return assertEqual(result.text, 'Text @@0@@ here') &&
+                   assertEqual(result.mathBlocks[0], '$x = 5$');
+        });
+
+        runTest('extractMath: display math', function() {
+            var input = 'Text $$y = mx + b$$ here';
+            var result = mathExtract.extractMath(input);
+            return assertEqual(result.text, 'Text @@0@@ here') &&
+                   assertEqual(result.mathBlocks[0], '$$y = mx + b$$');
+        });
+
+        runTest('extractMath: multiple expressions', function() {
+            var input = 'First $a$ then $b$ end';
+            var result = mathExtract.extractMath(input);
+            if (result.text !== 'First @@0@@ then @@1@@ end') {
+                return { pass: false, message: 'Wrong tokenized text', details: { expected: 'First @@0@@ then @@1@@ end', actual: result.text }};
+            }
+            if (result.mathBlocks.length !== 2) {
+                return { pass: false, message: 'Wrong block count', details: { expected: 2, actual: result.mathBlocks.length }};
+            }
+            return assertEqual(result.mathBlocks[0], '$a$');
+        });
+
+        runTest('extractMath: LaTeX display \\[...\\]', function() {
+            var input = 'Text \\[y = x^2\\] here';
+            var result = mathExtract.extractMath(input);
+            return assertEqual(result.text, 'Text @@0@@ here') &&
+                   assertEqual(result.mathBlocks[0], '\\[y = x^2\\]');
+        });
+
+        runTest('extractMath: LaTeX environment', function() {
+            var input = 'Text \\begin{equation}y = x\\end{equation} here';
+            var result = mathExtract.extractMath(input);
+            return assertEqual(result.text, 'Text @@0@@ here') &&
+                   assertEqual(result.mathBlocks[0], '\\begin{equation}y = x\\end{equation}');
+        });
+
+        runTest('extractMath: unclosed inline', function() {
+            var input = 'Text $x = 5 here';
+            var result = mathExtract.extractMath(input);
+            if (result.mathBlocks.length !== 0) {
+                return { pass: false, message: 'Should not extract unclosed math', details: { mathBlocks: result.mathBlocks }};
+            }
+            return assertContains(result.text, '$', 'Should preserve dollar sign');
+        });
+
+        runTest('extractMath: escaped dollar in math', function() {
+            var input = '$price = \\$50 + tax$';
+            var result = mathExtract.extractMath(input);
+            if (result.mathBlocks.length !== 1) {
+                return { pass: false, message: 'Should extract one block', details: { mathBlocks: result.mathBlocks }};
+            }
+            return assertContains(result.mathBlocks[0], '\\$50', 'Should preserve escaped dollar');
+        });
+
+        runTest('extractMath: mismatched environment', function() {
+            var input = '\\begin{equation}x = 5\\end{align}';
+            var result = mathExtract.extractMath(input);
+            return assertEqual(result.mathBlocks.length, 0, 'Should not extract mismatched');
+        });
+
+        // =================================================================
+        // escapeDollars tests
+        // =================================================================
+
+        runTest('escapeDollars: simple case', function() {
+            var input = 'Price: \\$100';
+            var result = mathExtract.escapeDollars(input);
+            return assertEqual(result, 'Price: &dollar;100');
+        });
+
+        runTest('escapeDollars: multiple', function() {
+            var input = '\\$50 to \\$100';
+            var result = mathExtract.escapeDollars(input);
+            return assertEqual(result, '&dollar;50 to &dollar;100');
+        });
+
+        runTest('escapeDollars: with token', function() {
+            var input = 'Price \\$100 and @@0@@ here';
+            var result = mathExtract.escapeDollars(input);
+            return assertEqual(result, 'Price &dollar;100 and @@0@@ here');
+        });
+
+        // =================================================================
+        // restoreCodeDollars tests
+        // =================================================================
+
+        runTest('restoreCodeDollars: basic', function() {
+            var input = '<code>~Dvariable</code>';
+            var result = mathExtract.restoreCodeDollars(input);
+            return assertEqual(result, '<code>$variable</code>');
+        });
+
+        // =================================================================
+        // restoreMath tests
+        // =================================================================
+
+        runTest('restoreMath: basic', function() {
+            var html = '<p>Text @@0@@ and @@1@@ here</p>';
+            var blocks = ['$x = 5$', '$y = 10$'];
+            var result = mathExtract.restoreMath(html, blocks);
+            return assertEqual(result, '<p>Text $x = 5$ and $y = 10$ here</p>');
+        });
+
+        // =================================================================
+        // Full pipeline integration tests
+        // =================================================================
+
+        function fullPipeline(input) {
+            // 1. Protect code dollars
+            var text = mathExtract.protectCodeDollars(input);
+            // 2. Extract math
+            var extracted = mathExtract.extractMath(text);
+            // 3. Escape text dollars
+            var escaped = mathExtract.escapeDollars(extracted.text);
+            // 4. Run markdown
+            var html = md.render(escaped);
+            // 5. Restore math
+            html = mathExtract.restoreMath(html, extracted.mathBlocks);
+            // 6. Restore code dollars
+            html = mathExtract.restoreCodeDollars(html);
+            return html;
+        }
+
+        runTest('Pipeline: escaped dollar becomes literal', function() {
+            var input = 'Price: \\$100';
+            var result = fullPipeline(input);
+            return assertContains(result, '$100') && assertNotContains(result, '\\$');
+        });
+
+        runTest('Pipeline: math preserved', function() {
+            var input = 'Formula $x = 5$ here';
+            var result = fullPipeline(input);
+            return assertContains(result, '$x = 5$');
+        });
+
+        runTest('Pipeline: code span with dollar', function() {
+            var input = 'Code `$variable` is protected';
+            var result = fullPipeline(input);
+            return assertContains(result, '<code>$variable</code>');
+        });
+
+        runTest('Pipeline: mixed content', function() {
+            var input = 'Price \\$100 and math $x$ and code `$var`';
+            var result = fullPipeline(input);
+            var checks = [
+                assertContains(result, '$100', 'escaped dollar'),
+                assertContains(result, '$x$', 'math preserved'),
+                assertContains(result, '<code>$var</code>', 'code protected')
+            ];
+            for (var i = 0; i < checks.length; i++) {
+                if (!checks[i].pass) return checks[i];
+            }
+            return { pass: true, message: 'All checks passed' };
+        });
+
+        runTest('Pipeline: URL in text not affected', function() {
+            var input = 'See http://example.com for info';
+            var result = fullPipeline(input);
+            // linkify should create link
+            return assertContains(result, '<a href="http://example.com"');
+        });
+
+        runTest('Pipeline: URL inside math not linkified', function() {
+            var input = 'Formula $http://example.com$ here';
+            var result = fullPipeline(input);
+            // Math protects URL from linkify
+            return assertNotContains(result, '<a href="http://example.com"') &&
+                   assertContains(result, '$http://example.com$');
+        });
+
+        runTest('Pipeline: underscores in math not emphasis', function() {
+            var input = 'Formula $a_b + c_d$ here';
+            var result = fullPipeline(input);
+            return assertNotContains(result, '<em>') &&
+                   assertContains(result, '$a_b + c_d$');
+        });
+
+        runTest('Pipeline: multiline display math', function() {
+            var input = 'Formula:\n$$\ny = mx + b\n$$\nend';
+            var result = fullPipeline(input);
+            return assertContains(result, '$$') && assertContains(result, 'y = mx + b');
+        });
+
+        runTest('Pipeline: LaTeX environment preserved', function() {
+            var input = '\\begin{align}\nx &= 5\n\\end{align}';
+            var result = fullPipeline(input);
+            return assertContains(result, '\\begin{align}') &&
+                   assertContains(result, '\\end{align}');
+        });
+
+        // =================================================================
+        // Render results
+        // =================================================================
+
+        var passCount = 0;
+        var failCount = 0;
+
+        results.forEach(function(r) {
+            var div = document.createElement('div');
+            div.className = 'test-case ' + (r.pass ? 'pass' : 'fail');
+
+            var html = '<div class="test-title">' + (r.pass ? '✓' : '✗') + ' ' + escapeHtml(r.name) + '</div>';
+            html += '<div>' + escapeHtml(r.message) + '</div>';
+
+            if (r.details) {
+                html += '<div class="label">Expected:</div><pre>' + escapeHtml(String(r.details.expected)) + '</pre>';
+                html += '<div class="label">Actual:</div><pre>' + escapeHtml(String(r.details.actual)) + '</pre>';
+            }
+
+            div.innerHTML = html;
+            resultsDiv.appendChild(div);
+
+            if (r.pass) passCount++;
+            else failCount++;
+        });
+
+        var summaryDiv = document.getElementById('summary');
+        summaryDiv.className = 'summary ' + (failCount === 0 ? 'all-pass' : 'has-fail');
+        summaryDiv.textContent = passCount + ' passed, ' + failCount + ' failed';
+    </script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 """utility functions used by Askbot test cases
 """
 from functools import wraps
-from markdown2 import Markdown
 from django.apps import apps
 from django.contrib.auth.management import create_permissions
 from django.contrib.sites.management import create_default_site

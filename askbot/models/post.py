@@ -2418,16 +2418,13 @@ class PostRevision(models.Model):
 
     @property
     def html(self, **kwargs):
-        markdowner = markup.get_parser()
-        sanitized_html = sanitize_html(markdowner.convert(self.text))
-
+        sanitized_html = markup.markdown_input_converter(self.text)
         if self.post.is_question():
             return sanitize_html(self.QUESTION_REVISION_TEMPLATE_NO_TAGS % {
                 'title': self.title,
                 'html': sanitized_html
             })
-        else:
-            return sanitized_html
+        return sanitized_html
 
     def get_snippet(self, max_length=120):
         """a little simpler than as Post.get_snippet"""

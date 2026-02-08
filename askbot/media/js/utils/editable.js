@@ -1,4 +1,4 @@
-﻿/* global askbot, gettext, getObjectByPath, inherits, parseUrl, runMathJax, showMessage, highlightAll,
+﻿/* global askbot, gettext, getObjectByPath, inherits, parseUrl, runMathJax, showMessage, hljs,
  stripTags, getAskbotMarkdownConverter,
  setupButtonEventHandlers, SimpleEditor, WrappedElement, WMD */
 /**
@@ -34,7 +34,7 @@ Editable.prototype.setPreviewerEnabled = function(state){
 Editable.prototype.setContent = function(content){
   this._content.empty();
   this._content.append(content);
-  highlightAll();
+  hljs.highlightAll();
   if (askbot.settings.mathjaxEnabled) {
     runMathJax();
   }
@@ -90,7 +90,7 @@ Editable.prototype.startEditingText = function (text) {
   }
   var onFocus = function () {
     ed.setText(text);
-    ed.putCursorAtEnd();
+    ed.putCursorAtStart();
   };
   ed.focus(onFocus);
 }

@@ -1,0 +1,155 @@
+// Block element styling for user-contributed content
+// Handles margins and spacing for paragraphs, lists, and code blocks
+// in preview areas and saved content
+
+.wmd-preview,
+.js-editable-content {
+  padding: var(--wmd-preview-padding);
+  margin: var(--wmd-preview-margin);
+
+  pre code {
+    display: block;
+    font-size: var(--small-font-size);
+    padding: var(--code-padding);
+    overflow-x: auto;
+    border-radius: var(--code-border-radius);
+    white-space: pre;
+    word-wrap: normal;
+  }
+
+  ul, ol {
+    padding: var(--uc-list-padding);
+  }
+
+  li > p:last-child {
+    margin-bottom: 0;
+  }
+
+  li > p:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+
+  ul.contains-task-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .task-list-item input[type="checkbox"] {
+    appearance: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    border: var(--border-width) var(--border-style) var(--uc-cb-color);
+    border-radius: var(--uc-cb-border-radius);
+    background: var(--bg-color);
+    transform: var(--uc-cb-transform);
+    margin: var(--uc-cb-margin);
+    cursor: default;
+
+    &:checked {
+      background: var(--uc-cb-color);
+      border-color: var(--uc-cb-color);
+    }
+
+    &:checked::after {
+      content: "";
+      display: block;
+      width: 0.25rem;
+      height: 0.5rem;
+      border: solid var(--bg-color);
+      border-width: 0 0.125rem 0.125rem 0;
+      margin: 1px auto 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  ul, ol, p, pre, blockquote, dl, dd, table, details, hr {
+    margin: var(--uc-margin);
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  // Headings
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--heading-font-weight);
+    margin: var(--uc-margin) !important;
+    line-height: var(--uc-h-tag-line-height);
+  }
+
+  h1 { font-size: var(--extra-large-font-size); }
+  h2 { font-size: var(--large-font-size); }
+  h3 { font-size: calc(1.125 * var(--font-size)); }
+  h4, h5, h6 { font-size: var(--font-size); }
+
+  // Blockquote
+  blockquote {
+    border-left: var(--uc-bq-tag-border-width) solid var(--uc-border-color);
+    padding-left: var(--uc-bq-tag-padding-left);
+    color: var(--uc-bq-tag-color);
+  }
+
+  // Horizontal rule
+  hr {
+    border: none;
+    border-top: var(--border-width) var(--border-style) var(--uc-border-color);
+  }
+
+  // Definition lists
+  dl {
+    margin-left: 0;
+  }
+
+  dt {
+    font-weight: var(--font-weight-bold);
+  }
+
+  dd {
+    margin-left: var(--uc-dd-tag-indent);
+  }
+
+  // Tables
+  table {
+    border-collapse: collapse;
+    width: auto;
+  }
+
+  th, td {
+    border: var(--border-width) var(--border-style) var(--uc-border-color);
+    padding: var(--uc-box-padding);
+    text-align: var(--uc-td-tag-text-align);
+  }
+
+  th {
+    background: var(--uc-th-tag-bg);
+    font-weight: var(--font-weight-bold);
+  }
+
+  // Collapsible details/summary
+  details {
+    border: var(--border-width) var(--border-style) var(--uc-border-color);
+    border-radius: var(--border-radius);
+    padding: var(--uc-box-padding);
+    & > :last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+  }
+
+  details[open] summary {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.js-editable-content {
+  padding-left: 0;
+}
+
+.wmd-preview {
+  background: var(--wmd-preview-background) !important;
+  border: var(--wmd-preview-border);
+}

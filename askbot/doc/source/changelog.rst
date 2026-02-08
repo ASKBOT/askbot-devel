@@ -1,6 +1,36 @@
 Changes in Askbot
 =================
 
+0.12.4 (Feb 8, 2026)
+--------------------
+* Major upgrade of Markdown support throughout the application
+* Backend: migrated from markdown2 to markdown-it with plugins for
+  tables, strikethrough, footnotes, task lists, and syntax highlighting
+* Frontend: migrated from Showdown to markdown-it.js, ensuring
+  server-client rendering parity
+* MathJax v2 support with Stack Exchange-style preprocessing —
+  LaTeX math in posts via ``$...$`` and ``$$...$$`` delimiters
+* Syntax highlighting: upgraded highlight.js to v11.11.1, added
+  Pygments backend highlighting with frontend/backend theme parity
+* Enabled automatic URL linkification with smart link truncation
+* Auto-link patterns: configurable URL shortcuts (e.g. ``gh:123``)
+* Video embedding redesigned as clickable links with modal player,
+  supports YouTube, Vimeo, and Dailymotion
+* New editor help panel with tabbed interface, i18n support,
+  keyboard navigation, and responsive overflow handling
+* Editor dialogs refactored: replaced inline WMD prompts with
+  ModalDialog-based dialogs for links and file uploads
+* Editor: automatic indented-to-fenced code block conversion
+* Unified Python/JS HTML sanitizer configuration with DOMPurify
+* Consolidated HTML allowlist; added ``details``/``summary`` elements
+* Comprehensive CSS styling for user-contributed content with
+  17 CSS variables (``--uc-*`` prefix) for theming
+* Code-friendly emphasis mode: only ``*`` triggers emphasis,
+  underscores are left literal
+* Task list checkbox styling in rendered markdown
+* Fixed long titles overflowing into sidebar
+* Scrolls textarea to top when editor opens
+
 0.12.3 (Jan 26, 2026)
 ---------------------
 * Supports Python 3.12
@@ -154,7 +184,6 @@ NOTE::
 ---------------------
 * Use prompt placeholders on all registration forms
 * Disable Google login by default because it is now OAuth2
-
 
 0.7.52 (Apr 19, 2015)
 ---------------------

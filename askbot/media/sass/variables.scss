@@ -146,6 +146,7 @@
   --tag-border-color: var(--sort-nav-sep-color);
   --tag-font-size: var(--small-font-size);
   --tag-height: 1.25rem;
+  --tag-padding: 0 .25rem;
   --tag-delete-btn-bg: var(--sort-nav-sep-color);
   --tag-delete-btn-hover-bg: var(--clr-danger);
   --tag-delete-btn-fg-color: var(--forum-header-fg-color);
@@ -179,8 +180,8 @@
   --post-update-info-margin: 0 0.5rem 0.5rem 0;
   --post-controls-icon-size: 0.75rem;
   --post-controls-icon-margin: 0 0.125rem 0 0;
-  --post-body-margin: 0 0 0.5rem;
-  --post-controls-margin: 0 0 0.75rem;
+  --post-body-margin: 0.25 0 0.5rem;
+  --post-controls-margin: 0.25rem 0 0.75rem;
 
   --reputation-badge-font-size: var(--2extra-small-font-size);
   --reputation-badge-color: var(--bg-color);
@@ -255,21 +256,18 @@
   --wmd-button-bg: transparent;
   --wmd-button-hover-color: var(--bg-color);
   --wmd-button-hover-bg: var(--clr-neutral-50);
-  --wmd-button-row-padding: 0 0 0.25rem;
+  --wmd-button-row-padding: 0 0 0.5rem;
   --wmd-button-row-margin: 0 -0.125rem;
 	--wmd-spacer-width: var(--border-width);
 	--wmd-spacer-height: 1.25rem;
   --wmd-spacer-margin: 0 0.25rem;
 	--wmd-spacer-background: var(--clr-neutral-50);
-  --wmd-preview-block-margin: 0 0 0.5rem;
-  --wmd-preview-list-padding: 0 0 0 1.5rem;
   --wmd-preview-padding: 0.5rem 0.75rem;
   --wmd-preview-margin: 0 0 0.5rem;
-  --wmd-preview-background: var(--clr-neutral-95);
+  --wmd-preview-background: var(--clr-neutral-85);
   --wmd-preview-border: var(--border-width) var(--border-style) var(--clr-neutral-80);
   --wmd-preview-toggle-padding: 0 0 0.5rem;
   --wmd-preview-toggle-margin: 0;
-  --pre-padding: 0.5rem;
 
   --badge-text-color: white;
   --badge-bg: var(--clr-neutral-30);
@@ -277,4 +275,46 @@
   --badge-padding: 0.125rem 0.5rem;
   --badge-border: none;
   --badge-border-radius: 0.25rem;
+
+  // User content - shared
+  --uc-margin: 0 0 0.75rem;
+  --uc-list-padding: 0 0 0 1rem;
+  --uc-h-tag-line-height: 1.25;
+  --uc-border-color: var(--clr-neutral-70);
+  --uc-box-padding: 0.5rem;
+
+  // User content - tag-specific
+  --uc-kbd-tag-padding: 0.125rem 0.25rem;
+  --uc-sup-tag-top: -0.375rem;
+  --uc-sub-tag-bottom: -0.25rem;
+  --uc-bq-tag-padding-left: 0.5rem;
+  --uc-bq-tag-border-width: 0.25rem;
+  --uc-bq-tag-color: var(--clr-neutral-40);
+  --uc-td-tag-text-align: left;
+  --uc-th-tag-bg: var(--clr-neutral-95);
+  --uc-dd-tag-indent: 1rem;
+
+  // User content - checkboxes (task lists)
+  --uc-cb-color: var(--clr-neutral-50);
+  --uc-cb-transform: translateY(0.125rem);
+  --uc-cb-margin: 0 2px 0 0;
+  --uc-cb-border-radius: 0.125rem;
+
+  // Syntax highlighting (code blocks)
+  --code-bg: #f3f3f3;
+  --code-fg: #444;
+  --code-padding: 0.875rem;
+  --code-border-radius: 4px;
+  --code-comment: #697070;
+  --code-keyword: #444;
+  --code-string: #880000;
+  --code-function: #880000;
+  --code-operator: #ab5656;
+  --code-literal: #669955;
+  --code-builtin: #397300;
+  --code-meta: #1f7199;
+  --code-meta-string: #3388aa;
+  --code-punctuation: rgba(68, 68, 68, 0.67);
+  --code-deletion: #880000;
+  --code-addition: #397300;
 }

@@ -23,7 +23,10 @@
 @use './components/footer.scss';
 @use './components/forum_header.scss';
 @use './components/header.scss';
-@use './components/highlight.min.css';
+@use './user-content/syntax-highlighting.scss';
+@use './user-content/block-elements.scss';
+@use './user-content/inline-elements.scss';
+@use './user-content/images.scss';
 @use './components/info_box.scss';
 @use './components/input_with_button.scss';
 @use './components/jquery.modal.scss';
@@ -38,6 +41,7 @@
 @use './components/tags.scss';
 @use './components/timeago.scss';
 @use './components/toolbar_dropdown_menu.scss';
+@use './components/video_embed.scss';
 @use './components/vote_buttons.scss';
 @use './components/title_row.scss';
 @use './components/user_card.scss';
