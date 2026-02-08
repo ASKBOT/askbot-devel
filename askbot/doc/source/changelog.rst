@@ -1,6 +1,10 @@
 Changes in Askbot
 =================
 
+0.12.5 (Feb 8, 2026)
+--------------------
+* No features changed, removed references to Django 2 from setup.py
+
 0.12.4 (Feb 8, 2026)
 --------------------
 * Major upgrade of Markdown support throughout the application
