@@ -1,4 +1,3 @@
-include ez_setup.py
 include tox.ini
 include LICENSE
 include AUTHORS
@@ -14,6 +13,7 @@ prune build
 prune static
 prune django
 prune lamson
+prune askbot_site
 exclude db
 exclude lint
 exclude settings.py

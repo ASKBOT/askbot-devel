@@ -16,6 +16,6 @@ site verification key is required for this to work. Please obtain the Site Verif
 `Google Webmasters Tools`_ site.
 
 There are many more settings that can be changed at any time without restarting the site. More
-documentaition on this topic will be added in the near future.
+documentation on this topic will be added in the near future.
 
 .. _`Google Webmasters Tools`: https://www.google.com/webmasters/tools/

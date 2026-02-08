@@ -1,8 +1,8 @@
 Changes in Askbot
 =================
 
-In development
---------------
+0.12.4 (Feb 8, 2026)
+--------------------
 * Major upgrade of Markdown support throughout the application
 * Backend: migrated from markdown2 to markdown-it with plugins for
   tables, strikethrough, footnotes, task lists, and syntax highlighting
@@ -30,6 +30,35 @@ In development
 * Task list checkbox styling in rendered markdown
 * Fixed long titles overflowing into sidebar
 * Scrolls textarea to top when editor opens
+
+0.12.3 (Jan 26, 2026)
+---------------------
+* Supports Python 3.12
+* Admin Tags: tags can be designated as "admin tags" with special styling and management,
+  setting ``ASKBOT_USER_CAN_MANAGE_ADMIN_TAGS_FUNCTION`` controls access
+* OIDC authentication: added setting ``OIDC_AUTHORIZATION_FUNCTION`` for custom authorization,
+  OIDC now uses access token instead of id_token
+* Added Django signals ``best_answer_accepted`` and ``best_answer_unaccepted``
+* Added setting ``WHO_CAN_ANONYMIZE_ACCOUNTS``
+* Added setting ``ASKBOT_FEDERATED_LOGIN_EMAIL_EDITABLE``
+* Custom user profile tab: added ``USER_IS_AUTHORIZED_FUNC`` option
+* Added ``email_is_confidential`` field to UserProfile model
+* HTML emails now use premailer for inline CSS styling
+* Added ``HeadRequestMiddleware`` to handle HEAD requests
+* Retired ``ez_setup.py``
+* Pre-commit configuration and GitHub Actions tests added
+* Admin site: allows filtering user profiles by status and email_is_confidential
+* Non-admins cannot terminate admin or moderator accounts
+* Publish/unpublish button shown for group private posts when user has permission
+* Security fix: authorization bypass in avatar views where URL string parameters
+  were compared directly to integer user IDs
+* Bug fix: undeleting a question was not working properly
+* Bug fix: unsubscribe URL no longer breaks if user not found with given email
+* Bug fix: privacy setting is maintained when editing a post via ajax
+* Bug fix: delete tag when removing admin tag
+* XSS fix: adds escape to closed_question_info in templates
+* Bumps django-livesettings3 to 1.6.3
+>>>>>>> master
 
 0.12.2 (Jul 29, 2023)
 ---------------------
@@ -156,7 +185,6 @@ NOTE::
 ---------------------
 * Use prompt placeholders on all registration forms
 * Disable Google login by default because it is now OAuth2
-
 
 0.7.52 (Apr 19, 2015)
 ---------------------

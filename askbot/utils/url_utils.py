@@ -1,5 +1,5 @@
 """utilities to work with the urls"""
-import imp
+import importlib
 import sys
 import urllib.parse
 from django.urls import reverse, re_path
@@ -12,7 +12,7 @@ def reload_urlconf():
     clear_url_caches()
     urlconf = django_settings.ROOT_URLCONF
     if urlconf in sys.modules:
-        imp.reload(sys.modules[urlconf])
+        importlib.reload(sys.modules[urlconf])
 
 def reverse_i18n(lang, *args, **kwargs):
     """reverses url in requested language"""
