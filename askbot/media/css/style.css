@@ -875,7 +875,7 @@ body:not(.with-tabs) main {
   --badge-border: none;
   --badge-border-radius: 0.25rem;
   --uc-margin: 0 0 0.75rem;
-  --uc-list-padding: 0 0 0 1.5rem;
+  --uc-list-padding: 0 0 0 1rem;
   --uc-h-tag-line-height: 1.25;
   --uc-border-color: var(--clr-neutral-70);
   --uc-box-padding: 0.5rem;
@@ -888,6 +888,10 @@ body:not(.with-tabs) main {
   --uc-td-tag-text-align: left;
   --uc-th-tag-bg: var(--clr-neutral-95);
   --uc-dd-tag-indent: 1rem;
+  --uc-cb-color: var(--clr-neutral-50);
+  --uc-cb-transform: translateY(0.125rem);
+  --uc-cb-margin: 0 2px 0 0;
+  --uc-cb-border-radius: 0.125rem;
   --code-bg: #f3f3f3;
   --code-fg: #444;
   --code-padding: 0.875rem;
@@ -8868,6 +8872,47 @@ pre code .esc {
 .js-editable-content ul,
 .js-editable-content ol {
   padding: var(--uc-list-padding);
+}
+.wmd-preview li > p:last-child,
+.js-editable-content li > p:last-child {
+  margin-bottom: 0;
+}
+.wmd-preview li > p:not(:last-child),
+.js-editable-content li > p:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+.wmd-preview ul.contains-task-list,
+.js-editable-content ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+.wmd-preview .task-list-item input[type=checkbox],
+.js-editable-content .task-list-item input[type=checkbox] {
+  appearance: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: var(--border-width) var(--border-style) var(--uc-cb-color);
+  border-radius: var(--uc-cb-border-radius);
+  background: var(--bg-color);
+  transform: var(--uc-cb-transform);
+  margin: var(--uc-cb-margin);
+  cursor: default;
+}
+.wmd-preview .task-list-item input[type=checkbox]:checked,
+.js-editable-content .task-list-item input[type=checkbox]:checked {
+  background: var(--uc-cb-color);
+  border-color: var(--uc-cb-color);
+}
+.wmd-preview .task-list-item input[type=checkbox]:checked::after,
+.js-editable-content .task-list-item input[type=checkbox]:checked::after {
+  content: "";
+  display: block;
+  width: 0.25rem;
+  height: 0.5rem;
+  border: solid var(--bg-color);
+  border-width: 0 0.125rem 0.125rem 0;
+  margin: 1px auto 0;
+  transform: rotate(45deg);
 }
 .wmd-preview ul, .wmd-preview ol, .wmd-preview p, .wmd-preview pre, .wmd-preview blockquote, .wmd-preview dl, .wmd-preview dd, .wmd-preview table, .wmd-preview details, .wmd-preview hr,
 .js-editable-content ul,

@@ -50,6 +50,13 @@ EOF
 
 This properly initializes Django settings and all app configurations.
 
+## Working with JavaScript, Svelte and SASS assets.
+
+All client side media assets are located in `askbot/media`. Sass files are in `askbot/media/sass`.
+Javascript
+
+To rebuild css files from sass and the help panel, refer to askbot/media/CLAUDE.md
+
 ## Issue Tracking
 
 This project uses **bd** (beads). Run `bd onboard` to get started.

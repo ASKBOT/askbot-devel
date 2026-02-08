@@ -1,12 +1,16 @@
 /* global askbot, markdownit, markdownitFootnote, markdownitTaskLists,
    linkPatternsPlugin, truncateLinksPlugin,
    markdownitAsteriskEmphasis, markdownitMathExtract, videoExtract,
-   DOMPurify, MathJax, hljs */
+   DOMPurify, MathJax, hljs,
+   PURIFY_CONFIG, ALLOWED_ATTR_MAP */
 /**
  * Askbot markdown converter using markdown-it.
  *
  * Replaces Showdown with markdown-it, matching the Python backend's plugin
  * configuration and rendering behavior.
+ *
+ * PURIFY_CONFIG and ALLOWED_ATTR_MAP are loaded from wmd/sanitize_config.js
+ * (auto-generated from askbot/const/sanitizer_config.py).
  */
 var getAskbotMarkdownConverter = function() {
   askbot['controllers'] = askbot['controllers'] || {};
@@ -17,6 +21,20 @@ var getAskbotMarkdownConverter = function() {
   }
   return converter;
 };
+
+// DOMPurify hook: enforce per-tag attribute restrictions
+DOMPurify.addHook('uponSanitizeAttribute', function(node, data) {
+  var tagName = node.nodeName.toLowerCase();
+  var allowedForTag = ALLOWED_ATTR_MAP[tagName];
+  if (allowedForTag) {
+    if (allowedForTag.indexOf(data.attrName) === -1) {
+      data.keepAttr = false;
+    }
+  } else {
+    // Tags not in the map get no attributes
+    data.keepAttr = false;
+  }
+});
 
 var AskbotMarkdownConverter = function() {
   this._md = this._createMarkdownInstance();
@@ -165,7 +183,7 @@ AskbotMarkdownConverter.prototype.makeHtml = function(text) {
 
   // Sanitization (CRITICAL for XSS prevention)
   // No iframe whitelist needed - video tokens (@@VIDEO0@@) pass through as text
-  html = DOMPurify.sanitize(html);
+  html = DOMPurify.sanitize(html, PURIFY_CONFIG);
 
   // Phase 6: Restore video tokens to iframes (AFTER sanitization)
   // This is the key security improvement - iframes are never subject to sanitization

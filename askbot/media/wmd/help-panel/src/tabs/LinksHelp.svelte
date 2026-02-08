@@ -14,7 +14,7 @@
 
     <div class="help-section">
         <h4>{gettext('Link with title')}</h4>
-        <code class="code-example">[{gettext('link text')}](https://example.com {gettext('Title')})</code>
+        <code class="code-example">[{gettext('link text')}](https://example.com "{gettext('Title')}")</code>
         <p class="help-note">{gettext('The title appears when hovering over the link.')}</p>
     </div>
 

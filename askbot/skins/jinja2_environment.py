@@ -17,7 +17,7 @@ from askbot.skins.askbot_environments import SkinEnvironment
 from askbot.templatetags.textwrap import TextWrapExtension
 from askbot.templatetags.premail import PremailerExtension
 from askbot.utils.functions import encode_jwt
-from askbot.utils.html import ALLOWED_HTML_ELEMENTS, HIDDEN_HELP_HTML_ELEMENTS
+from askbot.const.sanitizer_config import ALLOWED_HTML_ELEMENTS, HIDDEN_HELP_HTML_ELEMENTS
 from askbot.utils.translation import HAS_ASKBOT_LOCALE_MIDDLEWARE
 from askbot.utils.translation import get_language
 

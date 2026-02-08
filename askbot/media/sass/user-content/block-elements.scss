@@ -21,6 +21,47 @@
     padding: var(--uc-list-padding);
   }
 
+  li > p:last-child {
+    margin-bottom: 0;
+  }
+
+  li > p:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+
+  ul.contains-task-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .task-list-item input[type="checkbox"] {
+    appearance: none;
+    width: 0.875rem;
+    height: 0.875rem;
+    border: var(--border-width) var(--border-style) var(--uc-cb-color);
+    border-radius: var(--uc-cb-border-radius);
+    background: var(--bg-color);
+    transform: var(--uc-cb-transform);
+    margin: var(--uc-cb-margin);
+    cursor: default;
+
+    &:checked {
+      background: var(--uc-cb-color);
+      border-color: var(--uc-cb-color);
+    }
+
+    &:checked::after {
+      content: "";
+      display: block;
+      width: 0.25rem;
+      height: 0.5rem;
+      border: solid var(--bg-color);
+      border-width: 0 0.125rem 0.125rem 0;
+      margin: 1px auto 0;
+      transform: rotate(45deg);
+    }
+  }
+
   ul, ol, p, pre, blockquote, dl, dd, table, details, hr {
     margin: var(--uc-margin);
   }

@@ -278,7 +278,7 @@
 
   // User content - shared
   --uc-margin: 0 0 0.75rem;
-  --uc-list-padding: 0 0 0 1.5rem;
+  --uc-list-padding: 0 0 0 1rem;
   --uc-h-tag-line-height: 1.25;
   --uc-border-color: var(--clr-neutral-70);
   --uc-box-padding: 0.5rem;
@@ -293,6 +293,12 @@
   --uc-td-tag-text-align: left;
   --uc-th-tag-bg: var(--clr-neutral-95);
   --uc-dd-tag-indent: 1rem;
+
+  // User content - checkboxes (task lists)
+  --uc-cb-color: var(--clr-neutral-50);
+  --uc-cb-transform: translateY(0.125rem);
+  --uc-cb-margin: 0 2px 0 0;
+  --uc-cb-border-radius: 0.125rem;
 
   // Syntax highlighting (code blocks)
   --code-bg: #f3f3f3;
