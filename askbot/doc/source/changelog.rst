@@ -1,6 +1,36 @@
 Changes in Askbot
 =================
 
+In development
+--------------
+* Major upgrade of Markdown support throughout the application
+* Backend: migrated from markdown2 to markdown-it with plugins for
+  tables, strikethrough, footnotes, task lists, and syntax highlighting
+* Frontend: migrated from Showdown to markdown-it.js, ensuring
+  server-client rendering parity
+* MathJax v2 support with Stack Exchange-style preprocessing —
+  LaTeX math in posts via ``$...$`` and ``$$...$$`` delimiters
+* Syntax highlighting: upgraded highlight.js to v11.11.1, added
+  Pygments backend highlighting with frontend/backend theme parity
+* Enabled automatic URL linkification with smart link truncation
+* Auto-link patterns: configurable URL shortcuts (e.g. ``gh:123``)
+* Video embedding redesigned as clickable links with modal player,
+  supports YouTube, Vimeo, and Dailymotion
+* New editor help panel with tabbed interface, i18n support,
+  keyboard navigation, and responsive overflow handling
+* Editor dialogs refactored: replaced inline WMD prompts with
+  ModalDialog-based dialogs for links and file uploads
+* Editor: automatic indented-to-fenced code block conversion
+* Unified Python/JS HTML sanitizer configuration with DOMPurify
+* Consolidated HTML allowlist; added ``details``/``summary`` elements
+* Comprehensive CSS styling for user-contributed content with
+  17 CSS variables (``--uc-*`` prefix) for theming
+* Code-friendly emphasis mode: only ``*`` triggers emphasis,
+  underscores are left literal
+* Task list checkbox styling in rendered markdown
+* Fixed long titles overflowing into sidebar
+* Scrolls textarea to top when editor opens
+
 0.12.2 (Jul 29, 2023)
 ---------------------
 * improves installation process, supports Python 3.11
@@ -119,7 +149,7 @@ NOTE::
   Releases 0.10.x support Django 1.8, 0.9.x - Django 1.7,
   0.7.x support Django 1.5, 0.8.x - 1.6 and to be used
   only to migrate to the higher versions of the Django framework
-  from 1.5. See https://pypi.python.org/pypi/askbot/ 
+  from 1.5. See https://pypi.python.org/pypi/askbot/
   to download the latest available version.
 
 0.7.53 (Apr 22, 2015)
@@ -166,7 +196,7 @@ NOTE::
 * Allowed localized site settings
 * Added management command `askbot_clear_moderation_queue`
 * Admins and Moderators can merge questions.
-* Improved moderation modes: flags, audit, premoderation. 
+* Improved moderation modes: flags, audit, premoderation.
   Watched user status, IP blocking, mass content removal.
 * Allow bulk deletion of user content simultaneously with blocking
 * Allow custom destination url under the logo
@@ -179,7 +209,7 @@ NOTE::
 * Added Read-Only mode for the site in the "access control" section.
 * Added `askbot_add_osqa_content` management command.
 * Management command to add data from other Askbot site.
-* Allowed simple overrides of livesettings with `ASKBOT_...` prefixed 
+* Allowed simple overrides of livesettings with `ASKBOT_...` prefixed
   variables in the `settings.py` file.
 
 0.7.49 (Sep 19, 2013)
@@ -250,7 +280,7 @@ NOTE::
 * Added minimum reputation setting to accept any answer as correct (Evgeny)
 * Added "VIP" option to groups - if checked, all posts belong to the group and users of that group in the future will be able to moderate those posts. Moderation features for VIP group are in progress (Evgeny)
 * Added setting `NOTIFICATION_DELAY_TIME` to use with enabled celery daemon (Adolfo)
-* Added setting `ASKBOT_INTERNAL_IPS` - to allow anonymous access to 
+* Added setting `ASKBOT_INTERNAL_IPS` - to allow anonymous access to
   closed sites from dedicated IP addresses (Evgeny)
 * Moved default skin from `askbot/skins/default` to simply `askbot` (Evgeny)
 * Repost comment as answer (Adolfo)
@@ -291,7 +321,7 @@ NOTE::
 * Enabling/disabling the badges system (Evgeny)
 * Created a basic post moderation feature (Evgeny)
 * Created a way to specify reasons for rejecting posts in a modal dialog (Evgeny)
-* A number of bug fixes (Adolfo Fitoria, Jim Tittsler, 
+* A number of bug fixes (Adolfo Fitoria, Jim Tittsler,
   Evgeny Fadeev, Robin Stocker, Radim Řehůřek, Silvio Heuberger)
 
 0.7.41, 0.7.42 (April 21, 2012)
@@ -335,7 +365,7 @@ NOTE::
 
 0.7.37 (Jan 8, 2012)
 --------------------
-* added basic slugification treatment to question titles with 
+* added basic slugification treatment to question titles with
   ``ALLOW_UNICODE_SLUGS = True`` (Evgeny)
 * added verification of the project directory name to
   make sure it does not contain a `.` (dot) symbol (Evgeny)
@@ -447,7 +477,7 @@ For these versions we did not keep consistent record of features.
 
 0.7.22
 ------
-* Media resource revision is now incremented 
+* Media resource revision is now incremented
   automatically any time when media is updated (Adolfo Fitoria, Evgeny Fadeev)
 * First user automatically becomes site administrator (Adolfo Fitoria)
 * Avatar displayed on the sidebar can be controlled with livesettings.(Adolfo Fitoria, Evgeny Fadeev)
