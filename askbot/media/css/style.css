@@ -8108,32 +8108,6 @@ form.repost-comment-as-answer {
   background: var(--wmd-button-hover-bg);
 }
 
-.wmd-prompt-background {
-  background-color: Black;
-}
-
-.wmd-prompt-dialog {
-  border: 1px solid #999999;
-  background-color: #F5F5F5;
-}
-
-.wmd-prompt-dialog > div {
-  font-size: 1em;
-  font-family: arial, helvetica, sans-serif;
-}
-
-.wmd-prompt-dialog > form > input[type=text] {
-  border: 1px solid #999999;
-  color: black;
-}
-
-.wmd-prompt-dialog > form > input[type=button] {
-  border: 1px solid #888888;
-  font-family: trebuchet MS, helvetica, sans-serif;
-  font-size: 1em;
-  font-weight: var(--font-weight-bold);
-}
-
 .wmd-previewer-toggle {
   cursor: pointer;
   padding: var(--wmd-preview-toggle-padding);
@@ -9259,6 +9233,40 @@ pre code .esc {
     -webkit-transform: scaleY(1);
   }
 }
+.file-upload-dialog .ajax-file-upload > label {
+  display: block;
+  margin-top: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.js-file-upload-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.js-file-upload-wrapper input[type=file] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.js-labeled-input {
+  margin: 0.75rem 0 0;
+}
+.js-labeled-input label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: var(--small-font-size);
+  color: var(--action-link-color);
+}
+.js-labeled-input input[type=text] {
+  width: 100%;
+}
+
 .paginator,
 .js-paginator {
   display: flex;

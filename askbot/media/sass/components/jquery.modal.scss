@@ -132,3 +132,40 @@
     -webkit-transform: scaleY(1.0);
   }
 }
+
+.file-upload-dialog .ajax-file-upload > label {
+  display: block;
+  margin-top: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.js-file-upload-wrapper {
+  position: relative;
+  display: inline-block;
+
+  input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+}
+
+.js-labeled-input {
+  margin: 0.75rem 0 0;
+
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: var(--small-font-size);
+    color: var(--action-link-color);
+  }
+
+  input[type="text"] {
+    width: 100%;
+  }
+}

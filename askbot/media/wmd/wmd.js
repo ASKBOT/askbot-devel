@@ -51,13 +51,13 @@ Attacklab.wmdBase = function(){
 
 	// The text that appears on the upper part of the dialog box when
 	// entering links.
-	var imageDialogText = "<p style='margin-top: 0px'>" + gettext('enter image url') + '</p>';
-	var linkDialogText = "<p style='margin-top: 0px'>" + gettext('enter url') + '</p>';
-    var fileDialogText = "<p>" + gettext('upload file attachment') + '</p>';
+	var imageDialogText = gettext('Upload image');
+	var linkDialogText = gettext('Enter URL');
+    var fileDialogText = gettext('Upload file');
 	// The default text that appears in the dialog input box when entering
 	// links.
-	var imageDefaultText = "http://";
-	var linkDefaultText = "http://";
+	var imageDefaultText = "";
+	var linkDefaultText = "";
 
 	// The location of your button images relative to the base directory.
 	var imageDirectory = "images/";
@@ -203,269 +203,189 @@ Attacklab.wmdBase = function(){
 	};
 
 
-// This simulates a modal dialog box and asks for the URL when you
-// click the hyperlink or image buttons.
-//
-// text: The html for the input box.
-// defaultInputText: The default value that appears in the input box.
-// makeLinkMarkdown: The function which is executed when the prompt is dismissed, either via OK or Cancel
-util.prompt = function(text, defaultInputText, makeLinkMarkdown, dialogType){
-
-    // These variables need to be declared at this level since they are used
-    // in multiple functions.
-    var dialog;// The dialog box.
-    var background;// The background beind the dialog box.
-    var input;// The text box where you enter the hyperlink.
-
-    if (defaultInputText === undefined) {
-        defaultInputText = "";
+// Cleans up common URL pasting errors.
+var cleanUrl = function(text, dialogType) {
+    if (!text) return null;
+    text = text.replace('http://http://', 'http://');
+    text = text.replace('http://https://', 'https://');
+    text = text.replace('http://ftp://', 'ftp://');
+    if (text.indexOf('http://') === -1 &&
+        text.indexOf('ftp://') === -1 &&
+        text.indexOf('https://') === -1 &&
+        text.indexOf('/') !== 0) {
+        if (dialogType === 'link' || dialogType === 'image') {
+            text = 'https://' + text;
+        }
     }
+    return text;
+};
 
-    // Used as a keydown event handler. Esc dismisses the prompt.
-    // Key code 27 is ESC.
-    var checkEscape = function(key){
-        var code = (key.charCode || key.keyCode);
-        if (code === 27) {
-            close(true);
-        }
-    };
+// ---- WmdLinkDialog ----
+// Simple modal for entering a URL. Calls makeLinkMarkdown(url) on
+// accept or makeLinkMarkdown(null) on cancel/ESC.
+var WmdLinkDialog = function (opts) {
+    ModalDialog.call(this);
+    this._headingText = opts.headingText;
+    this._defaultInputText = opts.defaultInputText;
+    this._makeLinkMarkdown = opts.makeLinkMarkdown;
+};
+inherits(WmdLinkDialog, ModalDialog);
 
-    // Dismisses the hyperlink input box.
-    // isCancel is true if we don't care about the input text.
-    // isCancel is false if we are going to keep the text.
-    var close = function(isCancel){
-        util.removeEvent(doc.body, "keydown", checkEscape);
-        var text = input.value;
+WmdLinkDialog.prototype.createDom = function () {
+    this.setHeadingText(this._headingText);
 
-        if (isCancel){
-            text = null;
-        }
-        else{
-            // Fixes common pasting errors.
-            text = text.replace('http://http://', 'http://');
-            text = text.replace('http://https://', 'https://');
-            text = text.replace('http://ftp://', 'ftp://');
+    var wrapper = $('<div>').addClass('js-labeled-input');
 
-            if (text.indexOf('http://') === -1 && text.indexOf('ftp://') === -1 && text.indexOf('https://') === -1) {
-                if (dialogType == 'link'){
-                    //add http only to urls
-                    text = 'http://' + text;
-                }
-            }
-        }
+    var inputLabel = $('<label>');
+    inputLabel.attr('for', 'wmd-link-url');
+    inputLabel.text(gettext('e.g.') + ' https://www.example.com');
+    wrapper.append(inputLabel);
 
-        dialog.parentNode.removeChild(dialog);
-        background.parentNode.removeChild(background);
-        makeLinkMarkdown(text);
-        return false;
-    };
+    var input = $('<input type="text">');
+    input.val(this._defaultInputText);
+    input.attr('id', 'wmd-link-url');
+    wrapper.append(input);
+    this._input = input;
 
-    // Creates the background behind the hyperlink text entry box.
-    // Most of this has been moved to CSS but the div creation and
-    // browser-specific hacks remain here.
-    var createBackground = function(){
+    this.setContent(wrapper);
 
-        background = doc.createElement("div");
-        background.className = "wmd-prompt-background";
-        style = background.style;
-        style.position = "absolute";
-        style.top = "0";
-
-        style.zIndex = "1000";
-
-        // Some versions of Konqueror don't support transparent colors
-        // so we make the whole window transparent.
-        //
-        // Is this necessary on modern konqueror browsers?
-        if (global.isKonqueror) {
-            style.backgroundColor = "transparent";
-        } else if (global.isIE) {
-            style.filter = "alpha(opacity=50)";
+    var me = this;
+    var originalHide = this.hide.bind(this);
+    this.setAcceptHandler(function () {
+        var url = $.trim(input.val());
+        originalHide();
+        if (url === '') {
+            me._makeLinkMarkdown(null);
         } else {
-            style.opacity = "0.5";
+            me._makeLinkMarkdown(cleanUrl(url, 'link'));
         }
+    });
+    this.setRejectHandler(function () {
+        originalHide();
+        me._makeLinkMarkdown(null);
+    });
 
-        var pageSize = position.getPageSize();
-        style.height = pageSize[1] + "px";
+    WmdLinkDialog.superClass_.createDom.call(this);
+};
 
-        if(global.isIE) {
-            style.left = doc.documentElement.scrollLeft;
-            style.width = doc.documentElement.clientWidth;
-        } else {
-            style.left = "0";
-            style.width = "100%";
+WmdLinkDialog.prototype.show = function () {
+    var me = this;
+    me._escHandler = function (evt) {
+        if (evt.keyCode === 27) {
+            me._reject_handler();
         }
-
-        doc.body.appendChild(background);
     };
+    $(document).on('keydown.modalDialog', me._escHandler);
+    me._element.modal('show');
 
-    // Create the text input box form/window.
-    var createDialog = function(){
-
-        // The main dialog box.
-        dialog = doc.createElement("div");
-        dialog.className = "wmd-prompt-dialog";
-        dialog.style.padding = "10px;";
-        dialog.style.position = "fixed";
-        dialog.style.width = "400px";
-        dialog.style.zIndex = "1001";
-
-        // The dialog text.
-        var question = doc.createElement("div");
-        question.innerHTML = text;
-        question.style.padding = "5px";
-        dialog.appendChild(question);
-
-        // The web form container for the text box and buttons.
-        var form = doc.createElement("form");
-        form.onsubmit = function(){ return close(false); };
-        style = form.style;
-        style.padding = "0";
-        style.margin = "0";
-        style.cssFloat = "left";
-        style.width = "100%";
-        style.textAlign = "center";
-        style.position = "relative";
-        dialog.appendChild(form);
-
-        // The input text box
-        input = doc.createElement("input");
-        if(dialogType == 'image' || dialogType == 'file'){
-            input.id = util.makeId("image-url");
+    // Submit on Enter
+    me._input.on('keydown', function (evt) {
+        if (evt.keyCode === 13) {
+            evt.preventDefault();
+            me._accept_handler();
         }
-        input.type = "text";
-        if (dialogType == 'file'){
-            input.disabled = "disabled";
-        };
+    });
 
-        input.value = defaultInputText;
-        style = input.style;
-        style.display = "block";
-        style.width = "80%";
-        style.marginLeft = style.marginRight = "auto";
-        form.appendChild(input);
+    setTimeout(function () { me._input.focus().select(); }, 0);
+};
 
-        //EF. fucus at the end of the input box
-        //putCursorAtEnd($(input));
 
-        // The upload file input
-        if(dialogType == 'image' || dialogType == 'file'){
-            var upload_container = $('<div></div>');
-            var upload_input = $('<input type="file" />');
-            upload_input.attr('name', 'file-upload');
-            upload_input.attr('id', 'file-upload');
-            upload_input.attr('size', 26);
+// ---- WmdUploadDialog ----
+// Upload dialog for images and file attachments. Wraps FileUploadDialog
+// with post-upload handling that captures the original filename and
+// calls makeLinkMarkdown(url) on accept or makeLinkMarkdown(null) on cancel/ESC.
+var WmdUploadDialog = function (opts) {
+    FileUploadDialog.call(this);
+    this._headingText = opts.headingText;
+    this._dialogType = opts.dialogType;
+    this._makeLinkMarkdown = opts.makeLinkMarkdown;
 
-            var spinner = $('<img />');
-            spinner.attr('id', 'loading');
-            spinner.attr('src', mediaUrl("media/images/indicator.gif"));
-            spinner.css('display', 'none');
+    this.setFileType(opts.dialogType === 'file' ? 'attachment' : 'image');
+    this.setInputId(util.makeId('file-upload'));
+    this._headerEnabled = true;
+    this.setHeadingText(opts.headingText);
 
-            var startUploadHandler = function(){
-                // gets the uploaded file name, fixes the fakepath issue
-                localUploadFileName = $(this).val().replace(/\w:.*\\(.*)$/, '$1');
+    if (opts.dialogType === 'image') {
+        this.setUrlInputTooltip(gettext('Or paste image url here'));
+    }
+};
+inherits(WmdUploadDialog, FileUploadDialog);
 
-                /*
-                 * startUploadHandler is passed into the ajaxFileUpload
-                 * in order to re-install the onchange handler
-                 * because the jquery extension ajaxFileUpload removes the handler
-                 */
-                var options = {
-                    spinner: spinner,
-                    uploadInputId: 'file-upload',
-                    urlInput: $(input),
-                    startUploadHandler: startUploadHandler
-                };
-                return ajaxFileUpload(options);
-                //$('#image-url'), startUploadHandler);
-            };
+WmdUploadDialog.prototype.createDom = function () {
+    var me = this;
+    var dialogType = this._dialogType;
+    var makeLinkMarkdown = this._makeLinkMarkdown;
 
-            upload_input.change(startUploadHandler);
-
-            upload_container.append(upload_input);
-            upload_container.append($('<br/>'));
-
-            upload_container.append(spinner);
-
-            upload_container.css('padding', '5px');
-            $(form).append(upload_container);
+    this.setPostUploadHandler(function (url, origFileName) {
+        if (origFileName) {
+            localUploadFileName = origFileName;
         }
+        url = cleanUrl(url, dialogType);
+        makeLinkMarkdown(url);
+    });
 
-        // The ok button
-        var okButton = doc.createElement("input");
-        okButton.type = "button";
-        okButton.onclick = function(){
-            var isCancel = false;
-            if ($.trim($(input).val()) === ''){
-                isCancel = true;
-            }
-            return close(isCancel);
-        };
-        okButton.value = "OK";
-        style = okButton.style;
-        style.margin = "10px";
-        style.display = "inline";
-        style.width = "7em";
+    WmdUploadDialog.superClass_.createDom.call(this);
 
-        // The cancel button
-        var cancelButton = doc.createElement("input");
-        cancelButton.type = "button";
-        cancelButton.onclick = function(){ return close(true); };
-        cancelButton.value = "Cancel";
-        style = cancelButton.style;
-        style.margin = "10px";
-        style.display = "inline";
-        style.width = "7em";
-
-        // The order of these buttons is different on macs.
-        if (/mac/.test(nav.platform.toLowerCase())) {
-            form.appendChild(cancelButton);
-            form.appendChild(okButton);
-        }
-        else {
-            form.appendChild(okButton);
-            form.appendChild(cancelButton);
-        }
-
-        util.addEvent(doc.body, "keydown", checkEscape);
-        dialog.style.top = "50%";
-        dialog.style.left = "50%";
-        dialog.style.display = "block";
-        if(global.isIE_5or6){
-            dialog.style.position = "absolute";
-            dialog.style.top = doc.documentElement.scrollTop + 200 + "px";
-            dialog.style.left = "50%";
-        }
-        doc.body.appendChild(dialog);
-
-        // This has to be done AFTER adding the dialog to the form if you
-        // want it to be centered.
-        dialog.style.marginTop = -(position.getHeight(dialog) / 2) + "px";
-        dialog.style.marginLeft = -(position.getWidth(dialog) / 2) + "px";
-
-        $(document).trigger('askbot.afterCreateWMDPrompt', [dialog]);
+    // Override reject handler to also notify makeLinkMarkdown.
+    // Must rebind the button because super createDom() already bound the original.
+    var originalReject = me._reject_handler;
+    var newRejectHandler = function () {
+        originalReject();
+        makeLinkMarkdown(null);
     };
+    me.setRejectHandler(newRejectHandler);
+    if (me._rejectBtn) {
+        removeButtonEventHandlers(me._rejectBtn);
+        setupButtonEventHandlers(me._rejectBtn, newRejectHandler);
+    }
+};
 
-    createBackground();
+WmdUploadDialog.prototype.show = function () {
+    WmdUploadDialog.superClass_.show.call(this);
 
-    // Why is this in a zero-length timeout?
-    // Is it working around a browser bug?
-    setTimeout(function(){
-        createDialog();
-        var defTextLen = defaultInputText.length;
-        if (input.type == 'text' && input.selectionStart !== undefined) {
-            input.selectionStart = 0;
-            input.selectionEnd = defTextLen;
-        } else if (input.createTextRange) {
-            var range = input.createTextRange();
-            range.collapse(false);
-            range.moveStart("character", -defTextLen);
-            range.moveEnd("character", defTextLen);
-            range.select();
+    // Replace the ESC handler set by superclass show() so ESC calls reject
+    var me = this;
+    if (me._escHandler) {
+        $(document).off('keydown.modalDialog', me._escHandler);
+    }
+    me._escHandler = function (evt) {
+        if (evt.keyCode === 27) {
+            me._reject_handler();
         }
+    };
+    $(document).on('keydown.modalDialog', me._escHandler);
 
-        input.focus();
-    }, 0);
+    // Show the URL input wrapper for image type
+    if (me._dialogType === 'image') {
+        me._urlWrapper.css('display', '');
+    }
+};
+
+
+// ---- util.prompt ----
+// Opens a modal dialog for entering a URL (link type) or uploading
+// a file (image/file types), then calls makeLinkMarkdown with the
+// result URL or null on cancel.
+util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
+    if (defaultInputText === undefined) {
+        defaultInputText = '';
+    }
+    var dlg;
+    if (dialogType === 'link') {
+        dlg = new WmdLinkDialog({
+            headingText: text,
+            defaultInputText: defaultInputText,
+            makeLinkMarkdown: makeLinkMarkdown
+        });
+    } else {
+        dlg = new WmdUploadDialog({
+            headingText: text,
+            dialogType: dialogType,
+            makeLinkMarkdown: makeLinkMarkdown
+        });
+    }
+    dlg.createDom();
+    dlg.show();
 };
 
 

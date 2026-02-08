@@ -84,8 +84,8 @@ ImageChanger.prototype.startDialog = function () {
     var change_image_text = this._messages.change_image;
     var change_image_button = this._element;
     Attacklab.Util.prompt(
-        '<h3>' + gettext('Enter the logo url or upload an image') + '</h3>',
-        'http://',
+        gettext('Enter the logo url or upload an image'),
+        '',
         function (image_url) {
             if (image_url) {
                 me.saveImageUrl(image_url);
