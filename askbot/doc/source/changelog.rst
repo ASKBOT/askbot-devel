@@ -58,7 +58,6 @@ Changes in Askbot
 * Bug fix: delete tag when removing admin tag
 * XSS fix: adds escape to closed_question_info in templates
 * Bumps django-livesettings3 to 1.6.3
->>>>>>> master
 
 0.12.2 (Jul 29, 2023)
 ---------------------
