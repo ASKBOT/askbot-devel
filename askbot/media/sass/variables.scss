@@ -234,6 +234,13 @@
   --comment-upvote-active-btn-hover-color: var(--clr-danger);
   --comment-upvote-btn-icon-padding: 5px 0 0 0;
 
+  --dc-prompt-min-width: min(25rem, 100%);
+  --dc-existing-comments-max-height: 12.5rem;
+  --dc-pill-font-size: 0.6875rem;
+  --dc-pill-bg: var(--clr-neutral-94-06);
+  --dc-pill-border-radius: 0.625rem;
+  --dc-textarea-focus-shadow: 0 0 0 0.125rem var(--clr-blue-57-02);
+
   --info-box-bg: var(--clr-highlight-pale);
   --info-box-border-radius: var(--border-radius);
   --info-box-border: var(--border-width) var(--border-style) var(--clr-neutral-60);

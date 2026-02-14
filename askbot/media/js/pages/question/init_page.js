@@ -19,6 +19,7 @@ function initEditor(){
 }
 
 PostVote.init();
+DownvoteComment.init();
 
 $(document).ready(function(){
   $("#js-answers-sort-" + askbot['data']['answersSortTab']).attr('className',"js-active");

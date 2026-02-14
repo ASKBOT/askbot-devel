@@ -9,6 +9,8 @@
     "svelte": "^4.0.5"
   },
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "build:help-panel": "rollup -c --configComponent help-panel",
+    "build:downvote-comment": "rollup -c --configComponent downvote-comment"
   }
 }

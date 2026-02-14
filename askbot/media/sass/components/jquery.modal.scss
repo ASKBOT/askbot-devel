@@ -133,6 +133,21 @@
   }
 }
 
+.dc-modal.modal {
+  max-width: 550px;
+
+  .js-modal-body {
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+
+  .dc-heading-hint {
+    font-weight: normal;
+    font-size: var(--small-font-size);
+    color: var(--clr-neutral-50);
+  }
+}
+
 .file-upload-dialog .ajax-file-upload > label {
   display: block;
   margin-top: 0.5rem;

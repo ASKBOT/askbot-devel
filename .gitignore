@@ -9,7 +9,6 @@ push
 propagate
 the.diff
 askbot/media/style/.sass-cache/
-askbot/media/svelte
 .sass-cache
 db
 rebuild-locales.pl

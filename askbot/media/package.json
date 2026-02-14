@@ -13,8 +13,9 @@
     "sass:watch": "sass ./sass/style.scss ./css/style.css --watch",
     "sass:build": "sass ./sass/style.scss ./css/style.css",
     "sync:sanitize": "python3 bin/sync_sanitize_config.py",
-    "build": "npm run sync:sanitize && npm run sass:build && npm run build:help-panel",
-    "help-panel:build": "cd wmd/help-panel/src && npm run build"
+    "build": "npm run sync:sanitize && npm run sass:build && npm run build:svelte",
+    "build:svelte": "cd svelte && npm run build",
+    "help-panel:build": "cd svelte && npm run build:help-panel"
   },
   "devDependencies": {
     "eslint": "^7.31.0"

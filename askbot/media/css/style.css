@@ -604,6 +604,8 @@ body:not(.with-tabs) main {
   --clr-highlight-pale-90: hsla(var(--highlight-hue), 15%, 90%, var(--debug-transparency));
   --clr-highlight-pale-95: hsla(var(--highlight-hue), 15%, 95%, var(--debug-transparency));
   --clr-highlight-pale-89-05: hsla(var(--highlight-hue), 15%, 89%, 0.5);
+  --clr-neutral-94-06: hsla(var(--neutral-hue), var(--neutral-saturation), 94%, 0.6);
+  --clr-blue-57-02: hsla(var(--ok-hue), 56%, 57%, 0.2);
   --clr-highlight-100: hsla(var(--highlight-hue), 100%, 100%, var(--debug-transparency));
   --clr-highlight-90: hsla(var(--highlight-hue), 100%, 90%, var(--debug-transparency));
   --clr-highlight-70: hsla(var(--highlight-hue), 87%, 70%, var(--debug-transparency));
@@ -838,6 +840,12 @@ body:not(.with-tabs) main {
   --comment-upvote-active-btn-color: var(--clr-orange);
   --comment-upvote-active-btn-hover-color: var(--clr-danger);
   --comment-upvote-btn-icon-padding: 5px 0 0 0;
+  --dc-prompt-min-width: min(25rem, 100%);
+  --dc-existing-comments-max-height: 12.5rem;
+  --dc-pill-font-size: 0.6875rem;
+  --dc-pill-bg: var(--clr-neutral-94-06);
+  --dc-pill-border-radius: 0.625rem;
+  --dc-textarea-focus-shadow: 0 0 0 0.125rem var(--clr-blue-57-02);
   --info-box-bg: var(--clr-highlight-pale);
   --info-box-border-radius: var(--border-radius);
   --info-box-border: var(--border-width) var(--border-style) var(--clr-neutral-60);
@@ -7989,6 +7997,153 @@ form.repost-comment-as-answer {
   color: var(--clr-orange);
 }
 
+.dc-prompt {
+  min-width: var(--dc-prompt-min-width);
+}
+
+.dc-existing-comments {
+  position: relative;
+  max-height: var(--dc-existing-comments-max-height);
+  overflow-y: auto;
+  margin-bottom: 0.5rem;
+}
+
+.dc-pill-row {
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.dc-pill-row-above {
+  position: sticky;
+  top: 0;
+  height: 0;
+  overflow: visible;
+}
+
+.dc-pill-row-below {
+  position: sticky;
+  bottom: 0;
+  height: 0;
+  overflow: visible;
+}
+
+.dc-pill-row-below .dc-pill {
+  transform: translateY(calc(-100% - 0.125rem));
+}
+
+.dc-pill {
+  display: inline-block;
+  font-size: var(--dc-pill-font-size);
+  color: var(--clr-neutral-50);
+  background: var(--dc-pill-bg);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--dc-pill-border-radius);
+  padding: 1px 0.625rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dc-pill.visible {
+  opacity: 1;
+}
+
+.dc-loading,
+.dc-error {
+  color: var(--clr-neutral-60);
+  padding: 0.5rem 0;
+}
+
+.dc-error {
+  color: var(--clr-danger-dark);
+}
+
+.dc-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.dc-comment {
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--clr-neutral-90);
+}
+
+.dc-comment:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.dc-comment-header {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 0.125rem;
+}
+
+.dc-comment-author {
+  font-weight: bold;
+  color: var(--link-color);
+}
+
+.dc-comment-date {
+  color: var(--clr-neutral-60);
+}
+
+.dc-comment-body {
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.dc-comment-body p:last-child {
+  margin: 0;
+}
+
+.dc-your-comment {
+  display: flex;
+  flex-direction: column;
+}
+
+.dc-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border: 1px solid var(--clr-neutral-80);
+  border-radius: 0.1875rem;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.dc-textarea:focus {
+  outline: none;
+  border-color: var(--link-color);
+  box-shadow: var(--dc-textarea-focus-shadow);
+}
+
+.dc-char-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1px;
+  font-size: var(--small-font-size);
+}
+
+.dc-min-length-hint {
+  color: var(--clr-neutral-60);
+}
+
+.dc-char-counter {
+  margin-left: auto;
+  color: var(--clr-neutral-60);
+}
+
+.dc-char-counter.warning {
+  color: var(--clr-danger-dark);
+}
+
 .js-dropdown-menu {
   user-select: none;
 }
@@ -9233,6 +9388,19 @@ pre code .esc {
     -webkit-transform: scaleY(1);
   }
 }
+.dc-modal.modal {
+  max-width: 550px;
+}
+.dc-modal.modal .js-modal-body {
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.dc-modal.modal .dc-heading-hint {
+  font-weight: normal;
+  font-size: var(--small-font-size);
+  color: var(--clr-neutral-50);
+}
+
 .file-upload-dialog .ajax-file-upload > label {
   display: block;
   margin-top: 0.5rem;
