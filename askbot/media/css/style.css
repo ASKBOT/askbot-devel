@@ -8203,6 +8203,9 @@ form.repost-comment-as-answer {
   padding-bottom: 0.125rem;
 }
 
+.js-editable-controls {
+  margin-bottom: 1rem;
+}
 .js-editable-controls input[type=checkbox] {
   position: relative;
   top: 0.125rem;
