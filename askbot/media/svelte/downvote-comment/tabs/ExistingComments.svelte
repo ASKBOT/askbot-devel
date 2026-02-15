@@ -11,6 +11,7 @@
     let observer;
 
     import { onMount, onDestroy, tick } from 'svelte';
+    import Timeago from '../../common/Timeago.svelte';
 
     onMount(() => {
         if (prefetchedComments !== null) {
@@ -108,7 +109,7 @@
                 <div class="dc-comment">
                     <div class="dc-comment-header">
                         <span class="dc-comment-author">{comment.user_display_name}</span>
-                        <span class="dc-comment-date">{comment.comment_added_at}</span>
+                        <Timeago timestamp={comment.comment_added_at} />
                     </div>
                     <div class="dc-comment-body">{@html comment.html}</div>
                 </div>

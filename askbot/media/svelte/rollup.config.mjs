@@ -6,12 +6,7 @@ import { existsSync } from 'fs';
 
 const sharedPlugins = () => [
 	svelte({
-		emitCss: false,
-		compilerOptions: {
-			compatibility: {
-				componentApi: 4
-			}
-		}
+		emitCss: false
 	}),
 	resolve({
 		browser: true,
@@ -23,7 +18,7 @@ const sharedPlugins = () => [
 
 const components = {
 	'help-panel': {
-		input: './help-panel/EditorHelpPanel.svelte',
+		input: './help-panel/main.js',
 		output: {
 			format: 'iife',
 			name: 'EditorHelpPanel',
@@ -32,7 +27,7 @@ const components = {
 		plugins: sharedPlugins()
 	},
 	'downvote-comment': {
-		input: './downvote-comment/DownvoteCommentPrompt.svelte',
+		input: './downvote-comment/main.js',
 		output: {
 			format: 'iife',
 			name: 'DownvoteCommentPrompt',

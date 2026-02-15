@@ -1156,7 +1156,7 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 				// Insert after button bar, before any existing help content
 				buttonBar.parentNode.insertBefore(helpPanelContainer, buttonBar.nextSibling);
 				// Mount the Svelte component
-				new EditorHelpPanel({
+				EditorHelpPanel.create({
 					target: helpPanelContainer,
 					props: {
 						buttonRow: buttonRow,

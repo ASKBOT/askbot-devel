@@ -42,7 +42,7 @@ var DownvoteComment = (function () {
     function cleanup() {
         isModalOpen = false;
         if (svelteInstance) {
-            svelteInstance.$destroy();
+            DownvoteCommentPrompt.destroy(svelteInstance);
             svelteInstance = null;
         }
     }
@@ -67,12 +67,15 @@ var DownvoteComment = (function () {
             dialog.hide();
         }
 
-        svelteInstance = new DownvoteCommentPrompt({
+        svelteInstance = DownvoteCommentPrompt.create({
             target: mountTarget,
             props: {
                 postId: postId,
                 postType: postType,
                 onClose: closeModal,
+                onEditorOpen: function () {
+                    dialog.setDismissOnOutsideClick(false);
+                },
                 onSubmitted: function (pid, ptype) {
                     cleanup();
                     dialog.hide();

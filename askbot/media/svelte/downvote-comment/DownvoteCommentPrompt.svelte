@@ -4,7 +4,7 @@
     import { commentText } from './stores.js';
     import { onMount, tick } from 'svelte';
 
-    let { postId, postType = 'answer', onClose = null, onSubmitted = null } = $props();
+    let { postId, postType = 'answer', onClose = null, onSubmitted = null, onEditorOpen = null } = $props();
 
     let step = $state('prompt');
     let prefetchedComments = $state(null);
@@ -72,6 +72,7 @@
     }
 
     function handleLeaveComment() {
+        if (onEditorOpen) onEditorOpen();
         transitionToStep('editor');
     }
 

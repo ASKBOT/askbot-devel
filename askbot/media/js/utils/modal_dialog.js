@@ -19,6 +19,7 @@ var ModalDialog = function () {
     this._headerEnabled = true;
     this._className = undefined;
     this._escHandler = null;
+    this._dismissOnOutsideClick = true;
 };
 inherits(ModalDialog, WrappedElement);
 
@@ -31,6 +32,16 @@ ModalDialog.prototype.show = function () {
     };
     $(document).on('keydown.modalDialog', this._escHandler);
     this._element.modal('show');
+
+    var blocker = this._element.closest('.jquery-modal');
+    if (blocker.length) {
+        blocker.off('click');
+        blocker.on('click.modalDialog', function (e) {
+            if (me._dismissOnOutsideClick && e.target === blocker[0]) {
+                me.hide();
+            }
+        });
+    }
 };
 
 ModalDialog.prototype.hide = function () {
@@ -38,7 +49,15 @@ ModalDialog.prototype.hide = function () {
         $(document).off('keydown.modalDialog', this._escHandler);
         this._escHandler = null;
     }
+    var blocker = this._element.closest('.jquery-modal');
+    if (blocker.length) {
+        blocker.off('click.modalDialog');
+    }
     $.modal.close();
+};
+
+ModalDialog.prototype.setDismissOnOutsideClick = function (value) {
+    this._dismissOnOutsideClick = value;
 };
 
 ModalDialog.prototype.setClass = function (cls) {

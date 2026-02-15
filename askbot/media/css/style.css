@@ -8013,14 +8013,13 @@ form.repost-comment-as-answer {
   color: var(--clr-neutral-50);
 }
 
-.dc-body-text {
-  margin: 0 0 0.75rem;
+.js-modal-body p.dc-body-text {
+  margin: 0 0 1rem;
 }
 
 .dc-actions {
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.75rem;
 }
 
 .dc-error-banner {
@@ -8118,7 +8117,7 @@ form.repost-comment-as-answer {
   color: var(--link-color);
 }
 
-.dc-comment-date {
+.dc-comment-header .js-timeago {
   color: var(--clr-neutral-60);
 }
 
@@ -9789,6 +9788,7 @@ ul.tags li {
 .js-timeago {
   display: none;
   margin: 0 !important;
+  cursor: help;
 }
 
 .js-toolbar-dropdown-menu {

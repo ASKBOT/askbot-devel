@@ -115,9 +115,9 @@
             } else {
                 return interpolate(ngettext("%s year ago", "%s years ago", wholeYears), [wholeYears]);
             }
-        } else if (days == 2) {
+        } else if (days >= 2) {
             return gettext("2 days ago");
-        } else if (days == 1) {
+        } else if (days >= 1) {
             return gettext("yesterday");
         } else if (minutes >= 60) {
             var wholeHours = Math.floor(hours);
