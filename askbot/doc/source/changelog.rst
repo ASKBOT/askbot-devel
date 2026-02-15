@@ -9,6 +9,7 @@ In development
   auto-scroll to the newly posted comment
 * Consolidated Svelte build into shared ``askbot/media/svelte/``
   directory with multi-entry rollup config
+* Upgraded Svelte 4 to 5 with full runes migration across all components
 
 0.12.5 (Feb 8, 2026)
 --------------------
