@@ -59,6 +59,7 @@
 
     this._commentsTitle = element.find('.js-comments-list-title');
     $(document).on('askbot.afterEditCommentFormCancel', this.getCloseEditorHandler());
+    element.data('commentsWidget', this);
   };
 
   PostCommentsWidget.prototype.getCloseEditorHandler = function () {

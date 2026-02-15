@@ -8001,6 +8001,37 @@ form.repost-comment-as-answer {
   min-width: var(--dc-prompt-min-width);
 }
 
+.dc-heading {
+  margin: 0 0 0.5rem;
+  font-size: var(--large-font-size);
+  font-weight: var(--heading-font-weight);
+}
+
+.dc-heading-hint {
+  font-weight: normal;
+  font-size: var(--small-font-size);
+  color: var(--clr-neutral-50);
+}
+
+.dc-body-text {
+  margin: 0 0 0.75rem;
+}
+
+.dc-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.dc-error-banner {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius);
+  background: var(--clr-danger-dark);
+  color: var(--bg-color);
+  font-size: var(--small-font-size);
+}
+
 .dc-existing-comments {
   position: relative;
   max-height: var(--dc-existing-comments-max-height);
@@ -9391,14 +9422,15 @@ pre code .esc {
 .dc-modal.modal {
   max-width: 550px;
 }
+.dc-modal.modal .js-modal-header {
+  display: none;
+}
+.dc-modal.modal .js-modal-footer {
+  display: none;
+}
 .dc-modal.modal .js-modal-body {
   margin-bottom: 0;
   overflow: hidden;
-}
-.dc-modal.modal .dc-heading-hint {
-  font-weight: normal;
-  font-size: var(--small-font-size);
-  color: var(--clr-neutral-50);
 }
 
 .file-upload-dialog .ajax-file-upload > label {

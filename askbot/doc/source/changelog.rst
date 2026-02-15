@@ -1,6 +1,15 @@
 Changes in Askbot
 =================
 
+In development
+--------------
+* Downvote comment prompt: when a user downvotes a post, a modal
+  encourages them to leave a comment explaining why — with animated
+  transition to a comment editor, existing comments preview, and
+  auto-scroll to the newly posted comment
+* Consolidated Svelte build into shared ``askbot/media/svelte/``
+  directory with multi-entry rollup config
+
 0.12.5 (Feb 8, 2026)
 --------------------
 * No features changed, removed references to Django 2 from setup.py
