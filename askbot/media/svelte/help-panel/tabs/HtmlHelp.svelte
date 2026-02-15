@@ -31,13 +31,13 @@
     ];
 
     // Filter categories to only show tags that are allowed
-    $: allowedSet = new Set($settings.allowedHtmlElements || []);
-    $: visibleCategories = TAG_CATEGORIES
+    let allowedSet = $derived(new Set($settings.allowedHtmlElements || []));
+    let visibleCategories = $derived(TAG_CATEGORIES
         .map(category => ({
             ...category,
             allowedTags: category.tags.filter(tag => allowedSet.has(tag))
         }))
-        .filter(category => category.allowedTags.length > 0);
+        .filter(category => category.allowedTags.length > 0));
 </script>
 
 <div class="help-content">

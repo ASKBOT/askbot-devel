@@ -8,20 +8,20 @@
     let tabButtonEls = [];
     let lastContainerWidth = 0;
     let tabWidths = [];
-    let overflowIndex = -1; // Index where overflow starts (-1 = no overflow)
-    let pinnedTabId = null; // Tab promoted from dropdown (stays first)
+    let overflowIndex = $state(-1); // Index where overflow starts (-1 = no overflow)
+    let pinnedTabId = $state(null); // Tab promoted from dropdown (stays first)
 
     const DROPDOWN_WIDTH = 40; // Approximate width for "..." button
     const GAP = 2; // Gap between tabs in pixels
     const WIDTH_THRESHOLD = 10; // Minimum width change to trigger recalc
 
-    function handleSelect(event) {
-        activeTab.set(event.detail.id);
+    function handleSelect(detail) {
+        activeTab.set(detail.id);
         // Don't change pinned tab when selecting visible tabs
     }
 
-    function handleDropdownSelect(event) {
-        const tabId = event.detail.id;
+    function handleDropdownSelect(detail) {
+        const tabId = detail.id;
         activeTab.set(tabId);
         // Pin this tab so it stays first
         pinnedTabId = tabId;
@@ -97,7 +97,7 @@
     });
 
     // Reorder tabs only if a tab was pinned from the dropdown
-    $: orderedTabs = (() => {
+    let orderedTabs = $derived((() => {
         if (!pinnedTabId) return $visibleTabs;
         const pinnedIndex = $visibleTabs.findIndex(tab => tab.id === pinnedTabId);
         if (pinnedIndex <= 0) return $visibleTabs; // Already first or not found
@@ -105,22 +105,24 @@
         const [pinnedTab] = result.splice(pinnedIndex, 1);
         result.unshift(pinnedTab);
         return result;
-    })();
+    })());
 
     // Re-measure when pinned tab changes (visibleTabs handled by ResizeObserver)
-    $: if (pinnedTabId) {
-        tick().then(() => {
-            requestAnimationFrame(() => measureTabs(true));
-        });
-    }
+    $effect(() => {
+        if (pinnedTabId) {
+            tick().then(() => {
+                requestAnimationFrame(() => measureTabs(true));
+            });
+        }
+    });
 
-    $: inlineTabs = overflowIndex === -1
+    let inlineTabs = $derived(overflowIndex === -1
         ? orderedTabs
-        : orderedTabs.slice(0, overflowIndex);
+        : orderedTabs.slice(0, overflowIndex));
 
-    $: overflowTabs = overflowIndex === -1
+    let overflowTabs = $derived(overflowIndex === -1
         ? []
-        : orderedTabs.slice(overflowIndex);
+        : orderedTabs.slice(overflowIndex));
 </script>
 
 <div class="tab-bar" role="tablist" aria-label="Help topics" bind:this={containerEl}>
@@ -130,7 +132,7 @@
                 id={tab.id}
                 label={tab.label}
                 active={$activeTab === tab.id}
-                on:select={handleSelect}
+                onselect={handleSelect}
             />
         </span>
     {/each}
@@ -138,7 +140,7 @@
         <OverflowDropdown
             tabs={overflowTabs}
             activeTabId={$activeTab}
-            on:select={handleDropdownSelect}
+            onselect={handleDropdownSelect}
         />
     {/if}
 </div>

@@ -5,7 +5,14 @@ import terser from '@rollup/plugin-terser';
 import { existsSync } from 'fs';
 
 const sharedPlugins = () => [
-	svelte({ emitCss: false }),
+	svelte({
+		emitCss: false,
+		compilerOptions: {
+			compatibility: {
+				componentApi: 4
+			}
+		}
+	}),
 	resolve({
 		browser: true,
 		dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')

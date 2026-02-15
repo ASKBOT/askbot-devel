@@ -1,19 +1,14 @@
 <script>
-    export let id;
-    export let label;
-    export let active = false;
-
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+    let { id, label, active = false, onselect } = $props();
 
     function handleClick() {
-        dispatch('select', { id });
+        onselect?.({ id });
     }
 
     function handleKeydown(event) {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            dispatch('select', { id });
+            onselect?.({ id });
         }
     }
 </script>
@@ -25,8 +20,8 @@
     role="tab"
     aria-selected={active}
     tabindex={active ? 0 : -1}
-    on:click={handleClick}
-    on:keydown={handleKeydown}
+    onclick={handleClick}
+    onkeydown={handleKeydown}
 >
     {label}
 </button>

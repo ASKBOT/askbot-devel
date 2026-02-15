@@ -2,9 +2,7 @@
     import { onMount, tick } from 'svelte';
     import { commentText } from '../stores.js';
 
-    export let minLength = 10;
-    export let maxLength = 600;
-    export let onCommentChange = null;
+    let { minLength = 10, maxLength = 600, onCommentChange = null } = $props();
 
     let textareaEl;
 
@@ -20,10 +18,10 @@
         }
     }
 
-    $: charCount = $commentText.length;
-    $: remaining = maxLength - charCount;
-    $: counterClass = remaining < 20 ? 'warning' : '';
-    $: tooShort = charCount > 0 && charCount < minLength;
+    let charCount = $derived($commentText.length);
+    let remaining = $derived(maxLength - charCount);
+    let counterClass = $derived(remaining < 20 ? 'warning' : '');
+    let tooShort = $derived(charCount > 0 && charCount < minLength);
 </script>
 
 <div class="dc-your-comment">
@@ -32,7 +30,7 @@
         class="dc-textarea"
         placeholder={gettext('Leave a comment to explain your downvote')}
         value={$commentText}
-        on:input={handleInput}
+        oninput={handleInput}
         maxlength={maxLength}
         rows="4"
     ></textarea>

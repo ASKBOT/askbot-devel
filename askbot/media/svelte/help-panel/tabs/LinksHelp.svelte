@@ -1,6 +1,6 @@
 <script>
     import { parsedAutoLinks } from '../settings.js';
-    $: showAutoLinks = $parsedAutoLinks.length > 0;
+    let showAutoLinks = $derived($parsedAutoLinks.length > 0);
 </script>
 
 <div class="help-content">

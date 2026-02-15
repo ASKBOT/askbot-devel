@@ -1,15 +1,13 @@
 <script>
-    export let postId;
-    export let postType;
-    export let prefetchedComments = null;
+    let { postId, postType, prefetchedComments = null } = $props();
 
-    let comments = [];
-    let loading = true;
-    let error = null;
+    let comments = $state([]);
+    let loading = $state(true);
+    let error = $state(null);
 
-    let scrollContainer;
-    let aboveCount = 0;
-    let belowCount = 0;
+    let scrollContainer = $state(null);
+    let aboveCount = $state(0);
+    let belowCount = $state(0);
     let observer;
 
     import { onMount, onDestroy, tick } from 'svelte';

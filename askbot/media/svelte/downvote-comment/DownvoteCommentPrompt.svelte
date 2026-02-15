@@ -4,22 +4,19 @@
     import { commentText } from './stores.js';
     import { onMount, tick } from 'svelte';
 
-    export let postId;
-    export let postType = 'answer';
-    export let onClose = null;
-    export let onSubmitted = null;
+    let { postId, postType = 'answer', onClose = null, onSubmitted = null } = $props();
 
-    let step = 'prompt';
-    let prefetchedComments = null;
-    let hasComments = false;
-    let submitting = false;
-    let errorMessage = null;
+    let step = $state('prompt');
+    let prefetchedComments = $state(null);
+    let hasComments = $state(false);
+    let submitting = $state(false);
+    let errorMessage = $state(null);
     let contentEl;
 
     let minLength = askbot.settings.minCommentBodyLength || 10;
     let maxLength = askbot.data.maxCommentLength;
 
-    $: canSubmit = !submitting && $commentText.length >= minLength;
+    let canSubmit = $derived(!submitting && $commentText.length >= minLength);
 
     // Reset comment text on mount
     commentText.set('');
@@ -118,10 +115,10 @@
         <h3 class="dc-heading">{gettext('Thank you for your vote!')}</h3>
         <p class="dc-body-text">{gettext("We'd love to hear a bit more detailed feedback.")}</p>
         <div class="dc-actions">
-            <button class="btn" on:click={handleLeaveComment}>
+            <button class="btn" onclick={handleLeaveComment}>
                 {gettext('Leave a comment')}
             </button>
-            <button class="btn btn-muted" on:click={handleSkip}>
+            <button class="btn btn-muted" onclick={handleSkip}>
                 {gettext('Skip')}
             </button>
         </div>
@@ -146,11 +143,11 @@
             <button
                 class="btn"
                 disabled={!canSubmit}
-                on:click={handleSubmit}
+                onclick={handleSubmit}
             >
                 {gettext('Add Comment')}
             </button>
-            <button class="btn btn-muted" on:click={handleCancel}>
+            <button class="btn btn-muted" onclick={handleCancel}>
                 {gettext('Cancel')}
             </button>
         </div>

@@ -1,17 +1,14 @@
 <script>
-    import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
 
-    export let tabs = [];
-    export let activeTabId = null;
+    let { tabs = [], activeTabId = null, onselect } = $props();
 
-    const dispatch = createEventDispatcher();
+    let isOpen = $state(false);
+    let triggerEl = $state(null);
+    let menuEl = $state(null);
+    let focusedIndex = $state(-1);
 
-    let isOpen = false;
-    let triggerEl;
-    let menuEl;
-    let focusedIndex = -1;
-
-    $: hasActiveTab = tabs.some(tab => tab.id === activeTabId);
+    let hasActiveTab = $derived(tabs.some(tab => tab.id === activeTabId));
 
     function toggleDropdown() {
         isOpen = !isOpen;
@@ -26,7 +23,7 @@
     }
 
     function selectTab(tabId) {
-        dispatch('select', { id: tabId });
+        onselect({ id: tabId });
         closeDropdown();
     }
 
@@ -74,10 +71,12 @@
         document.removeEventListener('click', handleClickOutside);
     });
 
-    $: if (isOpen && menuEl && focusedIndex >= 0) {
-        const items = menuEl.querySelectorAll('.overflow-item');
-        items[focusedIndex]?.focus();
-    }
+    $effect(() => {
+        if (isOpen && menuEl && focusedIndex >= 0) {
+            const items = menuEl.querySelectorAll('.overflow-item');
+            items[focusedIndex]?.focus();
+        }
+    });
 </script>
 
 <div class="overflow-dropdown">
@@ -88,8 +87,8 @@
         class:has-active={hasActiveTab}
         aria-haspopup="true"
         aria-expanded={isOpen}
-        on:click={toggleDropdown}
-        on:keydown={handleTriggerKeydown}
+        onclick={toggleDropdown}
+        onkeydown={handleTriggerKeydown}
     >
         &hellip;
     </button>
@@ -99,7 +98,7 @@
             bind:this={menuEl}
             class="overflow-menu"
             role="menu"
-            on:keydown={handleMenuKeydown}
+            onkeydown={handleMenuKeydown}
         >
             {#each tabs as tab, i (tab.id)}
                 <li
@@ -108,8 +107,8 @@
                     class:focused={i === focusedIndex}
                     role="menuitem"
                     tabindex="-1"
-                    on:click={() => selectTab(tab.id)}
-                    on:keydown={(e) => e.key === 'Enter' && selectTab(tab.id)}
+                    onclick={() => selectTab(tab.id)}
+                    onkeydown={(e) => e.key === 'Enter' && selectTab(tab.id)}
                 >
                     {tab.label}
                 </li>

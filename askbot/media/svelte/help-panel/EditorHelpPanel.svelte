@@ -4,18 +4,21 @@
     import HelpPanel from './HelpPanel.svelte';
 
     // Props
-    export let buttonRow = null;
-    export let editorInput = null;
+    let { buttonRow = null, editorInput = null } = $props();
 
     // Local state
     let helpButton = null;
     let containerEl = null;
     let wrapperEl = null;
 
-    $: isOpen = $isPanelOpen;
+    let isOpen = $derived($isPanelOpen);
 
     // Toggle class on container when panel opens/closes
-    $: containerEl && containerEl.classList.toggle('js-help-panel-open', isOpen);
+    $effect(() => {
+        if (containerEl) {
+            containerEl.classList.toggle('js-help-panel-open', isOpen);
+        }
+    });
 
     function handleButtonClick() {
         togglePanel();
@@ -39,10 +42,10 @@
         }
     }
 
-    // Subscribe to store changes
-    const unsubscribe = isPanelOpen.subscribe(value => {
+    // React to store changes for button state and editor input class
+    $effect(() => {
+        const value = $isPanelOpen;
         updateButtonState(value);
-        // Toggle class on editor input
         if (editorInput) {
             editorInput.classList.toggle('js-help-panel-open', value);
         }
@@ -77,7 +80,6 @@
     });
 
     onDestroy(() => {
-        unsubscribe();
         if (helpButton) {
             helpButton.removeEventListener('click', handleButtonClick);
             helpButton.removeEventListener('keydown', handleKeydown);

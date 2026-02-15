@@ -2,7 +2,7 @@
     import { isPanelOpen, togglePanel } from './panel.js';
 
     // Get the open state from the store
-    $: isOpen = $isPanelOpen;
+    let isOpen = $derived($isPanelOpen);
 
     function handleClick() {
         togglePanel();
@@ -24,8 +24,8 @@
     title={gettext('Formatting help')}
     aria-label={gettext('Toggle formatting help')}
     aria-expanded={isOpen}
-    on:click={handleClick}
-    on:keydown={handleKeydown}
+    onclick={handleClick}
+    onkeydown={handleKeydown}
 >
 </li>
 

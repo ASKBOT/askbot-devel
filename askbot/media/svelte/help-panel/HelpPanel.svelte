@@ -15,7 +15,7 @@
     import VideoHelp from './tabs/VideoHelp.svelte';
     import MathHelp from './tabs/MathHelp.svelte';
 
-    $: isOpen = $isPanelOpen;
+    let isOpen = $derived($isPanelOpen);
 
     // Map tab IDs to components
     const tabComponents = {
@@ -31,14 +31,14 @@
         math: MathHelp
     };
 
-    $: currentComponent = tabComponents[$activeTab] || LinksHelp;
+    let CurrentComponent = $derived(tabComponents[$activeTab] || LinksHelp);
 </script>
 
 {#if isOpen}
     <div class="help-panel" transition:slide={{ duration: 150 }}>
         <TabBar />
         <div class="help-panel-content" role="tabpanel">
-            <svelte:component this={currentComponent} />
+            <CurrentComponent />
         </div>
     </div>
 {/if}
