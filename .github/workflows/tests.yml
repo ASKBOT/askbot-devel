@@ -48,7 +48,7 @@ jobs:
       run: |
         cd askbot_site
         ln -s ../askbot/tests .
-        python manage.py test --parallel tests
+        python manage.py test --parallel auto tests
 #      env:
 #        # Variables for unit tests
 #        DJANGO_SETTINGS_MODULE: settings
