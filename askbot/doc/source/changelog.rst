@@ -1,8 +1,8 @@
 Changes in Askbot
 =================
 
-In development
---------------
+0.12.6 (Feb 16, 2026)
+---------------------
 * Migrated from ``setup.py`` to ``pyproject.toml`` for packaging;
   removed ``setup.py`` and ``askbot_requirements.txt``
 * Bumped minimum Python version to 3.10
