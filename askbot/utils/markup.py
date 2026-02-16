@@ -323,8 +323,6 @@ def plain_text_input_converter(text):
     return sanitize_html(urlize('<p>' + text + '</p>'))
 
 
-MD_CONVERTER = get_md_converter()
-
 def markdown_input_converter(text):
     """
     Markdown to HTML converter with MathJax and video embed support.
