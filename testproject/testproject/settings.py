@@ -136,7 +136,6 @@ MIDDLEWARE = (
     'askbot.middleware.cancel.CancelActionMiddleware',
     #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'askbot.middleware.view_log.ViewLogMiddleware',
-    'askbot.middleware.spaceless.SpacelessMiddleware',
 )
 
 ATOMIC_REQUESTS = True
@@ -186,7 +185,6 @@ INSTALLED_APPS = (
     #'askbot.importers.stackexchange', #se loader
     'livesettings',
     'keyedcache',
-    'robots',
     'django_countries',
     'kombu.transport.memory',
     'followit',

@@ -1,0 +1,15 @@
+services:
+  postgres18:
+    image: postgres:18
+    container_name: askbot_pg18
+    environment:
+      POSTGRES_USER: askbot
+      POSTGRES_PASSWORD: askbot
+      POSTGRES_DB: askbot_docker
+    ports:
+      - "5433:5432"  # Use 5433 to avoid conflict with local postgres
+    volumes:
+      - pg18_data:/var/lib/postgresql
+
+volumes:
+  pg18_data:

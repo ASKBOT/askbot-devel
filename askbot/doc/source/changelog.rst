@@ -1,6 +1,83 @@
 Changes in Askbot
 =================
 
+0.12.6 (Feb 16, 2026)
+---------------------
+* Migrated from ``setup.py`` to ``pyproject.toml`` for packaging;
+  removed ``setup.py`` and ``askbot_requirements.txt``
+* Bumped minimum Python version to 3.10
+* Upgraded ``django-followit`` to 0.7
+* Downvote comment prompt: when a user downvotes a post, a modal
+  encourages them to leave a comment explaining why — with animated
+  transition to a comment editor, existing comments preview, and
+  auto-scroll to the new comment, once posted
+* Consolidated Svelte build into shared ``askbot/media/svelte/``
+  directory with multi-entry rollup config
+* Upgraded Svelte 4 to 5 with full runes migration across all components
+* Removed ``django-robots`` dependency — deployers can install it separately if needed
+
+0.12.5 (Feb 8, 2026)
+--------------------
+* No features changed, removed references to Django 2 from setup.py
+
+0.12.4 (Feb 8, 2026)
+--------------------
+* Major upgrade of Markdown support throughout the application
+* Backend: migrated from markdown2 to markdown-it with plugins for
+  tables, strikethrough, footnotes, task lists, and syntax highlighting
+* Frontend: migrated from Showdown to markdown-it.js, ensuring
+  server-client rendering parity
+* MathJax v2 support with Stack Exchange-style preprocessing —
+  LaTeX math in posts via ``$...$`` and ``$$...$$`` delimiters
+* Syntax highlighting: upgraded highlight.js to v11.11.1, added
+  Pygments backend highlighting with frontend/backend theme parity
+* Enabled automatic URL linkification with smart link truncation
+* Auto-link patterns: configurable URL shortcuts (e.g. ``gh:123``)
+* Video embedding redesigned as clickable links with modal player,
+  supports YouTube, Vimeo, and Dailymotion
+* New editor help panel with tabbed interface, i18n support,
+  keyboard navigation, and responsive overflow handling
+* Editor dialogs refactored: replaced inline WMD prompts with
+  ModalDialog-based dialogs for links and file uploads
+* Editor: automatic indented-to-fenced code block conversion
+* Unified Python/JS HTML sanitizer configuration with DOMPurify
+* Consolidated HTML allowlist; added ``details``/``summary`` elements
+* Comprehensive CSS styling for user-contributed content with
+  17 CSS variables (``--uc-*`` prefix) for theming
+* Code-friendly emphasis mode: only ``*`` triggers emphasis,
+  underscores are left literal
+* Task list checkbox styling in rendered markdown
+* Fixed long titles overflowing into sidebar
+* Scrolls textarea to top when editor opens
+
+0.12.3 (Jan 26, 2026)
+---------------------
+* Supports Python 3.12
+* Admin Tags: tags can be designated as "admin tags" with special styling and management,
+  setting ``ASKBOT_USER_CAN_MANAGE_ADMIN_TAGS_FUNCTION`` controls access
+* OIDC authentication: added setting ``OIDC_AUTHORIZATION_FUNCTION`` for custom authorization,
+  OIDC now uses access token instead of id_token
+* Added Django signals ``best_answer_accepted`` and ``best_answer_unaccepted``
+* Added setting ``WHO_CAN_ANONYMIZE_ACCOUNTS``
+* Added setting ``ASKBOT_FEDERATED_LOGIN_EMAIL_EDITABLE``
+* Custom user profile tab: added ``USER_IS_AUTHORIZED_FUNC`` option
+* Added ``email_is_confidential`` field to UserProfile model
+* HTML emails now use premailer for inline CSS styling
+* Added ``HeadRequestMiddleware`` to handle HEAD requests
+* Retired ``ez_setup.py``
+* Pre-commit configuration and GitHub Actions tests added
+* Admin site: allows filtering user profiles by status and email_is_confidential
+* Non-admins cannot terminate admin or moderator accounts
+* Publish/unpublish button shown for group private posts when user has permission
+* Security fix: authorization bypass in avatar views where URL string parameters
+  were compared directly to integer user IDs
+* Bug fix: undeleting a question was not working properly
+* Bug fix: unsubscribe URL no longer breaks if user not found with given email
+* Bug fix: privacy setting is maintained when editing a post via ajax
+* Bug fix: delete tag when removing admin tag
+* XSS fix: adds escape to closed_question_info in templates
+* Bumps django-livesettings3 to 1.6.3
+
 0.12.2 (Jul 29, 2023)
 ---------------------
 * improves installation process, supports Python 3.11
@@ -119,14 +196,13 @@ NOTE::
   Releases 0.10.x support Django 1.8, 0.9.x - Django 1.7,
   0.7.x support Django 1.5, 0.8.x - 1.6 and to be used
   only to migrate to the higher versions of the Django framework
-  from 1.5. See https://pypi.python.org/pypi/askbot/ 
+  from 1.5. See https://pypi.python.org/pypi/askbot/
   to download the latest available version.
 
 0.7.53 (Apr 22, 2015)
 ---------------------
 * Use prompt placeholders on all registration forms
 * Disable Google login by default because it is now OAuth2
-
 
 0.7.52 (Apr 19, 2015)
 ---------------------
@@ -166,7 +242,7 @@ NOTE::
 * Allowed localized site settings
 * Added management command `askbot_clear_moderation_queue`
 * Admins and Moderators can merge questions.
-* Improved moderation modes: flags, audit, premoderation. 
+* Improved moderation modes: flags, audit, premoderation.
   Watched user status, IP blocking, mass content removal.
 * Allow bulk deletion of user content simultaneously with blocking
 * Allow custom destination url under the logo
@@ -179,7 +255,7 @@ NOTE::
 * Added Read-Only mode for the site in the "access control" section.
 * Added `askbot_add_osqa_content` management command.
 * Management command to add data from other Askbot site.
-* Allowed simple overrides of livesettings with `ASKBOT_...` prefixed 
+* Allowed simple overrides of livesettings with `ASKBOT_...` prefixed
   variables in the `settings.py` file.
 
 0.7.49 (Sep 19, 2013)
@@ -250,7 +326,7 @@ NOTE::
 * Added minimum reputation setting to accept any answer as correct (Evgeny)
 * Added "VIP" option to groups - if checked, all posts belong to the group and users of that group in the future will be able to moderate those posts. Moderation features for VIP group are in progress (Evgeny)
 * Added setting `NOTIFICATION_DELAY_TIME` to use with enabled celery daemon (Adolfo)
-* Added setting `ASKBOT_INTERNAL_IPS` - to allow anonymous access to 
+* Added setting `ASKBOT_INTERNAL_IPS` - to allow anonymous access to
   closed sites from dedicated IP addresses (Evgeny)
 * Moved default skin from `askbot/skins/default` to simply `askbot` (Evgeny)
 * Repost comment as answer (Adolfo)
@@ -291,7 +367,7 @@ NOTE::
 * Enabling/disabling the badges system (Evgeny)
 * Created a basic post moderation feature (Evgeny)
 * Created a way to specify reasons for rejecting posts in a modal dialog (Evgeny)
-* A number of bug fixes (Adolfo Fitoria, Jim Tittsler, 
+* A number of bug fixes (Adolfo Fitoria, Jim Tittsler,
   Evgeny Fadeev, Robin Stocker, Radim Řehůřek, Silvio Heuberger)
 
 0.7.41, 0.7.42 (April 21, 2012)
@@ -335,7 +411,7 @@ NOTE::
 
 0.7.37 (Jan 8, 2012)
 --------------------
-* added basic slugification treatment to question titles with 
+* added basic slugification treatment to question titles with
   ``ALLOW_UNICODE_SLUGS = True`` (Evgeny)
 * added verification of the project directory name to
   make sure it does not contain a `.` (dot) symbol (Evgeny)
@@ -447,7 +523,7 @@ For these versions we did not keep consistent record of features.
 
 0.7.22
 ------
-* Media resource revision is now incremented 
+* Media resource revision is now incremented
   automatically any time when media is updated (Adolfo Fitoria, Evgeny Fadeev)
 * First user automatically becomes site administrator (Adolfo Fitoria)
 * Avatar displayed on the sidebar can be controlled with livesettings.(Adolfo Fitoria, Evgeny Fadeev)

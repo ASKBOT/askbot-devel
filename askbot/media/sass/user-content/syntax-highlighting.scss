@@ -1,0 +1,191 @@
+// Syntax highlighting for code blocks
+// Supports both highlight.js (frontend) and Pygments (backend) classes
+// Colors controlled via CSS variables in variables.scss
+code.hljs {
+  padding: var(--code-padding);
+}
+
+// ===========================================
+// HIGHLIGHT.JS CLASSES
+// ===========================================
+.wmd-preview,
+.js-editable-content {
+  pre code {
+    display: block;
+    background: var(--code-bg);
+    color: var(--code-fg);
+  }
+}
+
+.hljs-comment {
+  color: var(--code-comment);
+}
+
+.hljs-punctuation,
+.hljs-tag {
+  color: var(--code-punctuation);
+}
+
+.hljs-tag .hljs-attr,
+.hljs-tag .hljs-name {
+  color: var(--code-keyword);
+}
+
+.hljs-attribute,
+.hljs-doctag,
+.hljs-keyword,
+.hljs-name,
+.hljs-selector-tag {
+  color: var(--code-keyword);
+  font-weight: bold;
+}
+
+.hljs-meta .hljs-keyword {
+  color: var(--code-keyword);
+  font-weight: bold;
+}
+
+.hljs-deletion,
+.hljs-number,
+.hljs-quote,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-string,
+.hljs-template-tag,
+.hljs-type {
+  color: var(--code-string);
+}
+
+.hljs-section,
+.hljs-title {
+  color: var(--code-function);
+  font-weight: bold;
+}
+
+.hljs-link,
+.hljs-operator,
+.hljs-regexp,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-symbol,
+.hljs-template-variable,
+.hljs-variable {
+  color: var(--code-operator);
+}
+
+.hljs-literal {
+  color: var(--code-literal);
+}
+
+.hljs-addition,
+.hljs-built_in,
+.hljs-bullet,
+.hljs-code {
+  color: var(--code-builtin);
+}
+
+.hljs-meta {
+  color: var(--code-meta);
+}
+
+.hljs-meta .hljs-string {
+  color: var(--code-meta-string);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+// ===========================================
+// PYGMENTS CLASSES (server-side rendering)
+// ===========================================
+
+pre code {
+  // Comments
+  .c, .ch, .cm, .cp, .cpf, .c1, .cs {
+    color: var(--code-comment);
+  }
+
+  // Keywords
+  .k, .kc, .kd, .kn, .kp, .kr, .kt {
+    color: var(--code-keyword);
+    font-weight: bold;
+  }
+
+  // Strings
+  .s, .s1, .s2, .sa, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss, .sx, .dl {
+    color: var(--code-string);
+  }
+
+  // Numbers
+  .m, .mb, .mf, .mh, .mi, .mo, .il {
+    color: var(--code-string);
+  }
+
+  // Names (base color)
+  .n, .na, .nc, .nd, .ne, .ni, .nl, .nn, .no, .nv, .nx {
+    color: var(--code-fg);
+  }
+  .bp, .fm, .py, .vc, .vg, .vi, .vm {
+    color: var(--code-fg);
+  }
+
+  // Functions
+  .nf {
+    color: var(--code-function);
+    font-weight: bold;
+  }
+
+  // Tags
+  .nt {
+    color: var(--code-keyword);
+    font-weight: bold;
+  }
+
+  // Operators
+  .o, .ow {
+    color: var(--code-operator);
+  }
+
+  // Literals
+  .l, .ld {
+    color: var(--code-literal);
+  }
+
+  // Built-ins
+  .nb {
+    color: var(--code-builtin);
+  }
+
+  // Punctuation
+  .p, .pm {
+    color: var(--code-punctuation);
+  }
+
+  // Generic tokens
+  .g { color: var(--code-fg); }
+  .gd { color: var(--code-deletion); }
+  .ge { font-style: italic; }
+  .ges { font-style: italic; font-weight: bold; }
+  .gh { color: var(--code-function); font-weight: bold; }
+  .gi { color: var(--code-addition); }
+  .go { color: var(--code-comment); }
+  .gp { color: var(--code-fg); font-weight: bold; }
+  .gr { color: var(--code-deletion); }
+  .gs { font-weight: bold; }
+  .gt { color: var(--code-deletion); }
+  .gu { color: var(--code-meta); font-weight: bold; }
+
+  // Error token
+  .err { color: var(--code-deletion); }
+
+  // Whitespace
+  .w { color: transparent; }
+
+  // Escape sequences
+  .esc { color: var(--code-operator); }
+}

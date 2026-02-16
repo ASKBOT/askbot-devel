@@ -1,3 +1,5 @@
+[![Github tests](https://github.com/ASKBOT/askbot-devel/actions/workflows/tests.yml/badge.svg)](https://github.com/ASKBOT/askbot-devel/actions/workflows/tests.yml)
+
 ## Askbot - a Django Q&A forum platform
 
 This is Askbot project - open source Q&A system, like StackOverflow, Yahoo Answers and some others.
@@ -6,7 +8,7 @@ and Sailing Cai and some code written for OSQA.
 
 Demos and hosting are available at http://askbot.com.
 
-Branch `master` - released as versions 0.12.x - supports Django 4.2, Python up to 3.11
+Branch `master` - released as versions 0.12.x - supports Django 4.2, Python 3.10+
 
 Branch `0.11.x` - released as versions 0.11.x - supports Django 3.2/Python 3.7 - 3.10
 
@@ -71,6 +73,6 @@ License, copyright and trademarks
 =================================
 Askbot software is licensed under GPL, version 3.
 
-Copyright Askbot S.p.A and the project contributors, 2010-2023.
+Copyright Askbot S.p.A and the project contributors, 2010-2026.
 
 "Askbot" is a trademark and service mark registered in the United States, number 4323777.

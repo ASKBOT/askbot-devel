@@ -11,7 +11,7 @@
         href="{{ search_state.change_sort('relevance-desc').full_url() }}"
         title="{{desc_tooltip}}"
     {% endif %}
-    style="display: {% if query %}inline{% else %}none{% endif %};"
+    style="display: {% if not query %}none{% endif %};"
     data-sort-by="relevance"
 >
   {{ label }}

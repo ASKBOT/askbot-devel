@@ -19,7 +19,7 @@ ul.tags {
     display: inline-block;
     font-size: var(--tag-font-size);
     height: 100%;
-    padding: 0 0.25rem;
+    padding: var(--tag-padding);
     text-decoration: none;
     white-space: nowrap;
   }

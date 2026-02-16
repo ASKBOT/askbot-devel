@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # David <dafftu@gmail.com>, 2014
 # Marcin Barylski <marcin.barylski@tas-moto.org>, 2019-2020
@@ -9,335 +9,74 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-16 13:08-0500\n"
+"POT-Creation-Date: 2026-01-22 14:58+0000\n"
 "PO-Revision-Date: 2020-08-16 19:55+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/askbot/askbot/language/pl/)\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-
-#: media/js/editors/folded_editor.js:38 media/js/post.js:4949
-msgid "Sorry, you have only read access"
-msgstr "Przykro mi, masz dostęp tylko do odczytu"
-
-#: media/js/group_messaging.js:132
-msgid "Type a message"
-msgstr "Wpisz wiadomość"
-
-#: media/js/group_messaging.js:141
-msgid "Add a recipient"
-msgstr "Dodaj odbiorcę"
-
-#: media/js/group_messaging.js:171
-msgid "message sent"
-msgstr "wiadomość wysłana"
-
-#: media/js/group_messaging.js:187
-msgid ""
-"Did you mean to send your message to muliple users? Use comma instead of "
-"whitespaces"
-msgstr "Czy miałeś na myśli wysłanie wiadomości do wielu użytkowników? Użyj przecinka zamiast białych znaków"
-
-#: media/js/group_messaging.js:191
-msgid "user {{str}} does not exist"
-msgid_plural "users {{str}} do not exist"
-msgstr[0] "użytkownik {{str}} nie istnieje"
-msgstr[1] "użytkownicy {{str}} nie istnieją"
-msgstr[2] "użytkownicy {{str}} nie istnieją"
-msgstr[3] "użytkownicy {{str}} nie istnieją"
-
-#: media/js/group_messaging.js:198
-msgid "cannot send message to yourself"
-msgstr "nie możesz wysłać wiadomości do siebie"
-
-#: media/js/jquery-openid/jquery.authenticator.js:73
-#, javascript-format
-msgid "Are you sure you want to remove your %s login?"
-msgstr "Czy na pewno chcesz usunąć Twój login %s?"
-
-#: media/js/jquery-openid/jquery.authenticator.js:90
-msgid "Please add one or more login methods."
-msgstr "Dodaj jedną lub więcej metod logowania."
-
-#: media/js/jquery-openid/jquery.authenticator.js:93
-msgid ""
-"You don't have a method to log in right now, please add one or more by "
-"clicking any of the icons below."
-msgstr "Nie masz obecnie żadnej metody logowania, proszę dodaj jedną lub więcej klikaąc jedną z ikon poniżej."
-
-#: media/js/jquery-openid/jquery.authenticator.js:147
-msgid "enter username"
-msgstr "Wpisz nazwę użytkownika"
-
-#: media/js/jquery-openid/jquery.authenticator.js:149
-msgid "enter username or email"
-msgstr "Podaj nazwę użytkownika lub email"
-
-#: media/js/jquery-openid/jquery.authenticator.js:158
-msgid "enter password"
-msgstr "Podaj hasło"
-
-#: media/js/jquery-openid/jquery.authenticator.js:180
-msgid "passwords do not match"
-msgstr "hasła się różnią"
-
-#: media/js/jquery-openid/jquery.authenticator.js:206
-msgid "Show/change current login methods"
-msgstr "Pokaż/zmień obecne metody logowania"
-
-#: media/js/jquery-openid/jquery.authenticator.js:262
-#, javascript-format
-msgid "Please enter your %s, then proceed"
-msgstr "Podaj swój %s, następnie kontynuuj"
-
-#: media/js/jquery-openid/jquery.authenticator.js:264
-msgid "Connect your %(provider_name)s account to %(site)s"
-msgstr "Połącz swoje konto %(provider_name)s do %(site)s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:362
-#, javascript-format
-msgid "Change your %s password"
-msgstr "Zmień swoje hasło %s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:363
-msgid "Change password"
-msgstr "Zmień hasło"
-
-#: media/js/jquery-openid/jquery.authenticator.js:365
-#, javascript-format
-msgid "Create a password for %s"
-msgstr "Utwórz hasło dla %s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:366
-msgid "Create password"
-msgstr "Utwórz hasło"
-
-#: media/js/jquery-openid/jquery.authenticator.js:377
-msgid "Create a password-protected account"
-msgstr "Stwórz chronione hasłem konto użytkownika"
-
-#: media/js/post.js:28
-msgid "loading..."
-msgstr "wczytywanie..."
-
-#: media/js/post.js:137 media/js/post.js:176 media/js/post.js:229
-#: media/js/post.js:253
-msgid "enter > %(length)s character"
-msgid_plural "enter > %(length)s characters"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: media/js/post.js:155 media/js/post.js:218
-#, javascript-format
-msgid "details must have > %s character"
-msgid_plural "details must have > %s characters"
-msgstr[0] "szczegóły muszą mieć > %s znak"
-msgstr[1] "szczegóły muszą mieć > %s znaki"
-msgstr[2] "szczegóły muszą mieć > %s znaków"
-msgstr[3] "szczegóły muszą mieć > %s znaków"
-
-#: media/js/post.js:209 media/js/post.js:1457
-msgid "tags cannot be empty"
-msgstr "tagi nie mogą być puste"
-
-#: media/js/post.js:215
-msgid "details are required"
-msgstr "szczegóły są wymagane"
-
-#: media/js/post.js:226
-msgid "enter your question"
-msgstr "wpisz swoje pytanie"
-
-#: media/js/post.js:250
-msgid "content cannot be empty"
-msgstr "treść nie może być pusta"
-
-#: media/js/post.js:311
-msgid "Back to the question"
-msgstr "Wróć do pytania"
-
-#: media/js/post.js:382 media/js/post.js:426 media/js/post.js:512
-msgid "Load preview"
-msgstr "Załaduj podgląd"
-
-#: media/js/post.js:420
-msgid "Merge"
-msgstr "Scal"
-
-#: media/js/post.js:511 media/js/utils/modal_dialog.js:9
-#: media/js/utils/text_property_editor.js:48
-msgid "Cancel"
-msgstr "Anuluj"
-
-#: media/js/post.js:561
-msgid "draft saved..."
-msgstr "szkic zapisany"
-
-#: media/js/post.js:781
-#, javascript-format
-msgid "%s follower"
-msgid_plural "%s followers"
-msgstr[0] "%s obserwujący"
-msgstr[1] "%s obserwujący"
-msgstr[2] "%s obserwujących"
-msgstr[3] "%s obserwujących"
-
-#: media/js/post.js:819
-msgid "insufficient privilege"
-msgstr "niewystarczające uprawnienia"
-
-#: media/js/post.js:821 media/js/post.js:1606
-msgid "please login"
-msgstr "zaloguj się"
-
-#: media/js/post.js:824
-msgid "anonymous users cannot subscribe to questions"
-msgstr "anonimowi użytkownicy nie mogą subskrybować pytań"
-
-#: media/js/post.js:825 media/js/post.js:1616
-msgid "anonymous users cannot vote"
-msgstr "anonimowi użytkownicy nie mogą głosować"
-
-#: media/js/post.js:827
-msgid "anonymous users cannot flag offensive posts"
-msgstr "anonimowi uzytkownicy nie mogą oznaczać postów jako negatywne"
-
-#: media/js/post.js:828
-msgid "confirm delete"
-msgstr "potwierdź usunięcie"
-
-#: media/js/post.js:829
-msgid "anonymous users cannot delete/undelete"
-msgstr "anonimowi użytkownicy nie mogą usuwać/przywracać"
-
-#: media/js/post.js:830
-msgid "post recovered"
-msgstr "wpis odzyskany"
-
-#: media/js/post.js:831
-msgid "post deleted"
-msgstr "wpis usunięty"
-
-#: media/js/post.js:1047
-msgid "sorry, you cannot %(accept_own_answer)s"
-msgstr "przepraszam, nie możesz %(accept_own_answer)s"
-
-#: media/js/post.js:1101
-msgid "remove flag"
-msgstr "usuń znacznik"
-
-#: media/js/post.js:1135 media/js/post.js:1166
-msgid "flag offensive"
-msgstr "oznacz negatywnie"
-
-#: media/js/post.js:1191 media/js/post.js:1687
-msgid "undelete"
-msgstr "odzyskaj"
-
-#: media/js/post.js:1195 media/js/post.js:1691
-msgid "delete"
-msgstr "usuń"
-
-#: media/js/post.js:1397 media/js/post.js:1635
-msgid "sorry, something is not right here"
-msgstr "przepraszam, coś poszło nie tak"
-
-#: media/js/post.js:1865
-msgid "Preview: (hide)"
-msgstr "Podgląd: (ukryj)"
-
-#: media/js/post.js:1866
-msgid "Show preview"
-msgstr "Pokaż podgląd"
-
-#: media/js/post.js:2283
-msgid "add comment"
-msgstr "dodaj komentarz"
-
-#: media/js/post.js:2288
-msgid "save comment"
-msgstr "zapisz komentarz"
-
-#: media/js/post.js:2332
-#, javascript-format
-msgid "enter at least %s characters"
-msgstr "wpisz co najmniej %s znaków"
-
-#: media/js/post.js:2334
-#, javascript-format
-msgid "enter at least %s more characters"
-msgstr "wpisz co najmniej %s znaków więcej"
-
-#: media/js/post.js:2346
-#, javascript-format
-msgid "%s characters left"
-msgstr "%s znaków pozostało"
-
-#: media/js/post.js:2348
-msgid "maximum comment length reached"
-msgstr "osiągnięto maksymalną długość komentarza"
-
-#: media/js/post.js:2451 media/js/post.js:3370 media/js/post.js:4921
-#: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:323
-msgid "cancel"
-msgstr "anuluj"
-
-#: media/js/post.js:2466
-msgid "minor edit (don't send alerts)"
-msgstr "drobna zmiana (nie wysyłaj powiadomień)"
-
-#: media/js/post.js:2498
-msgid "Are you sure you don't want to post this comment?"
-msgstr "Na pewno nie chcesz publikować tego komentarza?"
-
-#: media/js/post.js:2543 media/jslib/timeago.js:131
-msgid "just now"
-msgstr "Teraz"
-
-#: media/js/post.js:2620
-msgid "delete this comment"
-msgstr "usuń ten komentarz"
-
-#: media/js/post.js:2918
-msgid "confirm delete comment"
-msgstr "potwierdź usunięcie komentarza"
-
-#: media/js/post.js:3087
-msgid "please sign in or register to post comments"
-msgstr "zaloguj się lub zarejestruj aby dodawać komentarze"
-
-#: media/js/post.js:3364 media/js/post.js:4185 media/js/post.js:4378
-#: media/js/utils/editable.js:318
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+#: askbot/media/js/category_tree/category.js:117
+msgid "Delete category?"
+msgstr "Usunąć kategorię?"
+
+#: askbot/media/js/category_tree/category.js:188
+#: askbot/media/js/category_tree/category_adder.js:139
+#: askbot/media/js/editors/object_description_editor.js:156
+#: askbot/media/js/utils/editable.js:304
 msgid "save"
 msgstr "zapisz"
 
-#: media/js/post.js:3489
-msgid "Enter the logo url or upload an image"
-msgstr "Wpisz adres url logo lub wyślij obrazek"
+#: askbot/media/js/category_tree/category.js:207
+#: askbot/media/js/utils/edit_link.js:19
+msgid "edit"
+msgstr "edytuj"
 
-#: media/js/post.js:3515
-msgid "Do you really want to remove the image?"
-msgstr "Czy na pewno chcesz usunąć ten obrazek"
+#: askbot/media/js/category_tree/category.js:239
+#, fuzzy
+#| msgid "%s min ago"
+#| msgid_plural "%s mins ago"
+msgid "Admin Tags"
+msgstr "%s minutę temu"
 
-#: media/js/post.js:3631
-msgid "change logo"
-msgstr "zmień logo"
+#: askbot/media/js/category_tree/category_adder.js:48
+msgid "category name cannot be empty"
+msgstr "nazwa kategorii nie może być pusta"
 
-#: media/js/post.js:3632
-msgid "add logo"
-msgstr "dodaj logo"
+#: askbot/media/js/category_tree/category_adder.js:85
+msgid "already exists at the current level!"
+msgstr "już istnieje na obecnym poziomie!"
 
-#: media/js/post.js:3736
+#: askbot/media/js/category_tree/category_adder.js:119
+msgid "add category"
+msgstr "dodaj kategorię"
+
+#: askbot/media/js/category_tree/category_selector_loader.js:169
+msgid "save tags"
+msgstr "zapisz tagi"
+
+#: askbot/media/js/category_tree/category_selector_loader.js:174
+#: askbot/media/js/editors/object_description_editor.js:162
+#: askbot/media/js/pages/question/edit_comment_form.js:266
+#: askbot/media/js/user/group_adder_widget.js:17
+#: askbot/media/js/utils/editable.js:310
+msgid "cancel"
+msgstr "anuluj"
+
+#: askbot/media/js/category_tree/tag_editor.js:62
 #, javascript-format
-msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
-msgstr "tag \"%s\" został już dodany, nie ma potrzeby ponaiania (wciśnij \"escape\" aby usunąć)"
+msgid ""
+"tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
+msgstr ""
+"tag \"%s\" został już dodany, nie ma potrzeby ponaiania (wciśnij \"escape\" "
+"aby usunąć)"
 
-#: media/js/post.js:3745
+#: askbot/media/js/category_tree/tag_editor.js:71
 #, javascript-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
@@ -346,51 +85,444 @@ msgstr[1] "maksymalnie %s tagi dozwolone"
 msgstr[2] "maksymalnie %s tagów dozwolonych"
 msgstr[3] "maksymalnie %s tagów dozwolonych"
 
-#: media/js/post.js:4114
-msgid "Delete category?"
-msgstr "Usunąć kategorię?"
+#: askbot/media/js/editors/folded_editor.js:38
+#: askbot/media/js/utils/ask_button.js:7
+msgid "Sorry, you have only read access"
+msgstr "Przykro mi, masz dostęp tylko do odczytu"
 
-#: media/js/post.js:4204 media/js/utils/edit_link.js:15
-msgid "edit"
-msgstr "edytuj"
+#: askbot/media/js/editors/group_settings_editor.js:117
+msgid "change logo"
+msgstr "zmień logo"
 
-#: media/js/post.js:4291
-msgid "category name cannot be empty"
-msgstr "nazwa kategorii nie może być pusta"
+#: askbot/media/js/editors/group_settings_editor.js:118
+msgid "add logo"
+msgstr "dodaj logo"
 
-#: media/js/post.js:4328
-msgid "already exists at the current level!"
-msgstr "już istnieje na obecnym poziomie!"
+#: askbot/media/js/editors/wmd_expander_toggle.js:7
+msgid "Preview: (hide)"
+msgstr "Podgląd: (ukryj)"
 
-#: media/js/post.js:4364
-msgid "add category"
-msgstr "dodaj kategorię"
+#: askbot/media/js/editors/wmd_expander_toggle.js:8
+msgid "Show preview"
+msgstr "Pokaż podgląd"
 
-#: media/js/post.js:4917
-msgid "save tags"
+#: askbot/media/js/group_messaging.js:132
+msgid "Type a message"
+msgstr "Wpisz wiadomość"
+
+#: askbot/media/js/group_messaging.js:141
+msgid "Add a recipient"
+msgstr "Dodaj odbiorcę"
+
+#: askbot/media/js/group_messaging.js:171
+msgid "message sent"
+msgstr "wiadomość wysłana"
+
+#: askbot/media/js/group_messaging.js:187
+msgid ""
+"Did you mean to send your message to muliple users? Use comma instead of "
+"whitespaces"
+msgstr ""
+"Czy miałeś na myśli wysłanie wiadomości do wielu użytkowników? Użyj "
+"przecinka zamiast białych znaków"
+
+#: askbot/media/js/group_messaging.js:191
+msgid "user {{str}} does not exist"
+msgid_plural "users {{str}} do not exist"
+msgstr[0] "użytkownik {{str}} nie istnieje"
+msgstr[1] "użytkownicy {{str}} nie istnieją"
+msgstr[2] "użytkownicy {{str}} nie istnieją"
+msgstr[3] "użytkownicy {{str}} nie istnieją"
+
+#: askbot/media/js/group_messaging.js:198
+msgid "cannot send message to yourself"
+msgstr "nie możesz wysłać wiadomości do siebie"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:73
+#, javascript-format
+msgid "Are you sure you want to remove your %s login?"
+msgstr "Czy na pewno chcesz usunąć Twój login %s?"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:90
+msgid "Please add one or more login methods."
+msgstr "Dodaj jedną lub więcej metod logowania."
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:93
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr ""
+"Nie masz obecnie żadnej metody logowania, proszę dodaj jedną lub więcej "
+"klikaąc jedną z ikon poniżej."
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:147
+msgid "enter username"
+msgstr "Wpisz nazwę użytkownika"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:149
+msgid "enter username or email"
+msgstr "Podaj nazwę użytkownika lub email"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:158
+msgid "enter password"
+msgstr "Podaj hasło"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:180
+msgid "passwords do not match"
+msgstr "hasła się różnią"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:206
+msgid "Show/change current login methods"
+msgstr "Pokaż/zmień obecne metody logowania"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:262
+#, javascript-format
+msgid "Please enter your %s, then proceed"
+msgstr "Podaj swój %s, następnie kontynuuj"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:264
+msgid "Connect your %(provider_name)s account to %(site)s"
+msgstr "Połącz swoje konto %(provider_name)s do %(site)s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:362
+#, javascript-format
+msgid "Change your %s password"
+msgstr "Zmień swoje hasło %s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:363
+msgid "Change password"
+msgstr "Zmień hasło"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:365
+#, javascript-format
+msgid "Create a password for %s"
+msgstr "Utwórz hasło dla %s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:366
+msgid "Create password"
+msgstr "Utwórz hasło"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:377
+msgid "Create a password-protected account"
+msgstr "Stwórz chronione hasłem konto użytkownika"
+
+#: askbot/media/js/moderation_queue/errors_alert.js:10
+msgid "Please fix these errors:"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/errors_alert.js:22
+#, fuzzy
+#| msgid "sorry, something is not right here"
+msgid "Sorry, something wrong happened."
+msgstr "przepraszam, coś poszło nie tak"
+
+#: askbot/media/js/moderation_queue/errors_alert.js:27
+#, fuzzy
+#| msgid "sorry, something is not right here"
+msgid "Sorry, something wrong happened"
+msgstr "przepraszam, coś poszło nie tak"
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:36
+msgid "Add new reject reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:41
+msgid "Manage post flag/reject reasons"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:46
+msgid "Edit reject reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:114
+msgid "Load more items."
+msgstr "Załaduj więcej pozycji."
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:164
+msgid "first post"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:166
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:180
+msgid "%(count)s selected post"
+msgid_plural "%(count)s selected posts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:177
+msgid "%(count)s visible post"
+msgid_plural "%(count)s visible posts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:237
+msgid "collapse"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:239
+msgid "show more"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:47
+msgid "Please provide description."
+msgstr "Podaj opis."
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:50
+msgid "Please provide details."
+msgstr "Podaj szczegóły."
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:111
+msgid "Enter a brief description of why you are rejecting the post."
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:116
+msgid "Enter details here. This text will be sent to the user."
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:125
+#, fuzzy
+#| msgid "save tags"
+msgid "Save reason"
 msgstr "zapisz tagi"
 
-#: media/js/post.js:5022
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:129
+#: askbot/media/js/pages/question/merge_questions_dialog.js:187
+#: askbot/media/js/utils/modal_dialog.js:9
+#: askbot/media/js/utils/text_property_editor.js:48
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:79
+msgid "A reason must be selected to delete one."
+msgstr "Musisz podać powód aby usunąć."
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:110
+msgid "Edit this reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:119
+#, fuzzy
+#| msgid "delete this comment"
+msgid "Delete this reason"
+msgstr "usuń ten komentarz"
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:128
+#, fuzzy
+#| msgid "add new group"
+msgid "Add a new reason"
+msgstr "dodaj nową grupę"
+
+#: askbot/media/js/pages/answer_edit.js:4
+#: askbot/media/js/pages/answer_edit.js:7
+#: askbot/media/js/pages/question/init_page.js:6
+#: askbot/media/js/pages/question/init_page.js:9
+#, fuzzy
+#| msgid "Load preview"
+msgid "hide preview"
+msgstr "Załaduj podgląd"
+
+#: askbot/media/js/pages/answer_edit.js:7
+#: askbot/media/js/pages/question/init_page.js:9
+#, fuzzy
+#| msgid "Show preview"
+msgid "show preview"
+msgstr "Pokaż podgląd"
+
+#: askbot/media/js/pages/edit_answer/setup_form_validation.js:83
+msgid "content cannot be empty"
+msgstr "treść nie może być pusta"
+
+#: askbot/media/js/pages/edit_answer/setup_form_validation.js:86
+#: askbot/media/js/validators/answer_validators.js:10
+#: askbot/media/js/validators/question_validators.js:9
+msgid "enter > %(length)s character"
+msgid_plural "enter > %(length)s characters"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: askbot/media/js/pages/question/accept_answer_button.js:10
+#, fuzzy
+#| msgid "please sign in or register to post comments"
+msgid "Please sign in to vote"
+msgstr "zaloguj się lub zarejestruj aby dodawać komentarze"
+
+#: askbot/media/js/pages/question/accept_answer_button.js:13
+#: askbot/media/js/pages/question/vote.js:212
+msgid "sorry, you cannot %(accept_own_answer)s"
+msgstr "przepraszam, nie możesz %(accept_own_answer)s"
+
+#: askbot/media/js/pages/question/comment.js:12
+msgid "delete this comment"
+msgstr "usuń ten komentarz"
+
+#: askbot/media/js/pages/question/comment.js:306
+msgid "confirm delete comment"
+msgstr "potwierdź usunięcie komentarza"
+
+#: askbot/media/js/pages/question/delete_post_link.js:30
+#: askbot/media/js/pages/question/vote.js:236
+msgid "undelete"
+msgstr "odzyskaj"
+
+#: askbot/media/js/pages/question/delete_post_link.js:34
+#: askbot/media/js/pages/question/vote.js:240
+msgid "delete"
+msgstr "usuń"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:108
+msgid "add comment"
+msgstr "dodaj komentarz"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:113
+msgid "save comment"
+msgstr "zapisz komentarz"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:143
+#, javascript-format
+msgid "enter at least %s characters"
+msgstr "wpisz co najmniej %s znaków"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:146
+#, javascript-format
+msgid "enter at least %s more characters"
+msgstr "wpisz co najmniej %s znaków więcej"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:161
+#, javascript-format
+msgid "%s characters left"
+msgstr "%s znaków pozostało"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:163
+msgid "maximum comment length reached"
+msgstr "osiągnięto maksymalną długość komentarza"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:285
+#: askbot/media/js/utils/editable.js:324
+msgid "minor edit (don't send alerts)"
+msgstr "drobna zmiana (nie wysyłaj powiadomień)"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:317
+msgid "Are you sure you don't want to post this comment?"
+msgstr "Na pewno nie chcesz publikować tego komentarza?"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:362
+#: askbot/media/jslib/timeago.js:129
+msgid "just now"
+msgstr "Teraz"
+
+#: askbot/media/js/pages/question/flag_offensive.js:4
+#: askbot/media/js/pages/question/post_vote.js:93
+#: askbot/media/js/pages/question/vote.js:26
+msgid "please login"
+msgstr "zaloguj się"
+
+#: askbot/media/js/pages/question/flag_offensive.js:5
+msgid "anonymous users cannot flag offensive posts"
+msgstr "anonimowi uzytkownicy nie mogą oznaczać postów jako negatywne"
+
+#: askbot/media/js/pages/question/flag_offensive.js:6
+#, fuzzy
+#| msgid "anonymous users cannot vote"
+msgid "anonymous users cannot remove post flags"
+msgstr "anonimowi użytkownicy nie mogą głosować"
+
+#: askbot/media/js/pages/question/follow_question.js:9
+#, javascript-format
+msgid "%s follower"
+msgid_plural "%s followers"
+msgstr[0] "%s obserwujący"
+msgstr[1] "%s obserwujący"
+msgstr[2] "%s obserwujących"
+msgstr[3] "%s obserwujących"
+
+#: askbot/media/js/pages/question/merge_questions_dialog.js:61
+#: askbot/media/js/pages/question/merge_questions_dialog.js:105
+#: askbot/media/js/pages/question/merge_questions_dialog.js:188
+msgid "Load preview"
+msgstr "Załaduj podgląd"
+
+#: askbot/media/js/pages/question/merge_questions_dialog.js:99
+msgid "Merge"
+msgstr "Scal"
+
+#: askbot/media/js/pages/question/post_comments_widget.js:168
+msgid "Sorry, only one moderated comment per post is allowed"
+msgstr ""
+
+#: askbot/media/js/pages/question/post_comments_widget.js:173
+msgid "please sign in or register to post comments"
+msgstr "zaloguj się lub zarejestruj aby dodawać komentarze"
+
+#: askbot/media/js/pages/question/post_vote.js:94
+#: askbot/media/js/pages/question/vote.js:30
+msgid "anonymous users cannot vote"
+msgstr "anonimowi użytkownicy nie mogą głosować"
+
+#: askbot/media/js/pages/question/retagger.js:90
+msgid "sorry, something is not right here"
+msgstr "przepraszam, coś poszło nie tak"
+
+#: askbot/media/js/pages/question/retagger.js:114
+msgid "tags cannot be empty"
+msgstr "tagi nie mogą być puste"
+
+#: askbot/media/js/pages/question/share_onsite.js:7
 msgid "Group name:"
 msgstr "Nazwa grupy:"
 
-#: media/js/post.js:5048
+#: askbot/media/js/pages/question/share_onsite.js:33
+#: askbot/media/js/pages/question/thread_users_dialog.js:64
 msgid "Shared with the following users:"
 msgstr "Współdzielone z użytkownikami:"
 
-#: media/js/post.js:5054
+#: askbot/media/js/pages/question/share_onsite.js:39
+#: askbot/media/js/pages/question/thread_users_dialog.js:71
 msgid "Shared with the following groups:"
 msgstr "Współdzielone z grupami:"
 
-#: media/js/searchbar/drop_menu.js:198
+#: askbot/media/js/pages/question/thread_users_dialog.js:48
+msgid "Back to the question"
+msgstr "Wróć do pytania"
+
+#: askbot/media/js/pages/question/vote.js:24
+msgid "insufficient privilege"
+msgstr "niewystarczające uprawnienia"
+
+#: askbot/media/js/pages/question/vote.js:29
+msgid "anonymous users cannot subscribe to questions"
+msgstr "anonimowi użytkownicy nie mogą subskrybować pytań"
+
+#: askbot/media/js/pages/question/vote.js:32
+msgid "confirm delete"
+msgstr "potwierdź usunięcie"
+
+#: askbot/media/js/pages/question/vote.js:33
+msgid "anonymous users cannot delete/undelete"
+msgstr "anonimowi użytkownicy nie mogą usuwać/przywracać"
+
+#: askbot/media/js/pages/question/vote.js:34
+msgid "post recovered"
+msgstr "wpis odzyskany"
+
+#: askbot/media/js/pages/question/vote.js:35
+msgid "post deleted"
+msgstr "wpis usunięty"
+
+#: askbot/media/js/searchbar/drop_menu.js:214
 msgid "To see search results, 2 or more characters may be required"
 msgstr "Aby wyświetlić wyniki wyszukiwania, wpisz 2 lub więcej znaków"
 
-#: media/js/searchbar/drop_menu.js:220
+#: askbot/media/js/searchbar/drop_menu.js:236
 msgid "Ask Your Question"
 msgstr "Zadaj Swoje Pytanie"
 
-#: media/js/searchbar/tag_warning_box.js:50
+#: askbot/media/js/searchbar/tag_warning_box.js:50
 msgid "Sorry, this tag does not exist"
 msgid_plural "Sorry, these tags do not exist"
 msgstr[0] "Ten tag nie istnieje"
@@ -398,98 +530,77 @@ msgstr[1] "Te tagi nie istnieją"
 msgstr[2] "Te tagi nie istnieją"
 msgstr[3] "Te tagi nie istnieją"
 
-#: media/js/tag_selector.js:14
+#: askbot/media/js/tag_selector.js:14
 msgid "Tag \"<span></span>\" matches:"
 msgstr "Tag \"<span></span>\" pasuje do:"
 
-#: media/js/tag_selector.js:91
+#: askbot/media/js/tag_selector.js:92
 #, javascript-format
 msgid "and %s more, not shown..."
 msgstr "i %s więcej, nie pokazywane..."
 
-#: media/js/user.js:50
+#: askbot/media/js/user.js:50
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "<a href=\"%(signin_url)s\">Zaloguj się</a> aby obserwować %(username)s"
 
-#: media/js/user/group_adder_widget.js:12
+#: askbot/media/js/user/group_adder_widget.js:12
 msgid "add group"
 msgstr "dodaj grupę"
 
-#: media/js/user/group_adder_widget.js:92
+#: askbot/media/js/user/group_adder_widget.js:92
 msgid "add"
 msgstr "dodaj"
 
-#: media/js/user/manage_account.js:3
+#: askbot/media/js/user/manage_account.js:3
 msgid "Anonymize and Disable Account"
 msgstr ""
 
-#: media/js/user/manage_account.js:4
+#: askbot/media/js/user/manage_account.js:4
 msgid "Yes, anonymize and disable"
 msgstr ""
 
-#: media/js/user/manage_account.js:13
-#| msgid "Are you sure you don't want to post this comment?"
+#: askbot/media/js/user/manage_account.js:13
 msgid "Are you sure you want to anonymize and disable %(user)s's account?"
 msgstr ""
 
-#: media/js/user/manage_account.js:20
+#: askbot/media/js/user/manage_account.js:20
 msgid "All posts will remain on the site"
 msgstr ""
 
-#: media/js/user/manage_account.js:22
+#: askbot/media/js/user/manage_account.js:22
 msgid "Posts will be attributed to user \"%(anon_user)s\""
 msgstr ""
 
-#: media/js/user/manage_account.js:27
+#: askbot/media/js/user/manage_account.js:27
 msgid "All %(user)s's personal info will be deleted"
 msgstr ""
 
-#: media/js/user/manage_account.js:31
+#: askbot/media/js/user/manage_account.js:31
 msgid "Account will be unusable"
 msgstr ""
 
-#: media/js/user/manage_account.js:37
+#: askbot/media/js/user/manage_account.js:37
 msgid "Remove Account"
 msgstr ""
 
-#: media/js/user/manage_account.js:38
+#: askbot/media/js/user/manage_account.js:38
 msgid "Yes, remove account"
 msgstr ""
 
-#: media/js/user/manage_account.js:46
+#: askbot/media/js/user/manage_account.js:46
 msgid "All content will be irreversibly deleted."
 msgstr ""
 
-#: media/js/user/manage_account.js:49
+#: askbot/media/js/user/manage_account.js:49
 msgid "Consider anonymizing the data instead if the content may be useful."
 msgstr ""
 
-#: media/js/user/manage_reject_reasons_dialog.js:90
-msgid "Looks there are some things to fix:"
-msgstr "Wygląda na to, że jest kilka rzeczy do poprawy:"
-
-#: media/js/user/manage_reject_reasons_dialog.js:158
-msgid "Please provide description."
-msgstr "Podaj opis."
-
-#: media/js/user/manage_reject_reasons_dialog.js:161
-msgid "Please provide details."
-msgstr "Podaj szczegóły."
-
-#: media/js/user/manage_reject_reasons_dialog.js:248
-msgid "A reason must be selected to delete one."
-msgstr "Musisz podać powód aby usunąć."
-
-#: media/js/user/post_moderation_controls.js:77
-#: media/js/user/response_notifs.js:30 media/js/user/response_notifs.js:107
+#: askbot/media/js/user/response_notifs.js:31
+#: askbot/media/js/user/response_notifs.js:108
 msgid "Please select at least one item"
 msgstr "Wybierz co najmniej jeden element"
 
-#: media/js/user/post_moderation_controls.js:113
-msgid "Load more items."
-msgstr "Załaduj więcej pozycji."
-
-#: media/js/utils.js:206
+#: askbot/media/js/utils.js:240
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "musi być krótsze niż %(max_chars)s znak"
@@ -497,147 +608,165 @@ msgstr[1] "musi być krótszze niż %(max_chars)s znaków"
 msgstr[2] "musi być krótsze niż %(max_chars)s znaków"
 msgstr[3] "musi być krótsze niż %(max_chars)s znaków"
 
-#: media/js/utils.js:274
+#: askbot/media/js/utils.js:308
 msgid "and"
 msgstr "oraz"
 
-#: media/js/utils.js:292
+#: askbot/media/js/utils.js:326
 msgid "click to close"
 msgstr "kliknij aby zamknąć"
 
-#: media/js/utils/comment_convert_link.js:26
+#: askbot/media/js/utils/comment_convert_link.js:27
 msgid "convert to answer"
 msgstr "konwertuj na odpowiedź"
 
-#: media/js/utils/edit_link.js:14
-msgid "click to edit this comment"
-msgstr "kliknij abytować komentarz"
+#: askbot/media/js/utils/draft_post.js:38
+msgid "draft saved..."
+msgstr "szkic zapisany"
 
-#: media/js/utils/file_upload_dialog.js:138
+#: askbot/media/js/utils/edit_link.js:18
+#, fuzzy
+#| msgid "click to close"
+msgid "click to edit"
+msgstr "kliknij aby zamknąć"
+
+#: askbot/media/js/utils/file_upload_dialog.js:138
 #, javascript-format
 msgid "Uploaded file: %s"
 msgstr "Wysłano plik: %s"
 
-#: media/js/utils/file_upload_dialog.js:152
+#: askbot/media/js/utils/file_upload_dialog.js:152
 msgid "Choose a different file"
 msgstr "Wybierz inny plik"
 
-#: media/js/utils/file_upload_dialog.js:154
+#: askbot/media/js/utils/file_upload_dialog.js:154
 msgid "Choose a different image"
 msgstr "Wybierz inny obrazek"
 
-#: media/js/utils/file_upload_dialog.js:168
+#: askbot/media/js/utils/file_upload_dialog.js:168
 msgid "Oops, looks like we had an error. Sorry."
 msgstr "Oops, wystąpił błąd. Przepraszamy."
 
-#: media/js/utils/file_upload_dialog.js:228
+#: askbot/media/js/utils/file_upload_dialog.js:228
 msgid "Choose a file to insert"
 msgstr "Wybierz plik do wstawienia"
 
-#: media/js/utils/file_upload_dialog.js:230
+#: askbot/media/js/utils/file_upload_dialog.js:230
 msgid "Choose an image to insert"
 msgstr "Wybierz obrazek do wstawienia"
 
-#: media/js/utils/file_upload_dialog.js:243
+#: askbot/media/js/utils/file_upload_dialog.js:243
 msgid "Allowed file types are:"
 msgstr "Dozwolone typy plików to:"
 
-#: media/js/utils/file_upload_dialog.js:249
-#: media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
+#: askbot/media/js/utils/file_upload_dialog.js:249
 msgid "Or paste file url here"
 msgstr "Lub wklej url pliku tutaj"
 
-#: media/js/utils/group_dropdown.js:18
+#: askbot/media/js/utils/group_dropdown.js:18
 msgid "group name"
 msgstr "nazwa grupy"
 
-#: media/js/utils/group_dropdown.js:26
+#: askbot/media/js/utils/group_dropdown.js:26
 msgid "add new group"
 msgstr "dodaj nową grupę"
 
-#: media/js/utils/group_dropdown.js:118
+#: askbot/media/js/utils/group_dropdown.js:118
 msgid "Group %(name)s already exists. Group names are case-insensitive."
-msgstr "Grupa %(name)s już istnieje. Wielkość liter w nazwach grup nie ma znaczenia."
+msgstr ""
+"Grupa %(name)s już istnieje. Wielkość liter w nazwach grup nie ma znaczenia."
 
-#: media/js/utils/modal_dialog.js:7
+#: askbot/media/js/utils/image_changer.js:87
+msgid "Enter the logo url or upload an image"
+msgstr "Wpisz adres url logo lub wyślij obrazek"
+
+#: askbot/media/js/utils/image_changer.js:113
+msgid "Do you really want to remove the image?"
+msgstr "Czy na pewno chcesz usunąć ten obrazek"
+
+#: askbot/media/js/utils/modal_dialog.js:7
 msgid "Ok"
 msgstr "Ok"
 
-#: media/js/utils/paginator.js:115
-#, javascript-format
-msgid "page %s"
-msgstr "strona %s"
-
-#: media/js/utils/tag.js:122
+#: askbot/media/js/utils/tag.js:130
 #, javascript-format
 msgid "see questions tagged '%s'"
 msgstr "zobacz pytania otagowane '%s'"
 
-#: media/js/utils/text_property_editor.js:47
+#: askbot/media/js/utils/text_property_editor.js:47
 msgid "Save"
 msgstr "Zapisz"
 
-#: media/js/utils/text_property_editor.js:119
+#: askbot/media/js/utils/text_property_editor.js:119
 msgid "saved"
 msgstr "zapisano"
 
-#: media/js/utils/toggle.js:88 media/js/utils/toggle.js:103
+#: askbot/media/js/utils/toggle.js:88 askbot/media/js/utils/toggle.js:103
 msgid "enabled"
 msgstr "włączone"
 
-#: media/js/utils/toggle.js:89 media/js/utils/toggle.js:104
+#: askbot/media/js/utils/toggle.js:89 askbot/media/js/utils/toggle.js:104
 msgid "disabled"
 msgstr "wyłączone"
 
-#: media/jslib/timeago.js:97
+#: askbot/media/js/validators/question_validators.js:25
+#, javascript-format
+msgid "details must have > %s character"
+msgid_plural "details must have > %s characters"
+msgstr[0] "szczegóły muszą mieć > %s znak"
+msgstr[1] "szczegóły muszą mieć > %s znaki"
+msgstr[2] "szczegóły muszą mieć > %s znaków"
+msgstr[3] "szczegóły muszą mieć > %s znaków"
+
+#: askbot/media/jslib/timeago.js:97
 msgid "Jan"
 msgstr "Sty"
 
-#: media/jslib/timeago.js:98
+#: askbot/media/jslib/timeago.js:98
 msgid "Feb"
 msgstr "Lut"
 
-#: media/jslib/timeago.js:99
+#: askbot/media/jslib/timeago.js:99
 msgid "Mar"
 msgstr "Mar"
 
-#: media/jslib/timeago.js:100
+#: askbot/media/jslib/timeago.js:100
 msgid "Apr"
 msgstr "Kwi"
 
-#: media/jslib/timeago.js:101
+#: askbot/media/jslib/timeago.js:101
 msgid "May"
 msgstr "Maj"
 
-#: media/jslib/timeago.js:102
+#: askbot/media/jslib/timeago.js:102
 msgid "Jun"
 msgstr "Cze"
 
-#: media/jslib/timeago.js:103
+#: askbot/media/jslib/timeago.js:103
 msgid "Jul"
 msgstr "Lip"
 
-#: media/jslib/timeago.js:104
+#: askbot/media/jslib/timeago.js:104
 msgid "Aug"
 msgstr "Sie"
 
-#: media/jslib/timeago.js:105
+#: askbot/media/jslib/timeago.js:105
 msgid "Sep"
 msgstr "Wrz"
 
-#: media/jslib/timeago.js:106
+#: askbot/media/jslib/timeago.js:106
 msgid "Oct"
 msgstr "Paź"
 
-#: media/jslib/timeago.js:107
+#: askbot/media/jslib/timeago.js:107
 msgid "Nov"
 msgstr "Lis"
 
-#: media/jslib/timeago.js:108
+#: askbot/media/jslib/timeago.js:108
 msgid "Dec"
 msgstr "Gru"
 
-#: media/jslib/timeago.js:118
+#: askbot/media/jslib/timeago.js:116
 #, javascript-format
 msgid "%s year ago"
 msgid_plural "%s years ago"
@@ -646,15 +775,15 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: media/jslib/timeago.js:121
+#: askbot/media/jslib/timeago.js:119
 msgid "2 days ago"
 msgstr "2 dni temu"
 
-#: media/jslib/timeago.js:123
+#: askbot/media/jslib/timeago.js:121
 msgid "yesterday"
 msgstr "wczoraj"
 
-#: media/jslib/timeago.js:126
+#: askbot/media/jslib/timeago.js:124
 #, javascript-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
@@ -663,7 +792,7 @@ msgstr[1] "%s godziny temu"
 msgstr[2] "%s godzin temu"
 msgstr[3] "%s godzin temu"
 
-#: media/jslib/timeago.js:129
+#: askbot/media/jslib/timeago.js:127
 #, javascript-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
@@ -672,109 +801,630 @@ msgstr[1] "%s minuty temu"
 msgstr[2] "%s minut temu"
 msgstr[3] "%s minut temu"
 
-#: media/tinymce/plugins/askbot_attachment/editor_plugin.js:71
-msgid "Insert a file"
-msgstr "Wstaw plik"
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:6
+msgid "Create clickable links in your text."
+msgstr ""
 
-#: media/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
-msgid "Insert image"
-msgstr "Wstaw obrazek"
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:9
+msgid "Inline link"
+msgstr ""
 
-#: media/wmd/wmd.js:31
-msgid "bold"
-msgstr "pogrubiony"
-
-#: media/wmd/wmd.js:32
-msgid "italic"
-msgstr "pochylony"
-
-#: media/wmd/wmd.js:33
-msgid "link"
-msgstr "link"
-
-#: media/wmd/wmd.js:34
-msgid "quote"
-msgstr "cytat"
-
-#: media/wmd/wmd.js:35
-msgid "preformatted text"
-msgstr "tekst sformatowany"
-
-#: media/wmd/wmd.js:36
-msgid "image"
-msgstr "obrazek"
-
-#: media/wmd/wmd.js:37
-msgid "attachment"
-msgstr "załącznik"
-
-#: media/wmd/wmd.js:38
-msgid "numbered list"
-msgstr "lista numerowana"
-
-#: media/wmd/wmd.js:39
-msgid "bulleted list"
-msgstr "lista punktowana"
-
-#: media/wmd/wmd.js:40
-msgid "heading"
-msgstr "nagłówek"
-
-#: media/wmd/wmd.js:41
-msgid "horizontal bar"
-msgstr "pasek poziomy"
-
-#: media/wmd/wmd.js:42
-msgid "undo"
-msgstr "cofnij"
-
-#: media/wmd/wmd.js:43 media/wmd/wmd.js:1171
-msgid "redo"
-msgstr "ponów"
-
-#: media/wmd/wmd.js:54
-msgid "enter image url"
-msgstr "podaj adres url obrazka"
-
-#: media/wmd/wmd.js:55
-msgid "enter url"
-msgstr "podaj url"
-
-#: media/wmd/wmd.js:56
-msgid "upload file attachment"
-msgstr "wyślij plik załącznika"
-
-#: media/wmd/wmd.js:1686
-msgid "strong text"
-msgstr "tekst pogrubiony"
-
-#: media/wmd/wmd.js:1690
-msgid "emphasized text"
-msgstr "tekst podkreślony"
-
-#: media/wmd/wmd.js:1844
-msgid "image description"
-msgstr "opis obrazka"
-
-#: media/wmd/wmd.js:1847
-msgid "file name"
-msgstr "nazwa pliku"
-
-#: media/wmd/wmd.js:1851
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:16
+#: askbot/media/wmd/wmd.js:1876
 msgid "link text"
 msgstr "tekst linku"
 
-#: media/wmd/wmd.js:2284 media/wmd/wmd.js:2304
+#: askbot/media/wmd/help-panel/src/HelpButton.svelte:24
+msgid "Formatting help"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/HelpButton.svelte:25
+msgid "Toggle formatting help"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:20
+msgid "Links"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:21
+#, fuzzy
+#| msgid "image"
+msgid "Images"
+msgstr "obrazek"
+
+#: askbot/media/wmd/help-panel/src/settings.js:22
+msgid "Styling"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:23
+msgid "Lists"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:24
+#, fuzzy
+#| msgid "quote"
+msgid "Quotes"
+msgstr "cytat"
+
+#: askbot/media/wmd/help-panel/src/settings.js:25
+msgid "Code"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:26
+msgid "HTML"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:27
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:19
+#, fuzzy
+#| msgid "enabled"
+msgid "Tables"
+msgstr "włączone"
+
+#: askbot/media/wmd/help-panel/src/settings.js:28
+msgid "Video"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:29
+msgid "Math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:30
+#, fuzzy
+#| msgid "link"
+msgid "Auto-link"
+msgstr "link"
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:6
+msgid "Special patterns are automatically converted to links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:9
+msgid "How it works"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:10
+msgid ""
+"Your administrator has configured patterns that automatically become "
+"clickable links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:14
+msgid "Example patterns"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:15
+msgid "Issue references like #123 or BUG-456 may link to your issue tracker."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:19
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:24
+msgid "Note"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:20
+msgid ""
+"The specific patterns available depend on your site's configuration. Contact "
+"your administrator for details."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:6
+msgid "Quote text from other sources."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:9
+#, fuzzy
+#| msgid "quote"
+msgid "Basic quote"
+msgstr "cytat"
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:10
+msgid "This is a quoted text."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:14
+msgid "Multi-line quote"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
+msgid "First line of quote."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
+msgid "Second line of quote."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:19
+msgid "Nested quotes"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
+#, fuzzy
+#| msgid "quote"
+msgid "Outer quote"
+msgstr "cytat"
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
+msgid "Nested quote"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:6
+msgid "Display code with syntax highlighting."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:9
+msgid "Inline code"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:11
+msgid "Wrap with single backticks."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:15
+msgid "Code block"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:17
+msgid "Wrap with triple backticks on separate lines."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:21
+msgid "Syntax highlighting"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:23
+msgid "Add language name after opening backticks."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:27
+msgid "Toolbar shortcut"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:28
+msgid "Select code and click the code button to format it."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:6
+msgid "Some HTML tags are allowed in posts."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:9
+msgid "Allowed tags"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:14
+msgid "Structure tags"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:25
+msgid ""
+"Scripts, iframes, and other potentially unsafe tags are filtered out for "
+"security."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:6
+msgid "Embed images in your post."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:9
+#, fuzzy
+#| msgid "message sent"
+msgid "Image syntax"
+msgstr "wiadomość wysłana"
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:11
+msgid "Alt text describes the image for accessibility."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:15
+msgid "Image with title"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:16
+msgid "\"Title text\""
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:17
+msgid "Title appears when hovering over the image."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:21
+#, fuzzy
+#| msgid "Uploaded file: %s"
+msgid "Uploading images"
+msgstr "Wysłano plik: %s"
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:22
+msgid ""
+"Click the image button in the toolbar to upload an image from your computer."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:11
+msgid "The text in brackets becomes the clickable link."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:15
+msgid "Link with title"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:17
+msgid "The title appears when hovering over the link."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:21
+msgid "Auto-linked URLs"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:22
+msgid "URLs like https://example.com are automatically converted to links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:6
+msgid "Create ordered, unordered, and task lists."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:9
+#, fuzzy
+#| msgid "numbered list"
+msgid "Unordered list"
+msgstr "lista numerowana"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+#, fuzzy
+#| msgid "List item"
+msgid "First item"
+msgstr "Element listy"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+msgid "Second item"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+#, fuzzy
+#| msgid "List item"
+msgid "Third item"
+msgstr "Element listy"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:11
+msgid "Also works with * or +"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:15
+#, fuzzy
+#| msgid "numbered list"
+msgid "Ordered list"
+msgstr "lista numerowana"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:20
+msgid "Task list"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
+msgid "Unchecked task"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
+msgid "Completed task"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:22
+msgid "Creates interactive checkboxes."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:26
+#, fuzzy
+#| msgid "bulleted list"
+msgid "Nested lists"
+msgstr "lista punktowana"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+msgid "Item"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+#, fuzzy
+#| msgid "List item"
+msgid "Nested item"
+msgstr "Element listy"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+msgid "Another nested"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:28
+msgid "Indent with 2 spaces for nesting."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:6
+msgid "Write mathematical expressions using LaTeX syntax."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:9
+msgid "Inline math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:11
+msgid "Wrap with single dollar signs for inline formulas."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:15
+msgid "Display math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:17
+msgid "Double dollar signs for centered block formulas."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:21
+msgid "LaTeX display mode"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:26
+msgid "Literal dollar signs"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:28
+msgid "Use backslash to show actual dollar signs."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:6
+msgid "Format text with bold, italic, and strikethrough."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:9
+msgid "Bold"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:10
+#, fuzzy
+#| msgid "link text"
+msgid "bold text"
+msgstr "tekst linku"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:11
+msgid "Or use __bold text__"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:15
+#, fuzzy
+#| msgid "italic"
+msgid "Italic"
+msgstr "pochylony"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:16
+#, fuzzy
+#| msgid "italic"
+msgid "italic text"
+msgstr "pochylony"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:17
+msgid "Or use _italic text_"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:21
+msgid "Bold and italic"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:22
+msgid "bold and italic"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:26
+msgid "Strikethrough"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:27
+msgid "strikethrough"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:6
+#, fuzzy
+#| msgid "enter at least %s more characters"
+msgid "Create tables using pipe characters."
+msgstr "wpisz co najmniej %s znaków więcej"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:9
+msgid "Basic table"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:11
+#, javascript-format
+msgctxt "Header <number>"
+msgid "Header %s"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:12
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:13
+#, javascript-format
+msgctxt "Cell <number>"
+msgid "Cell %s"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:17
+msgid "Column alignment"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+msgctxt "align column to"
+msgid "Left"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#, fuzzy
+#| msgid "enter url"
+msgctxt "align column to"
+msgid "Center"
+msgstr "podaj url"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+msgctxt "align column to"
+msgid "Right"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#, fuzzy
+#| msgid "link text"
+msgid "text"
+msgstr "tekst linku"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:19
+msgid "Use : to align columns (left, center, right)."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:6
+msgid "Embed videos from supported platforms."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:9
+msgid "YouTube"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:11
+msgid "Use the video ID from the YouTube URL."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:15
+msgid "Vimeo"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:20
+msgid "Dailymotion"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:25
+msgid "Finding the video ID"
+msgstr ""
+
+#: askbot/media/wmd/wmd.js:31
+msgid "bold"
+msgstr "pogrubiony"
+
+#: askbot/media/wmd/wmd.js:32
+msgid "italic"
+msgstr "pochylony"
+
+#: askbot/media/wmd/wmd.js:33
+msgid "link"
+msgstr "link"
+
+#: askbot/media/wmd/wmd.js:34
+msgid "quote"
+msgstr "cytat"
+
+#: askbot/media/wmd/wmd.js:35
+msgid "preformatted text"
+msgstr "tekst sformatowany"
+
+#: askbot/media/wmd/wmd.js:36
+msgid "image"
+msgstr "obrazek"
+
+#: askbot/media/wmd/wmd.js:37
+msgid "attachment"
+msgstr "załącznik"
+
+#: askbot/media/wmd/wmd.js:38
+msgid "numbered list"
+msgstr "lista numerowana"
+
+#: askbot/media/wmd/wmd.js:39
+msgid "bulleted list"
+msgstr "lista punktowana"
+
+#: askbot/media/wmd/wmd.js:40
+msgid "heading"
+msgstr "nagłówek"
+
+#: askbot/media/wmd/wmd.js:41
+msgid "horizontal bar"
+msgstr "pasek poziomy"
+
+#: askbot/media/wmd/wmd.js:42
+msgid "undo"
+msgstr "cofnij"
+
+#: askbot/media/wmd/wmd.js:43 askbot/media/wmd/wmd.js:1181
+msgid "redo"
+msgstr "ponów"
+
+#: askbot/media/wmd/wmd.js:54
+msgid "enter image url"
+msgstr "podaj adres url obrazka"
+
+#: askbot/media/wmd/wmd.js:55
+msgid "enter url"
+msgstr "podaj url"
+
+#: askbot/media/wmd/wmd.js:56
+msgid "upload file attachment"
+msgstr "wyślij plik załącznika"
+
+#: askbot/media/wmd/wmd.js:1712
+msgid "strong text"
+msgstr "tekst pogrubiony"
+
+#: askbot/media/wmd/wmd.js:1716
+msgid "emphasized text"
+msgstr "tekst podkreślony"
+
+#: askbot/media/wmd/wmd.js:1869
+msgid "image description"
+msgstr "opis obrazka"
+
+#: askbot/media/wmd/wmd.js:1872
+msgid "file name"
+msgstr "nazwa pliku"
+
+#: askbot/media/wmd/wmd.js:2309 askbot/media/wmd/wmd.js:2329
 msgid "enter code here"
 msgstr "Wpisz kod tutaj"
 
-#: media/wmd/wmd.js:2398
+#: askbot/media/wmd/wmd.js:2423
 msgid "List item"
 msgstr "Element listy"
 
-#: media/wmd/wmd.js:2430
+#: askbot/media/wmd/wmd.js:2455
 msgid "Heading"
 msgstr "Nagłówek"
+
+#~ msgid "loading..."
+#~ msgstr "wczytywanie..."
+
+#~ msgid "details are required"
+#~ msgstr "szczegóły są wymagane"
+
+#~ msgid "enter your question"
+#~ msgstr "wpisz swoje pytanie"
+
+#~ msgid "remove flag"
+#~ msgstr "usuń znacznik"
+
+#~ msgid "flag offensive"
+#~ msgstr "oznacz negatywnie"
+
+#~ msgid "Looks there are some things to fix:"
+#~ msgstr "Wygląda na to, że jest kilka rzeczy do poprawy:"
+
+#~ msgid "click to edit this comment"
+#~ msgstr "kliknij abytować komentarz"
+
+#, javascript-format
+#~ msgid "page %s"
+#~ msgstr "strona %s"
+
+#~ msgid "Insert a file"
+#~ msgstr "Wstaw plik"
+
+#~ msgid "Insert image"
+#~ msgstr "Wstaw obrazek"
 
 #~ msgid "%(question)s must have > %(length)s character"
 #~ msgid_plural "%(question)s must have > %(length)s characters"
@@ -789,7 +1439,9 @@ msgstr "Nagłówek"
 #~ msgid "Follow"
 #~ msgstr "Follow"
 
-#~ msgid "<div class=\"following\">Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgid ""
+#~ "<div class=\"following\">Following</div><div class=\"unfollow\">Unfollow</"
+#~ "div>"
 #~ msgstr "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
 
 #~ msgid "cannot pick own answer as best"
@@ -797,13 +1449,13 @@ msgstr "Nagłówek"
 
 #~ msgid "please confirm offensive"
 #~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ "are you sure this post is offensive, contains spam, advertising, "
+#~ "malicious remarks, etc.?"
 
 #~ msgid "please confirm removal of offensive flag"
 #~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ "are you sure this post is offensive, contains spam, advertising, "
+#~ "malicious remarks, etc.?"
 
 #~ msgid "Post deleted"
 #~ msgstr "your post has been deleted"

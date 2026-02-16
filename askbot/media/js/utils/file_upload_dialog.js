@@ -22,7 +22,7 @@ FileUploadDialog.prototype.getFileType = function () {
 };
 
 FileUploadDialog.prototype.setButtonText = function (text) {
-    this._fakeInput.val(text);
+    this._fakeInput.html(text);
 };
 
 FileUploadDialog.prototype.setPostUploadHandler = function (handler) {
@@ -56,9 +56,9 @@ FileUploadDialog.prototype.setUrlInputTooltip = function (text) {
 };
 
 FileUploadDialog.prototype.getUrl = function () {
-    var url_input = this._url_input;
-    if (url_input.isBlank() === false) {
-        return url_input.getVal();
+    var val = $.trim(this._url_input_el.val());
+    if (val.length > 0) {
+        return val;
     }
     return '';
 };
@@ -69,9 +69,10 @@ FileUploadDialog.prototype.getUrl = function () {
 //};
 
 FileUploadDialog.prototype.resetInputs = function () {
-    this._url_input.reset();
+    this._url_input_el.val('');
     //this._description_input.reset();
     this._upload_input.val('');
+    this._origFileName = undefined;
 };
 
 FileUploadDialog.prototype.getInputElement = function () {
@@ -93,7 +94,7 @@ FileUploadDialog.prototype.show = function () {
 };
 
 FileUploadDialog.prototype.getUrlInputElement = function () {
-    return this._url_input.getElement();
+    return this._url_input_el;
 };
 
 /*
@@ -147,6 +148,7 @@ FileUploadDialog.prototype.startFileUpload = function (startUploadHandler) {
             if (error !== '') {
                 me.setErrorText(error);
             } else {
+                me._origFileName = origFileName;
                 me.getUrlInputElement().attr('value', fileURL);
                 me.setLabelText(newStatus);
                 var buttonText = gettext('Choose a different file');
@@ -194,7 +196,7 @@ FileUploadDialog.prototype.createDom = function () {
         //var description = me.getDescription();
         //@todo: have url cleaning code here
         if (url.length > 0) {
-            me.runPostUploadHandler(url);//, description);
+            me.runPostUploadHandler(url, me._origFileName);
             me.resetInputs();
         }
         me.hide();
@@ -210,28 +212,33 @@ FileUploadDialog.prototype.createDom = function () {
     form.css('margin-bottom', 0);
     this.prependContent(form);
 
-    // Browser native file upload field
+    // Upload wrapper: hides native input behind styled button
+    var uploadWrapper = this.makeElement('div');
+    uploadWrapper.addClass('js-file-upload-wrapper');
+    form.append(uploadWrapper);
+
+    // Browser native file upload field (hidden via CSS, overlays the button)
     var upload_input = this.makeElement('input');
     upload_input.attr({
         id: this._input_id,
         type: 'file',
         name: 'file-upload'
-        //size: 26???
     });
-    form.append(upload_input);
+    uploadWrapper.append(upload_input);
     this._upload_input = upload_input;
 
-    var fakeInput = this.makeElement('input');
+    var fakeInput = this.makeElement('button');
     fakeInput.attr('type', 'button');
-    fakeInput.addClass('submit');
+    fakeInput.addClass('btn');
+    fakeInput.addClass('btn-muted');
     fakeInput.addClass('fake-file-input');
     var buttonText = gettext('Choose a file to insert');
     if (this._fileType === 'image') {
         buttonText = gettext('Choose an image to insert');
     }
-    fakeInput.val(buttonText);
+    fakeInput.html(buttonText);
     this._fakeInput = fakeInput;
-    form.append(fakeInput);
+    uploadWrapper.append(fakeInput);
 
     setupButtonEventHandlers(fakeInput, function () { upload_input.click(); });
 
@@ -244,17 +251,23 @@ FileUploadDialog.prototype.createDom = function () {
     form.append(label);
     this._label = label;
 
-    // The url input text box, probably unused in fact
-    var url_input = new TippedInput();
-    url_input.setInstruction(this._url_input_tooltip || gettext('Or paste file url here'));
-    var url_input_element = url_input.getElement();
-    url_input_element.css({
-        'width': '200px',
-        'display': 'none'
-    });
-    form.append(url_input_element);
-    //form.append($('<br/>'));
-    this._url_input = url_input;
+    // Floating-label URL input
+    var urlWrapper = this.makeElement('div');
+    urlWrapper.addClass('js-labeled-input');
+    urlWrapper.css('display', 'none');
+    form.append(urlWrapper);
+    this._urlWrapper = urlWrapper;
+
+    var urlLabel = this.makeElement('label');
+    urlLabel.attr('for', this._input_id + '-url');
+    urlLabel.text(this._url_input_tooltip || gettext('Or paste file url here'));
+    urlWrapper.append(urlLabel);
+
+    var url_input_el = this.makeElement('input');
+    url_input_el.attr('type', 'text');
+    url_input_el.attr('id', this._input_id + '-url');
+    urlWrapper.append(url_input_el);
+    this._url_input_el = url_input_el;
 
     /* //Description input box
     var descr_input = new TippedInput();

@@ -69,9 +69,8 @@ WMD.prototype.createDom = function () {
                         .addClass('wmd-panel');
     wmd_container.append(wmd_buttons);
 
-    var help = getTemplate('.wmd-help');
-
-    wmd_container.append(help);
+    // Help panel is now rendered by Svelte component (EditorHelpPanel)
+    // which is initialized when the WMD editor starts
 
     var editor = this.makeElement('textarea')
                         .attr('id', this.makeId('editor'));

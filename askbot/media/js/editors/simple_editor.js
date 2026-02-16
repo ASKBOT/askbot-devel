@@ -24,6 +24,19 @@ SimpleEditor.prototype.putCursorAtEnd = function () {
     putCursorAtEnd(this._textarea);
 };
 
+SimpleEditor.prototype.putCursorAtStart = function () {
+    var textarea = this._textarea[0];
+    if (textarea.setSelectionRange) {
+        textarea.setSelectionRange(0, 0);
+    } else if (textarea.createTextRange) {
+        // IE support
+        var range = textarea.createTextRange();
+        range.moveStart('character', 0);
+        range.select();
+    }
+    textarea.scrollTop = 0;
+};
+
 SimpleEditor.prototype.start = function () {
     this.getAutoResizeHandler()();
 };

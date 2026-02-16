@@ -9,7 +9,7 @@ import platform
 import sys
 import traceback
 
-VERSION = (0, 12, 2)
+VERSION = (0, 12, 6)
 
 default_app_config = 'askbot.apps.AskbotConfig' #pylint: disable=invalid-name
 
@@ -23,11 +23,11 @@ REQUIREMENTS = {
     'bleach': 'bleach==5.0.1',
     'bs4': 'beautifulsoup4<=4.7.1',
     'compressor': 'django-compressor>=3.0,<=4.4',
-    'celery': 'celery==5.2.7',
+    'celery': 'celery==5.3.0',
     'django': 'django>=3.0,<5.0',
     'django_countries': 'django-countries>=3.3',
     'django_jinja': 'django-jinja>=2.0',
-    'followit': 'django-followit==0.6.0',
+    'followit': 'django-followit==0.7.0',
     'html5lib': 'html5lib==1.1',
     'jinja2': 'Jinja2>=2.10,<3.1',
     'jinja2_simple_tags': 'jinja2-simple-tags==0.5.0',
@@ -36,10 +36,10 @@ REQUIREMENTS = {
     'keyedcache': 'django-keyedcache3>=1.5.1',
     'livesettings': 'django-livesettings3==1.6.3',
     'linkify_it': 'linkify-it-py==2.0.2',
-    'markdown2': 'markdown2<=2.3.9',
-    'markdown_it': 'markdown-it-py==2.2.0',
+    'markdown_it': 'markdown-it-py==4.0.0',
     'markupsafe': 'markupsafe',
-    'mdit_py_plugins': 'mdit-py-plugins==0.3.5',
+    'mdit_py_plugins': 'mdit-py-plugins==0.5.0',
+    'pygments': 'pygments>=2.15.0',
     'mock': 'mock==3.0.5',
     'oauth2': 'oauth2<=1.9.0.post1',
     'openid': 'python-openid2>=3.0',
@@ -52,7 +52,6 @@ REQUIREMENTS = {
     'responses': 'responses>=0.9.0,<=0.23.1',
     'requests_oauthlib': 'requests-oauthlib>=1.2.0',
     'requirements': 'requirements-parser>=0.2.0',
-    'robots': 'django-robots==5.0',
     'regex': 'regex',
     'tldextract': 'tldextract==5.1.2',
     'unidecode': 'unidecode',

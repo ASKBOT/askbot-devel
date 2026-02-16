@@ -116,10 +116,10 @@
   
   .js-message {
     ul, ol {
-      padding: var(--wmd-preview-list-padding);
+      padding: var(--uc-list-padding);
     }
     ul, ol, p, pre {
-      margin: var(--wmd-preview-block-margin);
+      margin: var(--uc-margin);
     }
     .post-content > :last-child {
       margin-bottom: 0 !important;

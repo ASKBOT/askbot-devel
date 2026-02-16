@@ -1,5 +1,4 @@
 import os
-import markdown2
 from django.conf import settings as django_settings
 from django.test import TestCase
 from askbot.tests.utils import with_settings

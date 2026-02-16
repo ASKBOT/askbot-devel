@@ -1,0 +1,127 @@
+// Video link styles
+.video-link {
+  display: inline;
+
+  a.js-video-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .fa-play-circle {
+      margin-left: 0.25em;
+    }
+  }
+
+  // Service-specific colors
+  &.video-link-youtube a.js-video-link {
+    color: #cc0000; // YouTube red
+
+    &:hover {
+      color: #990000;
+    }
+  }
+
+  &.video-link-vimeo a.js-video-link {
+    color: #1ab7ea; // Vimeo blue
+
+    &:hover {
+      color: #0d94c4;
+    }
+  }
+
+  &.video-link-dailymotion a.js-video-link {
+    color: #00aaff; // Dailymotion blue
+
+    &:hover {
+      color: #0088cc;
+    }
+  }
+}
+
+// Video modal styles (separate from other modals via .js-video-modal class)
+.js-video-modal {
+  background: var(--clr-neutral-10);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  max-width: 90vw;
+  width: 800px;
+
+  .js-modal-header {
+    padding: 8px 12px;
+
+    h3 {
+      margin: 0;
+      color: #fff;
+      font-size: var(--extra-large-font-size);
+      font-weight: var(--font-weight-bold);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .js-video-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--clr-neutral-60);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .js-modal-body {
+    padding: 0;
+    background: #000;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .js-video-modal-iframe-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; // 16:9 aspect ratio
+    height: 0;
+    overflow: hidden;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+}
+
+// Legacy video embed styles (for backward compatibility if needed)
+.video-embed {
+  width: 100%;
+
+  .video-embed-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; // 16:9 aspect ratio
+    height: 0;
+    overflow: hidden;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+}

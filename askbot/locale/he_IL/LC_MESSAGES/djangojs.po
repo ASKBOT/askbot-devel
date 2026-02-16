@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # naor zeharya <naorzh@gmail.com>, 2013
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2017
@@ -9,335 +9,73 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-16 13:08-0500\n"
+"POT-Creation-Date: 2026-01-22 14:58+0000\n"
 "PO-Revision-Date: 2020-08-16 19:55+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
-"Language-Team: Hebrew (Israel) (http://www.transifex.com/askbot/askbot/language/he_IL/)\n"
+"Language-Team: Hebrew (Israel) (http://www.transifex.com/askbot/askbot/"
+"language/he_IL/)\n"
+"Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: he_IL\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
-
-#: media/js/editors/folded_editor.js:38 media/js/post.js:4949
-msgid "Sorry, you have only read access"
-msgstr "יש לך גישה לקריאה בלבד, עמך הסליחה"
-
-#: media/js/group_messaging.js:132
-msgid "Type a message"
-msgstr "נא להקליד הודעה"
-
-#: media/js/group_messaging.js:141
-msgid "Add a recipient"
-msgstr "הוספת נמען"
-
-#: media/js/group_messaging.js:171
-msgid "message sent"
-msgstr "הודעה שנשלחה"
-
-#: media/js/group_messaging.js:187
-msgid ""
-"Did you mean to send your message to muliple users? Use comma instead of "
-"whitespaces"
-msgstr "כוונתך הייתה לשלוח את ההודעה שלך למספר נמענים? יש להשתמש בפסיק במקום ברווח"
-
-#: media/js/group_messaging.js:191
-msgid "user {{str}} does not exist"
-msgid_plural "users {{str}} do not exist"
-msgstr[0] "משתמשים {{str}} לא קיימים"
-msgstr[1] "משתמשים {{str}} לא קיימים"
-msgstr[2] "משתמשים {{str}} לא קיימים"
-msgstr[3] "משתמשים {{str}} לא קיימים"
-
-#: media/js/group_messaging.js:198
-msgid "cannot send message to yourself"
-msgstr "לא ניתן לשלוח הודעה לעצמך"
-
-#: media/js/jquery-openid/jquery.authenticator.js:73
-#, javascript-format
-msgid "Are you sure you want to remove your %s login?"
-msgstr "להסיר את הכניסה שלך באמצעות %s?"
-
-#: media/js/jquery-openid/jquery.authenticator.js:90
-msgid "Please add one or more login methods."
-msgstr "נא להוסיף שיטת כניסה אחת או יותר."
-
-#: media/js/jquery-openid/jquery.authenticator.js:93
-msgid ""
-"You don't have a method to log in right now, please add one or more by "
-"clicking any of the icons below."
-msgstr "אין לך שיטת כניסה כרגע, נא להוסיף שיטה אחת או יותר ע״י לחיצה על הסמלים שלהלן."
-
-#: media/js/jquery-openid/jquery.authenticator.js:147
-msgid "enter username"
-msgstr "נא להקליד שם משתמש"
-
-#: media/js/jquery-openid/jquery.authenticator.js:149
-msgid "enter username or email"
-msgstr "נא להקליד שם משתמש או דוא״ל"
-
-#: media/js/jquery-openid/jquery.authenticator.js:158
-msgid "enter password"
-msgstr "נא להזין ססמה"
-
-#: media/js/jquery-openid/jquery.authenticator.js:180
-msgid "passwords do not match"
-msgstr "הססמאות אינן תואמות"
-
-#: media/js/jquery-openid/jquery.authenticator.js:206
-msgid "Show/change current login methods"
-msgstr "הצגה/שינוי של שיטות הכניסה הנוכחיות"
-
-#: media/js/jquery-openid/jquery.authenticator.js:262
-#, javascript-format
-msgid "Please enter your %s, then proceed"
-msgstr "נא להקליד את ה%s שלך ולאחר מכן להמשיך"
-
-#: media/js/jquery-openid/jquery.authenticator.js:264
-msgid "Connect your %(provider_name)s account to %(site)s"
-msgstr "ניתן להתחבר עם חשבון ה־%(provider_name)s שלך אל  %(site)s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:362
-#, javascript-format
-msgid "Change your %s password"
-msgstr "החלפת הססמה שלך ב־%s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:363
-msgid "Change password"
-msgstr "החלפת הססמה"
-
-#: media/js/jquery-openid/jquery.authenticator.js:365
-#, javascript-format
-msgid "Create a password for %s"
-msgstr "יצירת ססמה עבור %s"
-
-#: media/js/jquery-openid/jquery.authenticator.js:366
-msgid "Create password"
-msgstr "יצירת ססמה"
-
-#: media/js/jquery-openid/jquery.authenticator.js:377
-msgid "Create a password-protected account"
-msgstr "יצירת חשבון מוגן בססמה"
-
-#: media/js/post.js:28
-msgid "loading..."
-msgstr "בטעינה…"
-
-#: media/js/post.js:137 media/js/post.js:176 media/js/post.js:229
-#: media/js/post.js:253
-msgid "enter > %(length)s character"
-msgid_plural "enter > %(length)s characters"
-msgstr[0] "נא להקליד > תו אחד - %(length)s"
-msgstr[1] "נא להקליד > %(length)s תווים"
-msgstr[2] "נא להקליד > %(length)s תווים"
-msgstr[3] "נא להקליד > %(length)s תווים"
-
-#: media/js/post.js:155 media/js/post.js:218
-#, javascript-format
-msgid "details must have > %s character"
-msgid_plural "details must have > %s characters"
-msgstr[0] "בפרטים חייב להיות > תו אחד - %s"
-msgstr[1] "בפרטים חייבים להיות > %s תווים"
-msgstr[2] "בפרטים חייבים להיות > %s תווים"
-msgstr[3] "בפרטים חייבים להיות > %s תווים"
-
-#: media/js/post.js:209 media/js/post.js:1457
-msgid "tags cannot be empty"
-msgstr "נא לבחור בתגית אחת לפחות"
-
-#: media/js/post.js:215
-msgid "details are required"
-msgstr "נדרשים פרטים"
-
-#: media/js/post.js:226
-msgid "enter your question"
-msgstr "נא להקליד את השאלה שלך"
-
-#: media/js/post.js:250
-msgid "content cannot be empty"
-msgstr "התוכן לא יכול להיות ריק"
-
-#: media/js/post.js:311
-msgid "Back to the question"
-msgstr "בחזרה לשאלה"
-
-#: media/js/post.js:382 media/js/post.js:426 media/js/post.js:512
-msgid "Load preview"
-msgstr "טעינת התצוגה המקדימה"
-
-#: media/js/post.js:420
-msgid "Merge"
-msgstr "מיזוג"
-
-#: media/js/post.js:511 media/js/utils/modal_dialog.js:9
-#: media/js/utils/text_property_editor.js:48
-msgid "Cancel"
-msgstr "ביטול"
-
-#: media/js/post.js:561
-msgid "draft saved..."
-msgstr "הטיוטה נשמרה…"
-
-#: media/js/post.js:781
-#, javascript-format
-msgid "%s follower"
-msgid_plural "%s followers"
-msgstr[0] "%s עוקבים"
-msgstr[1] "%s עוקבים"
-msgstr[2] "%s עוקבים"
-msgstr[3] "%s עוקבים"
-
-#: media/js/post.js:819
-msgid "insufficient privilege"
-msgstr "הרשאה בלתי תואמת"
-
-#: media/js/post.js:821 media/js/post.js:1606
-msgid "please login"
-msgstr "נא להיכנס"
-
-#: media/js/post.js:824
-msgid "anonymous users cannot subscribe to questions"
-msgstr "משתמשים אלמוניים לא יכול להירשם לשאלות"
-
-#: media/js/post.js:825 media/js/post.js:1616
-msgid "anonymous users cannot vote"
-msgstr "משתמשים אלמוניים לא יכולים להצביע, עמך הסליחה"
-
-#: media/js/post.js:827
-msgid "anonymous users cannot flag offensive posts"
-msgstr "משתמשים אלמוניים לא יכולים לסמן הודעות כפוגעניות"
-
-#: media/js/post.js:828
-msgid "confirm delete"
-msgstr "למחוק זאת?"
-
-#: media/js/post.js:829
-msgid "anonymous users cannot delete/undelete"
-msgstr "משתמשים אלמוניים לא יכולים למחוק או לבטל מחיקה של הודעות, עמך הסליחה"
-
-#: media/js/post.js:830
-msgid "post recovered"
-msgstr "ההודעה שלך שוחזרה כעת!"
-
-#: media/js/post.js:831
-msgid "post deleted"
-msgstr "ההודעה שלך נמחקה"
-
-#: media/js/post.js:1047
-msgid "sorry, you cannot %(accept_own_answer)s"
-msgstr "אין אפשרות %(accept_own_answer)s, עמך הסליחה"
-
-#: media/js/post.js:1101
-msgid "remove flag"
-msgstr "הסרת סימון"
-
-#: media/js/post.js:1135 media/js/post.js:1166
-msgid "flag offensive"
-msgstr "סימון כפוגעני"
-
-#: media/js/post.js:1191 media/js/post.js:1687
-msgid "undelete"
-msgstr "ביטול מחיקה"
-
-#: media/js/post.js:1195 media/js/post.js:1691
-msgid "delete"
-msgstr "מחיקה"
-
-#: media/js/post.js:1397 media/js/post.js:1635
-msgid "sorry, something is not right here"
-msgstr "משהו פה לא תקין, עמך הסליחה"
-
-#: media/js/post.js:1865
-msgid "Preview: (hide)"
-msgstr "תצוגה מקדימה: (הסתרה)"
-
-#: media/js/post.js:1866
-msgid "Show preview"
-msgstr "הצגת תצוגה מקדימה"
-
-#: media/js/post.js:2283
-msgid "add comment"
-msgstr "הוספת תגובה"
-
-#: media/js/post.js:2288
-msgid "save comment"
-msgstr "שמירת תגובה"
-
-#: media/js/post.js:2332
-#, javascript-format
-msgid "enter at least %s characters"
-msgstr "נא להקליד לפחות %s תווים"
-
-#: media/js/post.js:2334
-#, javascript-format
-msgid "enter at least %s more characters"
-msgstr "נא להקליד לפחות עוד %s תווים"
-
-#: media/js/post.js:2346
-#, javascript-format
-msgid "%s characters left"
-msgstr "%s תווים נותרו"
-
-#: media/js/post.js:2348
-msgid "maximum comment length reached"
-msgstr "התגובה ממלאה את האורך המרבי המותר"
-
-#: media/js/post.js:2451 media/js/post.js:3370 media/js/post.js:4921
-#: media/js/user/group_adder_widget.js:17 media/js/utils/editable.js:323
-msgid "cancel"
-msgstr "ביטול"
-
-#: media/js/post.js:2466
-msgid "minor edit (don't send alerts)"
-msgstr "עריכה משנית (לא לשלוח התרעות)"
-
-#: media/js/post.js:2498
-msgid "Are you sure you don't want to post this comment?"
-msgstr "לבטל את פרסום התגובה הזו?"
-
-#: media/js/post.js:2543 media/jslib/timeago.js:131
-msgid "just now"
-msgstr "הרגע"
-
-#: media/js/post.js:2620
-msgid "delete this comment"
-msgstr "מחיקת תגובה זו"
-
-#: media/js/post.js:2918
-msgid "confirm delete comment"
-msgstr "למחוק תגובה זו?"
-
-#: media/js/post.js:3087
-msgid "please sign in or register to post comments"
-msgstr "נא להיכנס או להירשם כדי לפרסם תגובות"
-
-#: media/js/post.js:3364 media/js/post.js:4185 media/js/post.js:4378
-#: media/js/utils/editable.js:318
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
+"1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
+
+#: askbot/media/js/category_tree/category.js:117
+msgid "Delete category?"
+msgstr "למחוק את הקטגוריה?"
+
+#: askbot/media/js/category_tree/category.js:188
+#: askbot/media/js/category_tree/category_adder.js:139
+#: askbot/media/js/editors/object_description_editor.js:156
+#: askbot/media/js/utils/editable.js:304
 msgid "save"
 msgstr "שמירה"
 
-#: media/js/post.js:3489
-msgid "Enter the logo url or upload an image"
-msgstr "נא להקליד את כתובת הלוגו או להעלות תמונה"
+#: askbot/media/js/category_tree/category.js:207
+#: askbot/media/js/utils/edit_link.js:19
+msgid "edit"
+msgstr "עריכה"
 
-#: media/js/post.js:3515
-msgid "Do you really want to remove the image?"
-msgstr "להסיר את התמונה הזו?"
+#: askbot/media/js/category_tree/category.js:239
+#, fuzzy
+#| msgid "%s min ago"
+#| msgid_plural "%s mins ago"
+msgid "Admin Tags"
+msgstr "לפני דקה - %s"
 
-#: media/js/post.js:3631
-msgid "change logo"
-msgstr "החלפת הלוגו"
+#: askbot/media/js/category_tree/category_adder.js:48
+msgid "category name cannot be empty"
+msgstr "שם הקטגוריה לא יכול להישאר ריק"
 
-#: media/js/post.js:3632
-msgid "add logo"
-msgstr "הוספת לוגו"
+#: askbot/media/js/category_tree/category_adder.js:85
+msgid "already exists at the current level!"
+msgstr "כבר קיים ברמה נוכחית!"
 
-#: media/js/post.js:3736
+#: askbot/media/js/category_tree/category_adder.js:119
+msgid "add category"
+msgstr "הוספת קטגוריה"
+
+#: askbot/media/js/category_tree/category_selector_loader.js:169
+msgid "save tags"
+msgstr "שמירת תגיות"
+
+#: askbot/media/js/category_tree/category_selector_loader.js:174
+#: askbot/media/js/editors/object_description_editor.js:162
+#: askbot/media/js/pages/question/edit_comment_form.js:266
+#: askbot/media/js/user/group_adder_widget.js:17
+#: askbot/media/js/utils/editable.js:310
+msgid "cancel"
+msgstr "ביטול"
+
+#: askbot/media/js/category_tree/tag_editor.js:62
 #, javascript-format
-msgid "tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
-msgstr "התגית „%s“ כבר נוספה, אין צורך לחזור עליה (יש ללחוץ על „escape“ כדי למחוק)"
+msgid ""
+"tag \"%s\" was already added, no need to repeat (press \"escape\" to delete)"
+msgstr ""
+"התגית „%s“ כבר נוספה, אין צורך לחזור עליה (יש ללחוץ על „escape“ כדי למחוק)"
 
-#: media/js/post.js:3745
+#: askbot/media/js/category_tree/tag_editor.js:71
 #, javascript-format
 msgid "a maximum of %s tag is allowed"
 msgid_plural "a maximum of %s tags are allowed"
@@ -346,51 +84,442 @@ msgstr[1] "כמות התגיות המרבית המותרת היא %s"
 msgstr[2] "כמות התגיות המרבית המותרת היא %s"
 msgstr[3] "כמות התגיות המרבית המותרת היא %s"
 
-#: media/js/post.js:4114
-msgid "Delete category?"
-msgstr "למחוק את הקטגוריה?"
+#: askbot/media/js/editors/folded_editor.js:38
+#: askbot/media/js/utils/ask_button.js:7
+msgid "Sorry, you have only read access"
+msgstr "יש לך גישה לקריאה בלבד, עמך הסליחה"
 
-#: media/js/post.js:4204 media/js/utils/edit_link.js:15
-msgid "edit"
-msgstr "עריכה"
+#: askbot/media/js/editors/group_settings_editor.js:117
+msgid "change logo"
+msgstr "החלפת הלוגו"
 
-#: media/js/post.js:4291
-msgid "category name cannot be empty"
-msgstr "שם הקטגוריה לא יכול להישאר ריק"
+#: askbot/media/js/editors/group_settings_editor.js:118
+msgid "add logo"
+msgstr "הוספת לוגו"
 
-#: media/js/post.js:4328
-msgid "already exists at the current level!"
-msgstr "כבר קיים ברמה נוכחית!"
+#: askbot/media/js/editors/wmd_expander_toggle.js:7
+msgid "Preview: (hide)"
+msgstr "תצוגה מקדימה: (הסתרה)"
 
-#: media/js/post.js:4364
-msgid "add category"
-msgstr "הוספת קטגוריה"
+#: askbot/media/js/editors/wmd_expander_toggle.js:8
+msgid "Show preview"
+msgstr "הצגת תצוגה מקדימה"
 
-#: media/js/post.js:4917
-msgid "save tags"
+#: askbot/media/js/group_messaging.js:132
+msgid "Type a message"
+msgstr "נא להקליד הודעה"
+
+#: askbot/media/js/group_messaging.js:141
+msgid "Add a recipient"
+msgstr "הוספת נמען"
+
+#: askbot/media/js/group_messaging.js:171
+msgid "message sent"
+msgstr "הודעה שנשלחה"
+
+#: askbot/media/js/group_messaging.js:187
+msgid ""
+"Did you mean to send your message to muliple users? Use comma instead of "
+"whitespaces"
+msgstr ""
+"כוונתך הייתה לשלוח את ההודעה שלך למספר נמענים? יש להשתמש בפסיק במקום ברווח"
+
+#: askbot/media/js/group_messaging.js:191
+msgid "user {{str}} does not exist"
+msgid_plural "users {{str}} do not exist"
+msgstr[0] "משתמשים {{str}} לא קיימים"
+msgstr[1] "משתמשים {{str}} לא קיימים"
+msgstr[2] "משתמשים {{str}} לא קיימים"
+msgstr[3] "משתמשים {{str}} לא קיימים"
+
+#: askbot/media/js/group_messaging.js:198
+msgid "cannot send message to yourself"
+msgstr "לא ניתן לשלוח הודעה לעצמך"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:73
+#, javascript-format
+msgid "Are you sure you want to remove your %s login?"
+msgstr "להסיר את הכניסה שלך באמצעות %s?"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:90
+msgid "Please add one or more login methods."
+msgstr "נא להוסיף שיטת כניסה אחת או יותר."
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:93
+msgid ""
+"You don't have a method to log in right now, please add one or more by "
+"clicking any of the icons below."
+msgstr ""
+"אין לך שיטת כניסה כרגע, נא להוסיף שיטה אחת או יותר ע״י לחיצה על הסמלים שלהלן."
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:147
+msgid "enter username"
+msgstr "נא להקליד שם משתמש"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:149
+msgid "enter username or email"
+msgstr "נא להקליד שם משתמש או דוא״ל"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:158
+msgid "enter password"
+msgstr "נא להזין ססמה"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:180
+msgid "passwords do not match"
+msgstr "הססמאות אינן תואמות"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:206
+msgid "Show/change current login methods"
+msgstr "הצגה/שינוי של שיטות הכניסה הנוכחיות"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:262
+#, javascript-format
+msgid "Please enter your %s, then proceed"
+msgstr "נא להקליד את ה%s שלך ולאחר מכן להמשיך"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:264
+msgid "Connect your %(provider_name)s account to %(site)s"
+msgstr "ניתן להתחבר עם חשבון ה־%(provider_name)s שלך אל  %(site)s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:362
+#, javascript-format
+msgid "Change your %s password"
+msgstr "החלפת הססמה שלך ב־%s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:363
+msgid "Change password"
+msgstr "החלפת הססמה"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:365
+#, javascript-format
+msgid "Create a password for %s"
+msgstr "יצירת ססמה עבור %s"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:366
+msgid "Create password"
+msgstr "יצירת ססמה"
+
+#: askbot/media/js/jquery-openid/jquery.authenticator.js:377
+msgid "Create a password-protected account"
+msgstr "יצירת חשבון מוגן בססמה"
+
+#: askbot/media/js/moderation_queue/errors_alert.js:10
+msgid "Please fix these errors:"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/errors_alert.js:22
+#, fuzzy
+#| msgid "sorry, something is not right here"
+msgid "Sorry, something wrong happened."
+msgstr "משהו פה לא תקין, עמך הסליחה"
+
+#: askbot/media/js/moderation_queue/errors_alert.js:27
+#, fuzzy
+#| msgid "sorry, something is not right here"
+msgid "Sorry, something wrong happened"
+msgstr "משהו פה לא תקין, עמך הסליחה"
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:36
+msgid "Add new reject reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:41
+msgid "Manage post flag/reject reasons"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/manage_reject_reasons_dialog.js:46
+msgid "Edit reject reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:114
+msgid "Load more items."
+msgstr "טעינת פריטים נוספים."
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:164
+msgid "first post"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:166
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:180
+msgid "%(count)s selected post"
+msgid_plural "%(count)s selected posts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:177
+msgid "%(count)s visible post"
+msgid_plural "%(count)s visible posts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:237
+msgid "collapse"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/post_moderation_controls.js:239
+msgid "show more"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:47
+msgid "Please provide description."
+msgstr "נא לספק תיאור."
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:50
+msgid "Please provide details."
+msgstr "נא לספק פרטים."
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:111
+msgid "Enter a brief description of why you are rejecting the post."
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:116
+msgid "Enter details here. This text will be sent to the user."
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:125
+#, fuzzy
+#| msgid "save tags"
+msgid "Save reason"
 msgstr "שמירת תגיות"
 
-#: media/js/post.js:5022
+#: askbot/media/js/moderation_queue/reject_reason_editor.js:129
+#: askbot/media/js/pages/question/merge_questions_dialog.js:187
+#: askbot/media/js/utils/modal_dialog.js:9
+#: askbot/media/js/utils/text_property_editor.js:48
+msgid "Cancel"
+msgstr "ביטול"
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:79
+msgid "A reason must be selected to delete one."
+msgstr "צריך לספק סיבה כדי למחוק אחת."
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:110
+msgid "Edit this reason"
+msgstr ""
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:119
+#, fuzzy
+#| msgid "delete this comment"
+msgid "Delete this reason"
+msgstr "מחיקת תגובה זו"
+
+#: askbot/media/js/moderation_queue/reject_reason_selector.js:128
+#, fuzzy
+#| msgid "add new group"
+msgid "Add a new reason"
+msgstr "הוספת קבוצה חדשה"
+
+#: askbot/media/js/pages/answer_edit.js:4
+#: askbot/media/js/pages/answer_edit.js:7
+#: askbot/media/js/pages/question/init_page.js:6
+#: askbot/media/js/pages/question/init_page.js:9
+#, fuzzy
+#| msgid "Load preview"
+msgid "hide preview"
+msgstr "טעינת התצוגה המקדימה"
+
+#: askbot/media/js/pages/answer_edit.js:7
+#: askbot/media/js/pages/question/init_page.js:9
+#, fuzzy
+#| msgid "Show preview"
+msgid "show preview"
+msgstr "הצגת תצוגה מקדימה"
+
+#: askbot/media/js/pages/edit_answer/setup_form_validation.js:83
+msgid "content cannot be empty"
+msgstr "התוכן לא יכול להיות ריק"
+
+#: askbot/media/js/pages/edit_answer/setup_form_validation.js:86
+#: askbot/media/js/validators/answer_validators.js:10
+#: askbot/media/js/validators/question_validators.js:9
+msgid "enter > %(length)s character"
+msgid_plural "enter > %(length)s characters"
+msgstr[0] "נא להקליד > תו אחד - %(length)s"
+msgstr[1] "נא להקליד > %(length)s תווים"
+msgstr[2] "נא להקליד > %(length)s תווים"
+msgstr[3] "נא להקליד > %(length)s תווים"
+
+#: askbot/media/js/pages/question/accept_answer_button.js:10
+#, fuzzy
+#| msgid "please sign in or register to post comments"
+msgid "Please sign in to vote"
+msgstr "נא להיכנס או להירשם כדי לפרסם תגובות"
+
+#: askbot/media/js/pages/question/accept_answer_button.js:13
+#: askbot/media/js/pages/question/vote.js:212
+msgid "sorry, you cannot %(accept_own_answer)s"
+msgstr "אין אפשרות %(accept_own_answer)s, עמך הסליחה"
+
+#: askbot/media/js/pages/question/comment.js:12
+msgid "delete this comment"
+msgstr "מחיקת תגובה זו"
+
+#: askbot/media/js/pages/question/comment.js:306
+msgid "confirm delete comment"
+msgstr "למחוק תגובה זו?"
+
+#: askbot/media/js/pages/question/delete_post_link.js:30
+#: askbot/media/js/pages/question/vote.js:236
+msgid "undelete"
+msgstr "ביטול מחיקה"
+
+#: askbot/media/js/pages/question/delete_post_link.js:34
+#: askbot/media/js/pages/question/vote.js:240
+msgid "delete"
+msgstr "מחיקה"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:108
+msgid "add comment"
+msgstr "הוספת תגובה"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:113
+msgid "save comment"
+msgstr "שמירת תגובה"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:143
+#, javascript-format
+msgid "enter at least %s characters"
+msgstr "נא להקליד לפחות %s תווים"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:146
+#, javascript-format
+msgid "enter at least %s more characters"
+msgstr "נא להקליד לפחות עוד %s תווים"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:161
+#, javascript-format
+msgid "%s characters left"
+msgstr "%s תווים נותרו"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:163
+msgid "maximum comment length reached"
+msgstr "התגובה ממלאה את האורך המרבי המותר"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:285
+#: askbot/media/js/utils/editable.js:324
+msgid "minor edit (don't send alerts)"
+msgstr "עריכה משנית (לא לשלוח התרעות)"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:317
+msgid "Are you sure you don't want to post this comment?"
+msgstr "לבטל את פרסום התגובה הזו?"
+
+#: askbot/media/js/pages/question/edit_comment_form.js:362
+#: askbot/media/jslib/timeago.js:129
+msgid "just now"
+msgstr "הרגע"
+
+#: askbot/media/js/pages/question/flag_offensive.js:4
+#: askbot/media/js/pages/question/post_vote.js:93
+#: askbot/media/js/pages/question/vote.js:26
+msgid "please login"
+msgstr "נא להיכנס"
+
+#: askbot/media/js/pages/question/flag_offensive.js:5
+msgid "anonymous users cannot flag offensive posts"
+msgstr "משתמשים אלמוניים לא יכולים לסמן הודעות כפוגעניות"
+
+#: askbot/media/js/pages/question/flag_offensive.js:6
+#, fuzzy
+#| msgid "anonymous users cannot vote"
+msgid "anonymous users cannot remove post flags"
+msgstr "משתמשים אלמוניים לא יכולים להצביע, עמך הסליחה"
+
+#: askbot/media/js/pages/question/follow_question.js:9
+#, javascript-format
+msgid "%s follower"
+msgid_plural "%s followers"
+msgstr[0] "%s עוקבים"
+msgstr[1] "%s עוקבים"
+msgstr[2] "%s עוקבים"
+msgstr[3] "%s עוקבים"
+
+#: askbot/media/js/pages/question/merge_questions_dialog.js:61
+#: askbot/media/js/pages/question/merge_questions_dialog.js:105
+#: askbot/media/js/pages/question/merge_questions_dialog.js:188
+msgid "Load preview"
+msgstr "טעינת התצוגה המקדימה"
+
+#: askbot/media/js/pages/question/merge_questions_dialog.js:99
+msgid "Merge"
+msgstr "מיזוג"
+
+#: askbot/media/js/pages/question/post_comments_widget.js:168
+msgid "Sorry, only one moderated comment per post is allowed"
+msgstr ""
+
+#: askbot/media/js/pages/question/post_comments_widget.js:173
+msgid "please sign in or register to post comments"
+msgstr "נא להיכנס או להירשם כדי לפרסם תגובות"
+
+#: askbot/media/js/pages/question/post_vote.js:94
+#: askbot/media/js/pages/question/vote.js:30
+msgid "anonymous users cannot vote"
+msgstr "משתמשים אלמוניים לא יכולים להצביע, עמך הסליחה"
+
+#: askbot/media/js/pages/question/retagger.js:90
+msgid "sorry, something is not right here"
+msgstr "משהו פה לא תקין, עמך הסליחה"
+
+#: askbot/media/js/pages/question/retagger.js:114
+msgid "tags cannot be empty"
+msgstr "נא לבחור בתגית אחת לפחות"
+
+#: askbot/media/js/pages/question/share_onsite.js:7
 msgid "Group name:"
 msgstr "שם הקבוצה:"
 
-#: media/js/post.js:5048
+#: askbot/media/js/pages/question/share_onsite.js:33
+#: askbot/media/js/pages/question/thread_users_dialog.js:64
 msgid "Shared with the following users:"
 msgstr "משותף עם המשתמשים הבאים:"
 
-#: media/js/post.js:5054
+#: askbot/media/js/pages/question/share_onsite.js:39
+#: askbot/media/js/pages/question/thread_users_dialog.js:71
 msgid "Shared with the following groups:"
 msgstr "משותף עם הקבוצות הבאות:"
 
-#: media/js/searchbar/drop_menu.js:198
+#: askbot/media/js/pages/question/thread_users_dialog.js:48
+msgid "Back to the question"
+msgstr "בחזרה לשאלה"
+
+#: askbot/media/js/pages/question/vote.js:24
+msgid "insufficient privilege"
+msgstr "הרשאה בלתי תואמת"
+
+#: askbot/media/js/pages/question/vote.js:29
+msgid "anonymous users cannot subscribe to questions"
+msgstr "משתמשים אלמוניים לא יכול להירשם לשאלות"
+
+#: askbot/media/js/pages/question/vote.js:32
+msgid "confirm delete"
+msgstr "למחוק זאת?"
+
+#: askbot/media/js/pages/question/vote.js:33
+msgid "anonymous users cannot delete/undelete"
+msgstr "משתמשים אלמוניים לא יכולים למחוק או לבטל מחיקה של הודעות, עמך הסליחה"
+
+#: askbot/media/js/pages/question/vote.js:34
+msgid "post recovered"
+msgstr "ההודעה שלך שוחזרה כעת!"
+
+#: askbot/media/js/pages/question/vote.js:35
+msgid "post deleted"
+msgstr "ההודעה שלך נמחקה"
+
+#: askbot/media/js/searchbar/drop_menu.js:214
 msgid "To see search results, 2 or more characters may be required"
 msgstr "כדי לצפות בתוצאות החיפוש, נדרשים 2 תווים ומעלה"
 
-#: media/js/searchbar/drop_menu.js:220
+#: askbot/media/js/searchbar/drop_menu.js:236
 msgid "Ask Your Question"
 msgstr "פרסום השאלה שלך"
 
-#: media/js/searchbar/tag_warning_box.js:50
+#: askbot/media/js/searchbar/tag_warning_box.js:50
 msgid "Sorry, this tag does not exist"
 msgid_plural "Sorry, these tags do not exist"
 msgstr[0] "תגית זו אינה קיימת, עמך הסליחה"
@@ -398,98 +527,77 @@ msgstr[1] "תגיות אלו לא קיימות, עמך הסליחה"
 msgstr[2] "תגיות אלו לא קיימות, עמך הסליחה"
 msgstr[3] "תגיות אלו לא קיימות, עמך הסליחה"
 
-#: media/js/tag_selector.js:14
+#: askbot/media/js/tag_selector.js:14
 msgid "Tag \"<span></span>\" matches:"
 msgstr "התגית \"<span></span>\" תואמת:"
 
-#: media/js/tag_selector.js:91
+#: askbot/media/js/tag_selector.js:92
 #, javascript-format
 msgid "and %s more, not shown..."
 msgstr "ו־%s נוספים, שאינם מוצגים…"
 
-#: media/js/user.js:50
+#: askbot/media/js/user.js:50
 msgid "Please <a href=\"%(signin_url)s\">signin</a> to follow %(username)s"
 msgstr "נא <a href=\"%(signin_url)s\">להיכנס</a> כדי לעקוב אחר %(username)s"
 
-#: media/js/user/group_adder_widget.js:12
+#: askbot/media/js/user/group_adder_widget.js:12
 msgid "add group"
 msgstr "הוספת קבוצה"
 
-#: media/js/user/group_adder_widget.js:92
+#: askbot/media/js/user/group_adder_widget.js:92
 msgid "add"
 msgstr "הוספה"
 
-#: media/js/user/manage_account.js:3
+#: askbot/media/js/user/manage_account.js:3
 msgid "Anonymize and Disable Account"
 msgstr ""
 
-#: media/js/user/manage_account.js:4
+#: askbot/media/js/user/manage_account.js:4
 msgid "Yes, anonymize and disable"
 msgstr ""
 
-#: media/js/user/manage_account.js:13
-#| msgid "Are you sure you don't want to post this comment?"
+#: askbot/media/js/user/manage_account.js:13
 msgid "Are you sure you want to anonymize and disable %(user)s's account?"
 msgstr ""
 
-#: media/js/user/manage_account.js:20
+#: askbot/media/js/user/manage_account.js:20
 msgid "All posts will remain on the site"
 msgstr ""
 
-#: media/js/user/manage_account.js:22
+#: askbot/media/js/user/manage_account.js:22
 msgid "Posts will be attributed to user \"%(anon_user)s\""
 msgstr ""
 
-#: media/js/user/manage_account.js:27
+#: askbot/media/js/user/manage_account.js:27
 msgid "All %(user)s's personal info will be deleted"
 msgstr ""
 
-#: media/js/user/manage_account.js:31
+#: askbot/media/js/user/manage_account.js:31
 msgid "Account will be unusable"
 msgstr ""
 
-#: media/js/user/manage_account.js:37
+#: askbot/media/js/user/manage_account.js:37
 msgid "Remove Account"
 msgstr ""
 
-#: media/js/user/manage_account.js:38
+#: askbot/media/js/user/manage_account.js:38
 msgid "Yes, remove account"
 msgstr ""
 
-#: media/js/user/manage_account.js:46
+#: askbot/media/js/user/manage_account.js:46
 msgid "All content will be irreversibly deleted."
 msgstr ""
 
-#: media/js/user/manage_account.js:49
+#: askbot/media/js/user/manage_account.js:49
 msgid "Consider anonymizing the data instead if the content may be useful."
 msgstr ""
 
-#: media/js/user/manage_reject_reasons_dialog.js:90
-msgid "Looks there are some things to fix:"
-msgstr "נראה כי יש לתקן מספר דברים:"
-
-#: media/js/user/manage_reject_reasons_dialog.js:158
-msgid "Please provide description."
-msgstr "נא לספק תיאור."
-
-#: media/js/user/manage_reject_reasons_dialog.js:161
-msgid "Please provide details."
-msgstr "נא לספק פרטים."
-
-#: media/js/user/manage_reject_reasons_dialog.js:248
-msgid "A reason must be selected to delete one."
-msgstr "צריך לספק סיבה כדי למחוק אחת."
-
-#: media/js/user/post_moderation_controls.js:77
-#: media/js/user/response_notifs.js:30 media/js/user/response_notifs.js:107
+#: askbot/media/js/user/response_notifs.js:31
+#: askbot/media/js/user/response_notifs.js:108
 msgid "Please select at least one item"
 msgstr "נא לבחור בפריט אחד לפחות"
 
-#: media/js/user/post_moderation_controls.js:113
-msgid "Load more items."
-msgstr "טעינת פריטים נוספים."
-
-#: media/js/utils.js:206
+#: askbot/media/js/utils.js:240
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "חייב להיות פחות מתו אחד - %(max_chars)s"
@@ -497,147 +605,164 @@ msgstr[1] "חייב להיות פחות מ־%(max_chars)s תווים"
 msgstr[2] "חייב להיות פחות מ־%(max_chars)s תווים"
 msgstr[3] "חייב להיות פחות מ־%(max_chars)s תווים"
 
-#: media/js/utils.js:274
+#: askbot/media/js/utils.js:308
 msgid "and"
 msgstr "וגם"
 
-#: media/js/utils.js:292
+#: askbot/media/js/utils.js:326
 msgid "click to close"
 msgstr "לחיצה לסגירה"
 
-#: media/js/utils/comment_convert_link.js:26
+#: askbot/media/js/utils/comment_convert_link.js:27
 msgid "convert to answer"
 msgstr "המרה לתשובה"
 
-#: media/js/utils/edit_link.js:14
-msgid "click to edit this comment"
-msgstr "יש ללחוץ כדי לערוך תגובה זו"
+#: askbot/media/js/utils/draft_post.js:38
+msgid "draft saved..."
+msgstr "הטיוטה נשמרה…"
 
-#: media/js/utils/file_upload_dialog.js:138
+#: askbot/media/js/utils/edit_link.js:18
+#, fuzzy
+#| msgid "click to close"
+msgid "click to edit"
+msgstr "לחיצה לסגירה"
+
+#: askbot/media/js/utils/file_upload_dialog.js:138
 #, javascript-format
 msgid "Uploaded file: %s"
 msgstr "קובץ שהועלה: %s"
 
-#: media/js/utils/file_upload_dialog.js:152
+#: askbot/media/js/utils/file_upload_dialog.js:152
 msgid "Choose a different file"
 msgstr "בחירה בקובץ אחר"
 
-#: media/js/utils/file_upload_dialog.js:154
+#: askbot/media/js/utils/file_upload_dialog.js:154
 msgid "Choose a different image"
 msgstr "בחירה בתמונה אחרת"
 
-#: media/js/utils/file_upload_dialog.js:168
+#: askbot/media/js/utils/file_upload_dialog.js:168
 msgid "Oops, looks like we had an error. Sorry."
 msgstr "געוואלד, כנראה שיש טעות בידינו, עמך הסליחה."
 
-#: media/js/utils/file_upload_dialog.js:228
+#: askbot/media/js/utils/file_upload_dialog.js:228
 msgid "Choose a file to insert"
 msgstr "בחירה בקובץ להוספה"
 
-#: media/js/utils/file_upload_dialog.js:230
+#: askbot/media/js/utils/file_upload_dialog.js:230
 msgid "Choose an image to insert"
 msgstr "בחירה בתמונה להוספה"
 
-#: media/js/utils/file_upload_dialog.js:243
+#: askbot/media/js/utils/file_upload_dialog.js:243
 msgid "Allowed file types are:"
 msgstr "סוגי הקבצים המותרים הם:"
 
-#: media/js/utils/file_upload_dialog.js:249
-#: media/tinymce/plugins/askbot_attachment/editor_plugin.js:35
+#: askbot/media/js/utils/file_upload_dialog.js:249
 msgid "Or paste file url here"
 msgstr "או להדביק את הכתובת לכאן"
 
-#: media/js/utils/group_dropdown.js:18
+#: askbot/media/js/utils/group_dropdown.js:18
 msgid "group name"
 msgstr "שם הקבוצה"
 
-#: media/js/utils/group_dropdown.js:26
+#: askbot/media/js/utils/group_dropdown.js:26
 msgid "add new group"
 msgstr "הוספת קבוצה חדשה"
 
-#: media/js/utils/group_dropdown.js:118
+#: askbot/media/js/utils/group_dropdown.js:118
 msgid "Group %(name)s already exists. Group names are case-insensitive."
 msgstr "הקבוצה %(name)s כבר קיימת. שמות הקבוצות תלויי רישיות."
 
-#: media/js/utils/modal_dialog.js:7
+#: askbot/media/js/utils/image_changer.js:87
+msgid "Enter the logo url or upload an image"
+msgstr "נא להקליד את כתובת הלוגו או להעלות תמונה"
+
+#: askbot/media/js/utils/image_changer.js:113
+msgid "Do you really want to remove the image?"
+msgstr "להסיר את התמונה הזו?"
+
+#: askbot/media/js/utils/modal_dialog.js:7
 msgid "Ok"
 msgstr "בסדר"
 
-#: media/js/utils/paginator.js:115
-#, javascript-format
-msgid "page %s"
-msgstr "עמוד %s"
-
-#: media/js/utils/tag.js:122
+#: askbot/media/js/utils/tag.js:130
 #, javascript-format
 msgid "see questions tagged '%s'"
 msgstr "הצגת שאלות עם התגית '%s'"
 
-#: media/js/utils/text_property_editor.js:47
+#: askbot/media/js/utils/text_property_editor.js:47
 msgid "Save"
 msgstr "שמירה"
 
-#: media/js/utils/text_property_editor.js:119
+#: askbot/media/js/utils/text_property_editor.js:119
 msgid "saved"
 msgstr "נשמר"
 
-#: media/js/utils/toggle.js:88 media/js/utils/toggle.js:103
+#: askbot/media/js/utils/toggle.js:88 askbot/media/js/utils/toggle.js:103
 msgid "enabled"
 msgstr "פעיל"
 
-#: media/js/utils/toggle.js:89 media/js/utils/toggle.js:104
+#: askbot/media/js/utils/toggle.js:89 askbot/media/js/utils/toggle.js:104
 msgid "disabled"
 msgstr "מנוטרל"
 
-#: media/jslib/timeago.js:97
+#: askbot/media/js/validators/question_validators.js:25
+#, javascript-format
+msgid "details must have > %s character"
+msgid_plural "details must have > %s characters"
+msgstr[0] "בפרטים חייב להיות > תו אחד - %s"
+msgstr[1] "בפרטים חייבים להיות > %s תווים"
+msgstr[2] "בפרטים חייבים להיות > %s תווים"
+msgstr[3] "בפרטים חייבים להיות > %s תווים"
+
+#: askbot/media/jslib/timeago.js:97
 msgid "Jan"
 msgstr "ינו׳"
 
-#: media/jslib/timeago.js:98
+#: askbot/media/jslib/timeago.js:98
 msgid "Feb"
 msgstr "פבר׳"
 
-#: media/jslib/timeago.js:99
+#: askbot/media/jslib/timeago.js:99
 msgid "Mar"
 msgstr "מרץ"
 
-#: media/jslib/timeago.js:100
+#: askbot/media/jslib/timeago.js:100
 msgid "Apr"
 msgstr "אפר׳"
 
-#: media/jslib/timeago.js:101
+#: askbot/media/jslib/timeago.js:101
 msgid "May"
 msgstr "מאי"
 
-#: media/jslib/timeago.js:102
+#: askbot/media/jslib/timeago.js:102
 msgid "Jun"
 msgstr "יונ׳"
 
-#: media/jslib/timeago.js:103
+#: askbot/media/jslib/timeago.js:103
 msgid "Jul"
 msgstr "יול׳"
 
-#: media/jslib/timeago.js:104
+#: askbot/media/jslib/timeago.js:104
 msgid "Aug"
 msgstr "אוג׳"
 
-#: media/jslib/timeago.js:105
+#: askbot/media/jslib/timeago.js:105
 msgid "Sep"
 msgstr "ספט׳"
 
-#: media/jslib/timeago.js:106
+#: askbot/media/jslib/timeago.js:106
 msgid "Oct"
 msgstr "אוק׳"
 
-#: media/jslib/timeago.js:107
+#: askbot/media/jslib/timeago.js:107
 msgid "Nov"
 msgstr "נוב׳"
 
-#: media/jslib/timeago.js:108
+#: askbot/media/jslib/timeago.js:108
 msgid "Dec"
 msgstr "דצמ׳"
 
-#: media/jslib/timeago.js:118
+#: askbot/media/jslib/timeago.js:116
 #, javascript-format
 msgid "%s year ago"
 msgid_plural "%s years ago"
@@ -646,15 +771,15 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: media/jslib/timeago.js:121
+#: askbot/media/jslib/timeago.js:119
 msgid "2 days ago"
 msgstr "לפני יומיים"
 
-#: media/jslib/timeago.js:123
+#: askbot/media/jslib/timeago.js:121
 msgid "yesterday"
 msgstr "אתמול"
 
-#: media/jslib/timeago.js:126
+#: askbot/media/jslib/timeago.js:124
 #, javascript-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
@@ -663,7 +788,7 @@ msgstr[1] "לפני %s שעות"
 msgstr[2] "לפני %s שעות"
 msgstr[3] "לפני %s שעות"
 
-#: media/jslib/timeago.js:129
+#: askbot/media/jslib/timeago.js:127
 #, javascript-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
@@ -672,109 +797,632 @@ msgstr[1] "לפני %s דקות"
 msgstr[2] "לפני %s דקות"
 msgstr[3] "לפני %s דקות"
 
-#: media/tinymce/plugins/askbot_attachment/editor_plugin.js:71
-msgid "Insert a file"
-msgstr "הוספת קובץ"
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:6
+msgid "Create clickable links in your text."
+msgstr ""
 
-#: media/tinymce/plugins/askbot_imageuploader/editor_plugin.js:70
-msgid "Insert image"
-msgstr "הוספת תמונה"
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:9
+msgid "Inline link"
+msgstr ""
 
-#: media/wmd/wmd.js:31
-msgid "bold"
-msgstr "מודגש"
-
-#: media/wmd/wmd.js:32
-msgid "italic"
-msgstr "נטוי"
-
-#: media/wmd/wmd.js:33
-msgid "link"
-msgstr "קישור"
-
-#: media/wmd/wmd.js:34
-msgid "quote"
-msgstr "ציטוט"
-
-#: media/wmd/wmd.js:35
-msgid "preformatted text"
-msgstr "טקסט מעוצב מראש"
-
-#: media/wmd/wmd.js:36
-msgid "image"
-msgstr "תמונה"
-
-#: media/wmd/wmd.js:37
-msgid "attachment"
-msgstr "קובץ מצורף"
-
-#: media/wmd/wmd.js:38
-msgid "numbered list"
-msgstr "רשימה ממוספרת"
-
-#: media/wmd/wmd.js:39
-msgid "bulleted list"
-msgstr "רשימה עם תבליטים"
-
-#: media/wmd/wmd.js:40
-msgid "heading"
-msgstr "כותרת"
-
-#: media/wmd/wmd.js:41
-msgid "horizontal bar"
-msgstr "שורה אופקית"
-
-#: media/wmd/wmd.js:42
-msgid "undo"
-msgstr "ביטול"
-
-#: media/wmd/wmd.js:43 media/wmd/wmd.js:1171
-msgid "redo"
-msgstr "ביצוע חוזר"
-
-#: media/wmd/wmd.js:54
-msgid "enter image url"
-msgstr "יש להזין את כתובת התמונה, למשל: http://www.example.com/image.jpg או להעלות קובץ תמונה"
-
-#: media/wmd/wmd.js:55
-msgid "enter url"
-msgstr "יש להזין כתובת אתר, למשל: http://www.example.com „כותרת העמוד“"
-
-#: media/wmd/wmd.js:56
-msgid "upload file attachment"
-msgstr "נא לבחור ולהעלות קובץ:"
-
-#: media/wmd/wmd.js:1686
-msgid "strong text"
-msgstr "טקסט חזק"
-
-#: media/wmd/wmd.js:1690
-msgid "emphasized text"
-msgstr "טקסט מודגש"
-
-#: media/wmd/wmd.js:1844
-msgid "image description"
-msgstr "תיאור תמונה"
-
-#: media/wmd/wmd.js:1847
-msgid "file name"
-msgstr "שם קובץ"
-
-#: media/wmd/wmd.js:1851
+#: askbot/media/wmd/help-panel/editor_help_panel.js:1
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:16
+#: askbot/media/wmd/wmd.js:1876
 msgid "link text"
 msgstr "טקסט הקישור"
 
-#: media/wmd/wmd.js:2284 media/wmd/wmd.js:2304
+#: askbot/media/wmd/help-panel/src/HelpButton.svelte:24
+msgid "Formatting help"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/HelpButton.svelte:25
+msgid "Toggle formatting help"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:20
+msgid "Links"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:21
+#, fuzzy
+#| msgid "image"
+msgid "Images"
+msgstr "תמונה"
+
+#: askbot/media/wmd/help-panel/src/settings.js:22
+msgid "Styling"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:23
+msgid "Lists"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:24
+#, fuzzy
+#| msgid "quote"
+msgid "Quotes"
+msgstr "ציטוט"
+
+#: askbot/media/wmd/help-panel/src/settings.js:25
+msgid "Code"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:26
+msgid "HTML"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:27
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:19
+#, fuzzy
+#| msgid "enabled"
+msgid "Tables"
+msgstr "פעיל"
+
+#: askbot/media/wmd/help-panel/src/settings.js:28
+msgid "Video"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:29
+msgid "Math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/settings.js:30
+#, fuzzy
+#| msgid "link"
+msgid "Auto-link"
+msgstr "קישור"
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:6
+msgid "Special patterns are automatically converted to links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:9
+msgid "How it works"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:10
+msgid ""
+"Your administrator has configured patterns that automatically become "
+"clickable links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:14
+msgid "Example patterns"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:15
+msgid "Issue references like #123 or BUG-456 may link to your issue tracker."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:19
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:24
+msgid "Note"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:20
+msgid ""
+"The specific patterns available depend on your site's configuration. Contact "
+"your administrator for details."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:6
+msgid "Quote text from other sources."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:9
+#, fuzzy
+#| msgid "quote"
+msgid "Basic quote"
+msgstr "ציטוט"
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:10
+msgid "This is a quoted text."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:14
+msgid "Multi-line quote"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
+msgid "First line of quote."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
+msgid "Second line of quote."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:19
+msgid "Nested quotes"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
+#, fuzzy
+#| msgid "quote"
+msgid "Outer quote"
+msgstr "ציטוט"
+
+#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
+msgid "Nested quote"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:6
+msgid "Display code with syntax highlighting."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:9
+msgid "Inline code"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:11
+msgid "Wrap with single backticks."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:15
+msgid "Code block"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:17
+msgid "Wrap with triple backticks on separate lines."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:21
+msgid "Syntax highlighting"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:23
+msgid "Add language name after opening backticks."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:27
+msgid "Toolbar shortcut"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:28
+msgid "Select code and click the code button to format it."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:6
+msgid "Some HTML tags are allowed in posts."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:9
+msgid "Allowed tags"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:14
+msgid "Structure tags"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:25
+msgid ""
+"Scripts, iframes, and other potentially unsafe tags are filtered out for "
+"security."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:6
+msgid "Embed images in your post."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:9
+#, fuzzy
+#| msgid "message sent"
+msgid "Image syntax"
+msgstr "הודעה שנשלחה"
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:11
+msgid "Alt text describes the image for accessibility."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:15
+msgid "Image with title"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:16
+msgid "\"Title text\""
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:17
+msgid "Title appears when hovering over the image."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:21
+#, fuzzy
+#| msgid "Uploaded file: %s"
+msgid "Uploading images"
+msgstr "קובץ שהועלה: %s"
+
+#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:22
+msgid ""
+"Click the image button in the toolbar to upload an image from your computer."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:11
+msgid "The text in brackets becomes the clickable link."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:15
+msgid "Link with title"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:17
+msgid "The title appears when hovering over the link."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:21
+msgid "Auto-linked URLs"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:22
+msgid "URLs like https://example.com are automatically converted to links."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:6
+msgid "Create ordered, unordered, and task lists."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:9
+#, fuzzy
+#| msgid "numbered list"
+msgid "Unordered list"
+msgstr "רשימה ממוספרת"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+#, fuzzy
+#| msgid "List item"
+msgid "First item"
+msgstr "פריט ברשימה"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+msgid "Second item"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
+#, fuzzy
+#| msgid "List item"
+msgid "Third item"
+msgstr "פריט ברשימה"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:11
+msgid "Also works with * or +"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:15
+#, fuzzy
+#| msgid "numbered list"
+msgid "Ordered list"
+msgstr "רשימה ממוספרת"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:20
+msgid "Task list"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
+msgid "Unchecked task"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
+msgid "Completed task"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:22
+msgid "Creates interactive checkboxes."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:26
+#, fuzzy
+#| msgid "bulleted list"
+msgid "Nested lists"
+msgstr "רשימה עם תבליטים"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+msgid "Item"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+#, fuzzy
+#| msgid "List item"
+msgid "Nested item"
+msgstr "פריט ברשימה"
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
+msgid "Another nested"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:28
+msgid "Indent with 2 spaces for nesting."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:6
+msgid "Write mathematical expressions using LaTeX syntax."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:9
+msgid "Inline math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:11
+msgid "Wrap with single dollar signs for inline formulas."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:15
+msgid "Display math"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:17
+msgid "Double dollar signs for centered block formulas."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:21
+msgid "LaTeX display mode"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:26
+msgid "Literal dollar signs"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:28
+msgid "Use backslash to show actual dollar signs."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:6
+msgid "Format text with bold, italic, and strikethrough."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:9
+msgid "Bold"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:10
+#, fuzzy
+#| msgid "link text"
+msgid "bold text"
+msgstr "טקסט הקישור"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:11
+msgid "Or use __bold text__"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:15
+#, fuzzy
+#| msgid "italic"
+msgid "Italic"
+msgstr "נטוי"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:16
+#, fuzzy
+#| msgid "italic"
+msgid "italic text"
+msgstr "נטוי"
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:17
+msgid "Or use _italic text_"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:21
+msgid "Bold and italic"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:22
+msgid "bold and italic"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:26
+msgid "Strikethrough"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:27
+msgid "strikethrough"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:6
+#, fuzzy
+#| msgid "enter at least %s more characters"
+msgid "Create tables using pipe characters."
+msgstr "נא להקליד לפחות עוד %s תווים"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:9
+msgid "Basic table"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:10
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:11
+#, javascript-format
+msgctxt "Header <number>"
+msgid "Header %s"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:12
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:13
+#, javascript-format
+msgctxt "Cell <number>"
+msgid "Cell %s"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:17
+msgid "Column alignment"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+msgctxt "align column to"
+msgid "Left"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#, fuzzy
+#| msgid "enter url"
+msgctxt "align column to"
+msgid "Center"
+msgstr "יש להזין כתובת אתר, למשל: http://www.example.com „כותרת העמוד“"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+msgctxt "align column to"
+msgid "Right"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#, fuzzy
+#| msgid "link text"
+msgid "text"
+msgstr "טקסט הקישור"
+
+#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:19
+msgid "Use : to align columns (left, center, right)."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:6
+msgid "Embed videos from supported platforms."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:9
+msgid "YouTube"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:11
+msgid "Use the video ID from the YouTube URL."
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:15
+msgid "Vimeo"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:20
+msgid "Dailymotion"
+msgstr ""
+
+#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:25
+msgid "Finding the video ID"
+msgstr ""
+
+#: askbot/media/wmd/wmd.js:31
+msgid "bold"
+msgstr "מודגש"
+
+#: askbot/media/wmd/wmd.js:32
+msgid "italic"
+msgstr "נטוי"
+
+#: askbot/media/wmd/wmd.js:33
+msgid "link"
+msgstr "קישור"
+
+#: askbot/media/wmd/wmd.js:34
+msgid "quote"
+msgstr "ציטוט"
+
+#: askbot/media/wmd/wmd.js:35
+msgid "preformatted text"
+msgstr "טקסט מעוצב מראש"
+
+#: askbot/media/wmd/wmd.js:36
+msgid "image"
+msgstr "תמונה"
+
+#: askbot/media/wmd/wmd.js:37
+msgid "attachment"
+msgstr "קובץ מצורף"
+
+#: askbot/media/wmd/wmd.js:38
+msgid "numbered list"
+msgstr "רשימה ממוספרת"
+
+#: askbot/media/wmd/wmd.js:39
+msgid "bulleted list"
+msgstr "רשימה עם תבליטים"
+
+#: askbot/media/wmd/wmd.js:40
+msgid "heading"
+msgstr "כותרת"
+
+#: askbot/media/wmd/wmd.js:41
+msgid "horizontal bar"
+msgstr "שורה אופקית"
+
+#: askbot/media/wmd/wmd.js:42
+msgid "undo"
+msgstr "ביטול"
+
+#: askbot/media/wmd/wmd.js:43 askbot/media/wmd/wmd.js:1181
+msgid "redo"
+msgstr "ביצוע חוזר"
+
+#: askbot/media/wmd/wmd.js:54
+msgid "enter image url"
+msgstr ""
+"יש להזין את כתובת התמונה, למשל: http://www.example.com/image.jpg או להעלות "
+"קובץ תמונה"
+
+#: askbot/media/wmd/wmd.js:55
+msgid "enter url"
+msgstr "יש להזין כתובת אתר, למשל: http://www.example.com „כותרת העמוד“"
+
+#: askbot/media/wmd/wmd.js:56
+msgid "upload file attachment"
+msgstr "נא לבחור ולהעלות קובץ:"
+
+#: askbot/media/wmd/wmd.js:1712
+msgid "strong text"
+msgstr "טקסט חזק"
+
+#: askbot/media/wmd/wmd.js:1716
+msgid "emphasized text"
+msgstr "טקסט מודגש"
+
+#: askbot/media/wmd/wmd.js:1869
+msgid "image description"
+msgstr "תיאור תמונה"
+
+#: askbot/media/wmd/wmd.js:1872
+msgid "file name"
+msgstr "שם קובץ"
+
+#: askbot/media/wmd/wmd.js:2309 askbot/media/wmd/wmd.js:2329
 msgid "enter code here"
 msgstr "נא להזין קוד כאן"
 
-#: media/wmd/wmd.js:2398
+#: askbot/media/wmd/wmd.js:2423
 msgid "List item"
 msgstr "פריט ברשימה"
 
-#: media/wmd/wmd.js:2430
+#: askbot/media/wmd/wmd.js:2455
 msgid "Heading"
 msgstr "כותרת עליונה"
+
+#~ msgid "loading..."
+#~ msgstr "בטעינה…"
+
+#~ msgid "details are required"
+#~ msgstr "נדרשים פרטים"
+
+#~ msgid "enter your question"
+#~ msgstr "נא להקליד את השאלה שלך"
+
+#~ msgid "remove flag"
+#~ msgstr "הסרת סימון"
+
+#~ msgid "flag offensive"
+#~ msgstr "סימון כפוגעני"
+
+#~ msgid "Looks there are some things to fix:"
+#~ msgstr "נראה כי יש לתקן מספר דברים:"
+
+#~ msgid "click to edit this comment"
+#~ msgstr "יש ללחוץ כדי לערוך תגובה זו"
+
+#, javascript-format
+#~ msgid "page %s"
+#~ msgstr "עמוד %s"
+
+#~ msgid "Insert a file"
+#~ msgstr "הוספת קובץ"
+
+#~ msgid "Insert image"
+#~ msgstr "הוספת תמונה"
 
 #~ msgid "%(question)s must have > %(length)s character"
 #~ msgid_plural "%(question)s must have > %(length)s characters"
@@ -789,7 +1437,9 @@ msgstr "כותרת עליונה"
 #~ msgid "Follow"
 #~ msgstr "Follow"
 
-#~ msgid "<div class=\"following\">Following</div><div class=\"unfollow\">Unfollow</div>"
+#~ msgid ""
+#~ "<div class=\"following\">Following</div><div class=\"unfollow\">Unfollow</"
+#~ "div>"
 #~ msgstr "<div>Following</div><div class=\"unfollow\">Unfollow</div>"
 
 #~ msgid "cannot pick own answer as best"
@@ -797,13 +1447,13 @@ msgstr "כותרת עליונה"
 
 #~ msgid "please confirm offensive"
 #~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ "are you sure this post is offensive, contains spam, advertising, "
+#~ "malicious remarks, etc.?"
 
 #~ msgid "please confirm removal of offensive flag"
 #~ msgstr ""
-#~ "are you sure this post is offensive, contains spam, advertising, malicious "
-#~ "remarks, etc.?"
+#~ "are you sure this post is offensive, contains spam, advertising, "
+#~ "malicious remarks, etc.?"
 
 #~ msgid "Post deleted"
 #~ msgstr "your post has been deleted"

@@ -1,0 +1,58 @@
+// Inline element styling for user-contributed content
+
+.wmd-preview,
+.js-editable-content {
+  // Links - use existing link variables
+  a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-thickness: var(--text-decoration-thickness);
+
+    &:hover {
+      color: var(--link-hover-color);
+    }
+  }
+
+  // Bold
+  b, strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  // Italic
+  i:not(.fa), em {
+    font-style: italic;
+  }
+
+  // Strikethrough
+  del, s, strike {
+    text-decoration: line-through;
+    text-decoration-thickness: var(--text-decoration-thickness);
+  }
+
+  // Keyboard input
+  kbd {
+    font-family: monospace;
+    font-size: var(--extra-small-font-size);
+    background: var(--tag-bg);
+    border: var(--border-width) var(--border-style) var(--tag-border-color);
+    border-radius: var(--border-radius);
+    padding: var(--uc-kbd-tag-padding);
+    box-shadow: inset 0 -1px 0 var(--clr-neutral-70);
+  }
+
+  // Subscript and superscript
+  sub, sup {
+    font-size: var(--extra-small-font-size);
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sup {
+    top: var(--uc-sup-tag-top);
+  }
+
+  sub {
+    bottom: var(--uc-sub-tag-bottom);
+  }
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Truncate Links Plugin Test</title>
+    <style>
+        .test-case { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #dfd; }
+        .fail { background-color: #fdd; }
+        .input { font-family: monospace; background: #f5f5f5; padding: 5px; }
+        .expected, .actual { margin-top: 10px; }
+        pre { white-space: pre-wrap; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Truncate Links Plugin Test</h1>
+    <p>This plugin truncates auto-linkified URLs to 40 characters with ellipsis. Matches Python backend.</p>
+    <div id="results"></div>
+
+    <script src="../vendor/markdown-it.min.js"></script>
+    <script src="truncate_links.js"></script>
+    <script>
+        var md = window.markdownit({linkify: true});
+        md.enable('linkify');
+        md.use(window.truncateLinksPlugin, {trim_limit: 40});
+
+        // Test cases matching Python backend (test_markdown_truncate_links_plugin.py)
+        var testCases = [
+            {
+                name: 'Long URL truncated to 40 chars',
+                input: 'https://github.com/executablebooks/markdown-it-py-documentation',
+                expectedContains: [
+                    'href="https://github.com/executablebooks/markdown-it-py-documentation"',
+                    'title="https://github.com/executablebooks/markdown-it-py-documentation"',
+                    '>https://github.com/executablebooks/mark\u2026<'
+                ]
+            },
+            {
+                name: 'Short URL NOT truncated',
+                input: 'https://example.com',
+                expectedContains: [
+                    'href="https://example.com"',
+                    '>https://example.com<'
+                ],
+                expectedNotContains: ['title=', '\u2026']
+            },
+            {
+                name: 'Markdown link NOT affected',
+                input: '[Click](https://github.com/executablebooks/markdown-it-py-documentation)',
+                expectedContains: [
+                    'href="https://github.com/executablebooks/markdown-it-py-documentation"',
+                    '>Click<'
+                ],
+                expectedNotContains: ['title=', '\u2026']
+            },
+            {
+                name: 'URL in inline code NOT linkified',
+                input: 'Use `http://api.example.com/v1` endpoint',
+                expectedContains: ['<code>http://api.example.com/v1</code>'],
+                expectedNotContains: ['<a href']
+            },
+            {
+                name: 'Plain URL with protocol linkified',
+                input: 'Visit http://example.com for details',
+                expectedContains: [
+                    'href="http://example.com"',
+                    '>http://example.com<'
+                ]
+            },
+            {
+                name: 'Fuzzy URL (no protocol) linkified',
+                input: 'Visit example.com for details',
+                expectedContains: [
+                    'href="http://example.com"',
+                    '>example.com<'
+                ]
+            },
+            {
+                name: 'www URL linkified',
+                input: 'Check www.example.com',
+                expectedContains: [
+                    'href="http://www.example.com"',
+                    '>www.example.com<'
+                ]
+            },
+            {
+                name: 'Multiple URLs - short and long',
+                input: 'Visit example.com and https://github.com/executablebooks/markdown-it-py-documentation',
+                expectedContains: [
+                    'href="http://example.com"',
+                    '>example.com<',
+                    'title="https://github.com/executablebooks/markdown-it-py-documentation"',
+                    '\u2026'
+                ]
+            },
+            {
+                name: 'URL with path and query (48 chars)',
+                input: 'https://example.com/path/to/page?foo=bar&baz=qux',
+                expectedContains: [
+                    'title="https://example.com/path/to/page?foo=bar&baz=qux"',
+                    '\u2026'
+                ]
+            },
+            {
+                name: 'URL with anchor (45 chars)',
+                input: 'https://example.com/some_page.html#anchor',
+                expectedContains: [
+                    'title="https://example.com/some_page.html#anchor"',
+                    '\u2026'
+                ]
+            },
+            {
+                name: 'URL with port NOT truncated (31 chars)',
+                input: 'http://example.com:8080/api/v1',
+                expectedContains: [
+                    'href="http://example.com:8080/api/v1"',
+                    '>http://example.com:8080/api/v1<'
+                ],
+                expectedNotContains: ['title=', '\u2026']
+            },
+            {
+                name: 'FTP URL truncated (44 chars)',
+                input: 'ftp://files.example.com/downloads/file.zip',
+                expectedContains: [
+                    'title="ftp://files.example.com/downloads/file.zip"',
+                    '\u2026'
+                ]
+            }
+        ];
+
+        var resultsDiv = document.getElementById('results');
+        var passCount = 0;
+        var failCount = 0;
+
+        testCases.forEach(function(tc) {
+            var output = md.render(tc.input);
+            var passed = true;
+            var failureReasons = [];
+
+            // Check expectedContains
+            if (tc.expectedContains) {
+                tc.expectedContains.forEach(function(expected) {
+                    if (output.indexOf(expected) === -1) {
+                        passed = false;
+                        failureReasons.push('Missing: ' + expected);
+                    }
+                });
+            }
+
+            // Check expectedNotContains
+            if (tc.expectedNotContains) {
+                tc.expectedNotContains.forEach(function(notExpected) {
+                    if (output.indexOf(notExpected) !== -1) {
+                        passed = false;
+                        failureReasons.push('Should NOT contain: ' + notExpected);
+                    }
+                });
+            }
+
+            if (passed) passCount++;
+            else failCount++;
+
+            var div = document.createElement('div');
+            div.className = 'test-case ' + (passed ? 'pass' : 'fail');
+            div.innerHTML = '<h3>' + (passed ? '\u2713' : '\u2717') + ' ' + tc.name + '</h3>' +
+                '<div class="input"><strong>Input:</strong> <code>' + tc.input.replace(/</g, '&lt;') + '</code></div>' +
+                '<div class="actual"><strong>Output:</strong><pre>' + output.replace(/</g, '&lt;') + '</pre></div>' +
+                (failureReasons.length ? '<div class="errors"><strong>Failures:</strong><ul>' +
+                    failureReasons.map(function(r) { return '<li>' + r + '</li>'; }).join('') +
+                '</ul></div>' : '');
+            resultsDiv.appendChild(div);
+        });
+
+        // Summary
+        var summary = document.createElement('div');
+        summary.innerHTML = '<h2>Summary: ' + passCount + ' passed, ' + failCount + ' failed</h2>';
+        resultsDiv.insertBefore(summary, resultsDiv.firstChild);
+    </script>
+</body>
+</html>

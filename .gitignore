@@ -9,7 +9,6 @@ push
 propagate
 the.diff
 askbot/media/style/.sass-cache/
-askbot/media/svelte
 .sass-cache
 db
 rebuild-locales.pl
@@ -27,6 +26,7 @@ settings.py
 *.iml
 lint
 env
+env-md
 .vagrant
 /Vagrantfile
 /custom_settings
@@ -50,7 +50,7 @@ askbot/skins/common/media/js/closure/google-closure
 askbot/skins/common/media/js/jquery.fancybox-1.3.4
 askbot/fixtures
 *.egg
-dist
+/dist
 *.egg-info
 build
 askbot/upfiles/
@@ -71,3 +71,5 @@ bower_components/
 /activity.txt
 /askbot/media/jslib/katex/
 .history
+env312
+pyrightconfig.json

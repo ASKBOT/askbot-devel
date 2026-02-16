@@ -5,7 +5,6 @@
   {% if settings.EDITOR_TYPE == 'markdown' %}
     <div class="wmd-container">
       <div id="wmd-button-bar" class="wmd-panel"></div>
-      {% include "editors/wmd_help.html" %}
       {{ post_form.text }}{# this element is resizable and will be wrapped by js #}
     </div>
     <div class="form-item">

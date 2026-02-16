@@ -1,0 +1,15 @@
+services:
+  postgres13:
+    image: postgres:13
+    container_name: askbot_pg13
+    environment:
+      POSTGRES_USER: askbot
+      POSTGRES_PASSWORD: askbot
+      POSTGRES_DB: askbot_docker
+    ports:
+      - "5434:5432"  # Use 5434 to avoid conflict
+    volumes:
+      - pg13_data:/var/lib/postgresql/data
+
+volumes:
+  pg13_data:

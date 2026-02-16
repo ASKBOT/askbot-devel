@@ -1,10 +1,8 @@
-include ez_setup.py
 include tox.ini
 include LICENSE
 include AUTHORS
 include COPYING
-include README.rst
-include askbot_requirements.txt
+include README.md
 recursive-include askbot *
 recursive-exclude askbot *.pyc
 recursive-exclude .git
@@ -14,6 +12,7 @@ prune build
 prune static
 prune django
 prune lamson
+prune askbot_site
 exclude db
 exclude lint
 exclude settings.py

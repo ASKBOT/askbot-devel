@@ -1,5 +1,0 @@
-/*! `shell` grammar compiled for Highlight.js 11.3.1 */
-var hljsGrammar=(()=>{"use strict";return s=>({name:"Shell Session",
-aliases:["console","shellsession"],contains:[{className:"meta",
-begin:/^\s{0,3}[/~\w\d[\]()@-]*[>%$#][ ]?/,starts:{end:/[^\\](?=\s*$)/,
-subLanguage:"bash"}}]})})();export default hljsGrammar;
