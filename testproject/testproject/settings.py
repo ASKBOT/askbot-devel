@@ -185,7 +185,6 @@ INSTALLED_APPS = (
     #'askbot.importers.stackexchange', #se loader
     'livesettings',
     'keyedcache',
-    'robots',
     'django_countries',
     'kombu.transport.memory',
     'followit',

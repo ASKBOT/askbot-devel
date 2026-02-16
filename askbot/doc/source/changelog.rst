@@ -14,6 +14,7 @@ In development
 * Consolidated Svelte build into shared ``askbot/media/svelte/``
   directory with multi-entry rollup config
 * Upgraded Svelte 4 to 5 with full runes migration across all components
+* Removed ``django-robots`` dependency — deployers can install it separately if needed
 
 0.12.5 (Feb 8, 2026)
 --------------------

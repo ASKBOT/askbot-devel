@@ -49,7 +49,6 @@ dependencies = [
     "django-livesettings3==1.6.3",
     "django-picklefield>=1.0.0,<=3.0.1",
     "django-recaptcha==3.0.0",
-    "django-robots==5.0",
     "html5lib==1.1",
     "Jinja2>=2.10,<3.1",
     "jinja2-simple-tags==0.5.0",

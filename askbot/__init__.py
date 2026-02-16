@@ -52,7 +52,6 @@ REQUIREMENTS = {
     'responses': 'responses>=0.9.0,<=0.23.1',
     'requests_oauthlib': 'requests-oauthlib>=1.2.0',
     'requirements': 'requirements-parser>=0.2.0',
-    'robots': 'django-robots==5.0',
     'regex': 'regex',
     'unidecode': 'unidecode',
     'urllib3': 'urllib3<1.27,>=1.21.1'
