@@ -1,3 +1,5 @@
+[![Github tests](https://github.com/ASKBOT/askbot-devel/actions/workflows/tests.yml/badge.svg)](https://github.com/ASKBOT/askbot-devel/actions/workflows/tests.yml)
+
 ## Askbot - a Django Q&A forum platform
 
 This is Askbot project - open source Q&A system, like StackOverflow, Yahoo Answers and some others.
