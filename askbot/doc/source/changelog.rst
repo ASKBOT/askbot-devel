@@ -6,7 +6,7 @@ In development
 * Downvote comment prompt: when a user downvotes a post, a modal
   encourages them to leave a comment explaining why — with animated
   transition to a comment editor, existing comments preview, and
-  auto-scroll to the newly posted comment
+  auto-scroll to the new comment, once posted
 * Consolidated Svelte build into shared ``askbot/media/svelte/``
   directory with multi-entry rollup config
 * Upgraded Svelte 4 to 5 with full runes migration across all components
