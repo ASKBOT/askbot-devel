@@ -2,8 +2,7 @@ include tox.ini
 include LICENSE
 include AUTHORS
 include COPYING
-include README.rst
-include askbot_requirements.txt
+include README.md
 recursive-include askbot *
 recursive-exclude askbot *.pyc
 recursive-exclude .git

@@ -27,7 +27,7 @@ REQUIREMENTS = {
     'django': 'django>=3.0,<5.0',
     'django_countries': 'django-countries>=3.3',
     'django_jinja': 'django-jinja>=2.0',
-    'followit': 'django-followit==0.6.0',
+    'followit': 'django-followit==0.7.0',
     'html5lib': 'html5lib==1.1',
     'jinja2': 'Jinja2>=2.10,<3.1',
     'jinja2_simple_tags': 'jinja2-simple-tags==0.5.0',

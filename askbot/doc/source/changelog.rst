@@ -3,6 +3,10 @@ Changes in Askbot
 
 In development
 --------------
+* Migrated from ``setup.py`` to ``pyproject.toml`` for packaging;
+  removed ``setup.py`` and ``askbot_requirements.txt``
+* Bumped minimum Python version to 3.10
+* Upgraded ``django-followit`` to 0.7
 * Downvote comment prompt: when a user downvotes a post, a modal
   encourages them to leave a comment explaining why — with animated
   transition to a comment editor, existing comments preview, and
