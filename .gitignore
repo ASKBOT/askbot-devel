@@ -71,5 +71,6 @@ coverage_html_report
 /activity.txt
 /askbot/media/jslib/katex/
 .history
+.beads
 env312
 pyrightconfig.json
