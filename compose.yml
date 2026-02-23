@@ -1,0 +1,78 @@
+# Askbot — docker compose up
+#
+# Override any variable below via a .env file in this directory, e.g.:
+#   SECRET_KEY=change-me-in-production
+#   ADMIN_PASSWORD=supersecret
+#
+# Email defaults to console backend (prints to docker logs).
+# For real email, add SMTP vars to .env:
+#   EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+#   EMAIL_HOST=smtp.example.com
+#   EMAIL_PORT=587
+#   EMAIL_USE_TLS=true
+#   EMAIL_HOST_USER=you@example.com
+#   EMAIL_HOST_PASSWORD=secret
+#   DEFAULT_FROM_EMAIL=you@example.com
+
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-askbot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-askbot}
+      POSTGRES_DB: ${POSTGRES_DB:-askbot}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-askbot}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  valkey:
+    image: valkey/valkey:8
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  askbot:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      valkey:
+        condition: service_healthy
+    ports:
+      - "${ASKBOT_PORT:-8000}:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me-for-production}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+      DEBUG: ${DEBUG:-false}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
+      CACHE_URL: redis://valkey:6379/0
+      CELERY_BROKER_URL: redis://valkey:6379/1
+      # Email (override via .env for real SMTP)
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+      EMAIL_HOST: ${EMAIL_HOST:-localhost}
+      EMAIL_PORT: ${EMAIL_PORT:-25}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS:-false}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
+      DEFAULT_FROM_EMAIL: ${DEFAULT_FROM_EMAIL:-noreply@askbot.local}
+    volumes:
+      - uploads:/app/upfiles
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  pgdata:
+  uploads:

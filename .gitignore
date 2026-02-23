@@ -71,5 +71,6 @@ bower_components/
 /activity.txt
 /askbot/media/jslib/katex/
 .history
+.beads
 env312
 pyrightconfig.json
