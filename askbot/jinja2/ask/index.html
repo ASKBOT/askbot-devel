@@ -81,9 +81,9 @@
         highlight: false,
         wait: 3000,
         captureLength: 5,
-        callback: highlightSyntax
+        callback: function() { hljs.highlightAll(); }
       });
-      highlightSyntax();
+      hljs.highlightAll();
 
       if (askbot['data']['userIsAuthenticated']) {
         var draftHandler = new DraftQuestion();

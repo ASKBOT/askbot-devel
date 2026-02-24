@@ -374,11 +374,28 @@ def test_compressor():
     """test settings for django compressor"""
     errors = list()
 
-    js_filters = getattr(django_settings, 'COMPRESS_JS_FILTERS', [])
+    new_filters_msg = (
+        'Please replace COMPRESS_JS_FILTERS with COMPRESS_FILTERS in your settings.py:\n'
+        "COMPRESS_FILTERS = {\n"
+        "    'css': [\n"
+        "        'compressor.filters.css_default.CssAbsoluteFilter',\n"
+        "        'compressor.filters.cssmin.rCSSMinFilter',\n"
+        "    ],\n"
+        "    'js': [],\n"
+        "}"
+    )
+
+    if hasattr(django_settings, 'COMPRESS_JS_FILTERS'):
+        errors.append(
+            'COMPRESS_JS_FILTERS is deprecated and ignored by django-compressor.\n'
+            + new_filters_msg
+        )
+
+    compress_filters = getattr(django_settings, 'COMPRESS_FILTERS', {})
+    js_filters = compress_filters.get('js', [])
     if js_filters:
         errors.append(
-            'Askbot does not yet support js minification, please add to your settings.py:\n'
-            'COMPRESS_JS_FILTERS = []'
+            'Askbot does not yet support js minification.\n' + new_filters_msg
         )
 
     if 'compressor' not in django_settings.INSTALLED_APPS:
