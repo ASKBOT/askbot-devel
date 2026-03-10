@@ -74,3 +74,7 @@ bower_components/
 .beads
 env312
 pyrightconfig.json
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db
