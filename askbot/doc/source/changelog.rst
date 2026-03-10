@@ -1,6 +1,13 @@
 Changes in Askbot
 =================
 
+0.12.7 (Mar 10, 2026)
+---------------------
+* Bug fix: fixed typo in ``django_authopenid`` ``LoginMethod`` where
+  ``self.mode`` was used instead of ``self.mod`` when checking for
+  ``OIDC_CUSTOM_SCOPES``, which prevented custom OIDC scopes from
+  being loaded
+
 0.12.6 (Feb 16, 2026)
 ---------------------
 * Migrated from ``setup.py`` to ``pyproject.toml`` for packaging;
