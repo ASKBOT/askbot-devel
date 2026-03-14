@@ -4276,17 +4276,7 @@ def record_flag_offensive(instance, mark_by, **kwargs):
     activity.add_recipients(instance.get_moderators())
 
 def record_update_tags(thread, tags, user, timestamp, **kwargs):
-    """
-    This function sends award badges signal on each updated tag
-    the badges that respond to the 'ta
-    """
-    for tag in tags:
-        award_badges_signal.send(None,
-                                 event='update_tag',
-                                 actor=user,
-                                 context_object=tag,
-                                 timestamp=timestamp)
-
+    """Records the tag update activity."""
     question = thread._question_post()
 
     activity = Activity(

@@ -223,7 +223,7 @@ class ThreadManager(BaseQuerySetManager):
         thread.update_tags(tagnames=tagnames,
                            user=author,
                            timestamp=added_at,
-                           without_signal=True) # no retag signal on thread creation
+                           suppress_signals=[signals.tags_updated])
 
         # TODO: this is handled in signal because models for posts
         # are too spread out
@@ -1524,7 +1524,7 @@ class Thread(models.Model):
         return removed_tags
 
     def update_tags(self, tagnames=None, user=None,
-                    timestamp=None, without_signal=False):
+                    timestamp=None, suppress_signals=None):
         """
         Updates Tag associations for a thread to match the given
         tagname string.
@@ -1535,6 +1535,11 @@ class Thread(models.Model):
         A signal tags updated is sent
 
         TagSynonym is used to replace tag names
+
+        ``suppress_signals`` - list of signal objects to suppress.
+        E.g. on thread creation we suppress ``signals.tags_updated``
+        to avoid a spurious "QUESTION_RETAGGED" analytics event,
+        while still allowing other signals (like badge awarding) to fire.
 
         *IMPORTANT*: self._question_post() has to
         exist when update_tags() is called!
@@ -1626,7 +1631,17 @@ class Thread(models.Model):
         modified_tags = set(modified_tags)
         if modified_tags:
             Tag.objects.update_use_counts(modified_tags)
-            if not without_signal:
+            if not suppress_signals:
+                suppress_signals = []
+            from askbot.models.badges import award_badges_signal
+            if award_badges_signal not in suppress_signals:
+                for tag in modified_tags:
+                    award_badges_signal.send(None,
+                                             event='update_tag',
+                                             actor=user,
+                                             context_object=tag,
+                                             timestamp=timestamp)
+            if signals.tags_updated not in suppress_signals:
                 signals.tags_updated.send(None,
                                           thread=self,
                                           tags=modified_tags,
