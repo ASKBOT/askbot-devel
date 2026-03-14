@@ -1,10 +1,23 @@
 """http-related utilities for askbot
 """
 from copy import copy
+from askbot.conf import settings as askbot_settings
 
 def is_ajax(request):
     """Returns `True` if request is ajax"""
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
+def can_save_draft(request):
+    """Returns `True` if the user is allowed to save drafts"""
+    return not any((
+        request.user.is_anonymous,
+        request.user.is_read_only(),
+        not request.user.is_active,
+        request.user.is_blocked(),
+        request.user.is_suspended(),
+        askbot_settings.READ_ONLY_MODE_ENABLED,
+    ))
 
 
 def hide_passwords(data):

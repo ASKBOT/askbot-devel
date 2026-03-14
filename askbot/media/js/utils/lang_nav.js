@@ -13,7 +13,7 @@ LangNav.prototype.translateUrl = function(url, lang) {
         type: 'GET',
         url: askbot['urls']['translateUrl'],
         data: {'url': url, 'language': lang },
-        async: false,
+        async: false, //important!
         cache: false,
         dataType: 'json',
         success: function(data) {

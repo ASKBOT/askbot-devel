@@ -1,6 +1,9 @@
 name: Github tests
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - 'analytics'
 
 jobs:
   build:

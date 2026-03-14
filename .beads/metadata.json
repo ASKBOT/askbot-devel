@@ -1,4 +1,7 @@
 {
-  "database": "beads.db",
-  "jsonl_export": "issues.jsonl"
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "server",
+  "dolt_database": "askbot_master",
+  "project_id": "40a1ea2e-1282-443b-aace-1d8fc34046f7"
 }

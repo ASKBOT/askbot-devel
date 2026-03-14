@@ -93,9 +93,10 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',            # for csrf
     'django.contrib.sessions.middleware.SessionMiddleware', # prerequisite for user messages
     'django.contrib.messages.middleware.MessageMiddleware', # for user messages
-    'django.middleware.common.CommonMiddleware',               # FIXME: why do we even have this?
-    'django.contrib.auth.middleware.AuthenticationMiddleware', # FIXME: why do we even have this?
+    'django.middleware.common.CommonMiddleware',               
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 
+    'askbot.middleware.analytics_session.AnalyticsSessionMiddleware',
     'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware', # up next: get rid of this
     'askbot.middleware.forum_mode.ForumModeMiddleware',
     'askbot.middleware.cancel.CancelActionMiddleware',

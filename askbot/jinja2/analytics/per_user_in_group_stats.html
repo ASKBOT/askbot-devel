@@ -1,0 +1,199 @@
+{% from "macros.html" import paginator %}
+{% from "analytics/macros.html" import format_query_string, sort_icon_class, linked_number_if_positive %}
+{% extends "one_column_body.html" %}
+{% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
+{% block layout_class %}{{ super() }} analytics-page{% endblock %}
+{% block forum_header %}{% endblock %}
+{% block content %}
+<div class="title-row">
+  <h1>
+    <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> /
+    <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> /
+    {% if not is_named_segment %}
+      <a href="{{ url('analytics_users', dates=dates_url_param, users_segment=segment_slug) }}">{{ segment_name }}</a> /
+    {% endif %}
+    {{ group_name }}
+  </h1>
+  {% include "analytics/date_selector.html" %}
+</div>
+{% if is_named_segment %}
+  {% set users_segment = segment_slug %}
+{% else %}
+  {% set users_segment = 'group:' + org_id | string %}
+{% endif %}
+{% set base_url = url('analytics_users', dates=dates_url_param, users_segment=users_segment) %}
+<form
+  class="search-form"
+  action="{{ base_url }}"
+  method="get"
+>
+  <input
+    type="text"
+    id="search-input"
+    name="query"
+    placeholder="Search users"
+    value="{{ query|escape }}"
+  />
+  <input type="hidden" name="sort_by" value="{{ sort_by }}">
+  <input type="hidden" name="sort_order" value="{{ sort_order }}">
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
+<table>
+  <thead>
+    <tr>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='username',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                  desired_sort_by='username',
+                                                  current_sort_by=sort_by,
+                                                  current_sort_order=sort_order) }}">
+          {% trans %}User{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_questions',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_questions',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Questions{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_answers',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_answers',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Answers{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_upvotes',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_upvotes',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Upvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='num_downvotes',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='num_downvotes',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Downvotes{% endtrans %}
+        </a>
+      </th>
+      <th>
+        {% trans %}All Events{% endtrans %}
+      </th>
+      <th>
+        <a
+          class="{{ sort_icon_class(desired_sort_by='time_on_site',
+                                    current_sort_by=sort_by,
+                                    current_sort_order=sort_order) }}"
+          href="{{ base_url ~ format_query_string(query=query,
+                                                   desired_sort_by='time_on_site',
+                                                   current_sort_by=sort_by,
+                                                   current_sort_order=sort_order) }}">
+          {% trans %}Time on Site{% endtrans %}
+        </a>
+      </th>
+    </tr>
+  </thead>
+    {% if org_id %}
+      {% set org_id_param = '&org_id=' ~ org_id %}
+    {% else %}
+      {% set org_id_param = '' %}
+    {% endif %}
+    <tbody>
+      {% for user_data in users %}
+        <tr>
+        <td>
+          <a href={{ url('analytics_activity',
+                         content_segment='all-content',
+                         activity_segment='all-activity',
+                         dates=dates_url_param,
+                         users_segment='user:' ~ user_data['user_id'])
+                  }}
+          >
+            {{ user_data['username']}}
+          </a>
+        </td>
+        <td>
+          {{ linked_number_if_positive(user_data['num_questions'],
+                                       url('analytics_activity',
+                                           content_segment='all-content',
+                                           activity_segment=analytics_activity_field.QUESTION_POSTED,
+                                           dates=dates_url_param,
+                                           users_segment='user:' ~ user_data['user_id']))
+          }}
+        </td>
+        <td>
+          {{ linked_number_if_positive(user_data['num_answers'],
+                                       url('analytics_activity',
+                                           content_segment='all-content',
+                                           activity_segment=analytics_activity_field.ANSWER_POSTED,
+                                           dates=dates_url_param,
+                                           users_segment='user:' ~ user_data['user_id']))
+          }}
+        </td>
+        <td>
+          {{ linked_number_if_positive(user_data['num_upvotes'],
+                                       url('analytics_activity',
+                                           content_segment='all-content',
+                                           activity_segment=analytics_activity_field.CONTENT_UPVOTED,
+                                           dates=dates_url_param,
+                                           users_segment='user:' ~ user_data['user_id']))
+          }}
+        </td>
+        <td>
+          {{ linked_number_if_positive(user_data['num_downvotes'],
+                                       url('analytics_activity',
+                                           content_segment='all-content',
+                                           activity_segment=analytics_activity_field.CONTENT_DOWNVOTED,
+                                           dates=dates_url_param,
+                                           users_segment='user:' ~ user_data['user_id']))
+          }}
+        </td>
+        <td>
+          <a href={{url('analytics_activity', activity_segment='all-activity', content_segment='all-content', users_segment='user:' ~ user_data['user_id'], dates=dates_url_param)}}>
+            {% include "analytics/arrow_right.html" %}
+          </a>
+        </td>
+        <td>
+          {{ user_data['time_on_site']|format_time_on_site }}
+        </td>
+      </tr>
+    {% else %}
+      <tr class="no-activity-row">
+        <td colspan="6">{% trans %}There has been no activity in this time period{% endtrans %}</td>
+      </tr>
+    {% endfor %}
+    {% if paginator_context.is_paginated %}
+      <tr class="paginator-row">
+        <td colspan="6">
+        {{ paginator(paginator_context) }}
+        </td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

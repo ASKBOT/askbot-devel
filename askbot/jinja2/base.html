@@ -34,7 +34,9 @@
         </div>
         {% endif %}
         {% include "components/header.html" %} {# Logo, user tool navigation and meta navitation #}
-        {% include "components/forum_header/index.html" %} {# Scope selector, search input and ask button #}
+        {% block forum_header %}
+            {% include "components/forum_header/index.html" %} {# Scope selector, search input and ask button #}
+        {% endblock %}
         {% if settings.ENABLE_LEADING_SIDEBAR %}
         <div id="leading-sidebar">
             {{ settings.LEADING_SIDEBAR }}

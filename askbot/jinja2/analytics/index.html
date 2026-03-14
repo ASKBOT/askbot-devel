@@ -1,0 +1,21 @@
+{% extends "one_column_body.html" %}
+{% block title %}{% filter trim %}{% trans %}Analytics / Home{% endtrans %}{% endfilter %}{% endblock %}
+{% block layout_class %}{{ super() }} analytics-page{% endblock %}
+{% block forum_header %}{% endblock %}
+{% block content %}
+<div class="title-row">
+  <h1>{% trans %}Analytics{% endtrans %} / {% trans %}Home{% endtrans %}</h1>
+</div>
+<section>
+  <h2><a href="{{ url('analytics_users', dates='all-time', users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a></h2>
+  <p>General statistics of user activity, split by organizations and the group memberships</p>
+</section>
+<section>
+  <h2><a href="{{ url('analytics_activity', activity_segment='all-activity', content_segment='all-content', dates='all-time', users_segment='all-users') }}">{% trans %}Activity{% endtrans %}</a></h2>
+  <p>All user activity, including visits to posts</p>
+</section>
+<section>
+  <h2>Searches</h2>
+  <p>Search events, searches that did not result in content clicks</p>
+</section>
+{% endblock %}

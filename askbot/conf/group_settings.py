@@ -1,8 +1,9 @@
 """Group settings"""
 from django.utils.translation import gettext_lazy as _
+from livesettings import values as livesettings
 from askbot.conf.settings_wrapper import settings
 from askbot.conf.super_groups import LOGIN_USERS_COMMUNICATION
-from livesettings import values as livesettings
+from askbot import const
 
 GROUP_SETTINGS = livesettings.ConfigurationGroup(
     'GROUP_SETTINGS',
@@ -62,5 +63,26 @@ settings.register(
         description=_('Enable group email addresses'),
         help_text=_('If selected, users can post to groups by email '
                     '"group-name@domain.com"')
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        GROUP_SETTINGS,
+        'PER_EMAIL_DOMAIN_GROUPS_ENABLED',
+        default=False,
+        description=_('Enable per email domain user groups'),
+        help_text=_('If enabled, groups will be created for each email domain name')
+    )
+)
+
+settings.register(
+    livesettings.StringValue(
+        GROUP_SETTINGS,
+        'PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY',
+        choices=const.GROUP_VISIBILITY_CHOICES,
+        default=const.GROUP_VISIBILITY_PUBLIC,
+        description=_('Default visibility of groups created for the email domains'),
+        help_text=_('Administrators can change the visibility of these groups individually later')
     )
 )

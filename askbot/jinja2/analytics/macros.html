@@ -1,0 +1,145 @@
+{% macro full_date(timestamp) %}
+  {{ timestamp|date('m/d/Y') }} {{ timestamp|date('H:i') }}
+{% endmacro %}
+
+{% macro analytics_user_activity_link(user, dates=dates) %}
+  <a href={{ url('analytics_activity',
+                  content_segment='all-content',
+                  activity_segment='all-activity',
+                  dates=dates,
+                  users_segment='user:' ~ user.id)
+          }}
+  >
+    {{ user.username }}
+  </a>
+{% endmacro %}
+
+{% macro analytics_group_activity_link(user, dates=dates) %}
+  {% set analytics_group = user.get_analytics_group() %}
+  {% if analytics_group %}
+    <a href={{ url('analytics_activity',
+                   dates=dates,
+                   activity_segment='all-activity',
+                   content_segment='all-content',
+                   users_segment='group:' ~ analytics_group.id)
+            }}>{{ analytics_group.name }}</a>
+  {% endif %}
+{% endmacro %}
+
+{% macro event_user_registered(event) %}
+  <div class="analytics-event">
+    Registered {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_user_logged_in(event) %}
+  <div class="analytics-event">
+    Logged in {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_user_logged_out(event) %}
+  <div class="analytics-event">
+    Logged out {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_question_viewed(event) %}
+  <div class="analytics-event">
+    Viewed question <em>{{ event.content_object.thread.title }}</em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_answer_viewed(event) %}
+  <div class="analytics-event">
+    Viewed answer <em>{{ event.content_object.thread.title }}</em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_upvoted(event) %}
+  <div class="analytics-event">
+    upvoted
+  </div>
+{% endmacro %}
+
+{% macro event_downvoted(event) %}
+  <div class="analytics-event">
+    downvoted
+  </div>
+{% endmacro %}
+
+{% macro event_vote_canceled(event) %}
+  <div class="analytics-event">
+    vote canceled
+  </div>
+{% endmacro %}
+
+{% macro event_asked(event) %}
+  <div class="analytics-event">
+    Asked: <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_answered(event) %}
+  <div class="analytics-event">
+    answered
+  </div>
+{% endmacro %}
+
+{% macro event_question_commented(event) %}
+  <div class="analytics-event">
+    Commented question <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+    <div class="comment-text">{{ event.content_object.html|safe }}</div>
+  </div>
+{% endmacro %}
+
+{% macro event_answer_commented(event) %}
+  <div class="analytics-event">
+    Commented answer <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }}
+  </div>
+{% endmacro %}
+
+{% macro event_question_retagged(event) %}
+  <div class="analytics-event">
+    Retagged question <em><a href="{{ event.content_object.get_absolute_url() }}">{{ event.content_object.thread.title }}</a></em> {{ full_date(event.timestamp) }} 
+  </div>
+{% endmacro %}
+
+{% macro event_searched(event) %}
+  <div class="analytics-event">
+    searched
+  </div>
+{% endmacro %}
+
+{%- macro format_query_string(query=None, desired_sort_by=None, current_sort_by=None, current_sort_order=None) -%}
+  {%- if query or desired_sort_by -%}?{%- endif -%}
+  {%- if query -%}
+    query={{ query }}&
+  {%- endif -%}
+  {%- if desired_sort_by -%}
+    sort_by={{ desired_sort_by }}&
+  {%- endif -%}
+  {%- if current_sort_by == desired_sort_by -%}
+    sort_order={{ 'desc' if current_sort_order == 'asc' else 'asc' }}
+  {%- else -%}
+    sort_order=desc
+  {%- endif -%}
+{%- endmacro -%}
+
+{%- macro sort_icon_class(desired_sort_by=None, current_sort_by=None, current_sort_order=None) -%}
+  {%- if desired_sort_by == current_sort_by -%}
+    {%- if current_sort_order == 'asc' -%}
+      js-with-sort-descending-icon
+    {%- else -%}
+      js-with-sort-ascending-icon
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro -%}
+
+{% macro linked_number_if_positive(number, url) %}
+  {% if number > 0 %}
+    <a href="{{ url }}">{{ number }}</a>
+  {% else %}
+    {{ number }}
+  {% endif %}
+{% endmacro %}

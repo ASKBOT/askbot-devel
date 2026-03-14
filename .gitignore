@@ -67,10 +67,14 @@ htmlcov
 node_modules
 bower_components/
 .tox
-coverage_html_report
+.history
 /activity.txt
 /askbot/media/jslib/katex/
 .history
 .beads
 env312
 pyrightconfig.json
+
+# Dolt database files (added by bd init)
+.dolt/
+*.db

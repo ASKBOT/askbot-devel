@@ -37,6 +37,7 @@ from askbot import const
 from askbot.const import message_keys
 from askbot.conf import settings as askbot_settings
 from askbot.models.question import Thread
+import askbot.models.analytics
 from askbot.skins import utils as skin_utils
 from askbot.mail.messages import (WelcomeEmail,
                                   WelcomeEmailRespondable,
@@ -267,6 +268,25 @@ def user_get_profile_url(self, profile_section=None, language_code=None):
 
 def user_get_absolute_url(self, language_code=None):
     return self.get_profile_url(language_code=language_code)
+
+
+def user_get_analytics_url(self, dates):
+    url = reverse('analytics_users', kwargs={'users_segment': 'user:' + str(self.id), 'dates': dates})
+    # if user belongs to a named segment, add the segment slug as segment
+    from askbot.views.analytics.utils import get_named_segment_group_ids, get_named_segment_slug
+    group_ids = get_named_segment_group_ids()
+    analytics_group = Group.objects.filter(used_for_analytics=True, user=self).first()
+
+    if not analytics_group:
+        # for some reason the user does not have the analytics group!!!
+        return ''
+
+    if analytics_group and analytics_group.id in group_ids:
+        return url + '?segment=' + get_named_segment_slug(analytics_group.id)
+
+    # otherwise, find the first analytics group to which this user belongs and
+    # add seggment = slug of the default segment and org_id = id of the group
+    return url + '?segment=' + django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug'] + '&org_id=' + str(analytics_group.id)
 
 
 def user_get_unsubscribe_url(self):
@@ -2978,10 +2998,23 @@ def get_profile_link(self, text=None):
 
     return mark_safe(profile_link)
 
-def user_get_groups(self, private=False):
+def user_get_groups(self, private=False, used_for_analytics=False):
     """returns a query set of groups to which user belongs"""
     #todo: maybe cache this query
-    return Group.objects.get_for_user(self, private=private)
+    return Group.objects.get_for_user(self, private=private,
+                                      used_for_analytics=used_for_analytics)
+
+def user_get_analytics_group(self):
+    """returns the group that should be used for analytics"""
+    if not askbot_settings.GROUPS_ENABLED:
+        return None
+
+    groups = self.get_groups(used_for_analytics=True)
+    if groups.count() == 0:
+        return None
+
+    return groups.first()
+
 
 def user_join_default_groups(self):
     """adds user to "global" and "personal" groups"""
@@ -2992,7 +3025,7 @@ def user_join_default_groups(self):
     group = Group.objects.get_global_group()
     self.join_group(group, force=True)
     group_name = format_personal_group_name(self)
-    group = Group.objects.get_or_create(name=group_name, user=self)
+    group, _ = Group.objects.get_or_create(name=group_name, user=self)
     self.join_group(group, force=True)
 
 def user_get_personal_group(self):
@@ -3330,6 +3363,8 @@ def _process_vote(user, post, timestamp=None, cancel=False, vote_type=None):
             auth.onDownVotedCanceled(vote, post, user, timestamp)
         else:
             auth.onDownVoted(vote, post, user, timestamp)
+
+    signals.voted.send(None, user=user, vote_type=vote_type, canceled=cancel, post=post, timestamp=timestamp)
 
     post.thread.reset_cached_data()
 
@@ -3711,6 +3746,7 @@ User.add_to_class(
     user_subscribe_for_followed_question_alerts
 )
 User.add_to_class('get_absolute_url', user_get_absolute_url)
+User.add_to_class('get_analytics_url', user_get_analytics_url)
 User.add_to_class('get_avatar_type', user_get_avatar_type)
 User.add_to_class('get_avatar_url', user_get_avatar_url)
 User.add_to_class('can_terminate_account', user_can_terminate_account)
@@ -3728,6 +3764,7 @@ User.add_to_class('get_or_create_fake_user', user_get_or_create_fake_user)
 User.add_to_class('get_marked_tags', user_get_marked_tags)
 User.add_to_class('get_marked_tag_names', user_get_marked_tag_names)
 User.add_to_class('get_groups', user_get_groups)
+User.add_to_class('get_analytics_group', user_get_analytics_group)
 User.add_to_class('get_foreign_groups', user_get_foreign_groups)
 User.add_to_class('get_group_membership', user_get_group_membership)
 User.add_to_class('get_personal_group', user_get_personal_group)
@@ -4118,7 +4155,7 @@ def record_user_visit(user, timestamp, **kwargs):
     profile.update_cache()
 
 
-def record_question_visit(request, question, **kwargs):
+def record_question_visit(request, question, timestamp, **kwargs):
     if functions.not_a_robot_request(request):
         #todo: split this out into a subroutine
         #todo: merge view counts per user and per session
@@ -4140,7 +4177,7 @@ def record_question_visit(request, question, **kwargs):
             else:
                 update_view_count = True
 
-        request.session['question_view_times'][question.id] = timezone.now()
+        request.session['question_view_times'][question.id] = timestamp
         #2) run the slower jobs in a celery task
         from askbot import tasks
         defer_celery_task(

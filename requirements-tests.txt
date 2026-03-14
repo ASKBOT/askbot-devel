@@ -5,3 +5,4 @@ tblib
 lamson==1.1
 django-lamson
 psycopg2-binary
+time-machine

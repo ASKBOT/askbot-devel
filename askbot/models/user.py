@@ -1,26 +1,34 @@
 import datetime
 import logging
-import re
+from collections import defaultdict
 from django.db import models
-from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import fields
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group as AuthGroup
 from django.core import exceptions
-from django.forms import EmailField, URLField
+from django.forms import EmailField
 from django.utils import translation, timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
-from django.utils.html import strip_tags
+import tldextract
 from askbot import const
 from askbot.conf import settings as askbot_settings
 from askbot.utils import functions
 from askbot.models.base import BaseQuerySetManager
-from collections import defaultdict
+from askbot.models.tag import get_tags_by_names, Tag
 
 PERSONAL_GROUP_NAME_PREFIX = '_personal_'
+
+def get_organization_name_from_domain(domain):
+    """Returns organization name from domain.
+    The organization name is the second level domain name,
+    sentence-cased.
+    """
+    result = tldextract.extract(domain)
+    raw_name = result.domain
+    return '-'.join(part.capitalize() for part in raw_name.split('-'))
 
 class InvitedModerator(object):
     """Mock user class to represent invited moderators"""
@@ -83,7 +91,7 @@ def remove_email_from_invited_moderators(email):
     """Update the `INVITED_MODERATORS` setting by removing
     the matching email entry"""
     lines = askbot_settings.INVITED_MODERATORS.strip().split('\n')
-    clean_lines = list()
+    clean_lines = []
     prefix = email + ' '
     for line in lines:
         if not line.startswith(prefix):
@@ -151,7 +159,7 @@ class ActivityQuerySet(models.query.QuerySet):
         """return a dictionary where keys are activity ids
         and values - content objects"""
         content_object_ids = defaultdict(list)# lists of c.object ids by c.types
-        activity_type_ids = dict()#links c.objects back to activity objects
+        activity_type_ids = {} #links c.objects back to activity objects
         for act in self:
             content_type_id = act.content_type_id
             object_id = act.object_id
@@ -159,7 +167,7 @@ class ActivityQuerySet(models.query.QuerySet):
             activity_type_ids[(content_type_id, object_id)] = act.id
 
         #3) get links from activity objects to content objects
-        objects_by_activity = dict()
+        objects_by_activity = {}
         for content_type_id, object_id_list in list(content_object_ids.items()):
             content_type = ContentType.objects.get_for_id(content_type_id)
             model_class = content_type.model_class()
@@ -187,7 +195,7 @@ class ActivityManager(BaseQuerySetManager):
             ):
 
         #todo: automate this using python inspect module
-        kwargs = dict()
+        kwargs = {}
 
         kwargs['activity_type'] = const.TYPE_ACTIVITY_MENTION
 
@@ -235,7 +243,7 @@ class ActivityManager(BaseQuerySetManager):
         todo: implement better rich field lookups
         """
 
-        kwargs = dict()
+        kwargs = {}
 
         kwargs['activity_type'] = const.TYPE_ACTIVITY_MENTION
 
@@ -307,14 +315,15 @@ class Activity(models.Model):
     #todo: remove this denorm question field when Post model is set up
     question = models.ForeignKey('Post', null=True, on_delete=models.CASCADE)
 
-    is_auditted = models.BooleanField(default=False)
+    is_auditted = models.BooleanField(default=False) # todo: this field seems to be unused
     #add summary field.
     summary = models.TextField(default='')
 
     objects = ActivityManager()
 
     def __str__(self):
-        return '[%s] was active at %s' % (self.user.username, self.active_at)
+        activity_type = self.get_activity_type_display()
+        return f'Activity: {self.user.username}@{self.active_at.isoformat()}: {activity_type}'
 
     class Meta:
         app_label = 'askbot'
@@ -524,13 +533,13 @@ class GroupQuerySet(models.query.QuerySet):
             name__startswith=PERSONAL_GROUP_NAME_PREFIX
         )
 
-    def get_for_user(self, user=None, private=False):
+    def get_for_user(self, user=None, private=False, used_for_analytics=False):
         gms = GroupMembership.objects.filter(user=user)
         if private:
             global_group = Group.objects.get_global_group()
             gms = gms.exclude(group=global_group)
         group_ids = gms.values_list('group_id', flat=True)
-        return Group.objects.filter(pk__in=group_ids)
+        return Group.objects.filter(pk__in=group_ids, used_for_analytics=used_for_analytics)
 
     def get_by_name(self, group_name = None):
         from askbot.models.tag import clean_group_name#todo - delete this
@@ -564,21 +573,31 @@ class GroupManager(BaseQuerySetManager):
             kwargs['group_ptr'] = group_ptr
         except AuthGroup.DoesNotExist:
             pass
-        return super(GroupManager, self).create(**kwargs)
+        return super().create(**kwargs)
 
-    def get_or_create(self, name=None, user=None, openness=None):
+    def get_or_create(self, name=None,
+                      user=None, openness=None,
+                      visibility=None, used_for_analytics=False):
         """creates a group tag or finds one, if exists"""
         #todo: here we might fill out the group profile
         try:
-            #iexact is important!!! b/c we don't want case variants
-            #of tags
+            #iexact is important!!! b/c we don't want case variants of groups
             group = self.get(name__iexact = name)
+            created = False
         except self.model.DoesNotExist:
+            default_visibility = askbot_settings.PER_EMAIL_DOMAIN_GROUP_DEFAULT_VISIBILITY
+            if visibility is None:
+                visibility = default_visibility
+
             if openness is None:
-                group = self.create(name=name)
-            else:
-                group = self.create(name=name, openness=openness)
-        return group
+                openness = self.model.DEFAULT_OPENNESS
+
+            group = self.create(name=name,
+                                openness=openness,
+                                visibility=visibility,
+                                used_for_analytics=used_for_analytics)
+            created = True
+        return group, created
 
 
 class Group(AuthGroup):
@@ -586,6 +605,7 @@ class Group(AuthGroup):
     OPEN = 0
     MODERATED = 1
     CLOSED = 2
+    DEFAULT_OPENNESS = CLOSED
     OPENNESS_CHOICES = (
         (OPEN, 'open'),
         (MODERATED, 'moderated'),
@@ -603,7 +623,11 @@ class Group(AuthGroup):
     can_upload_attachments = models.BooleanField(default=False)
     can_upload_images = models.BooleanField(default=False)
 
-    openness = models.SmallIntegerField(default=CLOSED, choices=OPENNESS_CHOICES)
+    openness = models.SmallIntegerField(default=DEFAULT_OPENNESS, choices=OPENNESS_CHOICES)
+    visibility = models.SmallIntegerField(default=const.GROUP_VISIBILITY_PUBLIC,
+                                          choices=const.GROUP_VISIBILITY_CHOICES)
+    used_for_analytics = models.BooleanField(default=False)
+
     # preapproved email addresses and domain names to auto-join groups
     # trick - the field is padded with space and all tokens are space separated
     preapproved_emails = models.TextField(
@@ -685,30 +709,31 @@ class Group(AuthGroup):
         emails = functions.split_list(self.preapproved_emails)
         email_field = EmailField()
         try:
-            list(map(lambda v: email_field.clean(v), emails))
-        except exceptions.ValidationError:
+            list(map(email_field.clean, emails))
+        except exceptions.ValidationError as exc:
             raise exceptions.ValidationError(
                 _('Please give a list of valid email addresses.')
-            )
+            ) from exc
         self.preapproved_emails = ' ' + '\n'.join(emails) + ' '
 
         domains = functions.split_list(self.preapproved_email_domains)
         from askbot.forms import DomainNameField
         domain_field = DomainNameField()
         try:
-            list(map(lambda v: domain_field.clean(v), domains))
-        except exceptions.ValidationError:
+            list(map(domain_field.clean, domains))
+        except exceptions.ValidationError as exc:
             raise exceptions.ValidationError(
                 _('Please give a list of valid email domain names.')
-            )
+            ) from exc
         self.preapproved_email_domains = ' ' + '\n'.join(domains) + ' '
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(Group, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
-class BulkTagSubscriptionManager(BaseQuerySetManager):
+class BulkTagSubscriptionManager(BaseQuerySetManager): # pylint: disable=too-few-public-methods
+    """Manager class for the BulkTagSubscription model"""
 
     def create(
                 self,
@@ -724,11 +749,10 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
         user_list = user_list or []
         group_list = group_list or []
 
-        new_object = super(BulkTagSubscriptionManager, self).create(**kwargs)
+        new_object = super().create(**kwargs)
         tag_name_list = []
 
         if tag_names:
-            from askbot.models.tag import get_tags_by_names
             tags, new_tag_names = get_tags_by_names(tag_names, language_code)
             if new_tag_names:
                 assert(tag_author)
@@ -736,7 +760,6 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
             tags_id_list= [tag.id for tag in tags]
             tag_name_list = [tag.name for tag in tags]
 
-            from askbot.models.tag import Tag
             new_tags = Tag.objects.create_in_bulk(
                                 tag_names=new_tag_names,
                                 user=tag_author,
@@ -769,6 +792,7 @@ class BulkTagSubscriptionManager(BaseQuerySetManager):
 
 
 class BulkTagSubscription(models.Model):
+    """Subscribes users in bulk to a list of tags"""
     date_added = models.DateField(auto_now_add=True)
     tags = models.ManyToManyField('Tag')
     users = models.ManyToManyField(User)
@@ -777,8 +801,10 @@ class BulkTagSubscription(models.Model):
     objects = BulkTagSubscriptionManager()
 
     def tag_list(self):
-        return [tag.name for tag in self.tags.all()]
+        """Returns list of tag names"""
+        return [tag.name for tag in self.tags.all()] # pylint: disable=no-member
 
-    class Meta:
+    class Meta: # pylint: disable=too-few-public-methods, missing-docstring
         app_label = 'askbot'
         ordering = ['-date_added']
+

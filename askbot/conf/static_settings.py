@@ -1,13 +1,15 @@
+from appconf import AppConf
 from django.conf import settings
 from django.utils import timezone
-from appconf import AppConf
-import os
-from askbot import const
-
+from django.utils.translation import gettext_lazy as _
 if settings.ASKBOT_TRANSLATE_URL:
     from django.utils.translation import pgettext
 else:
-    pgettext = lambda context, value: value
+    def pgettext(_context, value):
+        return value
+
+from askbot import const # pylint: disable=wrong-import-position
+
 
 def default_user_can_manage_admin_tags(user):
     """True, if user can manage admin tags"""
@@ -26,6 +28,18 @@ class AskbotStaticSettings(AppConf):
                                 '.bmp', '.png', '.tiff')
 
     AUTO_INIT_BADGES = True
+
+    ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED = False
+    ANALYTICS_ADMINS_FILTER = None # None or a dictionary applied in the Django ORM filter
+    ANALYTICS_SESSION_TIMEOUT_MINUTES = 30
+    # a list of dictionaries, each dictionary has keys: name, slug, description, group_ids
+    # these segments will be ordered the same way they are defined in the list
+    ANALYTICS_NAMED_SEGMENTS = []
+    # a dictionary with keys: name, slug, description - includes all users except
+    # the users belonging to the named segments
+    # this segment will be ordered after all named segments
+    ANALYTICS_DEFAULT_SEGMENT = {}
+
     CAS_USER_FILTER = None
     CAS_USER_FILTER_DENIED_MSG = None
     CAS_GET_USERNAME = None # python path to function
@@ -66,6 +80,5 @@ class AskbotStaticSettings(AppConf):
     WHITELISTED_IPS = tuple() # a tuple of whitelisted ips for moderation
     FEDERATED_LOGIN_EMAIL_EDITABLE = True
 
-    class Meta:
+    class Meta: # pylint: disable=too-few-public-methods
         prefix = 'askbot'
-
