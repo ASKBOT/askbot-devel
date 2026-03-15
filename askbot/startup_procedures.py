@@ -154,6 +154,7 @@ def test_middleware():
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'askbot.middleware.analytics_session.AnalyticsSessionMiddleware',
         'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
         'askbot.middleware.forum_mode.ForumModeMiddleware',
         'askbot.middleware.cancel.CancelActionMiddleware',

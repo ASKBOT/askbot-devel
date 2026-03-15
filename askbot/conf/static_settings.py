@@ -30,7 +30,6 @@ class AskbotStaticSettings(AppConf):
     AUTO_INIT_BADGES = True
 
     ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED = False
-    ANALYTICS_ADMINS_FILTER = None # None or a dictionary applied in the Django ORM filter
     ANALYTICS_SESSION_TIMEOUT_MINUTES = 30
     # a list of dictionaries, each dictionary has keys: name, slug, description, group_ids
     # these segments will be ordered the same way they are defined in the list

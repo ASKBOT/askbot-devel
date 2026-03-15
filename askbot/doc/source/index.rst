@@ -27,6 +27,7 @@ at the forum_ or by email at admin@askbot.org
    Upgrades <upgrade>
    Import data (StackExchange & ZenDesk) <import-data>
    Moderation <moderation>
+   Analytics <analytics>
    Appendix A: Maintenance procedures <management-commands>
    Appendix B: Optional modules <optional-modules>
    Appendix C: Api <api>

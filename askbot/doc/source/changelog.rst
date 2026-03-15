@@ -1,6 +1,16 @@
 Changes in Askbot
 =================
 
+0.12.8 (Mar 15, 2026)
+---------------------
+* Built-in analytics: tracks user activity (questions, answers, votes,
+  views, time on site) with session tracking middleware, hourly/daily
+  summarization, and web-based reporting views for administrators and
+  moderators
+* Added analytics documentation page
+* Updated documentation site navigation links
+* Global group ('everyone') is now marked for analytics by default
+
 0.12.7 (Mar 10, 2026)
 ---------------------
 * Bug fix: fixed typo in ``django_authopenid`` ``LoginMethod`` where

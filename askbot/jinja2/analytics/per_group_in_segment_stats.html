@@ -32,8 +32,12 @@
 {% block forum_header %}{% endblock %}
 {% block content %}
 <div class="title-row">
+  {% if has_named_segments %}
   <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / <a href="{{ url('analytics_users',
           dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> / {{ default_segment_name }}</h1>
+  {% else %}
+  <h1><a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> / {% trans %}Users{% endtrans %}</h1>
+  {% endif %}
   {% include "analytics/date_selector.html" %}
 </div>
 {% set base_url = url('analytics_users', dates=dates_url_param, users_segment=default_segment_slug) %}

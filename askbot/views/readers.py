@@ -51,6 +51,7 @@ from askbot.templatetags import extra_tags
 from askbot.utils import functions
 from askbot.utils.decorators import anonymous_forbidden, ajax_only, get_only
 from askbot.utils.diff import textDiff as htmldiff
+from askbot.utils.analytics_utils import get_analytics_default_segment_config
 from askbot.utils.html import sanitize_html
 from askbot.utils.http import is_ajax
 from askbot.utils.loading import load_module
@@ -730,7 +731,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
             })
             
         views_per_segment_name.append({
-            'segment_name': django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name'],
+            'segment_name': get_analytics_default_segment_config()['name'],
             'views_count': Event.objects.get_question_visits_count_by_default_segment(question_post)
         })
         data['views_per_segment_name'] = views_per_segment_name

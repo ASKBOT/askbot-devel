@@ -7,7 +7,7 @@
   <h1>{% trans %}Analytics{% endtrans %} / {% trans %}Home{% endtrans %}</h1>
 </div>
 <section>
-  <h2><a href="{{ url('analytics_users', dates='all-time', users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a></h2>
+  <h2><a href="{{ url('analytics_users', dates='all-time', users_segment=users_segment) }}">{% trans %}Users{% endtrans %}</a></h2>
   <p>General statistics of user activity, split by organizations and the group memberships</p>
 </section>
 <section>

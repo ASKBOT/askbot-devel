@@ -9,7 +9,7 @@
   <h1>
     <a href="{{ url('analytics_index') }}">{% trans %}Analytics{% endtrans %}</a> /
     <a href="{{ url('analytics_users', dates=dates_url_param, users_segment='all-users') }}">{% trans %}Users{% endtrans %}</a> /
-    {% if not is_named_segment %}
+    {% if not is_named_segment and has_named_segments %}
       <a href="{{ url('analytics_users', dates=dates_url_param, users_segment=segment_slug) }}">{{ segment_name }}</a> /
     {% endif %}
     {{ group_name }}

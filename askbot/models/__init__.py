@@ -286,7 +286,8 @@ def user_get_analytics_url(self, dates):
 
     # otherwise, find the first analytics group to which this user belongs and
     # add seggment = slug of the default segment and org_id = id of the group
-    return url + '?segment=' + django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug'] + '&org_id=' + str(analytics_group.id)
+    from askbot.utils.analytics_utils import get_analytics_default_segment_config
+    return url + '?segment=' + get_analytics_default_segment_config()['slug'] + '&org_id=' + str(analytics_group.id)
 
 
 def user_get_unsubscribe_url(self):

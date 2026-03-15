@@ -1,6 +1,7 @@
 """Askbot analytics views"""
 from datetime import timedelta
 from django.conf import settings as django_settings
+from django.utils import timezone
 from django.db import models
 from django.shortcuts import render, HttpResponseRedirect
 from django.http import HttpResponseForbidden
@@ -8,6 +9,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.utils.html import escape
 from askbot.utils import analytics_utils
+from askbot.utils.analytics_utils import get_analytics_default_segment_config
 from askbot.utils.functions import get_paginated_list
 from askbot.forms import AnalyticsUsersForm, AnalyticsActivityField
 from askbot.models import User, Group
@@ -55,7 +57,7 @@ def get_total_users_in_groups_by_date(group_ids, date):
 
 def non_routed_per_segment_stats(request, data):
     """Renders the all users page"""
-    default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
+    default_segment_config = get_analytics_default_segment_config()
     data.update({
         'all_users_count': User.objects.exclude(askbot_profile__status='b').count(),
         'default_segment_name': default_segment_config['name'],
@@ -96,8 +98,8 @@ def non_routed_per_segment_stats(request, data):
                                                                  date__lte=data['end_date'])
 
     default_segment_data = get_aggregated_group_data(default_segment_summaries)
-    default_segment_data['slug'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
-    default_segment_data['name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
+    default_segment_data['slug'] = default_segment_config['slug']
+    default_segment_data['name'] = default_segment_config['name']
     # here goes the symmetrical calculation of the missing fields - see step 1)
     named_segments_users_added = sum(datum['num_users_added'] for datum in named_segments_data)
     default_segment_data['num_users_added'] = all_data['num_users_added']\
@@ -150,8 +152,10 @@ def non_routed_per_group_in_segment_stats(request, data):
     end_date = data['end_date']
     customer_summaries = all_customer_summaries.filter(date__gt=start_date, date__lte=end_date) # pylint: disable=no-member
     data['groups'] = []
-    data['default_segment_name'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['name']
-    data['default_segment_slug'] = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+    default_segment_config = get_analytics_default_segment_config()
+    data['default_segment_name'] = default_segment_config['name']
+    data['default_segment_slug'] = default_segment_config['slug']
+    data['has_named_segments'] = bool(django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS)
 
     customer_summaries = customer_summaries.values('group_id')
     customer_summaries = customer_summaries.annotate(
@@ -239,6 +243,7 @@ def non_routed_per_user_in_group_stats(request,
     data['segment_slug'] = segment_slug
     data['segment_name'] = segment_name
     data['is_named_segment'] = is_named_segment
+    data['has_named_segments'] = bool(django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS)
     if is_named_segment:
         data['group_name'] = segment_name
     else:
@@ -260,9 +265,13 @@ def analytics_users(request, dates='all-time', users_segment='all-users'):
         return HttpResponseForbidden()
 
     earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
+    if earliest_summary is None:
+        earliest_possible_date = timezone.now().date()
+    else:
+        earliest_possible_date = earliest_summary.date
     query_data = request.GET.copy()
     query_data.update({'dates': dates, 'users_segment': users_segment})
-    users_form = AnalyticsUsersForm(query_data, earliest_possible_date=earliest_summary.date)
+    users_form = AnalyticsUsersForm(query_data, earliest_possible_date=earliest_possible_date)
 
     if not users_form.is_valid():
         escaped_range = escape(dates)
@@ -286,7 +295,15 @@ def analytics_users(request, dates='all-time', users_segment='all-users'):
         'analytics_activity_field': AnalyticsActivityField
     }
     if users_segment == 'all-users':
+        if not django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS:
+            slug = get_analytics_default_segment_config()['slug']
+            return HttpResponseRedirect(
+                reverse('analytics_users',
+                        kwargs={'dates': dates, 'users_segment': slug}))
         return non_routed_per_segment_stats(request, data)
+
+    if users_segment == 'all':
+        return non_routed_per_group_in_segment_stats(request, data)
 
     if analytics_utils.is_named_segment(users_segment):
         segment_config = analytics_utils.get_named_segment_config_by_slug(users_segment)
@@ -299,12 +316,12 @@ def analytics_users(request, dates='all-time', users_segment='all-users'):
             is_named_segment=True
         )
 
-    if users_segment == django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']:
+    default_segment_config = get_analytics_default_segment_config()
+    if users_segment == default_segment_config['slug']:
         return non_routed_per_group_in_segment_stats(request, data)
 
     if users_segment.startswith('group:'):
         group_id = int(users_segment.split(':')[1])
-        default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
         return non_routed_per_user_in_group_stats(
             request,
             data,

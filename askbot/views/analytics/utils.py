@@ -6,6 +6,7 @@ from django.conf import settings as django_settings
 from django.contrib.contenttypes.models import ContentType
 from askbot.models import Post
 from askbot.models.user import Group as AskbotGroup
+from askbot.utils.analytics_utils import get_analytics_default_segment_config
 
 def get_named_segment_group_ids():
     """Returns the list of group ids for named segments"""
@@ -28,7 +29,7 @@ def filter_events_by_users_segment(events, users_segment):
         user_id = int(users_segment.split(':')[1])
         return events.filter(session__user__id=user_id)
 
-    default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+    default_segment_slug = get_analytics_default_segment_config()['slug']
     if users_segment == default_segment_slug:
         # default segment is all groups used for analytics except named segments
         group_ids = get_named_segment_group_ids()

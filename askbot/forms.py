@@ -1751,9 +1751,11 @@ class AnalyticsUsersSegmentField(forms.CharField):
     - named segments
     """
     def clean(self, users_segment):
-        default_segment_slug = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT['slug']
+        from askbot.utils.analytics_utils import get_analytics_default_segment_config
+        default_segment_config = get_analytics_default_segment_config()
+        default_segment_slug = default_segment_config['slug']
         named_segment_slugs = [segment['slug'] for segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS]
-        allowed_segment_slugs = ['all-users', default_segment_slug] + named_segment_slugs
+        allowed_segment_slugs = ['all-users', 'all', default_segment_slug] + named_segment_slugs
         if users_segment in allowed_segment_slugs:
             return users_segment
 

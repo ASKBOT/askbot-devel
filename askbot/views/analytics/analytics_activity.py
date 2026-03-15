@@ -13,7 +13,11 @@ from django.contrib.contenttypes.models import ContentType
 from askbot.models import User, Group, Post
 from askbot.models.analytics import DailyGroupSummary, Event
 from askbot.utils.functions import get_paginated_list
-from askbot.utils.analytics_utils import get_named_segment_config_by_group_id, get_segment_name
+from askbot.utils.analytics_utils import (
+    get_analytics_default_segment_config,
+    get_named_segment_config_by_group_id,
+    get_segment_name
+)
 from askbot.views.analytics.utils import (
     get_date_selector_url_func,
     filter_events_by_users_segment,
@@ -86,7 +90,7 @@ def get_group_breadcrumb(group, dates):
 
 def get_default_segment_breadcrumb(dates):   
     """get breadcrumb for default segment"""
-    default_segment_config = django_settings.ASKBOT_ANALYTICS_DEFAULT_SEGMENT
+    default_segment_config = get_analytics_default_segment_config()
     return {
         'url': reverse('analytics_activity',
                         kwargs={'activity_segment': 'all-activity',
@@ -136,11 +140,20 @@ def get_users_segment_breadcrumbs(activity_segment, content_segment, users_segme
                 get_user_breadcrumb(user, dates)
             ]
 
-        return [
-            get_default_segment_breadcrumb(dates),
-            get_group_breadcrumb(group, dates),
-            get_user_breadcrumb(user, dates)
-        ]
+        has_named_segments = bool(django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS)
+        if has_named_segments:
+            return [
+                get_default_segment_breadcrumb(dates),
+                get_group_breadcrumb(group, dates),
+                get_user_breadcrumb(user, dates)
+            ]
+        analytics_group_count = Group.objects.filter(used_for_analytics=True).count()
+        if analytics_group_count > 1:
+            return [
+                get_group_breadcrumb(group, dates),
+                get_user_breadcrumb(user, dates)
+            ]
+        return [get_user_breadcrumb(user, dates)]
 
     if users_segment.startswith('group:'):
         group = Group.objects.get(id=users_segment.split(':')[1])
@@ -148,10 +161,16 @@ def get_users_segment_breadcrumbs(activity_segment, content_segment, users_segme
         if named_segment_config:
             return [get_named_segment_breadcrumb(named_segment_config, dates)]
 
-        return [
-            get_default_segment_breadcrumb(dates),
-            get_group_breadcrumb(group, dates)
-        ]
+        has_named_segments = bool(django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS)
+        if has_named_segments:
+            return [
+                get_default_segment_breadcrumb(dates),
+                get_group_breadcrumb(group, dates)
+            ]
+        analytics_group_count = Group.objects.filter(used_for_analytics=True).count()
+        if analytics_group_count > 1:
+            return [get_group_breadcrumb(group, dates)]
+        return []
                 
     return []
 
@@ -218,12 +237,16 @@ def analytics_activity(request, activity_segment=None, content_segment=None, use
         return HttpResponseForbidden()
 
     earliest_summary = DailyGroupSummary.objects.order_by('date').first() # pylint: disable=no-member
+    if earliest_summary is None:
+        earliest_possible_date = timezone.now().date()
+    else:
+        earliest_possible_date = earliest_summary.date
     form = AnalyticsActivityForm({
         'activity_segment': activity_segment,
         'content_segment': content_segment,
         'users_segment': users_segment,
         'dates': dates
-    }, earliest_possible_date=earliest_summary.date)
+    }, earliest_possible_date=earliest_possible_date)
 
     if not form.is_valid():
         default_params = {
