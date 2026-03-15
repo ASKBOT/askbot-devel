@@ -9,7 +9,7 @@ import platform
 import sys
 import traceback
 
-VERSION = (0, 12, 7)
+VERSION = (0, 12, 8)
 
 default_app_config = 'askbot.apps.AskbotConfig' #pylint: disable=invalid-name
 
