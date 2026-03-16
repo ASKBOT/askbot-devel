@@ -63,7 +63,7 @@ dependencies = [
     "premailer==3.10.0",
     "psycopg2-binary>=2.9.6",
     "pygments>=2.15.0",
-    "pyjwt<=1.7.1",
+    "pyjwt<=2.12.1",
     "python-cas>=1.4.0,<1.7",
     "python-openid2>=3.0",
     "regex",

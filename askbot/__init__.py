@@ -32,7 +32,7 @@ REQUIREMENTS = {
     'jinja2': 'Jinja2>=2.10,<3.1',
     'jinja2_simple_tags': 'jinja2-simple-tags==0.5.0',
     'jsonfield': 'jsonfield>=2.0.0',
-    'jwt': 'pyjwt<=1.7.1',
+    'jwt': 'pyjwt<=2.12.1',
     'keyedcache': 'django-keyedcache3>=1.5.1',
     'livesettings': 'django-livesettings3==1.6.3',
     'linkify_it': 'linkify-it-py==2.0.2',
