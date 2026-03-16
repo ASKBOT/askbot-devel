@@ -32,12 +32,15 @@ def decode_and_loads(input_str):
 
 def decode_jwt(data_jwt):
     """Decodes the jwt with the SECRET_KEY, returns a dict"""
-    return jwt.decode(data_jwt, django_settings.SECRET_KEY)
+    return jwt.decode(data_jwt, django_settings.SECRET_KEY, algorithms=['HS256'])
 
 
 def encode_jwt(data):
     """Encodes dict as jwt with the SECRET_KEY"""
-    return jwt.encode(data, django_settings.SECRET_KEY).decode('utf-8')
+    token = jwt.encode(data, django_settings.SECRET_KEY, algorithm='HS256')
+    if isinstance(token, bytes):
+        return token.decode('utf-8')
+    return token
 
 
 def is_email_valid(email):

@@ -8,7 +8,7 @@ from askbot.utils.html import replace_links_with_text
 from askbot.utils.html import get_text_from_html
 from askbot.utils.html import sanitize_html
 from askbot.utils import html as html_utils
-from askbot.utils.functions import list_directory_files
+from askbot.utils.functions import list_directory_files, encode_jwt, decode_jwt
 from askbot.conf import settings as askbot_settings
 import askbot
 
@@ -24,6 +24,28 @@ class FunctionTests(TestCase):
         self.assertTrue(file1 in file_list)
         self.assertTrue(file2 in file_list)
 
+    def test_encode_jwt_returns_string(self):
+        token = encode_jwt({'next_url': '/questions/'})
+        self.assertIsInstance(token, str)
+
+    def test_encode_decode_jwt_roundtrip(self):
+        data = {'next_url': '/questions/'}
+        token = encode_jwt(data)
+        result = decode_jwt(token)
+        self.assertEqual(result, data)
+
+    def test_encode_decode_jwt_with_multiple_keys(self):
+        data = {'next_url': '/users/', 'extra': 'data'}
+        token = encode_jwt(data)
+        result = decode_jwt(token)
+        self.assertEqual(result, data)
+
+    def test_decode_jwt_rejects_tampered_token(self):
+        token = encode_jwt({'next_url': '/questions/'})
+        # Tamper with the token by altering a character in the signature
+        tampered = token[:-1] + ('A' if token[-1] != 'A' else 'B')
+        with self.assertRaises(Exception):
+            decode_jwt(tampered)
 
 
 class UrlUtilsTests(TestCase):

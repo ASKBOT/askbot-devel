@@ -5,6 +5,8 @@ Development (not yet released)
 ------------------------------
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
+* Fixed ``encode_jwt``/``decode_jwt`` compatibility with PyJWT 2.x
+* Added tests for ``encode_jwt`` and ``decode_jwt``
 
 0.12.8 (Mar 15, 2026)
 ---------------------
