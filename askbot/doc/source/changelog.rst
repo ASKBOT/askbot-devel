@@ -1,6 +1,11 @@
 Changes in Askbot
 =================
 
+Development (not yet released)
+------------------------------
+* Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
+* Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
+
 0.12.8 (Mar 15, 2026)
 ---------------------
 * Built-in analytics: tracks user activity (questions, answers, votes,
