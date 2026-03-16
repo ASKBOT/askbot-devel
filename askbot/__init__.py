@@ -55,7 +55,7 @@ REQUIREMENTS = {
     'regex': 'regex',
     'tldextract': 'tldextract==5.1.2',
     'unidecode': 'unidecode',
-    'urllib3': 'urllib3<1.27,>=1.21.1'
+    'urllib3': 'urllib3>=2,<3'
 }
 
 def get_install_directory():
