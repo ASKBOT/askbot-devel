@@ -8,6 +8,8 @@ Development (not yet released)
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``
 * Fixed ``encode_jwt``/``decode_jwt`` compatibility with PyJWT 2.x
 * Added tests for ``encode_jwt`` and ``decode_jwt``
+* Fixed Contributors sidebar not updating when user uploads avatar,
+  switches to gravatar, enables default avatar, or disables gravatar
 
 0.12.8 (Mar 15, 2026)
 ---------------------

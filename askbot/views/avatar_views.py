@@ -1,6 +1,7 @@
 from askbot.conf import settings as askbot_settings
 from askbot.conf import gravatar_enabled
 from askbot.models import User, user_can_see_karma
+from askbot.models.recent_contributors import AvatarsBlockData
 from askbot.utils.forms import get_error_list
 from avatar.conf import settings as avatar_settings
 from avatar.forms import PrimaryAvatarForm, UploadAvatarForm
@@ -158,7 +159,6 @@ def set_primary(request, user_id=None, extra_context=None, avatar_size=128):
             user.avatar_type = 'a'
             user.clear_avatar_urls()
             user.save()
-            from askbot.models.recent_contributors import AvatarsBlockData
             AvatarsBlockData.update_user(user)
 
     return redirect_to_show_list(user_id)
@@ -185,6 +185,7 @@ def upload(request, user_id=None):
                 user.avatar_type = 'a'
                 user.clear_avatar_urls()
                 user.save()
+                AvatarsBlockData.update_user(user)
                 message = _('Avatar uploaded and set as primary')
             else:
                 errors = get_error_list(form)
@@ -213,7 +214,6 @@ def delete(request, avatar_id):
             user.avatar_set.update(primary=False)
         user.clear_avatar_urls()
         user.save()
-        from askbot.models.recent_contributors import AvatarsBlockData
         AvatarsBlockData.update_user(user)
 
     return redirect_to_show_list(user.id)
@@ -227,6 +227,7 @@ def enable_gravatar(request, user_id=None):
         user.avatar_set.update(primary=False)
         user.clear_avatar_urls()
         user.save()
+        AvatarsBlockData.update_user(user)
     return redirect_to_show_list(user_id)
 
 
@@ -238,6 +239,7 @@ def enable_default_avatar(request, user_id=None):
         user.avatar_set.update(primary=False)
         user.clear_avatar_urls()
         user.save()
+        AvatarsBlockData.update_user(user)
     return redirect_to_show_list(user_id)
 
 
@@ -253,4 +255,5 @@ def disable_gravatar(request, user_id=None):
             avatar_updated.send(sender=Avatar, user=request.user, avatar=avatar)
         user.clear_avatar_urls()
         user.save()
+        AvatarsBlockData.update_user(user)
     return redirect_to_show_list(user_id)
