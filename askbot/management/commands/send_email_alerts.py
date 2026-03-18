@@ -237,14 +237,18 @@ class Command(BaseCommand):
 
                 if feed.feed_type == 'q_sel':
                     q_sel_A = Q_set_A.filter(thread__followed_by=user)
+                    q_sel_A = q_sel_A[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_sel_A.cutoff_time = cutoff_time #store cutoff time per query set
                     q_sel_B = Q_set_B.filter(thread__followed_by=user)
+                    q_sel_B = q_sel_B[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_sel_B.cutoff_time = cutoff_time #store cutoff time per query set
 
                 elif feed.feed_type == 'q_ask':
                     q_ask_A = Q_set_A.filter(author=user)
+                    q_ask_A = q_ask_A[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_ask_A.cutoff_time = cutoff_time
                     q_ask_B = Q_set_B.filter(author=user)
+                    q_ask_B = q_ask_B[:askbot_settings.MAX_ALERTS_PER_EMAIL]
                     q_ask_B.cutoff_time = cutoff_time
 
                 elif feed.feed_type == 'q_ans':
@@ -283,19 +287,15 @@ class Command(BaseCommand):
             if feed.should_send_now():
                 cutoff_time = feed.get_previous_report_cutoff_time()
                 comments = Post.objects.get_comments().filter(
-                    added_at__lt=cutoff_time
-                ).exclude(author=user).select_related('parent')
+                    added_at__lt=cutoff_time,
+                    parent__author=user
+                ).exclude(author=user).select_related('parent', 'parent__thread')
                 q_commented = list()
 
                 for c in comments:
-                    post = c.parent
-
-                    if post.author_id != user.pk:
-                        continue
-
                     #skip is post was seen by the user after
                     #the comment posting time
-                    q_commented.append(post.get_origin_post())
+                    q_commented.append(c.parent.get_origin_post())
 
                 extend_question_list(
                     q_commented,
@@ -409,8 +409,9 @@ class Command(BaseCommand):
             q_rev = q_rev.exclude(author=user)
 
             #now update all sorts of metadata per question
-            meta_data['q_rev'] = len(q_rev)
-            if len(q_rev) > 0 and q.added_at == q_rev[0].revised_at:
+            q_rev_count = q_rev.count()
+            meta_data['q_rev'] = q_rev_count
+            if q_rev_count > 0 and q.added_at == q_rev[0].revised_at:
                 meta_data['q_rev'] = 0
                 meta_data['new_q'] = True
             else:
@@ -420,10 +421,12 @@ class Command(BaseCommand):
                 thread=q.thread,
                 added_at__gt=emailed_at,
                 deleted=False,
-            )
-            new_ans = new_ans.exclude(author=user)
-            meta_data['new_ans'] = len(new_ans)
+            ).exclude(author=user)
+            new_ans_count = new_ans.count()
+            meta_data['new_ans'] = new_ans_count
 
+            #ans_ids includes user's own answers so we can detect
+            #edits by others on the user's answers
             ans_ids = Post.objects.get_answers(user).filter(
                 thread=q.thread,
                 added_at__gt=emailed_at,
@@ -433,14 +436,15 @@ class Command(BaseCommand):
             ans_rev = PostRevision.objects.filter(post__id__in = ans_ids)
             ans_rev = ans_rev.exclude(author=user).distinct()
 
-            meta_data['ans_rev'] = len(ans_rev)
+            ans_rev_count = ans_rev.count()
+            meta_data['ans_rev'] = ans_rev_count
 
             comments = meta_data.get('comments', 0)
             mentions = meta_data.get('mentions', 0)
 
             #print meta_data
             #finally skip question if there are no news indeed
-            if len(q_rev) + len(new_ans) + len(ans_rev) + comments + mentions == 0:
+            if q_rev_count + new_ans_count + ans_rev_count + comments + mentions == 0:
                 meta_data['skip'] = True
                 #print 'skipping'
             else:
