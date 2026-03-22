@@ -265,15 +265,16 @@ def record_question_visit(
 
 @shared_task(ignore_result=True)
 def send_instant_notifications_about_activity_in_post(
-        activity_id=None, post_id=None, recipient_ids=None):
+        activity_id=None, post_id=None, recipient_ids=None,
+        include_invited_moderators=False):
 
-    if recipient_ids is None:
-        recipients = set()
+    if recipient_ids:
+        recipients = set(User.objects.filter(pk__in=recipient_ids))
     else:
-        recipients = User.objects.filter(pk__in=recipient_ids)
+        recipients = set()
 
-    recipients = set(recipients)
-    recipients.update(get_invited_moderators())
+    if include_invited_moderators:
+        recipients.update(get_invited_moderators())
 
     if len(recipients) == 0:
         return

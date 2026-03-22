@@ -312,7 +312,7 @@ class PostManager(BaseQuerySetManager):
         premoderation = askbot_settings.CONTENT_MODERATION_MODE == 'premoderation'
         if premoderation and visitor.is_authenticated:
             comments = [comment for comment in comments if (comment.approved or comment.author_id == visitor.pk)]
-            
+
         post_map = defaultdict(list)
         for cm in comments:
             post_map[cm.parent_id].append(cm)
@@ -790,7 +790,7 @@ class Post(models.Model):
             author=user,
             approved=False
         ).exists()
-    
+
     def add_to_groups(self, groups):
         """associates post with groups"""
         # TODO: use bulk-creation
@@ -876,16 +876,22 @@ class Post(models.Model):
             cache.cache.set(cache_key, True, django_settings.NOTIFICATION_DELAY_TIME)
 
         from askbot.tasks import send_instant_notifications_about_activity_in_post
+        from askbot.utils.lists import batch_size as make_batches
         recipient_ids = [user.id for user in notify_sets['for_email']]
-        defer_celery_task(
-            send_instant_notifications_about_activity_in_post,
-            args=(
-                update_activity.pk,
-                self.id,
-                recipient_ids
-            ),
-            countdown=django_settings.NOTIFICATION_DELAY_TIME
-        )
+        EMAIL_BATCH = 100
+        id_batches = make_batches(recipient_ids, EMAIL_BATCH) if recipient_ids else [[]]
+        for i, batch in enumerate(id_batches):
+            defer_celery_task(
+                send_instant_notifications_about_activity_in_post,
+                args=(
+                    update_activity.pk,
+                    self.id,
+                    batch
+                ),
+                #include invited mods only in the first batch, to avoid multiple emails to mods
+                kwargs={'include_invited_moderators': (i == 0)},
+                countdown=django_settings.NOTIFICATION_DELAY_TIME
+            )
 
     def delete_update_notifications(self, keep_activity):
         """reverse of issue update notifications
@@ -1278,13 +1284,16 @@ class Post(models.Model):
                                         tag__name__in=tag_names,
                                         tag__language_code=get_language(),
                                         reason=tag_mark_reason)
+
+        # iterator here is not saving memory on the final set, but saves ram in the ORM query set cache
+        # so using .iterator() is valuable; Fixing it further would require rearchitecting this portiion.
         subscribers = set(
             user_set_getter(
                 tag_selections__in=tag_selections
             ).filter(
                 askbot_profile__email_tag_filter_strategy=email_tag_filter_strategy,
                 notification_subscriptions__in=subscription_records
-            )
+            ).select_related('askbot_profile').iterator(chunk_size=500)
         )
 
         # part 2 - find users who follow or not ignore tags via wildcard selections
@@ -1313,8 +1322,8 @@ class Post(models.Model):
                 askbot_profile__email_tag_filter_strategy=email_tag_filter_strategy
             ).exclude(
                 **empty_wildcard_filter  # need this to limit size of the loop
-            )
-            for potential_subscriber in potential_wildcard_subscribers:
+            ).select_related('askbot_profile')
+            for potential_subscriber in potential_wildcard_subscribers.iterator(chunk_size=500):
                 wildcard_tags = getattr(
                     potential_subscriber,
                     wildcard_tags_attribute
@@ -1348,8 +1357,8 @@ class Post(models.Model):
             models.Q(askbot_profile__email_tag_filter_strategy=const.INCLUDE_ALL) &
             models.Q(notification_subscriptions__feed_type='q_all',
                      notification_subscriptions__frequency='i')
-        )
-        subscriber_set.update(global_subscribers)
+        ).select_related('askbot_profile')
+        subscriber_set.update(global_subscribers.iterator(chunk_size=500))
 
         # segment of users who want emails on selected questions only
         if askbot_settings.SUBSCRIBED_TAG_SELECTOR_ENABLED:
@@ -1445,13 +1454,12 @@ class Post(models.Model):
 
         # 4) questions answered by me -make sure is that people
         # are authors of the answers to this question
-        # TODO: replace this with a query set method
-        answer_authors = set()
-        for answer in origin_post.thread.posts.get_answers().all():
-            authors = answer.get_author_list()
-            answer_authors.update(authors)
-
-        if answer_authors:
+        # TODO: here we might want to exclude authors of deleted/spam posts
+        answer_author_ids = set(
+            origin_post.thread.posts.get_answers().values_list('author_id', flat=True)
+        )
+        if answer_author_ids:
+            answer_authors = User.objects.filter(id__in=answer_author_ids)
             answer_subscribers = EmailFeedSetting.objects.filter_subscribers(
                 potential_subscribers=answer_authors,
                 frequency='i',
@@ -2274,13 +2282,13 @@ class PostRevision(models.Model):
 
         if is_published:
             return True
-        
+
         if not user or user.is_anonymous:
             return False
 
         # revision is moderated, can be seen by mods or revision authors
         return user.is_admin_or_mod() or self.author_id == user.pk
-        
+
 
     def place_on_moderation_queue(self):
         """Creates moderation queue

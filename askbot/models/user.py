@@ -335,15 +335,16 @@ class Activity(models.Model):
         """have to use a special method, because django does not allow
         auto-adding to M2M with "through" model
         """
-        pre_existing = ActivityAuditStatus.objects.filter(user__in=recipients, activity=self)
-        pre_existing = pre_existing.only('user__id')
-        skip_user_ids = [user.id for user in pre_existing]
-
-        for recipient in recipients:
-            if recipient.id not in skip_user_ids:
-                #todo: may optimize for bulk addition
-                aas = ActivityAuditStatus(user=recipient, activity=self)
-                aas.save()
+        #TODO: investigate if the recipients passed are a query set
+        # in which case we perhaps can use .iterator() to avoid loading all users into memory
+        new_records = [
+            ActivityAuditStatus(user=recipient, activity=self)
+            for recipient in recipients
+        ]
+        if new_records:
+            ActivityAuditStatus.objects.bulk_create(
+                new_records, ignore_conflicts=True, batch_size=500
+            )
 
     def get_mentioned_user(self):
         assert(self.activity_type == const.TYPE_ACTIVITY_MENTION)
@@ -375,13 +376,21 @@ class EmailFeedSettingManager(models.Manager):
         matching_feeds = self.filter(feed_type=feed_type, frequency=frequency)
         if potential_subscribers is not None:
             matching_feeds = matching_feeds.filter(
-                            subscriber__in = potential_subscribers
+                            subscriber__in=potential_subscribers
                         )
-        subscriber_set = set()
-        for feed in matching_feeds:
-            subscriber_set.add(feed.subscriber)
+        subscriber_ids = set(
+            matching_feeds.values_list('subscriber_id', flat=True)
+        )
 
-        return subscriber_set
+        if not subscriber_ids:
+            return set()
+
+        # TODO: this method still returns set - perhaps we can use query sets and that would allow save RAM?
+        return set(
+            User.objects.filter(
+                id__in=subscriber_ids
+            ).select_related('askbot_profile')
+        )
 
 
 class EmailFeedSetting(models.Model):
