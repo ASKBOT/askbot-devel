@@ -1454,7 +1454,8 @@ class Post(models.Model):
 
         # 4) questions answered by me -make sure is that people
         # are authors of the answers to this question
-        # TODO: here we might want to exclude authors of deleted/spam posts
+        # Note: deleted posts are already excluded by get_answers() (filters deleted=False).
+        # Spam-flagged-but-not-deleted posts are a notification-correctness concern, not a memory issue.
         answer_author_ids = set(
             origin_post.thread.posts.get_answers().values_list('author_id', flat=True)
         )

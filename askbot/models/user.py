@@ -335,8 +335,6 @@ class Activity(models.Model):
         """have to use a special method, because django does not allow
         auto-adding to M2M with "through" model
         """
-        #TODO: investigate if the recipients passed are a query set
-        # in which case we perhaps can use .iterator() to avoid loading all users into memory
         new_records = [
             ActivityAuditStatus(user=recipient, activity=self)
             for recipient in recipients
@@ -385,7 +383,6 @@ class EmailFeedSettingManager(models.Manager):
         if not subscriber_ids:
             return set()
 
-        # TODO: this method still returns set - perhaps we can use query sets and that would allow save RAM?
         return set(
             User.objects.filter(
                 id__in=subscriber_ids
