@@ -31,18 +31,27 @@ def get_organization_name_from_domain(domain):
     return '-'.join(part.capitalize() for part in raw_name.split('-'))
 
 class InvitedModerator(object):
-    """Mock user class to represent invited moderators"""
+    """Mock user class to represent invited moderators.
+    Must implement enough of the User interface to pass
+    through the email template rendering pipeline."""
+    is_anonymous = False
+    is_authenticated = True
+    is_staff = False
+
     def __init__(self, username, email):
         self.username = username
         self.email = email
         self.reputation = 1
         self.invited_outside_moderator = True
 
-    def is_anonymous(self):
+    def is_blocked(self):
         return False
 
-    def is_authenticated(self):
-        return True
+    def can_post_by_email(self):
+        return False
+
+    def is_administrator_or_moderator(self):
+        return False
 
     @classmethod
     def make_from_setting(cls, setting_line):

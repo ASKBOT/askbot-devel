@@ -878,8 +878,7 @@ class Post(models.Model):
         from askbot.tasks import send_instant_notifications_about_activity_in_post
         from askbot.utils.lists import batch_size as make_batches
         recipient_ids = [user.id for user in notify_sets['for_email']]
-        EMAIL_BATCH = 100
-        id_batches = make_batches(recipient_ids, EMAIL_BATCH) if recipient_ids else [[]]
+        id_batches = make_batches(recipient_ids, const.CELERY_TASK_EMAIL_BATCH_SIZE) if recipient_ids else [[]]
         for i, batch in enumerate(id_batches):
             defer_celery_task(
                 send_instant_notifications_about_activity_in_post,

@@ -10,9 +10,11 @@ Development (not yet released)
 * Added tests for ``encode_jwt`` and ``decode_jwt``
 * Fixed Contributors sidebar not updating when user uploads avatar,
   switches to gravatar, enables default avatar, or disables gravatar
-* Optimized ``send_email_alerts`` command: limit selected/asked question
-  alerts per email, filter comments by author in the database query,
-  and use ``.count()`` instead of ``len()`` on querysets
+* Optimized instant email notifications: replaced per-recipient iteration
+  with query sets and batched celery tasks to avoid OOM eviction and
+  task timeout issues
+* Similarly, optimized ``send_email_alerts`` query performance
+* Improved test coverage for the instant email alerts sending functionalities
 
 0.12.8 (Mar 15, 2026)
 ---------------------
