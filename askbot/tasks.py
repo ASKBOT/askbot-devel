@@ -18,7 +18,6 @@ That is the reason for having two types of methods here:
   objects and call the base methods
 """
 import json
-import logging
 import os
 import traceback
 import uuid
@@ -51,6 +50,7 @@ from askbot.models.badges import award_badges_signal
 from askbot import exceptions as askbot_exceptions
 from askbot.utils.twitter import Twitter
 from askbot.spam_checker.akismet_spam_checker import akismet_submit_spam
+from askbot.utils.debug_logging import log_instant_email, log_instant_email_error
 
 
 logger = get_task_logger(__name__)
@@ -202,6 +202,10 @@ def notify_author_of_published_revision_celery_task(revision_id):
 def record_post_update_celery_task( # pylint: disable=too-many-arguments
         post_id, newly_mentioned_user_id_list=None, updated_by_id=None,
         suppress_email=False, timestamp=None, created=False, diff=None):
+    run_id = uuid.uuid4().hex[:8] if askbot_settings.DEBUG_EMAIL_ALERTS else None
+    log_instant_email(logger, run_id,
+                      'record_post_update_celery_task for post %d, %d newly mentioned users',
+                      post_id, len(newly_mentioned_user_id_list or []))
     # reconstitute objects from the database
     updated_by = User.objects.get(id=updated_by_id)
     post = Post.objects.get(id=post_id)
@@ -211,7 +215,8 @@ def record_post_update_celery_task( # pylint: disable=too-many-arguments
     try:
         notify_sets = post.get_notify_sets(
             mentioned_users=newly_mentioned_users,
-            exclude_list=[updated_by])
+            exclude_list=[updated_by],
+            run_id=run_id)
 
         activity_type = post.get_updated_activity_type(created)
         post.issue_update_notifications(
@@ -220,7 +225,8 @@ def record_post_update_celery_task( # pylint: disable=too-many-arguments
             activity_type=activity_type,
             suppress_email=suppress_email,
             timestamp=timestamp,
-            diff=diff)
+            diff=diff,
+            run_id=run_id)
     except Exception: # pylint: disable=broad-except
         logger.error(str(traceback.format_exc()).encode('utf-8'))
 
@@ -266,7 +272,10 @@ def record_question_visit(
 @shared_task(ignore_result=True)
 def send_instant_notifications_about_activity_in_post(
         activity_id=None, post_id=None, recipient_ids=None,
-        include_invited_moderators=False):
+        include_invited_moderators=False, run_id=None):
+
+    if run_id is None and askbot_settings.DEBUG_EMAIL_ALERTS:
+        run_id = uuid.uuid4().hex[:8]
 
     if recipient_ids:
         recipients = set(User.objects.filter(pk__in=recipient_ids))
@@ -277,6 +286,9 @@ def send_instant_notifications_about_activity_in_post(
         recipients.update(get_invited_moderators())
 
     if len(recipients) == 0:
+        log_instant_email(logger, run_id,
+                          'no recipients for activity %d, post %d',
+                          activity_id, post_id)
         return
 
     acceptable_types = const.RESPONSE_ACTIVITY_TYPES_FOR_INSTANT_NOTIFICATIONS
@@ -285,26 +297,34 @@ def send_instant_notifications_about_activity_in_post(
             .filter(activity_type__in=acceptable_types)\
             .get(id=activity_id)
     except Activity.DoesNotExist: # pylint: disable=no-member
-        logger.error("Unable to fetch activity with id %s", post_id)
+        log_instant_email_error(logger, run_id,
+                                'unable to fetch activity with id %s', activity_id)
         return
 
     try:
         post = Post.objects.get(id=post_id)
     except Post.DoesNotExist: # pylint: disable=no-member
-        logger.error("Unable to fetch post with id %s", post_id)
+        log_instant_email_error(logger, run_id,
+                                'unable to fetch post with id %s', post_id)
         return
 
     if not post.is_approved():
+        log_instant_email(logger, run_id,
+                          'post %d not approved, skipping notifications', post.id)
         return
 
-    if logger.getEffectiveLevel() <= logging.DEBUG:
-        log_id = uuid.uuid1()
-        logger.debug('email-alert %s, logId=%s', post.get_absolute_url(), log_id)
-    else:
-        log_id = None
+    activity_label = const.get_activity_type_display(update_activity.activity_type)
+    log_instant_email(logger, run_id,
+                      'sending to %d recipients for %s, activity_type=%s',
+                      len(recipients), post.get_absolute_url(), activity_label)
+
+    sent_count = 0
+    failed_count = 0
+    skipped_count = 0
 
     for user in recipients:
         if user.is_blocked():
+            skipped_count += 1
             continue
 
         activate_language(post.language_code)
@@ -318,7 +338,14 @@ def send_instant_notifications_about_activity_in_post(
         try:
             email.send([user.email])
         except Exception as error:
-            error_tpl = 'send_instant_notifications_about_activity_in_post: failed to send email to %s, error=%s, logId=%s'
-            logger.error(error_tpl, user.email, error, log_id)
+            failed_count += 1
+            log_instant_email_error(logger, run_id,
+                                    'failed to send to %s, error=%s',
+                                    user.email, error)
         else:
-            logger.debug('success %s, logId=%s', user.email, log_id)
+            sent_count += 1
+            log_instant_email(logger, run_id, 'sent to %s', user.email)
+
+    log_instant_email(logger, run_id,
+                      'delivery summary — sent %d, failed %d, skipped %d out of %d total',
+                      sent_count, failed_count, skipped_count, len(recipients))

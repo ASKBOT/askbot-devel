@@ -35,12 +35,15 @@ from askbot.utils.html import (get_word_count, has_moderated_tags,
                                moderate_tags, sanitize_html,
                                site_url)
 from askbot.utils.celery_utils import defer_celery_task
+from askbot.utils.debug_logging import log_instant_email
 from askbot.models.base import (AnonymousContent, BaseQuerySetManager,
                                 DraftContent)
 
 # TODO: maybe merge askbot.utils.markup and forum.utils.html
 from askbot.utils.diff import textDiff as htmldiff
 #from askbot.search import mysql
+
+logger = logging.getLogger(__name__)
 
 
 def default_html_moderator(post):
@@ -813,7 +816,7 @@ class Post(models.Model):
 
     def issue_update_notifications(self, updated_by=None, notify_sets=None,
                                    activity_type=None, suppress_email=False,
-                                   timestamp=None, diff=None):
+                                   timestamp=None, diff=None, run_id=None):
         """Called when a post is updated. Arguments:
 
         * ``notify_sets`` - result of ``Post.get_notify_sets()`` method
@@ -824,6 +827,12 @@ class Post(models.Model):
         * sends email alerts to all subscribers to the post
         """
         assert(activity_type is not None)
+        activity_label = const.get_activity_type_display(activity_type)
+        log_instant_email(logger, run_id,
+                          'issue_update_notifications for post %d, '
+                          'activity_type=%s, updated_by=%d',
+                          self.id, activity_label, updated_by.id)
+
         if diff:
             summary = diff
         else:
@@ -856,29 +865,50 @@ class Post(models.Model):
             user.update_response_counts()
 
         # shortcircuit if the email alerts are disabled
-        if suppress_email or not askbot_settings.ENABLE_EMAIL_ALERTS:
+        if suppress_email:
+            log_instant_email(logger, run_id,
+                              'email suppressed by caller for post %d', self.id)
+            return
+        if not askbot_settings.ENABLE_EMAIL_ALERTS:
+            log_instant_email(logger, run_id, 'email alerts globally disabled')
             return
 
         if not askbot_settings.INSTANT_EMAIL_ALERT_ENABLED:
+            log_instant_email(logger, run_id, 'instant email alerts disabled')
             return
 
         # TODO: fix this temporary spam protection plug
         if askbot_settings.MIN_REP_TO_TRIGGER_EMAIL:
             if not (updated_by.is_administrator() or updated_by.is_moderator()):
                 if updated_by.reputation < askbot_settings.MIN_REP_TO_TRIGGER_EMAIL:
+                    original_count = len(notify_sets['for_email'])
                     for_email = [u for u in notify_sets['for_email'] if u.is_administrator()]
                     notify_sets['for_email'] = for_email
+                    log_instant_email(logger, run_id,
+                                      'MIN_REP filter reduced recipients '
+                                      'from %d to %d for post %d',
+                                      original_count, len(for_email), self.id)
 
         if not getattr(django_settings, 'CELERY_TASK_ALWAYS_EAGER', False):
             cache_key = 'instant-notification-%d-%d' % (self.thread.id, updated_by.id)
             if cache.cache.get(cache_key):
+                log_instant_email(logger, run_id,
+                                  'notification throttled by cache for thread %d',
+                                  self.thread.id)
                 return
             cache.cache.set(cache_key, True, django_settings.NOTIFICATION_DELAY_TIME)
 
         from askbot.tasks import send_instant_notifications_about_activity_in_post
         from askbot.utils.lists import batch_size as make_batches
         recipient_ids = [user.id for user in notify_sets['for_email']]
+        log_instant_email(logger, run_id, '%d email recipients for post %d',
+                          len(recipient_ids), self.id)
         id_batches = make_batches(recipient_ids, const.CELERY_TASK_EMAIL_BATCH_SIZE) if recipient_ids else [[]]
+        if askbot_settings.DEBUG_EMAIL_ALERTS:
+            batch_sizes = [len(b) for b in id_batches]
+            log_instant_email(logger, run_id,
+                              'dispatching %d batches (sizes: %s) for post %d',
+                              len(id_batches), batch_sizes, self.id)
         for i, batch in enumerate(id_batches):
             defer_celery_task(
                 send_instant_notifications_about_activity_in_post,
@@ -888,9 +918,14 @@ class Post(models.Model):
                     batch
                 ),
                 #include invited mods only in the first batch, to avoid multiple emails to mods
-                kwargs={'include_invited_moderators': (i == 0)},
+                kwargs={
+                    'include_invited_moderators': (i == 0),
+                    'run_id': run_id
+                },
                 countdown=django_settings.NOTIFICATION_DELAY_TIME
             )
+        log_instant_email(logger, run_id, 'all %d batches dispatched for post %d',
+                          len(id_batches), self.id)
 
     def delete_update_notifications(self, keep_activity):
         """reverse of issue update notifications
@@ -1333,7 +1368,7 @@ class Post(models.Model):
 
         return subscribers
 
-    def get_global_instant_notification_subscribers(self):
+    def get_global_instant_notification_subscribers(self, run_id=None):
         """returns a set of subscribers to post according to tag filters
         both - subscribers who ignore tags or who follow only
         specific tags
@@ -1378,11 +1413,14 @@ class Post(models.Model):
                 tag_mark_reason='bad'
             )
         )
+        log_instant_email(logger, run_id,
+                          '%d global instant notification subscribers for post %d',
+                          len(subscriber_set), self.id)
         return subscriber_set
 
     def _qa__get_instant_notification_subscribers(
             self, potential_subscribers=None, mentioned_users=None,
-            exclude_list=None):
+            exclude_list=None, run_id=None):
         """get list of users who have subscribed to
         receive instant notifications for a given post
 
@@ -1422,6 +1460,9 @@ class Post(models.Model):
                 frequency='i'
             )
             subscriber_set.update(mention_subscribers)
+            log_instant_email(logger, run_id,
+                              '%d mention subscribers for post %d',
+                              len(mention_subscribers), self.id)
 
         origin_post = self.get_origin_post()
 
@@ -1437,10 +1478,17 @@ class Post(models.Model):
                 frequency='i'
             )
             subscriber_set.update(selective_subscribers)
+            log_instant_email(logger, run_id,
+                              '%d selective subscribers for post %d',
+                              len(selective_subscribers), self.id)
 
         # 3) whole forum subscribers
-        global_subscribers = origin_post.get_global_instant_notification_subscribers()
+        global_subscribers = origin_post.get_global_instant_notification_subscribers(
+            run_id=run_id)
         subscriber_set.update(global_subscribers)
+        log_instant_email(logger, run_id,
+                          '%d global subscribers for post %d',
+                          len(global_subscribers), self.id)
 
         # 4) question asked by me (todo: not "edited_by_me" ???)
         question_author = origin_post.author
@@ -1450,6 +1498,9 @@ class Post(models.Model):
             feed_type='q_ask'
         ).exists():
             subscriber_set.add(question_author)
+            log_instant_email(logger, run_id,
+                              'added question author %d as subscriber for post %d',
+                              question_author.id, self.id)
 
         # 4) questions answered by me -make sure is that people
         # are authors of the answers to this question
@@ -1466,12 +1517,19 @@ class Post(models.Model):
                 feed_type='q_ans',
             )
             subscriber_set.update(answer_subscribers)
+            log_instant_email(logger, run_id,
+                              '%d answer-author subscribers for post %d',
+                              len(answer_subscribers), self.id)
 
-        return subscriber_set - set(exclude_list)
+        result = subscriber_set - set(exclude_list)
+        log_instant_email(logger, run_id,
+                          '%d total qa subscribers for post %d (excluded %d)',
+                          len(result), self.id, len(exclude_list))
+        return result
 
     def _comment__get_instant_notification_subscribers(
             self, potential_subscribers=None, mentioned_users=None,
-            exclude_list=None):
+            exclude_list=None, run_id=None):
         """get list of users who want instant notifications about comments
 
         argument potential_subscribers is required as it saves on db hits
@@ -1504,6 +1562,9 @@ class Post(models.Model):
                                         feed_type='m_and_c',
                                         frequency='i')
             subscriber_set.update(comment_subscribers)
+            log_instant_email(logger, run_id,
+                              '%d comment subscribers for post %d',
+                              len(comment_subscribers), self.id)
 
         origin_post = self.get_origin_post()
         # TODO: The line below works only if origin_post is Question !
@@ -1518,26 +1579,43 @@ class Post(models.Model):
                     subscriber_set.add(subscriber)
 
             subscriber_set.update(selective_subscribers)
+            log_instant_email(logger, run_id,
+                              '%d selective subscribers for comment %d',
+                              len(selective_subscribers), self.id)
 
-        global_subscribers = origin_post.get_global_instant_notification_subscribers()
+        global_subscribers = origin_post.get_global_instant_notification_subscribers(
+            run_id=run_id)
         subscriber_set.update(global_subscribers)
+        log_instant_email(logger, run_id,
+                          '%d global subscribers for comment %d',
+                          len(global_subscribers), self.id)
 
-        return subscriber_set - set(exclude_list)
+        result = subscriber_set - set(exclude_list)
+        log_instant_email(logger, run_id,
+                          '%d total comment subscribers for post %d',
+                          len(result), self.id)
+        return result
 
     def get_instant_notification_subscribers(
             self, potential_subscribers=None, mentioned_users=None,
-            exclude_list=None):
+            exclude_list=None, run_id=None):
+        log_instant_email(logger, run_id,
+                          'collecting subscribers for %s post %d',
+                          self.post_type, self.id)
+
         if self.is_question() or self.is_answer():
             subscribers = self._qa__get_instant_notification_subscribers(
                 potential_subscribers=potential_subscribers,
                 mentioned_users=mentioned_users,
-                exclude_list=exclude_list
+                exclude_list=exclude_list,
+                run_id=run_id
             )
         elif self.is_comment():
             subscribers = self._comment__get_instant_notification_subscribers(
                 potential_subscribers=potential_subscribers,
                 mentioned_users=mentioned_users,
-                exclude_list=exclude_list
+                exclude_list=exclude_list,
+                run_id=run_id
             )
         elif self.is_tag_wiki() or self.is_reject_reason():
             return set()
@@ -1546,7 +1624,12 @@ class Post(models.Model):
 
         # if askbot_settings.GROUPS_ENABLED and self.is_effectively_private():
         # for subscriber in subscribers:
+        pre_filter_count = len(subscribers)
         subscribers = self.filter_authorized_users(subscribers)
+        log_instant_email(logger, run_id,
+                          '%d subscribers after authorization filter '
+                          '(was %d) for post %d',
+                          len(subscribers), pre_filter_count, self.id)
 
         # filter subscribers by language
         if askbot.is_multilingual():
@@ -1556,11 +1639,17 @@ class Post(models.Model):
                 subscriber_languages = subscriber.get_languages()
                 if language in subscriber_languages:
                     filtered_subscribers.append(subscriber)
+            if askbot_settings.DEBUG_EMAIL_ALERTS:
+                removed = len(subscribers) - len(filtered_subscribers)
+                log_instant_email(logger, run_id,
+                                  'filtered %d of %d subscribers by language %r for post %d',
+                                  removed, len(subscribers), language, self.id)
             return filtered_subscribers
         else:
             return subscribers
 
-    def get_notify_sets(self, mentioned_users=None, exclude_list=None):
+    def get_notify_sets(self, mentioned_users=None, exclude_list=None,
+                        run_id=None):
         """returns three lists of users in a dictionary with keys:
         * 'for_inbox' - users for which to add inbox items
         * 'for_mentions' - for whom mentions are added
@@ -1583,7 +1672,14 @@ class Post(models.Model):
             result['for_email'] = self.get_instant_notification_subscribers(
                 potential_subscribers=result['for_inbox'],
                 mentioned_users=result['for_mentions'],
-                exclude_list=exclude_list)
+                exclude_list=exclude_list,
+                run_id=run_id)
+        log_instant_email(logger, run_id,
+                          'notify sets for post %d — inbox: %d, mentions: %d, email: %d',
+                          self.id,
+                          len(result['for_inbox']),
+                          len(result['for_mentions']),
+                          len(result['for_email']))
         return result
 
     def cache_latest_revision(self, rev):

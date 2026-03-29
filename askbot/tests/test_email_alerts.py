@@ -1569,3 +1569,110 @@ class InstantNotificationCacheDedupTests(utils.AskbotTestCase):
             timestamp=timezone.now()
         )
         self.assertEqual(mock_defer.call_count, 2)
+
+
+class DebugEmailAlertsLoggingTests(utils.AskbotTestCase):
+    """Tests for DEBUG_EMAIL_ALERTS livesetting log output"""
+
+    def setUp(self):
+        self.sender = self.create_user(
+            'sender', status='m',
+            notification_schedule={
+                'q_ask': 'i', 'q_all': 'i', 'q_ans': 'i',
+                'q_sel': 'i', 'm_and_c': 'i'
+            }
+        )
+        self.recipient = self.create_user(
+            'recipient', status='m',
+            notification_schedule={
+                'q_ask': 'i', 'q_all': 'i', 'q_ans': 'i',
+                'q_sel': 'i', 'm_and_c': 'i'
+            }
+        )
+        self.question = self.post_question(user=self.sender)
+        self.update_activity = Activity.objects.get(
+            activity_type=const.TYPE_ACTIVITY_ASK_QUESTION,
+            question=self.question
+        )
+        django.core.mail.outbox = []
+
+    def tearDown(self):
+        translation.deactivate()
+
+    @with_settings(DEBUG_EMAIL_ALERTS=True)
+    def test_debug_logging_emits_info_when_enabled(self):
+        """With DEBUG_EMAIL_ALERTS=True, info-level 'email-alert: instant' logs are emitted"""
+        from askbot.tasks import send_instant_notifications_about_activity_in_post
+        with self.assertLogs('askbot.tasks', level='INFO') as cm:
+            send_instant_notifications_about_activity_in_post(
+                activity_id=self.update_activity.id,
+                post_id=self.question.id,
+                recipient_ids=[self.recipient.id]
+            )
+        email_alert_logs = [msg for msg in cm.output if 'email-alert: instant' in msg]
+        self.assertTrue(len(email_alert_logs) > 0,
+                        'Expected email-alert: instant log lines when DEBUG_EMAIL_ALERTS=True')
+
+    @with_settings(DEBUG_EMAIL_ALERTS=True)
+    def test_debug_logging_includes_run_id(self):
+        """With DEBUG_EMAIL_ALERTS=True, all log lines include a run_id"""
+        from askbot.tasks import send_instant_notifications_about_activity_in_post
+        with self.assertLogs('askbot.tasks', level='INFO') as cm:
+            send_instant_notifications_about_activity_in_post(
+                activity_id=self.update_activity.id,
+                post_id=self.question.id,
+                recipient_ids=[self.recipient.id]
+            )
+        alert_logs = [msg for msg in cm.output if 'email-alert: instant' in msg]
+        for log_line in alert_logs:
+            self.assertIn('run_id=', log_line,
+                          'Expected run_id= in log line: %s' % log_line)
+        # All lines share the same run_id
+        run_ids = set()
+        for log_line in alert_logs:
+            # extract run_id value from "run_id=<hex>"
+            idx = log_line.index('run_id=') + len('run_id=')
+            run_ids.add(log_line[idx:idx+8])
+        self.assertEqual(len(run_ids), 1,
+                         'Expected all log lines to share the same run_id')
+
+    @with_settings(DEBUG_EMAIL_ALERTS=True)
+    def test_debug_logging_includes_verbose_activity_type(self):
+        """With DEBUG_EMAIL_ALERTS=True, activity type is logged as human-readable label"""
+        from askbot.tasks import send_instant_notifications_about_activity_in_post
+        with self.assertLogs('askbot.tasks', level='INFO') as cm:
+            send_instant_notifications_about_activity_in_post(
+                activity_id=self.update_activity.id,
+                post_id=self.question.id,
+                recipient_ids=[self.recipient.id]
+            )
+        activity_logs = [msg for msg in cm.output if 'activity_type=' in msg]
+        self.assertTrue(len(activity_logs) > 0,
+                        'Expected at least one log line with activity_type=')
+        # Should contain the verbose label, not the integer code
+        self.assertIn('asked a question', activity_logs[0])
+
+    def test_no_debug_logging_when_disabled(self):
+        """With DEBUG_EMAIL_ALERTS=False (default), no 'email-alert: instant' info logs are emitted"""
+        from askbot.tasks import send_instant_notifications_about_activity_in_post
+        with self.assertNoLogs('askbot.tasks', level='INFO'):
+            send_instant_notifications_about_activity_in_post(
+                activity_id=self.update_activity.id,
+                post_id=self.question.id,
+                recipient_ids=[self.recipient.id]
+            )
+
+    @with_settings(DEBUG_EMAIL_ALERTS=True)
+    def test_debug_logging_delivery_summary(self):
+        """With DEBUG_EMAIL_ALERTS=True, delivery summary log is emitted"""
+        from askbot.tasks import send_instant_notifications_about_activity_in_post
+        with self.assertLogs('askbot.tasks', level='INFO') as cm:
+            send_instant_notifications_about_activity_in_post(
+                activity_id=self.update_activity.id,
+                post_id=self.question.id,
+                recipient_ids=[self.recipient.id]
+            )
+        summary_logs = [msg for msg in cm.output if 'delivery summary' in msg]
+        self.assertEqual(len(summary_logs), 1,
+                         'Expected exactly one delivery summary log line')
+        self.assertIn('sent 1', summary_logs[0])

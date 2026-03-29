@@ -15,6 +15,8 @@ Development (not yet released)
   task timeout issues
 * Similarly, optimized ``send_email_alerts`` query performance
 * Improved test coverage for the instant email alerts sending functionalities
+* Added optional live info-level logging of instant email alerts,
+  via a new boolean livesetting DEBUG_EMAIL_ALERTS
 
 0.12.8 (Mar 15, 2026)
 ---------------------

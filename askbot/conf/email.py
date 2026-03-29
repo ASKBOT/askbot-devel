@@ -133,6 +133,20 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         EMAIL,
+        'DEBUG_EMAIL_ALERTS',
+        default=False,
+        description=_('Log debug info for instant email alerts'),
+        help_text=_(
+            'When enabled, logs detailed information about email '
+            'notification processing at INFO level. '
+            'Use for production debugging.'
+        )
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        EMAIL,
         'HTML_EMAIL_ENABLED',
         default=True,
         description=_('Enable HTML-formatted email'),

@@ -301,6 +301,9 @@ TYPE_ACTIVITY = (
     ),
 )
 
+def get_activity_type_display(activity_type_key):
+    return dict(TYPE_ACTIVITY).get(activity_type_key)
+
 TYPE_ACTIVITY_BY_USER = (
     TYPE_ACTIVITY_ASK_QUESTION,
     TYPE_ACTIVITY_ANSWER,
