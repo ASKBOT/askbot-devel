@@ -301,7 +301,11 @@ var WmdUploadDialog = function (opts) {
     this._makeLinkMarkdown = opts.makeLinkMarkdown;
 
     this.setFileType(opts.dialogType === 'file' ? 'attachment' : 'image');
-    this.setInputId(util.makeId('file-upload'));
+    // Counter ensures each dialog instance gets a unique file-input ID.
+    // Never decremented: monotonic growth guarantees no ID collisions,
+    // even if the modal:after-close DOM cleanup hasn't fired yet.
+    WmdUploadDialog._counter += 1;
+    this.setInputId(util.makeId('file-upload-' + WmdUploadDialog._counter));
     this._headerEnabled = true;
     this.setHeadingText(opts.headingText);
 
@@ -310,6 +314,7 @@ var WmdUploadDialog = function (opts) {
     }
 };
 inherits(WmdUploadDialog, FileUploadDialog);
+WmdUploadDialog._counter = 0;
 
 WmdUploadDialog.prototype.createDom = function () {
     var me = this;
@@ -325,6 +330,10 @@ WmdUploadDialog.prototype.createDom = function () {
     });
 
     WmdUploadDialog.superClass_.createDom.call(this);
+
+    this._element.on('modal:after-close', function () {
+        me._element.remove();
+    });
 
     // Override reject handler to also notify makeLinkMarkdown.
     // Must rebind the button because super createDom() already bound the original.
