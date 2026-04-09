@@ -1,0 +1,1 @@
+{% trans %}Confirm your new email address on {{ site_name }}{% endtrans %}

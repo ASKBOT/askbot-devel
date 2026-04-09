@@ -1,0 +1,15 @@
+{% extends "email/base_mail.html"%}
+{% block title %}{% trans %}Confirm your new email address{% endtrans %}{% endblock %}
+{% block headline %}{% trans %}Confirm your new email address{% endtrans %}{% endblock %}
+
+{% block content %}
+<p>{% trans %}You requested to change your email address on {{ site_name }}. Please follow the link below to confirm this change:{% endtrans %}</p>
+
+<p><a href="{{ validation_link }}">{{ validation_link }}</a></p>
+
+<p>{% trans %}If you did not request this change, please ignore this email. Your email address will not be changed.{% endtrans %}</p>
+{% endblock %}
+
+{% block footer %}
+{% include "email/footer.html" %}
+{% endblock %}

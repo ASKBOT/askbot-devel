@@ -65,6 +65,19 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         USER_SETTINGS,
+        'EMAIL_CHANGE_REQUIRES_VERIFICATION',
+        default=False,
+        description=_('Require email verification before changing email address'),
+        help_text=_(
+            'When enabled, users must click a confirmation link sent to '
+            'the new email address before the change takes effect.'
+        )
+    )
+)
+
+settings.register(
+    livesettings.BooleanValue(
+        USER_SETTINGS,
         'ALLOW_EMAIL_ADDRESS_IN_USERNAME',
         default=True,
         description=_('Allow email address in user name')
