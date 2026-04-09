@@ -1055,6 +1055,13 @@ class Thread(models.Model):
     def clear_cached_data(self):
         self.invalidate_cached_post_data()
         self.invalidate_cached_summary_html()
+        self.invalidate_cached_thread_content_html()
+
+    def invalidate_cached_thread_content_html(self):
+        """Invalidates the template-level cache for the question detail page."""
+        from django.core.cache.utils import make_template_fragment_key
+        key = make_template_fragment_key('thread-content-html', [self.id])
+        cache.cache.delete(key)
 
     def get_public_posts(self):
         kwargs = {
