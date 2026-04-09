@@ -1,14 +1,59 @@
 """/api/v1 views"""
+import functools
 import json
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from askbot import models
 from askbot.models import User, UserProfile
 from askbot.conf import settings as askbot_settings
 from askbot.search.state_manager import SearchState
 from askbot.utils.html import site_url
 from askbot.utils.functions import get_epoch_str
+
+
+def _check_api_access(is_list_endpoint=False):
+    """Decorator that enforces API_V1_ACCESS_MODE setting.
+
+    is_list_endpoint: if True, this endpoint is blocked in 'disabled' mode
+    even for moderators.
+    """
+    def decorator(view_func):
+        @functools.wraps(view_func)
+        def wrapper(request, *args, **kwargs):
+            mode = askbot_settings.API_V1_ACCESS_MODE
+            if mode == 'public':
+                return view_func(request, *args, **kwargs)
+
+            is_authenticated = (hasattr(request, 'user')
+                                and request.user.is_authenticated)
+            is_mod = (is_authenticated
+                      and request.user.is_administrator_or_moderator())
+
+            if mode == 'authenticated':
+                if not is_authenticated:
+                    return JsonResponse(
+                        {'error': 'Authentication required'},
+                        status=403
+                    )
+                return view_func(request, *args, **kwargs)
+
+            if mode == 'disabled':
+                if is_list_endpoint:
+                    return JsonResponse(
+                        {'error': 'Endpoint disabled'},
+                        status=404
+                    )
+                if not is_mod:
+                    return JsonResponse(
+                        {'error': 'API disabled'},
+                        status=404
+                    )
+                return view_func(request, *args, **kwargs)
+
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator
 
 def get_posts_filter(posts_filter=None):
     """Returns filter for the posts.
@@ -95,6 +140,7 @@ def get_answer_data(post):
 
     return datum
 
+@_check_api_access(is_list_endpoint=True)
 def info(request): #pylint: disable=unused-argument
     """Returns general data about the forum"""
     data = {}
@@ -114,6 +160,7 @@ def info(request): #pylint: disable=unused-argument
     json_string = json.dumps(data)
     return HttpResponse(json_string, content_type='application/json')
 
+@_check_api_access(is_list_endpoint=False)
 def user(request, user_id): #pylint: disable=unused-argument
     '''
        Returns data about one user
@@ -129,6 +176,7 @@ def user(request, user_id): #pylint: disable=unused-argument
     return HttpResponse(json_string, content_type='application/json')
 
 
+@_check_api_access(is_list_endpoint=True)
 def users(request):
     """Returns data of the most active or latest users."""
     page = request.GET.get("page", '1')
@@ -166,6 +214,7 @@ def users(request):
     return HttpResponse(json_string, content_type='application/json')
 
 
+@_check_api_access(is_list_endpoint=False)
 def question(request, question_id): #pylint: disable=unused-argument
     """Returns info about a question by id"""
     #we retrieve question by post id, b/c that's what is in the url,
@@ -176,6 +225,7 @@ def question(request, question_id): #pylint: disable=unused-argument
     json_string = json.dumps(datum)
     return HttpResponse(json_string, content_type='application/json')
 
+@_check_api_access(is_list_endpoint=False)
 def answer(request, answer_id): #pylint: disable=unused-argument
     """Returns info about an answer by id"""
     post_filter = get_posts_filter({'id': answer_id, 'post_type': 'answer'})
@@ -184,6 +234,7 @@ def answer(request, answer_id): #pylint: disable=unused-argument
     json_string = json.dumps(datum)
     return HttpResponse(json_string, content_type='application/json')
 
+@_check_api_access(is_list_endpoint=True)
 def questions(request):
     """
     List of Questions, Tagged questions, and Unanswered questions.
