@@ -4164,11 +4164,18 @@ def record_question_visit(request, question, timestamp, **kwargs):
         if 'question_view_times' not in request.session:
             request.session['question_view_times'] = {}
 
-        last_seen = request.session['question_view_times'].get(question.id, None)
+        last_seen_raw = request.session['question_view_times'].get(question.id, None)
 
-        if last_seen and timezone.is_naive(last_seen) \
-            and getattr(django_settings, 'USE_TZ', False):
-            last_seen = timezone.make_aware(last_seen, datetime.timezone.utc)
+        # Parse ISO string back to datetime (session stores strings for JSON serialization)
+        last_seen = None
+        if last_seen_raw:
+            if isinstance(last_seen_raw, str):
+                last_seen = datetime.datetime.fromisoformat(last_seen_raw)
+            else:
+                last_seen = last_seen_raw
+            if timezone.is_naive(last_seen) \
+                and getattr(django_settings, 'USE_TZ', False):
+                last_seen = timezone.make_aware(last_seen, datetime.timezone.utc)
 
         update_view_count = False
         if question.thread.last_activity_by_id != request.user.id:
@@ -4178,7 +4185,7 @@ def record_question_visit(request, question, timestamp, **kwargs):
             else:
                 update_view_count = True
 
-        request.session['question_view_times'][question.id] = timestamp
+        request.session['question_view_times'][question.id] = timestamp.isoformat()
         #2) run the slower jobs in a celery task
         from askbot import tasks
         defer_celery_task(
