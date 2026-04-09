@@ -37,3 +37,7 @@ class AskbotConfig(AppConfig):
         import followit
         user_model = get_user_model()
         followit.register(user_model)
+
+        if getattr(django_settings, 'POST_ALERT_EMAIL', None):
+            from askbot.post_alerts import connect as connect_post_alerts
+            connect_post_alerts()
