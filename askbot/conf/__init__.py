@@ -33,6 +33,7 @@ def init():
     import askbot.conf.access_control
     import askbot.conf.site_modes
     import askbot.conf.words
+    import askbot.conf.moderation_settings
 
 #import main settings object
 from askbot.conf.settings_wrapper import settings

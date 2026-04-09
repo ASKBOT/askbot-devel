@@ -324,38 +324,46 @@ def moderate_post_edits(request):
                 cache.save()
 
             #block users and all their content
+            delete_users = askbot_settings.DELETE_BLOCKED_USERS
             users = exclude_admins(users)
             num_users = 0
             for user in users:
-                if user.status != 'b':
-                    user.set_status('b')
-                    num_users += 1
+                num_users += 1
                 #delete all content by the user
                 num_posts += request.user.delete_all_content_authored_by_user(
                                                             user, mark_as_spam=True)
+                if delete_users:
+                    user.delete()
+                elif user.status != 'b':
+                    user.set_status('b')
 
             num_ips = len(ips)
 
         elif 'users' in post_data['items']:
+            delete_users = askbot_settings.DELETE_BLOCKED_USERS
             memo_set = set(memo_set)#evaluate memo_set before deleting content
             editors = exclude_admins(get_editors(memo_set))
             assert request.user not in editors
             num_users = 0
             for editor in editors:
-                #block user
-                if editor.status != 'b':
-                    editor.set_status('b')
-                    num_users += 1
+                num_users += 1
                 #delete all content by the user
                 num_posts += request.user.delete_all_content_authored_by_user(
                                                             editor, mark_as_spam=True)
+                if delete_users:
+                    editor.delete()
+                elif editor.status != 'b':
+                    editor.set_status('b')
 
         if num_ips:
             ips_message = ngettext('%d ip blocked', '%d ips blocked', num_ips) % num_ips
             result['message'] = concat_messages(result['message'], ips_message)
 
         if num_users:
-            users_message = ngettext('%d user blocked', '%d users blocked', num_users) % num_users
+            if askbot_settings.DELETE_BLOCKED_USERS:
+                users_message = ngettext('%d user deleted', '%d users deleted', num_users) % num_users
+            else:
+                users_message = ngettext('%d user blocked', '%d users blocked', num_users) % num_users
             result['message'] = concat_messages(result['message'], users_message)
 
         if num_posts:
