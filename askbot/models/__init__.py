@@ -37,6 +37,7 @@ from askbot import const
 from askbot.const import message_keys
 from askbot.conf import settings as askbot_settings
 from askbot.models.question import Thread
+from askbot.models.post_confirmation import PostConfirmation
 import askbot.models.analytics
 from askbot.skins import utils as skin_utils
 from askbot.mail.messages import (WelcomeEmail,
@@ -3497,6 +3498,14 @@ def user_approve_post_revision(user, post_revision, timestamp = None):
                                         was_approved=True
                                     )
 
+    # Incremental ham learning: feed approved post text to the ham model
+    if askbot_settings.SPAM_FILTER_ENABLED and post_revision.text:
+        try:
+            from askbot.spam_checker.bayesian_spam_checker import retrain_ham_incremental
+            retrain_ham_incremental([post_revision.text])
+        except Exception:
+            logging.exception('Error in Bayesian ham incremental training')
+
 @auto_now_timestamp
 def flag_post(
     user, post, timestamp=None, cancel=False, cancel_all=False, force=False
@@ -4788,6 +4797,26 @@ def handle_posts_marked_as_spam(sender, post_ids, **kwargs):
 signals.posts_marked_as_spam.connect(
     handle_posts_marked_as_spam,
     dispatch_uid='handle_posts_marked_as_spam'
+)
+
+
+def handle_spam_for_bayesian_training(sender, post_ids, **kwargs):
+    """Feed spam posts to the Bayesian spam model for incremental learning."""
+    if not askbot_settings.SPAM_FILTER_ENABLED:
+        return
+    try:
+        from askbot.spam_checker.bayesian_spam_checker import retrain_spam_incremental
+        posts = Post.objects.filter(pk__in=post_ids).only('text')
+        texts = [p.text for p in posts if p.text]
+        if texts:
+            retrain_spam_incremental(texts)
+    except Exception:
+        logging.exception('Error in Bayesian spam incremental training')
+
+
+signals.posts_marked_as_spam.connect(
+    handle_spam_for_bayesian_training,
+    dispatch_uid='handle_spam_for_bayesian_training'
 )
 
 #set up a possibility for the users to follow others

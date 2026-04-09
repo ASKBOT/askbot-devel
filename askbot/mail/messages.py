@@ -841,6 +841,22 @@ class ApprovedPostNotificationRespondable(BaseEmail):
 #            'recipient_user': get_user()
 #        }
 
+class PostConfirmationEmail(BaseEmail):
+    template_path = 'email/post_confirmation'
+    title = _('Post confirmation')
+    description = _('Sent to new users to confirm their first post via email')
+    mock_contexts = ({'key': 'abc123def456'},)
+
+    def process_context(self, context):
+        context.update({
+            'site_name': askbot_settings.APP_SHORT_NAME,
+            'recipient_user': None,
+            'confirmation_link': site_url(reverse('confirm_post',
+                                                   kwargs={'key': context['key']}))
+        })
+        return context
+
+
 class FeedbackEmail(BaseEmail):
     template_path = 'email/feedback'
     title = _('Feedback email')
