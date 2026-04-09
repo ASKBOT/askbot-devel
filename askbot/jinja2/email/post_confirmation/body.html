@@ -1,0 +1,17 @@
+{% extends "email/base_mail.html"%}
+{% block title %}{% trans %}Please confirm your post{% endtrans %}{% endblock %}
+{% block headline %}{% trans %}Please confirm your post{% endtrans %}{% endblock %}
+
+{% block content %}
+<p>{% trans %}Thank you for posting on {{ site_name }}. To prevent spam, we ask new users to confirm their first post.{% endtrans %}</p>
+
+<p>{% trans %}Please follow the link below to confirm and publish your post:{% endtrans %}</p>
+
+<p><a href="{{ confirmation_link }}">{{ confirmation_link }}</a></p>
+
+<p>{% trans %}This link will expire in 3 days. Posts that are not confirmed will be removed.{% endtrans %}</p>
+{% endblock %}
+
+{% block footer %}
+{% include "email/footer.html" %}
+{% endblock %}

@@ -51,6 +51,108 @@ from askbot.importers.stackexchange import management as stackexchange#todo: may
 from askbot.utils.slug import slugify
 from askbot import spam_checker
 
+
+class _SilentSpamDeletion(Exception):
+    """Raised when a spam user is silently deleted.
+    Caught in the view to return a redirect without error message."""
+    pass
+
+
+def _check_spam_and_act(request, user, text):
+    """Dual Bayesian spam check. Returns None if post should proceed.
+
+    Raises _SilentSpamDeletion if the user was deleted (first post, spam only).
+    Raises PermissionDenied if the post should be held for moderation.
+    Does nothing if spam filter is disabled or no spam detected.
+    """
+    if not askbot_settings.SPAM_FILTER_ENABLED:
+        return
+
+    from askbot.spam_checker.bayesian_spam_checker import check_content
+    spam_detected, ham_detected = check_content(text)
+
+    if not spam_detected:
+        return
+
+    is_first_post = not models.Post.objects.filter(
+        author=user, deleted=False
+    ).exists()
+
+    if ham_detected:
+        # Ham model rescued it — benefit of doubt
+        if is_first_post and user.is_watched():
+            raise exceptions.PermissionDenied(
+                _('Your post is held for review')
+            )
+        return  # approved user + ham match → allow through
+
+    # Spam only, no ham match
+    if is_first_post and user.is_watched():
+        if askbot_settings.BAYESIAN_SPAM_SILENT_DELETE:
+            user.delete()
+            raise _SilentSpamDeletion()
+        raise exceptions.PermissionDenied(
+            _('Your post is held for review')
+        )
+    raise exceptions.PermissionDenied(
+        _('Your post is held for review')
+    )
+
+
+def _send_first_post_confirmation(request, user, post):
+    """If first-post email confirmation is enabled and user is watched,
+    create a PostConfirmation, mark post unapproved, send email, and
+    return True. Otherwise return False."""
+    if not askbot_settings.FIRST_POST_EMAIL_CONFIRMATION:
+        return False
+
+    if not user.is_watched():
+        return False
+
+    # Check if user has prior approved posts (excluding this one)
+    has_prior = models.Post.objects.filter(
+        author=user, deleted=False
+    ).exclude(pk=post.pk).exists()
+    if has_prior:
+        return False
+
+    from askbot.models.post_confirmation import PostConfirmation
+    from askbot.mail.messages import PostConfirmationEmail
+    from askbot.mail import send_mail
+
+    confirmation = PostConfirmation(post=post, user=user)
+    confirmation.save()
+
+    post.approved = False
+    post.save(update_fields=['approved'])
+
+    # Also mark thread unapproved for questions
+    if post.post_type == 'question':
+        post.thread.approved = False
+        post.thread.save(update_fields=['approved'])
+
+    # Also mark the revision as unapproved
+    revision = post.get_latest_revision()
+    if revision:
+        revision.approved = False
+        revision.save(update_fields=['approved'])
+
+    email = PostConfirmationEmail({'key': confirmation.key})
+    context = email.get_context()
+    subject = email.render_subject()
+    body = email.render_body()
+    send_mail(
+        subject_line=subject,
+        body_text=body,
+        recipient_list=[user.email],
+    )
+
+    request.user.message_set.create(
+        message=_('Please check your email to confirm your post.')
+    )
+    return True
+
+
 #todo: make this work with csrf
 @csrf.csrf_exempt
 def upload(request):#ajax upload file to a question or answer
@@ -228,13 +330,6 @@ def ask(request):#view used to ask a new question
             #group_id = form.cleaned_data.get('group_id', None)
             language = form.cleaned_data.get('language', None)
 
-            content = '{}\n\n{}\n\n{}'.format(title, tagnames, text)
-            spam_checker_params = spam_checker.get_params_from_request(request)
-            enabled = askbot_settings.SPAM_FILTER_ENABLED
-            if enabled and spam_checker.is_spam(content, **spam_checker_params):
-                message = _('Spam was detected in the post')
-                raise exceptions.PermissionDenied(message)
-
             if request.user.is_authenticated:
                 drafts = models.DraftQuestion.objects.filter(author=request.user)
                 drafts.delete()
@@ -247,6 +342,9 @@ def ask(request):#view used to ask a new question
 
             if user:
                 try:
+                    content = '{}\n\n{}\n\n{}'.format(title, tagnames, text)
+                    _check_spam_and_act(request, user, content)
+
                     question = user.post_question(
                         title=title,
                         body_text=text,
@@ -259,12 +357,18 @@ def ask(request):#view used to ask a new question
                         language=language,
                         ip_addr=request.META.get('REMOTE_ADDR')
                     )
+
+                    if _send_first_post_confirmation(request, user, question):
+                        return HttpResponseRedirect(reverse('index'))
+
                     signals.new_question_posted.send(None,
                         question=question,
                         user=user,
                         form_data=form.cleaned_data
                     )
                     return HttpResponseRedirect(question.get_absolute_url())
+                except _SilentSpamDeletion:
+                    return HttpResponseRedirect(reverse('index'))
                 except exceptions.PermissionDenied as e:
                     request.user.message_set.create(message = str(e))
                     return HttpResponseRedirect(reverse('index'))
@@ -529,17 +633,16 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
                 user = form.get_post_user(request.user)
                 try:
                     text = form.cleaned_data['text']
-                    spam_checker_params = spam_checker.get_params_from_request(request)
-                    enabled = askbot_settings.SPAM_FILTER_ENABLED
-                    if enabled and spam_checker.is_spam(text, **spam_checker_params):
-                        message = _('Spam was detected in the post')
-                        raise exceptions.PermissionDenied(message)
+                    _check_spam_and_act(request, user, text)
 
                     answer = form.save(
                                     question,
                                     user,
                                     ip_addr=request.META.get('REMOTE_ADDR')
                                 )
+
+                    if _send_first_post_confirmation(request, user, answer):
+                        return HttpResponseRedirect(question.get_absolute_url())
 
                     signals.new_answer_posted.send(None,
                         answer=answer,
@@ -548,6 +651,8 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
                     )
 
                     return HttpResponseRedirect(answer.get_absolute_url())
+                except _SilentSpamDeletion:
+                    return HttpResponseRedirect(question.get_absolute_url())
                 except askbot_exceptions.AnswerAlreadyGiven as e:
                     request.user.message_set.create(message = str(e))
                     answer = question.thread.get_answers_by_user(user)[0]
@@ -678,23 +783,31 @@ def post_comments(request):#generic ajax handler to load comments to an object
                 raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
 
             text = form.cleaned_data['comment']
-            spam_checker_params = spam_checker.get_params_from_request(request)
-            enabled = askbot_settings.SPAM_FILTER_ENABLED
-            if enabled and spam_checker.is_spam(text, **spam_checker_params):
-                message = _('Spam was detected in the post')
-                raise exceptions.PermissionDenied(message)
+            _check_spam_and_act(request, user, text)
 
             comment = user.post_comment(
                 parent_post=post,
                 body_text=text,
                 ip_addr=request.META.get('REMOTE_ADDR')
             )
-            signals.new_comment_posted.send(None,
-                comment=comment,
-                user=user,
-                form_data=form.cleaned_data
+
+            if _send_first_post_confirmation(request, user, comment):
+                response = HttpResponse(
+                    json.dumps([]),
+                    content_type="application/json"
+                )
+            else:
+                signals.new_comment_posted.send(None,
+                    comment=comment,
+                    user=user,
+                    form_data=form.cleaned_data
+                )
+                response = __generate_comments_json(post, user, avatar_size)
+        except _SilentSpamDeletion:
+            response = HttpResponse(
+                json.dumps([]),
+                content_type="application/json"
             )
-            response = __generate_comments_json(post, user, avatar_size)
         except exceptions.PermissionDenied as e:
             response = HttpResponseForbidden(str(e), content_type="application/json")
 

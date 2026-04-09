@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{% trans %}Confirm your post{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="content-wrapper" style="max-width: 700px; margin: 2em auto; padding: 1em;">
+
+{% if error %}
+    <h1>{% trans %}Post confirmation{% endtrans %}</h1>
+    <p class="message">{{ error }}</p>
+{% elif confirmed and pending_moderation %}
+    <h1>{% trans %}Post confirmed{% endtrans %}</h1>
+    <p>{% trans %}Thank you for confirming your post. It has been submitted for moderator review and will appear on the site once approved.{% endtrans %}</p>
+{% elif confirmed %}
+    <h1>{% trans %}Post published!{% endtrans %}</h1>
+    <p>{% trans %}Your post has been published. Thank you!{% endtrans %}</p>
+    <p><a href="{{ post_url }}">{% trans %}View your post{% endtrans %}</a></p>
+{% else %}
+    <h1>{% trans %}Confirm your post{% endtrans %}</h1>
+
+    <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 1em; margin: 1em 0; border-radius: 4px;">
+        <h3>{% trans %}Your post preview:{% endtrans %}</h3>
+        {{ post_html|safe }}
+    </div>
+
+    <form method="post" id="js-confirm-post-form">
+        {{ csrf_input }}
+        <p>
+            <label>
+                <input type="checkbox" id="js-confirm-checkbox" name="confirm_checkbox" value="1" />
+                {% trans %}I am posting a question about Wing IDE or Python programming{% endtrans %}
+            </label>
+        </p>
+        <p>
+            <button type="submit" id="js-confirm-button" disabled="disabled"
+                    style="padding: 8px 24px; font-size: 14px; cursor: pointer;">
+                {% trans %}Publish My Post{% endtrans %}
+            </button>
+        </p>
+    </form>
+
+    <script>
+    (function() {
+        var checkbox = document.getElementById('js-confirm-checkbox');
+        var button = document.getElementById('js-confirm-button');
+        checkbox.addEventListener('change', function() {
+            button.disabled = !checkbox.checked;
+        });
+    })();
+    </script>
+{% endif %}
+
+</div>
+{% endblock %}

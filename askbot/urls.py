@@ -641,7 +641,12 @@ urlpatterns = [
     re_path('^api/v1/questions/$', views.api_v1.questions, name='api_v1_questions'),
     re_path('^api/v1/questions/(?P<question_id>\d+)/$', views.api_v1.question, name='api_v1_question'),
     re_path('^api/v1/answers/(?P<answer_id>\d+)/$', views.api_v1.answer, name='api_v1_answer'),
-    re_path('^colors/', views.meta.colors, name='colors')
+    re_path('^colors/', views.meta.colors, name='colors'),
+    service_url(
+        r'^confirm-post/(?P<key>[a-f0-9]+)/$',
+        views.post_confirmation.confirm_post_view,
+        name='confirm_post'
+    ),
 ]
 
 if 'askbot.deps.django_authopenid' in settings.INSTALLED_APPS:

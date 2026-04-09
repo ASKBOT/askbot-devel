@@ -1,0 +1,1 @@
+{% trans %}Please confirm your post on {{ site_name }}{% endtrans %}
