@@ -142,6 +142,7 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
+    'askbot.middleware.request_log.RequestLogMiddleware',
     'askbot.middleware.analytics_session.AnalyticsSessionMiddleware',
     'askbot.middleware.head_request.HeadRequestMiddleware',
     'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
@@ -280,6 +281,33 @@ logging.basicConfig(
     level=logging.CRITICAL,
     format='%(pathname)s TIME: %(asctime)s MSG: %(filename)s:%(funcName)s:%(lineno)d %(message)s',
 )
+
+# To log requests to a file (for DDoS analysis / fail2ban), enable
+# REQUEST_LOG_ENABLED in livesettings and configure LOGGING:
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'formatters': {
+#        'request_log': {
+#            'format': '[%(asctime)s] %(message)s',
+#        },
+#    },
+#    'handlers': {
+#        'request_log_file': {
+#            'level': 'INFO',
+#            'class': 'logging.FileHandler',
+#            'filename': os.path.join(PROJECT_ROOT, 'log', 'requests.log'),
+#            'formatter': 'request_log',
+#        },
+#    },
+#    'loggers': {
+#        'askbot.request_log': {
+#            'handlers': ['request_log_file'],
+#            'level': 'INFO',
+#            'propagate': False,
+#        },
+#    },
+#}
 
 ###########################
 #
