@@ -19,6 +19,7 @@ Development (not yet released)
   via a new boolean livesetting DEBUG_EMAIL_ALERTS
 * Fixed an issue in the markdown editor, where two different files
   could not be uploaded in one editing session.
+* Added ability to control who can access api v1.
 
 0.12.8 (Mar 15, 2026)
 ---------------------
