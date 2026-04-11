@@ -17,6 +17,8 @@ Development (not yet released)
 * Improved test coverage for the instant email alerts sending functionalities
 * Added optional live info-level logging of instant email alerts,
   via a new boolean livesetting DEBUG_EMAIL_ALERTS
+* Fixed an issue in the markdown editor, where two different files
+  could not be uploaded in one editing session.
 
 0.12.8 (Mar 15, 2026)
 ---------------------

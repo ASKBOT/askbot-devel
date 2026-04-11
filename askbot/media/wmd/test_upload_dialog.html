@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Dialog Test: Duplicate ID Bug Fix</title>
+    <style>
+        body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
+        .test-case { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #dfd; }
+        .fail { background-color: #fdd; }
+        pre { white-space: pre-wrap; font-size: 12px; background: #f5f5f5; padding: 8px; }
+        /* Hide modal blocker from view during tests */
+        .jquery-modal.blocker { opacity: 0 !important; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <h1>Upload Dialog Test: Duplicate ID Bug Fix</h1>
+    <p>Tests that unique file-input IDs prevent the second upload from sending the first image's file,
+       and that stale dialog DOM is cleaned up on close.</p>
+    <div id="results"></div>
+
+    <!-- Mocks (before library scripts that may reference askbot at load time) -->
+    <script>
+        var askbot = {
+            settings: {
+                allowedUploadFileTypes: ['jpg', 'png', 'gif'],
+                static_url: '/'
+            },
+            urls: { upload: '/fake-upload' }
+        };
+        var gettext = function (s) { return s; };
+        var interpolate = function (s, args) {
+            return s.replace(/%s/, args && args[0] !== undefined ? args[0] : '');
+        };
+    </script>
+
+    <!-- Dependencies (order matters) -->
+    <script src="../jslib/jquery-3.6.0.min.js"></script>
+    <script src="../jslib/jquery.modal.min.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/utils/wrapped_element.js"></script>
+    <script src="../js/utils/alert_box.js"></script>
+    <script src="../js/utils/modal_dialog.js"></script>
+    <script src="../js/utils/file_upload_dialog.js"></script>
+    <script src="../jslib/jquery.ajaxfileupload.js"></script>
+
+    <script>
+        // ---- Test framework ----
+        var resultsDiv = document.getElementById('results');
+        var passCount = 0;
+        var failCount = 0;
+        var testResults = [];
+        var testQueue = [];
+
+        function assert(condition, message) {
+            if (!condition) throw new Error(message || 'Assertion failed');
+        }
+
+        function addResult(name, passed, details) {
+            if (passed) passCount++;
+            else failCount++;
+            testResults.push({ name: name, passed: passed, details: details });
+        }
+
+        function renderResults() {
+            var summary = document.createElement('div');
+            summary.style.cssText = 'padding: 10px; font-size: 18px; font-weight: bold;';
+            summary.style.backgroundColor = failCount === 0 ? '#dfd' : '#fdd';
+            summary.textContent = 'Summary: ' + passCount + ' passed, ' + failCount + ' failed';
+            resultsDiv.insertBefore(summary, resultsDiv.firstChild);
+
+            testResults.forEach(function (r) {
+                var div = document.createElement('div');
+                div.className = 'test-case ' + (r.passed ? 'pass' : 'fail');
+                div.innerHTML = '<h3>' + (r.passed ? '\u2713' : '\u2717') + ' ' + r.name + '</h3>' +
+                    '<pre>' + r.details.replace(/</g, '&lt;') + '</pre>';
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        function runNextTest() {
+            if (testQueue.length === 0) {
+                renderResults();
+                return;
+            }
+            var test = testQueue.shift();
+            test(function () { setTimeout(runNextTest, 100); });
+        }
+
+        // ---- Helper: create a FileUploadDialog with a given input ID ----
+        function createDialog(inputId) {
+            var dlg = new FileUploadDialog();
+            dlg.setInputId(inputId);
+            dlg.setFileType('image');
+            dlg._headerEnabled = true;
+            dlg.setHeadingText('Test Upload');
+            dlg.createDom();
+            return dlg;
+        }
+
+        // ==================================================================
+        // Test 1: BUG REPRO — Duplicate IDs cause wrong element lookup
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'BUG: Duplicate IDs cause wrong element lookup';
+            var details = '';
+
+            var dlgA = createDialog('file-upload');
+            var dlgB = createDialog('file-upload');
+
+            // Simulate: dialog A was shown then closed (hidden but still in DOM)
+            $('body').append(dlgA.getElement());
+            dlgA.getElement().hide();
+
+            // Dialog B is the current active one
+            $('body').append(dlgB.getElement());
+
+            var allWithId = $('[id="file-upload"]');
+            var firstMatch = document.getElementById('file-upload');
+
+            details += 'Elements with id="file-upload": ' + allWithId.length + '\n';
+            details += 'getElementById returns dialog A input (old): ' + (firstMatch === dlgA._upload_input[0]) + '\n';
+            details += 'getElementById returns dialog B input (current): ' + (firstMatch === dlgB._upload_input[0]) + '\n';
+
+            try {
+                assert(allWithId.length > 1,
+                    'Expected >1 elements with id="file-upload", got ' + allWithId.length);
+                assert(firstMatch === dlgA._upload_input[0],
+                    'getElementById should return dialog A\'s input (the old hidden one)');
+                assert(firstMatch !== dlgB._upload_input[0],
+                    'getElementById should NOT return dialog B\'s input');
+                addResult(name, true, details + 'Bug confirmed: jQuery finds old dialog\'s input, not the current one.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+
+            dlgA.getElement().remove();
+            dlgB.getElement().remove();
+            done();
+        });
+
+        // ==================================================================
+        // Test 2: BUG REPRO — jQuery.createUploadForm selects wrong input
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'BUG: jQuery.createUploadForm selects wrong input';
+            var details = '';
+
+            var dlgA = createDialog('file-upload');
+            var dlgB = createDialog('file-upload');
+
+            $('body').append(dlgA.getElement());
+            dlgA.getElement().hide();
+            $('body').append(dlgB.getElement());
+
+            // Mark inputs so we can tell them apart
+            dlgA._upload_input.attr('data-dialog', 'A');
+            dlgB._upload_input.attr('data-dialog', 'B');
+
+            var formId = Date.now();
+            var form = jQuery.createUploadForm(formId, 'file-upload');
+
+            var grabbed = form.find('input[type="file"]');
+            var grabbedFrom = grabbed.attr('data-dialog');
+
+            details += 'createUploadForm grabbed input from dialog: ' + grabbedFrom + '\n';
+            details += 'Expected: A (the old hidden dialog — wrong one)\n';
+
+            try {
+                assert(grabbedFrom === 'A',
+                    'Expected to grab dialog A\'s input, got: ' + grabbedFrom);
+                addResult(name, true, details + 'Bug confirmed: upload plugin grabs old dialog\'s file input.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+
+            form.remove();
+            dlgA.getElement().remove();
+            dlgB.getElement().remove();
+            done();
+        });
+
+        // ==================================================================
+        // Test 3: FIX — Unique IDs resolve element lookup correctly
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'FIX: Unique IDs resolve element lookup correctly';
+            var details = '';
+
+            var dlgC = createDialog('file-upload-1');
+            var dlgD = createDialog('file-upload-2');
+
+            // Dialog C closed (hidden), dialog D is current
+            $('body').append(dlgC.getElement());
+            dlgC.getElement().hide();
+            $('body').append(dlgD.getElement());
+
+            dlgD._upload_input.attr('data-dialog', 'D');
+
+            var matchCount = $('[id="file-upload-2"]').length;
+            var found = document.getElementById('file-upload-2');
+            var isCorrect = found === dlgD._upload_input[0];
+
+            details += 'Elements with id="file-upload-2": ' + matchCount + '\n';
+            details += 'getElementById returns dialog D input (correct): ' + isCorrect + '\n';
+
+            // Verify createUploadForm also works
+            var formId = Date.now();
+            var form = jQuery.createUploadForm(formId, 'file-upload-2');
+            var grabbed = form.find('input[type="file"]');
+            var grabbedFrom = grabbed.attr('data-dialog');
+
+            details += 'createUploadForm grabbed input from dialog: ' + grabbedFrom + '\n';
+
+            try {
+                assert(matchCount === 1,
+                    'Expected exactly 1 element with id="file-upload-2", got ' + matchCount);
+                assert(isCorrect,
+                    'getElementById should return dialog D\'s input');
+                assert(grabbedFrom === 'D',
+                    'createUploadForm should grab dialog D\'s input, got: ' + grabbedFrom);
+                addResult(name, true, details + 'Fix works: unique IDs ensure correct element lookup.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+
+            form.remove();
+            dlgC.getElement().remove();
+            dlgD.getElement().remove();
+            done();
+        });
+
+        // ==================================================================
+        // Test 4: FIX — DOM cleanup via modal:after-close
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'FIX: modal:after-close removes old dialog from DOM';
+            var details = '';
+
+            var dlg = createDialog('file-upload-cleanup');
+            var element = dlg.getElement();
+
+            // Bind cleanup handler (mirrors the fix in WmdUploadDialog.createDom)
+            element.on('modal:after-close', function () {
+                element.remove();
+            });
+
+            // Show via jquery.modal
+            dlg.show();
+            var inDomAfterShow = document.body.contains(element[0]);
+            details += 'After show(), element in DOM: ' + inDomAfterShow + '\n';
+
+            // Close via modal
+            dlg.hide();
+
+            // Wait for modal:after-close callback
+            setTimeout(function () {
+                var inDomAfterClose = document.body.contains(element[0]);
+                details += 'After hide() + modal:after-close, element in DOM: ' + inDomAfterClose + '\n';
+
+                try {
+                    assert(inDomAfterShow === true,
+                        'Element should be in DOM after show()');
+                    assert(inDomAfterClose === false,
+                        'Element should be removed from DOM after modal:after-close');
+                    addResult(name, true, details + 'Fix works: dialog DOM is cleaned up on close.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+
+                done();
+            }, 200);
+        });
+
+        // ---- Run ----
+        $(function () { runNextTest(); });
+    </script>
+</body>
+</html>
