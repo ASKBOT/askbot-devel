@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 API_SETTINGS = livesettings.ConfigurationGroup(
     'API_SETTINGS',
-    _('API access control'),
+    _('Askbot API settings'),
     super_group=EXTERNAL_SERVICES
 )
 
@@ -22,7 +22,8 @@ settings.register(
             ('disabled', _('Disabled (moderator item lookups only)')),
         ),
         help_text=_(
-            'Controls who can access the /api/v1/ endpoints. '
+            'NOTE: v1 API is read-only and this setting controls '
+            'who can access the its endpoints. '
             '"Authenticated" requires login for all API access. '
             '"Disabled" blocks list endpoints entirely and allows '
             'only individual item lookups for moderators/admins '
