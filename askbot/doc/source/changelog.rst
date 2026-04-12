@@ -20,6 +20,7 @@ Development (not yet released)
 * Fixed an issue in the markdown editor, where two different files
   could not be uploaded in one editing session.
 * Added ability to control who can access api v1.
+* Fixes to support JSON session serializer, changed default session serializer from Pickle to JSON
 
 0.12.8 (Mar 15, 2026)
 ---------------------

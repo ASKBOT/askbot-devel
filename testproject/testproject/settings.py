@@ -338,7 +338,7 @@ SOUTH_TESTS_MIGRATE = False
 VERIFIER_EXPIRE_DAYS = 3
 AVATAR_AUTO_GENERATE_SIZES = (16, 32, 48, 128) #change if avatars are sized differently
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 MESSAGE_TAGS = {
     message_level.INFO:    'notification_info',
