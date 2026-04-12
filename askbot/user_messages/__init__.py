@@ -13,6 +13,8 @@ def create_message (request, message):
     """
     assert hasattr(request, 'session'), "django-session-messages requires session middleware to be installed. Edit your MIDDLEWARE setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."
 
+    # Force lazy translation strings to str for JSON session serialization
+    message = str(message)
     try:
         request.session['messages'].append(message)
     except KeyError:

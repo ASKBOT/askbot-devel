@@ -17,6 +17,7 @@ Development (not yet released)
 * Improved test coverage for the instant email alerts sending functionalities
 * Added optional live info-level logging of instant email alerts,
   via a new boolean livesetting DEBUG_EMAIL_ALERTS
+* Fixes to support JSON session serializer, changed default session serializer from Pickle to JSON
 
 0.12.8 (Mar 15, 2026)
 ---------------------
