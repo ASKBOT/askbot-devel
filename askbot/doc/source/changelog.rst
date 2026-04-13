@@ -3,6 +3,11 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Replaced the ``REQUIRE_VALID_EMAIL_FOR`` access-control choice
+  setting with boolean ``EMAIL_VALIDATION_REQUIRED`` (default: ``True``).
+  Existing sites with posts where email validation was not required
+  keep that behavior via a data migration; fresh installs start with
+  validation on.
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``

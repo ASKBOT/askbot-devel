@@ -89,7 +89,7 @@ def email_is_acceptable(email):
     is_blank = (email == '')
     is_blank_and_ok = is_blank \
                         and askbot_settings.BLANK_EMAIL_ALLOWED \
-                        and askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing'
+                        and not askbot_settings.EMAIL_VALIDATION_REQUIRED
     if is_blank_and_ok:
         return True
 
@@ -1200,7 +1200,7 @@ def register(request, login_provider_name=None,
                 cleanup_post_register_session(request)
                 return HttpResponseRedirect(next_url)
 
-            if askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing':
+            if not askbot_settings.EMAIL_VALIDATION_REQUIRED:
                 user = create_authenticated_user_account(
                             username=username,
                             email=email,
@@ -1335,7 +1335,7 @@ def signup_with_password(request):
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
 
-            if askbot_settings.REQUIRE_VALID_EMAIL_FOR == 'nothing':
+            if not askbot_settings.EMAIL_VALIDATION_REQUIRED:
                 user = create_authenticated_user_account(
                     username=username,
                     email=email,
