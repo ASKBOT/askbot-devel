@@ -692,7 +692,7 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'category_tree_data': askbot_settings.CATEGORY_TREE,
         'favorited' : favorited,
         'group_read_only': group_read_only,
-        'is_cacheable': False,#is_cacheable, #temporary, until invalidation fix
+        'is_cacheable': is_cacheable,
         'language_code': translation.get_language(),
         'long_time': const.LONG_TIME,#"forever" caching
         'show_answer_form': should_show_answer_form(request.user, thread, answers),

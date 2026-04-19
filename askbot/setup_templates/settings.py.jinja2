@@ -136,6 +136,7 @@ TEMPLATES = (
 )
 
 MIDDLEWARE = (
+    'askbot.middleware.cache.UpdateCacheMiddleware',         # must be first (response phase)
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware', # prerequisite for user messages
     'django.contrib.messages.middleware.MessageMiddleware', # for user messages
@@ -148,6 +149,7 @@ MIDDLEWARE = (
     'askbot.middleware.forum_mode.ForumModeMiddleware',
     'askbot.middleware.cancel.CancelActionMiddleware',
     'askbot.middleware.view_log.ViewLogMiddleware',
+    'askbot.middleware.cache.FetchFromCacheMiddleware',      # must be last (request phase)
 )
 
 ATOMIC_REQUESTS = True
@@ -264,6 +266,7 @@ CACHES['default'].update({'KEY_PREFIX': 'askbot',})
 LIVESETTINGS_CACHE_TIMEOUT = CACHES['default']['TIMEOUT']
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_ALIAS = 'default'
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 

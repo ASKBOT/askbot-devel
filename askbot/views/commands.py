@@ -1510,6 +1510,7 @@ def publish_post(request):
     else:
         message = _('This feature is disabled')
 
+    post.thread.clear_cached_data()
     request.user.message_set.create(message=message)
     return {'redirect_url': post.get_absolute_url()}
 
