@@ -24,6 +24,7 @@ Development (not yet released)
   changed the default session serializer from Pickle to JSON
 * Added the option to require validation of email address when users change it.
   Controlled by the ``EMAIL_VALIDATION_REQUIRED`` livesetting.
+* Changed the default of the ``EMAIL_VALIDATION_REQUIRED`` livesetting from ``False`` to ``True``.
 
 0.12.8 (Mar 15, 2026)
 ---------------------
