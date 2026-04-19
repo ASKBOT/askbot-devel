@@ -16,7 +16,7 @@ class SetNewEmailTests(AskbotTestCase):
     def setUp(self):
         self.user = self.create_user('emailuser')
 
-    @with_settings(EMAIL_CHANGE_REQUIRES_VERIFICATION=True)
+    @with_settings(EMAIL_VALIDATION_REQUIRED=True)
     def test_same_email_noop(self):
         """Setting email to the same value should do nothing."""
         original_email = self.user.email
@@ -26,7 +26,7 @@ class SetNewEmailTests(AskbotTestCase):
         self.assertEqual(self.user.email, original_email)
         self.assertEqual(UserEmailVerifier.objects.count(), count_before)
 
-    @with_settings(EMAIL_CHANGE_REQUIRES_VERIFICATION=False)
+    @with_settings(EMAIL_VALIDATION_REQUIRED=False)
     def test_immediate_change_when_disabled(self):
         """Without verification, email should change immediately."""
         set_new_email(self.user, 'new@example.com', nomessage=True)
@@ -34,7 +34,7 @@ class SetNewEmailTests(AskbotTestCase):
         self.assertEqual(self.user.email, 'new@example.com')
         self.assertFalse(self.user.email_isvalid)
 
-    @with_settings(EMAIL_CHANGE_REQUIRES_VERIFICATION=True)
+    @with_settings(EMAIL_VALIDATION_REQUIRED=True)
     @patch('askbot.mail.messages.EmailChangeVerification')
     def test_verification_when_enabled(self, mock_email_cls):
         """With verification enabled, email should NOT change yet."""

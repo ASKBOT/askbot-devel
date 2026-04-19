@@ -65,7 +65,15 @@ settings.register(
         ACCESS_CONTROL,
         'EMAIL_VALIDATION_REQUIRED',
         default=True,
-        description=_('Require a valid email address')
+        description=_('Require a valid email address'),
+        help_text=_(
+            'When enabled, users must verify their email address '
+            'at registration or when changing their email address. '
+            'To verify it, the users must click an emailed confirmation link '
+            'from their inbox. '
+            'Disable only on trusted installations where email '
+            'ownership is guaranteed by other means.'
+        )
     )
 )
 

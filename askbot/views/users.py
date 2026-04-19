@@ -517,13 +517,18 @@ def user_moderate(request, subject, context):
 def set_new_email(user, new_email, nomessage=False):
     """Change user email, optionally requiring verification first.
 
-    When EMAIL_CHANGE_REQUIRES_VERIFICATION is enabled (via livesettings),
-    a verification link is sent to the new address and the email is NOT
+    When EMAIL_VALIDATION_REQUIRED is enabled (via livesettings), a
+    verification link is sent to the new address and the email is NOT
     changed until the user clicks it. Otherwise, the email is changed
     immediately (original behavior).
+
+    When verification is required, a flash message is also added to
+    ``user.message_set`` letting the user know a confirmation link was
+    sent — unless ``nomessage=True`` is passed (tests use this to
+    suppress the message while still exercising the verification path).
     """
     if new_email != user.email:
-        if askbot_settings.EMAIL_CHANGE_REQUIRES_VERIFICATION:
+        if askbot_settings.EMAIL_VALIDATION_REQUIRED:
             from askbot.deps.django_authopenid.models import UserEmailVerifier
             from askbot.mail.messages import EmailChangeVerification
             from askbot.utils.functions import generate_random_key
