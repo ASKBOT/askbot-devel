@@ -60,31 +60,22 @@ settings.register(
     )
 )
 
-EMAIL_VALIDATION_CASE_CHOICES = (
-    ('nothing', _('nothing - not required')),
-    ('see-content', _('account registration')),
-    # ('post-content', _('posting content')),
-)
-
 settings.register(
-    livesettings.StringValue(
+    livesettings.BooleanValue(
         ACCESS_CONTROL,
-        'REQUIRE_VALID_EMAIL_FOR',
-        default='nothing',
-        choices=EMAIL_VALIDATION_CASE_CHOICES,
-        description=_('Require valid email for')
+        'EMAIL_VALIDATION_REQUIRED',
+        default=True,
+        description=_('Require a valid email address'),
+        help_text=_(
+            'When enabled, users must verify their email address '
+            'at registration or when changing their email address. '
+            'To verify it, the users must click an emailed confirmation link '
+            'from their inbox. '
+            'Disable only on trusted installations where email '
+            'ownership is guaranteed by other means.'
+        )
     )
 )
-
-# TODO: move REQUIRE_VALID_EMAIL_FOR to boolean setting
-# settings.register(
-#     livesettings.BooleanValue(
-#         ACCESS_CONTROL,
-#         'EMAIL_VALIDATION_REQUIRED',
-#         default=False,
-#         description=_('Require valid email address to register')
-#     )
-# )
 
 
 def update_email_callback(old, new):

@@ -515,10 +515,89 @@ def user_moderate(request, subject, context):
 
 #non-view function
 def set_new_email(user, new_email, nomessage=False):
+    """Change user email, optionally requiring verification first.
+
+    When EMAIL_VALIDATION_REQUIRED is enabled (via livesettings), a
+    verification link is sent to the new address and the email is NOT
+    changed until the user clicks it. Otherwise, the email is changed
+    immediately (original behavior).
+
+    When verification is required, a flash message is also added to
+    ``user.message_set`` letting the user know a confirmation link was
+    sent — unless ``nomessage=True`` is passed (tests use this to
+    suppress the message while still exercising the verification path).
+    """
     if new_email != user.email:
+        if askbot_settings.EMAIL_VALIDATION_REQUIRED:
+            from askbot.deps.django_authopenid.models import UserEmailVerifier
+            from askbot.mail.messages import EmailChangeVerification
+            from askbot.utils.functions import generate_random_key
+
+            verifier = UserEmailVerifier(key=generate_random_key())
+            verifier.value = {
+                'user_id': user.id,
+                'new_email': new_email,
+                'action': 'change_email',
+            }
+            verifier.save()
+
+            email = EmailChangeVerification({'key': verifier.key})
+            email.send([new_email])
+
+            if not nomessage:
+                user.message_set.create(
+                    message=_('A confirmation email has been sent to %(email)s. '
+                              'Please check your inbox and click the link to '
+                              'complete the email change.') % {'email': new_email}
+                )
+        else:
+            user.email = new_email
+            user.email_isvalid = False
+            user.save()
+
+
+def verify_email_change(request):
+    """Process email change verification link.
+
+    When a user clicks the link sent to their new email address,
+    this view swaps in the new email and marks it as valid.
+    """
+    key = request.GET.get('validation_code') or request.POST.get('validation_code')
+    if not key:
+        return HttpResponseRedirect(reverse('index'))
+
+    from askbot.deps.django_authopenid.models import UserEmailVerifier
+    from django.contrib.auth.models import User
+
+    try:
+        verifier = UserEmailVerifier.objects.get(key=key)
+        assert verifier.verified is False
+        assert verifier.has_expired() is False
+        assert verifier.value.get('action') == 'change_email'
+
+        user_id = verifier.value['user_id']
+        new_email = verifier.value['new_email']
+        user = User.objects.get(id=user_id)
+
         user.email = new_email
-        user.email_isvalid = False
+        user.email_isvalid = True
         user.save()
+
+        verifier.verified = True
+        verifier.save()
+
+        request.user.message_set.create(
+            message=_('Your email address has been updated to %(email)s.') % {
+                'email': new_email
+            }
+        )
+    except Exception:
+        logging.exception('Email change verification failed for key=%s', key)
+        request.user.message_set.create(
+            message=_('Sorry, this email verification link has expired or is invalid.')
+        )
+
+    return HttpResponseRedirect(reverse('index'))
 
 
 def need_to_invalidate_post_caches(user, form):

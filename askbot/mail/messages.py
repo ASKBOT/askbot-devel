@@ -841,6 +841,22 @@ class ApprovedPostNotificationRespondable(BaseEmail):
 #            'recipient_user': get_user()
 #        }
 
+class EmailChangeVerification(BaseEmail):
+    template_path = 'email/email_change_verification'
+    title = _('Email change verification')
+    description = _('Sent when a user changes their email address, to verify the new address')
+    mock_contexts = ({'key': 'a4umkaeuaousthsth'},)
+
+    def process_context(self, context):
+        context.update({
+            'site_name': askbot_settings.APP_SHORT_NAME,
+            'recipient_user': None,
+            'validation_link': site_url(reverse('verify_email_change')) + \
+                                '?validation_code=' + context['key']
+        })
+        return context
+
+
 class FeedbackEmail(BaseEmail):
     template_path = 'email/feedback'
     title = _('Feedback email')

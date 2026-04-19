@@ -341,7 +341,7 @@ settings.register(
         help_text=format_lazy('{} {}',
             _('DANGER: makes impossible account recovery by email.'),
             settings.get_related_settings_info(
-                ('ACCESS_CONTROL', 'REQUIRE_VALID_EMAIL_FOR', True, _('Must be optional')),
+                ('ACCESS_CONTROL', 'EMAIL_VALIDATION_REQUIRED', True, _('Must be disabled')),
             )
         )
     )

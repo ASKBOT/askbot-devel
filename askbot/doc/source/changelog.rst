@@ -20,7 +20,10 @@ Development (not yet released)
 * Fixed an issue in the markdown editor, where two different files
   could not be uploaded in one editing session.
 * Added ability to control who can access api v1.
-* Fixes to support JSON session serializer, changed default session serializer from Pickle to JSON
+* Fixed the support of the JSON session serializer,
+  changed the default session serializer from Pickle to JSON
+* Added the option to require validation of email address when users change it.
+  Controlled by the ``EMAIL_VALIDATION_REQUIRED`` livesetting.
 
 0.12.8 (Mar 15, 2026)
 ---------------------
