@@ -142,6 +142,7 @@ MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
+    'askbot.middleware.ratelimit.RateLimitMiddleware',
     'askbot.middleware.analytics_session.AnalyticsSessionMiddleware',
     'askbot.middleware.head_request.HeadRequestMiddleware',
     'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',

@@ -4,6 +4,7 @@
 
 This module contains views that allow adding, editing, and deleting main textual content.
 """
+import datetime
 import logging
 import os
 import os.path
@@ -50,6 +51,32 @@ from askbot.templatetags import extra_filters_jinja as template_filters
 from askbot.importers.stackexchange import management as stackexchange#todo: may change
 from askbot.utils.slug import slugify
 from askbot import spam_checker
+
+
+def _check_content_velocity(user):
+    """Enforce post rate limit for watched users.
+
+    Raises PermissionDenied if the user has exceeded the content
+    velocity limit within the configured window.
+    """
+    if not askbot_settings.CONTENT_VELOCITY_ENABLED:
+        return
+    if not user.is_watched():
+        return
+
+    window_minutes = askbot_settings.CONTENT_VELOCITY_WINDOW_MINUTES
+    max_posts = askbot_settings.CONTENT_VELOCITY_MAX_POSTS
+    cutoff = timezone.now() - datetime.timedelta(minutes=window_minutes)
+    recent_count = models.Post.objects.filter(
+        author=user,
+        added_at__gte=cutoff,
+        deleted=False
+    ).count()
+    if recent_count >= max_posts:
+        raise exceptions.PermissionDenied(
+            _('You are posting too quickly. Please wait a while before posting again.')
+        )
+
 
 #todo: make this work with csrf
 @csrf.csrf_exempt
@@ -247,6 +274,7 @@ def ask(request):#view used to ask a new question
 
             if user:
                 try:
+                    _check_content_velocity(user)
                     question = user.post_question(
                         title=title,
                         body_text=text,
@@ -529,6 +557,7 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
                 user = form.get_post_user(request.user)
                 try:
                     text = form.cleaned_data['text']
+                    _check_content_velocity(user)
                     spam_checker_params = spam_checker.get_params_from_request(request)
                     enabled = askbot_settings.SPAM_FILTER_ENABLED
                     if enabled and spam_checker.is_spam(text, **spam_checker_params):
@@ -678,6 +707,7 @@ def post_comments(request):#generic ajax handler to load comments to an object
                 raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
 
             text = form.cleaned_data['comment']
+            _check_content_velocity(user)
             spam_checker_params = spam_checker.get_params_from_request(request)
             enabled = askbot_settings.SPAM_FILTER_ENABLED
             if enabled and spam_checker.is_spam(text, **spam_checker_params):
