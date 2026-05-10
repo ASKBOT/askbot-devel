@@ -13,6 +13,7 @@ import operator
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect
 from django.http import HttpResponse
 from django.http import Http404
 from django.http import HttpResponseNotAllowed
@@ -87,6 +88,19 @@ def questions(request, **kwargs):
                     user_logged_in=request.user.is_authenticated,
                     **kwargs
                 )
+
+    # Canonicalize tag order: redirect /tags:c,a,b/ -> /tags:a,b,c/.
+    # Without this, every permutation of the same tag set is a distinct URL
+    # serving identical content, which fragments caches and is exploited by
+    # scrapers that enumerate tag orderings to bypass per-URL caching.
+    # Only redirects when tags are present and unsorted; doesn't touch the
+    # bare /questions/ URL or other parameter shapes.
+    raw_tags = kwargs.get('tags')
+    if (raw_tags and request.method == 'GET' and not is_ajax(request)
+            and search_state.tags
+            and raw_tags.split(const.TAG_SEP) != search_state.tags):
+        canonical_path = reverse('questions') + search_state.query_string()
+        return HttpResponsePermanentRedirect(canonical_path)
 
     qs, meta_data = models.Thread.objects.run_advanced_search(
                         request_user=request.user, search_state=search_state
