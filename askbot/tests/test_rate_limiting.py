@@ -243,16 +243,16 @@ class RateLimitMisconfigWarningTests(AskbotTestCase):
         self.assertIn("'nonexistent'", cm.records[0].getMessage())
         self.assertIn('has no entry', cm.records[0].getMessage())
 
+    @override_settings(
+        RATELIMIT_USE_CACHE='broken',
+        CACHES={'broken': 'redis://example.com/0'},
+    )
     def test_misconfig_warns_when_use_cache_non_dict(self):
         """Boot-time mirror of W004: warns when the matching
         ``CACHES`` entry is not a dict."""
-        with override_settings(
-            RATELIMIT_USE_CACHE='broken',
-            CACHES={'broken': 'redis://example.com/0'},
-        ):
-            ratelimit_mod.MISCONFIG_CHECK_DONE = False
-            with self.assertLogs(self.LOGGER, level='WARNING') as cm:
-                ratelimit_mod.maybe_warn_misconfig()
+        ratelimit_mod.MISCONFIG_CHECK_DONE = False
+        with self.assertLogs(self.LOGGER, level='WARNING') as cm:
+            ratelimit_mod.maybe_warn_misconfig()
         self.assertEqual(len(cm.records), 1)
         self.assertIn("'broken'", cm.records[0].getMessage())
         self.assertIn('not a dict', cm.records[0].getMessage())
@@ -407,9 +407,9 @@ class RateLimitSystemCheckTests(AskbotTestCase):
             'RATELIMIT_ENABLE is falsy', results[0].msg,
         )
 
+    @override_settings(RATELIMIT_ENABLE=True)
     def test_check_w001_silent_when_consistent(self):
-        with override_settings(RATELIMIT_ENABLE=True):
-            results = askbot_checks.check_ratelimit_enable_consistency(None)
+        results = askbot_checks.check_ratelimit_enable_consistency(None)
         self.assertEqual(results, [])
 
     def test_check_i001_when_livesettings_db_raises(self):
@@ -517,22 +517,22 @@ class RateLimitSystemCheckTests(AskbotTestCase):
 
     # --- W002 ---
 
-    def test_check_w002_fires_when_use_cache_points_at_locmem(self):
-        with override_settings(
-            RATELIMIT_USE_CACHE='other',
-            CACHES={
-                'default': {
-                    'BACKEND':
-                        'django.core.cache.backends.dummy.DummyCache',
-                },
-                'other': {
-                    'BACKEND':
-                        'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'rl-w002-other',
-                },
+    @override_settings(
+        RATELIMIT_USE_CACHE='other',
+        CACHES={
+            'default': {
+                'BACKEND':
+                    'django.core.cache.backends.dummy.DummyCache',
             },
-        ):
-            results = askbot_checks.check_ratelimit_cache_backend(None)
+            'other': {
+                'BACKEND':
+                    'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'rl-w002-other',
+            },
+        },
+    )
+    def test_check_w002_fires_when_use_cache_points_at_locmem(self):
+        results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W002')
         self.assertIn("'other'", results[0].msg)
@@ -555,38 +555,38 @@ class RateLimitSystemCheckTests(AskbotTestCase):
             results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(results, [])
 
+    @override_settings(
+        CACHES={
+            'default': {
+                'BACKEND':
+                    'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'rl-w002-default',
+            },
+        },
+    )
     def test_check_w002_uses_default_when_use_cache_unset(self):
         """When ``RATELIMIT_USE_CACHE`` is not set, the check must
         fall back to ``'default'``. Drops the fallback and the
         attribute lookup would raise only in production."""
-        with override_settings(
-            CACHES={
-                'default': {
-                    'BACKEND':
-                        'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'rl-w002-default',
-                },
-            },
-        ):
-            results = askbot_checks.check_ratelimit_cache_backend(None)
+        results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W002')
 
+    @override_settings(
+        RATELIMIT_USE_CACHE='nonexistent',
+        CACHES={
+            'default': {
+                'BACKEND':
+                    'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'rl-w004-missing',
+            },
+        },
+    )
     def test_check_w004_fires_when_use_cache_missing(self):
         """W004 fires when ``RATELIMIT_USE_CACHE`` points at a key
         with no ``CACHES`` entry. W002 must not also fire — the two
         IDs are mutually exclusive."""
-        with override_settings(
-            RATELIMIT_USE_CACHE='nonexistent',
-            CACHES={
-                'default': {
-                    'BACKEND':
-                        'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'rl-w004-missing',
-                },
-            },
-        ):
-            results = askbot_checks.check_ratelimit_cache_backend(None)
+        results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W004')
         self.assertIn('has no entry', results[0].msg)
@@ -594,16 +594,16 @@ class RateLimitSystemCheckTests(AskbotTestCase):
             'askbot.W002', [r.id for r in results],
         )
 
+    @override_settings(
+        RATELIMIT_USE_CACHE='broken',
+        CACHES={
+            'broken': 'redis://example.com/0',  # not a dict
+        },
+    )
     def test_check_w004_fires_when_use_cache_non_dict(self):
         """W004 fires when the ``CACHES`` entry exists but is not a
         dict. W002 must not also fire."""
-        with override_settings(
-            RATELIMIT_USE_CACHE='broken',
-            CACHES={
-                'broken': 'redis://example.com/0',  # not a dict
-            },
-        ):
-            results = askbot_checks.check_ratelimit_cache_backend(None)
+        results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W004')
         self.assertIn('not a dict', results[0].msg)
@@ -611,11 +611,11 @@ class RateLimitSystemCheckTests(AskbotTestCase):
             'askbot.W002', [r.id for r in results],
         )
 
+    @override_settings(CACHES={})
     def test_check_w004_fires_when_caches_empty(self):
         """``CACHES={}`` makes the ``'default'`` lookup return None,
         which the missing-entry branch reports as W004."""
-        with override_settings(CACHES={}):
-            results = askbot_checks.check_ratelimit_cache_backend(None)
+        results = askbot_checks.check_ratelimit_cache_backend(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W004')
         self.assertIn('has no entry', results[0].msg)
@@ -689,10 +689,10 @@ class RateLimitLoggerLevelCheckTests(AskbotTestCase):
         ratelimit_logger.setLevel(level)
         self.addCleanup(ratelimit_logger.setLevel, original)
 
+    @with_settings(REQUEST_RATE_LIMIT_ENABLED=True)
     def test_check_w003_fires_when_logger_above_warning(self):
         self._set_logger_level(logging.ERROR)
-        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
-            results = askbot_checks.check_ratelimit_logger_level(None)
+        results = askbot_checks.check_ratelimit_logger_level(None)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].id, 'askbot.W003')
         self.assertEqual(
@@ -707,28 +707,28 @@ class RateLimitLoggerLevelCheckTests(AskbotTestCase):
             '(fail2ban / CrowdSec / Wazuh / Filebeat) will fail.',
         )
 
+    @with_settings(REQUEST_RATE_LIMIT_ENABLED=True)
     def test_check_w003_silent_when_logger_at_warning(self):
         self._set_logger_level(logging.WARNING)
-        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
-            results = askbot_checks.check_ratelimit_logger_level(None)
+        results = askbot_checks.check_ratelimit_logger_level(None)
         self.assertEqual(results, [])
 
+    @with_settings(REQUEST_RATE_LIMIT_ENABLED=True)
     def test_check_w003_silent_when_logger_below_warning(self):
         self._set_logger_level(logging.DEBUG)
-        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
-            results = askbot_checks.check_ratelimit_logger_level(None)
+        results = askbot_checks.check_ratelimit_logger_level(None)
         self.assertEqual(results, [])
 
+    @with_settings(
+        REQUEST_RATE_LIMIT_ENABLED=False,
+        REGISTRATION_RATE_LIMIT_ENABLED=False,
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=False,
+    )
     def test_check_w003_silent_when_no_ratelimit_livesetting_enabled(self):
         """Deployments with no rate limiting enabled must not see a
         warning about a logger that has nothing to log."""
         self._set_logger_level(logging.ERROR)
-        with livesettings_override(
-            REQUEST_RATE_LIMIT_ENABLED=False,
-            REGISTRATION_RATE_LIMIT_ENABLED=False,
-            WATCHED_USER_POST_RATE_LIMIT_ENABLED=False,
-        ):
-            results = askbot_checks.check_ratelimit_logger_level(None)
+        results = askbot_checks.check_ratelimit_logger_level(None)
         self.assertEqual(results, [])
 
     def test_check_w003_silent_when_ratelimit_enable_falsy(self):
