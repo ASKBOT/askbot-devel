@@ -5,8 +5,9 @@ Preconditions for this test module:
 1. Django's ``RATELIMIT_ENABLE`` setting is True (the default). If a
    future test settings module sets it to False, ``get_usage`` in
    django_ratelimit returns None and every test here silently passes
-   as 'under limit'. Test 11 exercises the False path explicitly so a
-   regression is caught in one place.
+   as 'under limit'. ``test_global_ratelimit_enable_setting_disables_helper``
+   exercises the False path explicitly so a regression is caught in
+   one place.
 
 2. ``CACHES['default']`` is NOT ``DummyCache``. The test project uses
    ``LocMemCache`` (askbot_site/askbot_site/settings.py), which
@@ -26,8 +27,7 @@ from django.http import HttpResponse
 from django.test import RequestFactory, TestCase, override_settings
 
 from askbot import const
-from askbot.conf import settings as askbot_settings
-from askbot.tests.utils import with_settings
+from askbot.tests.utils import livesettings_override, with_settings
 from askbot.utils.ratelimit import (
     # Used only in JSON-branch 'message' field assertions; no longer
     # the raw response body.
@@ -88,8 +88,6 @@ class AskbotRatelimitHelperTests(TestCase):
         headers.setdefault('HTTP_ACCEPT', 'text/html,*/*;q=0.8')
         return self._get(path=path, ip=ip, **headers)
 
-    # --- Test 1 ---------------------------------------------------------
-
     @with_settings(REQUEST_RATE_LIMIT_ENABLED=False,
                    REQUEST_RATE_LIMIT_MAX_REQUESTS=2)
     def test_disabled_flag_short_circuits_decorator(self):
@@ -98,8 +96,6 @@ class AskbotRatelimitHelperTests(TestCase):
         for _ in range(10):
             response = wrapped(self._get())
             self.assertEqual(response.status_code, 200)
-
-    # --- Test 2 ---------------------------------------------------------
 
     @with_settings(REQUEST_RATE_LIMIT_ENABLED=False,
                    REQUEST_RATE_LIMIT_MAX_REQUESTS=2)
@@ -111,8 +107,6 @@ class AskbotRatelimitHelperTests(TestCase):
             )
             self.assertIsNone(result)
 
-    # --- Test 3 ---------------------------------------------------------
-
     @with_settings(REQUEST_RATE_LIMIT_ENABLED=True,
                    REQUEST_RATE_LIMIT_MAX_REQUESTS=5)
     def test_under_limit_passes(self):
@@ -122,8 +116,6 @@ class AskbotRatelimitHelperTests(TestCase):
             request = self._get()
             response = wrapped(request)
             self.assertEqual(response.status_code, 200)
-
-    # --- Test 4 ---------------------------------------------------------
 
     @with_settings(REQUEST_RATE_LIMIT_ENABLED=True,
                    REQUEST_RATE_LIMIT_MAX_REQUESTS=5)
@@ -145,14 +137,11 @@ class AskbotRatelimitHelperTests(TestCase):
         # Wrapped view must NOT be invoked on the over-limit request.
         self.assertEqual(mock_view.call_count, 5)
 
-    # --- Test 5 ---------------------------------------------------------
-
     def test_livesettings_read_at_request_time(self):
         wrapped = askbot_ratelimit(policy='request')(_dummy_view)
 
-        askbot_settings.update('REQUEST_RATE_LIMIT_ENABLED', True)
-        askbot_settings.update('REQUEST_RATE_LIMIT_MAX_REQUESTS', 2)
-        try:
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True,
+                                   REQUEST_RATE_LIMIT_MAX_REQUESTS=2):
             self.assertEqual(wrapped(self._get()).status_code, 200)
             self.assertEqual(wrapped(self._get()).status_code, 200)
             self.assertEqual(wrapped(self._get()).status_code, 429)
@@ -162,13 +151,8 @@ class AskbotRatelimitHelperTests(TestCase):
             # is called, so stale bucket state is never consulted. No
             # cache clear here — adding one would hide a regression
             # where the disabled check accidentally falls through.
-            askbot_settings.update('REQUEST_RATE_LIMIT_ENABLED', False)
-            self.assertEqual(wrapped(self._get()).status_code, 200)
-        finally:
-            askbot_settings.update('REQUEST_RATE_LIMIT_ENABLED', True)
-            askbot_settings.update('REQUEST_RATE_LIMIT_MAX_REQUESTS', 30)
-
-    # --- Test 6 ---------------------------------------------------------
+            with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=False):
+                self.assertEqual(wrapped(self._get()).status_code, 200)
 
     def test_rate_string_reflects_current_max_count(self):
         """Changing MAX mid-window starts a fresh bucket.
@@ -182,9 +166,8 @@ class AskbotRatelimitHelperTests(TestCase):
 
         wrapped = askbot_ratelimit(policy='request')(_dummy_view)
 
-        askbot_settings.update('REQUEST_RATE_LIMIT_ENABLED', True)
-        askbot_settings.update('REQUEST_RATE_LIMIT_MAX_REQUESTS', 2)
-        try:
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True,
+                                   REQUEST_RATE_LIMIT_MAX_REQUESTS=2):
             with mock.patch(
                 'askbot.utils.ratelimit.is_ratelimited',
                 wraps=real_impl,
@@ -193,22 +176,22 @@ class AskbotRatelimitHelperTests(TestCase):
                 self.assertEqual(wrapped(self._get()).status_code, 200)
                 self.assertEqual(wrapped(self._get()).status_code, 429)
 
-                askbot_settings.update(
-                    'REQUEST_RATE_LIMIT_MAX_REQUESTS', 10
-                )
-                # Fresh bucket under new rate string — allowed.
-                self.assertEqual(wrapped(self._get()).status_code, 200)
-                self.assertEqual(wrapped(self._get()).status_code, 200)
+                with livesettings_override(
+                    REQUEST_RATE_LIMIT_MAX_REQUESTS=10
+                ):
+                    # Fresh bucket under new rate string — allowed.
+                    self.assertEqual(
+                        wrapped(self._get()).status_code, 200
+                    )
+                    self.assertEqual(
+                        wrapped(self._get()).status_code, 200
+                    )
 
-                rate_kwargs = [
-                    c.kwargs['rate'] for c in spy.call_args_list
-                ]
-                self.assertIn('2/60s', rate_kwargs)
-                self.assertIn('10/60s', rate_kwargs)
-        finally:
-            askbot_settings.update('REQUEST_RATE_LIMIT_MAX_REQUESTS', 30)
-
-    # --- 429 response-shape cluster (replaces old test 7) --------------
+                    rate_kwargs = [
+                        c.kwargs['rate'] for c in spy.call_args_list
+                    ]
+                    self.assertIn('2/60s', rate_kwargs)
+                    self.assertIn('10/60s', rate_kwargs)
 
     @with_settings(REQUEST_RATE_LIMIT_ENABLED=True,
                    REQUEST_RATE_LIMIT_MAX_REQUESTS=1)
@@ -397,8 +380,7 @@ class AskbotRatelimitHelperTests(TestCase):
     def test_check_variant_also_returns_content_negotiated_response(self):
         # Mirror of test_429_is_json_for_ajax_requests but through
         # check_askbot_ratelimit -- guards against the two variants
-        # drifting apart. Also folds in the under-limit None
-        # assertion preserved from the retired test 7.
+        # drifting apart. Also covers the under-limit None case.
         request_ok = self._get(HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertIsNone(check_askbot_ratelimit(
             request_ok,
@@ -1115,7 +1097,6 @@ class AllowlistTests(TestCase):
 
     def tearDown(self):
         caches['default'].clear()
-        askbot_settings.update('RATE_LIMIT_IP_ALLOWLIST', [])
 
     def _attach_browser_state(self, request):
         request.user = AnonymousUser()
@@ -1257,7 +1238,6 @@ class SubnetGranularityTests(TestCase):
 
     def tearDown(self):
         caches['default'].clear()
-        askbot_settings.update('RATE_LIMIT_SUBNET_GRANULARITY', 'subnet')
 
     def _get(self, ip='1.2.3.4', **headers):
         request = self.factory.get('/', REMOTE_ADDR=ip, **headers)
@@ -1295,13 +1275,11 @@ class SubnetGranularityTests(TestCase):
             wrapped(self._get(ip='1.2.3.4')).status_code, 429
         )
 
-        askbot_settings.update(
-            'RATE_LIMIT_SUBNET_GRANULARITY', 'host',
-        )
-        # New cache key under /32 → fresh bucket.
-        self.assertEqual(
-            wrapped(self._get(ip='1.2.3.4')).status_code, 200
-        )
+        with livesettings_override(RATE_LIMIT_SUBNET_GRANULARITY='host'):
+            # New cache key under /32 → fresh bucket.
+            self.assertEqual(
+                wrapped(self._get(ip='1.2.3.4')).status_code, 200
+            )
 
     @with_settings(RATE_LIMIT_SUBNET_GRANULARITY='bogus')
     def test_unknown_granularity_falls_back_to_subnet(self):

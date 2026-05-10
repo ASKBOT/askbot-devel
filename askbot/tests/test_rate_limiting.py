@@ -58,6 +58,9 @@ class RateLimitMisconfigWarningTests(AskbotTestCase):
     LOGGER = 'askbot.middleware.ratelimit'
 
     def setUp(self):
+        self.addCleanup(
+            setattr, ratelimit_mod, 'MISCONFIG_CHECK_DONE', False,
+        )
         ratelimit_mod.MISCONFIG_CHECK_DONE = False
 
     @override_settings(CACHES={
@@ -777,6 +780,9 @@ class RateLimitIntegrationTests(AskbotTestCase):
         # Cleared in both setUp and tearDown: livesettings share the
         # cache, and ``with_settings`` populates it after setUp runs.
         caches['default'].clear()
+        self.addCleanup(
+            setattr, ratelimit_mod, 'MISCONFIG_CHECK_DONE', False,
+        )
         ratelimit_mod.MISCONFIG_CHECK_DONE = False
 
     def tearDown(self):
@@ -1038,19 +1044,15 @@ class WatchedUserPostRateLimitTests(AskbotTestCase):
         test below, which checks the same scenario without the
         allowlist entry."""
         from askbot.views.writers import check_watched_user_post_rate_limit
-        from askbot.conf import settings as askbot_settings
 
         for i in range(3):
             self.post_question(user=self.watched_user,
                                title='question %d' % i)
 
-        askbot_settings.update('RATE_LIMIT_IP_ALLOWLIST', ['1.2.3.4'])
-        try:
+        with livesettings_override(RATE_LIMIT_IP_ALLOWLIST=['1.2.3.4']):
             check_watched_user_post_rate_limit(
                 self.watched_user, self._request(ip='1.2.3.4'),
             )
-        finally:
-            askbot_settings.update('RATE_LIMIT_IP_ALLOWLIST', [])
 
     @with_settings(
         WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
