@@ -74,6 +74,7 @@ from askbot.deps.django_authopenid.exceptions import OAuthError
 from askbot.deps.django_authopenid.providers import discourse
 from askbot.utils.http import get_request_info, get_request_params, is_ajax
 from askbot.utils.loading import load_module
+from askbot.utils.ratelimit import askbot_ratelimit
 
 try:
     from xmlrpc.client import Fault as WpFault
@@ -1093,6 +1094,7 @@ def finalize_generic_signin(
                 redirect_url=redirect_url
             )
 
+@askbot_ratelimit(policy='registration')
 @not_authenticated
 @csrf.csrf_protect
 def register(request, login_provider_name=None,
@@ -1314,6 +1316,7 @@ def verify_email_and_register(request):
             return HttpResponseRedirect(reverse('index'))
     return render(request, 'authopenid/verify_email.html')
 
+@askbot_ratelimit(policy='registration')
 @not_authenticated
 @csrf.csrf_protect
 def signup_with_password(request):

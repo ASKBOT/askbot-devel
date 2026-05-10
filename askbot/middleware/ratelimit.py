@@ -1,140 +1,116 @@
-"""Per-IP request rate limiting middleware using an in-memory sliding window."""
-import collections
-import threading
-import time
+"""Per-IP request rate limiting middleware.
 
-from django.conf import settings as django_settings
-from django.http import HttpResponse
+Thin shell over ``askbot.utils.ratelimit.check_askbot_ratelimit``:
+the helper handles the enabled-flag short-circuit, allowlist
+bypass, per-subnet bucketing, content-negotiated 429 response,
+and the structured WARNING line emitted to the
+``askbot.utils.ratelimit`` logger on every rate-limit hit
+(consumed by log-tailer integrations).
+
+The middleware adds one thing on top: a one-shot worker-boot
+WARNING when ``CACHES['default']`` is a per-process backend
+(``LocMemCache`` / ``DummyCache``), so a deploy that never wired
+up a shared cache cannot silently make rate-limit state
+per-worker.
+"""
+import logging
+
+from django.conf import settings
 
 from askbot.conf import settings as askbot_settings
+from askbot.utils.ratelimit import (
+    PER_PROCESS_CACHE_BACKENDS,
+    check_askbot_ratelimit,
+)
 
 
-# Module-level state: IP -> deque of timestamps
-_request_log = {}
-_registration_log = {}
-_lock = threading.Lock()
+logger = logging.getLogger(__name__)
+
+MISCONFIG_CHECK_DONE = False
 
 
-def _cleanup_stale(now, window):
-    """Remove IPs that haven't been seen within the window."""
-    stale = [ip for ip, times in _request_log.items()
-             if not times or (now - times[-1]) > window]
-    for ip in stale:
-        del _request_log[ip]
+def maybe_warn_misconfig():
+    global MISCONFIG_CHECK_DONE
+    if MISCONFIG_CHECK_DONE:
+        return
+    MISCONFIG_CHECK_DONE = True
 
+    # Check 1: master kill switch contradicts admin toggles.
+    # Falsy match (not `is False`) so RATELIMIT_ENABLE=0 / '' / None
+    # — all of which django-ratelimit treats as disabled at
+    # core.py:166 — also fire the warning.
+    if not getattr(settings, 'RATELIMIT_ENABLE', True):
+        try:
+            contradicts = any([
+                askbot_settings.REQUEST_RATE_LIMIT_ENABLED,
+                askbot_settings.REGISTRATION_RATE_LIMIT_ENABLED,
+                askbot_settings.WATCHED_USER_POST_RATE_LIMIT_ENABLED,
+            ])
+        except Exception:
+            # Mirrors checks.py: livesettings DB may be transiently
+            # unreachable at worker boot. Suppress and continue to
+            # Check 2 — DO NOT crash the worker on a startup hiccup.
+            # Wording mirrors askbot.I001 so an operator reading either
+            # surface sees the same "couldn't verify" framing.
+            logger.info(
+                'RATELIMIT_ENABLE is falsy but askbot livesettings '
+                'could not be read; consistency with admin toggles '
+                'could not be verified.'
+            )
+            contradicts = False
+        if contradicts:
+            logger.warning(
+                'RATELIMIT_ENABLE is falsy; this overrides every '
+                'askbot rate-limit livesetting and admin toggles '
+                'will have no effect.'
+            )
 
-def _cleanup_stale_registrations(now, window):
-    """Remove IPs that haven't registered within the window."""
-    stale = [ip for ip, times in _registration_log.items()
-             if not times or (now - times[-1]) > window]
-    for ip in stale:
-        del _registration_log[ip]
-
-
-# Registration paths to match (suffix matching for i18n variants)
-_REGISTRATION_SUFFIXES = ('/account/signup/', '/account/register/')
+    # Check 2: actually-used cache, not just `default`.
+    # Emission order: W001 → W002/W004. W004 takes the W002 slot when
+    # the cache entry is missing or non-dict (the two are mutually
+    # exclusive — a missing/non-dict entry can't be a dict-shaped
+    # per-process backend).
+    cache_name = getattr(settings, 'RATELIMIT_USE_CACHE', 'default')
+    caches = getattr(settings, 'CACHES', None) or {}
+    cache_entry = caches.get(cache_name)
+    if cache_entry is None:
+        logger.warning(
+            'RATELIMIT_USE_CACHE resolves to %r, but CACHES has no '
+            'entry %r. django-ratelimit will raise '
+            'InvalidCacheBackendError at the first rate-limited '
+            'request.',
+            cache_name, cache_name,
+        )
+        return
+    if not isinstance(cache_entry, dict):
+        logger.warning(
+            'RATELIMIT_USE_CACHE resolves to %r, but the matching '
+            'CACHES entry is not a dict; django-ratelimit expects a '
+            'cache configuration dict.',
+            cache_name,
+        )
+        return
+    backend = cache_entry.get('BACKEND', '')
+    # endswith() intentionally false-negatives on custom subclasses
+    # (e.g. a user-written `MyLocMemCache`); we warn on the documented
+    # Django backend names only.
+    if backend.endswith(PER_PROCESS_CACHE_BACKENDS):
+        logger.warning(
+            'RATELIMIT_USE_CACHE=%r points at %r; rate limiting '
+            'state is per-process and limits will be ineffective '
+            'under multiple workers.',
+            cache_name, backend,
+        )
 
 
 class RateLimitMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
-        self._cleanup_counter = 0
+        maybe_warn_misconfig()
 
     def __call__(self, request):
-        if not askbot_settings.RATE_LIMIT_ENABLED:
-            return self.get_response(request)
-
-        # Use X-Forwarded-For when behind a reverse proxy (e.g., nginx)
-        forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR', '')
-        ip = forwarded_for.split(',')[0].strip() if forwarded_for else request.META.get('REMOTE_ADDR', '')
-
-        # Whitelisted IPs bypass rate limiting
-        internal_ips = getattr(django_settings, 'ASKBOT_INTERNAL_IPS', None)
-        if internal_ips and ip in internal_ips:
-            return self.get_response(request)
-
-        now = time.monotonic()
-        window = askbot_settings.RATE_LIMIT_WINDOW_SECONDS
-        max_requests = askbot_settings.RATE_LIMIT_REQUESTS_PER_WINDOW
-        max_tracked = askbot_settings.RATE_LIMIT_CACHE_SIZE
-
-        with _lock:
-            # Periodic cleanup every 1000 requests
-            self._cleanup_counter += 1
-            if self._cleanup_counter >= 1000:
-                self._cleanup_counter = 0
-                _cleanup_stale(now, window)
-                reg_window = askbot_settings.REGISTRATION_RATE_LIMIT_WINDOW_SECONDS
-                _cleanup_stale_registrations(now, reg_window)
-                # Evict oldest entries if over capacity
-                while len(_request_log) > max_tracked:
-                    oldest_ip = min(_request_log,
-                                    key=lambda k: _request_log[k][-1]
-                                    if _request_log[k] else 0)
-                    del _request_log[oldest_ip]
-
-            timestamps = _request_log.get(ip)
-            if timestamps is None:
-                timestamps = collections.deque()
-                _request_log[ip] = timestamps
-
-            # Trim timestamps outside the window
-            cutoff = now - window
-            while timestamps and timestamps[0] < cutoff:
-                timestamps.popleft()
-
-            if len(timestamps) >= max_requests:
-                # Mark on the request so logging middleware can see it
-                request._ratelimited = True
-
-                # Optional ban command
-                if askbot_settings.RATE_LIMIT_BAN_ENABLED:
-                    ban_cmd = askbot_settings.RATE_LIMIT_BAN_COMMAND
-                    if ban_cmd and '{ip}' in ban_cmd:
-                        import subprocess
-                        try:
-                            subprocess.Popen(
-                                ban_cmd.format(ip=ip).split(),
-                                stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL
-                            )
-                        except OSError:
-                            pass
-
-                return HttpResponse(
-                    'Rate limit exceeded. Please slow down.',
-                    status=429,
-                    content_type='text/plain'
-                )
-
-            timestamps.append(now)
-
-            # Registration rate limiting (POST to signup/register paths)
-            if (askbot_settings.REGISTRATION_RATE_LIMIT_ENABLED
-                    and request.method == 'POST'
-                    and any(request.path.endswith(s)
-                            for s in _REGISTRATION_SUFFIXES)):
-                reg_window = askbot_settings.REGISTRATION_RATE_LIMIT_WINDOW_SECONDS
-                reg_max = askbot_settings.REGISTRATION_RATE_LIMIT_PER_IP
-                reg_now = now
-
-                reg_timestamps = _registration_log.get(ip)
-                if reg_timestamps is None:
-                    reg_timestamps = collections.deque()
-                    _registration_log[ip] = reg_timestamps
-
-                reg_cutoff = reg_now - reg_window
-                while reg_timestamps and reg_timestamps[0] < reg_cutoff:
-                    reg_timestamps.popleft()
-
-                if len(reg_timestamps) >= reg_max:
-                    return HttpResponse(
-                        'Too many registrations. Please try again later.',
-                        status=429,
-                        content_type='text/plain'
-                    )
-
-                reg_timestamps.append(reg_now)
-
+        limited = check_askbot_ratelimit(request, policy='request')
+        if limited is not None:
+            return limited
         return self.get_response(request)

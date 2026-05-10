@@ -267,6 +267,43 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_MIDDLEWARE_SECONDS = 600
 #If you use memcache you may want to uncomment the following line to enable memcached based sessions
 #SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# --- Rate limiting (django-ratelimit) settings ---
+#
+# Askbot's rate limiting is controlled by two layers stacked together:
+# the django-ratelimit library (configured here in settings.py) and
+# Askbot's livesettings (configured in the admin UI). Misconfiguring
+# the django side silently overrides the admin UI; `manage.py check`
+# emits askbot.W001 / askbot.W002 to surface the contradictions.
+#
+# RATELIMIT_ENABLE (default: True)
+#     Master kill switch for django-ratelimit. ANY falsy value
+#     (False, 0, '', None) disables ALL askbot rate limiting
+#     regardless of admin UI state. `manage.py check` emits
+#     askbot.W001 if this contradicts the admin livesettings.
+#
+# RATELIMIT_USE_CACHE (default: 'default')
+#     Which CACHES entry to use for rate-limit counters. Under
+#     multi-worker deployments this MUST be a shared cache (Redis
+#     or Memcached) — NOT LocMemCache or DummyCache, which are
+#     per-process and silently make limits 4x ineffective with
+#     four gunicorn workers. `manage.py check` emits askbot.W002
+#     on a per-process backend.
+#
+# RATELIMIT_IP_META_KEY (no default)
+#     MUST be configured when askbot is behind a reverse proxy
+#     (nginx, haproxy, ELB, etc). Without it django-ratelimit
+#     reads REMOTE_ADDR — which is the proxy's IP, so every
+#     visitor buckets together as "the proxy" and per-IP limits
+#     degrade to a single global counter. Recommended:
+#         RATELIMIT_IP_META_KEY = 'HTTP_X_FORWARDED_FOR'
+#     for single-hop nginx; a callable for multi-hop proxy chains
+#     that need to skip trusted intermediaries.
+#
+# RATELIMIT_IPV4_MASK / RATELIMIT_IPV6_MASK (defaults: 32 / 64)
+#     NOT used by askbot's per-subnet bucketing — askbot's
+#     subnet_ip_key reads the RATE_LIMIT_SUBNET_GRANULARITY
+#     livesetting instead. These masks only apply to third-party
+#     `key='ip'` decorator usages outside askbot.
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

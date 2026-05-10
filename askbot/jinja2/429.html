@@ -1,0 +1,14 @@
+{% extends "one_column_body.html" %}
+<!-- template 429.jinja.html -->
+{% block title %}{% filter trim %}{% trans %}Too many requests{% endtrans %}{% endfilter %}{% endblock %}
+{% block layout_class %}error-page error-429-page{% endblock %}
+{% block content %}
+<h1>{% trans %}Too many requests{% endtrans %}</h1>
+<p class="row">
+  {% trans %}You have made too many requests in a short period of time.{% endtrans %}
+  {% trans wait=retry_after_human %}Please wait {{ wait }} before trying again.{% endtrans %}
+</p>
+<p>
+  <a href="{{ url('questions') }}">{% trans %}Return to the forum{% endtrans %}</a>
+</p>
+{% endblock %}

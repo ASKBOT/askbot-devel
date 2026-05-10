@@ -13,75 +13,66 @@ RATE_LIMITING = livesettings.ConfigurationGroup(
 settings.register(
     livesettings.BooleanValue(
         RATE_LIMITING,
-        'RATE_LIMIT_ENABLED',
+        'REQUEST_RATE_LIMIT_ENABLED',
         description=_('Enable rate limiting'),
-        default=True,
+        default=False,
         help_text=_('Master switch for per-IP request rate limiting.')
     )
 )
 
+# RATE_LIMIT_IP_ALLOWLIST and RATE_LIMIT_SUBNET_GRANULARITY are
+# cross-policy: the allowlist applies to every limiter, the granularity
+# applies to every IP-keyed limiter. They intentionally drop the
+# per-scope prefix the other settings use.
 settings.register(
-    livesettings.IntegerValue(
+    livesettings.StringArrayValue(
         RATE_LIMITING,
-        'RATE_LIMIT_REQUESTS_PER_WINDOW',
-        description=_('Max requests per IP per window'),
-        default=60,
-        help_text=_('Number of requests allowed per IP within the sliding window.')
+        'RATE_LIMIT_IP_ALLOWLIST',
+        description=_('Rate-limit allowlist (IPs / CIDR ranges)'),
+        default=[],
+        help_text=_(
+            'IP addresses and CIDR ranges that bypass every rate-limit '
+            'policy (request, registration, watched-user-post). One '
+            'entry per row. Plain IP (1.2.3.4, 2001:db8::1) or CIDR '
+            '(1.2.3.0/24, 2001:db8::/32). IPv4 or IPv6. '
+            'Combines with the deploy-time ASKBOT_INTERNAL_IPS django.'
+            'Edits apply on the next request and do NOT '
+            'invalidate any rate-limit buckets.'
+        ),
     )
 )
 
-settings.register(
-    livesettings.IntegerValue(
-        RATE_LIMITING,
-        'RATE_LIMIT_WINDOW_SECONDS',
-        description=_('Rate limit window (seconds)'),
-        default=60,
-        help_text=_('Duration of the sliding window in seconds.')
-    )
+RATE_LIMIT_SUBNET_GRANULARITY_CHOICES = (
+    ('host',   _('Individual IP (/32 IPv4, /128 IPv6) — strict')),
+    ('subnet', _('Local subnet (/24 IPv4, /64 IPv6) — recommended')),
+    ('region', _('Regional block (/16 IPv4, /48 IPv6) — aggressive')),
 )
-
-settings.register(
-    livesettings.IntegerValue(
-        RATE_LIMITING,
-        'RATE_LIMIT_CACHE_SIZE',
-        description=_('Max tracked IPs'),
-        default=200000,
-        help_text=_('Maximum number of IPs to track in memory. '
-                    'Each tracked IP uses approximately 3KB of memory '
-                    '(50,000 IPs ≈ 150MB, 200,000 ≈ 600MB). '
-                    'Set based on available server RAM. IPs exceeding this '
-                    'limit evict the oldest entries, so use the ban command '
-                    'for persistent blocking.')
-    )
-)
-
-settings.register(
-    livesettings.BooleanValue(
-        RATE_LIMITING,
-        'RATE_LIMIT_BAN_ENABLED',
-        description=_('Enable ban command on rate limit'),
-        default=False,
-        help_text=_('When enabled, executes the ban command below '
-                    'when an IP exceeds the rate limit. Note: the web '
-                    'process typically lacks permissions to run '
-                    'fail2ban-client directly. The recommended approach '
-                    'for fail2ban is to enable request logging instead '
-                    'and configure fail2ban to watch the log file for '
-                    '"ratelimited=true" entries. Use this setting only '
-                    'for commands the web process can run (e.g. writing '
-                    'to a file or calling a local API).')
-    )
-)
-
 settings.register(
     livesettings.StringValue(
         RATE_LIMITING,
-        'RATE_LIMIT_BAN_COMMAND',
-        description=_('Ban command template'),
-        default='',
-        help_text=_('Command to execute when banning an IP. '
-                    'Use {ip} as placeholder. Must be runnable by the '
-                    'web process user without elevated privileges.')
+        'RATE_LIMIT_SUBNET_GRANULARITY',
+        description=_('Subnet granularity for IP-keyed rate limits'),
+        default='subnet',
+        choices=RATE_LIMIT_SUBNET_GRANULARITY_CHOICES,
+        help_text=_(
+            'Controls how broadly IP-keyed rate limits group '
+            'addresses. "host" buckets each IP separately (/32 IPv4, '
+            '/128 IPv6) — strict. "subnet" buckets local-network '
+            'neighbors together (/24 IPv4, /64 IPv6) — recommended '
+            'default; "region" buckets entire regional blocks together '
+            '(/16 IPv4, /48 IPv6) — aggressive. IPv4 and IPv6 widths '
+            'always change together.'
+        ),
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        RATE_LIMITING,
+        'REQUEST_RATE_LIMIT_MAX_REQUESTS',
+        description=_('Max requests per IP per window'),
+        default=60,
+        help_text=_('Number of requests allowed per IP within a 60-second window.')
     )
 )
 
@@ -101,32 +92,20 @@ settings.register(
 settings.register(
     livesettings.IntegerValue(
         RATE_LIMITING,
-        'REGISTRATION_RATE_LIMIT_PER_IP',
+        'REGISTRATION_RATE_LIMIT_MAX_REGISTRATIONS',
         description=_('Max registrations per IP per window'),
         default=3,
-        help_text=_('Number of registrations allowed per IP within '
-                    'the sliding window.')
+        help_text=_('Number of registrations allowed per IP within a 1-day window.')
     )
 )
 
-settings.register(
-    livesettings.IntegerValue(
-        RATE_LIMITING,
-        'REGISTRATION_RATE_LIMIT_WINDOW_SECONDS',
-        description=_('Registration rate limit window (seconds)'),
-        default=86400,
-        help_text=_('Duration of the sliding window in seconds. '
-                    'Default: 86400 (1 day).')
-    )
-)
-
-# --- Content velocity limiting ---
+# --- Watched user post rate limiting ---
 
 settings.register(
     livesettings.BooleanValue(
         RATE_LIMITING,
-        'CONTENT_VELOCITY_ENABLED',
-        description=_('Enable content velocity limiting'),
+        'WATCHED_USER_POST_RATE_LIMIT_ENABLED',
+        description=_('Enable post rate limiting for watched users'),
         default=False,
         help_text=_('Per-user post limit for watched users to slow '
                     'sophisticated spammers.')
@@ -136,20 +115,9 @@ settings.register(
 settings.register(
     livesettings.IntegerValue(
         RATE_LIMITING,
-        'CONTENT_VELOCITY_MAX_POSTS',
+        'WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS',
         description=_('Max posts per window (watched users)'),
         default=5,
-        help_text=_('Maximum posts a watched user can make within '
-                    'the velocity window.')
-    )
-)
-
-settings.register(
-    livesettings.IntegerValue(
-        RATE_LIMITING,
-        'CONTENT_VELOCITY_WINDOW_MINUTES',
-        description=_('Content velocity window (minutes)'),
-        default=60,
-        help_text=_('Duration of the content velocity window in minutes.')
+        help_text=_('Maximum posts a watched user can make within a 1-hour window.')
     )
 )
