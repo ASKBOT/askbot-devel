@@ -51,6 +51,7 @@ Development (not yet released)
 * Added the option to require validation of email address when users change it.
   Controlled by the ``EMAIL_VALIDATION_REQUIRED`` livesetting.
 * Changed the default of the ``EMAIL_VALIDATION_REQUIRED`` livesetting from ``False`` to ``True``.
+* Fixed: AJAX-injected system message banners now use the same markup as page-load banners.
 
 0.12.8 (Mar 15, 2026)
 ---------------------

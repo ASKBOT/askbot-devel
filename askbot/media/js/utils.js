@@ -497,9 +497,8 @@ var notify = (function () {
         show: function (html, autohide) {
             if (html) {
                 $('body').addClass('user-messages');
-                var par = $('<p class="js-system-message"></p>');
-                par.html(html);
-                $('.js-system-messages').prepend(par);
+                var msg = new SystemMessage(html);
+                $('.js-system-messages .remove-messages-container').after(msg.getElement());
             }
             $('.js-system-messages').fadeIn('slow');
             visible = true;
@@ -514,7 +513,7 @@ var notify = (function () {
             }
         },
         clear: function () {
-            $('.js-system-messages').empty();
+            $('.js-system-messages .js-system-message').remove();
         },
         close: function (doPostback) {
             if (doPostback) {
