@@ -3,34 +3,32 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
-* Added ``django-ratelimit>=4.0,<5.0`` and raised the minimum supported
-  Django version to 4.2 LTS. Production deployments must use Redis or
-  Memcached to properly support rate limiting.
-* Added registration limiting via a view-level decorator on
-  ``register`` and ``signup_with_password``.
-* Rate-limit (429) responses now render an HTML page for browsers
-  and JSON for AJAX/API clients, and carry a ``Retry-After`` header.
-* AJAX rate-limit (429) responses now surface a client-side banner
-  with a humanized retry-after time, matching the server-rendered
-  banner on non-AJAX paths.
-* Per-IP rate-limit middleware now reads its bucket state from the
-  Django cache (Redis/Memcached recommended) instead of a per-process
-  in-memory dict; logs a WARNING when cache backends do not support
-  shared use between processes.
-* Rate-limit events are now emitted as structured WARNING log lines on the
-  ``askbot.utils.ratelimit`` logger; see :ref:`rate-limit-log-monitoring`
-  for log-tailer integration.
-* Added two new rate-limit livesettings: ``RATE_LIMIT_IP_ALLOWLIST``
-  (runtime allowlist of IPs / CIDRs that bypass every limiter; unions
-  with the deploy-time ``ASKBOT_INTERNAL_IPS`` — see
-  :ref:`rate-limit-allowlist`) and ``RATE_LIMIT_SUBNET_GRANULARITY``
-  (host / subnet / region IP-keyed bucketing — see
-  :ref:`rate-limit-subnet-keying`).
+* Added per subnet rate-limiting feature that allows
+  limiting three types of requests: get requests, post requests
+  and user account registrations.
+  Rate limiting is using django-ratelimit app, which counts the requests
+  per subnet and stores this count in the shared cache.
+
+  When user is rate-limited, they see a page advising them to slow down
+  or a similar banner message - when rate limited is detected
+  during an AJAX request.
+
+  Rate limited responses are with the 429 status code, with a
+  retry-after header set (value in seconds).
+
+  The size of the subnet can be set either per ip /32, local /24,
+  or regional /16, which can be adjusted in the livesettings.
+
+  Maximum number of requests per window can be adjusted.
+  The window durations are fixed: 1 minute for get requests,
+  1 hour for the posts and 1 day for the registrations.
+
+  IPv4 and IPv6 networks are supported.
+
+  Allowlisted IP ranges can be added in the livesettings.
+
 * Closed-forum-mode bypass via ``ASKBOT_INTERNAL_IPS`` now honors
   CIDR ranges and IPv6 addresses (including IPv4-mapped IPv6).
-* ``manage.py check`` - checks rate-limit related settings.
-* Dismissing a rate-limit banner no longer spawns a new one.
-* JS translation catalog (``/jsi18n/``) is now exempt from the per-request rate limit.
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``
