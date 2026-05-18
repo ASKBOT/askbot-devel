@@ -4,10 +4,13 @@ Bridges django-ratelimit (which wants a static rate string at decoration
 time) with Askbot's livesettings (which must be readable and mutable at
 request time). Exposes a decorator variant (``askbot_ratelimit``) for
 view-level use, a non-decorator variant (``check_askbot_ratelimit``)
-for middleware-style call sites that have no view function, and a
+for middleware-style call sites that have no view function, a
 bool-check primitive (``is_askbot_ratelimited``) for call sites that
 need to render their own UX (e.g. a session message + form re-render)
-instead of returning the helper's content-negotiated 429 response.
+instead of returning the helper's content-negotiated 429 response, and
+a view-level opt-out (``ratelimit_exempt``) for UI-bookkeeping
+endpoints that must not be subject to the per-request middleware
+policy.
 
 Callers pick a policy by name (``policy='request'``, etc.); the policy
 table maps each name to its enabled-flag livesetting, max-count
@@ -530,6 +533,46 @@ def askbot_ratelimit(*, policy):
             return view_func(request, *args, **kwargs)
         return wrapped
     return decorator
+
+
+def ratelimit_exempt(view_func):
+    """Mark a view as exempt from the per-request rate-limit middleware.
+
+    Mirrors the ``csrf_exempt`` idiom: stamps an attribute on the view
+    function and returns it unchanged — no inner wrapper, no
+    ``functools.wraps``. This keeps the function identity intact
+    (``ratelimit_exempt(view) is view``) and lets ``__name__`` and
+    ``__doc__`` carry over trivially.
+
+    Contract:
+
+    * Sets ``view_func.askbot_ratelimit_exempt = True`` (the literal
+      ``True`` sentinel, not just any truthy value). ``RateLimitMiddleware``
+      reads the attribute with ``is True`` — strict identity — so a
+      future drift to ``= 1`` / ``= 'yes'`` fails closed.
+
+    * Exempts only the per-request middleware policy. The
+      ``registration`` policy is opt-in at the view layer via
+      ``@askbot_ratelimit(policy='registration')`` and
+      ``watched_user_post`` is enforced by a separate DB-count helper —
+      neither is affected by this decorator. A view may still carry
+      ``@askbot_ratelimit(policy='registration')`` alongside
+      ``@ratelimit_exempt``; the two are orthogonal.
+
+    * Apply as the OUTERMOST decorator on the view (listed first /
+      topmost in source order). Many Django decorators use
+      ``functools.wraps``, which updates the wrapper's ``__dict__``
+      from the wrapped function and therefore carries this attribute
+      up — so in practice the attribute often survives common inner
+      wrappers (``csrf_protect``, ``csrf_exempt``, ``login_required``,
+      etc.). But a wrapper that does NOT use ``@wraps`` (or excludes
+      ``__dict__`` from ``WRAPPER_UPDATES``) will shadow it. Applying
+      this decorator outermost makes the attribute land directly on
+      the callable returned by URL resolution and is robust to any
+      inner wrapper.
+    """
+    view_func.askbot_ratelimit_exempt = True
+    return view_func
 
 
 def check_askbot_ratelimit(request, *, policy):

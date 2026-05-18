@@ -110,7 +110,13 @@ class RateLimitMiddleware:
         maybe_warn_misconfig()
 
     def __call__(self, request):
-        limited = check_askbot_ratelimit(request, policy='request')
-        if limited is not None:
-            return limited
         return self.get_response(request)
+
+    # Per-request limiter must run after URL resolution so views can
+    # opt out via the askbot_ratelimit_exempt attribute. Do not move
+    # this check back into __call__ — the resolved view callable is
+    # not available there.
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if getattr(view_func, 'askbot_ratelimit_exempt', False) is True:
+            return None
+        return check_askbot_ratelimit(request, policy='request')

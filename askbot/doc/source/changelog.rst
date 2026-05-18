@@ -29,6 +29,8 @@ Development (not yet released)
 * Closed-forum-mode bypass via ``ASKBOT_INTERNAL_IPS`` now honors
   CIDR ranges and IPv6 addresses (including IPv4-mapped IPv6).
 * ``manage.py check`` - checks rate-limit related settings.
+* Dismissing a rate-limit banner no longer spawns a new one.
+* JS translation catalog (``/jsi18n/``) is now exempt from the per-request rate limit.
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``

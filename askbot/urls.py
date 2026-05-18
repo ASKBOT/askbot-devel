@@ -12,6 +12,7 @@ from django.views import i18n as I18nViews
 from askbot import views
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
+from askbot.utils.ratelimit import ratelimit_exempt
 from askbot.utils.url_utils import service_url
 import askbot.deps.django_authopenid.urls
 
@@ -622,8 +623,10 @@ urlpatterns = [
         name='askbot_docs',
     ),
     service_url(
+        # Exempt: page-load asset; a 429 here breaks JS i18n on every
+        # subsequent rendered page in the session.
         r'^jsi18n/$',
-        I18nViews.JavaScriptCatalog.as_view(),
+        ratelimit_exempt(I18nViews.JavaScriptCatalog.as_view()),
         {'domain': 'djangojs', 'packages': str.join('+',['askbot'])},
         name='askbot_jsi18n'
     ),

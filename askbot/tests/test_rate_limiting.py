@@ -960,6 +960,47 @@ class RateLimitIntegrationTests(AskbotTestCase):
         self.assertIn('message', body)
 
 
+    @with_settings(
+        REQUEST_RATE_LIMIT_ENABLED=True,
+        REQUEST_RATE_LIMIT_MAX_REQUESTS=1,
+    )
+    def test_markread_endpoint_exempt_under_saturated_bucket(self):
+        """End-to-end check for the ``ratelimit_exempt`` opt-out:
+        saturate the per-request bucket, then POST
+        ``/messages/markread/`` and assert the response is not 429.
+        Closes the rate-limit-banner loop documented in
+        askbot-master-2c8."""
+        # Saturate the bucket with non-exempt GETs from this IP.
+        ip = '12.12.12.12'
+        self.client.get('/', REMOTE_ADDR=ip)
+        over = self.client.get('/', REMOTE_ADDR=ip)
+        self.assertEqual(over.status_code, 429)
+
+        # The exempt POST must bypass the saturated bucket.
+        response = self.client.post(
+            reverse('read_message'), REMOTE_ADDR=ip,
+        )
+        self.assertNotEqual(response.status_code, 429)
+
+    @with_settings(
+        REQUEST_RATE_LIMIT_ENABLED=True,
+        REQUEST_RATE_LIMIT_MAX_REQUESTS=1,
+    )
+    def test_jsi18n_endpoint_exempt_under_saturated_bucket(self):
+        """End-to-end check that the JS i18n catalog is exempt:
+        a 429 here would break translations on every subsequent
+        page load in the session."""
+        ip = '13.13.13.13'
+        self.client.get('/', REMOTE_ADDR=ip)
+        over = self.client.get('/', REMOTE_ADDR=ip)
+        self.assertEqual(over.status_code, 429)
+
+        response = self.client.get(
+            reverse('askbot_jsi18n'), REMOTE_ADDR=ip,
+        )
+        self.assertNotEqual(response.status_code, 429)
+
+
 class WatchedUserPostRateLimitTests(AskbotTestCase):
     """Tests for post rate limiting of watched users."""
 

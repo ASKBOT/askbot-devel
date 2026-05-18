@@ -35,6 +35,7 @@ from askbot.conf import settings as askbot_settings
 from askbot.utils import category_tree
 from askbot.utils import decorators
 from askbot.utils import url_utils
+from askbot.utils.ratelimit import ratelimit_exempt
 from askbot.utils.forms import get_db_object_or_404
 from askbot.utils.functions import decode_and_loads
 from askbot.utils.html import get_login_link
@@ -931,6 +932,7 @@ def delete_post(request):
     return {'is_deleted': post.deleted}
 
 #askbot-user communication system
+@ratelimit_exempt
 @csrf.csrf_protect
 def read_message(request):#marks message a read
     if request.method == "POST":
