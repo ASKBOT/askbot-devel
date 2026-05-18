@@ -185,6 +185,12 @@ $(document).ajaxError(function (event, xhr) {
     if (body.error !== 'rate_limited') {
         return;
     }
+    // Only one rate-limit banner at a time. The id is removed together
+    // with the .js-system-message subtree by notify.clear / notify.close,
+    // so the next 429 after dismissal surfaces a fresh banner.
+    if (document.getElementById('js-rate-limit-banner')) {
+        return;
+    }
     var retryAfter = body.retry_after;
     var msg;
     // humanizeSeconds requires retryAfter >= 1 (see helper docstring) —
@@ -198,7 +204,7 @@ $(document).ajaxError(function (event, xhr) {
     } else {
         msg = gettext('Too many requests, please slow down.');
     }
-    notify.show(msg, false);
+    notify.show(msg, false, 'js-rate-limit-banner');
 });
 
 
@@ -494,10 +500,10 @@ var setCheckBoxesIn = function (selector, value) {
 var notify = (function () {
     var visible = false;
     return {
-        show: function (html, autohide) {
+        show: function (html, autohide, id) {
             if (html) {
                 $('body').addClass('user-messages');
-                var msg = new SystemMessage(html);
+                var msg = new SystemMessage(html, id);
                 $('.js-system-messages .remove-messages-container').after(msg.getElement());
             }
             $('.js-system-messages').fadeIn('slow');
@@ -516,15 +522,16 @@ var notify = (function () {
             $('.js-system-messages .js-system-message').remove();
         },
         close: function (doPostback) {
+            $('.js-system-messages .js-system-message').remove();
+            $('.js-system-messages').fadeOut('fast');
+            $('body').removeClass('user-messages');
+            visible = false;
             if (doPostback) {
                 $.post(
                     askbot.urls.mark_read_message,
                     { formdata: 'required' }
                 );
             }
-            $('.js-system-messages').fadeOut('fast');
-            $('body').removeClass('user-messages');
-            visible = false;
         },
         isVisible: function () { return visible; }
     };

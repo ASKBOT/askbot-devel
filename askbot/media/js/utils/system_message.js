@@ -6,9 +6,10 @@
  * DOM shape. html is interpreted as HTML (jQuery .html());
  * callers are responsible for sanitization.
  */
-var SystemMessage = function (html) {
+var SystemMessage = function (html, id) {
     WrappedElement.call(this);
     this._html = html;
+    this._id = id;
 };
 inherits(SystemMessage, WrappedElement);
 
@@ -20,4 +21,7 @@ SystemMessage.prototype.createDom = function () {
     this._element = this.makeElement('div')
         .addClass('js-system-message')
         .append(inner);
+    if (this._id) {
+        this._element.attr('id', this._id);
+    }
 };
