@@ -24,3 +24,19 @@
     }
   }
 }
+
+.error-429-page {
+  .countdown {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.125rem 0.5rem;
+    min-width: 1.5rem;
+    background: var(--clr-neutral-50);
+    color: var(--bg-color);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--extra-large-font-size);
+    font-variant-numeric: tabular-nums;
+    border-radius: var(--badge-border-radius);
+    text-align: center;
+  }
+}

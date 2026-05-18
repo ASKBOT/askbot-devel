@@ -8,4 +8,34 @@
   {% trans %}You have made too many requests in a short period of time.{% endtrans %}
   {% trans wait=retry_after_human %}Please wait {{ wait }} before trying again.{% endtrans %}
 </p>
+{% if retry_after <= 60 %}
+<div class="countdown js-rate-limit-countdown"
+     data-retry-after="{{ retry_after }}"
+     role="timer"
+     aria-live="polite"
+     aria-atomic="true"><span class="js-countdown-value">{{ retry_after }}</span></div>
+{% endif %}
 {% endblock %}
+{% if retry_after <= 60 %}
+{% block endjs %}
+<script type="text/javascript">
+(function () {
+  var el = document.querySelector('.js-rate-limit-countdown');
+  if (!el) { return; }
+  var valueEl = el.querySelector('.js-countdown-value');
+  var remaining = parseInt(el.getAttribute('data-retry-after'), 10);
+  if (isNaN(remaining)) { return; }
+  var timer = setInterval(function () {
+    remaining -= 1;
+    if (remaining <= 0) {
+      valueEl.textContent = '0';
+      clearInterval(timer);
+      window.location.reload();
+      return;
+    }
+    valueEl.textContent = String(remaining);
+  }, 1000);
+})();
+</script>
+{% endblock %}
+{% endif %}
