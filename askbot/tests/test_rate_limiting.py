@@ -633,10 +633,15 @@ class RateLimitSystemCheckTests(AskbotTestCase):
     # --- Registration check ---
 
     def test_system_check_w004_registered(self):
-        """Registration sweep for W004. The ``W002 not in IDs`` check
-        is load-bearing — without it, a regression that surfaces both
-        IDs would go unnoticed. As above, W001/W003 require opposing
-        ``RATELIMIT_ENABLE`` values so the sweep unions two passes."""
+        """Registration sweep for W001/W003/W004/W005. The
+        ``W002 not in IDs`` check is load-bearing — without it, a
+        regression that surfaces both IDs would go unnoticed. W001/W003
+        require opposing ``RATELIMIT_ENABLE`` values so the sweep
+        unions two passes. The second pass also asserts W005 and
+        therefore must run with a ``MIDDLEWARE`` that excludes
+        ``RateLimitMiddleware`` — otherwise the assertion would pass
+        under ``tox`` (testproject settings) and fail under
+        ``askbot_site`` (which installs the middleware)."""
         cache_overrides = dict(
             RATELIMIT_USE_CACHE='nonexistent',
             CACHES={
@@ -645,6 +650,10 @@ class RateLimitSystemCheckTests(AskbotTestCase):
                         'django.core.cache.backends.dummy.DummyCache',
                 },
             },
+        )
+        sweep_middleware_no_ratelimit = (
+            'django.middleware.csrf.CsrfViewMiddleware',
+            'django.contrib.sessions.middleware.SessionMiddleware',
         )
         ratelimit_logger = logging.getLogger('askbot.utils.ratelimit')
         original = ratelimit_logger.level
@@ -656,13 +665,15 @@ class RateLimitSystemCheckTests(AskbotTestCase):
                 with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
                     w001_w004_results = run_checks(app_configs=None)
             with override_settings(
-                RATELIMIT_ENABLE=True, **cache_overrides,
+                RATELIMIT_ENABLE=True,
+                MIDDLEWARE=sweep_middleware_no_ratelimit,
+                **cache_overrides,
             ):
                 with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
-                    w003_results = run_checks(app_configs=None)
+                    w003_w005_results = run_checks(app_configs=None)
         finally:
             ratelimit_logger.setLevel(original)
-        all_results = (*w001_w004_results, *w003_results)
+        all_results = (*w001_w004_results, *w003_w005_results)
         askbot_ids = {
             warning.id for warning in all_results
             if getattr(warning, 'id', '').startswith('askbot.W')
@@ -670,6 +681,7 @@ class RateLimitSystemCheckTests(AskbotTestCase):
         self.assertIn('askbot.W001', askbot_ids)
         self.assertIn('askbot.W003', askbot_ids)
         self.assertIn('askbot.W004', askbot_ids)
+        self.assertIn('askbot.W005', askbot_ids)
         self.assertNotIn('askbot.W002', askbot_ids)
 
 
@@ -766,6 +778,133 @@ class RateLimitLoggerLevelCheckTests(AskbotTestCase):
         ):
             results = askbot_checks.check_ratelimit_logger_level(None)
         self.assertEqual(results, [])
+
+
+# MIDDLEWARE list excluding RateLimitMiddleware — used by the W005
+# tests to assert the check fires under a configuration that omits
+# the per-request rate limiter. Independent of the active test
+# settings module (testproject vs askbot_site).
+MIDDLEWARE_WITHOUT_RATELIMIT = (
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'askbot.middleware.anon_user.ConnectToSessionMessagesMiddleware',
+    'askbot.middleware.forum_mode.ForumModeMiddleware',
+    'askbot.middleware.cancel.CancelActionMiddleware',
+    'askbot.middleware.view_log.ViewLogMiddleware',
+)
+
+
+class RateLimitMiddlewareInstalledCheckTests(AskbotTestCase):
+    """Tests for the ``askbot.W005`` system check.
+
+    W005 fires when REQUEST_RATE_LIMIT_ENABLED is on but
+    RateLimitMiddleware is not installed — a silent failure mode
+    where the admin UI toggle has no effect. Parent epic:
+    ``askbot-master-fby``.
+    """
+
+    @override_settings(MIDDLEWARE=MIDDLEWARE_WITHOUT_RATELIMIT)
+    def test_check_w005_fires_when_middleware_missing(self):
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].id, 'askbot.W005')
+        self.assertIn(
+            'RateLimitMiddleware', results[0].msg,
+        )
+
+    @override_settings(MIDDLEWARE=TEST_MIDDLEWARE)
+    def test_check_w005_silent_when_middleware_installed(self):
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(results, [])
+
+    @override_settings(MIDDLEWARE=MIDDLEWARE_WITHOUT_RATELIMIT)
+    def test_check_w005_silent_when_livesetting_off(self):
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=False):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(results, [])
+
+    @override_settings(
+        RATELIMIT_ENABLE=False,
+        MIDDLEWARE=MIDDLEWARE_WITHOUT_RATELIMIT,
+    )
+    def test_check_w005_silent_when_ratelimit_enable_falsy(self):
+        """If ``RATELIMIT_ENABLE`` is falsy, W001 already reports the
+        contradiction. W005 must stay silent so the operator does not
+        see two warnings for one underlying misconfig — this is the
+        load-bearing reason for the first guard in the check."""
+        with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(results, [])
+
+    @override_settings(MIDDLEWARE=MIDDLEWARE_WITHOUT_RATELIMIT)
+    def test_check_w005_silent_when_livesettings_access_raises(self):
+        """A livesettings DB failure (common during collectstatic,
+        migrate, or fresh bootstrap) must be swallowed silently
+        rather than crash ``manage.py check``."""
+        from askbot import conf as askbot_conf
+
+        real_settings = askbot_conf.settings
+        raising_attrs = {'REQUEST_RATE_LIMIT_ENABLED'}
+
+        class SelectiveRaising:
+            def __getattr__(self, name):
+                if name in raising_attrs:
+                    raise Exception('boom')
+                return getattr(real_settings, name)
+
+        with mock.patch.object(
+            askbot_conf, 'settings', SelectiveRaising(),
+        ):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(results, [])
+
+    @override_settings(MIDDLEWARE=MIDDLEWARE_WITHOUT_RATELIMIT)
+    def test_check_w005_scoped_to_request_policy_only(self):
+        """Only the REQUEST policy gates W005. Other policies
+        (registration, watched-user-post) are not middleware-gated,
+        so enabling them with the middleware missing must not fire
+        W005."""
+        with livesettings_override(
+            REQUEST_RATE_LIMIT_ENABLED=False,
+            REGISTRATION_RATE_LIMIT_ENABLED=True,
+            WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
+        ):
+            results = (
+                askbot_checks.check_ratelimit_middleware_installed(None)
+            )
+        self.assertEqual(results, [])
+
+    def test_check_w005_fires_when_middleware_undefined(self):
+        """A settings object with no ``MIDDLEWARE`` attribute at all
+        must still reach W005 via the ``getattr(..., ())`` fallback,
+        not raise. ``RATELIMIT_ENABLE`` is set on the namespace
+        itself because ``mock.patch.object`` replaces
+        ``askbot_checks.settings`` process-wide for the block, so the
+        first-guard short-circuit must read from the same object."""
+        ns = SimpleNamespace(RATELIMIT_ENABLE=True)
+        with mock.patch.object(askbot_checks, 'settings', ns):
+            with livesettings_override(REQUEST_RATE_LIMIT_ENABLED=True):
+                results = (
+                    askbot_checks
+                    .check_ratelimit_middleware_installed(None)
+                )
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].id, 'askbot.W005')
 
 
 @override_settings(MIDDLEWARE=TEST_MIDDLEWARE)

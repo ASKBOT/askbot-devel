@@ -139,3 +139,38 @@ def check_ratelimit_logger_level(app_configs, **kwargs):
              '(fail2ban / CrowdSec / Wazuh / Filebeat) will fail.',
         id='askbot.W003',
     )]
+
+
+@register()
+def check_ratelimit_middleware_installed(app_configs, **kwargs):
+    """W005: REQUEST_RATE_LIMIT_ENABLED on but RateLimitMiddleware not installed."""
+    # `RATELIMIT_ENABLE` short-circuit mirrors W001's first guard;
+    # keeps W001 and W005 mutually exclusive on a single misconfig so
+    # the operator does not see two warnings for one underlying issue.
+    if not getattr(settings, 'RATELIMIT_ENABLE', True):
+        return []
+    try:
+        # Deferred import + broad except mirror W001/W003 — tolerate
+        # collectstatic / migrate / fresh bootstrap where livesettings
+        # are not reachable. Silent on read failure matches W003.
+        from askbot.conf import settings as askbot_settings
+        if not askbot_settings.REQUEST_RATE_LIMIT_ENABLED:
+            return []
+    except Exception:
+        return []
+    middleware = getattr(settings, 'MIDDLEWARE', ())
+    if 'askbot.middleware.ratelimit.RateLimitMiddleware' in middleware:
+        return []
+    return [Warning(
+        "REQUEST_RATE_LIMIT_ENABLED is on but "
+        "'askbot.middleware.ratelimit.RateLimitMiddleware' is not "
+        "installed; the per-request rate limiter will not run and "
+        "the admin toggle will have no effect.",
+        hint="Add 'askbot.middleware.ratelimit.RateLimitMiddleware' "
+             "to MIDDLEWARE (ahead of "
+             "askbot.middleware.view_log.ViewLogMiddleware so that "
+             "rate-limited requests do not get logged as ordinary "
+             "traffic), or disable REQUEST_RATE_LIMIT_ENABLED in the "
+             "admin UI.",
+        id='askbot.W005',
+    )]
