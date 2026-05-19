@@ -69,9 +69,9 @@ disagree the disagreement is silent — the admin UI keeps showing rate
 limiting as enabled while the library no-ops every request. The three
 django-side knobs below are the ones operators must get right;
 ``manage.py check`` emits stable warning codes (``askbot.W001``,
-``askbot.W002``, ``askbot.W003``, ``askbot.W004``) so deploy pipelines
-can fail before traffic hits production **when ``manage.py check`` is
-invoked with** ``--fail-level=WARNING --deploy``. Without those flags,
+``askbot.W002``, ``askbot.W003``, ``askbot.W004``, ``askbot.W005``) so
+deploy pipelines can fail before traffic hits production **when
+``manage.py check`` is invoked with** ``--fail-level=WARNING --deploy``. Without those flags,
 Django's default fail-level is ``ERROR`` and these Warning-level checks
 are informational. ``askbot.W003`` polices the rate-limit log channel
 and is documented in :ref:`rate-limit-log-monitoring`.
@@ -110,6 +110,18 @@ enabled livesetting. ``askbot.I001`` (informational) is emitted when
 the livesettings DB cannot be reached during the consistency check;
 this is expected during fresh bootstrap and does not fail deploy
 gates.
+
+**Middleware presence — install RateLimitMiddleware.** ``manage.py
+check`` emits ``askbot.W005`` when ``REQUEST_RATE_LIMIT_ENABLED`` is
+on in the admin UI but
+``askbot.middleware.ratelimit.RateLimitMiddleware`` is missing from
+Django's ``MIDDLEWARE`` setting — the admin toggle then has no effect
+because no middleware consumes it. Add the middleware ahead of
+``askbot.middleware.view_log.ViewLogMiddleware`` so rate-limited
+requests are not logged as ordinary traffic, or disable the
+livesetting. W005 short-circuits when ``RATELIMIT_ENABLE`` is falsy
+so it does not duplicate ``askbot.W001`` for the same underlying
+disable.
 
 .. _rate-limit-subnet-keying:
 
@@ -160,6 +172,18 @@ When the limiter cannot resolve a client IP (proxy misconfigured, the
 header was anonymized) the IP field renders as ``ip=-``. Log-tailer
 recipes must either skip those rows or anchor on a bannable policy so
 the actioner is never fed the ``-`` placeholder.
+
+**Exempted endpoints emit nothing.** Views decorated with
+``askbot.utils.ratelimit.ratelimit_exempt`` short-circuit the
+per-request middleware before any bucket lookup, so they neither
+consume a slot nor emit a ``askbot.ratelimit hit`` line. Askbot ships
+this mark on the two UI-bookkeeping endpoints whose 429s would break
+the user session: ``POST /messages/markread/`` (dismissing the
+rate-limit banner) and ``GET /jsi18n/`` (the JavaScript-i18n
+catalog). Custom views that should bypass the per-request bucket can
+apply the same decorator; only the per-request policy honours it —
+the registration policy fires from its own view-level decorator and
+is unaffected.
 
 **Bannable-policy choice.** The middleware emits ``policy=request``,
 the registration decorator emits ``policy=registration``, and the
@@ -237,11 +261,12 @@ instead of configuring the parent.
    ``askbot.middleware.ratelimit`` — muting the misconfig logger is
    silently destructive.
 
-**W003 fail-level.** Like W001/W002/W004, ``askbot.W003`` is a
+**W003 fail-level.** Like W001/W002/W004/W005, ``askbot.W003`` is a
 Warning-level system check. It does NOT fail ``manage.py check``
 unless invoked as ``manage.py check --fail-level=WARNING --deploy``
 (Django's default ``--fail-level`` is ``ERROR``). The same caveat is
-documented for W001/W002/W004 in :ref:`rate-limit-reverse-proxies`.
+documented for W001/W002/W004/W005 in
+:ref:`rate-limit-reverse-proxies`.
 
 **Headline fail2ban recipe.** Drop a ``jail.d`` snippet matching the
 anchor and capturing the ``ip=`` field. Two regex variants — pick the
