@@ -6,7 +6,7 @@ import regex as re
 from copy import copy
 from django.conf import settings as django_settings
 from django.db import models
-from django.db.models import F, Q
+from django.db.models import Count, F, Q
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.core import cache  # import cache, not from cache import cache, to be able to monkey-patch cache.cache in test cases
@@ -358,10 +358,23 @@ class ThreadManager(BaseQuerySetManager):
             else:
                 meta_data['non_existing_tags'] = list()
 
-            # construct filter for the tag search
-            for tag in tags:
-                # Tags or AND-ed here, not OR-ed (i.e. we fetch only threads with all tags)
-                qs = qs.filter(tags__name=tag)
+            # AND across tags: fetch only threads tagged with every requested tag.
+            # The natural ORM expression — one .filter(tags__name=tag) per tag —
+            # produces a JOIN through the M2M for every tag, which scales
+            # superlinearly and degrades to multi-second response times for
+            # 6-8 tag queries even on small datasets. The subquery + HAVING
+            # COUNT form is the relational idiom for set intersection.
+            tags = list(tags)
+            ThreadTagModel = self.model.tags.through
+            matching_thread_ids = (
+                ThreadTagModel.objects
+                .filter(tag__name__in=tags)
+                .values('thread_id')
+                .annotate(matched=Count('tag_id', distinct=True))
+                .filter(matched=len(tags))
+                .values_list('thread_id', flat=True)
+            )
+            qs = qs.filter(id__in=matching_thread_ids)
         else:
             meta_data['non_existing_tags'] = list()
 

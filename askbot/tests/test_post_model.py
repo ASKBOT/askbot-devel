@@ -239,6 +239,17 @@ class ThreadTagModelsTests(AskbotTestCase):
         qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss.add_tag('tag1').add_tag('tag3').add_tag('tag6'))
         self.assertEqual(1, qs.count())
 
+        # 4+ tag AND: exercises the subquery+HAVING COUNT path. q4 is the
+        # only thread tagged with all six tags so any 4-6 tag subset matches
+        # only q4.
+        qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss.add_tag('tag1').add_tag('tag2').add_tag('tag3').add_tag('tag6'))
+        self.assertEqual(1, qs.count())
+        self.assertEqual(self.q4.thread_id, qs[0].id)
+
+        qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss.add_tag('tag1').add_tag('tag2').add_tag('tag3').add_tag('tag4').add_tag('tag5').add_tag('tag6'))
+        self.assertEqual(1, qs.count())
+        self.assertEqual(self.q4.thread_id, qs[0].id)
+
         ss = SearchState(scope=None, sort=None, query="#tag3", tags='tag1, tag6', author=None, page=None, user_logged_in=None)
         qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss)
         self.assertEqual(1, qs.count())
