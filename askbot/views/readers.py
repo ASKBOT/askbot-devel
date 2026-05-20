@@ -638,6 +638,15 @@ def question(request, id):#refactor - long subroutine. display question body, an
     is_cacheable = True
     if show_page != 1:
         is_cacheable = False
+    elif request.user.is_authenticated:
+        # The cached fragment includes the answer form with {{ csrf_input }}.
+        # The cache key is only thread.id, so caching across users would serve
+        # one user's CSRF token to everyone else, causing 403s on submit.
+        # Authenticated users also have other personalized content (drafts,
+        # vote buttons, permission-gated controls), so the fragment cache is
+        # never safe for them. Anonymous users still benefit from the cache,
+        # which is the main scraper-defense use case.
+        is_cacheable = False
     # temporary, until invalidation fix. Got broken with Python 3
     # elif show_comment_position > askbot_settings.MAX_COMMENTS_TO_SHOW:
     #    is_cacheable = False
