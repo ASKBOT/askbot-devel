@@ -12,7 +12,7 @@ from django.views import i18n as I18nViews
 from askbot import views
 from askbot.feed import RssLastestQuestionsFeed, RssIndividualQuestionFeed
 from askbot.sitemap import QuestionsSitemap
-from askbot.utils.ratelimit import ratelimit_exempt
+from askbot.utils.ratelimit import ratelimit_exempt, ratelimit_exempt_resolver
 from askbot.utils.url_utils import service_url
 import askbot.deps.django_authopenid.urls
 
@@ -35,6 +35,11 @@ MAIN_PAGE_BASE_URL = settings.ASKBOT_MAIN_PAGE_BASE_URL
 QUESTION_PAGE_BASE_URL = settings.ASKBOT_QUESTION_PAGE_BASE_URL
 
 APP_PATH = os.path.dirname(__file__)
+
+livesettings_urls = ratelimit_exempt_resolver(
+    re_path(r'^settings/', include('livesettings.urls'))
+)
+
 urlpatterns = [
     re_path(r'^$', views.readers.index, name='index'),
     # BEGIN Questions (main page) urls. All this urls work both normally and through ajax
@@ -634,7 +639,7 @@ urlpatterns = [
     re_path(r'^analytics/users/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics_users.analytics_users, name='analytics_users'),
     re_path(r'^analytics/activity/(?P<activity_segment>.+)/(?P<content_segment>.+)/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics.analytics_activity.analytics_activity, name='analytics_activity'),
     #service_url(r'^private-messages/', include('askbot.deps.group_messaging.urls')),
-    re_path(r'^settings/', include('livesettings.urls')),
+    livesettings_urls,
     re_path(r'^preview-emails/$', views.emails.list_emails, name='list_emails'),
     re_path(r'^preview-emails/(?P<slug>.+)/$', views.emails.preview_email, name='preview_email'),
 

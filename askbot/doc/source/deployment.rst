@@ -173,17 +173,23 @@ header was anonymized) the IP field renders as ``ip=-``. Log-tailer
 recipes must either skip those rows or anchor on a bannable policy so
 the actioner is never fed the ``-`` placeholder.
 
-**Exempted endpoints emit nothing.** Views decorated with
-``askbot.utils.ratelimit.ratelimit_exempt`` short-circuit the
-per-request middleware before any bucket lookup, so they neither
-consume a slot nor emit a ``askbot.ratelimit hit`` line. Askbot ships
-this mark on the two UI-bookkeeping endpoints whose 429s would break
-the user session: ``POST /messages/markread/`` (dismissing the
-rate-limit banner) and ``GET /jsi18n/`` (the JavaScript-i18n
-catalog). Custom views that should bypass the per-request bucket can
-apply the same decorator; only the per-request policy honours it —
-the registration policy fires from its own view-level decorator and
-is unaffected.
+**Exempted endpoints emit nothing.** Views marked exempt
+short-circuit the per-request middleware before any bucket lookup, so
+they neither consume a slot nor emit a ``askbot.ratelimit hit`` line.
+Askbot ships this mark on two UI-bookkeeping endpoints whose 429s
+would break the user session: ``POST /messages/markread/`` (dismissing
+the rate-limit banner) and ``GET /jsi18n/`` (the JavaScript-i18n
+catalog). The livesettings admin pages (``/settings/...``) are also
+exempt, so an admin tuning configuration is never locked out. These
+two endpoints carry the per-view
+``askbot.utils.ratelimit.ratelimit_exempt`` decorator; the
+livesettings pages are exempted at the URLconf level via
+``ratelimit_exempt_resolver``, because they are added by a bulk
+``include()`` of a third-party URLconf whose views cannot be decorated
+at their definition site. Custom views that should bypass the
+per-request bucket can apply the same decorator; only the per-request
+policy honours it — the registration policy fires from its own
+view-level decorator and is unaffected.
 
 **Bannable-policy choice.** The middleware emits ``policy=request``,
 the registration decorator emits ``policy=registration``, and the

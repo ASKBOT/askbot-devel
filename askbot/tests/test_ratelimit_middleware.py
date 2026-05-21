@@ -4,17 +4,24 @@
 End-to-end tests that drive the real URL chain live in
 ``test_rate_limiting.py`` (``RateLimitIntegrationTests``); this file
 covers the middleware in isolation via ``RequestFactory`` and
-synthetic view callables.
+synthetic view callables. It also covers resolver-level contract
+tests for the exemption helpers — URL resolution checked without
+driving a request through the middleware stack.
 """
 from django.core.cache import caches
 from django.http import HttpResponse
 from django.test import RequestFactory
+from django.urls import URLPattern, include, re_path, resolve
 from django.views.decorators import csrf
 
 from askbot.middleware import ratelimit as ratelimit_mod
 from askbot.middleware.ratelimit import RateLimitMiddleware
 from askbot.tests.utils import AskbotTestCase, with_settings
-from askbot.utils.ratelimit import askbot_ratelimit, ratelimit_exempt
+from askbot.utils.ratelimit import (
+    askbot_ratelimit,
+    ratelimit_exempt,
+    ratelimit_exempt_resolver,
+)
 
 
 def _passthrough(request):
@@ -71,6 +78,58 @@ class RatelimitExemptDecoratorTests(AskbotTestCase):
         self.assertIs(decorated, view)
         self.assertEqual(decorated.__name__, 'view')
         self.assertEqual(decorated.__doc__, 'doc')
+
+
+class RatelimitExemptResolverTests(AskbotTestCase):
+    """Contract tests for the ``ratelimit_exempt_resolver`` helper.
+    Tests 1 and 2 exercise the helper against synthetic URLconfs whose
+    view callables are fresh function objects defined in the test —
+    never the shared ``livesettings.views`` functions. Fresh callables
+    start without the exempt attribute, so a passing assertion proves
+    the helper did the stamping (the real livesettings callbacks are
+    stamped process-wide once ``askbot.urls`` imports, which would make
+    a real-URLconf test a tautology). Only Test 3 resolves the real
+    livesettings routes, since its purpose is to confirm that
+    ``askbot/urls.py``'s module-level stamping ran.
+    """
+
+    def test_helper_stamps_flat_urlconf(self):
+        def view_a(request):
+            return HttpResponse()
+
+        def view_b(request):
+            return HttpResponse()
+
+        patterns = [
+            re_path(r'^a/$', view_a),
+            re_path(r'^b/$', view_b),
+        ]
+        resolver = re_path(r'^x/', include((patterns, 'app')))
+
+        returned = ratelimit_exempt_resolver(resolver)
+
+        self.assertIs(returned, resolver)
+        for entry in resolver.url_patterns:
+            if isinstance(entry, URLPattern):
+                self.assertIs(entry.callback.askbot_ratelimit_exempt, True)
+
+    def test_helper_recurses_into_nested_include(self):
+        def inner_view(request):
+            return HttpResponse()
+
+        inner_patterns = [re_path(r'^deep/$', inner_view)]
+        outer_patterns = [
+            re_path(r'^nested/', include((inner_patterns, 'inner'))),
+        ]
+        resolver = re_path(r'^x/', include((outer_patterns, 'outer')))
+
+        ratelimit_exempt_resolver(resolver)
+
+        self.assertIs(inner_view.askbot_ratelimit_exempt, True)
+
+    def test_livesettings_routes_resolve_exempt(self):
+        match = resolve('/settings/', urlconf='askbot.urls')
+        self.assertIs(match.func.askbot_ratelimit_exempt, True)
 
 
 class RateLimitMiddlewareProcessViewTests(AskbotTestCase):

@@ -30,6 +30,8 @@ Development (not yet released)
   High-reputation users can be allowed to bypass for the watched-user
   post rate limit, controlled by two new livesettings.
 
+  The livesettings admin pages are exempt from request rate limiting.
+
 * Closed-forum-mode bypass via ``ASKBOT_INTERNAL_IPS`` now honors
   CIDR ranges and IPv6 addresses (including IPv4-mapped IPv6).
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``

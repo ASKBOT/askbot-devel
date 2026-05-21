@@ -7,10 +7,12 @@ view-level use, a non-decorator variant (``check_askbot_ratelimit``)
 for middleware-style call sites that have no view function, a
 bool-check primitive (``is_askbot_ratelimited``) for call sites that
 need to render their own UX (e.g. a session message + form re-render)
-instead of returning the helper's content-negotiated 429 response, and
-a view-level opt-out (``ratelimit_exempt``) for UI-bookkeeping
+instead of returning the helper's content-negotiated 429 response, a
+view-level opt-out (``ratelimit_exempt``) for UI-bookkeeping
 endpoints that must not be subject to the per-request middleware
-policy.
+policy, and a URLconf-level opt-out (``ratelimit_exempt_resolver``)
+for routes added by a bulk include() of a third-party URLconf, whose
+views cannot be decorated at their definition site.
 
 Callers pick a policy by name (``policy='request'``, etc.); the policy
 table maps each name to its enabled-flag livesetting, max-count
@@ -25,6 +27,7 @@ import logging
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
+from django.urls import URLPattern, URLResolver
 from django.utils.cache import patch_vary_headers
 from django.utils.module_loading import import_string
 from django.utils.translation import ngettext
@@ -596,6 +599,25 @@ def ratelimit_exempt(view_func):
     """
     view_func.askbot_ratelimit_exempt = True
     return view_func
+
+
+def ratelimit_exempt_resolver(resolver):
+    """Mark every view reachable through an included URLconf as exempt.
+
+    For third-party URLconfs added with a bulk include(), where the
+    view functions cannot be decorated at their definition site.
+    Recurses into nested includes.
+
+    Returns the same ``resolver`` it was given, so it can wrap an
+    ``include()`` inline at the call site (mirrors how
+    ``ratelimit_exempt`` returns the view it stamps).
+    """
+    for entry in resolver.url_patterns:
+        if isinstance(entry, URLResolver):
+            ratelimit_exempt_resolver(entry)
+        elif isinstance(entry, URLPattern):
+            ratelimit_exempt(entry.callback)
+    return resolver
 
 
 def check_askbot_ratelimit(request, *, policy):
