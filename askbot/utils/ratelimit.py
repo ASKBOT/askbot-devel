@@ -254,6 +254,29 @@ def is_allowlisted(request):
     return False
 
 
+def is_high_rep_exempt(request):
+    """True iff high-rep bypass is enabled and request.user's
+    reputation meets MIN_REP_TO_BYPASS_RATE_LIMIT. Anonymous users
+    are never exempt.
+
+    Policy-agnostic: answers "is this requester trusted by
+    reputation?" — not "does any specific policy bypass them?". The
+    only consumer today is check_watched_user_post_rate_limit; a
+    future caller is free to reuse it without semantic re-work.
+    """
+    user = getattr(request, 'user', None)
+    if user is None or not user.is_authenticated:
+        return False
+    if not askbot_settings.RATE_LIMIT_BYPASS_HIGH_REP_USERS:
+        return False
+    # User.reputation is bound via add_to_class on real users, but
+    # bare or anonymous-like objects from unusual auth backends or
+    # tests may lack it; the `or 0` also coerces a stray None to a
+    # comparable int.
+    rep = getattr(user, 'reputation', 0) or 0
+    return rep >= askbot_settings.MIN_REP_TO_BYPASS_RATE_LIMIT
+
+
 def get_internal_ip_networks():
     """Parsed networks from the ASKBOT_INTERNAL_IPS django setting only.
 

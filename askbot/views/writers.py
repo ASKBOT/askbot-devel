@@ -47,7 +47,7 @@ from askbot.utils.file_utils import store_file
 from askbot.utils.functions import encode_jwt
 from askbot.utils.http import is_ajax
 from askbot.utils.loading import load_module
-from askbot.utils.ratelimit import is_allowlisted
+from askbot.utils.ratelimit import is_allowlisted, is_high_rep_exempt
 from askbot.views import context
 from askbot.templatetags import extra_filters_jinja as template_filters
 from askbot.importers.stackexchange import management as stackexchange#todo: may change
@@ -64,6 +64,11 @@ def check_watched_user_post_rate_limit(user, request):
     bypass the check entirely, including the DB count query.
     """
     if is_allowlisted(request):
+        return
+    # Ordering: after is_allowlisted (trusted-IP wins), before the
+    # enabled flag (so the bypass is meaningful only when the policy
+    # is on and would otherwise raise).
+    if is_high_rep_exempt(request):
         return
     if not askbot_settings.WATCHED_USER_POST_RATE_LIMIT_ENABLED:
         return

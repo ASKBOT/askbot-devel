@@ -310,6 +310,35 @@ that fanned out to a configurable shell command per ban event. Both
 are removed; this log-tailer recipe is the supported integration
 path.
 
+.. _rate-limit-high-rep-bypass:
+
+High-reputation bypass for the watched-user post limit
+------------------------------------------------------
+
+Two livesettings let trusted contributors bypass the watched-user
+post rate limit while still being treated as watched for every
+other moderation purpose:
+
+* ``RATE_LIMIT_BYPASS_HIGH_REP_USERS`` — master switch. Off by
+  default. When on, users at or above the reputation threshold
+  below skip the watched-user post limit.
+* ``MIN_REP_TO_BYPASS_RATE_LIMIT`` — integer reputation threshold,
+  default 200. Only consulted when the master switch is on.
+
+**Scope.** The bypass applies ONLY to the watched-user post limit.
+The per-IP ``request`` policy and the ``registration`` policy
+remain uniform for everyone — admins, moderators, high-reputation
+users, and anonymous traffic are all subject to the same caps.
+
+**Interaction with auto-approval.** Askbot promotes a watched user
+out of the watched status when their reputation crosses
+``MIN_REP_TO_AUTOAPPROVE_USER``. Once approved, the watched-user
+limit no longer applies to them and this bypass is never consulted.
+For the bypass to ever take effect, set ``MIN_REP_TO_BYPASS_RATE_LIMIT``
+strictly LOWER than ``MIN_REP_TO_AUTOAPPROVE_USER``. The bypass is
+useful when auto-approval is set very high (or effectively disabled),
+or when an admin has manually re-watched a high-reputation user.
+
 Setting up file access permissions
 ----------------------------------
 

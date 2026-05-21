@@ -1139,6 +1139,77 @@ class RateLimitIntegrationTests(AskbotTestCase):
         )
         self.assertNotEqual(response.status_code, 429)
 
+    @with_settings(
+        REQUEST_RATE_LIMIT_ENABLED=True,
+        REQUEST_RATE_LIMIT_MAX_REQUESTS=2,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_high_rep_user_not_exempt_from_request_policy(self):
+        """High-rep bypass switch must not leak to the per-IP request
+        policy: a high-rep authenticated user still hits 429 once the
+        request bucket saturates."""
+        high_rep = self.create_user(
+            'rl_high_rep', status='a', reputation=300,
+        )
+        self.client.force_login(high_rep)
+
+        for i in range(2):
+            response = self.client.get('/', REMOTE_ADDR='7.7.7.7')
+            self.assertLess(response.status_code, 400)
+
+        over = self.client.get('/', REMOTE_ADDR='7.7.7.7')
+        self.assertEqual(over.status_code, 429)
+
+    @with_settings(
+        REGISTRATION_RATE_LIMIT_ENABLED=True,
+        REGISTRATION_RATE_LIMIT_MAX_REGISTRATIONS=2,
+        REQUEST_RATE_LIMIT_ENABLED=False,
+        USE_RECAPTCHA=False,
+        TERMS_CONSENT_REQUIRED=False,
+        NEW_REGISTRATIONS_DISABLED=False,
+        EMAIL_VALIDATION_REQUIRED=False,
+        BLANK_EMAIL_ALLOWED=False,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_high_rep_user_not_exempt_from_registration_policy(self):
+        """High-rep bypass switch must not leak to the registration
+        policy: the rate-limit middleware runs before view dispatch,
+        so the signup-view auth redirect does not preempt the 429."""
+        high_rep = self.create_user(
+            'rl_signup_high_rep', status='a', reputation=300,
+        )
+        self.client.force_login(high_rep)
+
+        url = reverse('user_signup_with_password')
+        for i in range(2):
+            response = self.client.post(
+                url,
+                {
+                    'next': '/',
+                    'username': f'hrrl{i}',
+                    'email': f'hrrl{i}@example.com',
+                    'password1': 'TestPass12345!',
+                    'password2': 'TestPass12345!',
+                },
+                REMOTE_ADDR='4.4.4.4',
+            )
+            self.assertNotEqual(response.status_code, 429)
+
+        over = self.client.post(
+            url,
+            {
+                'next': '/',
+                'username': 'hrrl2',
+                'email': 'hrrl2@example.com',
+                'password1': 'TestPass12345!',
+                'password2': 'TestPass12345!',
+            },
+            REMOTE_ADDR='4.4.4.4',
+        )
+        self.assertEqual(over.status_code, 429)
+
 
 class WatchedUserPostRateLimitTests(AskbotTestCase):
     """Tests for post rate limiting of watched users."""
@@ -1149,6 +1220,11 @@ class WatchedUserPostRateLimitTests(AskbotTestCase):
 
     def _request(self, ip='8.8.8.8'):
         return RequestFactory().get('/', REMOTE_ADDR=ip)
+
+    def _request_as(self, user, ip='8.8.8.8'):
+        req = self._request(ip=ip)
+        req.user = user
+        return req
 
     @with_settings(
         WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
@@ -1252,3 +1328,121 @@ class WatchedUserPostRateLimitTests(AskbotTestCase):
             check_watched_user_post_rate_limit(
                 self.watched_user, self._request(ip='1.2.3.4'),
             )
+
+    @with_settings(
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
+        WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS=3,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=False,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_no_bypass_when_master_switch_off(self):
+        """Master switch off, high-rep watched user, over limit —
+        raises. The switch is the gate even at very high rep."""
+        from askbot.views.writers import check_watched_user_post_rate_limit
+        from django.core import exceptions as django_exceptions
+
+        watched_high_rep = self.create_user(
+            'watched_high_rep', status='w', reputation=300,
+        )
+        for i in range(3):
+            self.post_question(user=watched_high_rep,
+                               title='switch-off %d' % i)
+
+        with self.assertRaises(django_exceptions.PermissionDenied):
+            check_watched_user_post_rate_limit(
+                watched_high_rep, self._request_as(watched_high_rep),
+            )
+
+    @with_settings(
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
+        WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS=3,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_no_bypass_when_rep_just_below_threshold(self):
+        """Boundary test: rep `threshold - 1` (199 vs 200) — still
+        raises."""
+        from askbot.views.writers import check_watched_user_post_rate_limit
+        from django.core import exceptions as django_exceptions
+
+        watched_just_below = self.create_user(
+            'watched_just_below', status='w', reputation=199,
+        )
+        for i in range(3):
+            self.post_question(user=watched_just_below,
+                               title='just-below %d' % i)
+
+        with self.assertRaises(django_exceptions.PermissionDenied):
+            check_watched_user_post_rate_limit(
+                watched_just_below,
+                self._request_as(watched_just_below),
+            )
+
+    @with_settings(
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
+        WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS=3,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_bypass_when_rep_at_threshold(self):
+        """Master switch on, rep exactly at threshold — no exception
+        (`>=` comparison)."""
+        from askbot.views.writers import check_watched_user_post_rate_limit
+
+        watched_at_threshold = self.create_user(
+            'watched_at_threshold', status='w', reputation=200,
+        )
+        for i in range(3):
+            self.post_question(user=watched_at_threshold,
+                               title='at-threshold %d' % i)
+
+        check_watched_user_post_rate_limit(
+            watched_at_threshold,
+            self._request_as(watched_at_threshold),
+        )
+
+    @with_settings(
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=True,
+        WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS=3,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_bypass_when_rep_above_threshold(self):
+        """Master switch on, rep above threshold — no exception."""
+        from askbot.views.writers import check_watched_user_post_rate_limit
+
+        watched_high_rep = self.create_user(
+            'watched_high_rep', status='w', reputation=300,
+        )
+        for i in range(3):
+            self.post_question(user=watched_high_rep,
+                               title='above-threshold %d' % i)
+
+        check_watched_user_post_rate_limit(
+            watched_high_rep, self._request_as(watched_high_rep),
+        )
+
+    @with_settings(
+        WATCHED_USER_POST_RATE_LIMIT_ENABLED=False,
+        WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS=3,
+        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
+        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
+    )
+    def test_bypass_safe_when_policy_disabled(self):
+        """Policy disabled and bypass enabled: high-rep watched user
+        over limit — no PermissionDenied. Non-regression check that
+        the new branch does not raise when the policy is off. The
+        ordering invariant is enforced by code review, not this
+        test."""
+        from askbot.views.writers import check_watched_user_post_rate_limit
+
+        watched_high_rep = self.create_user(
+            'watched_high_rep', status='w', reputation=300,
+        )
+        for i in range(5):
+            self.post_question(user=watched_high_rep,
+                               title='policy-off %d' % i)
+
+        check_watched_user_post_rate_limit(
+            watched_high_rep, self._request_as(watched_high_rep),
+        )

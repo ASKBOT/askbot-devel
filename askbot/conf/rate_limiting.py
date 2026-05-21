@@ -121,3 +121,44 @@ settings.register(
         help_text=_('Maximum posts a watched user can make within a 1-hour window.')
     )
 )
+
+# Reputation-based bypass for the watched-user-post limit. Placed
+# here (not in askbot/conf/minimum_reputation.py) so every knob that
+# tunes rate-limit behavior lives in one admin form.
+settings.register(
+    livesettings.BooleanValue(
+        RATE_LIMITING,
+        'RATE_LIMIT_BYPASS_HIGH_REP_USERS',
+        description=_('Bypass post rate limit for high-reputation users'),
+        default=False,
+        help_text=_(
+            'Master switch. When on, users whose reputation meets the '
+            'threshold below bypass the watched-user post rate limit. '
+            'The per-IP request limit and the registration limit are not affected.'
+            'Note: askbot also auto-approves watched users once their '
+            'reputation crosses MIN_REP_TO_AUTOAPPROVE_USER — for this '
+            'bypass to ever take effect, set the threshold below LOWER '
+            'than MIN_REP_TO_AUTOAPPROVE_USER. See the deployment doc '
+            "section 'rate-limit-high-rep-bypass' for the full "
+            'rationale.'
+        )
+    )
+)
+
+settings.register(
+    livesettings.IntegerValue(
+        RATE_LIMITING,
+        'MIN_REP_TO_BYPASS_RATE_LIMIT',
+        description=_('Reputation threshold for rate-limit bypass'),
+        default=200,
+        help_text=_(
+            "Only consulted when 'Bypass post rate limit for "
+            "high-reputation users' is enabled. Applies ONLY to the "
+            'watched-user post limit; the per-IP request limit and the '
+            'registration limit are not affected. Set strictly LOWER '
+            'than MIN_REP_TO_AUTOAPPROVE_USER — otherwise the bypass '
+            'never fires, because askbot promotes reputable users out '
+            'of the watched status before this threshold is reached.'
+        )
+    )
+)
