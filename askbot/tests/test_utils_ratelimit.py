@@ -46,6 +46,21 @@ def _dummy_view(request):
     return HttpResponse('ok', status=200)
 
 
+# The default LocMemCache holds 300 entries and culls a third of them
+# once full. Askbot's many livesettings fill the cache quickly, so a
+# cull can evict a rate-limit bucket mid-test and make accumulation
+# tests flaky. A large limit keeps every bucket alive for the test.
+_NO_CULL_CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'askbot-ratelimit-tests',
+        'KEY_PREFIX': 'askbot',
+        'OPTIONS': {'MAX_ENTRIES': 1000000},
+    },
+}
+
+
+@override_settings(CACHES=_NO_CULL_CACHES)
 class AskbotRatelimitHelperTests(TestCase):
 
     def setUp(self):
@@ -562,7 +577,7 @@ class AskbotRatelimitHelperTests(TestCase):
                     const.REGISTRATION_RATE_LIMIT_WINDOW_SECONDS,
                 'group': 'askbot.ratelimit.registration',
                 'key': subnet_ip_key,
-                'methods': ['POST'],
+                'methods': ratelimit_module._ALL_METHODS,
             },
         )
 
@@ -594,8 +609,10 @@ class AskbotRatelimitHelperTests(TestCase):
             response = dummy_signup(over_request)
             self.assertEqual(response.status_code, 429)
 
-            # GET to dummy_register passes (method filter).
-            self.assertEqual(get(dummy_register).status_code, 200)
+            # The registration policy now counts every method, so a
+            # GET also evaluates the limit. The bucket is already over
+            # limit (three prior POSTs), so this GET 429s too.
+            self.assertEqual(get(dummy_register).status_code, 429)
 
             # Non-registration policy on the same IP: unaffected.
             # REQUEST_RATE_LIMIT_ENABLED=True ensures a real
@@ -1058,8 +1075,8 @@ class SubnetIpKeyTests(TestCase):
         # Two IPs in the same /24 hitting the registration policy
         # share the bucket — mirrors test_same_policy_implies_shared_bucket
         # but exercises the subnet-width property of the policy's key.
-        # POSTs are used because the registration policy is POST-only
-        # (see _POLICIES['registration']['methods']).
+        # POSTs are used here to mirror genuine registration attempts;
+        # the registration policy itself counts every method.
         wrapped = askbot_ratelimit(policy='registration')(_dummy_view)
 
         self.assertEqual(

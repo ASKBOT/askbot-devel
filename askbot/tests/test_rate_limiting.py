@@ -6,6 +6,8 @@ import tempfile
 from types import SimpleNamespace
 from unittest import mock
 
+from bs4 import BeautifulSoup
+
 from django.core.cache import caches
 from django.core.checks import run_checks
 from django.test import RequestFactory, override_settings
@@ -14,6 +16,7 @@ from django.urls import reverse
 from askbot import checks as askbot_checks
 from askbot import signals
 from askbot.middleware import ratelimit as ratelimit_mod
+from askbot.models import User
 from askbot.tests.utils import (
     AskbotTestCase,
     livesettings_override,
@@ -45,6 +48,19 @@ TEST_MIDDLEWARE = (
     'askbot.middleware.cancel.CancelActionMiddleware',
     'askbot.middleware.view_log.ViewLogMiddleware',
 )
+
+# The default LocMemCache holds 300 entries and culls a third of them
+# once full. Askbot's many livesettings fill the cache quickly, so a
+# cull can evict a rate-limit bucket between requests and make the
+# accumulation tests flaky. A large limit keeps every bucket alive.
+NO_CULL_CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'askbot-ratelimit-integration-tests',
+        'KEY_PREFIX': 'askbot',
+        'OPTIONS': {'MAX_ENTRIES': 1000000},
+    },
+}
 
 
 class RateLimitMisconfigWarningTests(AskbotTestCase):
@@ -907,7 +923,7 @@ class RateLimitMiddlewareInstalledCheckTests(AskbotTestCase):
         self.assertEqual(results[0].id, 'askbot.W005')
 
 
-@override_settings(MIDDLEWARE=TEST_MIDDLEWARE)
+@override_settings(MIDDLEWARE=TEST_MIDDLEWARE, CACHES=NO_CULL_CACHES)
 class RateLimitIntegrationTests(AskbotTestCase):
     """End-to-end tests through the real URL and middleware chain.
 
@@ -937,12 +953,15 @@ class RateLimitIntegrationTests(AskbotTestCase):
         EMAIL_VALIDATION_REQUIRED=False,
         BLANK_EMAIL_ALLOWED=False,
     )
-    def test_signup_endpoint_returns_429_at_limit(self):
+    def test_signup_endpoint_over_limit_shows_form_error(self):
         url = reverse('user_signup_with_password')
-        # Each attempt uses a distinct username and email so form
-        # validation cannot fail first and mask the rate-limit check.
+        # A fresh client per POST keeps every request anonymous: a
+        # successful registration logs the client in, after which
+        # ``@not_authenticated`` redirects later POSTs before the
+        # in-view rate-limit check can run.
         for i in range(2):
-            response = self.client.post(
+            client = self.client_class()
+            response = client.post(
                 url,
                 {
                     'next': '/',
@@ -953,8 +972,10 @@ class RateLimitIntegrationTests(AskbotTestCase):
                 },
                 REMOTE_ADDR='5.5.5.5',
             )
-            self.assertLess(response.status_code, 400)
-        over = self.client.post(
+            self.assertEqual(response.status_code, 302) # redirect
+            self.assertEqual(User.objects.filter(email=f'rl{i}@example.com').exists(), True)
+            self.assertEqual(response.headers['Location'], '/') # to the home page
+        over = self.client_class().post(
             url,
             {
                 'next': '/',
@@ -965,7 +986,12 @@ class RateLimitIntegrationTests(AskbotTestCase):
             },
             REMOTE_ADDR='5.5.5.5',
         )
-        self.assertEqual(over.status_code, 429)
+        self.assertEqual(User.objects.filter(email=f'rl2@example.com').exists(), False)
+        self.assertEqual(over.status_code, 200)
+        dom = BeautifulSoup(over.content, 'html5lib')
+        errorlist = dom.select('.errorlist')
+        self.assertEqual(len(errorlist), 1)
+        self.assertTrue('Too many registration attempts' in errorlist[0].text)
 
     @with_settings(
         REGISTRATION_RATE_LIMIT_ENABLED=True,
@@ -991,6 +1017,93 @@ class RateLimitIntegrationTests(AskbotTestCase):
             REMOTE_ADDR='6.6.6.6',
         )
         self.assertLess(response.status_code, 400)
+
+    @with_settings(
+        REGISTRATION_RATE_LIMIT_ENABLED=True,
+        REGISTRATION_RATE_LIMIT_MAX_REGISTRATIONS=0,
+        REQUEST_RATE_LIMIT_ENABLED=False,
+        USE_RECAPTCHA=False,
+        TERMS_CONSENT_REQUIRED=False,
+        NEW_REGISTRATIONS_DISABLED=False,
+        EMAIL_VALIDATION_REQUIRED=False,
+        BLANK_EMAIL_ALLOWED=False,
+    )
+    def test_federated_register_over_limit_shows_form_error(self):
+        """Over-limit federated registration shows the rate-limit
+        message inside the ``complete.html`` form."""
+        # A max of zero puts the very first request over the limit, so
+        # a single POST is enough. The federated view reads the session
+        # to recover the provider chosen on the previous step.
+        session = self.client.session
+        session['login_provider_name'] = 'stub'
+        session['user_identifier'] = 'uid'
+        session.save()
+        response = self.client.post(
+            reverse('user_register'),
+            {'next': '/', 'username': 'feduser', 'email': 'fed@example.com'},
+            REMOTE_ADDR='9.9.9.9',
+        )
+        self.assertEqual(response.status_code, 200)
+        dom = BeautifulSoup(response.content, 'html5lib')
+        errorlist = dom.select('.errorlist')
+        self.assertEqual(len(errorlist), 1)
+        self.assertTrue('Too many registration attempts' in errorlist[0].text)
+
+    @with_settings(
+        REGISTRATION_RATE_LIMIT_ENABLED=True,
+        REGISTRATION_RATE_LIMIT_MAX_REGISTRATIONS=1,
+        REQUEST_RATE_LIMIT_ENABLED=False,
+        NEW_REGISTRATIONS_DISABLED=False,
+        EMAIL_VALIDATION_REQUIRED=False,
+        BLANK_EMAIL_ALLOWED=False,
+    )
+    def test_one_click_register_over_limit_returns_429(self):
+        """The one-click registration path has no form, so over the
+        limit it keeps showing the standalone 429 page."""
+        from importlib import import_module
+        from django.conf import settings as django_settings
+        from django.contrib.auth.models import AnonymousUser
+        from askbot.deps.django_authopenid import util
+        from askbot.deps.django_authopenid.protocols.base import BaseProtocol
+        from askbot.deps.django_authopenid.views import register
+
+        engine = import_module(django_settings.SESSION_ENGINE)
+
+        # A BaseProtocol subclass so the provider behaves like a real
+        # one-click provider: it exposes ``one_click_registration`` as
+        # an attribute and ``['type']`` as a key, which the context
+        # processors run while rendering the 429 page rely on.
+        class StubProvider(BaseProtocol):
+            protocol_type = 'stub'
+            one_click_registration = True
+
+        provider = StubProvider()
+
+        def one_click(username, email, user_identifier):
+            request = RequestFactory().get('/register/', REMOTE_ADDR='3.3.3.3')
+            request.user = AnonymousUser()
+            request.session = engine.SessionStore()
+            request.session['username'] = username
+            request.session['email'] = email
+            with mock.patch.object(
+                util, 'get_enabled_login_providers',
+                return_value={'stub': provider},
+            ):
+                return register(
+                    request,
+                    login_provider_name='stub',
+                    user_identifier=user_identifier,
+                )
+
+        first = one_click('oneclick0', 'oneclick0@example.com', 'uid0')
+        # redirect
+        self.assertEqual(first.status_code, 302)
+        # user registered
+        self.assertEqual(User.objects.filter(username='oneclick0').exists(), True)
+
+        over = one_click('oneclick1', 'oneclick1@example.com', 'uid1')
+        self.assertEqual(over.status_code, 429)
+        self.assertEqual(User.objects.filter(username='oneclick1').exists(), False)
 
     @with_settings(
         REQUEST_RATE_LIMIT_ENABLED=True,
@@ -1159,55 +1272,6 @@ class RateLimitIntegrationTests(AskbotTestCase):
             self.assertLess(response.status_code, 400)
 
         over = self.client.get('/', REMOTE_ADDR='7.7.7.7')
-        self.assertEqual(over.status_code, 429)
-
-    @with_settings(
-        REGISTRATION_RATE_LIMIT_ENABLED=True,
-        REGISTRATION_RATE_LIMIT_MAX_REGISTRATIONS=2,
-        REQUEST_RATE_LIMIT_ENABLED=False,
-        USE_RECAPTCHA=False,
-        TERMS_CONSENT_REQUIRED=False,
-        NEW_REGISTRATIONS_DISABLED=False,
-        EMAIL_VALIDATION_REQUIRED=False,
-        BLANK_EMAIL_ALLOWED=False,
-        RATE_LIMIT_BYPASS_HIGH_REP_USERS=True,
-        MIN_REP_TO_BYPASS_RATE_LIMIT=200,
-    )
-    def test_high_rep_user_not_exempt_from_registration_policy(self):
-        """High-rep bypass switch must not leak to the registration
-        policy: the rate-limit middleware runs before view dispatch,
-        so the signup-view auth redirect does not preempt the 429."""
-        high_rep = self.create_user(
-            'rl_signup_high_rep', status='a', reputation=300,
-        )
-        self.client.force_login(high_rep)
-
-        url = reverse('user_signup_with_password')
-        for i in range(2):
-            response = self.client.post(
-                url,
-                {
-                    'next': '/',
-                    'username': f'hrrl{i}',
-                    'email': f'hrrl{i}@example.com',
-                    'password1': 'TestPass12345!',
-                    'password2': 'TestPass12345!',
-                },
-                REMOTE_ADDR='4.4.4.4',
-            )
-            self.assertNotEqual(response.status_code, 429)
-
-        over = self.client.post(
-            url,
-            {
-                'next': '/',
-                'username': 'hrrl2',
-                'email': 'hrrl2@example.com',
-                'password1': 'TestPass12345!',
-                'password2': 'TestPass12345!',
-            },
-            REMOTE_ADDR='4.4.4.4',
-        )
         self.assertEqual(over.status_code, 429)
 
 

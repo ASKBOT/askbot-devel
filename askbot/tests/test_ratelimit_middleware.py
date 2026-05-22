@@ -349,8 +349,7 @@ class RateLimitMiddlewareProcessViewTests(AskbotTestCase):
         ``request`` policy only.
 
         Drives the registration decorator directly with the view's
-        POSTs (the registration policy is POST-only) so the assertion
-        is local to this file."""
+        POSTs so the assertion is local to this file."""
         @ratelimit_exempt
         @askbot_ratelimit(policy='registration')
         def view(request):

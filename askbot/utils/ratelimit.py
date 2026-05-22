@@ -2,8 +2,9 @@
 
 Bridges django-ratelimit (which wants a static rate string at decoration
 time) with Askbot's livesettings (which must be readable and mutable at
-request time). Exposes a decorator variant (``askbot_ratelimit``) for
-view-level use, a non-decorator variant (``check_askbot_ratelimit``)
+request time). Exposes a decorator variant (``askbot_ratelimit``) which
+has no production view consumer but remains a tested primitive, a
+non-decorator variant (``check_askbot_ratelimit``)
 for middleware-style call sites that have no view function, a
 bool-check primitive (``is_askbot_ratelimited``) for call sites that
 need to render their own UX (e.g. a session message + form re-render)
@@ -366,7 +367,11 @@ _POLICIES = {
         'window_seconds': const.REGISTRATION_RATE_LIMIT_WINDOW_SECONDS,
         'group': 'askbot.ratelimit.registration',
         'key': subnet_ip_key,
-        'methods': ['POST'],
+        # Counts all methods: the limit is checked only at the genuine
+        # registration-attempt call sites inside the registration
+        # views (two POST, one one-click GET), never on a form-display
+        # GET. A POST-only filter would miss the one-click GET path.
+        'methods': _ALL_METHODS,
     },
     'watched_user_post': {
         'enabled_setting': 'WATCHED_USER_POST_RATE_LIMIT_ENABLED',
@@ -578,12 +583,10 @@ def ratelimit_exempt(view_func):
       future drift to ``= 1`` / ``= 'yes'`` fails closed.
 
     * Exempts only the per-request middleware policy. The
-      ``registration`` policy is opt-in at the view layer via
-      ``@askbot_ratelimit(policy='registration')`` and
-      ``watched_user_post`` is enforced by a separate DB-count helper —
-      neither is affected by this decorator. A view may still carry
-      ``@askbot_ratelimit(policy='registration')`` alongside
-      ``@ratelimit_exempt``; the two are orthogonal.
+      ``registration`` policy is enforced by explicit per-call-site
+      checks inside the registration views and ``watched_user_post``
+      is enforced by a separate DB-count helper — neither is affected
+      by this decorator.
 
     * Apply as the OUTERMOST decorator on the view (listed first /
       topmost in source order). Many Django decorators use

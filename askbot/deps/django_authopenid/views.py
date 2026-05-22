@@ -74,7 +74,7 @@ from askbot.deps.django_authopenid.exceptions import OAuthError
 from askbot.deps.django_authopenid.providers import discourse
 from askbot.utils.http import get_request_info, get_request_params, is_ajax
 from askbot.utils.loading import load_module
-from askbot.utils.ratelimit import askbot_ratelimit
+from askbot.utils.ratelimit import is_askbot_ratelimited, check_askbot_ratelimit
 
 try:
     from xmlrpc.client import Fault as WpFault
@@ -82,6 +82,17 @@ try:
     from wordpress_xmlrpc.methods.users import GetUserInfo
 except ImportError:
     pass
+
+
+def registration_rate_limit_message():
+    """Return the message shown when the registration limit is hit.
+
+    A helper, not a module-level constant: ``_`` in this module is the
+    eager ``gettext``, so a constant would freeze the translation at
+    import time. Calling it per request applies the active locale.
+    """
+    return _('Too many registration attempts from your network. '
+             'Please try again later.')
 
 
 def email_is_acceptable(email):
@@ -1094,7 +1105,6 @@ def finalize_generic_signin(
                 redirect_url=redirect_url
             )
 
-@askbot_ratelimit(policy='registration')
 @not_authenticated
 @csrf.csrf_protect
 def register(request, login_provider_name=None,
@@ -1132,6 +1142,10 @@ def register(request, login_provider_name=None,
             and provider_data.one_click_registration:
 
             if username_is_acceptable(username) and email_is_acceptable(email):
+                rate_limit_response = check_askbot_ratelimit(
+                                            request, policy='registration')
+                if rate_limit_response:
+                    return rate_limit_response
                 #try auto-registration and redirect to the next_url
                 user = create_authenticated_user_account(
                             username=username,
@@ -1183,9 +1197,9 @@ def register(request, login_provider_name=None,
         logging.debug('trying to create new account associated with openid')
         form_class = forms.get_federated_registration_form_class()
         register_form = form_class(request.POST, request=request)
-        if not register_form.is_valid():
-            logging.debug('registration form is INVALID')
-        else:
+        if is_askbot_ratelimited(request, policy='registration'):
+            register_form.add_error(None, registration_rate_limit_message())
+        elif register_form.is_valid():
             username = register_form.cleaned_data['username']
             email = register_form.cleaned_data['email']
 
@@ -1316,7 +1330,6 @@ def verify_email_and_register(request):
             return HttpResponseRedirect(reverse('index'))
     return render(request, 'authopenid/verify_email.html')
 
-@askbot_ratelimit(policy='registration')
 @not_authenticated
 @csrf.csrf_protect
 def signup_with_password(request):
@@ -1333,7 +1346,9 @@ def signup_with_password(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST, request=request)
 
-        if form.is_valid():
+        if is_askbot_ratelimited(request, policy='registration'):
+            form.add_error(None, registration_rate_limit_message())
+        elif form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
