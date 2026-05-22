@@ -128,6 +128,85 @@ $.ajaxSetup({
     }
 });
 
+/**
+ * Render a duration in seconds as a translated human string.
+ * Mirrors askbot.utils.ratelimit._humanize_seconds — pick the largest
+ * clean unit (hour / minute / second) using ngettext for plurals.
+ * Caller MUST guard seconds >= 1: ngettext for `count === 0` resolves
+ * to the plural form in English ("0 seconds") but is locale-dependent
+ * elsewhere (e.g. French treats 0 as singular), so 0 is excluded
+ * upstream rather than handled here.
+ */
+var humanizeSeconds = function (seconds) {
+    if (seconds >= 3600) {
+        var hours = Math.floor(seconds / 3600);
+        return interpolate(
+            ngettext('%(count)s hour', '%(count)s hours', hours),
+            { count: hours },
+            true
+        );
+    }
+    if (seconds >= 60) {
+        var minutes = Math.floor(seconds / 60);
+        return interpolate(
+            ngettext('%(count)s minute', '%(count)s minutes', minutes),
+            { count: minutes },
+            true
+        );
+    }
+    return interpolate(
+        ngettext('%(count)s second', '%(count)s seconds', seconds),
+        { count: seconds },
+        true
+    );
+};
+
+/**
+ * Global handler for content-negotiated 429 responses from
+ * askbot.utils.ratelimit. Surfaces a banner via the existing notify
+ * API so AJAX callers get the same UX as page-load callers (which
+ * see a server-rendered session message).
+ *
+ * Only fires when status is 429, Content-Type is application/json,
+ * AND body.error === 'rate_limited'. Plain-text 429s fall through
+ * (per-IP middleware, pre-ae2). Per-call-site error handlers
+ * continue to fire; a call site that wants to suppress the global
+ * banner should use $.ajax({ global: false }).
+ */
+$(document).ajaxError(function (event, xhr) {
+    if (xhr.status !== 429) {
+        return;
+    }
+    var contentType = xhr.getResponseHeader('Content-Type') || '';
+    if (contentType.indexOf('application/json') === -1) {
+        return;
+    }
+    var body = xhr.responseJSON || {};
+    if (body.error !== 'rate_limited') {
+        return;
+    }
+    // Only one rate-limit banner at a time. The id is removed together
+    // with the .js-system-message subtree by notify.clear / notify.close,
+    // so the next 429 after dismissal surfaces a fresh banner.
+    if (document.getElementById('js-rate-limit-banner')) {
+        return;
+    }
+    var retryAfter = body.retry_after;
+    var msg;
+    // humanizeSeconds requires retryAfter >= 1 (see helper docstring) —
+    // 0 / missing / non-numeric values fall through to the generic copy.
+    if (typeof retryAfter === 'number' && retryAfter > 0) {
+        msg = interpolate(
+            gettext('Too many requests. Please wait %(time)s and try again.'),
+            { time: humanizeSeconds(retryAfter) },
+            true
+        );
+    } else {
+        msg = gettext('Too many requests, please slow down.');
+    }
+    notify.show(msg, false, 'js-rate-limit-banner');
+});
+
 
 /**
  * Selects template by class
@@ -421,12 +500,11 @@ var setCheckBoxesIn = function (selector, value) {
 var notify = (function () {
     var visible = false;
     return {
-        show: function (html, autohide) {
+        show: function (html, autohide, id) {
             if (html) {
                 $('body').addClass('user-messages');
-                var par = $('<p class="js-system-message"></p>');
-                par.html(html);
-                $('.js-system-messages').prepend(par);
+                var msg = new SystemMessage(html, id);
+                $('.js-system-messages .remove-messages-container').after(msg.getElement());
             }
             $('.js-system-messages').fadeIn('slow');
             visible = true;
@@ -441,18 +519,19 @@ var notify = (function () {
             }
         },
         clear: function () {
-            $('.js-system-messages').empty();
+            $('.js-system-messages .js-system-message').remove();
         },
         close: function (doPostback) {
+            $('.js-system-messages .js-system-message').remove();
+            $('.js-system-messages').fadeOut('fast');
+            $('body').removeClass('user-messages');
+            visible = false;
             if (doPostback) {
                 $.post(
                     askbot.urls.mark_read_message,
                     { formdata: 'required' }
                 );
             }
-            $('.js-system-messages').fadeOut('fast');
-            $('body').removeClass('user-messages');
-            visible = false;
         },
         isVisible: function () { return visible; }
     };

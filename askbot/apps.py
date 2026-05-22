@@ -29,6 +29,8 @@ class AskbotConfig(AppConfig):
         import askbot.conf
         askbot.conf.init()
 
+        from askbot import checks  # noqa: F401  registers django system checks
+
         if getattr(django_settings, 'ASKBOT_AUTO_INIT_BADGES', False):
             request_started.connect(
                 init_badges_once,

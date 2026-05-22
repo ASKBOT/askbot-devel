@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 14:58+0000\n"
+"POT-Creation-Date: 2026-04-27 02:03+0000\n"
 "PO-Revision-Date: 2020-08-16 19:55+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Asturian (http://www.transifex.com/askbot/askbot/language/"
@@ -64,68 +64,100 @@ msgstr ""
 msgid "HTML is allowed"
 msgstr ""
 
-#: askbot/conf/access_control.py:64
-msgid "nothing - not required"
+#: askbot/conf/access_control.py:68
+msgid "Require a valid email address"
 msgstr ""
 
-#: askbot/conf/access_control.py:65
-msgid "account registration"
+#: askbot/conf/access_control.py:70
+msgid ""
+"When enabled, users must verify their email address at registration or when "
+"changing their email address. To verify it, the users must click an emailed "
+"confirmation link from their inbox. Disable only on trusted installations "
+"where email ownership is guaranteed by other means."
 msgstr ""
 
-#: askbot/conf/access_control.py:75
-msgid "Require valid email for"
-msgstr ""
-
-#: askbot/conf/access_control.py:100
+#: askbot/conf/access_control.py:91
 msgid "Allowed email addresses"
 msgstr ""
 
-#: askbot/conf/access_control.py:102 askbot/conf/access_control.py:148
+#: askbot/conf/access_control.py:93 askbot/conf/access_control.py:139
 msgid "Please use space to separate the entries"
 msgstr ""
 
-#: askbot/conf/access_control.py:103 askbot/conf/access_control.py:117
+#: askbot/conf/access_control.py:94 askbot/conf/access_control.py:108
 msgid "Entry disables blacklisted email patterns"
 msgstr ""
 
-#: askbot/conf/access_control.py:114
+#: askbot/conf/access_control.py:105
 msgid "Allowed email domain names"
 msgstr ""
 
-#: askbot/conf/access_control.py:116
+#: askbot/conf/access_control.py:107
 msgid "Please use space to separate the entries, do not use the @ symbol!"
 msgstr ""
 
-#: askbot/conf/access_control.py:124
+#: askbot/conf/access_control.py:115
 msgid "disable"
 msgstr ""
 
-#: askbot/conf/access_control.py:126
+#: askbot/conf/access_control.py:117
 msgid "block user registrations"
 msgstr ""
 
-#: askbot/conf/access_control.py:127
+#: askbot/conf/access_control.py:118
 msgid "allow existing users to post"
 msgstr ""
 
-#: askbot/conf/access_control.py:128
+#: askbot/conf/access_control.py:119
 msgid "block completely"
 msgstr ""
 
-#: askbot/conf/access_control.py:137
+#: askbot/conf/access_control.py:128
 msgid "Blacklisted email address patterns mode"
 msgstr ""
 
-#: askbot/conf/access_control.py:146
+#: askbot/conf/access_control.py:137
 msgid "Blacklisted email address patterns"
 msgstr ""
 
-#: askbot/conf/access_control.py:149
+#: askbot/conf/access_control.py:140
 msgid "regular expressions are allowed"
 msgstr ""
 
-#: askbot/conf/access_control.py:159
+#: askbot/conf/access_control.py:150
 msgid "Allow moderators to access other's messages"
+msgstr ""
+
+#: askbot/conf/api_settings.py:9
+#, fuzzy
+#| msgid "Access control settings"
+msgid "Askbot API settings"
+msgstr "Configuración del control d'accesu"
+
+#: askbot/conf/api_settings.py:17
+msgid "API v1 access mode"
+msgstr ""
+
+#: askbot/conf/api_settings.py:20
+msgid "Public (anyone can access)"
+msgstr ""
+
+#: askbot/conf/api_settings.py:21
+#, fuzzy
+#| msgid "Country field is required"
+msgid "Authenticated (login required)"
+msgstr "El campu País ye obligatoriu"
+
+#: askbot/conf/api_settings.py:22
+msgid "Disabled (moderator item lookups only)"
+msgstr ""
+
+#: askbot/conf/api_settings.py:25
+msgid ""
+"NOTE: v1 API is read-only and this setting controls who can access the its "
+"endpoints. \"Authenticated\" requires login for all API access. \"Disabled\" "
+"blocks list endpoints entirely and allows only individual item lookups for "
+"moderators/admins (preserves merge dialog functionality)."
 msgstr ""
 
 #: askbot/conf/badges.py:16
@@ -403,50 +435,60 @@ msgid "Enable moderation queue alerts"
 msgstr ""
 
 #: askbot/conf/email.py:138
+msgid "Log debug info for instant email alerts"
+msgstr ""
+
+#: askbot/conf/email.py:140
+msgid ""
+"When enabled, logs detailed information about email notification processing "
+"at INFO level. Use for production debugging."
+msgstr ""
+
+#: askbot/conf/email.py:152
 msgid "Enable HTML-formatted email"
 msgstr ""
 
-#: askbot/conf/email.py:139
+#: askbot/conf/email.py:153
 msgid "May not be supported by some email clients"
 msgstr ""
 
-#: askbot/conf/email.py:148
+#: askbot/conf/email.py:162
 msgid "Maximum number of news entries in an email alert"
 msgstr "Máximu númberu de mensaxes d'una alerta per corréu"
 
-#: askbot/conf/email.py:158
+#: askbot/conf/email.py:172
 msgid "Default notification frequency all questions"
 msgstr "Frecuencia predeterminada de notificación pa toles entrugues"
 
-#: askbot/conf/email.py:168
+#: askbot/conf/email.py:182
 msgid "Default notification frequency questions asked by the user"
 msgstr ""
 "Frecuencia predeterminada de notificación pa les entrugues feches pol usuariu"
 
-#: askbot/conf/email.py:179
+#: askbot/conf/email.py:193
 msgid "Default notification frequency questions answered by the user"
 msgstr ""
 "Frecuencia predeterminada de notificación pa les entrugues respondíes pol "
 "usuariu"
 
-#: askbot/conf/email.py:190
+#: askbot/conf/email.py:204
 msgid "Default notification frequency on unanswered questions"
 msgstr ""
 
-#: askbot/conf/email.py:200
+#: askbot/conf/email.py:214
 msgid ""
 "Default notification frequency questions individuallyselected by the user"
 msgstr ""
 
-#: askbot/conf/email.py:211
+#: askbot/conf/email.py:225
 msgid "Default notification frequency for mentionsand comments"
 msgstr ""
 
-#: askbot/conf/email.py:221
+#: askbot/conf/email.py:235
 msgid "Enable reminders about unanswered questions"
 msgstr ""
 
-#: askbot/conf/email.py:223
+#: askbot/conf/email.py:237
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_unanswered_question_reminders\" (for example, via a cron job "
@@ -456,24 +498,25 @@ msgstr ""
 "xestión \"send_unanswered_question_reminders\" (por exemplu, per aciu d'una "
 "xera de cron cola frecuencia apropiada) "
 
-#: askbot/conf/email.py:230 askbot/conf/group_settings.py:50
+#: askbot/conf/email.py:244 askbot/conf/group_settings.py:51
+#: askbot/migrations/0035_set_global_group_used_for_analytics.py:41
 msgid "everyone"
 msgstr ""
 
-#: askbot/conf/email.py:231
+#: askbot/conf/email.py:245
 msgid "moderators & administrators"
 msgstr ""
 
-#: askbot/conf/email.py:240
+#: askbot/conf/email.py:254
 msgid "Whom to remind about unanswered questions"
 msgstr ""
 
-#: askbot/conf/email.py:250
+#: askbot/conf/email.py:264
 msgid "Days before starting to send reminders about unanswered questions"
 msgstr ""
 "Díes enantes d'empezar a unviar recordatorios sobre entrugues ensin responder"
 
-#: askbot/conf/email.py:261
+#: askbot/conf/email.py:275
 msgid ""
 "How often to send unanswered question reminders (in days between the "
 "reminders sent)."
@@ -481,16 +524,16 @@ msgstr ""
 "Con qué frecuencia unviar recordatorios d'entrugues ensin responder (en díes "
 "ente cada recordatoriu unviáu)."
 
-#: askbot/conf/email.py:271
+#: askbot/conf/email.py:285
 msgid "Max. number of reminders to send about unanswered questions"
 msgstr ""
 "Númberu máximu de recordatorios a unviar sobro entrugues ensin responder"
 
-#: askbot/conf/email.py:281
+#: askbot/conf/email.py:295
 msgid "Enable accept the best answer reminders"
 msgstr ""
 
-#: askbot/conf/email.py:283
+#: askbot/conf/email.py:297
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_accept_answer_reminders\" (for example, via a cron job - with "
@@ -500,67 +543,67 @@ msgstr ""
 "xestión \"send_accept_answer_reminders\" (por exemplu, per aciu d'una xera "
 "de cron cola frecuencia apropiada) "
 
-#: askbot/conf/email.py:295
+#: askbot/conf/email.py:309
 msgid "Days before starting to send reminders to accept an answer"
 msgstr "Díes enantes d'empezar a unviar recordatorios p'aceutar una respuesta"
 
-#: askbot/conf/email.py:305
+#: askbot/conf/email.py:319
 msgid ""
 "How often to send accept answer reminders (in days between the reminders "
 "sent)."
 msgstr ""
 
-#: askbot/conf/email.py:317
+#: askbot/conf/email.py:331
 msgid "Max. number of reminders to send to accept the best answer"
 msgstr ""
 
-#: askbot/conf/email.py:326
+#: askbot/conf/email.py:340
 msgid "Allow blank email"
 msgstr ""
 
-#: askbot/conf/email.py:328
+#: askbot/conf/email.py:342
 msgid "DANGER: makes impossible account recovery by email."
 msgstr ""
 
-#: askbot/conf/email.py:330
-msgid "Must be optional"
+#: askbot/conf/email.py:344 askbot/conf/login_providers.py:309
+msgid "Must be disabled"
 msgstr ""
 
-#: askbot/conf/email.py:341
+#: askbot/conf/email.py:355
 msgid "Fake email for anonymous user"
 msgstr ""
 
-#: askbot/conf/email.py:342
+#: askbot/conf/email.py:356
 msgid "Use this setting to control gravatar for email-less user"
 msgstr ""
 
-#: askbot/conf/email.py:351
+#: askbot/conf/email.py:365
 msgid "Replace space in emailed tags with dash"
 msgstr ""
 
-#: askbot/conf/email.py:353
+#: askbot/conf/email.py:367
 msgid ""
 "This setting applies to tags written in the subject line of questions asked "
 "by email"
 msgstr ""
 
-#: askbot/conf/email.py:363
+#: askbot/conf/email.py:377
 msgid "Enable posting and replying by email"
 msgstr ""
 
-#: askbot/conf/email.py:365
+#: askbot/conf/email.py:379
 msgid "To enable this feature make sure lamson is running"
 msgstr ""
 
-#: askbot/conf/email.py:373
+#: askbot/conf/email.py:387
 msgid "Emailed post: when to notify author about publishing"
 msgstr ""
 
-#: askbot/conf/email.py:397
+#: askbot/conf/email.py:411
 msgid "Reply by email hostname"
 msgstr ""
 
-#: askbot/conf/email.py:407
+#: askbot/conf/email.py:421
 msgid ""
 "Email replies having fewer words than this number will be posted as comments "
 "instead of answers"
@@ -1270,29 +1313,46 @@ msgid ""
 "automatic data import fails to detect the original question correctly."
 msgstr ""
 
-#: askbot/conf/group_settings.py:9 askbot/jinja2/users/group_settings.html:5
+#: askbot/conf/group_settings.py:10
 msgid "Group settings"
 msgstr ""
 
-#: askbot/conf/group_settings.py:18
+#: askbot/conf/group_settings.py:19
 msgid "Enable user groups"
 msgstr ""
 
-#: askbot/conf/group_settings.py:51
+#: askbot/conf/group_settings.py:52
 msgid "Global user group name"
 msgstr ""
 
-#: askbot/conf/group_settings.py:52
+#: askbot/conf/group_settings.py:53
 msgid "All users belong to this group automatically"
 msgstr ""
 
-#: askbot/conf/group_settings.py:62
+#: askbot/conf/group_settings.py:63
 msgid "Enable group email addresses"
 msgstr ""
 
-#: askbot/conf/group_settings.py:63
+#: askbot/conf/group_settings.py:64
 msgid ""
 "If selected, users can post to groups by email \"group-name@domain.com\""
+msgstr ""
+
+#: askbot/conf/group_settings.py:74
+msgid "Enable per email domain user groups"
+msgstr ""
+
+#: askbot/conf/group_settings.py:75
+msgid "If enabled, groups will be created for each email domain name"
+msgstr ""
+
+#: askbot/conf/group_settings.py:85
+msgid "Default visibility of groups created for the email domains"
+msgstr ""
+
+#: askbot/conf/group_settings.py:86
+msgid ""
+"Administrators can change the visibility of these groups individually later"
 msgstr ""
 
 #: askbot/conf/karma_and_badges_visibility.py:12
@@ -1641,10 +1701,6 @@ msgstr ""
 msgid "Must be enabled"
 msgstr ""
 
-#: askbot/conf/login_providers.py:309
-msgid "Must be not be required"
-msgstr ""
-
 #: askbot/conf/markup.py:15
 msgid "Markup in posts"
 msgstr ""
@@ -1943,6 +1999,104 @@ msgstr ""
 
 #: askbot/conf/question_lists.py:81
 msgid "Default questions selector for the anonymous users"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:9
+msgid "Rate limiting"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:20
+msgid "Individual IP (/32 IPv4, /128 IPv6) — strict"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:21
+msgid "Local subnet (/24 IPv4, /64 IPv6) — recommended"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:22
+msgid "Regional block (/16 IPv4, /48 IPv6) — aggressive"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:29
+msgid "Rate-limit allowlist (IPs / CIDR ranges)"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:32
+msgid ""
+"IP addresses and CIDR ranges that bypass every rate-limit policy (request, "
+"registration, watched-user-post). One entry per row. Plain IP (1.2.3.4, "
+"2001:db8::1) or CIDR (1.2.3.0/24, 2001:db8::/32). IPv4 or IPv6. Whitespace "
+"is trimmed. Invalid entries are logged and skipped — no restart needed. "
+"Combines with the deploy-time ASKBOT_INTERNAL_IPS django setting by union "
+"(an IP bypasses if matched by either source). The admin UI shows only this "
+"livesetting half; inspect settings.py or ask your deployer for the deploy-"
+"time ASKBOT_INTERNAL_IPS value. Edits apply on the next request and do NOT "
+"invalidate any rate-limit buckets — the allowlist is a short-circuit, not "
+"part of the cache key."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:53
+msgid "Subnet granularity for IP-keyed rate limits"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:57
+msgid ""
+"Controls how broadly IP-keyed rate limits group addresses. \"host\" buckets "
+"each IP separately (/32 IPv4, /128 IPv6) — strict. \"subnet\" buckets local-"
+"network neighbors together (/24 IPv4, /64 IPv6) — recommended default; "
+"defends against per-IP rotation within one subnet. \"region\" buckets entire "
+"regional blocks together (/16 IPv4, /48 IPv6) — aggressive. IPv4 and IPv6 "
+"widths always change together. Changing this value starts fresh buckets for "
+"every IP (the prefix is part of the cache key) — distinct from the allowlist "
+"setting, where edits do NOT invalidate buckets."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:76
+msgid "Enable rate limiting"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:78
+msgid "Master switch for per-IP request rate limiting."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:86
+msgid "Max requests per IP per window"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:88
+msgid "Number of requests allowed per IP within a 60-second window."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:98
+msgid "Enable registration rate limiting"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:100
+msgid "Per-IP throttle on signup endpoints to slow automated account creation."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:109
+msgid "Max registrations per IP per window"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:111
+msgid "Number of registrations allowed per IP within a 1-day window."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:121
+msgid "Enable post rate limiting for watched users"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:123
+msgid "Per-user post limit for watched users to slow sophisticated spammers."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:132
+msgid "Max posts per window (watched users)"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:134
+msgid "Maximum posts a watched user can make within a 1-hour window."
 msgstr ""
 
 #: askbot/conf/reputation_changes.py:13
@@ -2468,12 +2622,12 @@ msgstr ""
 msgid "Askbot spam checker API key"
 msgstr ""
 
-#: askbot/conf/static_settings.py:64
+#: askbot/conf/static_settings.py:54
 msgctxt "urls"
 msgid "questions"
 msgstr ""
 
-#: askbot/conf/static_settings.py:76
+#: askbot/conf/static_settings.py:66
 msgctxt "urls"
 msgid "question"
 msgstr ""
@@ -2491,7 +2645,7 @@ msgid "Data rules & Formatting"
 msgstr ""
 
 #: askbot/conf/super_groups.py:8
-msgid "External Services"
+msgid "External Services & APIs"
 msgstr ""
 
 #: askbot/conf/super_groups.py:9
@@ -2660,7 +2814,6 @@ msgid "Site terms vocabulary"
 msgstr ""
 
 #: askbot/conf/words.py:22 askbot/conf/words.py:23
-#: askbot/jinja2/ask/index.html:4
 msgid "Ask Your Question"
 msgstr ""
 
@@ -2747,6 +2900,8 @@ msgid "Enter duplicate question ID"
 msgstr ""
 
 #: askbot/conf/words.py:182 askbot/conf/words.py:183
+#: askbot/migrations/0027_populate_analytics_events.py:17
+#: askbot/models/analytics.py:168
 msgid "asked"
 msgstr ""
 
@@ -2779,6 +2934,8 @@ msgid "Gave accepted answer"
 msgstr ""
 
 #: askbot/conf/words.py:263 askbot/conf/words.py:264
+#: askbot/migrations/0027_populate_analytics_events.py:18
+#: askbot/models/analytics.py:169
 msgid "answered"
 msgstr ""
 
@@ -2806,8 +2963,7 @@ msgstr ""
 msgid "Countable plural forms for \"answer\""
 msgstr ""
 
-#: askbot/conf/words.py:295 askbot/jinja2/search_posts/context_link.html:3
-#: askbot/models/post.py:728
+#: askbot/conf/words.py:295 askbot/models/post.py:731
 msgid "question"
 msgstr ""
 
@@ -2831,8 +2987,7 @@ msgstr ""
 msgid "unanswered questions (plural)"
 msgstr ""
 
-#: askbot/conf/words.py:325 askbot/jinja2/search_posts/context_link.html:5
-#: askbot/models/post.py:726
+#: askbot/conf/words.py:325 askbot/models/post.py:729
 msgid "answer"
 msgstr ""
 
@@ -3088,411 +3243,442 @@ msgstr "la entruga ta respondida, s'aceutó la respuesta correcta"
 msgid "closed as inactive"
 msgstr "inactiva"
 
-#: askbot/const/__init__.py:39
+#: askbot/const/__init__.py:45
 msgid "disable sharing"
 msgstr ""
 
-#: askbot/const/__init__.py:40
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:13
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:17
+#: askbot/const/__init__.py:46
 msgid "my posts"
 msgstr ""
 
-#: askbot/const/__init__.py:41
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:14
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:16
+#: askbot/const/__init__.py:47
 msgid "all posts"
 msgstr ""
 
-#: askbot/const/__init__.py:64 askbot/jinja2/question/answers_sort_nav.html:13
+#: askbot/const/__init__.py:70
 msgid "newest"
 msgstr "más nueves"
 
-#: askbot/const/__init__.py:65 askbot/jinja2/question/answers_sort_nav.html:11
-#: askbot/jinja2/users/title_row.html:37
+#: askbot/const/__init__.py:71
 msgid "oldest"
 msgstr "más antigües"
 
-#: askbot/const/__init__.py:66
+#: askbot/const/__init__.py:72
 msgid "active"
 msgstr "activa"
 
-#: askbot/const/__init__.py:67
+#: askbot/const/__init__.py:73
 msgid "inactive"
 msgstr "inactiva"
 
-#: askbot/const/__init__.py:68
+#: askbot/const/__init__.py:74
 msgid "hottest"
 msgstr "más populares"
 
-#: askbot/const/__init__.py:69
+#: askbot/const/__init__.py:75
 msgid "coldest"
 msgstr "menos populares"
 
-#: askbot/const/__init__.py:70 askbot/jinja2/question/answers_sort_nav.html:15
+#: askbot/const/__init__.py:76
 msgid "most voted"
 msgstr "más votada"
 
-#: askbot/const/__init__.py:71
+#: askbot/const/__init__.py:77
 msgid "least voted"
 msgstr "menos votada"
 
-#: askbot/const/__init__.py:72
+#: askbot/const/__init__.py:78
 msgid "relevance"
 msgstr "relevancia"
 
-#: askbot/const/__init__.py:84
+#: askbot/const/__init__.py:90
 msgid "Never"
 msgstr ""
 
-#: askbot/const/__init__.py:85
+#: askbot/const/__init__.py:91
 msgid "When new post is published"
 msgstr ""
 
-#: askbot/const/__init__.py:86
+#: askbot/const/__init__.py:92
 msgid "When post is published or revised"
 msgstr ""
 
-#: askbot/const/__init__.py:120
+#: askbot/const/__init__.py:126
 msgid "latest first"
 msgstr ""
 
-#: askbot/const/__init__.py:121
+#: askbot/const/__init__.py:127
 msgid "oldest first"
 msgstr ""
 
-#: askbot/const/__init__.py:122
+#: askbot/const/__init__.py:128
 msgid "most voted first"
 msgstr ""
 
-#: askbot/const/__init__.py:127 askbot/jinja2/tags/header.html:24
+#: askbot/const/__init__.py:133
 msgid "sorted by frequency of tag use"
 msgstr ""
 
-#: askbot/const/__init__.py:128 askbot/jinja2/tags/header.html:18
+#: askbot/const/__init__.py:134
 msgid "sorted alphabetically"
 msgstr ""
 
-#: askbot/const/__init__.py:133 askbot/jinja2/users/title_row.html:25
+#: askbot/const/__init__.py:139
 msgid "see people with the highest reputation"
 msgstr ""
 
-#: askbot/const/__init__.py:134 askbot/jinja2/users/title_row.html:31
+#: askbot/const/__init__.py:140
 msgid "see people who joined most recently"
 msgstr ""
 
-#: askbot/const/__init__.py:135 askbot/jinja2/users/title_row.html:36
+#: askbot/const/__init__.py:141
 msgid "see people who joined the site first"
 msgstr ""
 
-#: askbot/const/__init__.py:136 askbot/jinja2/users/title_row.html:41
+#: askbot/const/__init__.py:142
 msgid "see people sorted by name"
 msgstr ""
 
-#: askbot/const/__init__.py:147 askbot/jinja2/user_inbox/responses.html:12
+#: askbot/const/__init__.py:153
 msgid "all"
 msgstr "toes"
 
-#: askbot/const/__init__.py:148
+#: askbot/const/__init__.py:154
 msgid "unanswered"
 msgstr "ensin rempuesta"
 
-#: askbot/const/__init__.py:149
+#: askbot/const/__init__.py:155
 msgid "followed"
 msgstr ""
 
-#: askbot/const/__init__.py:154
+#: askbot/const/__init__.py:160
 msgid "list"
 msgstr "llista"
 
-#: askbot/const/__init__.py:155
+#: askbot/const/__init__.py:161
 msgid "cloud"
 msgstr "ñube"
 
-#: askbot/const/__init__.py:165
+#: askbot/const/__init__.py:171
 msgid "Question has no answers"
 msgstr "La entruga nun tien rempuestes"
 
-#: askbot/const/__init__.py:166
+#: askbot/const/__init__.py:172
 msgid "Question has no accepted answers"
 msgstr "La entruga nun tien rempuestes aceutaes"
 
-#: askbot/const/__init__.py:230
+#: askbot/const/__init__.py:239
 msgid "asked a question"
 msgstr ""
 
-#: askbot/const/__init__.py:231
+#: askbot/const/__init__.py:240
 msgid "answered a question"
 msgstr ""
 
-#: askbot/const/__init__.py:232
+#: askbot/const/__init__.py:241
+#: askbot/migrations/0027_populate_analytics_events.py:19
+#: askbot/models/analytics.py:170
 msgid "commented question"
 msgstr ""
 
-#: askbot/const/__init__.py:233
+#: askbot/const/__init__.py:242
+#: askbot/migrations/0027_populate_analytics_events.py:20
+#: askbot/models/analytics.py:171
 msgid "commented answer"
 msgstr ""
 
-#: askbot/const/__init__.py:234
+#: askbot/const/__init__.py:243
 msgid "edited question"
 msgstr ""
 
-#: askbot/const/__init__.py:235
+#: askbot/const/__init__.py:244
 msgid "edited answer"
 msgstr ""
 
-#: askbot/const/__init__.py:236
+#: askbot/const/__init__.py:245
 msgid "received badge"
 msgstr ""
 
-#: askbot/const/__init__.py:237
+#: askbot/const/__init__.py:246
 msgid "marked best answer"
 msgstr ""
 
-#: askbot/const/__init__.py:238
+#: askbot/const/__init__.py:247
+#: askbot/migrations/0027_populate_analytics_events.py:15
+#: askbot/models/analytics.py:165
 msgid "upvoted"
 msgstr ""
 
-#: askbot/const/__init__.py:239
+#: askbot/const/__init__.py:248
+#: askbot/migrations/0027_populate_analytics_events.py:16
+#: askbot/models/analytics.py:166
 msgid "downvoted"
 msgstr ""
 
-#: askbot/const/__init__.py:240
+#: askbot/const/__init__.py:249 askbot/models/analytics.py:167
 msgid "canceled vote"
 msgstr ""
 
-#: askbot/const/__init__.py:241
+#: askbot/const/__init__.py:250
 msgid "deleted question"
 msgstr ""
 
-#: askbot/const/__init__.py:242
+#: askbot/const/__init__.py:251
 msgid "deleted answer"
 msgstr ""
 
-#: askbot/const/__init__.py:243
+#: askbot/const/__init__.py:252
 msgid "marked offensive"
 msgstr ""
 
-#: askbot/const/__init__.py:244
+#: askbot/const/__init__.py:253
 msgid "updated tags"
 msgstr ""
 
-#: askbot/const/__init__.py:245
+#: askbot/const/__init__.py:254
 msgid "selected favorite"
 msgstr ""
 
-#: askbot/const/__init__.py:246
+#: askbot/const/__init__.py:255
 msgid "completed user profile"
 msgstr ""
 
-#: askbot/const/__init__.py:247
+#: askbot/const/__init__.py:256
 msgid "email update sent to user"
 msgstr ""
 
-#: askbot/const/__init__.py:248
+#: askbot/const/__init__.py:257
 msgid "a post was shared"
 msgstr ""
 
-#: askbot/const/__init__.py:251
+#: askbot/const/__init__.py:260
 msgid "reminder about unanswered questions sent"
 msgstr ""
 
-#: askbot/const/__init__.py:255
+#: askbot/const/__init__.py:264
 msgid "reminder about accepting the best answer sent"
 msgstr ""
 
-#: askbot/const/__init__.py:257
+#: askbot/const/__init__.py:266
 msgid "mentioned in the post"
 msgstr ""
 
-#: askbot/const/__init__.py:260
+#: askbot/const/__init__.py:269
 msgid "created tag description"
 msgstr ""
 
-#: askbot/const/__init__.py:264
+#: askbot/const/__init__.py:273
 msgid "updated tag description"
 msgstr ""
 
-#: askbot/const/__init__.py:266
+#: askbot/const/__init__.py:275
 msgid "made a new post"
 msgstr ""
 
-#: askbot/const/__init__.py:269
+#: askbot/const/__init__.py:278
 msgid "made an edit"
 msgstr ""
 
-#: askbot/const/__init__.py:273
+#: askbot/const/__init__.py:282
 msgid "created post reject reason"
 msgstr ""
 
-#: askbot/const/__init__.py:277
+#: askbot/const/__init__.py:286
 msgid "updated post reject reason"
 msgstr ""
 
-#: askbot/const/__init__.py:352
+#: askbot/const/__init__.py:298
+msgid "joined"
+msgstr ""
+
+#: askbot/const/__init__.py:302
+msgid "viewed question"
+msgstr ""
+
+#: askbot/const/__init__.py:306
+#, fuzzy
+#| msgid "Question has no answers"
+msgid "viewed answer"
+msgstr "La entruga nun tien rempuestes"
+
+#: askbot/const/__init__.py:407
 msgid "[closed]"
 msgstr ""
 
-#: askbot/const/__init__.py:353
+#: askbot/const/__init__.py:408
 msgid "[deleted]"
 msgstr ""
 
-#: askbot/const/__init__.py:354 askbot/views/readers.py:742
+#: askbot/const/__init__.py:409 askbot/views/readers.py:765
 msgid "initial version"
 msgstr ""
 
-#: askbot/const/__init__.py:355
+#: askbot/const/__init__.py:410
 msgid "retagged"
 msgstr ""
 
-#: askbot/const/__init__.py:356
+#: askbot/const/__init__.py:411
 msgid "[private]"
 msgstr ""
 
-#: askbot/const/__init__.py:449 askbot/const/__init__.py:458
-#: askbot/const/__init__.py:464 askbot/const/__init__.py:470
+#: askbot/const/__init__.py:504 askbot/const/__init__.py:513
+#: askbot/const/__init__.py:519 askbot/const/__init__.py:525
 #, fuzzy
 #| msgid "tags"
 msgid "all tags"
 msgstr "etiquetes"
 
-#: askbot/const/__init__.py:450 askbot/const/__init__.py:459
-#: askbot/const/__init__.py:465 askbot/const/__init__.py:471
+#: askbot/const/__init__.py:505 askbot/const/__init__.py:514
+#: askbot/const/__init__.py:520 askbot/const/__init__.py:526
 msgid "exclude ignored tags"
 msgstr ""
 
-#: askbot/const/__init__.py:451 askbot/const/__init__.py:460
-#: askbot/const/__init__.py:472
+#: askbot/const/__init__.py:506 askbot/const/__init__.py:515
+#: askbot/const/__init__.py:527
 msgid "only interesting tags"
 msgstr ""
 
-#: askbot/const/__init__.py:455 askbot/const/__init__.py:466
-#: askbot/const/__init__.py:473
+#: askbot/const/__init__.py:510 askbot/const/__init__.py:521
+#: askbot/const/__init__.py:528
 msgid "only subscribed tags"
 msgstr ""
 
-#: askbot/const/__init__.py:477
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:24
+#: askbot/const/__init__.py:532
 msgid "instantly"
 msgstr ""
 
-#: askbot/const/__init__.py:478 askbot/const/__init__.py:484
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:25
+#: askbot/const/__init__.py:533 askbot/const/__init__.py:539
 msgid "daily"
 msgstr ""
 
-#: askbot/const/__init__.py:479 askbot/const/__init__.py:485
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:26
+#: askbot/const/__init__.py:534 askbot/const/__init__.py:540
 msgid "weekly"
 msgstr ""
 
-#: askbot/const/__init__.py:480 askbot/const/__init__.py:486
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:27
+#: askbot/const/__init__.py:535 askbot/const/__init__.py:541
 msgid "never"
 msgstr ""
 
-#: askbot/const/__init__.py:491
+#: askbot/const/__init__.py:546
 msgid "identicon"
 msgstr ""
 
-#: askbot/const/__init__.py:492
+#: askbot/const/__init__.py:547
 msgid "monsterid"
 msgstr ""
 
-#: askbot/const/__init__.py:493
+#: askbot/const/__init__.py:548
 msgid "wavatar"
 msgstr ""
 
-#: askbot/const/__init__.py:494
+#: askbot/const/__init__.py:549
 msgid "retro"
 msgstr ""
 
-#: askbot/const/__init__.py:495
+#: askbot/const/__init__.py:550
 msgid "mystery-man"
 msgstr ""
 
-#: askbot/const/__init__.py:498 askbot/jinja2/avatar/show_list.html:13
+#: askbot/const/__init__.py:553
 msgid "Default avatar"
 msgstr ""
 
-#: askbot/const/__init__.py:499 askbot/jinja2/avatar/show_list.html:26
+#: askbot/const/__init__.py:554
 msgid "Gravatar"
 msgstr ""
 
-#: askbot/const/__init__.py:504
+#: askbot/const/__init__.py:559
 msgid "Uploaded Avatar"
 msgstr ""
 
-#: askbot/const/__init__.py:514 askbot/forms.py:699
+#: askbot/const/__init__.py:569 askbot/forms.py:699
 msgid "administrator"
 msgstr "alministrador"
 
-#: askbot/const/__init__.py:515 askbot/forms.py:700
+#: askbot/const/__init__.py:570 askbot/forms.py:700
 msgid "moderator"
 msgstr "moderador"
 
-#: askbot/const/__init__.py:516 askbot/forms.py:693
+#: askbot/const/__init__.py:571 askbot/forms.py:693
 msgid "approved"
 msgstr "aprobáu"
 
-#: askbot/const/__init__.py:517 askbot/forms.py:694
+#: askbot/const/__init__.py:572 askbot/forms.py:694
 msgid "watched"
 msgstr "vistu"
 
-#: askbot/const/__init__.py:518 askbot/forms.py:695
+#: askbot/const/__init__.py:573 askbot/forms.py:695
 msgid "suspended"
 msgstr "suspendíu"
 
-#: askbot/const/__init__.py:519 askbot/forms.py:696
+#: askbot/const/__init__.py:574 askbot/forms.py:696
 msgid "blocked"
 msgstr "bloquiáu"
 
-#: askbot/const/__init__.py:521
+#: askbot/const/__init__.py:576
 msgid "terminated"
 msgstr ""
 
-#: askbot/const/__init__.py:555 askbot/jinja2/badges/sidebar.html:4
+#: askbot/const/__init__.py:610
 msgid "gold"
 msgstr ""
 
-#: askbot/const/__init__.py:556 askbot/jinja2/badges/sidebar.html:11
+#: askbot/const/__init__.py:611
 msgid "silver"
 msgstr ""
 
-#: askbot/const/__init__.py:557 askbot/jinja2/badges/sidebar.html:18
+#: askbot/const/__init__.py:612
 msgid "bronze"
 msgstr ""
 
-#: askbot/const/__init__.py:568
+#: askbot/const/__init__.py:623
 msgid "date descendant"
 msgstr ""
 
-#: askbot/const/__init__.py:569
+#: askbot/const/__init__.py:624
 msgid "date ascendant"
 msgstr ""
 
-#: askbot/const/__init__.py:570
+#: askbot/const/__init__.py:625
 msgid "most recently active"
 msgstr ""
 
-#: askbot/const/__init__.py:571
+#: askbot/const/__init__.py:626
 msgid "least recently active"
 msgstr ""
 
-#: askbot/const/__init__.py:572
+#: askbot/const/__init__.py:627
 msgid "more responses"
 msgstr ""
 
-#: askbot/const/__init__.py:573
+#: askbot/const/__init__.py:628
 msgid "fewer responses"
 msgstr ""
 
-#: askbot/const/__init__.py:574
+#: askbot/const/__init__.py:629
 msgid "more votes"
 msgstr ""
 
-#: askbot/const/__init__.py:575
+#: askbot/const/__init__.py:630
 msgid "less votes"
+msgstr ""
+
+#: askbot/const/__init__.py:671
+#, fuzzy
+#| msgid "administrator"
+msgid "Visible to administrators"
+msgstr "alministrador"
+
+#: askbot/const/__init__.py:672
+msgid "Visible to moderators and administrators"
+msgstr ""
+
+#: askbot/const/__init__.py:673
+msgid "Visible to own members, moderators and administrators"
+msgstr ""
+
+#: askbot/const/__init__.py:674
+msgid "Visible to everyone"
 msgstr ""
 
 #: askbot/const/message_keys.py:15
@@ -3622,7 +3808,7 @@ msgid "In order to register, you must accept the terms of service"
 msgstr ""
 
 #: askbot/deps/django_authopenid/forms.py:97
-#: askbot/deps/django_authopenid/views.py:212
+#: askbot/deps/django_authopenid/views.py:215
 msgid "i-names are not supported"
 msgstr ""
 
@@ -3672,7 +3858,6 @@ msgid "entered passwords did not match, please try again"
 msgstr ""
 
 #: askbot/deps/django_authopenid/forms.py:429
-#: askbot/jinja2/user_profile/unsubscribe.html:22
 msgid "Sorry, we don't have a user with this email."
 msgstr ""
 
@@ -3737,7 +3922,6 @@ msgid "%(site)s user name and password"
 msgstr ""
 
 #: askbot/deps/django_authopenid/util.py:458
-#: askbot/jinja2/authopenid/signin.html:98
 msgid "Create a password-protected account"
 msgstr ""
 
@@ -3747,7 +3931,6 @@ msgstr ""
 
 #: askbot/deps/django_authopenid/util.py:471
 #: askbot/deps/django_authopenid/util.py:914
-#: askbot/jinja2/components/login_link.html:16
 #, python-format
 msgid "Sign in via %(login_name)s"
 msgstr ""
@@ -3830,81 +4013,81 @@ msgstr ""
 msgid "Signin with %(provider)s user name and password"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:220
+#: askbot/deps/django_authopenid/views.py:223
 #, python-format
 msgid "OpenID %(openid_url)s is invalid"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:253
+#: askbot/deps/django_authopenid/views.py:256
 msgid "Unfortunately, there was some problem logging in via the Discourse site"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:460
-#: askbot/deps/django_authopenid/views.py:694
-#: askbot/deps/django_authopenid/views.py:710
+#: askbot/deps/django_authopenid/views.py:463
+#: askbot/deps/django_authopenid/views.py:697
+#: askbot/deps/django_authopenid/views.py:713
 #, python-format
 msgid ""
 "Unfortunately, there was some problem when connecting to %(provider)s, "
 "please try again or use another provider"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:603
-#: askbot/deps/django_authopenid/views.py:920
+#: askbot/deps/django_authopenid/views.py:606
+#: askbot/deps/django_authopenid/views.py:923
 msgid "Your new password is saved"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:750
+#: askbot/deps/django_authopenid/views.py:753
 msgid "The login password combination was not correct"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:846
+#: askbot/deps/django_authopenid/views.py:849
 msgid "Click any of the icons below to sign in"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:848
+#: askbot/deps/django_authopenid/views.py:851
 msgid "Account recovery email sent"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:851
-#: askbot/deps/django_authopenid/views.py:856
+#: askbot/deps/django_authopenid/views.py:854
+#: askbot/deps/django_authopenid/views.py:859
 msgid "Add at least one login method"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:853
+#: askbot/deps/django_authopenid/views.py:856
 msgid "If you wish, please add, remove or re-validate your login methods"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:858
+#: askbot/deps/django_authopenid/views.py:861
 msgid "Please wait a second! Your account is recovered, but ..."
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:938
+#: askbot/deps/django_authopenid/views.py:941
 #, python-format
 msgid "Login method %(provider_name)s does not exist"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:944
+#: askbot/deps/django_authopenid/views.py:947
 msgid "Oops, sorry - there was some error - please try again"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:1047
+#: askbot/deps/django_authopenid/views.py:1050
 msgid ""
 "If you are trying to sign in to another account, please sign out first. "
 "Otherwise, please report the incident to the site administrator."
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:1075
+#: askbot/deps/django_authopenid/views.py:1078
 #, python-format
 msgid "Your %(provider)s login works fine"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:1310
+#: askbot/deps/django_authopenid/views.py:1317
 msgid ""
 "Sorry, registration failed. The token can be already used or has expired. "
 "Please try again"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:1490
+#: askbot/deps/django_authopenid/views.py:1501
 msgid "Sorry, this account recovery key has expired or is invalid"
 msgstr ""
 
@@ -3962,7 +4145,7 @@ msgid_plural "must be < %d words"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/forms.py:254 askbot/jinja2/ask/ask_form.html:68
+#: askbot/forms.py:254
 msgid "Select language"
 msgstr ""
 
@@ -4008,9 +4191,7 @@ msgid ""
 "them."
 msgstr ""
 
-#: askbot/forms.py:460 askbot/forms.py:1106
-#: askbot/jinja2/ask/tags_field.html:11
-#: askbot/jinja2/components/meta_nav.html:8 askbot/models/widgets.py:27
+#: askbot/forms.py:460 askbot/forms.py:1106 askbot/models/widgets.py:27
 msgid "tags"
 msgstr "etiquetes"
 
@@ -4125,7 +4306,7 @@ msgstr "Nun quiero dar el corréu electrónicu o recibir rempuesta:"
 msgid "Message is required"
 msgstr ""
 
-#: askbot/forms.py:844 askbot/models/__init__.py:2684
+#: askbot/forms.py:844 askbot/models/__init__.py:2705
 msgid "Anonymous"
 msgstr ""
 
@@ -4233,7 +4414,7 @@ msgstr "Escueyi una etiqueta pa la peñera de corréu"
 msgid "Individually selected"
 msgstr "Seleicionao individualmente"
 
-#: askbot/forms.py:1473 askbot/models/user.py:417
+#: askbot/forms.py:1473 askbot/models/user.py:441
 msgid "Unanswered questions"
 msgstr ""
 
@@ -4262,2970 +4443,104 @@ msgstr ""
 msgid "Invalid key"
 msgstr ""
 
-#: askbot/forms.py:1625 askbot/jinja2/reopen.html:7
+#: askbot/forms.py:1625
 msgid "Title"
 msgstr ""
 
-#: askbot/forms.py:1626 askbot/jinja2/email/preview_email.html:9
-#: askbot/jinja2/groups.html:27
+#: askbot/forms.py:1626
 msgid "Description"
 msgstr ""
 
-#: askbot/forms.py:1651 askbot/jinja2/ask/tags_field.html:4
-#: askbot/jinja2/ask/tags_field.html:15 askbot/jinja2/ask/tags_field.html:19
-#: askbot/jinja2/questions/sidebar.html:21 askbot/jinja2/tags/header.html:9
-#: askbot/jinja2/tags/index.html:3
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:12
-#: askbot/jinja2/widgets/tag_category_selector.html:2
+#: askbot/forms.py:1651
 msgid "Tags"
+msgstr ""
+
+#: askbot/forms.py:1910
+msgid "All Events"
+msgstr ""
+
+#: askbot/forms.py:1912
+msgid "User Registered"
+msgstr ""
+
+#: askbot/forms.py:1914
+msgid "User Logged In"
+msgstr ""
+
+#: askbot/forms.py:1916
+msgid "User Logged Out"
+msgstr ""
+
+#: askbot/forms.py:1918
+msgid "Question Viewed"
+msgstr ""
+
+#: askbot/forms.py:1920
+#, fuzzy
+#| msgid "unanswered"
+msgid "Answer Viewed"
+msgstr "ensin rempuesta"
+
+#: askbot/forms.py:1922
+#, fuzzy
+#| msgid "most voted"
+msgid "Content Voted"
+msgstr "más votada"
+
+#: askbot/forms.py:1924
+#, fuzzy
+#| msgid "most voted"
+msgid "Content Upvoted"
+msgstr "más votada"
+
+#: askbot/forms.py:1926
+msgid "Content Downvoted"
+msgstr ""
+
+#: askbot/forms.py:1928
+#, fuzzy
+#| msgid "Question has no answers"
+msgid "Question Posted"
+msgstr "La entruga nun tien rempuestes"
+
+#: askbot/forms.py:1930
+#, fuzzy
+#| msgid "unanswered"
+msgid "Answer Posted"
+msgstr "ensin rempuesta"
+
+#: askbot/forms.py:1932
+msgid "Question Commented"
+msgstr ""
+
+#: askbot/forms.py:1934
+#, fuzzy
+#| msgid "Answered by me"
+msgid "Answer Commented"
+msgstr "Respondío por min"
+
+#: askbot/forms.py:1936
+msgid "Question Retagged"
+msgstr ""
+
+#: askbot/forms.py:1938
+msgid "Any Content Posted"
+msgstr ""
+
+#: askbot/forms.py:1962
+msgid "Selected Thread"
+msgstr ""
+
+#: askbot/forms.py:1964
+msgid "Selected Post"
+msgstr ""
+
+#: askbot/forms.py:1966
+msgid "All Content"
 msgstr ""
 
 #: askbot/importers/stackexchange/management/commands/load_stackexchange.py:151
 msgid "Congratulations, you are now an Administrator"
-msgstr ""
-
-#: askbot/jinja2/404.html:3 askbot/jinja2/404.html:6
-msgid "Page not found"
-msgstr ""
-
-#: askbot/jinja2/404.html:8
-msgid "Sorry, could not find the page you requested."
-msgstr ""
-
-#: askbot/jinja2/404.html:9
-msgid "This might have happened for the following reasons:"
-msgstr ""
-
-#: askbot/jinja2/404.html:12
-msgid "This page has been deleted"
-msgstr ""
-
-#: askbot/jinja2/404.html:13
-msgid "url has error - please check it;"
-msgstr ""
-
-#: askbot/jinja2/404.html:14
-msgid ""
-"the page you tried to visit is protected or you don't have sufficient "
-"points, see"
-msgstr ""
-
-#: askbot/jinja2/404.html:15 askbot/jinja2/components/footer.html:28
-msgid "faq"
-msgstr ""
-
-#: askbot/jinja2/404.html:17
-msgid "if you believe this error 404 should not have occured, please"
-msgstr ""
-
-#: askbot/jinja2/404.html:18
-msgid "report this problem"
-msgstr ""
-
-#: askbot/jinja2/500.html:3
-msgid "Internal server error"
-msgstr ""
-
-#: askbot/jinja2/500.html:14
-msgid "Sorry, something went wrong."
-msgstr ""
-
-#: askbot/jinja2/500.html:16
-msgid "We are working to resolve the issue as soon as possible."
-msgstr ""
-
-#: askbot/jinja2/answer_edit.html:8 askbot/jinja2/group_messaging/home.html:9
-#: askbot/jinja2/revisions.html:9
-msgid "back"
-msgstr ""
-
-#: askbot/jinja2/answer_edit.html:40
-msgid "Save edit"
-msgstr ""
-
-#: askbot/jinja2/answer_edit.html:44
-#: askbot/jinja2/avatar/confirm_delete.html:16 askbot/jinja2/close.html:17
-#: askbot/jinja2/feedback.html:53 askbot/jinja2/group_messaging/home.html:44
-#: askbot/jinja2/reopen.html:25 askbot/jinja2/subscribe_for_tags.html:12
-#: askbot/jinja2/user_profile/user_edit.html:75
-msgid "Cancel"
-msgstr ""
-
-#: askbot/jinja2/ask/ask_form.html:80
-msgid "Login/Signup to Post"
-msgstr ""
-
-#: askbot/jinja2/ask/index.html:68 askbot/jinja2/ask/index.html:71
-#: askbot/jinja2/editors/rich_text.html:17
-msgid "hide preview"
-msgstr ""
-
-#: askbot/jinja2/ask/index.html:71
-msgid "show preview"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:6
-msgid ""
-"since you are not logged in right now, you will be asked to sign in or "
-"register after making your post"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:9
-#: askbot/jinja2/components/answer_edit_tips.html:8
-msgid "provide enough details"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:10
-#: askbot/jinja2/components/answer_edit_tips.html:9
-msgid "be clear and concise"
-msgstr ""
-
-#: askbot/jinja2/ask/tags_field.html:12
-#, fuzzy
-#| msgid "Country field is required"
-msgid ", one of these is required"
-msgstr "El campu País ye obligatoriu"
-
-#: askbot/jinja2/ask/tags_field.html:16
-msgid "(required)"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:2
-#: askbot/jinja2/authopenid/account_activation/body.html:3
-#: askbot/jinja2/authopenid/account_activation/body.txt:1
-#: askbot/jinja2/authopenid/account_recovery/body.html:2
-#: askbot/jinja2/authopenid/account_recovery/body.html:3
-#: askbot/jinja2/authopenid/account_recovery/body.txt:1
-#: askbot/jinja2/authopenid/email_validation/body.html:2
-#: askbot/jinja2/authopenid/email_validation/body.html:3
-#, python-format
-msgid "Greetings from %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:7
-msgid "To activate your account, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:12
-#: askbot/jinja2/authopenid/account_activation/body.txt:7
-#: askbot/jinja2/authopenid/account_recovery/body.html:12
-#: askbot/jinja2/authopenid/account_recovery/body.txt:7
-msgid ""
-"If you are unable to follow the link, copy/paste this key into the form:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:17
-#: askbot/jinja2/authopenid/account_activation/body.txt:11
-#: askbot/jinja2/authopenid/account_recovery/body.html:17
-#: askbot/jinja2/authopenid/account_recovery/body.txt:11
-msgid ""
-"If you believe that this message was sent erroneously - no further action is "
-"needed. We apologize for any inconvenience."
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.txt:3
-#: askbot/jinja2/authopenid/account_recovery/body.html:7
-#: askbot/jinja2/authopenid/account_recovery/body.txt:3
-msgid "To recover your account, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.txt:13
-#: askbot/jinja2/authopenid/account_recovery/body.txt:13
-#, python-format
-msgid ""
-"Sincerely,\n"
-"%(site_name)s Administrator"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/subject.txt:1
-#, python-format
-msgid "Activate your %(site_name)s account"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery/subject.txt:1
-#, python-format
-msgid "Recover your %(site_name)s account"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:2
-#: askbot/jinja2/authopenid/signin.html:181
-msgid "Enter your email"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:5
-msgid "Send a new recovery key"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:7
-#: askbot/jinja2/authopenid/complete.html:108
-#: askbot/jinja2/authopenid/recover_account.html:2
-#: askbot/jinja2/authopenid/recover_account.html:9
-#: askbot/jinja2/authopenid/signin.html:184
-#, fuzzy
-#| msgid "account/"
-msgid "Recover account"
-msgstr "cuenta/"
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:59
-msgid "Please enter your <span>user name</span>, then sign in"
-msgstr ""
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:60
-msgid "(or select another login method above)"
-msgstr ""
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:62
-#: askbot/jinja2/authopenid/signin.html:96
-#: askbot/jinja2/components/login_link.html:24
-msgid "Sign in"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:21
-#: askbot/jinja2/authopenid/complete.html:35
-msgid "Complete registration"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:27
-#: askbot/jinja2/authopenid/signup_with_password.html:19
-msgid "New user registrations are disabled"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:65
-#: askbot/jinja2/authopenid/signup_with_password.html:34
-#: askbot/utils/forms.py:119
-msgid "Choose a screen name"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:74
-msgid "Email cannot be changed"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:83
-#: askbot/jinja2/authopenid/signup_with_password.html:45
-#: askbot/jinja2/components/proxy_author_inputs.html:23
-msgid "Email address"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:100
-#: askbot/jinja2/authopenid/signup_with_password.html:5
-#: askbot/jinja2/authopenid/signup_with_password.html:77
-msgid "Signup"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:113
-msgid "Already have an account?"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:114
-msgid "Recover it by email."
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:117
-msgid "Prefer to create a new account?"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:118
-msgid "Return to registration."
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:1
-msgid "Thank you for registering at our Q&A forum!"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:3
-msgid "Your account details are:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:5
-msgid "Username:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:6
-msgid "Password:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:8
-msgid "Please sign in here:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:11
-#: askbot/jinja2/authopenid/email_validation/body.txt:13
-msgid ""
-"Sincerely,\n"
-"Q&A Forum Administrator"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.html:7
-#: askbot/jinja2/authopenid/email_validation/body.txt:3
-msgid "To make use of the Forum, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.html:11
-#: askbot/jinja2/authopenid/email_validation/body.txt:7
-msgid "Following the link above will help us verify your email address."
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.html:13
-#: askbot/jinja2/authopenid/email_validation/body.txt:9
-msgid ""
-"If you believe that this message was sent in mistake - \n"
-"no further action is needed. Just ignore this email, we apologize\n"
-"for any inconvenience"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.txt:1
-msgid "Greetings from the Q&A forum"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/subject.txt:1
-#, python-format
-msgid "Validate your %(site_name)s email"
-msgstr ""
-
-#: askbot/jinja2/authopenid/logout.html:3
-msgid "Logout"
-msgstr ""
-
-#: askbot/jinja2/authopenid/logout.html:6
-msgid "You have successfully logged out"
-msgstr ""
-
-#: askbot/jinja2/authopenid/logout.html:8
-msgid ""
-"However, you still may be logged in to your OpenID provider. Please logout "
-"of your provider if you wish to do so."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:5
-msgid "User login"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:20
-msgid ""
-"It's a good idea to make sure that your existing login methods still work, "
-"or add a new one. Please click any of the icons below to check/change or add "
-"new login methods."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:22
-msgid ""
-"Please add a more permanent login method by clicking one of the icons below, "
-"to avoid logging in via email each time."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:26
-msgid ""
-"Click on one of the icons below to add a new login method or re-validate an "
-"existing one."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:28
-msgid ""
-"You don't have a method to log in right now, please add one or more by "
-"clicking any of the icons below."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:64
-msgid "or enter your <span>user name and password</span>"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:68
-msgid "Please, sign in"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:73
-msgid "Login failed, please try again"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:82
-msgid "Username"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:84
-msgid "Username or email"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:92
-#: askbot/jinja2/authopenid/signup_with_password.html:56
-#: askbot/utils/forms.py:309
-msgid "Password"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:103
-msgid "To change your password - please enter the new one twice, then submit"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:113
-msgid "New password"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:123
-msgid "Please, retype"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:128
-msgid "Change password"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:142
-msgid "Here are your current login methods"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:146
-#, fuzzy
-#| msgid "approved"
-msgid "provider"
-msgstr "aprobáu"
-
-#: askbot/jinja2/authopenid/signin.html:147
-#, fuzzy
-#| msgid "least voted"
-msgid "last used"
-msgstr "menos votada"
-
-#: askbot/jinja2/authopenid/signin.html:161
-#: askbot/jinja2/question/answer_controls.html:12
-#: askbot/jinja2/question/question_controls.html:45
-#: askbot/jinja2/user_inbox/responses.html:10
-msgid "delete"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:163
-msgid "cannot be deleted"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:173
-msgid "Having trouble signing in?"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signup_with_password.html:13
-msgid ""
-"<span class='strong big'>If you prefer, create your forum login name and\n"
-"password here. However</span>, please keep in mind that we also support\n"
-"<strong>OpenID</strong> login method. With <strong>OpenID</strong> you can\n"
-"simply reuse your external login (e.g. Gmail or AOL) without ever sharing\n"
-"your login details with anyone and having to remember yet another password."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signup_with_password.html:24
-msgid "Create login name and password"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signup_with_password.html:67
-#: askbot/utils/forms.py:317
-msgid "Password retyped"
-msgstr ""
-
-#: askbot/jinja2/authopenid/tos_field.html:4
-msgid "Terms of service:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:2
-#: askbot/jinja2/authopenid/verify_email.html:5
-msgid "Confirm email address"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:7
-msgid "Validation email sent. Please find it and follow the enclosed link."
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:8
-msgid "If the link doesn't work - enter the emailed code below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:14
-msgid "Validation code"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:16
-msgid "Continue"
-msgstr ""
-
-#: askbot/jinja2/avatar/avatar.html:3
-#, python-format
-msgid "%(username)s's primary avatar"
-msgstr ""
-
-#: askbot/jinja2/avatar/avatar.html:5 askbot/jinja2/macros.html:591
-#, python-format
-msgid "%(username)s's avatar"
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:2
-msgid "delete avatar"
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:4
-msgid "Please select the avatars that you would like to delete."
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:6
-#, python-format
-msgid ""
-"You have no avatars to delete. Please <a "
-"href=\"%(avatar_change_url)s\">upload one</a> now."
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:13
-msgid "Delete These"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:3
-msgid "manage avatars"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:13
-msgid ""
-"This is a default avatar image, shown at your account because you have not "
-"yet uploaded an avatar."
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:21
-#: askbot/jinja2/avatar/show_list.html:35
-#: askbot/jinja2/avatar/show_list.html:47
-msgid "Set as primary"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:26
-#, python-format
-msgid ""
-"This image, called 'gravatar', is linked to the email address %(email)s.  It "
-"can be changed at http://gravatar.com"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:40
-msgid "Uploaded"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:53
-msgid "Remove"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:58
-msgid "Primary avatar"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:65
-msgid "You haven't uploaded an avatar yet."
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:67
-msgid "Upload another avatar."
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:72
-msgid "Upload an avatar"
-msgstr ""
-
-#: askbot/jinja2/badge.html:7 askbot/jinja2/badge.html:18
-#, python-format
-msgid "%(name)s"
-msgstr ""
-
-#: askbot/jinja2/badge.html:9
-msgid "Badge"
-msgstr ""
-
-#: askbot/jinja2/badge.html:16
-#, python-format
-msgid "Badge \"%(name)s\""
-msgstr ""
-
-#: askbot/jinja2/badge.html:19
-#, python-format
-msgid "This %(level)s badge is awarded for:"
-msgstr ""
-
-#: askbot/jinja2/badge.html:24
-#, python-format
-msgid "%(num_awardees)s user received this badge"
-msgid_plural "%(num_awardees)s users received this badge"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/badge.html:29
-msgid "Nobody yet received this badge."
-msgstr ""
-
-#: askbot/jinja2/badges/index.html:3 askbot/jinja2/badges/index.html:6
-#, fuzzy
-#| msgid "Badge settings"
-msgid "Badges"
-msgstr "Configuración de les insinies"
-
-#: askbot/jinja2/badges/index.html:11
-msgid ""
-"Below is the list of available badges and number of times each type of badge "
-"has been awarded."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:2
-#, fuzzy
-#| msgid "Badge settings"
-msgid "Badge levels"
-msgstr "Configuración de les insinies"
-
-#: askbot/jinja2/badges/sidebar.html:7
-msgid ""
-"Gold badge is the highest award in this community. To obtain it you have to "
-"show profound knowledge, ability and your active participation."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:14
-msgid ""
-"Silver badge is occasionally awarded for the very high quality contributions."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:21
-msgid "Bronze badge is often given for special achievements."
-msgstr ""
-
-#: askbot/jinja2/close.html:12
-msgid "Reasons"
-msgstr ""
-
-#: askbot/jinja2/close.html:16
-msgid "OK to close"
-msgstr ""
-
-#: askbot/jinja2/components/answer_edit_tips.html:3
-msgid "Tips"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:17
-#, python-format
-msgid ""
-"\n"
-"              Content on this site is licensed under a %(license)s license.\n"
-"            "
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:26
-msgid "about"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:29
-msgid "help"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:32
-msgid "privacy policy"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:35
-msgid "terms of service"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:49
-msgid "give feedback"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:55
-#, python-format
-msgid ""
-"\n"
-"          Powered by Askbot version %(version)s\n"
-"        "
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/scope_nav.html:8
-msgid "ALL"
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/scope_nav.html:18
-msgid "FOLLOWED"
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/search_bar.html:27
-msgid "Type your question or search"
-msgstr ""
-
-#: askbot/jinja2/components/logo.html:3
-#, python-format
-msgid "%(site)s logo"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:2
-msgid "Markdown basics"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:6
-msgid "*italic*"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:9
-msgid "**bold**"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:13
-msgid "*italic* or _italic_"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:16
-msgid "**bold** or __bold__"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/question/answer_controls.html:36
-msgid "link"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/components/markdown_help.html:24
-msgid "text"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/components/markdown_help.html:24
-msgid "title"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:24
-msgid "image"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:28
-msgid "numbered list:"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:29
-msgid "One"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:30
-msgid "Two"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:33
-msgid "basic HTML tags are also supported"
-msgstr ""
-
-#: askbot/jinja2/components/meta_nav.html:15
-msgid "users"
-msgstr ""
-
-#: askbot/jinja2/components/meta_nav.html:24
-msgid "badges"
-msgstr ""
-
-#: askbot/jinja2/components/meta_nav.html:31
-#, fuzzy
-#| msgid "Badge settings"
-msgid "settings"
-msgstr "Configuración de les insinies"
-
-#: askbot/jinja2/components/proxy_author_inputs.html:5
-msgid ""
-"To post on behalf of someone else, enter user name <strong>and</strong> "
-"email below."
-msgstr ""
-
-#: askbot/jinja2/components/proxy_author_inputs.html:13
-#, fuzzy
-#| msgid "Real name"
-msgid "User name"
-msgstr "Nome real"
-
-#: askbot/jinja2/components/user_nav/inbox_link.html:3
-#, python-format
-msgid "you have %(response_count)s new response"
-msgid_plural "you have %(response_count)s new responses"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/components/user_nav/index.html:5
-msgid "read only access"
-msgstr ""
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:8
-#: askbot/jinja2/macros.html:825 askbot/jinja2/macros.html:826
-#, python-format
-msgid "%(new)s new flagged posts and %(seen)s previous"
-msgstr ""
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:10
-#: askbot/jinja2/macros.html:828 askbot/jinja2/macros.html:829
-#, python-format
-msgid "%(new)s new flagged posts"
-msgstr ""
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:12
-#: askbot/jinja2/macros.html:834 askbot/jinja2/macros.html:835
-#, python-format
-msgid "%(seen)s flagged posts"
-msgstr ""
-
-#: askbot/jinja2/editors/rich_text.html:15
-msgid "Toggle the real time Markdown editor preview"
-msgstr ""
-
-#: askbot/jinja2/email/accept_answers_reminder/body.html:2
-#: askbot/jinja2/email/accept_answers_reminder/body.html:3
-msgid "Please select the best responses for"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:6
-#: askbot/jinja2/email/account_management_request/body.html:7
-#: askbot/jinja2/email/feedback/body.html:6
-#: askbot/jinja2/email/feedback/body.html:7
-#, python-format
-msgid "%(site_name)s feedback"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:9
-msgid "Hello,"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:11
-msgid ""
-"If you are not sure how to do this, please ask your system administrator.\n"
-"This feature is new and will be improved in the near future."
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/subject.txt:1
-#, python-format
-msgid "Attention: %(username)s requested your action on their account"
-msgstr ""
-
-#: askbot/jinja2/email/approved_post_notification/body.html:9
-#: askbot/jinja2/email/approved_post_notification_respondable/body.html:20
-msgid "Below is a copy of your post:"
-msgstr ""
-
-#: askbot/jinja2/email/approved_post_notification/subject.txt:1
-#: askbot/jinja2/email/approved_post_notification_respondable/subject.txt:1
-#, python-format
-msgid "Your post at %(site_name)s is now published"
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:4
-#, python-format
-msgid "%(user)s, please reply to this message."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:9
-msgid ""
-"Your post could not be published, because we could not detect signature in "
-"your email."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:10
-msgid ""
-"This happened either because this is your first post or you have changed "
-"your email signature."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:11
-msgid "Please make a simple response, without editing this message."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:12
-msgid ""
-"We will then attempt to detect the signature in your response and you should "
-"be able to post."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/subject.txt:1
-#: askbot/jinja2/email/insufficient_reputation/subject.txt:1
-msgid "Subject line depends on the previous incoming email"
-msgstr ""
-
-#: askbot/jinja2/email/batch_email_alert/subject.txt:2
-#, python-format
-msgid ""
-"\n"
-"        %(question_count)s update about %(topics)s\n"
-"    "
-msgid_plural ""
-"\n"
-"        %(question_count)s updates about %(topics)s\n"
-"    "
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/email/batch_email_alert/subject.txt:8
-#, python-format
-msgid ""
-"\n"
-"        %(question_count)s update\n"
-"    "
-msgid_plural ""
-"\n"
-"        %(question_count)s updates\n"
-"    "
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/email/change_settings_info.html:5
-#, python-format
-msgid ""
-"You have received this message because you've been invited to join <a "
-"href=\"%(app_url)s\">%(app_name)s</a> as a moderator."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:6
-#: askbot/jinja2/email/change_settings_info.html:18
-#, python-format
-msgid ""
-"If you believe that this message was sent in an error, please email about it "
-"the forum administrator at <a href=\"mailto:"
-"%(admin_email)s\">%(admin_email)s</a>."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:10
-#, python-format
-msgid ""
-"To change frequency, language and content of these alerts, please visit <a "
-"href=\"%(url)s\">your user profile</a>."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:12
-#, python-format
-msgid ""
-"To change frequency and content of these alerts, please visit <a "
-"href=\"%(url)s\">your user profile</a>."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:16
-#: askbot/jinja2/email/unsubscribe_link/body.html:5
-#, python-format
-msgid "To unsubscribe, visit <a href=\"%(unsubscribe_url)s\">this page</a>"
-msgstr ""
-
-#: askbot/jinja2/email/feedback/body.html:10
-#: askbot/jinja2/email/feedback/body.html:12
-msgid "wrote:"
-msgstr ""
-
-#: askbot/jinja2/email/feedback/subject.txt:1
-#, python-format
-msgid "%(site_name)s feedback message"
-msgstr ""
-
-#: askbot/jinja2/email/instant_notification/body.html:10
-#, python-format
-msgid ""
-"Note: to reply with a comment, please use \n"
-"                <a href=\"mailto:%(addr)s?subject=%(subject)s\">this link</"
-"a>\n"
-"            "
-msgstr ""
-
-#: askbot/jinja2/email/instant_notification/body.html:23
-#, python-format
-msgid "%(author)s edited a <a href=\"%(post_url)s\">post</a>"
-msgstr ""
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:10
-#, python-format
-msgid "%(username)s, your content could not be posted by email just yet."
-msgstr ""
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:14
-#, python-format
-msgid ""
-"To make posts by email, you need to receive about %(min_upvotes)s upvotes."
-msgstr ""
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:15
-#, python-format
-msgid "At this time, please post your content at %(link)s"
-msgstr ""
-
-#: askbot/jinja2/email/list_emails.html:2
-msgid "Preview of emails"
-msgstr ""
-
-#: askbot/jinja2/email/list_emails.html:4
-msgid "List of emails sent by Askbot"
-msgstr ""
-
-#: askbot/jinja2/email/macros.html:34 askbot/jinja2/email/macros.html:66
-#, python-format
-msgid "In reply to %(author)s's %(post_type)s"
-msgstr ""
-
-#: askbot/jinja2/email/macros.html:37 askbot/jinja2/email/macros.html:68
-#, python-format
-msgid "%(author)s %(performed_action)s"
-msgstr ""
-
-#: askbot/jinja2/email/macros.html:52
-msgid "Tags:"
-msgstr ""
-
-#: askbot/jinja2/email/moderation_queue_notification/body.html:3
-#, python-format
-msgid ""
-"\n"
-"        There are new items in the %(site)s moderation queue, <a "
-"href=\"%(mod_url)s\">please have a look</a>\n"
-"    "
-msgstr ""
-
-#: askbot/jinja2/email/moderation_queue_notification/subject.txt:1
-#, python-format
-msgid "%(site)s moderation alert"
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:2
-#: askbot/jinja2/email/preview_email.html:8
-#, python-format
-msgid "Preview of email \"%(title)s\""
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:5
-msgid "Askbot emails"
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:13
-#, python-format
-msgid "Example %(num)s"
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:19
-#, fuzzy
-#| msgid "Subject line"
-msgid "Subject"
-msgstr "Llinia d'asuntu"
-
-#: askbot/jinja2/email/preview_email.html:20
-msgid "Body text (below, email styling preserved)"
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:2
-#: askbot/jinja2/email/re_welcome/body.html:3
-#, python-format
-msgid "Great, you are ready to use %(site_name)s!"
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:8
-msgid ""
-"When you receive update notifications, you will be able to respond to them, "
-"also by email."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:9
-#, python-format
-msgid ""
-"Of course, you can always visit the %(site_name)s at <a "
-"href=\"%(site_url)s\">%(site_url)s</a>."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:11
-#, python-format
-msgid ""
-"Please visit %(site_name)s at <a href=\"%(site_url)s\">%(site_url)s</a>, we "
-"look forward to your posts."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/subject.txt:1
-#, python-format
-msgid "Re: Welcome to %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/body.html:2
-#: askbot/jinja2/email/rejected_post/body.html:3
-msgid "Your post was rejected."
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/body.html:5
-msgid "Your post (copied in the end), was rejected for the following reason:"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/body.html:7
-msgid "Here is your original post"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/subject.txt:1
-#, fuzzy
-#| msgid "Question has no accepted answers"
-msgid "your post was not accepted"
-msgstr "La entruga nun tien rempuestes aceutaes"
-
-#: askbot/jinja2/email/reply_by_email_error/body.html:3
-msgid "The system was unable to process your message successfully"
-msgstr ""
-
-#: askbot/jinja2/email/reply_by_email_error/subject.txt:1
-msgid "Error posting your reply"
-msgstr ""
-
-#: askbot/jinja2/email/unanswered_questions_reminder/subject.txt:2
-#, python-format
-msgid ""
-"%(question_count)s %(unanswered_questions_phrase)s about %(tag_summary)s"
-msgstr ""
-
-#: askbot/jinja2/email/unsubscribe_link/subject.txt:1
-#, python-format
-msgid "Link to unsubscribe from %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/email/welcome/subject.txt:1
-#: askbot/jinja2/email/welcome_respondable/subject.txt:1
-#, python-format
-msgid "Welcome to %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:3
-#: askbot/jinja2/email/welcome_respondable/body.html:4
-#, python-format
-msgid "Welcome to %(site_name)s!"
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:10
-msgid ""
-"Important: <em>Please reply</em> to this message, without editing it. We "
-"need this to determine your email signature and that the email address is "
-"valid and was typed correctly."
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:13
-#, python-format
-msgid ""
-"Until we receive the response from you, you will not be able to post content "
-"on %(site_name)s by email."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:3 askbot/jinja2/faq_static.html:6
-#: askbot/views/meta.py:93
-msgid "FAQ"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:6
-msgid "Frequently Asked Questions "
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:7
-msgid "What kinds of questions can I ask here?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:8
-msgid ""
-"Most importantly - questions should be <strong>relevant</strong> to this "
-"community."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:9
-msgid ""
-"Before you ask - please make sure to search for a similar question. You can "
-"search questions by their title or tags."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:11
-msgid "What kinds of questions should be avoided?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:12
-msgid ""
-"Please avoid asking questions that are not relevant to this community, too "
-"subjective and argumentative."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:14
-msgid "What should I avoid in my answers?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:15
-msgid ""
-"is a <strong>question and answer</strong> site - <strong>it is not a "
-"discussion group</strong>. Please avoid holding debates in your answers as "
-"they tend to dilute the essense of questions and answers. For the brief "
-"discussions please use commenting facility."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:16
-msgid "Who moderates this community?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:17
-msgid "The short answer is: <strong>you</strong>."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:18
-msgid "This website is moderated by the users."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:19
-msgid ""
-"Karma system allows users to earn rights to perform a variety of moderation "
-"tasks"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:21
-msgid "How does karma system work?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:22
-msgid ""
-"When a question or answer is upvoted, the user who posted them will gain "
-"some points, which are called \"karma points\". These points serve as a "
-"rough measure of the community trust to him/her. Various moderation tasks "
-"are gradually assigned to the users based on those points."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:23
-#, python-format
-msgid ""
-"For example, if you ask an interesting question or give a helpful answer, "
-"your input will be upvoted. On the other hand if the answer is misleading - "
-"it will be downvoted. Each vote in favor will generate "
-"<strong>%(REP_GAIN_FOR_RECEIVING_UPVOTE)s</strong> points, each vote against "
-"will subtract <strong>%(REP_LOSS_FOR_RECEIVING_DOWNVOTE)s</strong> points. "
-"There is a limit of <strong>%(MAX_REP_GAIN_PER_USER_PER_DAY)s</strong> "
-"points that can be accumulated for a question or answer per day. The table "
-"below explains reputation point requirements for each type of moderation "
-"task."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:32 askbot/models/__init__.py:918
-msgid "upvote"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:37
-msgid "add comments"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:42 askbot/models/__init__.py:921
-msgid "downvote"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:46
-msgid " accept own answer to own questions"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:50
-msgid "retag other's questions"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:55
-msgid "edit community wiki questions"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:60
-#, fuzzy
-#| msgid "Question has no answers"
-msgid "edit any answer"
-msgstr "La entruga nun tien rempuestes"
-
-#: askbot/jinja2/faq_static.html:64
-msgid "delete any comment"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:68
-msgid "How to change my picture (gravatar) and what is gravatar?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:69
-msgid ""
-"<p>The picture that appears on the users profiles is called "
-"<strong>gravatar</strong> (which means <strong>g</strong>lobally <strong>r</"
-"strong>ecognized <strong>avatar</strong>).</p><p>Here is how it works: a "
-"<strong>cryptographic key</strong> (unbreakable code) is calculated from "
-"your email address. You upload your picture (or your favorite alter ego "
-"image) the website <a href='http://gravatar.com'><strong>gravatar.com</"
-"strong></a> from where we later retreive your image using the key.</"
-"p><p>This way all the websites you trust can show your image next to your "
-"posts and your email address remains private.</p><p>Please "
-"<strong>personalize your account</strong> with an image - just register at "
-"<a href='http://gravatar.com'><strong>gravatar.com</strong></a> (just please "
-"be sure to use the same email address that you used to register with us). "
-"Default image that looks like a kitchen tile is generated automatically.</p>"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:70
-msgid "To register, do I need to create new password?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:71
-msgid ""
-"No, you don't have to. You can login through any service that supports "
-"OpenID, e.g. Google, Yahoo, AOL, etc."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:72
-msgid "\"Login now!\""
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:74
-msgid "Why other people can edit my questions/answers?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:76
-msgid "Goal of this site is..."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:76
-msgid ""
-"So questions and answers can be edited like wiki pages by experienced users "
-"of this site and this improves the overall quality of the knowledge base "
-"content."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:77
-msgid "If this approach is not for you, we respect your choice."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:79
-msgid "Still have questions?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:80
-#, python-format
-msgid ""
-"Please <a href='%(ask_question_url)s'>ask</a> your question, help make our "
-"community better!"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:3
-msgid "Feedback"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:6
-msgid "Give us your feedback!"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:23
-msgid "(to hear from us please enter a valid email or check the box below)"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:30 askbot/jinja2/feedback.html:39
-#, fuzzy
-#| msgid "Country field is required"
-msgid "(this field is required)"
-msgstr "El campu País ye obligatoriu"
-
-#: askbot/jinja2/feedback.html:52
-msgid "Send Feedback"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/email_alert/body.html:7
-#, python-format
-msgid "%(author)s wrote:"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/email_alert/body.html:11
-msgid ""
-"To reply please <a class=\"thread-link\" href=\"THREAD_URL_HOLE\">visit your "
-"message inbox</a>"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:10
-#: askbot/jinja2/group_messaging/home_thread_details.html:7
-msgid "compose"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:25
-#: askbot/jinja2/group_messaging/home.html:43
-msgid "Send"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:26
-msgid "Reply"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:33
-msgid "Recipient"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:39
-#, fuzzy
-#| msgid "Your message:"
-msgid "Write your message"
-msgstr "El to mensaxe:"
-
-#: askbot/jinja2/group_messaging/macros.html:5
-#, python-format
-msgid "You wrote on %(date)s:"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:3
-msgid "Messages by sender:"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:5
-#: askbot/jinja2/user_inbox/base.html:3
-msgid "inbox"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:9
-msgid "sent"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:16
-msgid "trash"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/threads_list.html:25
-msgid "there are no messages yet..."
-msgstr ""
-
-#: askbot/jinja2/groups.html:3 askbot/jinja2/groups.html:7
-#: askbot/jinja2/question/sidebar_sharing_tools.html:66
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:15
-msgid "Groups"
-msgstr ""
-
-#: askbot/jinja2/groups.html:12
-msgid "All groups"
-msgstr ""
-
-#: askbot/jinja2/groups.html:14
-msgid "all groups"
-msgstr ""
-
-#: askbot/jinja2/groups.html:17
-msgid "My groups"
-msgstr ""
-
-#: askbot/jinja2/groups.html:19
-msgid "my groups"
-msgstr ""
-
-#: askbot/jinja2/groups.html:25
-msgid "Group"
-msgstr ""
-
-#: askbot/jinja2/groups.html:26
-msgid "Number of members"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:2 askbot/jinja2/help_static.html:5
-#: askbot/views/meta.py:78
-msgid "Help"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:8
-#, python-format
-msgid "Welcome %(username)s,"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:10
-msgid "Welcome,"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:14
-#, python-format
-msgid "Thank you for using %(app_name)s, here is how it works."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:17
-msgid "How questions, answers and comments work"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:19
-msgid ""
-"This site is for asking and answering questions, not for open-ended "
-"discussions."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:20
-msgid ""
-"We encourage everyone to use “question” space for asking and “answer” for "
-"answering."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:23
-msgid ""
-"Despite that, each question and answer can be commented – \n"
-"    the comments are good for the limited discussions."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:27
-msgid "Please search before asking your questions"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:28
-msgid ""
-"Type your question in the search bar and see whether a similar question has "
-"been asked before"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:30
-msgid "Search has advanced capabilities:"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:32
-msgid "to search in title - enter [title: your text]"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:33
-msgid "to search by tags - enter [tag: sometag] or #sometag"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:34
-msgid ""
-"to search by user - enter [user: somename] or @somename or @\"some name\""
-msgstr ""
-
-#: askbot/jinja2/help_static.html:36
-msgid ""
-"In addition, it is possible to click on tags to add them to the search query."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:38
-msgid ""
-"Finally, a separate tag search box is available in the side bar of the main "
-"page, where the search tags can be entered as well"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:41
-msgid ""
-"<em>Important!!!</em> All search terms are combined with a logical \"AND\" "
-"expression - to narrow the search by adding new terms."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:43
-msgid "Voting"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:45
-#, python-format
-msgid ""
-"Voting in %(app_name)s helps to select best answers and thank most helpful "
-"users."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:48
-#, python-format
-msgid ""
-"Please vote when you find helpful information,\n"
-"    it really helps the %(app_name)s community."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:52
-msgid "Other topics"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:54
-msgid ""
-"You can @mention users anywhere in the text to point their attention,\n"
-"    follow users and conversations and report inappropriate content by "
-"flagging it."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:57
-msgid "Enjoy."
-msgstr ""
-
-#: askbot/jinja2/import_data.html:2 askbot/jinja2/import_data.html:4
-msgid "Import StackExchange data"
-msgstr ""
-
-#: askbot/jinja2/import_data.html:13
-msgid ""
-"<em>Warning:</em> if your database is not empty, please back it up\n"
-"        before attempting this operation."
-msgstr ""
-
-#: askbot/jinja2/import_data.html:16
-msgid ""
-"Upload your stackexchange dump .zip file, then wait until\n"
-"        the data import completes. This process may take several minutes.\n"
-"        Please note that feedback will be printed in plain text.\n"
-"        "
-msgstr ""
-
-#: askbot/jinja2/import_data.html:25
-msgid "Import data"
-msgstr ""
-
-#: askbot/jinja2/import_data.html:27
-msgid ""
-"In the case you experience any difficulties in using this import tool,\n"
-"        please try importing your data via command line: <code>python "
-"manage.py load_stackexchange path/to/your-data.zip</code>"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:12
-msgid "Tag"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:13
-msgid "Suggested by"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:14
-msgid "Your decision"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:15
-msgid "Where the tag was used"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:35
-#: askbot/jinja2/list_suggested_tags.html:46
-msgid "Accept"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:36
-#: askbot/jinja2/list_suggested_tags.html:47
-msgid "Reject"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:39
-msgid "This tag has not yet been used"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:62
-#, python-format
-msgid "Apply tag \"%(name)s\" to the above"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:63
-msgid "Reject tag"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:71
-msgid "Nothing found"
-msgstr ""
-
-#: askbot/jinja2/macros.html:4
-#, python-format
-msgid "This %(post_type)s is being moderated, please do not repost it!"
-msgstr ""
-
-#: askbot/jinja2/macros.html:14
-#, python-format
-msgid "Share this content on %(site)s"
-msgstr ""
-
-#: askbot/jinja2/macros.html:20
-msgid "flag offensive"
-msgstr ""
-
-#: askbot/jinja2/macros.html:25
-msgid "remove flag"
-msgstr ""
-
-#: askbot/jinja2/macros.html:72
-#, python-format
-msgid "%(count)s vote"
-msgid_plural "%(count)s votes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/macros.html:95
-#, python-format
-msgid ""
-"This post is a wiki.\n"
-"          Anyone with karma &gt;%(wiki_min_rep)s is welcome to improve it."
-msgstr ""
-
-#: askbot/jinja2/macros.html:208
-msgid "retag"
-msgstr ""
-
-#: askbot/jinja2/macros.html:214
-#, fuzzy
-#| msgid "tags"
-msgid "add tags"
-msgstr "etiquetes"
-
-#: askbot/jinja2/macros.html:260 askbot/jinja2/macros.html:266
-msgid "Leave this group"
-msgstr ""
-
-#: askbot/jinja2/macros.html:261 askbot/jinja2/macros.html:263
-#: askbot/jinja2/macros.html:282
-msgid "Join this group"
-msgstr ""
-
-#: askbot/jinja2/macros.html:262 askbot/jinja2/macros.html:267
-#: askbot/jinja2/macros.html:277
-msgid "You are a member"
-msgstr ""
-
-#: askbot/jinja2/macros.html:269
-msgid "Cancel application"
-msgstr ""
-
-#: askbot/jinja2/macros.html:270 askbot/jinja2/macros.html:279
-msgid "Awaiting approval"
-msgstr ""
-
-#: askbot/jinja2/macros.html:272 askbot/jinja2/macros.html:273
-#: askbot/jinja2/macros.html:284
-msgid "Ask to join"
-msgstr ""
-
-#: askbot/jinja2/macros.html:354
-msgid "add a comment"
-msgstr ""
-
-#: askbot/jinja2/macros.html:355
-msgid "see more comments"
-msgstr ""
-
-#: askbot/jinja2/macros.html:375
-msgid "upvote comment"
-msgstr ""
-
-#: askbot/jinja2/macros.html:401 askbot/jinja2/question/answer_controls.html:4
-#: askbot/jinja2/question/question_controls.html:5
-#: askbot/jinja2/question/title.html:14
-#: askbot/jinja2/search_posts/index.html:44
-#: askbot/jinja2/user_profile/user_info_about_text.html:29
-#: askbot/jinja2/user_profile/user_info_table.html:34
-msgid "edit"
-msgstr ""
-
-#: askbot/jinja2/macros.html:403 askbot/jinja2/question/answer_controls.html:38
-#: askbot/models/post.py:1160 askbot/templatetags/extra_filters_jinja.py:165
-msgid "more"
-msgstr ""
-
-#: askbot/jinja2/macros.html:407
-msgid "delete this comment"
-msgstr ""
-
-#: askbot/jinja2/macros.html:413
-msgid "convert to answer"
-msgstr ""
-
-#: askbot/jinja2/macros.html:448
-msgid "Comments"
-msgstr ""
-
-#: askbot/jinja2/macros.html:615
-#, fuzzy
-#| msgid "ask anonymously"
-msgid "anonymous user"
-msgstr "entrugar anónimamente"
-
-#: askbot/jinja2/macros.html:627
-#, python-format
-msgid "%(username)s's website is %(url)s"
-msgstr ""
-
-#: askbot/jinja2/macros.html:643 askbot/jinja2/macros.html:708
-#: askbot/jinja2/macros.html:768
-msgid "previous"
-msgstr ""
-
-#: askbot/jinja2/macros.html:651
-msgid "first"
-msgstr ""
-
-#: askbot/jinja2/macros.html:661 askbot/jinja2/macros.html:728
-msgid "current page"
-msgstr ""
-
-#: askbot/jinja2/macros.html:669 askbot/jinja2/macros.html:683
-#: askbot/jinja2/macros.html:735 askbot/jinja2/macros.html:749
-#: askbot/jinja2/macros.html:775 askbot/jinja2/macros.html:790
-#: askbot/jinja2/macros.html:803
-#, python-format
-msgid "page %(num)s"
-msgstr ""
-
-#: askbot/jinja2/macros.html:690 askbot/jinja2/macros.html:757
-#: askbot/jinja2/macros.html:812
-msgid "next page"
-msgstr ""
-
-#: askbot/jinja2/macros.html:715
-msgid "first page"
-msgstr ""
-
-#: askbot/jinja2/macros.html:851
-#, python-format
-msgid "%(action_performed)s %(when)s"
-msgstr ""
-
-#: askbot/jinja2/meta/bottom_scripts.html:7
-#, python-format
-msgid ""
-"Please note: %(app_name)s requires javascript to work properly, please "
-"enable javascript in your browser, <a href=\"%(noscript_url)s\">here is how</"
-"a>"
-msgstr ""
-
-#: askbot/jinja2/moderation/blank_state.html:2
-msgid "Moderation queue is empty."
-msgstr ""
-
-#: askbot/jinja2/moderation/messages.html:10
-msgid "show more"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:5
-msgid "first post"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:8
-#, fuzzy
-#| msgid "approved"
-msgid "approve posts"
-msgstr "aprobáu"
-
-#: askbot/jinja2/moderation/moderation_header.html:9
-msgid "approve posts and users"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:14
-msgid "visible posts"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:19
-msgid "decline and explain why"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:29
-msgid "add/manage reject reasons"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:33
-msgid "block spammers"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:35
-msgid "block spammers and IPs"
-msgstr ""
-
-#: askbot/jinja2/moderation/queue.html:4 askbot/jinja2/moderation/queue.html:8
-msgid "Moderation queue"
-msgstr ""
-
-#: askbot/jinja2/question/answer_card.html:33
-msgid "This response is published"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:12
-#: askbot/jinja2/question/question_controls.html:45
-msgid "undelete"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:22
-#: askbot/jinja2/question/question_controls.html:15
-msgid "unpublish"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:24
-#: askbot/jinja2/question/question_controls.html:17
-msgid "publish"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:35
-msgid "permanent link"
-msgstr ""
-
-#: askbot/jinja2/question/answer_vote_buttons.html:9
-msgid "(click again to undo)"
-msgstr ""
-
-#: askbot/jinja2/question/answers_sort_nav.html:5
-#: askbot/jinja2/questions/questions_title.html:4
-#: askbot/jinja2/user_profile/user_answers.html:6
-#: askbot/jinja2/user_profile/user_questions.html:7
-#, python-format
-msgid "<span class=\"count\">%(item_count)s</span> %(pluralized_item_term)s"
-msgstr ""
-
-#: askbot/jinja2/question/answers_sort_nav.html:8
-#: askbot/jinja2/questions/questions_sort_nav.html:2
-msgid "Sort by"
-msgstr ""
-
-#: askbot/jinja2/question/closed_question_info.html:2
-msgid "Closed for the following reason"
-msgstr ""
-
-#: askbot/jinja2/question/closed_question_info.html:3
-msgid "by"
-msgstr ""
-
-#: askbot/jinja2/question/content.html:12
-#, fuzzy
-#| msgid "Question has no accepted answers"
-msgid "See the accepted answer"
-msgstr "La entruga nun tien rempuestes aceutaes"
-
-#: askbot/jinja2/question/lang_switch_message.html:1
-#, python-format
-msgid ""
-"Sorry, this page is only available in %(post_lang)s. Go to the \n"
-"<a href=\"%(home_url)s\">home page in %(request_lang)s</a>."
-msgstr ""
-
-#: askbot/jinja2/question/question_controls.html:30
-msgid "reopen"
-msgstr ""
-
-#: askbot/jinja2/question/question_controls.html:35
-msgid "close"
-msgstr ""
-
-#: askbot/jinja2/question/question_controls.html:40
-msgid "merge"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:12
-msgid "Unfollow"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:13
-#: askbot/jinja2/question/sidebar.html:15
-#: askbot/jinja2/question/sidebar.html:21
-msgid "Follow"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:14
-#: askbot/jinja2/question/sidebar.html:19
-msgid "Following"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:27
-#, python-format
-msgid "%(count)s follower"
-msgid_plural "%(count)s followers"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/question/sidebar.html:34
-#: askbot/jinja2/question/sidebar.html:35
-msgid "subscribe to the rss feed"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:44
-msgid "Stats"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:46
-#, fuzzy
-#| msgid "Asked by me"
-msgid "Asked"
-msgstr "Entrugao por min"
-
-#: askbot/jinja2/question/sidebar.html:49
-msgid "Seen"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:49
-msgid "times"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:52
-#, fuzzy
-#| msgid "least voted"
-msgid "Last updated"
-msgstr "menos votada"
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:4
-msgid "Invite"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:9
-#: askbot/jinja2/question/sidebar_sharing_tools.html:15
-#: askbot/jinja2/questions/sidebar_tag_selector.html:23
-#: askbot/jinja2/questions/sidebar_tag_selector.html:46
-#: askbot/jinja2/questions/sidebar_tag_selector.html:70
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:170
-msgid "add"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:11
-#: askbot/jinja2/question/sidebar_sharing_tools.html:17
-msgid "- or -"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:29
-msgid "share with everyone"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:42
-#, fuzzy
-#| msgid "Individually selected"
-msgid "Individual users"
-msgstr "Seleicionao individualmente"
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:47
-msgid "You"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:54
-#: askbot/jinja2/question/sidebar_sharing_tools.html:73
-msgid "and"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:77
-#, python-format
-msgid "%(more_count)s more"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:83
-msgid "Public thread"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:84
-#, python-format
-msgid "This thread is public, all members of %(site_name)s can read this page."
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:3
-msgid "Oops, looks like there is nothing here yet!"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:5
-msgid "Did not find what you were looking for?"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:11
-msgid "You can expand your search by "
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:14
-msgid "resetting author"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:16
-#: askbot/jinja2/questions/blank_state.html:19
-#: askbot/jinja2/questions/questions_header.html:36
-#: askbot/jinja2/questions/questions_header.html:39
-msgid " or "
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:17
-#, fuzzy
-#| msgid "Badge settings"
-msgid "resetting tags"
-msgstr "Configuración de les insinies"
-
-#: askbot/jinja2/questions/blank_state.html:20
-#: askbot/jinja2/questions/blank_state.html:23
-msgid "starting over"
-msgstr ""
-
-#: askbot/jinja2/questions/index.html:7
-msgid "Questions"
-msgstr ""
-
-#: askbot/jinja2/questions/question_summary_stats.html:5
-msgid "view"
-msgid_plural "views"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/questions/question_summary_stats.html:21
-#: askbot/models/repute.py:58
-msgid "vote"
-msgid_plural "votes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/questions/questions_header.html:10
-msgid "subscribe to the feed"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:12
-msgid "RSS"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:31
-msgid "Search tips:"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:34
-msgid "reset author"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:37
-msgid "reset tags"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:40
-#: askbot/jinja2/questions/questions_header.html:43
-msgid "start over"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:45
-msgid " - to expand, or dig in by adding more tags and revising the query."
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:48
-msgid "Search tip:"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:48
-msgid "add tags and a query to focus your search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_contributors.html:3
-#: askbot/jinja2/widgets/contributors.html:3
-msgid "Contributors"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_search.html:2
-msgid "Tag search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_search.html:5
-#: askbot/jinja2/search_posts/index.html:16
-msgid "search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:4
-msgid "Interesting tags"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:20
-#: askbot/jinja2/questions/sidebar_tag_selector.html:43
-#: askbot/jinja2/questions/sidebar_tag_selector.html:66
-msgid "Enter tag"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:27
-msgid "Ignored tags"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:51
-msgid "Subscribed tags"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:88
-msgid "Email me alerts for"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:101
-msgid "Change frequency of emails"
-msgstr ""
-
-#: askbot/jinja2/reopen.html:12
-#, python-format
-msgid ""
-"Closed by:\n"
-"  <a href=\"%(closed_by_profile_url)s\">%(username)s</a>\n"
-msgstr ""
-
-#: askbot/jinja2/reopen.html:17
-msgid "Close reason:"
-msgstr ""
-
-#: askbot/jinja2/reopen.html:20
-msgid "When:"
-msgstr ""
-
-#: askbot/jinja2/revisions.html:4 askbot/jinja2/revisions.html:8
-msgid "Revision history"
-msgstr ""
-
-#: askbot/jinja2/revisions.html:16
-#, python-format
-msgid "Revision %(rev)s"
-msgstr ""
-
-#: askbot/jinja2/search_posts/context_link.html:7 askbot/models/post.py:724
-msgid "comment"
-msgstr ""
-
-#: askbot/jinja2/search_posts/index.html:2
-msgid "Post Search"
-msgstr ""
-
-#: askbot/jinja2/search_posts/index.html:5
-msgid "Post search"
-msgstr ""
-
-#: askbot/jinja2/search_posts/index.html:10
-msgid "search by text"
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:6
-msgid "prev."
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:21
-msgid "of"
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:25
-msgid "go"
-msgstr ""
-
-#: askbot/jinja2/subscribe_for_tags.html:3
-#: askbot/jinja2/subscribe_for_tags.html:5
-msgid "Subscribe for tags"
-msgstr ""
-
-#: askbot/jinja2/subscribe_for_tags.html:6
-msgid "Please, subscribe for the following tags:"
-msgstr ""
-
-#: askbot/jinja2/subscribe_for_tags.html:11
-msgid "Subscribe"
-msgstr ""
-
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:4
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:6
-msgid "Tag subscriptions"
-msgstr ""
-
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:10
-#: askbot/jinja2/user_profile/user_languages.html:19
-msgid "Save"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:7
-#, python-format
-msgid "Tags, matching \"%(tag_query)s\""
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:13 askbot/jinja2/users/title_row.html:19
-msgid "Sort by &raquo;"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:19
-#, fuzzy
-#| msgid "Real name"
-msgid "by name"
-msgstr "Nome real"
-
-#: askbot/jinja2/tags/header.html:25
-msgid "by popularity"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:33 askbot/jinja2/tags/header.html:34
-msgid "suggested"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:41 askbot/jinja2/tags/header.html:42
-msgid "manage subscriptions"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:4
-msgid "Manage tag subscriptions"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:7
-msgid "Manage tag subscription"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:8
-msgid "Create new"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:11
-msgid "Date"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:13
-#: askbot/jinja2/users/index.html:8 askbot/jinja2/users/title_row.html:6
-msgid "Users"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:17
-msgid "Action"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:49
-#: askbot/views/commands.py:619
-msgid "Edit"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:53
-msgid "Delete"
-msgstr ""
-
-#: askbot/jinja2/tags/no_tags.html:3
-msgid "Nothing found."
-msgstr ""
-
-#: askbot/jinja2/tags/no_tags.html:5
-msgid "There are no tags."
-msgstr ""
-
-#: askbot/jinja2/user_inbox/base.html:9
-msgid "Sections:"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/base.html:14
-#, fuzzy
-#| msgid "Your message:"
-msgid "messages"
-msgstr "El to mensaxe:"
-
-#: askbot/jinja2/user_inbox/base.html:19
-#, python-format
-msgid "forum responses (<span class=\"response-count\">%(re_count)s</span>)"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/base.html:26
-msgid "group join requests"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:4
-msgid "inbox - group join requests"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:26
-#, fuzzy
-#| msgid "approved"
-msgid "Approve"
-msgstr "aprobáu"
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:41
-msgid "Deny"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/messages.html:9
-#: askbot/jinja2/user_profile/user_tabs.html:12
-#, fuzzy
-#| msgid "Your message:"
-msgid "private messages"
-msgstr "El to mensaxe:"
-
-#: askbot/jinja2/user_inbox/responses.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:9
-msgid "notifications"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:9
-msgid "mark seen"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:11
-msgid "select:"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:13
-msgid "none"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:36
-msgid "There are no notifications."
-msgstr ""
-
-#: askbot/jinja2/user_profile/account_terminated.html:3
-#: askbot/jinja2/user_profile/account_terminated.html:5
-msgid "Account Terminated"
-msgstr ""
-
-#: askbot/jinja2/user_profile/account_terminated.html:7
-msgid "Your account has been terminated."
-msgstr ""
-
-#: askbot/jinja2/user_profile/account_terminated.html:8
-msgid "All content has been anonymized and remains accessible."
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:8
-#, python-format
-msgid "Auto-tweeting to @%(handle)s"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:19
-msgid "stop tweeting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:23
-msgid "Auto-tweeting is inactive"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:26
-#, fuzzy
-#| msgid "select country"
-msgid "Select twitter account"
-msgstr "seleiciona un país"
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:28
-msgid "use another account"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:32
-msgid "Auto-tweeting is off"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:33
-msgid "Start tweeting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:2
-msgid "Unsubscribe"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:5
-#, python-format
-msgid "Want to unsubcribe %(verified_email)s from %(app_name)s?"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:8
-msgid "Successfully unsubscribed."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:12
-msgid "Yes, unsubscribe"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:17
-msgid "Bad unsubscribe link."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:18
-#, python-format
-msgid ""
-"Expected format is %(link_url)s?key=&lt;unsubscribe "
-"key&gt;&amp;email=&lt;email address&gt;"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:23
-msgid "Please, contact support."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:26
-msgid "The unsubscribe key sent with the link had expired."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:29
-msgid "Resend unsubscribe link"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:32
-msgid "Unsubscribe link resent. Please check your email."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:34
-msgid "Sorry, there was an unexpected error."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user.html:11
-#, python-format
-msgid "%(username)s's profile"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user.html:14
-msgid "sign out"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user.html:17
-msgid "manage logins"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_activity.html:5
-#: askbot/jinja2/user_profile/user_tabs.html:38 askbot/models/user.py:322
-msgid "activity"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_activity.html:16
-#: askbot/jinja2/user_profile/user_badges.html:8
-#, python-format
-msgid "%(description)s"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_activity.html:26
-#: askbot/jinja2/user_profile/user_activity.html:33
-msgid "source"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_activity.html:46
-msgid "There was no activity."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_badges.html:3
-#, python-format
-msgid "<span class=\"count\">%(counter)s</span> Badge"
-msgid_plural "<span class=\"count\">%(counter)s</span> Badges"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/user_profile/user_badges.html:21
-msgid "Answer to:"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:4
-msgid "Edit user profile"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:7
-#, fuzzy
-#| msgid "Profile"
-msgid "edit profile"
-msgstr "Perfil"
-
-#: askbot/jinja2/user_profile/user_edit.html:17
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:10
-msgid "change picture"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:41
-msgid "(cannot be changed)"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:74
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:154
-msgid "Update"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:6
-msgid "subscriptions"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:10
-msgid ""
-"<span class='big strong'>Adjust frequency of email updates.</span> Receive "
-"updates on interesting content by email. If you do not wish to receive "
-"emails - select 'no email' on all items below.<br/>Updates are only sent "
-"when there is any new activity on selected items."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:12
-msgid "Note: language settings also apply to the email subscriptions"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:155
-#, fuzzy
-#| msgid "Email:"
-msgid "Stop Email"
-msgstr "Corréu electrónicu:"
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:162
-msgid "Subscribed Tags"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info.html:5
-msgid ""
-"Note: the homepage link and the about section won't be shown to other users "
-"until your profile is approved by the moderators."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_about_text.html:12
-msgid "Write something about yourself..."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:21
-msgid "unfollow"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:22
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:25
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:31
-msgid "follow"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:24
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:29
-msgid "following"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:9
-msgid "update profile"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:16
-#, fuzzy
-#| msgid "Real name"
-msgid "real name"
-msgstr "Nome real"
-
-#: askbot/jinja2/user_profile/user_info_table.html:22
-#, fuzzy
-#| msgid "Email:"
-msgid "email"
-msgstr "Corréu electrónicu:"
-
-#: askbot/jinja2/user_profile/user_info_table.html:28
-msgid "groups"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:40
-msgid "member since"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:45
-#, fuzzy
-#| msgid "least voted"
-msgid "last seen"
-msgstr "menos votada"
-
-#: askbot/jinja2/user_profile/user_info_table.html:51
-#, fuzzy
-#| msgid "Website"
-msgid "website"
-msgstr "Sitiu web"
-
-#: askbot/jinja2/user_profile/user_info_table.html:70
-msgid "location"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:76
-msgid "todays unused votes"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:82
-#: askbot/jinja2/user_profile/user_tabs.html:42
-#: askbot/jinja2/user_profile/user_votes.html:4 askbot/models/repute.py:59
-msgid "votes"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:3
-#: askbot/jinja2/user_profile/user_tabs.html:17
-msgid "languages"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:12
-msgid "View and subscribe to posts in these languages"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:14
-msgid "Subscribe to posts in these languages"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:17
-msgid "My primary language is"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:4
-#, fuzzy
-#| msgid "account/"
-msgid "manage account"
-msgstr "cuenta/"
-
-#: askbot/jinja2/user_profile/user_manage_account.html:8
-msgid ""
-"To delete this account or obtain its data, please\n"
-"  use one of the options below"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:12
-msgid "Download backup files:"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:29
-#, fuzzy
-#| msgid "account/"
-msgid "Remove account"
-msgstr "cuenta/"
-
-#: askbot/jinja2/user_profile/user_manage_account.html:31
-msgid "Ask to remove account"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:41
-msgid "Anonymize data and disable account"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:45
-msgid "Exporting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:50
-msgid "Export data"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:47
-#, fuzzy
-#| msgid "moderator"
-msgid "moderation"
-msgstr "moderador"
-
-#: askbot/jinja2/user_profile/user_moderate.html:9
-#, python-format
-msgid "%(username)s's current status is \"%(status)s\""
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:21
-#, fuzzy
-#| msgid "Change status to"
-msgid "Change status"
-msgstr "Camudar estáu a"
-
-#: askbot/jinja2/user_profile/user_moderate.html:23
-msgid "Block user and delete all content"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:33
-#, python-format
-msgid "Your current reputation is %(reputation)s points"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:35
-#, python-format
-msgid "User's current reputation is %(reputation)s points"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:39
-msgid "User reputation changed"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:46
-msgid "Subtract"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:47
-msgid "Add"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:52
-#, python-format
-msgid "Send message to %(username)s"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:54
-msgid ""
-"An email will be sent to the user with 'reply-to' field set to your email "
-"address. Please make sure that your address is entered correctly."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:57
-#, fuzzy
-#| msgid "Message text"
-msgid "Message sent"
-msgstr "Testu del mensaxe"
-
-#: askbot/jinja2/user_profile/user_moderate.html:75
-#, fuzzy
-#| msgid "Your message:"
-msgid "Send message"
-msgstr "El to mensaxe:"
-
-#: askbot/jinja2/user_profile/user_moderate.html:86
-msgid ""
-"Administrators have privileges of normal users, but in addition they can "
-"assign/revoke any status to any user, and are exempt from the reputation "
-"limits."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:89
-msgid ""
-"Moderators have the same privileges as administrators, but cannot add or "
-"remove user status of 'moderator' or 'administrator'."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:92
-msgid "'Approved' status means the same as regular user."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:95
-msgid "Suspended users can only edit or delete their own posts."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:98
-msgid ""
-"Blocked users can only login and send feedback to the site administrators, "
-"their url and profile will also be hidden."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:26
-msgid "network"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:9
-#, python-format
-msgid "Followed by %(count)s person"
-msgid_plural "Followed by %(count)s people"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/user_profile/user_network.html:13
-#, python-format
-msgid "Following %(count)s person"
-msgid_plural "Following %(count)s people"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/user_profile/user_network.html:19
-msgid ""
-"Your network is empty. Would you like to follow someone? - Just visit their "
-"profiles and click \"follow\""
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:21
-#, python-format
-msgid "%(username)s's network is empty"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_questions.html:24
-msgid "There are no questions."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_reputation.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:31
-#: askbot/jinja2/users/title_row.html:26
-msgid "karma"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_reputation.html:10
-msgid "Your karma change log."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_reputation.html:12
-#, python-format
-msgid "%(user_name)s's karma change log"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_stats.html:6
-#: askbot/jinja2/user_profile/user_tabs.html:5
-msgid "overview"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_tabs.html:21
-msgid "email alerts"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_tabs.html:57
-#, fuzzy
-#| msgid "account/"
-msgid "account"
-msgstr "cuenta/"
-
-#: askbot/jinja2/user_profile/user_tags.html:3
-#, python-format
-msgid "<span class=\"count\">%(counter)s</span> Tag"
-msgid_plural "<span class=\"count\">%(counter)s</span> Tags"
-msgstr[0] ""
-msgstr[1] ""
-
-#: askbot/jinja2/user_profile/user_votes.html:27
-msgid "There were no votes."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:7
-msgid "Group info"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:40
-msgid "edit description"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:44
-msgid "change logo"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:46
-msgid "delete logo"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:50
-msgid "add logo"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:63
-msgid "moderate emailed content"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:70
-msgid "How users join this group?"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:97
-msgid "Read only access"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:110
-msgid "Can post questions"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:123
-msgid "Can post answers"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:136
-msgid "Can post comments"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:150
-msgid "Can upload file attachments"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:165
-msgid "Can upload images"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:178
-msgid "List of preapproved email addresses"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:179
-msgid ""
-"Users with these email adderesses will be added to the group automatically."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:180
-msgid "edit preapproved emails"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:191
-msgid "List of preapproved email domain names"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:192
-msgid ""
-"Users whose email adderesses belong to these domains will be added to the "
-"group automatically."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:193
-msgid "edit preapproved email domains"
-msgstr ""
-
-#: askbot/jinja2/users/index.html:13
-msgid "No users found."
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:4
-#, python-format
-msgid "Users in group %(name)s"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:11
-msgid "Select/Sort by &raquo;"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:15
-#, python-format
-msgid "people in group %(name)s"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:32
-msgid "recent"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:42
-msgid "by username"
-msgstr ""
-
-#: askbot/jinja2/widgets/moderated_image.html:1
-msgid "image awaiting moderation"
-msgstr ""
-
-#: askbot/jinja2/widgets/moderated_link.html:1
-msgid "link awaiting moderation"
-msgstr ""
-
-#: askbot/jinja2/widgets/three_column_category_selector.html:7
-#: askbot/jinja2/widgets/three_column_category_selector.html:10
-msgid "(done editing)"
-msgstr ""
-
-#: askbot/jinja2/widgets/three_column_category_selector.html:8
-#: askbot/jinja2/widgets/three_column_category_selector.html:9
-#: askbot/jinja2/widgets/three_column_category_selector.html:11
-msgid "(edit categories)"
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:3
-msgid "Karma reflects the value of your contribution to this community."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:12
-#, python-format
-msgid ""
-"Since you are the site %(role)s, you have access to all functions regardless "
-"of your karma."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:14
-msgid "The higher is your karma, the more rights you have on this site."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:18
-msgid "Currently, you can:"
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:20
-msgid "Make new posts"
 msgstr ""
 
 #: askbot/mail/__init__.py:118
@@ -7398,7 +4713,7 @@ msgid ""
 msgstr ""
 
 #: askbot/mail/messages.py:627
-#: askbot/management/commands/send_email_alerts.py:494
+#: askbot/management/commands/send_email_alerts.py:498
 msgid "new question"
 msgstr ""
 
@@ -7464,10 +4779,18 @@ msgid "To add to your post EDIT ABOVE THIS LINE"
 msgstr ""
 
 #: askbot/mail/messages.py:846
-msgid "Feedback email"
+msgid "Email change verification"
 msgstr ""
 
 #: askbot/mail/messages.py:847
+msgid "Sent when a user changes their email address, to verify the new address"
+msgstr ""
+
+#: askbot/mail/messages.py:862
+msgid "Feedback email"
+msgstr ""
+
+#: askbot/mail/messages.py:863
 msgid "Sent when user submits feedback form"
 msgstr ""
 
@@ -7480,103 +4803,126 @@ msgstr ""
 msgid "Compensated by admin during recalculation of karma"
 msgstr ""
 
-#: askbot/models/__init__.py:739
+#: askbot/migrations/0027_populate_analytics_events.py:13
+#: askbot/models/analytics.py:160
+msgid "registered"
+msgstr ""
+
+#: askbot/migrations/0027_populate_analytics_events.py:14
+#: askbot/models/analytics.py:163
+msgid "question viewed"
+msgstr ""
+
+#: askbot/migrations/0027_populate_analytics_events.py:21
+#: askbot/models/analytics.py:172
+msgid "retagged question"
+msgstr ""
+
+#: askbot/models/__init__.py:760
 msgid "perform this action"
 msgstr ""
 
-#: askbot/models/__init__.py:745
+#: askbot/models/__init__.py:766
 #, python-format
 msgid ""
 "Sorry, you cannot %(perform_action)s because the site is temporarily read "
 "only"
 msgstr ""
 
-#: askbot/models/__init__.py:752
+#: askbot/models/__init__.py:773
 #, python-format
 msgid ""
 "Sorry, you cannot %(perform_action)s because %(domain)s emails have been "
 "blacklisted."
 msgstr ""
 
-#: askbot/models/__init__.py:755
+#: askbot/models/__init__.py:776
 #, python-format
 msgid "Please <a href=\"%(url)s\">change your email</a>."
 msgstr ""
 
-#: askbot/models/__init__.py:763 askbot/models/__init__.py:1678
-#: askbot/views/writers.py:210
+#: askbot/models/__init__.py:784 askbot/models/__init__.py:1699
+#: askbot/views/writers.py:244
 msgid "Sorry, but you have only read access"
 msgstr ""
 
-#: askbot/models/__init__.py:771
+#: askbot/models/__init__.py:792
 msgid "your account is disabled"
 msgstr ""
 
-#: askbot/models/__init__.py:778 askbot/models/__init__.py:849
+#: askbot/models/__init__.py:799 askbot/models/__init__.py:870
 msgid "your account is blocked"
 msgstr ""
 
-#: askbot/models/__init__.py:786 askbot/models/__init__.py:794
-#: askbot/models/__init__.py:845
+#: askbot/models/__init__.py:807 askbot/models/__init__.py:815
+#: askbot/models/__init__.py:866
 msgid "your account is suspended"
 msgstr ""
 
-#: askbot/models/__init__.py:815
+#: askbot/models/__init__.py:836
 #, python-format
 msgid "Sorry, only moderators and site administrators can %(perform_action)s"
 msgstr ""
 
-#: askbot/models/__init__.py:822
+#: askbot/models/__init__.py:843
 #, python-format
 msgid ""
 "Sorry, only administrators, moderators or users with reputation > "
 "%(min_rep)s can %(perform_action)s"
 msgstr ""
 
-#: askbot/models/__init__.py:911
+#: askbot/models/__init__.py:932
 msgid "Sorry, you cannot vote for your own posts"
 msgstr ""
 
-#: askbot/models/__init__.py:935
+#: askbot/models/__init__.py:939
+msgid "upvote"
+msgstr ""
+
+#: askbot/models/__init__.py:942
+msgid "downvote"
+msgstr ""
+
+#: askbot/models/__init__.py:956
 msgid "upload files"
 msgstr ""
 
-#: askbot/models/__init__.py:977
+#: askbot/models/__init__.py:998
 msgid "join or leave groups"
 msgstr ""
 
-#: askbot/models/__init__.py:990 askbot/views/commands.py:217
+#: askbot/models/__init__.py:1011 askbot/views/commands.py:213
 msgid "mark or unmark tags"
 msgstr ""
 
-#: askbot/models/__init__.py:998
+#: askbot/models/__init__.py:1019
 msgid "merge duplicate questions"
 msgstr ""
 
-#: askbot/models/__init__.py:1014
+#: askbot/models/__init__.py:1035
 msgid "Could not post, because anonymous users cannot publish links"
 msgstr ""
 
-#: askbot/models/__init__.py:1018
+#: askbot/models/__init__.py:1039
 msgid "Could not post, because your karma is insufficient to publish links"
 msgstr ""
 
-#: askbot/models/__init__.py:1035 askbot/models/__init__.py:1060
-#: askbot/models/__init__.py:1166
+#: askbot/models/__init__.py:1056 askbot/models/__init__.py:1081
+#: askbot/models/__init__.py:1187
 #, python-format
 msgid "Sorry, you cannot %(perform_action)s"
 msgstr ""
 
-#: askbot/models/__init__.py:1046
+#: askbot/models/__init__.py:1067
 #, python-format
 msgid "Sorry, %(you_already_gave_an_answer)s, please edit it instead."
 msgstr ""
 
-#: askbot/models/__init__.py:1076 askbot/models/__init__.py:1162
+#: askbot/models/__init__.py:1097 askbot/models/__init__.py:1183
 msgid "Sorry, commenting closed entries is not allowed"
 msgstr ""
 
-#: askbot/models/__init__.py:1087
+#: askbot/models/__init__.py:1108
 #, python-format
 msgid ""
 "Sorry, comments (except the last one) are editable only within %(minutes)s "
@@ -7587,43 +4933,43 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:1103
+#: askbot/models/__init__.py:1124
 msgid "Sorry, but only post owners or moderators can edit comments"
 msgstr ""
 
-#: askbot/models/__init__.py:1116
+#: askbot/models/__init__.py:1137
 msgid "repost items"
 msgstr ""
 
-#: askbot/models/__init__.py:1151 askbot/models/__init__.py:1167
+#: askbot/models/__init__.py:1172 askbot/models/__init__.py:1188
 msgid "post comments"
 msgstr ""
 
-#: askbot/models/__init__.py:1171
+#: askbot/models/__init__.py:1192
 msgid "Sorry, only one moderated comment per post is allowed"
 msgstr ""
 
-#: askbot/models/__init__.py:1190
+#: askbot/models/__init__.py:1211
 msgid ""
 "This post has been deleted and can be seen only by post owners, site "
 "administrators and moderators"
 msgstr ""
 
-#: askbot/models/__init__.py:1202
+#: askbot/models/__init__.py:1223
 msgid ""
 "Sorry, only moderators, site administrators and post owners can edit deleted "
 "posts"
 msgstr ""
 
-#: askbot/models/__init__.py:1218
+#: askbot/models/__init__.py:1239
 msgid "edit wiki posts"
 msgstr ""
 
-#: askbot/models/__init__.py:1221
+#: askbot/models/__init__.py:1242
 msgid "edit posts"
 msgstr ""
 
-#: askbot/models/__init__.py:1261
+#: askbot/models/__init__.py:1282
 #, python-format
 msgid ""
 "Sorry, posts like this are editable only within %(minutes)s minute from "
@@ -7634,12 +4980,12 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:1313
+#: askbot/models/__init__.py:1334
 #, python-format
 msgid "At least %d karma point is required to delete own questions"
 msgstr ""
 
-#: askbot/models/__init__.py:1322
+#: askbot/models/__init__.py:1343
 msgid ""
 "Sorry, cannot delete this since it has an upvoted response posted by someone "
 "else"
@@ -7649,60 +4995,60 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:1341
+#: askbot/models/__init__.py:1362
 msgid "delete posts"
 msgstr ""
 
-#: askbot/models/__init__.py:1369
+#: askbot/models/__init__.py:1390
 msgid "reopen questions"
 msgstr ""
 
-#: askbot/models/__init__.py:1383
+#: askbot/models/__init__.py:1404
 msgid "You have flagged this post before and cannot do it more than once"
 msgstr ""
 
-#: askbot/models/__init__.py:1395
+#: askbot/models/__init__.py:1416
 msgid "flag posts as offensive"
 msgstr ""
 
-#: askbot/models/__init__.py:1407
+#: askbot/models/__init__.py:1428
 #, python-format
 msgid ""
 "Sorry, you have exhausted the maximum number of %(max_flags_per_day)s "
 "offensive flags per day."
 msgstr ""
 
-#: askbot/models/__init__.py:1432
+#: askbot/models/__init__.py:1453
 msgid "cannot remove non-existing flag"
 msgstr ""
 
-#: askbot/models/__init__.py:1441
+#: askbot/models/__init__.py:1462
 msgid "remove flags"
 msgstr ""
 
-#: askbot/models/__init__.py:1450
+#: askbot/models/__init__.py:1471
 msgid "you don't have the permission to remove all flags"
 msgstr ""
 
-#: askbot/models/__init__.py:1451
+#: askbot/models/__init__.py:1472
 msgid "no flags for this entry"
 msgstr ""
 
-#: askbot/models/__init__.py:1506
+#: askbot/models/__init__.py:1527
 #, python-format
 msgid "Only administrators and moderators can add/remove the tag \"%s\""
 msgstr ""
 
-#: askbot/models/__init__.py:1508
+#: askbot/models/__init__.py:1529
 #, python-format
 msgid "Only administrators and moderators can add/remove the tags \"%s\""
 msgstr ""
 
-#: askbot/models/__init__.py:1518
+#: askbot/models/__init__.py:1539
 msgid "delete comments"
 msgstr ""
 
-#: askbot/models/__init__.py:1535
+#: askbot/models/__init__.py:1556
 #, python-format
 msgid ""
 "Sorry, comments (except the last one) are deletable only within %(minutes)s "
@@ -7713,137 +5059,157 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:1553
+#: askbot/models/__init__.py:1574
 msgid "sorry, but older votes cannot be revoked"
 msgstr ""
 
-#: askbot/models/__init__.py:2498 askbot/utils/functions.py:182
+#: askbot/models/__init__.py:2519 askbot/utils/functions.py:186
 #, python-format
 msgid "on %(date)s"
 msgstr ""
 
-#: askbot/models/__init__.py:2500
+#: askbot/models/__init__.py:2521
 msgid "in two days"
 msgstr ""
 
-#: askbot/models/__init__.py:2502
+#: askbot/models/__init__.py:2523
 msgid "tomorrow"
 msgstr ""
 
-#: askbot/models/__init__.py:2504
+#: askbot/models/__init__.py:2525
 #, python-format
 msgid "in %(hr)d hour"
 msgid_plural "in %(hr)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:2506
+#: askbot/models/__init__.py:2527
 #, python-format
 msgid "in %(min)d min"
 msgid_plural "in %(min)d mins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:2507
+#: askbot/models/__init__.py:2528
 #, python-format
 msgid "%(days)d day"
 msgid_plural "%(days)d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:2509
+#: askbot/models/__init__.py:2530
 #, python-format
 msgid ""
 "New users must wait %(days)s to %(answer_own_questions)s.  You can post an "
 "answer %(left)s"
 msgstr ""
 
-#: askbot/models/__init__.py:2818
+#: askbot/models/__init__.py:2839
 msgid "Registered User"
 msgstr ""
 
-#: askbot/models/__init__.py:2820
+#: askbot/models/__init__.py:2841
 msgid "Administrator"
 msgstr ""
 
-#: askbot/models/__init__.py:2822
+#: askbot/models/__init__.py:2843
 msgid "Moderator"
 msgstr ""
 
-#: askbot/models/__init__.py:2824
+#: askbot/models/__init__.py:2845
 msgid "Suspended User"
 msgstr ""
 
-#: askbot/models/__init__.py:2826
+#: askbot/models/__init__.py:2847
 msgid "Blocked User"
 msgstr ""
 
-#: askbot/models/__init__.py:2828
+#: askbot/models/__init__.py:2849
 msgid "Active User"
 msgstr ""
 
-#: askbot/models/__init__.py:2830
+#: askbot/models/__init__.py:2851
 msgid "Account terminated"
 msgstr ""
 
-#: askbot/models/__init__.py:3077
+#: askbot/models/__init__.py:3111
 #, python-format
 msgid "User %(username)s, id=%(id)s, %(email)s asked to terminate the account."
 msgstr ""
 
-#: askbot/models/__init__.py:3178
+#: askbot/models/__init__.py:3212
 #, python-format
 msgid "%(username)s karma is %(reputation)s"
 msgstr ""
 
-#: askbot/models/__init__.py:3191
+#: askbot/models/__init__.py:3225
 #, python-format
 msgid "one gold badge"
 msgid_plural "%(count)d gold badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:3198
+#: askbot/models/__init__.py:3232
 #, python-format
 msgid "one silver badge"
 msgid_plural "%(count)d silver badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:3205
+#: askbot/models/__init__.py:3239
 #, python-format
 msgid "one bronze badge"
 msgid_plural "%(count)d bronze badges"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:3216
+#: askbot/models/__init__.py:3250
 #, python-format
 msgid "%(item1)s and %(item2)s"
 msgstr ""
 
-#: askbot/models/__init__.py:3218
+#: askbot/models/__init__.py:3252
 #, python-format
 msgid "%(user)s has %(badges)s"
 msgstr ""
 
-#: askbot/models/__init__.py:3364
+#: askbot/models/__init__.py:3400
 #, python-format
 msgid "At least %d karma point is required to post links"
 msgid_plural "At least %d karma points is required to post links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/models/__init__.py:4060
+#: askbot/models/__init__.py:4098
 #, python-format
 msgid ""
 "Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
 "href=\"%(user_profile)s\">your profile</a>."
 msgstr ""
 
-#: askbot/models/__init__.py:4345 askbot/views/commands.py:555
+#: askbot/models/__init__.py:4380 askbot/views/commands.py:551
 msgid "Your tag subscription was saved, thanks!"
 msgstr ""
+
+#: askbot/models/analytics.py:161
+msgid "logged in"
+msgstr ""
+
+#: askbot/models/analytics.py:162
+msgid "logged out"
+msgstr ""
+
+#: askbot/models/analytics.py:164
+#, fuzzy
+#| msgid "unanswered"
+msgid "answer viewed"
+msgstr "ensin rempuesta"
+
+#: askbot/models/analytics.py:173
+#, fuzzy
+#| msgid "watched"
+msgid "searched"
+msgstr "vistu"
 
 #: askbot/models/badges.py:134
 #, python-format
@@ -7990,117 +5356,125 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: askbot/models/post.py:730
+#: askbot/models/post.py:727
+msgid "comment"
+msgstr ""
+
+#: askbot/models/post.py:733
 msgid "piece of content"
 msgstr ""
 
-#: askbot/models/post.py:940 askbot/models/question.py:1507
+#: askbot/models/post.py:980 askbot/models/question.py:1506
 msgid "Sharing did not work, because group is unknown"
 msgstr ""
 
-#: askbot/models/post.py:961
+#: askbot/models/post.py:1001
 msgid "merged revision"
 msgstr ""
 
-#: askbot/models/post.py:1787
+#: askbot/models/post.py:1200 askbot/templatetags/extra_filters_jinja.py:165
+msgid "more"
+msgstr ""
+
+#: askbot/models/post.py:1891
 msgid "Sorry, this content is not available"
 msgstr ""
 
-#: askbot/models/post.py:1789 askbot/models/post.py:1802
-#: askbot/models/post.py:1805
+#: askbot/models/post.py:1893 askbot/models/post.py:1906
+#: askbot/models/post.py:1909
 msgid "Sorry, this content is no longer available"
 msgstr ""
 
-#: askbot/models/post.py:1818 askbot/models/post.py:1821
+#: askbot/models/post.py:1922 askbot/models/post.py:1925
 msgid "Sorry, this comment is no longer available"
 msgstr ""
 
-#: askbot/models/post.py:1840
+#: askbot/models/post.py:1944
 msgid "This post is temporarily not available"
 msgstr ""
 
-#: askbot/models/post.py:2168
+#: askbot/models/post.py:2272
 msgid "Suggested edit"
 msgstr ""
 
-#: askbot/models/post.py:2261
+#: askbot/models/post.py:2365
 msgid "post revision"
 msgstr ""
 
-#: askbot/models/post.py:2262
+#: askbot/models/post.py:2366
 msgid "post revisions"
 msgstr ""
 
-#: askbot/models/post.py:2327
+#: askbot/models/post.py:2431
 #, python-format
 msgid ""
 "Thank you for your post to %(site)s. It will be published after the "
 "moderators review."
 msgstr ""
 
-#: askbot/models/post.py:2331
+#: askbot/models/post.py:2435
 #, python-format
 msgid "your post to %(site)s"
 msgstr ""
 
-#: askbot/models/post.py:2338
+#: askbot/models/post.py:2442
 msgid ""
 "Your post was placed on the moderation queue and will be published after the "
 "moderator approval."
 msgstr ""
 
-#: askbot/models/post.py:2395
+#: askbot/models/post.py:2499
 msgid "proposed an edit"
 msgstr ""
 
-#: askbot/models/post.py:2401
+#: askbot/models/post.py:2505
 msgid "posted"
 msgstr ""
 
-#: askbot/models/post.py:2402
+#: askbot/models/post.py:2506
 msgid "updated"
 msgstr ""
 
-#: askbot/models/post.py:2442
+#: askbot/models/post.py:2546
 msgid "post flag reason"
 msgstr ""
 
-#: askbot/models/post.py:2443
+#: askbot/models/post.py:2547
 msgid "post flag reasons"
 msgstr ""
 
-#: askbot/models/question.py:157
+#: askbot/models/question.py:153
 #, python-format
 msgid "\" and \"%s\""
 msgstr ""
 
-#: askbot/models/question.py:160
+#: askbot/models/question.py:156
 msgid "\" and more"
 msgstr ""
 
-#: askbot/models/question.py:586
+#: askbot/models/question.py:585
 msgid "thread to group"
 msgstr ""
 
-#: askbot/models/question.py:587
+#: askbot/models/question.py:586
 msgid "threads to groups"
-msgstr ""
-
-#: askbot/models/question.py:1615
-#, python-format
-msgid "Tag %s is new and will be submitted for the moderators approval"
 msgstr ""
 
 #: askbot/models/question.py:1620
 #, python-format
+msgid "Tag %s is new and will be submitted for the moderators approval"
+msgstr ""
+
+#: askbot/models/question.py:1625
+#, python-format
 msgid "Tags %s are new and will be submitted for the moderators approval"
 msgstr ""
 
-#: askbot/models/question.py:1783
+#: askbot/models/question.py:1802
 msgid "favorite question"
 msgstr ""
 
-#: askbot/models/question.py:1784
+#: askbot/models/question.py:1803
 msgid "favorite questions"
 msgstr ""
 
@@ -8118,6 +5492,14 @@ msgstr ""
 
 #: askbot/models/reply_by_email.py:114
 msgid "edited by email"
+msgstr ""
+
+#: askbot/models/repute.py:58
+msgid "vote"
+msgstr ""
+
+#: askbot/models/repute.py:59
+msgid "votes"
 msgstr ""
 
 #: askbot/models/repute.py:141 askbot/models/repute.py:142
@@ -8141,63 +5523,67 @@ msgstr ""
 msgid "<em>Changed by moderator. Reason:</em> %(reason)s"
 msgstr ""
 
-#: askbot/models/user.py:323
+#: askbot/models/user.py:340
+msgid "activity"
+msgstr ""
+
+#: askbot/models/user.py:341
 msgid "activities"
 msgstr ""
 
-#: askbot/models/user.py:414
+#: askbot/models/user.py:438
 msgid "Entire forum"
 msgstr ""
 
-#: askbot/models/user.py:415
+#: askbot/models/user.py:439
 msgid "Questions that I asked"
 msgstr ""
 
-#: askbot/models/user.py:416
+#: askbot/models/user.py:440
 msgid "Questions that I answered"
 msgstr ""
 
-#: askbot/models/user.py:418
+#: askbot/models/user.py:442
 msgid "Individually selected questions"
 msgstr ""
 
-#: askbot/models/user.py:419
+#: askbot/models/user.py:443
 msgid "Mentions and comment responses"
 msgstr ""
 
-#: askbot/models/user.py:422
+#: askbot/models/user.py:446
 msgid "Instantly"
 msgstr ""
 
-#: askbot/models/user.py:423
+#: askbot/models/user.py:447
 msgid "Daily"
 msgstr ""
 
-#: askbot/models/user.py:424
+#: askbot/models/user.py:448
 msgid "Weekly"
 msgstr ""
 
-#: askbot/models/user.py:425
+#: askbot/models/user.py:449
 msgid "No email"
 msgstr ""
 
-#: askbot/models/user.py:639
+#: askbot/models/user.py:678
 msgid "Can join when they want"
 msgstr ""
 
-#: askbot/models/user.py:640
+#: askbot/models/user.py:679
 msgid "Users ask permission"
 msgstr ""
 
-#: askbot/models/user.py:641
+#: askbot/models/user.py:680
 msgid "Moderator adds users"
 msgstr ""
 
-#: askbot/models/user.py:691
+#: askbot/models/user.py:730
 msgid "Please give a list of valid email addresses."
 msgstr ""
 
-#: askbot/models/user.py:702
+#: askbot/models/user.py:741
 msgid "Please give a list of valid email domain names."
 msgstr ""
 
@@ -8376,9 +5762,19 @@ msgctxt "urls"
 msgid "upload/"
 msgstr ""
 
-#: askbot/urls.py:647
+#: askbot/urls.py:655
 msgctxt "urls"
 msgid "account/"
+msgstr ""
+
+#: askbot/utils/analytics_utils.py:6
+#: askbot/views/analytics/analytics_activity.py:49
+#: askbot/views/analytics/analytics_activity.py:115
+msgid "All Users"
+msgstr ""
+
+#: askbot/utils/analytics_utils.py:12
+msgid "Rest of Users"
 msgstr ""
 
 #: askbot/utils/category_tree.py:98 askbot/utils/category_tree.py:142
@@ -8404,6 +5800,10 @@ msgstr ""
 
 #: askbot/utils/forms.py:92
 msgid "this field is required"
+msgstr ""
+
+#: askbot/utils/forms.py:119
+msgid "Choose a screen name"
 msgstr ""
 
 #: askbot/utils/forms.py:129
@@ -8458,152 +5858,194 @@ msgstr ""
 msgid "this email is already used by someone else, please choose another"
 msgstr ""
 
+#: askbot/utils/forms.py:309
+msgid "Password"
+msgstr ""
+
+#: askbot/utils/forms.py:317
+msgid "Password retyped"
+msgstr ""
+
 #: askbot/utils/forms.py:318
 msgid "please, retype your password"
 msgstr ""
 
-#: askbot/utils/functions.py:185
+#: askbot/utils/functions.py:189
 msgid "2 days ago"
 msgstr ""
 
-#: askbot/utils/functions.py:187
+#: askbot/utils/functions.py:191
 msgid "yesterday"
 msgstr ""
 
-#: askbot/utils/functions.py:190
+#: askbot/utils/functions.py:194
 #, python-format
 msgid "%(hr)d hour ago"
 msgid_plural "%(hr)d hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/utils/functions.py:196
+#: askbot/utils/functions.py:200
 #, python-format
 msgid "%(min)d min ago"
 msgid_plural "%(min)d mins ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/utils/html.py:305
+#: askbot/utils/html.py:296
 msgid "please login"
 msgstr ""
 
-#: askbot/views/avatar_views.py:180
+#: askbot/utils/ratelimit.py:337
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: askbot/utils/ratelimit.py:343
+#, python-format
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: askbot/utils/ratelimit.py:346
+#, python-format
+msgid "%(count)d second"
+msgid_plural "%(count)d seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: askbot/views/analytics/analytics_activity.py:215
+msgid "Analytics"
+msgstr ""
+
+#: askbot/views/analytics/analytics_users.py:278
+#, python-brace-format
+msgid "Date range {range} is invalid."
+msgstr ""
+
+#: askbot/views/avatar_views.py:189
 msgid "Avatar uploaded and set as primary"
 msgstr ""
 
-#: askbot/views/avatar_views.py:185
+#: askbot/views/avatar_views.py:194
 msgid "Please choose file to upload"
 msgstr ""
 
-#: askbot/views/commands.py:64
+#: askbot/views/commands.py:60
 msgid "Sorry, anonymous users cannot vote"
 msgstr ""
 
-#: askbot/views/commands.py:79
+#: askbot/views/commands.py:75
 msgid "Sorry you ran out of votes for today"
 msgstr ""
 
-#: askbot/views/commands.py:84
+#: askbot/views/commands.py:80
 #, python-format
 msgid "You have %(votes_left)s votes left for today"
 msgstr ""
 
-#: askbot/views/commands.py:152 askbot/views/users.py:322
+#: askbot/views/commands.py:148 askbot/views/users.py:322
 #: askbot/views/users.py:353
 msgid "Sorry, something is not right here..."
 msgstr ""
 
-#: askbot/views/commands.py:156
+#: askbot/views/commands.py:152
 msgid "Sorry, but anonymous users cannot perform this action."
 msgstr ""
 
-#: askbot/views/commands.py:164 askbot/views/commands.py:175
+#: askbot/views/commands.py:160 askbot/views/commands.py:171
 msgid "Request mode is not supported. Please try again."
 msgstr ""
 
-#: askbot/views/commands.py:216 askbot/views/commands.py:678
-#: askbot/views/commands.py:694 askbot/views/commands.py:737
+#: askbot/views/commands.py:212 askbot/views/commands.py:674
+#: askbot/views/commands.py:690 askbot/views/commands.py:733
 #, python-format
 msgid "anonymous users cannot %(perform_action)s"
 msgstr ""
 
-#: askbot/views/commands.py:459
+#: askbot/views/commands.py:455
 msgid "Sorry, could not delete tag"
 msgstr ""
 
-#: askbot/views/commands.py:501
+#: askbot/views/commands.py:497
 #, python-format
 msgid "Admin tag %s cannot be added at this position"
 msgstr ""
 
-#: askbot/views/commands.py:559
+#: askbot/views/commands.py:555
 #, python-format
 msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
 msgstr ""
 
-#: askbot/views/commands.py:568
+#: askbot/views/commands.py:564
 #, python-format
 msgid "Please sign in to subscribe for: %(tags)s"
 msgstr ""
 
-#: askbot/views/commands.py:587
+#: askbot/views/commands.py:583
 msgid "Create"
 msgstr ""
 
-#: askbot/views/commands.py:695 askbot/views/commands.py:738
+#: askbot/views/commands.py:615
+msgid "Edit"
+msgstr ""
+
+#: askbot/views/commands.py:691 askbot/views/commands.py:734
 msgid "make edits"
 msgstr ""
 
-#: askbot/views/commands.py:705 askbot/views/commands.py:752
-#: askbot/views/users.py:841 askbot/views/writers.py:235
-#: askbot/views/writers.py:364 askbot/views/writers.py:445
-#: askbot/views/writers.py:535 askbot/views/writers.py:684
-#: askbot/views/writers.py:719
+#: askbot/views/commands.py:701 askbot/views/commands.py:748
+#: askbot/views/users.py:920 askbot/views/writers.py:269
+#: askbot/views/writers.py:399 askbot/views/writers.py:480
+#: askbot/views/writers.py:571 askbot/views/writers.py:721
+#: askbot/views/writers.py:756
 msgid "Spam was detected in the post"
 msgstr ""
 
-#: askbot/views/commands.py:899
+#: askbot/views/commands.py:895
 msgid "Please sign in to vote"
 msgstr ""
 
-#: askbot/views/commands.py:920
+#: askbot/views/commands.py:916
 msgid "Please sign in to delete/restore posts"
 msgstr ""
 
-#: askbot/views/commands.py:982
+#: askbot/views/commands.py:978
 #, python-format
 msgid "Group %(name)s does not exist"
 msgstr ""
 
-#: askbot/views/commands.py:1370 askbot/views/commands.py:1403
+#: askbot/views/commands.py:1361 askbot/views/commands.py:1395
 msgid "Sorry, looks like sharing request was invalid"
 msgstr ""
 
-#: askbot/views/commands.py:1426
+#: askbot/views/commands.py:1419
 #, python-format
 msgid "%(user)s, welcome to group %(group)s!"
 msgstr ""
 
-#: askbot/views/commands.py:1480
+#: askbot/views/commands.py:1473
 #, fuzzy
 #| msgid "Sorry, but anonymous visitors cannot access this function"
 msgid "Sorry, only thread moderators or post owners can use this function"
 msgstr "Lo sentimos, los visitantes anónimos nun tienen accesu a esta función"
 
-#: askbot/views/commands.py:1509
+#: askbot/views/commands.py:1501
 msgid "The post is now published"
 msgstr ""
 
-#: askbot/views/commands.py:1517
+#: askbot/views/commands.py:1509
 msgid "The post is now unpublished"
 msgstr ""
 
-#: askbot/views/commands.py:1519
+#: askbot/views/commands.py:1511
 msgid "This feature is disabled"
 msgstr ""
 
-#: askbot/views/commands.py:1530
+#: askbot/views/commands.py:1522
 msgid "Sorry, only thread moderators can use this function"
 msgstr ""
 
@@ -8616,6 +6058,14 @@ msgstr ""
 #: askbot/views/meta.py:61
 #, python-format
 msgid "About %(site)s"
+msgstr ""
+
+#: askbot/views/meta.py:78
+msgid "Help"
+msgstr ""
+
+#: askbot/views/meta.py:93
+msgid "FAQ"
 msgstr ""
 
 #: askbot/views/meta.py:110
@@ -8678,14 +6128,14 @@ msgid_plural "%d users blocked"
 msgstr[0] ""
 msgstr[1] ""
 
-#: askbot/views/readers.py:273
+#: askbot/views/readers.py:274
 #, python-format
 msgid ""
 "Please go to Settings -> %s and set the base url for your site to function "
 "properly"
 msgstr ""
 
-#: askbot/views/readers.py:533
+#: askbot/views/readers.py:534
 msgid ""
 "Sorry, the comment you are looking for has been deleted and is no longer "
 "accessible"
@@ -8717,132 +6167,342 @@ msgstr ""
 msgid "moderate user"
 msgstr ""
 
-#: askbot/views/users.py:767
+#: askbot/views/users.py:549
+#, python-format
+msgid ""
+"A confirmation email has been sent to %(email)s. Please check your inbox and "
+"click the link to complete the email change."
+msgstr ""
+
+#: askbot/views/users.py:590
+#, python-format
+msgid "Your email address has been updated to %(email)s."
+msgstr ""
+
+#: askbot/views/users.py:597
+msgid "Sorry, this email verification link has expired or is invalid."
+msgstr ""
+
+#: askbot/views/users.py:846
 msgid "user profile overview"
 msgstr ""
 
-#: askbot/views/users.py:954
+#: askbot/views/users.py:1033
 msgid "profile - recent activity"
 msgstr ""
 
-#: askbot/views/users.py:984
+#: askbot/views/users.py:1063
 msgid "profile - moderation"
 msgstr ""
 
-#: askbot/views/users.py:1096
+#: askbot/views/users.py:1175
 msgid "profile - responses"
 msgstr ""
 
-#: askbot/views/users.py:1109
+#: askbot/views/users.py:1188
 msgid "profile - network"
 msgstr ""
 
-#: askbot/views/users.py:1137
+#: askbot/views/users.py:1216
 msgid "profile - votes"
 msgstr ""
 
-#: askbot/views/users.py:1190
+#: askbot/views/users.py:1269
 msgid "Profile - User's Karma"
 msgstr ""
 
-#: askbot/views/users.py:1226
+#: askbot/views/users.py:1305
 msgid "profile - favorites"
 msgstr ""
 
-#: askbot/views/users.py:1356 askbot/views/users.py:1360
+#: askbot/views/users.py:1435 askbot/views/users.py:1439
 msgid "changes saved"
 msgstr ""
 
-#: askbot/views/users.py:1366
+#: askbot/views/users.py:1445
 msgid "email updates canceled"
 msgstr ""
 
-#: askbot/views/users.py:1383
+#: askbot/views/users.py:1462
 msgid "profile - email subscriptions"
 msgstr ""
 
-#: askbot/views/users.py:1406
+#: askbot/views/users.py:1485
 #, python-format
 msgid "profile - %(section)s"
 msgstr ""
 
-#: askbot/views/writers.py:66
+#: askbot/views/writers.py:84
+msgid "You are posting too quickly. Please wait a while before posting again."
+msgstr ""
+
+#: askbot/views/writers.py:100
 msgid "Sorry, anonymous users cannot upload files"
 msgstr ""
 
-#: askbot/views/writers.py:72
+#: askbot/views/writers.py:106
 msgid "Uploading of files is not allowed"
 msgstr ""
 
-#: askbot/views/writers.py:87
+#: askbot/views/writers.py:121
 #, python-format
 msgid "allowed file types are '%(file_types)s'"
 msgstr ""
 
-#: askbot/views/writers.py:95
+#: askbot/views/writers.py:129
 #, python-format
 msgid "maximum upload file size is %(file_size)s bytes"
 msgstr ""
 
-#: askbot/views/writers.py:107
+#: askbot/views/writers.py:141
 msgid "Error uploading file. Please contact the site administrator. Thank you."
 msgstr ""
 
-#: askbot/views/writers.py:199 askbot/views/writers.py:492
+#: askbot/views/writers.py:233 askbot/views/writers.py:527
 msgid "Please log in to make posts"
 msgstr ""
 
-#: askbot/views/writers.py:653
+#: askbot/views/writers.py:689
 msgid "This content is forbidden"
 msgstr ""
 
-#: askbot/views/writers.py:663
+#: askbot/views/writers.py:699
 msgid "Post not found"
 msgstr ""
 
-#: askbot/views/writers.py:671
+#: askbot/views/writers.py:707
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot post comments. Please <a "
 "href=\"%(sign_in_url)s\">sign in</a>."
 msgstr ""
 
-#: askbot/views/writers.py:707
+#: askbot/views/writers.py:744
 msgid "Sorry, anonymous users cannot edit comments"
 msgstr ""
 
-#: askbot/views/writers.py:771
+#: askbot/views/writers.py:808
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot delete comments. Please <a "
 "href=\"%(sign_in_url)s\">sign in</a>."
 msgstr ""
 
-#: askbot/views/writers.py:800
+#: askbot/views/writers.py:837
 msgid "sorry, we seem to have some technical difficulties"
 msgstr ""
 
-#: askbot/views/writers.py:813
+#: askbot/views/writers.py:850
 #, python-format
 msgid ""
 "Sorry, only logged in users can convert comments to answers. Please <a "
 "href=\"%(sign_in_url)s\">sign in</a>."
 msgstr ""
 
-#: askbot/views/writers.py:844
+#: askbot/views/writers.py:881
 #, python-format
 msgid ""
 "Sorry, only logged in users can convert answers to comments. Please <a "
 "href=\"%(sign_in_url)s\">sign in</a>."
 msgstr ""
 
-#: askbot/views/writers.py:869
+#: askbot/views/writers.py:906
 msgid "Error - could not find the destination post"
 msgstr ""
 
-#: askbot/views/writers.py:892
+#: askbot/views/writers.py:929
 #, python-format
 msgid ""
 "Cannot convert, because text has more characters than %(max_chars)s - "
 "maximum allowed for comments"
 msgstr ""
+
+#: testproject/testproject/settings.py:241
+#, fuzzy
+#| msgid "account/"
+msgid "account/"
+msgstr "cuenta/"
+
+#: testproject/testproject/settings.py:241
+msgid "signin/"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Country field is required"
+#~ msgid ", one of these is required"
+#~ msgstr "El campu País ye obligatoriu"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "Recover account"
+#~ msgstr "cuenta/"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "provider"
+#~ msgstr "aprobáu"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "last used"
+#~ msgstr "menos votada"
+
+#, fuzzy
+#~| msgid "Badge settings"
+#~ msgid "Badges"
+#~ msgstr "Configuración de les insinies"
+
+#, fuzzy
+#~| msgid "Badge settings"
+#~ msgid "Badge levels"
+#~ msgstr "Configuración de les insinies"
+
+#, fuzzy
+#~| msgid "Badge settings"
+#~ msgid "settings"
+#~ msgstr "Configuración de les insinies"
+
+#, fuzzy
+#~| msgid "Real name"
+#~ msgid "User name"
+#~ msgstr "Nome real"
+
+#, fuzzy
+#~| msgid "Subject line"
+#~ msgid "Subject"
+#~ msgstr "Llinia d'asuntu"
+
+#, fuzzy
+#~| msgid "Question has no accepted answers"
+#~ msgid "your post was not accepted"
+#~ msgstr "La entruga nun tien rempuestes aceutaes"
+
+#, fuzzy
+#~| msgid "Your message:"
+#~ msgid "Write your message"
+#~ msgstr "El to mensaxe:"
+
+#, fuzzy
+#~| msgid "tags"
+#~ msgid "add tags"
+#~ msgstr "etiquetes"
+
+#, fuzzy
+#~| msgid "ask anonymously"
+#~ msgid "anonymous user"
+#~ msgstr "entrugar anónimamente"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "approve posts"
+#~ msgstr "aprobáu"
+
+#, fuzzy
+#~| msgid "Question has no accepted answers"
+#~ msgid "See the accepted answer"
+#~ msgstr "La entruga nun tien rempuestes aceutaes"
+
+#, fuzzy
+#~| msgid "Asked by me"
+#~ msgid "Asked"
+#~ msgstr "Entrugao por min"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "Last updated"
+#~ msgstr "menos votada"
+
+#, fuzzy
+#~| msgid "Individually selected"
+#~ msgid "Individual users"
+#~ msgstr "Seleicionao individualmente"
+
+#, fuzzy
+#~| msgid "Badge settings"
+#~ msgid "resetting tags"
+#~ msgstr "Configuración de les insinies"
+
+#, fuzzy
+#~| msgid "Real name"
+#~ msgid "by name"
+#~ msgstr "Nome real"
+
+#, fuzzy
+#~| msgid "Your message:"
+#~ msgid "messages"
+#~ msgstr "El to mensaxe:"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "Approve"
+#~ msgstr "aprobáu"
+
+#, fuzzy
+#~| msgid "Your message:"
+#~ msgid "private messages"
+#~ msgstr "El to mensaxe:"
+
+#, fuzzy
+#~| msgid "select country"
+#~ msgid "Select twitter account"
+#~ msgstr "seleiciona un país"
+
+#, fuzzy
+#~| msgid "Profile"
+#~ msgid "edit profile"
+#~ msgstr "Perfil"
+
+#, fuzzy
+#~| msgid "Email:"
+#~ msgid "Stop Email"
+#~ msgstr "Corréu electrónicu:"
+
+#, fuzzy
+#~| msgid "Real name"
+#~ msgid "real name"
+#~ msgstr "Nome real"
+
+#, fuzzy
+#~| msgid "Email:"
+#~ msgid "email"
+#~ msgstr "Corréu electrónicu:"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "last seen"
+#~ msgstr "menos votada"
+
+#, fuzzy
+#~| msgid "Website"
+#~ msgid "website"
+#~ msgstr "Sitiu web"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "manage account"
+#~ msgstr "cuenta/"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "Remove account"
+#~ msgstr "cuenta/"
+
+#, fuzzy
+#~| msgid "moderator"
+#~ msgid "moderation"
+#~ msgstr "moderador"
+
+#, fuzzy
+#~| msgid "Change status to"
+#~ msgid "Change status"
+#~ msgstr "Camudar estáu a"
+
+#, fuzzy
+#~| msgid "Message text"
+#~ msgid "Message sent"
+#~ msgstr "Testu del mensaxe"
+
+#, fuzzy
+#~| msgid "Your message:"
+#~ msgid "Send message"
+#~ msgstr "El to mensaxe:"

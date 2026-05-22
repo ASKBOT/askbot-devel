@@ -46,6 +46,32 @@ def with_settings(**settings_dict):
     return decorator
 
 
+class livesettings_override:
+    """``with``-form companion to ``with_settings``.
+
+    ``with_settings`` above is decorator-only; some tests need a
+    context-manager form so livesettings overrides can nest inside
+    django ``override_settings`` blocks. Backs up and restores the
+    original livesetting values on exit.
+    """
+
+    def __init__(self, **kwargs):
+        self._desired = kwargs
+        self._backup = {}
+
+    def __enter__(self):
+        from askbot.conf import settings as askbot_settings
+        for key, value in self._desired.items():
+            self._backup[key] = getattr(askbot_settings, key)
+            askbot_settings.update(key, value)
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        from askbot.conf import settings as askbot_settings
+        for key, value in self._backup.items():
+            askbot_settings.update(key, value)
+        return False
+
 
 def create_user(username=None,
                 email=None,

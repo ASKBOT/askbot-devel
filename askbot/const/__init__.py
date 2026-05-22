@@ -32,6 +32,12 @@ CLOSE_REASONS = (
 LONG_TIME = 60*60*24*30 #30 days is a lot of time
 DATETIME_FORMAT = '%I:%M %p, %d %b %Y'
 
+# --- Rate limiting policy windows ---
+# Fixed by policy; operators tune the max counts via livesettings.
+REQUEST_RATE_LIMIT_WINDOW_SECONDS = 60           # 1 minute
+REGISTRATION_RATE_LIMIT_WINDOW_SECONDS = 86400   # 1 day
+WATCHED_USER_POST_RATE_LIMIT_WINDOW_SECONDS = 3600  # 1 hour
+
 SHARE_NOTHING = 0
 SHARE_MY_POSTS = 1
 SHARE_EVERYTHING = 2

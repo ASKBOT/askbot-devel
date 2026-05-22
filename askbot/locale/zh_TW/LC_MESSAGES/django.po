@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 14:58+0000\n"
+"POT-Creation-Date: 2026-04-27 02:03+0000\n"
 "PO-Revision-Date: 2020-08-16 19:55+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/askbot/askbot/"
@@ -87,69 +87,103 @@ msgstr "說明使用者註冊的訊息已經停用"
 msgid "HTML is allowed"
 msgstr "允許使用 HTML"
 
-#: askbot/conf/access_control.py:64
-msgid "nothing - not required"
-msgstr "無 - 非必要"
-
-#: askbot/conf/access_control.py:65
-msgid "account registration"
-msgstr "帳號註冊"
-
-#: askbot/conf/access_control.py:75
-msgid "Require valid email for"
+#: askbot/conf/access_control.py:68
+#, fuzzy
+#| msgid "Require valid email for"
+msgid "Require a valid email address"
 msgstr "需要有效的電子信箱"
 
-#: askbot/conf/access_control.py:100
+#: askbot/conf/access_control.py:70
+msgid ""
+"When enabled, users must verify their email address at registration or when "
+"changing their email address. To verify it, the users must click an emailed "
+"confirmation link from their inbox. Disable only on trusted installations "
+"where email ownership is guaranteed by other means."
+msgstr ""
+
+#: askbot/conf/access_control.py:91
 msgid "Allowed email addresses"
 msgstr "允許電子信箱地址"
 
-#: askbot/conf/access_control.py:102 askbot/conf/access_control.py:148
+#: askbot/conf/access_control.py:93 askbot/conf/access_control.py:139
 msgid "Please use space to separate the entries"
 msgstr "請使用空格分隔項目"
 
-#: askbot/conf/access_control.py:103 askbot/conf/access_control.py:117
+#: askbot/conf/access_control.py:94 askbot/conf/access_control.py:108
 msgid "Entry disables blacklisted email patterns"
 msgstr "輸入黑名單電子郵件的胚騰樣式"
 
-#: askbot/conf/access_control.py:114
+#: askbot/conf/access_control.py:105
 msgid "Allowed email domain names"
 msgstr "允許的電子信箱域名"
 
-#: askbot/conf/access_control.py:116
+#: askbot/conf/access_control.py:107
 msgid "Please use space to separate the entries, do not use the @ symbol!"
 msgstr "請使用空白隔開項目，不要使用 @ 符號！"
 
-#: askbot/conf/access_control.py:124
+#: askbot/conf/access_control.py:115
 msgid "disable"
 msgstr "停用"
 
-#: askbot/conf/access_control.py:126
+#: askbot/conf/access_control.py:117
 msgid "block user registrations"
 msgstr "禁止使用者註冊"
 
-#: askbot/conf/access_control.py:127
+#: askbot/conf/access_control.py:118
 msgid "allow existing users to post"
 msgstr "允許既有使用者貼文"
 
-#: askbot/conf/access_control.py:128
+#: askbot/conf/access_control.py:119
 msgid "block completely"
 msgstr "全部禁止"
 
-#: askbot/conf/access_control.py:137
+#: askbot/conf/access_control.py:128
 msgid "Blacklisted email address patterns mode"
 msgstr "黑名單電子信箱位址胚騰樣式模式"
 
-#: askbot/conf/access_control.py:146
+#: askbot/conf/access_control.py:137
 msgid "Blacklisted email address patterns"
 msgstr "黑名單電子信箱位址胚騰樣式"
 
-#: askbot/conf/access_control.py:149
+#: askbot/conf/access_control.py:140
 msgid "regular expressions are allowed"
 msgstr "允許使用常規表示式"
 
-#: askbot/conf/access_control.py:159
+#: askbot/conf/access_control.py:150
 msgid "Allow moderators to access other's messages"
 msgstr "允許版主存取其他人的訊息"
+
+#: askbot/conf/api_settings.py:9
+#, fuzzy
+#| msgid "User settings"
+msgid "Askbot API settings"
+msgstr "使用者設定"
+
+#: askbot/conf/api_settings.py:17
+msgid "API v1 access mode"
+msgstr ""
+
+#: askbot/conf/api_settings.py:20
+msgid "Public (anyone can access)"
+msgstr ""
+
+#: askbot/conf/api_settings.py:21
+#, fuzzy
+#| msgid "this field is required"
+msgid "Authenticated (login required)"
+msgstr "此欄位不能空白"
+
+#: askbot/conf/api_settings.py:22
+msgid "Disabled (moderator item lookups only)"
+msgstr ""
+
+#: askbot/conf/api_settings.py:25
+msgid ""
+"NOTE: v1 API is read-only and this setting controls who can access the its "
+"endpoints. \"Authenticated\" requires login for all API access. \"Disabled\" "
+"blocks list endpoints entirely and allows only individual item lookups for "
+"moderators/admins (preserves merge dialog functionality)."
+msgstr ""
 
 #: askbot/conf/badges.py:16
 msgid "Badge settings"
@@ -428,47 +462,59 @@ msgid "Enable moderation queue alerts"
 msgstr "啟用審核列表通知"
 
 #: askbot/conf/email.py:138
+#, fuzzy
+#| msgid "Enable instant email alerts"
+msgid "Log debug info for instant email alerts"
+msgstr "啟用即時電子郵件通知"
+
+#: askbot/conf/email.py:140
+msgid ""
+"When enabled, logs detailed information about email notification processing "
+"at INFO level. Use for production debugging."
+msgstr ""
+
+#: askbot/conf/email.py:152
 msgid "Enable HTML-formatted email"
 msgstr "啟用 HTML 格式郵件"
 
-#: askbot/conf/email.py:139
+#: askbot/conf/email.py:153
 msgid "May not be supported by some email clients"
 msgstr "可能不支持某些電子郵件軟體"
 
-#: askbot/conf/email.py:148
+#: askbot/conf/email.py:162
 msgid "Maximum number of news entries in an email alert"
 msgstr "郵件通知的最大新問題數"
 
-#: askbot/conf/email.py:158
+#: askbot/conf/email.py:172
 msgid "Default notification frequency all questions"
 msgstr "所有問題的預設通知頻率"
 
-#: askbot/conf/email.py:168
+#: askbot/conf/email.py:182
 msgid "Default notification frequency questions asked by the user"
 msgstr "使用者提問預設通知頻率"
 
-#: askbot/conf/email.py:179
+#: askbot/conf/email.py:193
 msgid "Default notification frequency questions answered by the user"
 msgstr "使用者答覆的預設通知頻率"
 
-#: askbot/conf/email.py:190
+#: askbot/conf/email.py:204
 msgid "Default notification frequency on unanswered questions"
 msgstr ""
 
-#: askbot/conf/email.py:200
+#: askbot/conf/email.py:214
 msgid ""
 "Default notification frequency questions individuallyselected by the user"
 msgstr ""
 
-#: askbot/conf/email.py:211
+#: askbot/conf/email.py:225
 msgid "Default notification frequency for mentionsand comments"
 msgstr ""
 
-#: askbot/conf/email.py:221
+#: askbot/conf/email.py:235
 msgid "Enable reminders about unanswered questions"
 msgstr "啟用提醒未回答的問題"
 
-#: askbot/conf/email.py:223
+#: askbot/conf/email.py:237
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_unanswered_question_reminders\" (for example, via a cron job "
@@ -477,37 +523,38 @@ msgstr ""
 "注意：使用本功能需運行管理命令「send_unanswered_question_reminders」(例如以 "
 "cron 任務——以適當頻率)"
 
-#: askbot/conf/email.py:230 askbot/conf/group_settings.py:50
+#: askbot/conf/email.py:244 askbot/conf/group_settings.py:51
+#: askbot/migrations/0035_set_global_group_used_for_analytics.py:41
 msgid "everyone"
 msgstr "每個人"
 
-#: askbot/conf/email.py:231
+#: askbot/conf/email.py:245
 msgid "moderators & administrators"
 msgstr "版主及管理員"
 
-#: askbot/conf/email.py:240
+#: askbot/conf/email.py:254
 msgid "Whom to remind about unanswered questions"
 msgstr "未回覆問題的提醒對象"
 
-#: askbot/conf/email.py:250
+#: askbot/conf/email.py:264
 msgid "Days before starting to send reminders about unanswered questions"
 msgstr "開始發送未回答問題提醒郵件之前的天數"
 
-#: askbot/conf/email.py:261
+#: askbot/conf/email.py:275
 msgid ""
 "How often to send unanswered question reminders (in days between the "
 "reminders sent)."
 msgstr "發送未回答問題提醒郵件的間隔時間。"
 
-#: askbot/conf/email.py:271
+#: askbot/conf/email.py:285
 msgid "Max. number of reminders to send about unanswered questions"
 msgstr "發送無回答提問提醒郵件的最大數量"
 
-#: askbot/conf/email.py:281
+#: askbot/conf/email.py:295
 msgid "Enable accept the best answer reminders"
 msgstr "啟用提醒接受最佳回答"
 
-#: askbot/conf/email.py:283
+#: askbot/conf/email.py:297
 msgid ""
 "NOTE: in order to use this feature, it is necessary to run the management "
 "command \"send_accept_answer_reminders\" (for example, via a cron job - with "
@@ -516,67 +563,69 @@ msgstr ""
 "注意：使用本功能需運行管理命令「send_accept_answer_reminders」(例如以 cron 任"
 "務——以適當頻率)"
 
-#: askbot/conf/email.py:295
+#: askbot/conf/email.py:309
 msgid "Days before starting to send reminders to accept an answer"
 msgstr "發送接受最佳回答提醒郵件前的天數"
 
-#: askbot/conf/email.py:305
+#: askbot/conf/email.py:319
 msgid ""
 "How often to send accept answer reminders (in days between the reminders "
 "sent)."
 msgstr "發送接受回答提醒的間隔天數。"
 
-#: askbot/conf/email.py:317
+#: askbot/conf/email.py:331
 msgid "Max. number of reminders to send to accept the best answer"
 msgstr "發送接收最佳答案的提醒郵件的最大數量"
 
-#: askbot/conf/email.py:326
+#: askbot/conf/email.py:340
 msgid "Allow blank email"
 msgstr "允許空白郵件"
 
-#: askbot/conf/email.py:328
+#: askbot/conf/email.py:342
 msgid "DANGER: makes impossible account recovery by email."
 msgstr "危險： 以郵件恢復不可能的帳號。"
 
-#: askbot/conf/email.py:330
-msgid "Must be optional"
-msgstr ""
+#: askbot/conf/email.py:344 askbot/conf/login_providers.py:309
+#, fuzzy
+#| msgid "Must be enabled"
+msgid "Must be disabled"
+msgstr "必須啟用"
 
-#: askbot/conf/email.py:341
+#: askbot/conf/email.py:355
 msgid "Fake email for anonymous user"
 msgstr "匿名使用者的假裝電子信箱"
 
-#: askbot/conf/email.py:342
+#: askbot/conf/email.py:356
 msgid "Use this setting to control gravatar for email-less user"
 msgstr "使用這個設定來控制沒有電子信箱的使用者圖像"
 
-#: askbot/conf/email.py:351
+#: askbot/conf/email.py:365
 msgid "Replace space in emailed tags with dash"
 msgstr "以破折號替代所發送郵件中標籤中的空格"
 
-#: askbot/conf/email.py:353
+#: askbot/conf/email.py:367
 msgid ""
 "This setting applies to tags written in the subject line of questions asked "
 "by email"
 msgstr "本設定適用於寫在以電子郵件提問標題列中的標籤"
 
-#: askbot/conf/email.py:363
+#: askbot/conf/email.py:377
 msgid "Enable posting and replying by email"
 msgstr "啟用透過電子郵件貼文和回覆"
 
-#: askbot/conf/email.py:365
+#: askbot/conf/email.py:379
 msgid "To enable this feature make sure lamson is running"
 msgstr "若要啟用這項功能，請確定 lamson 正在運行"
 
-#: askbot/conf/email.py:373
+#: askbot/conf/email.py:387
 msgid "Emailed post: when to notify author about publishing"
 msgstr "通過電子郵件貼文：何時通知作者發布動態"
 
-#: askbot/conf/email.py:397
+#: askbot/conf/email.py:411
 msgid "Reply by email hostname"
 msgstr "通過電子郵件的主機名回覆"
 
-#: askbot/conf/email.py:407
+#: askbot/conf/email.py:421
 msgid ""
 "Email replies having fewer words than this number will be posted as comments "
 "instead of answers"
@@ -1357,31 +1406,50 @@ msgstr ""
 "此設定輔助匯入其它論壇（例如 zendesk）資料，用於自動匯入無法正確偵測原始問題"
 "的情形。"
 
-#: askbot/conf/group_settings.py:9 askbot/jinja2/users/group_settings.html:5
+#: askbot/conf/group_settings.py:10
 msgid "Group settings"
 msgstr "群組設定"
 
-#: askbot/conf/group_settings.py:18
+#: askbot/conf/group_settings.py:19
 msgid "Enable user groups"
 msgstr "啟用使用者分組"
 
-#: askbot/conf/group_settings.py:51
+#: askbot/conf/group_settings.py:52
 msgid "Global user group name"
 msgstr "全域使用者群組名稱"
 
-#: askbot/conf/group_settings.py:52
+#: askbot/conf/group_settings.py:53
 msgid "All users belong to this group automatically"
 msgstr "所有使用者自動歸屬這個群組"
 
-#: askbot/conf/group_settings.py:62
+#: askbot/conf/group_settings.py:63
 msgid "Enable group email addresses"
 msgstr "啟用群組電子郵件位址"
 
-#: askbot/conf/group_settings.py:63
+#: askbot/conf/group_settings.py:64
 msgid ""
 "If selected, users can post to groups by email \"group-name@domain.com\""
 msgstr ""
 "若選取，則使用者可透過寄信給「group-name@domain.com」的方式貼文到群組中"
+
+#: askbot/conf/group_settings.py:74
+#, fuzzy
+#| msgid "Enable user groups"
+msgid "Enable per email domain user groups"
+msgstr "啟用使用者分組"
+
+#: askbot/conf/group_settings.py:75
+msgid "If enabled, groups will be created for each email domain name"
+msgstr ""
+
+#: askbot/conf/group_settings.py:85
+msgid "Default visibility of groups created for the email domains"
+msgstr ""
+
+#: askbot/conf/group_settings.py:86
+msgid ""
+"Administrators can change the visibility of these groups individually later"
+msgstr ""
 
 #: askbot/conf/karma_and_badges_visibility.py:12
 msgid "Karma & Badge visibility"
@@ -1741,10 +1809,6 @@ msgstr "允許完成 Wiki 認證後跳過註冊頁面。"
 msgid "Must be enabled"
 msgstr "必須啟用"
 
-#: askbot/conf/login_providers.py:309
-msgid "Must be not be required"
-msgstr "必須是非必要"
-
 #: askbot/conf/markup.py:15
 msgid "Markup in posts"
 msgstr "貼文中的標記語法"
@@ -2064,6 +2128,112 @@ msgstr "登入使用者的預設問題篩選方式"
 #: askbot/conf/question_lists.py:81
 msgid "Default questions selector for the anonymous users"
 msgstr "匿名使用者的預設問題篩選方式"
+
+#: askbot/conf/rate_limiting.py:9
+msgid "Rate limiting"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:20
+msgid "Individual IP (/32 IPv4, /128 IPv6) — strict"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:21
+msgid "Local subnet (/24 IPv4, /64 IPv6) — recommended"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:22
+msgid "Regional block (/16 IPv4, /48 IPv6) — aggressive"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:29
+msgid "Rate-limit allowlist (IPs / CIDR ranges)"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:32
+msgid ""
+"IP addresses and CIDR ranges that bypass every rate-limit policy (request, "
+"registration, watched-user-post). One entry per row. Plain IP (1.2.3.4, "
+"2001:db8::1) or CIDR (1.2.3.0/24, 2001:db8::/32). IPv4 or IPv6. Whitespace "
+"is trimmed. Invalid entries are logged and skipped — no restart needed. "
+"Combines with the deploy-time ASKBOT_INTERNAL_IPS django setting by union "
+"(an IP bypasses if matched by either source). The admin UI shows only this "
+"livesetting half; inspect settings.py or ask your deployer for the deploy-"
+"time ASKBOT_INTERNAL_IPS value. Edits apply on the next request and do NOT "
+"invalidate any rate-limit buckets — the allowlist is a short-circuit, not "
+"part of the cache key."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:53
+msgid "Subnet granularity for IP-keyed rate limits"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:57
+msgid ""
+"Controls how broadly IP-keyed rate limits group addresses. \"host\" buckets "
+"each IP separately (/32 IPv4, /128 IPv6) — strict. \"subnet\" buckets local-"
+"network neighbors together (/24 IPv4, /64 IPv6) — recommended default; "
+"defends against per-IP rotation within one subnet. \"region\" buckets entire "
+"regional blocks together (/16 IPv4, /48 IPv6) — aggressive. IPv4 and IPv6 "
+"widths always change together. Changing this value starts fresh buckets for "
+"every IP (the prefix is part of the cache key) — distinct from the allowlist "
+"setting, where edits do NOT invalidate buckets."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:76
+#, fuzzy
+#| msgid "Enable tag moderation"
+msgid "Enable rate limiting"
+msgstr "啟用標籤審核"
+
+#: askbot/conf/rate_limiting.py:78
+msgid "Master switch for per-IP request rate limiting."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:86
+msgid "Max requests per IP per window"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:88
+msgid "Number of requests allowed per IP within a 60-second window."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:98
+#, fuzzy
+#| msgid "Disable registration of new users"
+msgid "Enable registration rate limiting"
+msgstr "禁止新使用者註冊"
+
+#: askbot/conf/rate_limiting.py:100
+msgid "Per-IP throttle on signup endpoints to slow automated account creation."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:109
+msgid "Max registrations per IP per window"
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:111
+msgid "Number of registrations allowed per IP within a 1-day window."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:121
+#, fuzzy
+#| msgid "audit flagged posts and watched users"
+msgid "Enable post rate limiting for watched users"
+msgstr "稽核標記的貼文和監看的使用者"
+
+#: askbot/conf/rate_limiting.py:123
+msgid "Per-user post limit for watched users to slow sophisticated spammers."
+msgstr ""
+
+#: askbot/conf/rate_limiting.py:132
+#, fuzzy
+#| msgid "audit flagged posts and watched users"
+msgid "Max posts per window (watched users)"
+msgstr "稽核標記的貼文和監看的使用者"
+
+#: askbot/conf/rate_limiting.py:134
+msgid "Maximum posts a watched user can make within a 1-hour window."
+msgstr ""
 
 #: askbot/conf/reputation_changes.py:13
 msgid "Karma loss and gain rules"
@@ -2624,12 +2794,12 @@ msgstr ""
 msgid "Askbot spam checker API key"
 msgstr ""
 
-#: askbot/conf/static_settings.py:64
+#: askbot/conf/static_settings.py:54
 msgctxt "urls"
 msgid "questions"
 msgstr "questions"
 
-#: askbot/conf/static_settings.py:76
+#: askbot/conf/static_settings.py:66
 msgctxt "urls"
 msgid "question"
 msgstr "question"
@@ -2647,7 +2817,9 @@ msgid "Data rules & Formatting"
 msgstr "日期規則和格式設定"
 
 #: askbot/conf/super_groups.py:8
-msgid "External Services"
+#, fuzzy
+#| msgid "External Services"
+msgid "External Services & APIs"
 msgstr "外部服務"
 
 #: askbot/conf/super_groups.py:9
@@ -2823,7 +2995,6 @@ msgid "Site terms vocabulary"
 msgstr "網站專用術語和詞彙表"
 
 #: askbot/conf/words.py:22 askbot/conf/words.py:23
-#: askbot/jinja2/ask/index.html:4
 msgid "Ask Your Question"
 msgstr "開始發問"
 
@@ -2922,6 +3093,8 @@ msgid "Enter duplicate question ID"
 msgstr "輸入重複問題的ID"
 
 #: askbot/conf/words.py:182 askbot/conf/words.py:183
+#: askbot/migrations/0027_populate_analytics_events.py:17
+#: askbot/models/analytics.py:168
 msgid "asked"
 msgstr "提問於"
 
@@ -2954,6 +3127,8 @@ msgid "Gave accepted answer"
 msgstr "提供已接受的答案"
 
 #: askbot/conf/words.py:263 askbot/conf/words.py:264
+#: askbot/migrations/0027_populate_analytics_events.py:18
+#: askbot/models/analytics.py:169
 msgid "answered"
 msgstr "已回答"
 
@@ -2985,8 +3160,7 @@ msgstr ""
 msgid "Countable plural forms for \"answer\""
 msgstr "「答案」的可數複數形式"
 
-#: askbot/conf/words.py:295 askbot/jinja2/search_posts/context_link.html:3
-#: askbot/models/post.py:728
+#: askbot/conf/words.py:295 askbot/models/post.py:731
 msgid "question"
 msgstr "問題"
 
@@ -3010,8 +3184,7 @@ msgstr "未回答問題"
 msgid "unanswered questions (plural)"
 msgstr "未回答問題 (名詞，複數)"
 
-#: askbot/conf/words.py:325 askbot/jinja2/search_posts/context_link.html:5
-#: askbot/models/post.py:726
+#: askbot/conf/words.py:325 askbot/models/post.py:729
 msgid "answer"
 msgstr "回答"
 
@@ -3273,412 +3446,449 @@ msgstr "問題已經解決，已得到正確答案"
 msgid "closed as inactive"
 msgstr "冷門問題"
 
-#: askbot/const/__init__.py:39
+#: askbot/const/__init__.py:45
 msgid "disable sharing"
 msgstr "撤銷共享"
 
-#: askbot/const/__init__.py:40
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:13
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:17
+#: askbot/const/__init__.py:46
 msgid "my posts"
 msgstr "我的文章"
 
-#: askbot/const/__init__.py:41
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:14
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:16
+#: askbot/const/__init__.py:47
 msgid "all posts"
 msgstr "所有文章"
 
-#: askbot/const/__init__.py:64 askbot/jinja2/question/answers_sort_nav.html:13
+#: askbot/const/__init__.py:70
 msgid "newest"
 msgstr "最新問題"
 
-#: askbot/const/__init__.py:65 askbot/jinja2/question/answers_sort_nav.html:11
-#: askbot/jinja2/users/title_row.html:37
+#: askbot/const/__init__.py:71
 msgid "oldest"
 msgstr "最先加入"
 
-#: askbot/const/__init__.py:66
+#: askbot/const/__init__.py:72
 msgid "active"
 msgstr "熱門問題"
 
-#: askbot/const/__init__.py:67
+#: askbot/const/__init__.py:73
 msgid "inactive"
 msgstr "冷門問題"
 
-#: askbot/const/__init__.py:68
+#: askbot/const/__init__.py:74
 msgid "hottest"
 msgstr "火熱問題"
 
-#: askbot/const/__init__.py:69
+#: askbot/const/__init__.py:75
 msgid "coldest"
 msgstr "過時"
 
-#: askbot/const/__init__.py:70 askbot/jinja2/question/answers_sort_nav.html:15
+#: askbot/const/__init__.py:76
 msgid "most voted"
 msgstr "最有價值的問題"
 
-#: askbot/const/__init__.py:71
+#: askbot/const/__init__.py:77
 msgid "least voted"
 msgstr "最不被推薦的問題"
 
-#: askbot/const/__init__.py:72
+#: askbot/const/__init__.py:78
 msgid "relevance"
 msgstr "關聯"
 
-#: askbot/const/__init__.py:84
+#: askbot/const/__init__.py:90
 msgid "Never"
 msgstr "從不"
 
-#: askbot/const/__init__.py:85
+#: askbot/const/__init__.py:91
 msgid "When new post is published"
 msgstr "當發布新文章之時"
 
-#: askbot/const/__init__.py:86
+#: askbot/const/__init__.py:92
 msgid "When post is published or revised"
 msgstr "當貼文發布或修訂時"
 
-#: askbot/const/__init__.py:120
+#: askbot/const/__init__.py:126
 msgid "latest first"
 msgstr "最新問題優先"
 
-#: askbot/const/__init__.py:121
+#: askbot/const/__init__.py:127
 msgid "oldest first"
 msgstr "最舊問題優先"
 
-#: askbot/const/__init__.py:122
+#: askbot/const/__init__.py:128
 msgid "most voted first"
 msgstr "票數最多優先"
 
-#: askbot/const/__init__.py:127 askbot/jinja2/tags/header.html:24
+#: askbot/const/__init__.py:133
 msgid "sorted by frequency of tag use"
 msgstr "按標籤被使用的次數排序"
 
-#: askbot/const/__init__.py:128 askbot/jinja2/tags/header.html:18
+#: askbot/const/__init__.py:134
 msgid "sorted alphabetically"
 msgstr "按名稱的字母先後順序排序"
 
-#: askbot/const/__init__.py:133 askbot/jinja2/users/title_row.html:25
+#: askbot/const/__init__.py:139
 msgid "see people with the highest reputation"
 msgstr "查看積分最高的使用者"
 
-#: askbot/const/__init__.py:134 askbot/jinja2/users/title_row.html:31
+#: askbot/const/__init__.py:140
 msgid "see people who joined most recently"
 msgstr "查看最新加入的使用者"
 
-#: askbot/const/__init__.py:135 askbot/jinja2/users/title_row.html:36
+#: askbot/const/__init__.py:141
 msgid "see people who joined the site first"
 msgstr "查看最早加入的使用者"
 
-#: askbot/const/__init__.py:136 askbot/jinja2/users/title_row.html:41
+#: askbot/const/__init__.py:142
 msgid "see people sorted by name"
 msgstr "按名字排序查看使用者"
 
-#: askbot/const/__init__.py:147 askbot/jinja2/user_inbox/responses.html:12
+#: askbot/const/__init__.py:153
 msgid "all"
 msgstr "全部"
 
-#: askbot/const/__init__.py:148
+#: askbot/const/__init__.py:154
 msgid "unanswered"
 msgstr "尚未回答"
 
-#: askbot/const/__init__.py:149
+#: askbot/const/__init__.py:155
 msgid "followed"
 msgstr "追蹤中"
 
-#: askbot/const/__init__.py:154
+#: askbot/const/__init__.py:160
 msgid "list"
 msgstr "列表"
 
-#: askbot/const/__init__.py:155
+#: askbot/const/__init__.py:161
 msgid "cloud"
 msgstr "雲"
 
-#: askbot/const/__init__.py:165
+#: askbot/const/__init__.py:171
 msgid "Question has no answers"
 msgstr "未回答的問題"
 
-#: askbot/const/__init__.py:166
+#: askbot/const/__init__.py:172
 msgid "Question has no accepted answers"
 msgstr "仍沒有正確答案的問題"
 
-#: askbot/const/__init__.py:230
+#: askbot/const/__init__.py:239
 msgid "asked a question"
 msgstr "提問"
 
-#: askbot/const/__init__.py:231
+#: askbot/const/__init__.py:240
 msgid "answered a question"
 msgstr "作答"
 
-#: askbot/const/__init__.py:232
+#: askbot/const/__init__.py:241
+#: askbot/migrations/0027_populate_analytics_events.py:19
+#: askbot/models/analytics.py:170
 msgid "commented question"
 msgstr "評論問題"
 
-#: askbot/const/__init__.py:233
+#: askbot/const/__init__.py:242
+#: askbot/migrations/0027_populate_analytics_events.py:20
+#: askbot/models/analytics.py:171
 msgid "commented answer"
 msgstr "評論回答"
 
-#: askbot/const/__init__.py:234
+#: askbot/const/__init__.py:243
 msgid "edited question"
 msgstr "修改問題"
 
-#: askbot/const/__init__.py:235
+#: askbot/const/__init__.py:244
 msgid "edited answer"
 msgstr "修改回答"
 
-#: askbot/const/__init__.py:236
+#: askbot/const/__init__.py:245
 msgid "received badge"
 msgstr "收到的徽章"
 
-#: askbot/const/__init__.py:237
+#: askbot/const/__init__.py:246
 msgid "marked best answer"
 msgstr "標記最佳答案"
 
-#: askbot/const/__init__.py:238
+#: askbot/const/__init__.py:247
+#: askbot/migrations/0027_populate_analytics_events.py:15
+#: askbot/models/analytics.py:165
 msgid "upvoted"
 msgstr "投贊成票"
 
-#: askbot/const/__init__.py:239
+#: askbot/const/__init__.py:248
+#: askbot/migrations/0027_populate_analytics_events.py:16
+#: askbot/models/analytics.py:166
 msgid "downvoted"
 msgstr "投反對票"
 
-#: askbot/const/__init__.py:240
+#: askbot/const/__init__.py:249 askbot/models/analytics.py:167
 msgid "canceled vote"
 msgstr "撤銷投票"
 
-#: askbot/const/__init__.py:241
+#: askbot/const/__init__.py:250
 msgid "deleted question"
 msgstr "刪除問題"
 
-#: askbot/const/__init__.py:242
+#: askbot/const/__init__.py:251
 msgid "deleted answer"
 msgstr "刪除回答"
 
-#: askbot/const/__init__.py:243
+#: askbot/const/__init__.py:252
 msgid "marked offensive"
 msgstr "已標為濫用"
 
-#: askbot/const/__init__.py:244
+#: askbot/const/__init__.py:253
 msgid "updated tags"
 msgstr "更新標籤"
 
-#: askbot/const/__init__.py:245
+#: askbot/const/__init__.py:254
 msgid "selected favorite"
 msgstr "選取收藏"
 
-#: askbot/const/__init__.py:246
+#: askbot/const/__init__.py:255
 msgid "completed user profile"
 msgstr "已完成使用者個人檔案"
 
-#: askbot/const/__init__.py:247
+#: askbot/const/__init__.py:256
 msgid "email update sent to user"
 msgstr "電子郵件通知已寄送給使用者"
 
-#: askbot/const/__init__.py:248
+#: askbot/const/__init__.py:257
 msgid "a post was shared"
 msgstr "已分享一則貼文"
 
-#: askbot/const/__init__.py:251
+#: askbot/const/__init__.py:260
 msgid "reminder about unanswered questions sent"
 msgstr "已發送未回答問題提醒郵件"
 
-#: askbot/const/__init__.py:255
+#: askbot/const/__init__.py:264
 msgid "reminder about accepting the best answer sent"
 msgstr "已發送接受最佳答案提醒郵件"
 
-#: askbot/const/__init__.py:257
+#: askbot/const/__init__.py:266
 msgid "mentioned in the post"
 msgstr "發布提醒"
 
-#: askbot/const/__init__.py:260
+#: askbot/const/__init__.py:269
 msgid "created tag description"
 msgstr "建立的標籤敘述"
 
-#: askbot/const/__init__.py:264
+#: askbot/const/__init__.py:273
 msgid "updated tag description"
 msgstr "更新標籤敘述內容"
 
-#: askbot/const/__init__.py:266
+#: askbot/const/__init__.py:275
 msgid "made a new post"
 msgstr "已發新貼文"
 
-#: askbot/const/__init__.py:269
+#: askbot/const/__init__.py:278
 msgid "made an edit"
 msgstr "進行編輯"
 
-#: askbot/const/__init__.py:273
+#: askbot/const/__init__.py:282
 msgid "created post reject reason"
 msgstr "已建立拒絕貼文理由"
 
-#: askbot/const/__init__.py:277
+#: askbot/const/__init__.py:286
 msgid "updated post reject reason"
 msgstr "已更新拒絕貼文理由"
 
-#: askbot/const/__init__.py:352
+#: askbot/const/__init__.py:298
+msgid "joined"
+msgstr ""
+
+#: askbot/const/__init__.py:302
+#, fuzzy
+#| msgid "new question"
+msgid "viewed question"
+msgstr "提問"
+
+#: askbot/const/__init__.py:306
+#, fuzzy
+#| msgid "edited answer"
+msgid "viewed answer"
+msgstr "修改回答"
+
+#: askbot/const/__init__.py:407
 msgid "[closed]"
 msgstr "[已關閉]"
 
-#: askbot/const/__init__.py:353
+#: askbot/const/__init__.py:408
 msgid "[deleted]"
 msgstr "[已刪除]"
 
-#: askbot/const/__init__.py:354 askbot/views/readers.py:742
+#: askbot/const/__init__.py:409 askbot/views/readers.py:765
 msgid "initial version"
 msgstr "初始版本"
 
-#: askbot/const/__init__.py:355
+#: askbot/const/__init__.py:410
 msgid "retagged"
 msgstr "更新了標籤"
 
-#: askbot/const/__init__.py:356
+#: askbot/const/__init__.py:411
 msgid "[private]"
 msgstr "[私有]"
 
-#: askbot/const/__init__.py:449 askbot/const/__init__.py:458
-#: askbot/const/__init__.py:464 askbot/const/__init__.py:470
+#: askbot/const/__init__.py:504 askbot/const/__init__.py:513
+#: askbot/const/__init__.py:519 askbot/const/__init__.py:525
 #, fuzzy
 #| msgid "show all tags"
 msgid "all tags"
 msgstr "顯示所有標籤"
 
-#: askbot/const/__init__.py:450 askbot/const/__init__.py:459
-#: askbot/const/__init__.py:465 askbot/const/__init__.py:471
+#: askbot/const/__init__.py:505 askbot/const/__init__.py:514
+#: askbot/const/__init__.py:520 askbot/const/__init__.py:526
 msgid "exclude ignored tags"
 msgstr "排除想忽視的標籤"
 
-#: askbot/const/__init__.py:451 askbot/const/__init__.py:460
-#: askbot/const/__init__.py:472
+#: askbot/const/__init__.py:506 askbot/const/__init__.py:515
+#: askbot/const/__init__.py:527
 msgid "only interesting tags"
 msgstr "感興趣的標籤"
 
-#: askbot/const/__init__.py:455 askbot/const/__init__.py:466
-#: askbot/const/__init__.py:473
+#: askbot/const/__init__.py:510 askbot/const/__init__.py:521
+#: askbot/const/__init__.py:528
 msgid "only subscribed tags"
 msgstr "只要有訂閱的標籤"
 
-#: askbot/const/__init__.py:477
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:24
+#: askbot/const/__init__.py:532
 msgid "instantly"
 msgstr "立即"
 
-#: askbot/const/__init__.py:478 askbot/const/__init__.py:484
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:25
+#: askbot/const/__init__.py:533 askbot/const/__init__.py:539
 msgid "daily"
 msgstr "每日"
 
-#: askbot/const/__init__.py:479 askbot/const/__init__.py:485
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:26
+#: askbot/const/__init__.py:534 askbot/const/__init__.py:540
 msgid "weekly"
 msgstr "每周"
 
-#: askbot/const/__init__.py:480 askbot/const/__init__.py:486
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:27
+#: askbot/const/__init__.py:535 askbot/const/__init__.py:541
 msgid "never"
 msgstr "永不"
 
-#: askbot/const/__init__.py:491
+#: askbot/const/__init__.py:546
 msgid "identicon"
 msgstr "identicon"
 
-#: askbot/const/__init__.py:492
+#: askbot/const/__init__.py:547
 msgid "monsterid"
 msgstr "monsterid"
 
-#: askbot/const/__init__.py:493
+#: askbot/const/__init__.py:548
 msgid "wavatar"
 msgstr "wavatar"
 
-#: askbot/const/__init__.py:494
+#: askbot/const/__init__.py:549
 msgid "retro"
 msgstr "retro"
 
-#: askbot/const/__init__.py:495
+#: askbot/const/__init__.py:550
 msgid "mystery-man"
 msgstr "神秘人"
 
-#: askbot/const/__init__.py:498 askbot/jinja2/avatar/show_list.html:13
+#: askbot/const/__init__.py:553
 msgid "Default avatar"
 msgstr "預設頭像"
 
-#: askbot/const/__init__.py:499 askbot/jinja2/avatar/show_list.html:26
+#: askbot/const/__init__.py:554
 msgid "Gravatar"
 msgstr "Gravatar"
 
-#: askbot/const/__init__.py:504
+#: askbot/const/__init__.py:559
 msgid "Uploaded Avatar"
 msgstr "已上傳頭像"
 
-#: askbot/const/__init__.py:514 askbot/forms.py:699
+#: askbot/const/__init__.py:569 askbot/forms.py:699
 msgid "administrator"
 msgstr "管理員"
 
-#: askbot/const/__init__.py:515 askbot/forms.py:700
+#: askbot/const/__init__.py:570 askbot/forms.py:700
 msgid "moderator"
 msgstr "版主"
 
-#: askbot/const/__init__.py:516 askbot/forms.py:693
+#: askbot/const/__init__.py:571 askbot/forms.py:693
 msgid "approved"
 msgstr "核准"
 
-#: askbot/const/__init__.py:517 askbot/forms.py:694
+#: askbot/const/__init__.py:572 askbot/forms.py:694
 msgid "watched"
 msgstr "監看"
 
-#: askbot/const/__init__.py:518 askbot/forms.py:695
+#: askbot/const/__init__.py:573 askbot/forms.py:695
 msgid "suspended"
 msgstr "已停權"
 
-#: askbot/const/__init__.py:519 askbot/forms.py:696
+#: askbot/const/__init__.py:574 askbot/forms.py:696
 msgid "blocked"
 msgstr "已封鎖"
 
-#: askbot/const/__init__.py:521
+#: askbot/const/__init__.py:576
 msgid "terminated"
 msgstr ""
 
-#: askbot/const/__init__.py:555 askbot/jinja2/badges/sidebar.html:4
+#: askbot/const/__init__.py:610
 msgid "gold"
 msgstr "金牌"
 
-#: askbot/const/__init__.py:556 askbot/jinja2/badges/sidebar.html:11
+#: askbot/const/__init__.py:611
 msgid "silver"
 msgstr "銀牌"
 
-#: askbot/const/__init__.py:557 askbot/jinja2/badges/sidebar.html:18
+#: askbot/const/__init__.py:612
 msgid "bronze"
 msgstr "銅牌"
 
-#: askbot/const/__init__.py:568
+#: askbot/const/__init__.py:623
 msgid "date descendant"
 msgstr "日期遞減"
 
-#: askbot/const/__init__.py:569
+#: askbot/const/__init__.py:624
 msgid "date ascendant"
 msgstr "日期遞增"
 
-#: askbot/const/__init__.py:570
+#: askbot/const/__init__.py:625
 msgid "most recently active"
 msgstr "最近最活躍"
 
-#: askbot/const/__init__.py:571
+#: askbot/const/__init__.py:626
 msgid "least recently active"
 msgstr "最近最不活躍"
 
-#: askbot/const/__init__.py:572
+#: askbot/const/__init__.py:627
 msgid "more responses"
 msgstr "更多回應"
 
-#: askbot/const/__init__.py:573
+#: askbot/const/__init__.py:628
 msgid "fewer responses"
 msgstr "較少回應"
 
-#: askbot/const/__init__.py:574
+#: askbot/const/__init__.py:629
 msgid "more votes"
 msgstr "更多投票"
 
-#: askbot/const/__init__.py:575
+#: askbot/const/__init__.py:630
 msgid "less votes"
 msgstr "較少投票"
+
+#: askbot/const/__init__.py:671
+#, fuzzy
+#| msgid "moderators & administrators"
+msgid "Visible to administrators"
+msgstr "版主及管理員"
+
+#: askbot/const/__init__.py:672
+#, fuzzy
+#| msgid "This function is limited to moderators and administrators"
+msgid "Visible to moderators and administrators"
+msgstr "該功能僅限於版主和管理員"
+
+#: askbot/const/__init__.py:673
+#, fuzzy
+#| msgid "This function is limited to moderators and administrators"
+msgid "Visible to own members, moderators and administrators"
+msgstr "該功能僅限於版主和管理員"
+
+#: askbot/const/__init__.py:674
+msgid "Visible to everyone"
+msgstr ""
 
 #: askbot/const/message_keys.py:15
 msgid "most relevant questions"
@@ -3808,7 +4018,7 @@ msgid "In order to register, you must accept the terms of service"
 msgstr "要想成功註冊您必須接受服務條款"
 
 #: askbot/deps/django_authopenid/forms.py:97
-#: askbot/deps/django_authopenid/views.py:212
+#: askbot/deps/django_authopenid/views.py:215
 msgid "i-names are not supported"
 msgstr "不支援 i-names"
 
@@ -3860,7 +4070,6 @@ msgid "entered passwords did not match, please try again"
 msgstr "輸入密碼不一致，請重新輸入"
 
 #: askbot/deps/django_authopenid/forms.py:429
-#: askbot/jinja2/user_profile/unsubscribe.html:22
 #, fuzzy
 #| msgid "sorry, there is no user with this name"
 msgid "Sorry, we don't have a user with this email."
@@ -3927,7 +4136,6 @@ msgid "%(site)s user name and password"
 msgstr "%(site)s 使用者名稱和密碼"
 
 #: askbot/deps/django_authopenid/util.py:458
-#: askbot/jinja2/authopenid/signin.html:98
 msgid "Create a password-protected account"
 msgstr "建立一個以密碼保護的帳號"
 
@@ -3937,7 +4145,6 @@ msgstr "修改密碼"
 
 #: askbot/deps/django_authopenid/util.py:471
 #: askbot/deps/django_authopenid/util.py:914
-#: askbot/jinja2/components/login_link.html:16
 #, python-format
 msgid "Sign in via %(login_name)s"
 msgstr "已 %(login_name)s 登入"
@@ -4020,66 +4227,66 @@ msgstr "將您的%(provider)s帳號連結到%(site_name)s"
 msgid "Signin with %(provider)s user name and password"
 msgstr "使用%(provider)s帳號密碼登入"
 
-#: askbot/deps/django_authopenid/views.py:220
+#: askbot/deps/django_authopenid/views.py:223
 #, python-format
 msgid "OpenID %(openid_url)s is invalid"
 msgstr "OpenID %(openid_url)s是不正確的"
 
-#: askbot/deps/django_authopenid/views.py:253
+#: askbot/deps/django_authopenid/views.py:256
 msgid "Unfortunately, there was some problem logging in via the Discourse site"
 msgstr ""
 
-#: askbot/deps/django_authopenid/views.py:460
-#: askbot/deps/django_authopenid/views.py:694
-#: askbot/deps/django_authopenid/views.py:710
+#: askbot/deps/django_authopenid/views.py:463
+#: askbot/deps/django_authopenid/views.py:697
+#: askbot/deps/django_authopenid/views.py:713
 #, python-format
 msgid ""
 "Unfortunately, there was some problem when connecting to %(provider)s, "
 "please try again or use another provider"
 msgstr "真不巧，連接 %(provider)s 時出現一些問題，還請重試或使用其他的服務"
 
-#: askbot/deps/django_authopenid/views.py:603
-#: askbot/deps/django_authopenid/views.py:920
+#: askbot/deps/django_authopenid/views.py:606
+#: askbot/deps/django_authopenid/views.py:923
 msgid "Your new password is saved"
 msgstr "您的新密碼已保存"
 
-#: askbot/deps/django_authopenid/views.py:750
+#: askbot/deps/django_authopenid/views.py:753
 msgid "The login password combination was not correct"
 msgstr "登入密碼組合不正確"
 
-#: askbot/deps/django_authopenid/views.py:846
+#: askbot/deps/django_authopenid/views.py:849
 #, fuzzy
 #| msgid "Please click any of the icons below to sign in"
 msgid "Click any of the icons below to sign in"
 msgstr "請點按下面任何一個圖標登入"
 
-#: askbot/deps/django_authopenid/views.py:848
+#: askbot/deps/django_authopenid/views.py:851
 msgid "Account recovery email sent"
 msgstr "發送帳號恢復郵件"
 
-#: askbot/deps/django_authopenid/views.py:851
-#: askbot/deps/django_authopenid/views.py:856
+#: askbot/deps/django_authopenid/views.py:854
+#: askbot/deps/django_authopenid/views.py:859
 msgid "Add at least one login method"
 msgstr "至少新增一種登入方式"
 
-#: askbot/deps/django_authopenid/views.py:853
+#: askbot/deps/django_authopenid/views.py:856
 msgid "If you wish, please add, remove or re-validate your login methods"
 msgstr "您可以添加，刪除或重新驗證您的登入方式"
 
-#: askbot/deps/django_authopenid/views.py:858
+#: askbot/deps/django_authopenid/views.py:861
 msgid "Please wait a second! Your account is recovered, but ..."
 msgstr "請稍等，您的帳號正在恢復..."
 
-#: askbot/deps/django_authopenid/views.py:938
+#: askbot/deps/django_authopenid/views.py:941
 #, python-format
 msgid "Login method %(provider_name)s does not exist"
 msgstr "%(provider_name)s登入方式不存在"
 
-#: askbot/deps/django_authopenid/views.py:944
+#: askbot/deps/django_authopenid/views.py:947
 msgid "Oops, sorry - there was some error - please try again"
 msgstr "對不起，系統出錯，請重試"
 
-#: askbot/deps/django_authopenid/views.py:1047
+#: askbot/deps/django_authopenid/views.py:1050
 msgid ""
 "If you are trying to sign in to another account, please sign out first. "
 "Otherwise, please report the incident to the site administrator."
@@ -4087,18 +4294,18 @@ msgstr ""
 "如果您試圖用另一個帳號登入，請先登出現在的帳號。若不是，請回報意外問題給網站"
 "管理者。"
 
-#: askbot/deps/django_authopenid/views.py:1075
+#: askbot/deps/django_authopenid/views.py:1078
 #, python-format
 msgid "Your %(provider)s login works fine"
 msgstr "您的%(provider)s登入成功"
 
-#: askbot/deps/django_authopenid/views.py:1310
+#: askbot/deps/django_authopenid/views.py:1317
 msgid ""
 "Sorry, registration failed. The token can be already used or has expired. "
 "Please try again"
 msgstr "抱歉，註冊失敗。註冊用的代符可能已經用過，或是已經過期。請再試一次"
 
-#: askbot/deps/django_authopenid/views.py:1490
+#: askbot/deps/django_authopenid/views.py:1501
 msgid "Sorry, this account recovery key has expired or is invalid"
 msgstr "對不起，這個帳號恢復已過期或不正確"
 
@@ -4154,7 +4361,7 @@ msgid "must be < %d word"
 msgid_plural "must be < %d words"
 msgstr[0] "必須 < %d 個字"
 
-#: askbot/forms.py:254 askbot/jinja2/ask/ask_form.html:68
+#: askbot/forms.py:254
 msgid "Select language"
 msgstr "選取語言"
 
@@ -4196,9 +4403,7 @@ msgid ""
 "them."
 msgstr "保存標籤的空間已耗盡，請縮短或刪除部分標籤。"
 
-#: askbot/forms.py:460 askbot/forms.py:1106
-#: askbot/jinja2/ask/tags_field.html:11
-#: askbot/jinja2/components/meta_nav.html:8 askbot/models/widgets.py:27
+#: askbot/forms.py:460 askbot/forms.py:1106 askbot/models/widgets.py:27
 msgid "tags"
 msgstr "標籤"
 
@@ -4307,7 +4512,7 @@ msgstr "我不想提供我的電子信箱或接受回應："
 msgid "Message is required"
 msgstr "訊息是必填"
 
-#: askbot/forms.py:844 askbot/models/__init__.py:2684
+#: askbot/forms.py:844 askbot/models/__init__.py:2705
 msgid "Anonymous"
 msgstr "匿名"
 
@@ -4419,7 +4624,7 @@ msgstr "選擇電子郵件標籤篩選器"
 msgid "Individually selected"
 msgstr "個別選定"
 
-#: askbot/forms.py:1473 askbot/models/user.py:417
+#: askbot/forms.py:1473 askbot/models/user.py:441
 msgid "Unanswered questions"
 msgstr ""
 
@@ -4448,3400 +4653,125 @@ msgstr "不要收到 %(sitename)s 的電子郵件，謝謝"
 msgid "Invalid key"
 msgstr ""
 
-#: askbot/forms.py:1625 askbot/jinja2/reopen.html:7
+#: askbot/forms.py:1625
 msgid "Title"
 msgstr "標題"
 
-#: askbot/forms.py:1626 askbot/jinja2/email/preview_email.html:9
-#: askbot/jinja2/groups.html:27
+#: askbot/forms.py:1626
 msgid "Description"
 msgstr "描述"
 
-#: askbot/forms.py:1651 askbot/jinja2/ask/tags_field.html:4
-#: askbot/jinja2/ask/tags_field.html:15 askbot/jinja2/ask/tags_field.html:19
-#: askbot/jinja2/questions/sidebar.html:21 askbot/jinja2/tags/header.html:9
-#: askbot/jinja2/tags/index.html:3
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:12
-#: askbot/jinja2/widgets/tag_category_selector.html:2
+#: askbot/forms.py:1651
 msgid "Tags"
 msgstr "標籤"
+
+#: askbot/forms.py:1910
+#, fuzzy
+#| msgid "All Questions"
+msgid "All Events"
+msgstr "全部問題"
+
+#: askbot/forms.py:1912
+#, fuzzy
+#| msgid "Registered User"
+msgid "User Registered"
+msgstr "已註冊使用者"
+
+#: askbot/forms.py:1914
+#, fuzzy
+#| msgid "please login"
+msgid "User Logged In"
+msgstr "請登入"
+
+#: askbot/forms.py:1916
+msgid "User Logged Out"
+msgstr ""
+
+#: askbot/forms.py:1918
+#, fuzzy
+#| msgid "Question voted up"
+msgid "Question Viewed"
+msgstr "被贊同的提問"
+
+#: askbot/forms.py:1920
+#, fuzzy
+#| msgid "Answered"
+msgid "Answer Viewed"
+msgstr "已回答"
+
+#: askbot/forms.py:1922
+#, fuzzy
+#| msgid "Content moderation"
+msgid "Content Voted"
+msgstr "內容審核"
+
+#: askbot/forms.py:1924
+#, fuzzy
+#| msgid "most voted"
+msgid "Content Upvoted"
+msgstr "最有價值的問題"
+
+#: askbot/forms.py:1926
+#, fuzzy
+#| msgid "Downvote"
+msgid "Content Downvoted"
+msgstr "投反對票"
+
+#: askbot/forms.py:1928
+#, fuzzy
+#| msgid "Question voted up"
+msgid "Question Posted"
+msgstr "被贊同的提問"
+
+#: askbot/forms.py:1930
+#, fuzzy
+#| msgid "Answer voted up"
+msgid "Answer Posted"
+msgstr "被贊同的回答"
+
+#: askbot/forms.py:1932
+#, fuzzy
+#| msgid "Question voted up"
+msgid "Question Commented"
+msgstr "被贊同的提問"
+
+#: askbot/forms.py:1934
+#, fuzzy
+#| msgid "Answer voted up"
+msgid "Answer Commented"
+msgstr "被贊同的回答"
+
+#: askbot/forms.py:1936
+#, fuzzy
+#| msgid "Question voted up"
+msgid "Question Retagged"
+msgstr "被贊同的提問"
+
+#: askbot/forms.py:1938
+#, fuzzy
+#| msgid "Content License"
+msgid "Any Content Posted"
+msgstr "內容授權"
+
+#: askbot/forms.py:1962
+#, fuzzy
+#| msgid "selected favorite"
+msgid "Selected Thread"
+msgstr "選取收藏"
+
+#: askbot/forms.py:1964
+#, fuzzy
+#| msgid "selected favorite"
+msgid "Selected Post"
+msgstr "選取收藏"
+
+#: askbot/forms.py:1966
+msgid "All Content"
+msgstr ""
 
 #: askbot/importers/stackexchange/management/commands/load_stackexchange.py:151
 msgid "Congratulations, you are now an Administrator"
 msgstr "恭喜您成為管理者"
-
-#: askbot/jinja2/404.html:3 askbot/jinja2/404.html:6
-#, fuzzy
-#| msgid "Post not found"
-msgid "Page not found"
-msgstr "未找到文章"
-
-#: askbot/jinja2/404.html:8
-#, fuzzy
-#| msgid "Sorry, could not delete tag"
-msgid "Sorry, could not find the page you requested."
-msgstr "對不起，不能刪除標籤"
-
-#: askbot/jinja2/404.html:9
-msgid "This might have happened for the following reasons:"
-msgstr ""
-
-#: askbot/jinja2/404.html:12
-#, fuzzy
-#| msgid "this answer has been selected as correct"
-msgid "This page has been deleted"
-msgstr "該回答已被認為正確"
-
-#: askbot/jinja2/404.html:13
-msgid "url has error - please check it;"
-msgstr ""
-
-#: askbot/jinja2/404.html:14
-msgid ""
-"the page you tried to visit is protected or you don't have sufficient "
-"points, see"
-msgstr ""
-
-#: askbot/jinja2/404.html:15 askbot/jinja2/components/footer.html:28
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "faq/"
-msgid "faq"
-msgstr "faq/"
-
-#: askbot/jinja2/404.html:17
-msgid "if you believe this error 404 should not have occured, please"
-msgstr ""
-
-#: askbot/jinja2/404.html:18
-msgid "report this problem"
-msgstr ""
-
-#: askbot/jinja2/500.html:3
-msgid "Internal server error"
-msgstr ""
-
-#: askbot/jinja2/500.html:14
-#, fuzzy
-#| msgid "Sorry, something is not right here..."
-msgid "Sorry, something went wrong."
-msgstr "對不起，這裡出了些問題..."
-
-#: askbot/jinja2/500.html:16
-msgid "We are working to resolve the issue as soon as possible."
-msgstr ""
-
-#: askbot/jinja2/answer_edit.html:8 askbot/jinja2/group_messaging/home.html:9
-#: askbot/jinja2/revisions.html:9
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "feedback/"
-msgid "back"
-msgstr "feedback/"
-
-#: askbot/jinja2/answer_edit.html:40
-#, fuzzy
-#| msgid "make edits"
-msgid "Save edit"
-msgstr "編輯"
-
-#: askbot/jinja2/answer_edit.html:44
-#: askbot/jinja2/avatar/confirm_delete.html:16 askbot/jinja2/close.html:17
-#: askbot/jinja2/feedback.html:53 askbot/jinja2/group_messaging/home.html:44
-#: askbot/jinja2/reopen.html:25 askbot/jinja2/subscribe_for_tags.html:12
-#: askbot/jinja2/user_profile/user_edit.html:75
-msgid "Cancel"
-msgstr ""
-
-#: askbot/jinja2/ask/ask_form.html:80
-#, fuzzy
-#| msgid "Login/Signup to Answer"
-msgid "Login/Signup to Post"
-msgstr "登入或註冊回答問題"
-
-#: askbot/jinja2/ask/index.html:68 askbot/jinja2/ask/index.html:71
-#: askbot/jinja2/editors/rich_text.html:17
-msgid "hide preview"
-msgstr ""
-
-#: askbot/jinja2/ask/index.html:71
-msgid "show preview"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:6
-msgid ""
-"since you are not logged in right now, you will be asked to sign in or "
-"register after making your post"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:9
-#: askbot/jinja2/components/answer_edit_tips.html:8
-msgid "provide enough details"
-msgstr ""
-
-#: askbot/jinja2/ask/question_edit_tips.html:10
-#: askbot/jinja2/components/answer_edit_tips.html:9
-#, fuzzy
-#| msgid "Terms and conditions"
-msgid "be clear and concise"
-msgstr "條款和細則"
-
-#: askbot/jinja2/ask/tags_field.html:12
-#, fuzzy
-#| msgid "Message is required"
-msgid ", one of these is required"
-msgstr "訊息是必填"
-
-#: askbot/jinja2/ask/tags_field.html:16
-msgid "(required)"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:2
-#: askbot/jinja2/authopenid/account_activation/body.html:3
-#: askbot/jinja2/authopenid/account_activation/body.txt:1
-#: askbot/jinja2/authopenid/account_recovery/body.html:2
-#: askbot/jinja2/authopenid/account_recovery/body.html:3
-#: askbot/jinja2/authopenid/account_recovery/body.txt:1
-#: askbot/jinja2/authopenid/email_validation/body.html:2
-#: askbot/jinja2/authopenid/email_validation/body.html:3
-#, fuzzy, python-format
-#| msgid "Group settings: %(name)s"
-msgid "Greetings from %(site_name)s"
-msgstr "群組設定: %(name)s"
-
-#: askbot/jinja2/authopenid/account_activation/body.html:7
-msgid "To activate your account, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:12
-#: askbot/jinja2/authopenid/account_activation/body.txt:7
-#: askbot/jinja2/authopenid/account_recovery/body.html:12
-#: askbot/jinja2/authopenid/account_recovery/body.txt:7
-msgid ""
-"If you are unable to follow the link, copy/paste this key into the form:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.html:17
-#: askbot/jinja2/authopenid/account_activation/body.txt:11
-#: askbot/jinja2/authopenid/account_recovery/body.html:17
-#: askbot/jinja2/authopenid/account_recovery/body.txt:11
-msgid ""
-"If you believe that this message was sent erroneously - no further action is "
-"needed. We apologize for any inconvenience."
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.txt:3
-#: askbot/jinja2/authopenid/account_recovery/body.html:7
-#: askbot/jinja2/authopenid/account_recovery/body.txt:3
-msgid "To recover your account, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/body.txt:13
-#: askbot/jinja2/authopenid/account_recovery/body.txt:13
-#, python-format
-msgid ""
-"Sincerely,\n"
-"%(site_name)s Administrator"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_activation/subject.txt:1
-#, python-format
-msgid "Activate your %(site_name)s account"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery/subject.txt:1
-#, python-format
-msgid "Recover your %(site_name)s account"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:2
-#: askbot/jinja2/authopenid/signin.html:181
-#, fuzzy
-#| msgid "edited by email"
-msgid "Enter your email"
-msgstr "通過電子郵件編輯"
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:5
-msgid "Send a new recovery key"
-msgstr ""
-
-#: askbot/jinja2/authopenid/account_recovery_form.html:7
-#: askbot/jinja2/authopenid/complete.html:108
-#: askbot/jinja2/authopenid/recover_account.html:2
-#: askbot/jinja2/authopenid/recover_account.html:9
-#: askbot/jinja2/authopenid/signin.html:184
-#, fuzzy
-#| msgid "account/"
-msgid "Recover account"
-msgstr "account/"
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:59
-#, fuzzy
-#| msgid "Please enter your %(username_token)s"
-msgid "Please enter your <span>user name</span>, then sign in"
-msgstr "請輸入%(username_token)s"
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:60
-msgid "(or select another login method above)"
-msgstr ""
-
-#: askbot/jinja2/authopenid/authopenid_macros.html:62
-#: askbot/jinja2/authopenid/signin.html:96
-#: askbot/jinja2/components/login_link.html:24
-msgid "Sign in"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:21
-#: askbot/jinja2/authopenid/complete.html:35
-#, fuzzy
-#| msgid "account registration"
-msgid "Complete registration"
-msgstr "帳號註冊"
-
-#: askbot/jinja2/authopenid/complete.html:27
-#: askbot/jinja2/authopenid/signup_with_password.html:19
-#, fuzzy
-#| msgid "Message explaining that user registrations are disabled"
-msgid "New user registrations are disabled"
-msgstr "說明使用者註冊的訊息已經停用"
-
-#: askbot/jinja2/authopenid/complete.html:65
-#: askbot/jinja2/authopenid/signup_with_password.html:34
-#: askbot/utils/forms.py:119
-msgid "Choose a screen name"
-msgstr "請決定顯示稱呼"
-
-#: askbot/jinja2/authopenid/complete.html:74
-#, fuzzy
-#| msgid "email updates canceled"
-msgid "Email cannot be changed"
-msgstr "取消電子郵件更新"
-
-#: askbot/jinja2/authopenid/complete.html:83
-#: askbot/jinja2/authopenid/signup_with_password.html:45
-#: askbot/jinja2/components/proxy_author_inputs.html:23
-#, fuzzy
-#| msgid "Email address:"
-msgid "Email address"
-msgstr "電子信箱地址："
-
-#: askbot/jinja2/authopenid/complete.html:100
-#: askbot/jinja2/authopenid/signup_with_password.html:5
-#: askbot/jinja2/authopenid/signup_with_password.html:77
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "signup/"
-msgid "Signup"
-msgstr "signup/"
-
-#: askbot/jinja2/authopenid/complete.html:113
-#, fuzzy
-#| msgid "you already gave an answer"
-msgid "Already have an account?"
-msgstr "您已經回答過"
-
-#: askbot/jinja2/authopenid/complete.html:114
-#, fuzzy
-#| msgid "edited by email"
-msgid "Recover it by email."
-msgstr "通過電子郵件編輯"
-
-#: askbot/jinja2/authopenid/complete.html:117
-msgid "Prefer to create a new account?"
-msgstr ""
-
-#: askbot/jinja2/authopenid/complete.html:118
-#, fuzzy
-#| msgid "account registration"
-msgid "Return to registration."
-msgstr "帳號註冊"
-
-#: askbot/jinja2/authopenid/confirm_email.txt:1
-msgid "Thank you for registering at our Q&A forum!"
-msgstr ""
-
-#: askbot/jinja2/authopenid/confirm_email.txt:3
-#, fuzzy
-#| msgid "your account is disabled"
-msgid "Your account details are:"
-msgstr "您的帳號已停用"
-
-#: askbot/jinja2/authopenid/confirm_email.txt:5
-#, fuzzy
-#| msgid "User name:"
-msgid "Username:"
-msgstr "使用者名稱："
-
-#: askbot/jinja2/authopenid/confirm_email.txt:6
-#, fuzzy
-#| msgid "Password"
-msgid "Password:"
-msgstr "密碼"
-
-#: askbot/jinja2/authopenid/confirm_email.txt:8
-#, fuzzy
-#| msgid "Please sign in to vote"
-msgid "Please sign in here:"
-msgstr "請登入後投票"
-
-#: askbot/jinja2/authopenid/confirm_email.txt:11
-#: askbot/jinja2/authopenid/email_validation/body.txt:13
-#, fuzzy
-#| msgid "<p>Sincerely,<br>{{ SITE_NAME }} Administrator</p>"
-msgid ""
-"Sincerely,\n"
-"Q&A Forum Administrator"
-msgstr "<p>謹此。<br>{{ SITE_NAME }} 管理員</p>"
-
-#: askbot/jinja2/authopenid/email_validation/body.html:7
-#: askbot/jinja2/authopenid/email_validation/body.txt:3
-msgid "To make use of the Forum, please follow the link below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.html:11
-#: askbot/jinja2/authopenid/email_validation/body.txt:7
-msgid "Following the link above will help us verify your email address."
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.html:13
-#: askbot/jinja2/authopenid/email_validation/body.txt:9
-msgid ""
-"If you believe that this message was sent in mistake - \n"
-"no further action is needed. Just ignore this email, we apologize\n"
-"for any inconvenience"
-msgstr ""
-
-#: askbot/jinja2/authopenid/email_validation/body.txt:1
-#, fuzzy
-#| msgid "Site title for the Q&A forum"
-msgid "Greetings from the Q&A forum"
-msgstr "網站標題"
-
-#: askbot/jinja2/authopenid/email_validation/subject.txt:1
-#, python-format
-msgid "Validate your %(site_name)s email"
-msgstr ""
-
-#: askbot/jinja2/authopenid/logout.html:3
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "logout/"
-msgid "Logout"
-msgstr "logout/"
-
-#: askbot/jinja2/authopenid/logout.html:6
-msgid "You have successfully logged out"
-msgstr ""
-
-#: askbot/jinja2/authopenid/logout.html:8
-msgid ""
-"However, you still may be logged in to your OpenID provider. Please logout "
-"of your provider if you wish to do so."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:5
-#, fuzzy
-#| msgid "please login"
-msgid "User login"
-msgstr "請登入"
-
-#: askbot/jinja2/authopenid/signin.html:20
-msgid ""
-"It's a good idea to make sure that your existing login methods still work, "
-"or add a new one. Please click any of the icons below to check/change or add "
-"new login methods."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:22
-msgid ""
-"Please add a more permanent login method by clicking one of the icons below, "
-"to avoid logging in via email each time."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:26
-msgid ""
-"Click on one of the icons below to add a new login method or re-validate an "
-"existing one."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:28
-msgid ""
-"You don't have a method to log in right now, please add one or more by "
-"clicking any of the icons below."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:64
-#, fuzzy
-#| msgid "%(site)s user name and password"
-msgid "or enter your <span>user name and password</span>"
-msgstr "%(site)s 使用者名稱和密碼"
-
-#: askbot/jinja2/authopenid/signin.html:68
-#, fuzzy
-#| msgid "Please sign in to vote"
-msgid "Please, sign in"
-msgstr "請登入後投票"
-
-#: askbot/jinja2/authopenid/signin.html:73
-msgid "Login failed, please try again"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:82
-#, fuzzy
-#| msgid "User name:"
-msgid "Username"
-msgstr "使用者名稱："
-
-#: askbot/jinja2/authopenid/signin.html:84
-#, fuzzy
-#| msgid "User name is required with the email"
-msgid "Username or email"
-msgstr "電子信箱地址需要使用者名稱"
-
-#: askbot/jinja2/authopenid/signin.html:92
-#: askbot/jinja2/authopenid/signup_with_password.html:56
-#: askbot/utils/forms.py:309
-msgid "Password"
-msgstr "密碼"
-
-#: askbot/jinja2/authopenid/signin.html:103
-msgid "To change your password - please enter the new one twice, then submit"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:113
-#, fuzzy
-#| msgid "Change password"
-msgid "New password"
-msgstr "修改密碼"
-
-#: askbot/jinja2/authopenid/signin.html:123
-#, fuzzy
-#| msgid "Password retyped"
-msgid "Please, retype"
-msgstr "再次輸入密碼"
-
-#: askbot/jinja2/authopenid/signin.html:128
-msgid "Change password"
-msgstr "修改密碼"
-
-#: askbot/jinja2/authopenid/signin.html:142
-msgid "Here are your current login methods"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signin.html:146
-#, fuzzy
-#| msgid "approved"
-msgid "provider"
-msgstr "核准"
-
-#: askbot/jinja2/authopenid/signin.html:147
-#, fuzzy
-#| msgid "least voted"
-msgid "last used"
-msgstr "最不被推薦的問題"
-
-#: askbot/jinja2/authopenid/signin.html:161
-#: askbot/jinja2/question/answer_controls.html:12
-#: askbot/jinja2/question/question_controls.html:45
-#: askbot/jinja2/user_inbox/responses.html:10
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "delete/"
-msgid "delete"
-msgstr "delete/"
-
-#: askbot/jinja2/authopenid/signin.html:163
-#, fuzzy
-#| msgid "%d post deleted"
-#| msgid_plural "%d posts deleted"
-msgid "cannot be deleted"
-msgstr "已刪除 %d 篇文章"
-
-#: askbot/jinja2/authopenid/signin.html:173
-msgid "Having trouble signing in?"
-msgstr ""
-
-#: askbot/jinja2/authopenid/signup_with_password.html:13
-msgid ""
-"<span class='strong big'>If you prefer, create your forum login name and\n"
-"password here. However</span>, please keep in mind that we also support\n"
-"<strong>OpenID</strong> login method. With <strong>OpenID</strong> you can\n"
-"simply reuse your external login (e.g. Gmail or AOL) without ever sharing\n"
-"your login details with anyone and having to remember yet another password."
-msgstr ""
-
-#: askbot/jinja2/authopenid/signup_with_password.html:24
-#, fuzzy
-#| msgid "%(site)s user name and password"
-msgid "Create login name and password"
-msgstr "%(site)s 使用者名稱和密碼"
-
-#: askbot/jinja2/authopenid/signup_with_password.html:67
-#: askbot/utils/forms.py:317
-msgid "Password retyped"
-msgstr "再次輸入密碼"
-
-#: askbot/jinja2/authopenid/tos_field.html:4
-msgid "Terms of service:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:2
-#: askbot/jinja2/authopenid/verify_email.html:5
-#, fuzzy
-#| msgid "Email address:"
-msgid "Confirm email address"
-msgstr "電子信箱地址："
-
-#: askbot/jinja2/authopenid/verify_email.html:7
-msgid "Validation email sent. Please find it and follow the enclosed link."
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:8
-msgid "If the link doesn't work - enter the emailed code below:"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:14
-msgid "Validation code"
-msgstr ""
-
-#: askbot/jinja2/authopenid/verify_email.html:16
-#, fuzzy
-#| msgid "Content License"
-msgid "Continue"
-msgstr "內容授權"
-
-#: askbot/jinja2/avatar/avatar.html:3
-#, fuzzy, python-format
-#| msgid "%(username)s gravatar image"
-msgid "%(username)s's primary avatar"
-msgstr "%(username)s 大頭貼"
-
-#: askbot/jinja2/avatar/avatar.html:5 askbot/jinja2/macros.html:591
-#, fuzzy, python-format
-#| msgid "%(username)s gravatar image"
-msgid "%(username)s's avatar"
-msgstr "%(username)s 大頭貼"
-
-#: askbot/jinja2/avatar/confirm_delete.html:2
-#, fuzzy
-#| msgid "Default avatar"
-msgid "delete avatar"
-msgstr "預設頭像"
-
-#: askbot/jinja2/avatar/confirm_delete.html:4
-msgid "Please select the avatars that you would like to delete."
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:6
-#, python-format
-msgid ""
-"You have no avatars to delete. Please <a "
-"href=\"%(avatar_change_url)s\">upload one</a> now."
-msgstr ""
-
-#: askbot/jinja2/avatar/confirm_delete.html:13
-#, fuzzy
-#| msgid "deleted answer"
-msgid "Delete These"
-msgstr "刪除回答"
-
-#: askbot/jinja2/avatar/show_list.html:3
-msgid "manage avatars"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:13
-msgid ""
-"This is a default avatar image, shown at your account because you have not "
-"yet uploaded an avatar."
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:21
-#: askbot/jinja2/avatar/show_list.html:35
-#: askbot/jinja2/avatar/show_list.html:47
-msgid "Set as primary"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:26
-#, python-format
-msgid ""
-"This image, called 'gravatar', is linked to the email address %(email)s.  It "
-"can be changed at http://gravatar.com"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:40
-#, fuzzy
-#| msgid "Upload files"
-msgid "Uploaded"
-msgstr "上傳檔案"
-
-#: askbot/jinja2/avatar/show_list.html:53
-msgid "Remove"
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:58
-#, fuzzy
-#| msgid "Gravatar"
-msgid "Primary avatar"
-msgstr "Gravatar"
-
-#: askbot/jinja2/avatar/show_list.html:65
-msgid "You haven't uploaded an avatar yet."
-msgstr ""
-
-#: askbot/jinja2/avatar/show_list.html:67
-#, fuzzy
-#| msgid "Uploaded Avatar"
-msgid "Upload another avatar."
-msgstr "已上傳頭像"
-
-#: askbot/jinja2/avatar/show_list.html:72
-#, fuzzy
-#| msgid "Uploaded Avatar"
-msgid "Upload an avatar"
-msgstr "已上傳頭像"
-
-#: askbot/jinja2/badge.html:7 askbot/jinja2/badge.html:18
-#, python-format
-msgid "%(name)s"
-msgstr ""
-
-#: askbot/jinja2/badge.html:9
-#, fuzzy
-#| msgid "Badge name"
-msgid "Badge"
-msgstr "徽章名稱"
-
-#: askbot/jinja2/badge.html:16
-#, fuzzy, python-format
-#| msgid "Badge name"
-msgid "Badge \"%(name)s\""
-msgstr "徽章名稱"
-
-#: askbot/jinja2/badge.html:19
-#, python-format
-msgid "This %(level)s badge is awarded for:"
-msgstr ""
-
-#: askbot/jinja2/badge.html:24
-#, python-format
-msgid "%(num_awardees)s user received this badge"
-msgid_plural "%(num_awardees)s users received this badge"
-msgstr[0] ""
-
-#: askbot/jinja2/badge.html:29
-#, fuzzy
-#| msgid "received badge"
-msgid "Nobody yet received this badge."
-msgstr "收到的徽章"
-
-#: askbot/jinja2/badges/index.html:3 askbot/jinja2/badges/index.html:6
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "badges/"
-msgid "Badges"
-msgstr "badges/"
-
-#: askbot/jinja2/badges/index.html:11
-msgid ""
-"Below is the list of available badges and number of times each type of badge "
-"has been awarded."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:2
-#, fuzzy
-#| msgid "Badge name"
-msgid "Badge levels"
-msgstr "徽章名稱"
-
-#: askbot/jinja2/badges/sidebar.html:7
-msgid ""
-"Gold badge is the highest award in this community. To obtain it you have to "
-"show profound knowledge, ability and your active participation."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:14
-msgid ""
-"Silver badge is occasionally awarded for the very high quality contributions."
-msgstr ""
-
-#: askbot/jinja2/badges/sidebar.html:21
-msgid "Bronze badge is often given for special achievements."
-msgstr ""
-
-#: askbot/jinja2/close.html:12
-msgid "Reasons"
-msgstr ""
-
-#: askbot/jinja2/close.html:16
-msgid "OK to close"
-msgstr ""
-
-#: askbot/jinja2/components/answer_edit_tips.html:3
-msgid "Tips"
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:17
-#, python-format
-msgid ""
-"\n"
-"              Content on this site is licensed under a %(license)s license.\n"
-"            "
-msgstr ""
-
-#: askbot/jinja2/components/footer.html:26
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "about/"
-msgid "about"
-msgstr "about/"
-
-#: askbot/jinja2/components/footer.html:29
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "help/"
-msgid "help"
-msgstr "help/"
-
-#: askbot/jinja2/components/footer.html:32
-#, fuzzy
-#| msgid "Privacy policy"
-msgid "privacy policy"
-msgstr "隱私政策"
-
-#: askbot/jinja2/components/footer.html:35
-#, fuzzy
-#| msgid "External Services"
-msgid "terms of service"
-msgstr "外部服務"
-
-#: askbot/jinja2/components/footer.html:49
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "feedback/"
-msgid "give feedback"
-msgstr "feedback/"
-
-#: askbot/jinja2/components/footer.html:55
-#, python-format
-msgid ""
-"\n"
-"          Powered by Askbot version %(version)s\n"
-"        "
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/scope_nav.html:8
-msgid "ALL"
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/scope_nav.html:18
-msgid "FOLLOWED"
-msgstr ""
-
-#: askbot/jinja2/components/forum_header/search_bar.html:27
-#, fuzzy
-#| msgid "Please ask your question here"
-msgid "Type your question or search"
-msgstr "請在此提問"
-
-#: askbot/jinja2/components/logo.html:3
-#, fuzzy, python-format
-#| msgid "Use license logo"
-msgid "%(site)s logo"
-msgstr "使用授權條款 Logo"
-
-#: askbot/jinja2/components/markdown_help.html:2
-msgid "Markdown basics"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:6
-msgid "*italic*"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:9
-msgid "**bold**"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:13
-msgid "*italic* or _italic_"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:16
-msgid "**bold** or __bold__"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/question/answer_controls.html:36
-msgid "link"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/components/markdown_help.html:24
-msgid "text"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:20
-#: askbot/jinja2/components/markdown_help.html:24
-#, fuzzy
-#| msgid "Title"
-msgid "title"
-msgstr "標題"
-
-#: askbot/jinja2/components/markdown_help.html:24
-msgid "image"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:28
-msgid "numbered list:"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:29
-msgid "One"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:30
-msgid "Two"
-msgstr ""
-
-#: askbot/jinja2/components/markdown_help.html:33
-#, fuzzy
-#| msgid "i-names are not supported"
-msgid "basic HTML tags are also supported"
-msgstr "不支援 i-names"
-
-#: askbot/jinja2/components/meta_nav.html:15
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "users/"
-msgid "users"
-msgstr "users/"
-
-#: askbot/jinja2/components/meta_nav.html:24
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "badges/"
-msgid "badges"
-msgstr "badges/"
-
-#: askbot/jinja2/components/meta_nav.html:31
-#, fuzzy
-#| msgid "User settings"
-msgid "settings"
-msgstr "使用者設定"
-
-#: askbot/jinja2/components/proxy_author_inputs.html:5
-msgid ""
-"To post on behalf of someone else, enter user name <strong>and</strong> "
-"email below."
-msgstr ""
-
-#: askbot/jinja2/components/proxy_author_inputs.html:13
-#, fuzzy
-#| msgid "User name:"
-msgid "User name"
-msgstr "使用者名稱："
-
-#: askbot/jinja2/components/user_nav/inbox_link.html:3
-#, python-format
-msgid "you have %(response_count)s new response"
-msgid_plural "you have %(response_count)s new responses"
-msgstr[0] ""
-
-#: askbot/jinja2/components/user_nav/index.html:5
-msgid "read only access"
-msgstr ""
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:8
-#: askbot/jinja2/macros.html:825 askbot/jinja2/macros.html:826
-#, python-format
-msgid "%(new)s new flagged posts and %(seen)s previous"
-msgstr ""
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:10
-#: askbot/jinja2/macros.html:828 askbot/jinja2/macros.html:829
-#, fuzzy, python-format
-#| msgid "First flagged post"
-msgid "%(new)s new flagged posts"
-msgstr "第一個被標記的貼文"
-
-#: askbot/jinja2/components/user_nav/moderation_queue_link.html:12
-#: askbot/jinja2/macros.html:834 askbot/jinja2/macros.html:835
-#, fuzzy, python-format
-#| msgid "First flagged post"
-msgid "%(seen)s flagged posts"
-msgstr "第一個被標記的貼文"
-
-#: askbot/jinja2/editors/rich_text.html:15
-msgid "Toggle the real time Markdown editor preview"
-msgstr ""
-
-#: askbot/jinja2/email/accept_answers_reminder/body.html:2
-#: askbot/jinja2/email/accept_answers_reminder/body.html:3
-msgid "Please select the best responses for"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:6
-#: askbot/jinja2/email/account_management_request/body.html:7
-#: askbot/jinja2/email/feedback/body.html:6
-#: askbot/jinja2/email/feedback/body.html:7
-#, python-format
-msgid "%(site_name)s feedback"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:9
-msgid "Hello,"
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/body.html:11
-msgid ""
-"If you are not sure how to do this, please ask your system administrator.\n"
-"This feature is new and will be improved in the near future."
-msgstr ""
-
-#: askbot/jinja2/email/account_management_request/subject.txt:1
-#, python-format
-msgid "Attention: %(username)s requested your action on their account"
-msgstr ""
-
-#: askbot/jinja2/email/approved_post_notification/body.html:9
-#: askbot/jinja2/email/approved_post_notification_respondable/body.html:20
-msgid "Below is a copy of your post:"
-msgstr ""
-
-#: askbot/jinja2/email/approved_post_notification/subject.txt:1
-#: askbot/jinja2/email/approved_post_notification_respondable/subject.txt:1
-#, fuzzy, python-format
-#| msgid "The answer is now published"
-msgid "Your post at %(site_name)s is now published"
-msgstr "已經發布答案"
-
-#: askbot/jinja2/email/ask_for_signature/body.html:4
-#, python-format
-msgid "%(user)s, please reply to this message."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:9
-msgid ""
-"Your post could not be published, because we could not detect signature in "
-"your email."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:10
-msgid ""
-"This happened either because this is your first post or you have changed "
-"your email signature."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:11
-msgid "Please make a simple response, without editing this message."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/body.html:12
-msgid ""
-"We will then attempt to detect the signature in your response and you should "
-"be able to post."
-msgstr ""
-
-#: askbot/jinja2/email/ask_for_signature/subject.txt:1
-#: askbot/jinja2/email/insufficient_reputation/subject.txt:1
-msgid "Subject line depends on the previous incoming email"
-msgstr ""
-
-#: askbot/jinja2/email/batch_email_alert/subject.txt:2
-#, python-format
-msgid ""
-"\n"
-"        %(question_count)s update about %(topics)s\n"
-"    "
-msgid_plural ""
-"\n"
-"        %(question_count)s updates about %(topics)s\n"
-"    "
-msgstr[0] ""
-
-#: askbot/jinja2/email/batch_email_alert/subject.txt:8
-#, python-format
-msgid ""
-"\n"
-"        %(question_count)s update\n"
-"    "
-msgid_plural ""
-"\n"
-"        %(question_count)s updates\n"
-"    "
-msgstr[0] ""
-
-#: askbot/jinja2/email/change_settings_info.html:5
-#, python-format
-msgid ""
-"You have received this message because you've been invited to join <a "
-"href=\"%(app_url)s\">%(app_name)s</a> as a moderator."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:6
-#: askbot/jinja2/email/change_settings_info.html:18
-#, python-format
-msgid ""
-"If you believe that this message was sent in an error, please email about it "
-"the forum administrator at <a href=\"mailto:"
-"%(admin_email)s\">%(admin_email)s</a>."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:10
-#, python-format
-msgid ""
-"To change frequency, language and content of these alerts, please visit <a "
-"href=\"%(url)s\">your user profile</a>."
-msgstr ""
-
-#: askbot/jinja2/email/change_settings_info.html:12
-#, fuzzy, python-format
-#| msgid ""
-#| "To get an Akismet key please visit <a href=\"%(url)s\">Akismet site</a>"
-msgid ""
-"To change frequency and content of these alerts, please visit <a "
-"href=\"%(url)s\">your user profile</a>."
-msgstr "請訪問 <a href=\"%(url)s\">Akismet 網站</a> 獲取 Akismet 金鑰"
-
-#: askbot/jinja2/email/change_settings_info.html:16
-#: askbot/jinja2/email/unsubscribe_link/body.html:5
-#, python-format
-msgid "To unsubscribe, visit <a href=\"%(unsubscribe_url)s\">this page</a>"
-msgstr ""
-
-#: askbot/jinja2/email/feedback/body.html:10
-#: askbot/jinja2/email/feedback/body.html:12
-msgid "wrote:"
-msgstr ""
-
-#: askbot/jinja2/email/feedback/subject.txt:1
-#, python-format
-msgid "%(site_name)s feedback message"
-msgstr ""
-
-#: askbot/jinja2/email/instant_notification/body.html:10
-#, python-format
-msgid ""
-"Note: to reply with a comment, please use \n"
-"                <a href=\"mailto:%(addr)s?subject=%(subject)s\">this link</"
-"a>\n"
-"            "
-msgstr ""
-
-#: askbot/jinja2/email/instant_notification/body.html:23
-#, fuzzy, python-format
-#| msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
-msgid "%(author)s edited a <a href=\"%(post_url)s\">post</a>"
-msgstr "標籤訂閱已取消 (<a href=\"%(url)s\">撤銷</a>)。"
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:10
-#, python-format
-msgid "%(username)s, your content could not be posted by email just yet."
-msgstr ""
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:14
-#, python-format
-msgid ""
-"To make posts by email, you need to receive about %(min_upvotes)s upvotes."
-msgstr ""
-
-#: askbot/jinja2/email/insufficient_reputation/body.html:15
-#, python-format
-msgid "At this time, please post your content at %(link)s"
-msgstr ""
-
-#: askbot/jinja2/email/list_emails.html:2
-#, fuzzy
-#| msgid "edited by email"
-msgid "Preview of emails"
-msgstr "通過電子郵件編輯"
-
-#: askbot/jinja2/email/list_emails.html:4
-msgid "List of emails sent by Askbot"
-msgstr ""
-
-#: askbot/jinja2/email/macros.html:34 askbot/jinja2/email/macros.html:66
-#, python-format
-msgid "In reply to %(author)s's %(post_type)s"
-msgstr ""
-
-#: askbot/jinja2/email/macros.html:37 askbot/jinja2/email/macros.html:68
-#, fuzzy, python-format
-#| msgid "anonymous users cannot %(perform_action)s"
-msgid "%(author)s %(performed_action)s"
-msgstr "匿名使用者無法 %(perform_action)s"
-
-#: askbot/jinja2/email/macros.html:52
-#, fuzzy
-#| msgid "Tags"
-msgid "Tags:"
-msgstr "標籤"
-
-#: askbot/jinja2/email/moderation_queue_notification/body.html:3
-#, python-format
-msgid ""
-"\n"
-"        There are new items in the %(site)s moderation queue, <a "
-"href=\"%(mod_url)s\">please have a look</a>\n"
-"    "
-msgstr ""
-
-#: askbot/jinja2/email/moderation_queue_notification/subject.txt:1
-#, fuzzy, python-format
-#| msgid "Enable moderation queue alerts"
-msgid "%(site)s moderation alert"
-msgstr "啟用審核列表通知"
-
-#: askbot/jinja2/email/preview_email.html:2
-#: askbot/jinja2/email/preview_email.html:8
-#, python-format
-msgid "Preview of email \"%(title)s\""
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:5
-#, fuzzy
-#| msgid "No email"
-msgid "Askbot emails"
-msgstr "無電子郵件"
-
-#: askbot/jinja2/email/preview_email.html:13
-#, python-format
-msgid "Example %(num)s"
-msgstr ""
-
-#: askbot/jinja2/email/preview_email.html:19
-#, fuzzy
-#| msgid "Subject line"
-msgid "Subject"
-msgstr "主題"
-
-#: askbot/jinja2/email/preview_email.html:20
-msgid "Body text (below, email styling preserved)"
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:2
-#: askbot/jinja2/email/re_welcome/body.html:3
-#, fuzzy, python-format
-#| msgid "Connect your %(provider)s account to %(site_name)s"
-msgid "Great, you are ready to use %(site_name)s!"
-msgstr "將您的%(provider)s帳號連結到%(site_name)s"
-
-#: askbot/jinja2/email/re_welcome/body.html:8
-msgid ""
-"When you receive update notifications, you will be able to respond to them, "
-"also by email."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:9
-#, python-format
-msgid ""
-"Of course, you can always visit the %(site_name)s at <a "
-"href=\"%(site_url)s\">%(site_url)s</a>."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/body.html:11
-#, python-format
-msgid ""
-"Please visit %(site_name)s at <a href=\"%(site_url)s\">%(site_url)s</a>, we "
-"look forward to your posts."
-msgstr ""
-
-#: askbot/jinja2/email/re_welcome/subject.txt:1
-#, python-format
-msgid "Re: Welcome to %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/body.html:2
-#: askbot/jinja2/email/rejected_post/body.html:3
-#, fuzzy
-#| msgid "Post was rejected"
-msgid "Your post was rejected."
-msgstr "貼文被拒"
-
-#: askbot/jinja2/email/rejected_post/body.html:5
-msgid "Your post (copied in the end), was rejected for the following reason:"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/body.html:7
-msgid "Here is your original post"
-msgstr ""
-
-#: askbot/jinja2/email/rejected_post/subject.txt:1
-#, fuzzy
-#| msgid "Question has no accepted answers"
-msgid "your post was not accepted"
-msgstr "仍沒有正確答案的問題"
-
-#: askbot/jinja2/email/reply_by_email_error/body.html:3
-msgid "The system was unable to process your message successfully"
-msgstr ""
-
-#: askbot/jinja2/email/reply_by_email_error/subject.txt:1
-msgid "Error posting your reply"
-msgstr ""
-
-#: askbot/jinja2/email/unanswered_questions_reminder/subject.txt:2
-#, python-format
-msgid ""
-"%(question_count)s %(unanswered_questions_phrase)s about %(tag_summary)s"
-msgstr ""
-
-#: askbot/jinja2/email/unsubscribe_link/subject.txt:1
-#, fuzzy, python-format
-#| msgid "Please sign in to subscribe for: %(tags)s"
-msgid "Link to unsubscribe from %(site_name)s"
-msgstr "請登入以訂閱%(tags)s"
-
-#: askbot/jinja2/email/welcome/subject.txt:1
-#: askbot/jinja2/email/welcome_respondable/subject.txt:1
-#, python-format
-msgid "Welcome to %(site_name)s"
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:3
-#: askbot/jinja2/email/welcome_respondable/body.html:4
-#, python-format
-msgid "Welcome to %(site_name)s!"
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:10
-msgid ""
-"Important: <em>Please reply</em> to this message, without editing it. We "
-"need this to determine your email signature and that the email address is "
-"valid and was typed correctly."
-msgstr ""
-
-#: askbot/jinja2/email/welcome_respondable/body.html:13
-#, python-format
-msgid ""
-"Until we receive the response from you, you will not be able to post content "
-"on %(site_name)s by email."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:3 askbot/jinja2/faq_static.html:6
-#: askbot/views/meta.py:93
-msgid "FAQ"
-msgstr "FAQ"
-
-#: askbot/jinja2/faq_static.html:6
-#, fuzzy
-#| msgid "Followed Questions"
-msgid "Frequently Asked Questions "
-msgstr "已關注問題"
-
-#: askbot/jinja2/faq_static.html:7
-msgid "What kinds of questions can I ask here?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:8
-msgid ""
-"Most importantly - questions should be <strong>relevant</strong> to this "
-"community."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:9
-msgid ""
-"Before you ask - please make sure to search for a similar question. You can "
-"search questions by their title or tags."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:11
-msgid "What kinds of questions should be avoided?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:12
-msgid ""
-"Please avoid asking questions that are not relevant to this community, too "
-"subjective and argumentative."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:14
-#, fuzzy
-#| msgid "What should \"unanswered question\" mean?"
-msgid "What should I avoid in my answers?"
-msgstr "「未回答」問題是什麼意思？"
-
-#: askbot/jinja2/faq_static.html:15
-msgid ""
-"is a <strong>question and answer</strong> site - <strong>it is not a "
-"discussion group</strong>. Please avoid holding debates in your answers as "
-"they tend to dilute the essense of questions and answers. For the brief "
-"discussions please use commenting facility."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:16
-msgid "Who moderates this community?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:17
-msgid "The short answer is: <strong>you</strong>."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:18
-msgid "This website is moderated by the users."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:19
-msgid ""
-"Karma system allows users to earn rights to perform a variety of moderation "
-"tasks"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:21
-msgid "How does karma system work?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:22
-msgid ""
-"When a question or answer is upvoted, the user who posted them will gain "
-"some points, which are called \"karma points\". These points serve as a "
-"rough measure of the community trust to him/her. Various moderation tasks "
-"are gradually assigned to the users based on those points."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:23
-#, python-format
-msgid ""
-"For example, if you ask an interesting question or give a helpful answer, "
-"your input will be upvoted. On the other hand if the answer is misleading - "
-"it will be downvoted. Each vote in favor will generate "
-"<strong>%(REP_GAIN_FOR_RECEIVING_UPVOTE)s</strong> points, each vote against "
-"will subtract <strong>%(REP_LOSS_FOR_RECEIVING_DOWNVOTE)s</strong> points. "
-"There is a limit of <strong>%(MAX_REP_GAIN_PER_USER_PER_DAY)s</strong> "
-"points that can be accumulated for a question or answer per day. The table "
-"below explains reputation point requirements for each type of moderation "
-"task."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:32 askbot/models/__init__.py:918
-msgid "upvote"
-msgstr "投贊成票"
-
-#: askbot/jinja2/faq_static.html:37
-#, fuzzy
-#| msgid "delete comments"
-msgid "add comments"
-msgstr "刪除評論"
-
-#: askbot/jinja2/faq_static.html:42 askbot/models/__init__.py:921
-msgid "downvote"
-msgstr "投反對票"
-
-#: askbot/jinja2/faq_static.html:46
-#, fuzzy
-#| msgid "answer own questions"
-msgid " accept own answer to own questions"
-msgstr "回答自己的問題"
-
-#: askbot/jinja2/faq_static.html:50
-#, fuzzy
-#| msgid "retag questions"
-msgid "retag other's questions"
-msgstr "整理標籤"
-
-#: askbot/jinja2/faq_static.html:55
-#, fuzzy
-#| msgid "Edit community wiki posts"
-msgid "edit community wiki questions"
-msgstr "編輯社群共筆文章"
-
-#: askbot/jinja2/faq_static.html:60
-#, fuzzy
-#| msgid "Accept any answer"
-msgid "edit any answer"
-msgstr "接受任意答案"
-
-#: askbot/jinja2/faq_static.html:64
-#, fuzzy
-#| msgid "delete comments"
-msgid "delete any comment"
-msgstr "刪除評論"
-
-#: askbot/jinja2/faq_static.html:68
-msgid "How to change my picture (gravatar) and what is gravatar?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:69
-msgid ""
-"<p>The picture that appears on the users profiles is called "
-"<strong>gravatar</strong> (which means <strong>g</strong>lobally <strong>r</"
-"strong>ecognized <strong>avatar</strong>).</p><p>Here is how it works: a "
-"<strong>cryptographic key</strong> (unbreakable code) is calculated from "
-"your email address. You upload your picture (or your favorite alter ego "
-"image) the website <a href='http://gravatar.com'><strong>gravatar.com</"
-"strong></a> from where we later retreive your image using the key.</"
-"p><p>This way all the websites you trust can show your image next to your "
-"posts and your email address remains private.</p><p>Please "
-"<strong>personalize your account</strong> with an image - just register at "
-"<a href='http://gravatar.com'><strong>gravatar.com</strong></a> (just please "
-"be sure to use the same email address that you used to register with us). "
-"Default image that looks like a kitchen tile is generated automatically.</p>"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:70
-msgid "To register, do I need to create new password?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:71
-msgid ""
-"No, you don't have to. You can login through any service that supports "
-"OpenID, e.g. Google, Yahoo, AOL, etc."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:72
-msgid "\"Login now!\""
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:74
-msgid "Why other people can edit my questions/answers?"
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:76
-msgid "Goal of this site is..."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:76
-msgid ""
-"So questions and answers can be edited like wiki pages by experienced users "
-"of this site and this improves the overall quality of the knowledge base "
-"content."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:77
-msgid "If this approach is not for you, we respect your choice."
-msgstr ""
-
-#: askbot/jinja2/faq_static.html:79
-#, fuzzy
-#| msgid "Stellar Question"
-msgid "Still have questions?"
-msgstr "明星提問"
-
-#: askbot/jinja2/faq_static.html:80
-#, python-format
-msgid ""
-"Please <a href='%(ask_question_url)s'>ask</a> your question, help make our "
-"community better!"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:3
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "feedback/"
-msgid "Feedback"
-msgstr "feedback/"
-
-#: askbot/jinja2/feedback.html:6
-#, fuzzy
-#| msgid "Thanks for the feedback!"
-msgid "Give us your feedback!"
-msgstr "感謝您的意見回饋！"
-
-#: askbot/jinja2/feedback.html:23
-msgid "(to hear from us please enter a valid email or check the box below)"
-msgstr ""
-
-#: askbot/jinja2/feedback.html:30 askbot/jinja2/feedback.html:39
-#, fuzzy
-#| msgid "this field is required"
-msgid "(this field is required)"
-msgstr "此欄位不能空白"
-
-#: askbot/jinja2/feedback.html:52
-#, fuzzy
-#| msgid "Who can send feedback"
-msgid "Send Feedback"
-msgstr "誰可以傳送回饋意見"
-
-#: askbot/jinja2/group_messaging/email_alert/body.html:7
-#, python-format
-msgid "%(author)s wrote:"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/email_alert/body.html:11
-msgid ""
-"To reply please <a class=\"thread-link\" href=\"THREAD_URL_HOLE\">visit your "
-"message inbox</a>"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:10
-#: askbot/jinja2/group_messaging/home_thread_details.html:7
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "complete/"
-msgid "compose"
-msgstr "complete/"
-
-#: askbot/jinja2/group_messaging/home.html:25
-#: askbot/jinja2/group_messaging/home.html:43
-msgid "Send"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:26
-msgid "Reply"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:33
-msgid "Recipient"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/home.html:39
-#, fuzzy
-#| msgid "Your message:"
-msgid "Write your message"
-msgstr "您的訊息："
-
-#: askbot/jinja2/group_messaging/macros.html:5
-#, fuzzy, python-format
-#| msgid "on %(date)s"
-msgid "You wrote on %(date)s:"
-msgstr "在%(date)s"
-
-#: askbot/jinja2/group_messaging/senders_list.html:3
-msgid "Messages by sender:"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:5
-#: askbot/jinja2/user_inbox/base.html:3
-msgid "inbox"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:9
-msgid "sent"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/senders_list.html:16
-msgid "trash"
-msgstr ""
-
-#: askbot/jinja2/group_messaging/threads_list.html:25
-msgid "there are no messages yet..."
-msgstr ""
-
-#: askbot/jinja2/groups.html:3 askbot/jinja2/groups.html:7
-#: askbot/jinja2/question/sidebar_sharing_tools.html:66
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:15
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "Groups"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:12
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "All groups"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:14
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "all groups"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:17
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "My groups"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:19
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "my groups"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:25
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "Group"
-msgstr "groups/"
-
-#: askbot/jinja2/groups.html:26
-msgid "Number of members"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:2 askbot/jinja2/help_static.html:5
-#: askbot/views/meta.py:78
-msgid "Help"
-msgstr "幫助"
-
-#: askbot/jinja2/help_static.html:8
-#, fuzzy, python-format
-#| msgid "Welcome message"
-msgid "Welcome %(username)s,"
-msgstr "歡迎訊息"
-
-#: askbot/jinja2/help_static.html:10
-#, fuzzy
-#| msgid "Welcome message"
-msgid "Welcome,"
-msgstr "歡迎訊息"
-
-#: askbot/jinja2/help_static.html:14
-#, python-format
-msgid "Thank you for using %(app_name)s, here is how it works."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:17
-msgid "How questions, answers and comments work"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:19
-msgid ""
-"This site is for asking and answering questions, not for open-ended "
-"discussions."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:20
-msgid ""
-"We encourage everyone to use “question” space for asking and “answer” for "
-"answering."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:23
-msgid ""
-"Despite that, each question and answer can be commented – \n"
-"    the comments are good for the limited discussions."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:27
-#, fuzzy
-#| msgid "Please enter your question"
-msgid "Please search before asking your questions"
-msgstr "請輸入問題"
-
-#: askbot/jinja2/help_static.html:28
-msgid ""
-"Type your question in the search bar and see whether a similar question has "
-"been asked before"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:30
-msgid "Search has advanced capabilities:"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:32
-msgid "to search in title - enter [title: your text]"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:33
-msgid "to search by tags - enter [tag: sometag] or #sometag"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:34
-msgid ""
-"to search by user - enter [user: somename] or @somename or @\"some name\""
-msgstr ""
-
-#: askbot/jinja2/help_static.html:36
-msgid ""
-"In addition, it is possible to click on tags to add them to the search query."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:38
-msgid ""
-"Finally, a separate tag search box is available in the side bar of the main "
-"page, where the search tags can be entered as well"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:41
-msgid ""
-"<em>Important!!!</em> All search terms are combined with a logical \"AND\" "
-"expression - to narrow the search by adding new terms."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:43
-msgid "Voting"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:45
-#, python-format
-msgid ""
-"Voting in %(app_name)s helps to select best answers and thank most helpful "
-"users."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:48
-#, python-format
-msgid ""
-"Please vote when you find helpful information,\n"
-"    it really helps the %(app_name)s community."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:52
-msgid "Other topics"
-msgstr ""
-
-#: askbot/jinja2/help_static.html:54
-msgid ""
-"You can @mention users anywhere in the text to point their attention,\n"
-"    follow users and conversations and report inappropriate content by "
-"flagging it."
-msgstr ""
-
-#: askbot/jinja2/help_static.html:57
-msgid "Enjoy."
-msgstr ""
-
-#: askbot/jinja2/import_data.html:2 askbot/jinja2/import_data.html:4
-msgid "Import StackExchange data"
-msgstr ""
-
-#: askbot/jinja2/import_data.html:13
-msgid ""
-"<em>Warning:</em> if your database is not empty, please back it up\n"
-"        before attempting this operation."
-msgstr ""
-
-#: askbot/jinja2/import_data.html:16
-msgid ""
-"Upload your stackexchange dump .zip file, then wait until\n"
-"        the data import completes. This process may take several minutes.\n"
-"        Please note that feedback will be printed in plain text.\n"
-"        "
-msgstr ""
-
-#: askbot/jinja2/import_data.html:25
-msgid "Import data"
-msgstr ""
-
-#: askbot/jinja2/import_data.html:27
-msgid ""
-"In the case you experience any difficulties in using this import tool,\n"
-"        please try importing your data via command line: <code>python "
-"manage.py load_stackexchange path/to/your-data.zip</code>"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:12
-#, fuzzy
-#| msgid "Tags"
-msgid "Tag"
-msgstr "標籤"
-
-#: askbot/jinja2/list_suggested_tags.html:13
-#, fuzzy
-#| msgid "Suggested edit"
-msgid "Suggested by"
-msgstr "推薦的編修"
-
-#: askbot/jinja2/list_suggested_tags.html:14
-#, fuzzy
-#| msgid "Ask Your Question"
-msgid "Your decision"
-msgstr "開始發問"
-
-#: askbot/jinja2/list_suggested_tags.html:15
-msgid "Where the tag was used"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:35
-#: askbot/jinja2/list_suggested_tags.html:46
-msgid "Accept"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:36
-#: askbot/jinja2/list_suggested_tags.html:47
-msgid "Reject"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:39
-msgid "This tag has not yet been used"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:62
-#, python-format
-msgid "Apply tag \"%(name)s\" to the above"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:63
-msgid "Reject tag"
-msgstr ""
-
-#: askbot/jinja2/list_suggested_tags.html:71
-#, fuzzy
-#| msgid "Post not found"
-msgid "Nothing found"
-msgstr "未找到文章"
-
-#: askbot/jinja2/macros.html:4
-#, python-format
-msgid "This %(post_type)s is being moderated, please do not repost it!"
-msgstr ""
-
-#: askbot/jinja2/macros.html:14
-#, fuzzy, python-format
-#| msgid "Sorry, this content is not available"
-msgid "Share this content on %(site)s"
-msgstr "對不起，此內容不可用"
-
-#: askbot/jinja2/macros.html:20
-#, fuzzy
-#| msgid "Flag offensive"
-msgid "flag offensive"
-msgstr "舉報濫用"
-
-#: askbot/jinja2/macros.html:25
-#, fuzzy
-#| msgid "remove flags"
-msgid "remove flag"
-msgstr "移除標記"
-
-#: askbot/jinja2/macros.html:72
-#, python-format
-msgid "%(count)s vote"
-msgid_plural "%(count)s votes"
-msgstr[0] ""
-
-#: askbot/jinja2/macros.html:95
-#, python-format
-msgid ""
-"This post is a wiki.\n"
-"          Anyone with karma &gt;%(wiki_min_rep)s is welcome to improve it."
-msgstr ""
-
-#: askbot/jinja2/macros.html:208
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "retag/"
-msgid "retag"
-msgstr "retag/"
-
-#: askbot/jinja2/macros.html:214
-#, fuzzy
-#| msgid "updated tags"
-msgid "add tags"
-msgstr "更新標籤"
-
-#: askbot/jinja2/macros.html:260 askbot/jinja2/macros.html:266
-msgid "Leave this group"
-msgstr ""
-
-#: askbot/jinja2/macros.html:261 askbot/jinja2/macros.html:263
-#: askbot/jinja2/macros.html:282
-msgid "Join this group"
-msgstr ""
-
-#: askbot/jinja2/macros.html:262 askbot/jinja2/macros.html:267
-#: askbot/jinja2/macros.html:277
-msgid "You are a member"
-msgstr ""
-
-#: askbot/jinja2/macros.html:269
-msgid "Cancel application"
-msgstr ""
-
-#: askbot/jinja2/macros.html:270 askbot/jinja2/macros.html:279
-msgid "Awaiting approval"
-msgstr ""
-
-#: askbot/jinja2/macros.html:272 askbot/jinja2/macros.html:273
-#: askbot/jinja2/macros.html:284
-msgid "Ask to join"
-msgstr ""
-
-#: askbot/jinja2/macros.html:354
-#, fuzzy
-#| msgid "delete comments"
-msgid "add a comment"
-msgstr "刪除評論"
-
-#: askbot/jinja2/macros.html:355
-#, fuzzy
-#| msgid "delete comments"
-msgid "see more comments"
-msgstr "刪除評論"
-
-#: askbot/jinja2/macros.html:375
-#, fuzzy
-#| msgid "post comments"
-msgid "upvote comment"
-msgstr "發表評論"
-
-#: askbot/jinja2/macros.html:401 askbot/jinja2/question/answer_controls.html:4
-#: askbot/jinja2/question/question_controls.html:5
-#: askbot/jinja2/question/title.html:14
-#: askbot/jinja2/search_posts/index.html:44
-#: askbot/jinja2/user_profile/user_info_about_text.html:29
-#: askbot/jinja2/user_profile/user_info_table.html:34
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "edit/"
-msgid "edit"
-msgstr "edit/"
-
-#: askbot/jinja2/macros.html:403 askbot/jinja2/question/answer_controls.html:38
-#: askbot/models/post.py:1160 askbot/templatetags/extra_filters_jinja.py:165
-msgid "more"
-msgstr "更多"
-
-#: askbot/jinja2/macros.html:407
-#, fuzzy
-#| msgid "delete comments"
-msgid "delete this comment"
-msgstr "刪除評論"
-
-#: askbot/jinja2/macros.html:413
-#, fuzzy
-#| msgid "Accept own answer"
-msgid "convert to answer"
-msgstr "接受自己的回答"
-
-#: askbot/jinja2/macros.html:448
-#, fuzzy
-#| msgid "Comment"
-msgid "Comments"
-msgstr "評論"
-
-#: askbot/jinja2/macros.html:615
-#, fuzzy
-#| msgid "Anonymous"
-msgid "anonymous user"
-msgstr "匿名"
-
-#: askbot/jinja2/macros.html:627
-#, fuzzy, python-format
-#| msgid "%(username)s karma is %(reputation)s"
-msgid "%(username)s's website is %(url)s"
-msgstr "%(username)s 積分是 %(reputation)s"
-
-#: askbot/jinja2/macros.html:643 askbot/jinja2/macros.html:708
-#: askbot/jinja2/macros.html:768
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "revisions/"
-msgid "previous"
-msgstr "revisions/"
-
-#: askbot/jinja2/macros.html:651
-msgid "first"
-msgstr ""
-
-#: askbot/jinja2/macros.html:661 askbot/jinja2/macros.html:728
-msgid "current page"
-msgstr ""
-
-#: askbot/jinja2/macros.html:669 askbot/jinja2/macros.html:683
-#: askbot/jinja2/macros.html:735 askbot/jinja2/macros.html:749
-#: askbot/jinja2/macros.html:775 askbot/jinja2/macros.html:790
-#: askbot/jinja2/macros.html:803
-#, python-format
-msgid "page %(num)s"
-msgstr ""
-
-#: askbot/jinja2/macros.html:690 askbot/jinja2/macros.html:757
-#: askbot/jinja2/macros.html:812
-msgid "next page"
-msgstr ""
-
-#: askbot/jinja2/macros.html:715
-#, fuzzy
-#| msgid "First retag"
-msgid "first page"
-msgstr "首次重設標籤"
-
-#: askbot/jinja2/macros.html:851
-#, python-format
-msgid "%(action_performed)s %(when)s"
-msgstr ""
-
-#: askbot/jinja2/meta/bottom_scripts.html:7
-#, python-format
-msgid ""
-"Please note: %(app_name)s requires javascript to work properly, please "
-"enable javascript in your browser, <a href=\"%(noscript_url)s\">here is how</"
-"a>"
-msgstr ""
-
-#: askbot/jinja2/moderation/blank_state.html:2
-#, fuzzy
-#| msgid "Moderation queue has items"
-msgid "Moderation queue is empty."
-msgstr "審核列表中還有項目"
-
-#: askbot/jinja2/moderation/messages.html:10
-#, fuzzy
-#| msgid "more"
-msgid "show more"
-msgstr "更多"
-
-#: askbot/jinja2/moderation/moderation_header.html:5
-#, fuzzy
-#| msgid "First upvote"
-msgid "first post"
-msgstr "第一個贊成票"
-
-#: askbot/jinja2/moderation/moderation_header.html:8
-#, fuzzy
-#| msgid "approved"
-msgid "approve posts"
-msgstr "核准"
-
-#: askbot/jinja2/moderation/moderation_header.html:9
-#, fuzzy
-#| msgid "Enable approved post alert"
-msgid "approve posts and users"
-msgstr "啟用核准貼文通知"
-
-#: askbot/jinja2/moderation/moderation_header.html:14
-#, fuzzy
-#| msgid "delete posts"
-msgid "visible posts"
-msgstr "刪除文章"
-
-#: askbot/jinja2/moderation/moderation_header.html:19
-msgid "decline and explain why"
-msgstr ""
-
-#: askbot/jinja2/moderation/moderation_header.html:29
-#, fuzzy
-#| msgid "updated post reject reason"
-msgid "add/manage reject reasons"
-msgstr "已更新拒絕貼文理由"
-
-#: askbot/jinja2/moderation/moderation_header.html:33
-#, fuzzy
-#| msgid "Blocked User"
-msgid "block spammers"
-msgstr "凍結帳號"
-
-#: askbot/jinja2/moderation/moderation_header.html:35
-msgid "block spammers and IPs"
-msgstr ""
-
-#: askbot/jinja2/moderation/queue.html:4 askbot/jinja2/moderation/queue.html:8
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "moderation-queue/"
-msgid "Moderation queue"
-msgstr "moderation-queue/"
-
-#: askbot/jinja2/question/answer_card.html:33
-#, fuzzy
-#| msgid "When new post is published"
-msgid "This response is published"
-msgstr "當發布新文章之時"
-
-#: askbot/jinja2/question/answer_controls.html:12
-#: askbot/jinja2/question/question_controls.html:45
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "delete/"
-msgid "undelete"
-msgstr "delete/"
-
-#: askbot/jinja2/question/answer_controls.html:22
-#: askbot/jinja2/question/question_controls.html:15
-msgid "unpublish"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:24
-#: askbot/jinja2/question/question_controls.html:17
-msgid "publish"
-msgstr ""
-
-#: askbot/jinja2/question/answer_controls.html:35
-msgid "permanent link"
-msgstr ""
-
-#: askbot/jinja2/question/answer_vote_buttons.html:9
-msgid "(click again to undo)"
-msgstr ""
-
-#: askbot/jinja2/question/answers_sort_nav.html:5
-#: askbot/jinja2/questions/questions_title.html:4
-#: askbot/jinja2/user_profile/user_answers.html:6
-#: askbot/jinja2/user_profile/user_questions.html:7
-#, python-format
-msgid "<span class=\"count\">%(item_count)s</span> %(pluralized_item_term)s"
-msgstr ""
-
-#: askbot/jinja2/question/answers_sort_nav.html:8
-#: askbot/jinja2/questions/questions_sort_nav.html:2
-msgid "Sort by"
-msgstr ""
-
-#: askbot/jinja2/question/closed_question_info.html:2
-msgid "Closed for the following reason"
-msgstr ""
-
-#: askbot/jinja2/question/closed_question_info.html:3
-msgid "by"
-msgstr ""
-
-#: askbot/jinja2/question/content.html:12
-#, fuzzy
-#| msgid "Gave accepted answer"
-msgid "See the accepted answer"
-msgstr "提供已接受的答案"
-
-#: askbot/jinja2/question/lang_switch_message.html:1
-#, python-format
-msgid ""
-"Sorry, this page is only available in %(post_lang)s. Go to the \n"
-"<a href=\"%(home_url)s\">home page in %(request_lang)s</a>."
-msgstr ""
-
-#: askbot/jinja2/question/question_controls.html:30
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "reopen/"
-msgid "reopen"
-msgstr "reopen/"
-
-#: askbot/jinja2/question/question_controls.html:35
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "close/"
-msgid "close"
-msgstr "close/"
-
-#: askbot/jinja2/question/question_controls.html:40
-msgid "merge"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:12
-#, fuzzy
-#| msgid "followed"
-msgid "Unfollow"
-msgstr "追蹤中"
-
-#: askbot/jinja2/question/sidebar.html:13
-#: askbot/jinja2/question/sidebar.html:15
-#: askbot/jinja2/question/sidebar.html:21
-#, fuzzy
-#| msgid "followed"
-msgid "Follow"
-msgstr "追蹤中"
-
-#: askbot/jinja2/question/sidebar.html:14
-#: askbot/jinja2/question/sidebar.html:19
-msgid "Following"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:27
-#, python-format
-msgid "%(count)s follower"
-msgid_plural "%(count)s followers"
-msgstr[0] ""
-
-#: askbot/jinja2/question/sidebar.html:34
-#: askbot/jinja2/question/sidebar.html:35
-#, fuzzy
-#| msgid "subscribe to all tags"
-msgid "subscribe to the rss feed"
-msgstr "訂閱全部標籤"
-
-#: askbot/jinja2/question/sidebar.html:44
-msgid "Stats"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:46
-#, fuzzy
-#| msgid "asked"
-msgid "Asked"
-msgstr "提問於"
-
-#: askbot/jinja2/question/sidebar.html:49
-msgid "Seen"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:49
-msgid "times"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar.html:52
-#, fuzzy
-#| msgid "least voted"
-msgid "Last updated"
-msgstr "最不被推薦的問題"
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:4
-msgid "Invite"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:9
-#: askbot/jinja2/question/sidebar_sharing_tools.html:15
-#: askbot/jinja2/questions/sidebar_tag_selector.html:23
-#: askbot/jinja2/questions/sidebar_tag_selector.html:46
-#: askbot/jinja2/questions/sidebar_tag_selector.html:70
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:170
-msgid "add"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:11
-#: askbot/jinja2/question/sidebar_sharing_tools.html:17
-msgid "- or -"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:29
-msgid "share with everyone"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:42
-#, fuzzy
-#| msgid "Individually selected"
-msgid "Individual users"
-msgstr "個別選定"
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:47
-msgid "You"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:54
-#: askbot/jinja2/question/sidebar_sharing_tools.html:73
-msgid "and"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:77
-#, python-format
-msgid "%(more_count)s more"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:83
-msgid "Public thread"
-msgstr ""
-
-#: askbot/jinja2/question/sidebar_sharing_tools.html:84
-#, python-format
-msgid "This thread is public, all members of %(site_name)s can read this page."
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:3
-msgid "Oops, looks like there is nothing here yet!"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:5
-msgid "Did not find what you were looking for?"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:11
-msgid "You can expand your search by "
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:14
-msgid "resetting author"
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:16
-#: askbot/jinja2/questions/blank_state.html:19
-#: askbot/jinja2/questions/questions_header.html:36
-#: askbot/jinja2/questions/questions_header.html:39
-msgid " or "
-msgstr ""
-
-#: askbot/jinja2/questions/blank_state.html:17
-#, fuzzy
-#| msgid "only interesting tags"
-msgid "resetting tags"
-msgstr "感興趣的標籤"
-
-#: askbot/jinja2/questions/blank_state.html:20
-#: askbot/jinja2/questions/blank_state.html:23
-msgid "starting over"
-msgstr ""
-
-#: askbot/jinja2/questions/index.html:7
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "questions"
-msgid "Questions"
-msgstr "questions"
-
-#: askbot/jinja2/questions/question_summary_stats.html:5
-msgid "view"
-msgid_plural "views"
-msgstr[0] ""
-
-#: askbot/jinja2/questions/question_summary_stats.html:21
-#: askbot/models/repute.py:58
-msgid "vote"
-msgid_plural "votes"
-msgstr[0] ""
-
-#: askbot/jinja2/questions/questions_header.html:10
-#, fuzzy
-#| msgid "subscribe to all tags"
-msgid "subscribe to the feed"
-msgstr "訂閱全部標籤"
-
-#: askbot/jinja2/questions/questions_header.html:12
-msgid "RSS"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:31
-msgid "Search tips:"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:34
-msgid "reset author"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:37
-#, fuzzy
-#| msgid "Suggested tags"
-msgid "reset tags"
-msgstr "推薦的標籤"
-
-#: askbot/jinja2/questions/questions_header.html:40
-#: askbot/jinja2/questions/questions_header.html:43
-msgid "start over"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:45
-msgid " - to expand, or dig in by adding more tags and revising the query."
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:48
-msgid "Search tip:"
-msgstr ""
-
-#: askbot/jinja2/questions/questions_header.html:48
-msgid "add tags and a query to focus your search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_contributors.html:3
-#: askbot/jinja2/widgets/contributors.html:3
-msgid "Contributors"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_search.html:2
-msgid "Tag search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_search.html:5
-#: askbot/jinja2/search_posts/index.html:16
-msgid "search"
-msgstr ""
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:4
-#, fuzzy
-#| msgid "only interesting tags"
-msgid "Interesting tags"
-msgstr "感興趣的標籤"
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:20
-#: askbot/jinja2/questions/sidebar_tag_selector.html:43
-#: askbot/jinja2/questions/sidebar_tag_selector.html:66
-#, fuzzy
-#| msgid "Mandatory tags"
-msgid "Enter tag"
-msgstr "必要標籤"
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:27
-#, fuzzy
-#| msgid "exclude ignored tags"
-msgid "Ignored tags"
-msgstr "排除想忽視的標籤"
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:51
-#, fuzzy
-#| msgid "only subscribed tags"
-msgid "Subscribed tags"
-msgstr "只要有訂閱的標籤"
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:88
-#, fuzzy
-#| msgid "Enable email alerts"
-msgid "Email me alerts for"
-msgstr "啟用電子郵件通知"
-
-#: askbot/jinja2/questions/sidebar_tag_selector.html:101
-#, fuzzy
-#| msgid "sorted by frequency of tag use"
-msgid "Change frequency of emails"
-msgstr "按標籤被使用的次數排序"
-
-#: askbot/jinja2/reopen.html:12
-#, python-format
-msgid ""
-"Closed by:\n"
-"  <a href=\"%(closed_by_profile_url)s\">%(username)s</a>\n"
-msgstr ""
-
-#: askbot/jinja2/reopen.html:17
-#, fuzzy
-#| msgid "Close question"
-msgid "Close reason:"
-msgstr "關閉問題"
-
-#: askbot/jinja2/reopen.html:20
-msgid "When:"
-msgstr ""
-
-#: askbot/jinja2/revisions.html:4 askbot/jinja2/revisions.html:8
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "revisions/"
-msgid "Revision history"
-msgstr "revisions/"
-
-#: askbot/jinja2/revisions.html:16
-#, fuzzy, python-format
-#| msgctxt "urls"
-#| msgid "revisions/"
-msgid "Revision %(rev)s"
-msgstr "revisions/"
-
-#: askbot/jinja2/search_posts/context_link.html:7 askbot/models/post.py:724
-#, fuzzy
-#| msgid "Comment"
-msgid "comment"
-msgstr "評論"
-
-#: askbot/jinja2/search_posts/index.html:2
-msgid "Post Search"
-msgstr ""
-
-#: askbot/jinja2/search_posts/index.html:5
-#, fuzzy
-#| msgid "post answers"
-msgid "Post search"
-msgstr "發表答案"
-
-#: askbot/jinja2/search_posts/index.html:10
-msgid "search by text"
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:6
-msgid "prev."
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:21
-msgid "of"
-msgstr ""
-
-#: askbot/jinja2/search_posts/posts_nav.html:25
-#, fuzzy
-#| msgid "gold"
-msgid "go"
-msgstr "金牌"
-
-#: askbot/jinja2/subscribe_for_tags.html:3
-#: askbot/jinja2/subscribe_for_tags.html:5
-#, fuzzy
-#| msgid "subscribe to all tags"
-msgid "Subscribe for tags"
-msgstr "訂閱全部標籤"
-
-#: askbot/jinja2/subscribe_for_tags.html:6
-#, fuzzy
-#| msgid "subscribe to all tags"
-msgid "Please, subscribe for the following tags:"
-msgstr "訂閱全部標籤"
-
-#: askbot/jinja2/subscribe_for_tags.html:11
-#, fuzzy
-#| msgid "subscribed"
-msgid "Subscribe"
-msgstr "有訂閱"
-
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:4
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:6
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "subscriptions/"
-msgid "Tag subscriptions"
-msgstr "subscriptions/"
-
-#: askbot/jinja2/tags/form_bulk_tag_subscription.html:10
-#: askbot/jinja2/user_profile/user_languages.html:19
-msgid "Save"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:7
-#, python-format
-msgid "Tags, matching \"%(tag_query)s\""
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:13 askbot/jinja2/users/title_row.html:19
-msgid "Sort by &raquo;"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:19
-#, fuzzy
-#| msgid "Real name"
-msgid "by name"
-msgstr "真實姓名"
-
-#: askbot/jinja2/tags/header.html:25
-msgid "by popularity"
-msgstr ""
-
-#: askbot/jinja2/tags/header.html:33 askbot/jinja2/tags/header.html:34
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "suggested-tags/"
-msgid "suggested"
-msgstr "suggested-tags/"
-
-#: askbot/jinja2/tags/header.html:41 askbot/jinja2/tags/header.html:42
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "subscriptions/"
-msgid "manage subscriptions"
-msgstr "subscriptions/"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:4
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "subscriptions/"
-msgid "Manage tag subscriptions"
-msgstr "subscriptions/"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:7
-#, fuzzy
-#| msgid "created tag description"
-msgid "Manage tag subscription"
-msgstr "建立的標籤敘述"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:8
-#, fuzzy
-#| msgid "Create"
-msgid "Create new"
-msgstr "創建"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:11
-msgid "Date"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:13
-#: askbot/jinja2/users/index.html:8 askbot/jinja2/users/title_row.html:6
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "users/"
-msgid "Users"
-msgstr "users/"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:17
-msgid "Action"
-msgstr ""
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:49
-#: askbot/views/commands.py:619
-msgid "Edit"
-msgstr "編輯"
-
-#: askbot/jinja2/tags/list_bulk_tag_subscription.html:53
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "delete/"
-msgid "Delete"
-msgstr "delete/"
-
-#: askbot/jinja2/tags/no_tags.html:3
-#, fuzzy
-#| msgid "Post not found"
-msgid "Nothing found."
-msgstr "未找到文章"
-
-#: askbot/jinja2/tags/no_tags.html:5
-#, fuzzy
-#| msgid "Very active in one tag"
-msgid "There are no tags."
-msgstr "在一個標籤里非常活躍的人"
-
-#: askbot/jinja2/user_inbox/base.html:9
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "questions"
-msgid "Sections:"
-msgstr "questions"
-
-#: askbot/jinja2/user_inbox/base.html:14
-#, fuzzy
-#| msgid "message"
-msgid "messages"
-msgstr "訊息"
-
-#: askbot/jinja2/user_inbox/base.html:19
-#, python-format
-msgid "forum responses (<span class=\"response-count\">%(re_count)s</span>)"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/base.html:26
-#, fuzzy
-#| msgid "reopen questions"
-msgid "group join requests"
-msgstr "重新打開問題"
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:4
-msgid "inbox - group join requests"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:26
-#, fuzzy
-#| msgid "approved"
-msgid "Approve"
-msgstr "核准"
-
-#: askbot/jinja2/user_inbox/group_join_requests.html:41
-msgid "Deny"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/messages.html:9
-#: askbot/jinja2/user_profile/user_tabs.html:12
-#, fuzzy
-#| msgid "profile - messages"
-msgid "private messages"
-msgstr "個人檔案 - 訊息"
-
-#: askbot/jinja2/user_inbox/responses.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:9
-#, fuzzy
-#| msgid "Trigger email notifications"
-msgid "notifications"
-msgstr "觸發郵件通知"
-
-#: askbot/jinja2/user_inbox/responses.html:9
-msgid "mark seen"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:11
-msgid "select:"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:13
-msgid "none"
-msgstr ""
-
-#: askbot/jinja2/user_inbox/responses.html:36
-#, fuzzy
-#| msgid "Trigger email notifications"
-msgid "There are no notifications."
-msgstr "觸發郵件通知"
-
-#: askbot/jinja2/user_profile/account_terminated.html:3
-#: askbot/jinja2/user_profile/account_terminated.html:5
-#, fuzzy
-#| msgid "Account recovery email sent"
-msgid "Account Terminated"
-msgstr "發送帳號恢復郵件"
-
-#: askbot/jinja2/user_profile/account_terminated.html:7
-#, fuzzy
-#| msgid "your account is disabled"
-msgid "Your account has been terminated."
-msgstr "您的帳號已停用"
-
-#: askbot/jinja2/user_profile/account_terminated.html:8
-msgid "All content has been anonymized and remains accessible."
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:8
-#, python-format
-msgid "Auto-tweeting to @%(handle)s"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:19
-msgid "stop tweeting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:23
-msgid "Auto-tweeting is inactive"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:26
-#, fuzzy
-#| msgid "select country"
-msgid "Select twitter account"
-msgstr "選擇國家"
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:28
-#, fuzzy
-#| msgid "Trigger tweets on others accounts"
-msgid "use another account"
-msgstr "用其它帳號發布 Tweet"
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:32
-msgid "Auto-tweeting is off"
-msgstr ""
-
-#: askbot/jinja2/user_profile/twitter_sharing_controls.html:33
-msgid "Start tweeting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:2
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "unsubscribe/"
-msgid "Unsubscribe"
-msgstr "unsubscribe/"
-
-#: askbot/jinja2/user_profile/unsubscribe.html:5
-#, python-format
-msgid "Want to unsubcribe %(verified_email)s from %(app_name)s?"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:8
-msgid "Successfully unsubscribed."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:12
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "unsubscribe/"
-msgid "Yes, unsubscribe"
-msgstr "unsubscribe/"
-
-#: askbot/jinja2/user_profile/unsubscribe.html:17
-#, fuzzy
-#| msgid "Unsubscribe link"
-msgid "Bad unsubscribe link."
-msgstr "取消訂閱連結"
-
-#: askbot/jinja2/user_profile/unsubscribe.html:18
-#, python-format
-msgid ""
-"Expected format is %(link_url)s?key=&lt;unsubscribe "
-"key&gt;&amp;email=&lt;email address&gt;"
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:23
-#, fuzzy
-#| msgid "Please login to post"
-msgid "Please, contact support."
-msgstr "請登入後發文"
-
-#: askbot/jinja2/user_profile/unsubscribe.html:26
-msgid "The unsubscribe key sent with the link had expired."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:29
-#, fuzzy
-#| msgid "Unsubscribe link"
-msgid "Resend unsubscribe link"
-msgstr "取消訂閱連結"
-
-#: askbot/jinja2/user_profile/unsubscribe.html:32
-msgid "Unsubscribe link resent. Please check your email."
-msgstr ""
-
-#: askbot/jinja2/user_profile/unsubscribe.html:34
-#, fuzzy
-#| msgid "sorry, there is no such user name"
-msgid "Sorry, there was an unexpected error."
-msgstr "對不起，沒有這個使用者名稱"
-
-#: askbot/jinja2/user_profile/user.html:11
-#, fuzzy, python-format
-#| msgid "%(username)s gravatar image"
-msgid "%(username)s's profile"
-msgstr "%(username)s 大頭貼"
-
-#: askbot/jinja2/user_profile/user.html:14
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "signout/"
-msgid "sign out"
-msgstr "signout/"
-
-#: askbot/jinja2/user_profile/user.html:17
-#, fuzzy
-#| msgid "please login"
-msgid "manage logins"
-msgstr "請登入"
-
-#: askbot/jinja2/user_profile/user_activity.html:5
-#: askbot/jinja2/user_profile/user_tabs.html:38 askbot/models/user.py:322
-msgid "activity"
-msgstr "活動"
-
-#: askbot/jinja2/user_profile/user_activity.html:16
-#: askbot/jinja2/user_profile/user_badges.html:8
-#, fuzzy, python-format
-#| msgid "Description"
-msgid "%(description)s"
-msgstr "描述"
-
-#: askbot/jinja2/user_profile/user_activity.html:26
-#: askbot/jinja2/user_profile/user_activity.html:33
-msgid "source"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_activity.html:46
-msgid "There was no activity."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_badges.html:3
-#, python-format
-msgid "<span class=\"count\">%(counter)s</span> Badge"
-msgid_plural "<span class=\"count\">%(counter)s</span> Badges"
-msgstr[0] ""
-
-#: askbot/jinja2/user_profile/user_badges.html:21
-#, fuzzy
-#| msgid "Answered"
-msgid "Answer to:"
-msgstr "已回答"
-
-#: askbot/jinja2/user_profile/user_edit.html:4
-#, fuzzy
-#| msgid "completed user profile"
-msgid "Edit user profile"
-msgstr "已完成使用者個人檔案"
-
-#: askbot/jinja2/user_profile/user_edit.html:7
-#, fuzzy
-#| msgid "edit posts"
-msgid "edit profile"
-msgstr "編輯文章"
-
-#: askbot/jinja2/user_profile/user_edit.html:17
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:10
-msgid "change picture"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:41
-msgid "(cannot be changed)"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_edit.html:74
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:154
-#, fuzzy
-#| msgid "by date"
-msgid "Update"
-msgstr "依日期"
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:6
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "subscriptions/"
-msgid "subscriptions"
-msgstr "subscriptions/"
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:10
-msgid ""
-"<span class='big strong'>Adjust frequency of email updates.</span> Receive "
-"updates on interesting content by email. If you do not wish to receive "
-"emails - select 'no email' on all items below.<br/>Updates are only sent "
-"when there is any new activity on selected items."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:12
-msgid "Note: language settings also apply to the email subscriptions"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:155
-#, fuzzy
-#| msgid "No email"
-msgid "Stop Email"
-msgstr "無電子郵件"
-
-#: askbot/jinja2/user_profile/user_email_subscriptions.html:162
-#, fuzzy
-#| msgid "only subscribed tags"
-msgid "Subscribed Tags"
-msgstr "只要有訂閱的標籤"
-
-#: askbot/jinja2/user_profile/user_info.html:5
-msgid ""
-"Note: the homepage link and the about section won't be shown to other users "
-"until your profile is approved by the moderators."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_about_text.html:12
-msgid "Write something about yourself..."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:21
-#, fuzzy
-#| msgid "followed"
-msgid "unfollow"
-msgstr "追蹤中"
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:22
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:25
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:31
-#, fuzzy
-#| msgid "followed"
-msgid "follow"
-msgstr "追蹤中"
-
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:24
-#: askbot/jinja2/user_profile/user_info_avatar_block.html:29
-#, fuzzy
-#| msgid "followed"
-msgid "following"
-msgstr "追蹤中"
-
-#: askbot/jinja2/user_profile/user_info_table.html:9
-#, fuzzy
-#| msgid "upload files"
-msgid "update profile"
-msgstr "上傳檔案"
-
-#: askbot/jinja2/user_profile/user_info_table.html:16
-#, fuzzy
-#| msgid "Real name"
-msgid "real name"
-msgstr "真實姓名"
-
-#: askbot/jinja2/user_profile/user_info_table.html:22
-#, fuzzy
-#| msgid "No email"
-msgid "email"
-msgstr "無電子郵件"
-
-#: askbot/jinja2/user_profile/user_info_table.html:28
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "groups/"
-msgid "groups"
-msgstr "groups/"
-
-#: askbot/jinja2/user_profile/user_info_table.html:40
-msgid "member since"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:45
-#, fuzzy
-#| msgid "least voted"
-msgid "last seen"
-msgstr "最不被推薦的問題"
-
-#: askbot/jinja2/user_profile/user_info_table.html:51
-#, fuzzy
-#| msgid "Website"
-msgid "website"
-msgstr "個人網站"
-
-#: askbot/jinja2/user_profile/user_info_table.html:70
-#, fuzzy
-#| msgid "Documentation"
-msgid "location"
-msgstr "文件"
-
-#: askbot/jinja2/user_profile/user_info_table.html:76
-msgid "todays unused votes"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_info_table.html:82
-#: askbot/jinja2/user_profile/user_tabs.html:42
-#: askbot/jinja2/user_profile/user_votes.html:4 askbot/models/repute.py:59
-msgid "votes"
-msgstr "投票"
-
-#: askbot/jinja2/user_profile/user_languages.html:3
-#: askbot/jinja2/user_profile/user_tabs.html:17
-#, fuzzy
-#| msgctxt "urls"
-#| msgid "select_languages/"
-msgid "languages"
-msgstr "select_languages/"
-
-#: askbot/jinja2/user_profile/user_languages.html:12
-msgid "View and subscribe to posts in these languages"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:14
-msgid "Subscribe to posts in these languages"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_languages.html:17
-msgid "My primary language is"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:4
-#, fuzzy
-#| msgid "account/"
-msgid "manage account"
-msgstr "account/"
-
-#: askbot/jinja2/user_profile/user_manage_account.html:8
-msgid ""
-"To delete this account or obtain its data, please\n"
-"  use one of the options below"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:12
-msgid "Download backup files:"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:29
-#, fuzzy
-#| msgid "remove anonymity"
-msgid "Remove account"
-msgstr "刪除匿名"
-
-#: askbot/jinja2/user_profile/user_manage_account.html:31
-msgid "Ask to remove account"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:41
-msgid "Anonymize data and disable account"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:45
-msgid "Exporting"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_manage_account.html:50
-msgid "Export data"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:47
-#, fuzzy
-#| msgid "moderator"
-msgid "moderation"
-msgstr "版主"
-
-#: askbot/jinja2/user_profile/user_moderate.html:9
-#, fuzzy, python-format
-#| msgid "%(username)s karma is %(reputation)s"
-msgid "%(username)s's current status is \"%(status)s\""
-msgstr "%(username)s 積分是 %(reputation)s"
-
-#: askbot/jinja2/user_profile/user_moderate.html:21
-#, fuzzy
-#| msgid "Change status to"
-msgid "Change status"
-msgstr "改變狀態至"
-
-#: askbot/jinja2/user_profile/user_moderate.html:23
-msgid "Block user and delete all content"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:33
-#, python-format
-msgid "Your current reputation is %(reputation)s points"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:35
-#, python-format
-msgid "User's current reputation is %(reputation)s points"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:39
-#, fuzzy
-#| msgid "User status changed"
-msgid "User reputation changed"
-msgstr "使用者狀態已修改"
-
-#: askbot/jinja2/user_profile/user_moderate.html:46
-msgid "Subtract"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:47
-msgid "Add"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:52
-#, python-format
-msgid "Send message to %(username)s"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:54
-msgid ""
-"An email will be sent to the user with 'reply-to' field set to your email "
-"address. Please make sure that your address is entered correctly."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:57
-#, fuzzy
-#| msgid "Message text"
-msgid "Message sent"
-msgstr "訊息文字"
-
-#: askbot/jinja2/user_profile/user_moderate.html:75
-#, fuzzy
-#| msgid "message"
-msgid "Send message"
-msgstr "訊息"
-
-#: askbot/jinja2/user_profile/user_moderate.html:86
-msgid ""
-"Administrators have privileges of normal users, but in addition they can "
-"assign/revoke any status to any user, and are exempt from the reputation "
-"limits."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:89
-msgid ""
-"Moderators have the same privileges as administrators, but cannot add or "
-"remove user status of 'moderator' or 'administrator'."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:92
-msgid "'Approved' status means the same as regular user."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:95
-msgid "Suspended users can only edit or delete their own posts."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_moderate.html:98
-msgid ""
-"Blocked users can only login and send feedback to the site administrators, "
-"their url and profile will also be hidden."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:26
-msgid "network"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:9
-#, fuzzy, python-format
-#| msgid "Followed Questions"
-msgid "Followed by %(count)s person"
-msgid_plural "Followed by %(count)s people"
-msgstr[0] "已關注問題"
-
-#: askbot/jinja2/user_profile/user_network.html:13
-#, python-format
-msgid "Following %(count)s person"
-msgid_plural "Following %(count)s people"
-msgstr[0] ""
-
-#: askbot/jinja2/user_profile/user_network.html:19
-msgid ""
-"Your network is empty. Would you like to follow someone? - Just visit their "
-"profiles and click \"follow\""
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_network.html:21
-#, fuzzy, python-format
-#| msgid "%(username)s karma is %(reputation)s"
-msgid "%(username)s's network is empty"
-msgstr "%(username)s 積分是 %(reputation)s"
-
-#: askbot/jinja2/user_profile/user_questions.html:24
-#, fuzzy
-#| msgid "reopen questions"
-msgid "There are no questions."
-msgstr "重新打開問題"
-
-#: askbot/jinja2/user_profile/user_reputation.html:4
-#: askbot/jinja2/user_profile/user_tabs.html:31
-#: askbot/jinja2/users/title_row.html:26
-msgid "karma"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_reputation.html:10
-msgid "Your karma change log."
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_reputation.html:12
-#, fuzzy, python-format
-#| msgid "%(username)s gravatar image"
-msgid "%(user_name)s's karma change log"
-msgstr "%(username)s 大頭貼"
-
-#: askbot/jinja2/user_profile/user_stats.html:6
-#: askbot/jinja2/user_profile/user_tabs.html:5
-msgid "overview"
-msgstr ""
-
-#: askbot/jinja2/user_profile/user_tabs.html:21
-#, fuzzy
-#| msgid "Enable email alerts"
-msgid "email alerts"
-msgstr "啟用電子郵件通知"
-
-#: askbot/jinja2/user_profile/user_tabs.html:57
-#, fuzzy
-#| msgid "account/"
-msgid "account"
-msgstr "account/"
-
-#: askbot/jinja2/user_profile/user_tags.html:3
-#, python-format
-msgid "<span class=\"count\">%(counter)s</span> Tag"
-msgid_plural "<span class=\"count\">%(counter)s</span> Tags"
-msgstr[0] ""
-
-#: askbot/jinja2/user_profile/user_votes.html:27
-msgid "There were no votes."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:7
-#, fuzzy
-#| msgid "Group settings"
-msgid "Group info"
-msgstr "群組設定"
-
-#: askbot/jinja2/users/group_settings.html:40
-#, fuzzy
-#| msgid "created tag description"
-msgid "edit description"
-msgstr "建立的標籤敘述"
-
-#: askbot/jinja2/users/group_settings.html:44
-#, fuzzy
-#| msgid "Show logo"
-msgid "change logo"
-msgstr "顯示 Logo"
-
-#: askbot/jinja2/users/group_settings.html:46
-#, fuzzy
-#| msgid "delete posts"
-msgid "delete logo"
-msgstr "刪除文章"
-
-#: askbot/jinja2/users/group_settings.html:50
-msgid "add logo"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:63
-msgid "moderate emailed content"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:70
-msgid "How users join this group?"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:97
-msgid "Read only access"
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:110
-#, fuzzy
-#| msgid "ask questions"
-msgid "Can post questions"
-msgstr "提問"
-
-#: askbot/jinja2/users/group_settings.html:123
-#, fuzzy
-#| msgid "post answers"
-msgid "Can post answers"
-msgstr "發表答案"
-
-#: askbot/jinja2/users/group_settings.html:136
-#, fuzzy
-#| msgid "post comments"
-msgid "Can post comments"
-msgstr "發表評論"
-
-#: askbot/jinja2/users/group_settings.html:150
-#, fuzzy
-#| msgid "upload files"
-msgid "Can upload file attachments"
-msgstr "上傳檔案"
-
-#: askbot/jinja2/users/group_settings.html:165
-#, fuzzy
-#| msgid "upload files"
-msgid "Can upload images"
-msgstr "上傳檔案"
-
-#: askbot/jinja2/users/group_settings.html:178
-#, fuzzy
-#| msgid "Allowed email addresses"
-msgid "List of preapproved email addresses"
-msgstr "允許電子信箱地址"
-
-#: askbot/jinja2/users/group_settings.html:179
-msgid ""
-"Users with these email adderesses will be added to the group automatically."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:180
-#, fuzzy
-#| msgid "edited by email"
-msgid "edit preapproved emails"
-msgstr "通過電子郵件編輯"
-
-#: askbot/jinja2/users/group_settings.html:191
-#, fuzzy
-#| msgid "Allowed email domain names"
-msgid "List of preapproved email domain names"
-msgstr "允許的電子信箱域名"
-
-#: askbot/jinja2/users/group_settings.html:192
-msgid ""
-"Users whose email adderesses belong to these domains will be added to the "
-"group automatically."
-msgstr ""
-
-#: askbot/jinja2/users/group_settings.html:193
-#, fuzzy
-#| msgid "Allowed email domain names"
-msgid "edit preapproved email domains"
-msgstr "允許的電子信箱域名"
-
-#: askbot/jinja2/users/index.html:13
-msgid "No users found."
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:4
-#, fuzzy, python-format
-#| msgid "Global user group name"
-msgid "Users in group %(name)s"
-msgstr "全域使用者群組名稱"
-
-#: askbot/jinja2/users/title_row.html:11
-msgid "Select/Sort by &raquo;"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:15
-#, fuzzy, python-format
-#| msgid "Group settings: %(name)s"
-msgid "people in group %(name)s"
-msgstr "群組設定: %(name)s"
-
-#: askbot/jinja2/users/title_row.html:32
-msgid "recent"
-msgstr ""
-
-#: askbot/jinja2/users/title_row.html:42
-#, fuzzy
-#| msgid "Your user name"
-msgid "by username"
-msgstr "您的使用者名稱"
-
-#: askbot/jinja2/widgets/moderated_image.html:1
-#, fuzzy
-#| msgid "Enable tag moderation"
-msgid "image awaiting moderation"
-msgstr "啟用標籤審核"
-
-#: askbot/jinja2/widgets/moderated_link.html:1
-#, fuzzy
-#| msgid "Enable tag moderation"
-msgid "link awaiting moderation"
-msgstr "啟用標籤審核"
-
-#: askbot/jinja2/widgets/three_column_category_selector.html:7
-#: askbot/jinja2/widgets/three_column_category_selector.html:10
-msgid "(done editing)"
-msgstr ""
-
-#: askbot/jinja2/widgets/three_column_category_selector.html:8
-#: askbot/jinja2/widgets/three_column_category_selector.html:9
-#: askbot/jinja2/widgets/three_column_category_selector.html:11
-msgid "(edit categories)"
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:3
-msgid "Karma reflects the value of your contribution to this community."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:12
-#, python-format
-msgid ""
-"Since you are the site %(role)s, you have access to all functions regardless "
-"of your karma."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:14
-msgid "The higher is your karma, the more rights you have on this site."
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:18
-msgid "Currently, you can:"
-msgstr ""
-
-#: askbot/jinja2/widgets/user_perms.html:20
-#, fuzzy
-#| msgid "made a new post"
-msgid "Make new posts"
-msgstr "已發新貼文"
 
 #: askbot/mail/__init__.py:118
 msgid "<p>To post by email, please:</p>"
@@ -8023,7 +4953,7 @@ msgid ""
 msgstr "要產生預覽至少需要一位在網站上的使用者和兩則提問"
 
 #: askbot/mail/messages.py:627
-#: askbot/management/commands/send_email_alerts.py:494
+#: askbot/management/commands/send_email_alerts.py:498
 msgid "new question"
 msgstr "提問"
 
@@ -8089,10 +5019,20 @@ msgid "To add to your post EDIT ABOVE THIS LINE"
 msgstr "在本行前面編輯以補充您提交的內容"
 
 #: askbot/mail/messages.py:846
+#, fuzzy
+#| msgid "Enable image moderation"
+msgid "Email change verification"
+msgstr "啟用影像審核"
+
+#: askbot/mail/messages.py:847
+msgid "Sent when a user changes their email address, to verify the new address"
+msgstr ""
+
+#: askbot/mail/messages.py:862
 msgid "Feedback email"
 msgstr "意見回饋信"
 
-#: askbot/mail/messages.py:847
+#: askbot/mail/messages.py:863
 msgid "Sent when user submits feedback form"
 msgstr "當使用者提交回饋表單時送出"
 
@@ -8105,18 +5045,40 @@ msgstr "請以 %s 登入"
 msgid "Compensated by admin during recalculation of karma"
 msgstr ""
 
-#: askbot/models/__init__.py:739
+#: askbot/migrations/0027_populate_analytics_events.py:13
+#: askbot/models/analytics.py:160
+#, fuzzy
+#| msgctxt "urls"
+#| msgid "register/"
+msgid "registered"
+msgstr "register/"
+
+#: askbot/migrations/0027_populate_analytics_events.py:14
+#: askbot/models/analytics.py:163
+#, fuzzy
+#| msgid "question"
+msgid "question viewed"
+msgstr "問題"
+
+#: askbot/migrations/0027_populate_analytics_events.py:21
+#: askbot/models/analytics.py:172
+#, fuzzy
+#| msgid "retag questions"
+msgid "retagged question"
+msgstr "整理標籤"
+
+#: askbot/models/__init__.py:760
 msgid "perform this action"
 msgstr "執行這項動作"
 
-#: askbot/models/__init__.py:745
+#: askbot/models/__init__.py:766
 #, python-format
 msgid ""
 "Sorry, you cannot %(perform_action)s because the site is temporarily read "
 "only"
 msgstr "對不起，您無法%(perform_action)s，因為網站暫處於唯讀狀態"
 
-#: askbot/models/__init__.py:752
+#: askbot/models/__init__.py:773
 #, python-format
 msgid ""
 "Sorry, you cannot %(perform_action)s because %(domain)s emails have been "
@@ -8124,35 +5086,35 @@ msgid ""
 msgstr ""
 "對不起，您無法%(perform_action)s，因為 %(domain)s 的電子郵件已被列入黑名單。"
 
-#: askbot/models/__init__.py:755
+#: askbot/models/__init__.py:776
 #, python-format
 msgid "Please <a href=\"%(url)s\">change your email</a>."
 msgstr "請<a href=\"%(url)s\">更改您的電子郵件</a>。"
 
-#: askbot/models/__init__.py:763 askbot/models/__init__.py:1678
-#: askbot/views/writers.py:210
+#: askbot/models/__init__.py:784 askbot/models/__init__.py:1699
+#: askbot/views/writers.py:244
 msgid "Sorry, but you have only read access"
 msgstr "對不起，您只有讀取的權利"
 
-#: askbot/models/__init__.py:771
+#: askbot/models/__init__.py:792
 msgid "your account is disabled"
 msgstr "您的帳號已停用"
 
-#: askbot/models/__init__.py:778 askbot/models/__init__.py:849
+#: askbot/models/__init__.py:799 askbot/models/__init__.py:870
 msgid "your account is blocked"
 msgstr "您的帳號已被凍結"
 
-#: askbot/models/__init__.py:786 askbot/models/__init__.py:794
-#: askbot/models/__init__.py:845
+#: askbot/models/__init__.py:807 askbot/models/__init__.py:815
+#: askbot/models/__init__.py:866
 msgid "your account is suspended"
 msgstr "您的帳號已被暫停使用"
 
-#: askbot/models/__init__.py:815
+#: askbot/models/__init__.py:836
 #, python-format
 msgid "Sorry, only moderators and site administrators can %(perform_action)s"
 msgstr "對不起，只有版主和網站管理員可以%(perform_action)s"
 
-#: askbot/models/__init__.py:822
+#: askbot/models/__init__.py:843
 #, python-format
 msgid ""
 "Sorry, only administrators, moderators or users with reputation > "
@@ -8161,53 +5123,61 @@ msgstr ""
 "抱歉，只有管理員和協調員，或是聲望大於 %(min_rep)s 的使用者才可以 "
 "%(perform_action)s"
 
-#: askbot/models/__init__.py:911
+#: askbot/models/__init__.py:932
 msgid "Sorry, you cannot vote for your own posts"
 msgstr "對不起，您不能為自己的文章投票"
 
-#: askbot/models/__init__.py:935
+#: askbot/models/__init__.py:939
+msgid "upvote"
+msgstr "投贊成票"
+
+#: askbot/models/__init__.py:942
+msgid "downvote"
+msgstr "投反對票"
+
+#: askbot/models/__init__.py:956
 msgid "upload files"
 msgstr "上傳檔案"
 
-#: askbot/models/__init__.py:977
+#: askbot/models/__init__.py:998
 msgid "join or leave groups"
 msgstr "加入或離開群組"
 
-#: askbot/models/__init__.py:990 askbot/views/commands.py:217
+#: askbot/models/__init__.py:1011 askbot/views/commands.py:213
 msgid "mark or unmark tags"
 msgstr "標記或取消標籤標記"
 
-#: askbot/models/__init__.py:998
+#: askbot/models/__init__.py:1019
 msgid "merge duplicate questions"
 msgstr "合併重複問題"
 
-#: askbot/models/__init__.py:1014
+#: askbot/models/__init__.py:1035
 #, fuzzy
 #| msgid "Could not post, because your karma is insufficient to publish links"
 msgid "Could not post, because anonymous users cannot publish links"
 msgstr "無法張貼，因為您的積分不足以發布連結"
 
-#: askbot/models/__init__.py:1018
+#: askbot/models/__init__.py:1039
 msgid "Could not post, because your karma is insufficient to publish links"
 msgstr "無法張貼，因為您的積分不足以發布連結"
 
-#: askbot/models/__init__.py:1035 askbot/models/__init__.py:1060
-#: askbot/models/__init__.py:1166
+#: askbot/models/__init__.py:1056 askbot/models/__init__.py:1081
+#: askbot/models/__init__.py:1187
 #, fuzzy, python-format
 #| msgid "anonymous users cannot %(perform_action)s"
 msgid "Sorry, you cannot %(perform_action)s"
 msgstr "匿名使用者無法 %(perform_action)s"
 
-#: askbot/models/__init__.py:1046
+#: askbot/models/__init__.py:1067
 #, python-format
 msgid "Sorry, %(you_already_gave_an_answer)s, please edit it instead."
 msgstr "對不起，%(you_already_gave_an_answer)s，請改為編修內容。"
 
-#: askbot/models/__init__.py:1076 askbot/models/__init__.py:1162
+#: askbot/models/__init__.py:1097 askbot/models/__init__.py:1183
 msgid "Sorry, commenting closed entries is not allowed"
 msgstr "對不起，無法在關閉的條目上留下評註"
 
-#: askbot/models/__init__.py:1087
+#: askbot/models/__init__.py:1108
 #, python-format
 msgid ""
 "Sorry, comments (except the last one) are editable only within %(minutes)s "
@@ -8217,45 +5187,45 @@ msgid_plural ""
 "minutes from posting"
 msgstr[0] "對不起，留言只能在發布後%(minutes)s分鐘內可編輯"
 
-#: askbot/models/__init__.py:1103
+#: askbot/models/__init__.py:1124
 msgid "Sorry, but only post owners or moderators can edit comments"
 msgstr "對不起，只有發布者或版主才能修改留言"
 
-#: askbot/models/__init__.py:1116
+#: askbot/models/__init__.py:1137
 msgid "repost items"
 msgstr "重複張貼項目"
 
-#: askbot/models/__init__.py:1151 askbot/models/__init__.py:1167
+#: askbot/models/__init__.py:1172 askbot/models/__init__.py:1188
 msgid "post comments"
 msgstr "發表評論"
 
-#: askbot/models/__init__.py:1171
+#: askbot/models/__init__.py:1192
 #, fuzzy
 #| msgid "(only one answer per user is allowed)"
 msgid "Sorry, only one moderated comment per post is allowed"
 msgstr "(每個使用者只允許有一個答案)"
 
-#: askbot/models/__init__.py:1190
+#: askbot/models/__init__.py:1211
 msgid ""
 "This post has been deleted and can be seen only by post owners, site "
 "administrators and moderators"
 msgstr "這篇文章已經被刪除，只有原發文人，以及網站管理員和版主能查看"
 
-#: askbot/models/__init__.py:1202
+#: askbot/models/__init__.py:1223
 msgid ""
 "Sorry, only moderators, site administrators and post owners can edit deleted "
 "posts"
 msgstr "對不起，只有版主，網站管理員及原發文者可以編輯已刪除的文章"
 
-#: askbot/models/__init__.py:1218
+#: askbot/models/__init__.py:1239
 msgid "edit wiki posts"
 msgstr "編輯共筆文章"
 
-#: askbot/models/__init__.py:1221
+#: askbot/models/__init__.py:1242
 msgid "edit posts"
 msgstr "編輯文章"
 
-#: askbot/models/__init__.py:1261
+#: askbot/models/__init__.py:1282
 #, python-format
 msgid ""
 "Sorry, posts like this are editable only within %(minutes)s minute from "
@@ -8265,12 +5235,12 @@ msgid_plural ""
 "posting"
 msgstr[0] "對不起，這類貼文只能在發布後 %(minutes)s 分鐘內可編輯"
 
-#: askbot/models/__init__.py:1313
+#: askbot/models/__init__.py:1334
 #, python-format
 msgid "At least %d karma point is required to delete own questions"
 msgstr "至少需要 %d  積分值，才可以刪除自己的問題"
 
-#: askbot/models/__init__.py:1322
+#: askbot/models/__init__.py:1343
 msgid ""
 "Sorry, cannot delete this since it has an upvoted response posted by someone "
 "else"
@@ -8279,60 +5249,60 @@ msgid_plural ""
 "someone else"
 msgstr[0] "抱歉，無法刪除。因為已經有一些其他人張貼的回應有被贊同"
 
-#: askbot/models/__init__.py:1341
+#: askbot/models/__init__.py:1362
 msgid "delete posts"
 msgstr "刪除文章"
 
-#: askbot/models/__init__.py:1369
+#: askbot/models/__init__.py:1390
 msgid "reopen questions"
 msgstr "重新打開問題"
 
-#: askbot/models/__init__.py:1383
+#: askbot/models/__init__.py:1404
 msgid "You have flagged this post before and cannot do it more than once"
 msgstr "您之前已經標記過這篇貼文，不能再標記一次"
 
-#: askbot/models/__init__.py:1395
+#: askbot/models/__init__.py:1416
 msgid "flag posts as offensive"
 msgstr "舉報多篇文章濫用"
 
-#: askbot/models/__init__.py:1407
+#: askbot/models/__init__.py:1428
 #, python-format
 msgid ""
 "Sorry, you have exhausted the maximum number of %(max_flags_per_day)s "
 "offensive flags per day."
 msgstr "對不起，您已用完每日的濫用文章最大舉報數 %(max_flags_per_day)s 次。"
 
-#: askbot/models/__init__.py:1432
+#: askbot/models/__init__.py:1453
 msgid "cannot remove non-existing flag"
 msgstr "無法移除不存在的標記"
 
-#: askbot/models/__init__.py:1441
+#: askbot/models/__init__.py:1462
 msgid "remove flags"
 msgstr "移除標記"
 
-#: askbot/models/__init__.py:1450
+#: askbot/models/__init__.py:1471
 msgid "you don't have the permission to remove all flags"
 msgstr "您無權移除所有標記"
 
-#: askbot/models/__init__.py:1451
+#: askbot/models/__init__.py:1472
 msgid "no flags for this entry"
 msgstr "本項無標記"
 
-#: askbot/models/__init__.py:1506
+#: askbot/models/__init__.py:1527
 #, python-format
 msgid "Only administrators and moderators can add/remove the tag \"%s\""
 msgstr ""
 
-#: askbot/models/__init__.py:1508
+#: askbot/models/__init__.py:1529
 #, python-format
 msgid "Only administrators and moderators can add/remove the tags \"%s\""
 msgstr ""
 
-#: askbot/models/__init__.py:1518
+#: askbot/models/__init__.py:1539
 msgid "delete comments"
 msgstr "刪除評論"
 
-#: askbot/models/__init__.py:1535
+#: askbot/models/__init__.py:1556
 #, python-format
 msgid ""
 "Sorry, comments (except the last one) are deletable only within %(minutes)s "
@@ -8342,42 +5312,42 @@ msgid_plural ""
 "minutes from posting"
 msgstr[0] "對不起，留言（除了最新的之外）只在發布後 %(minutes)s 分鐘內可以刪除"
 
-#: askbot/models/__init__.py:1553
+#: askbot/models/__init__.py:1574
 msgid "sorry, but older votes cannot be revoked"
 msgstr "抱歉，但是舊的投票不能撤銷"
 
-#: askbot/models/__init__.py:2498 askbot/utils/functions.py:182
+#: askbot/models/__init__.py:2519 askbot/utils/functions.py:186
 #, python-format
 msgid "on %(date)s"
 msgstr "在%(date)s"
 
-#: askbot/models/__init__.py:2500
+#: askbot/models/__init__.py:2521
 msgid "in two days"
 msgstr "兩天內"
 
-#: askbot/models/__init__.py:2502
+#: askbot/models/__init__.py:2523
 msgid "tomorrow"
 msgstr "明天"
 
-#: askbot/models/__init__.py:2504
+#: askbot/models/__init__.py:2525
 #, python-format
 msgid "in %(hr)d hour"
 msgid_plural "in %(hr)d hours"
 msgstr[0] "在 %(hr)d 小時內"
 
-#: askbot/models/__init__.py:2506
+#: askbot/models/__init__.py:2527
 #, python-format
 msgid "in %(min)d min"
 msgid_plural "in %(min)d mins"
 msgstr[0] "在 %(min)d 分鐘內"
 
-#: askbot/models/__init__.py:2507
+#: askbot/models/__init__.py:2528
 #, python-format
 msgid "%(days)d day"
 msgid_plural "%(days)d days"
 msgstr[0] "%(days)d 天"
 
-#: askbot/models/__init__.py:2509
+#: askbot/models/__init__.py:2530
 #, python-format
 msgid ""
 "New users must wait %(days)s to %(answer_own_questions)s.  You can post an "
@@ -8385,81 +5355,81 @@ msgid ""
 msgstr ""
 "新使用者必須等 %(days)s 才能 %(answer_own_questions)s。您%(left)s可以張貼答覆"
 
-#: askbot/models/__init__.py:2818
+#: askbot/models/__init__.py:2839
 msgid "Registered User"
 msgstr "已註冊使用者"
 
-#: askbot/models/__init__.py:2820
+#: askbot/models/__init__.py:2841
 msgid "Administrator"
 msgstr "管理員"
 
-#: askbot/models/__init__.py:2822
+#: askbot/models/__init__.py:2843
 msgid "Moderator"
 msgstr "版主"
 
-#: askbot/models/__init__.py:2824
+#: askbot/models/__init__.py:2845
 msgid "Suspended User"
 msgstr "暫停帳號"
 
-#: askbot/models/__init__.py:2826
+#: askbot/models/__init__.py:2847
 msgid "Blocked User"
 msgstr "凍結帳號"
 
-#: askbot/models/__init__.py:2828
+#: askbot/models/__init__.py:2849
 #, fuzzy
 #| msgid "New User"
 msgid "Active User"
 msgstr "新使用者"
 
-#: askbot/models/__init__.py:2830
+#: askbot/models/__init__.py:2851
 msgid "Account terminated"
 msgstr ""
 
-#: askbot/models/__init__.py:3077
+#: askbot/models/__init__.py:3111
 #, python-format
 msgid "User %(username)s, id=%(id)s, %(email)s asked to terminate the account."
 msgstr ""
 
-#: askbot/models/__init__.py:3178
+#: askbot/models/__init__.py:3212
 #, python-format
 msgid "%(username)s karma is %(reputation)s"
 msgstr "%(username)s 積分是 %(reputation)s"
 
-#: askbot/models/__init__.py:3191
+#: askbot/models/__init__.py:3225
 #, python-format
 msgid "one gold badge"
 msgid_plural "%(count)d gold badges"
 msgstr[0] "%(count)d 個金牌"
 
-#: askbot/models/__init__.py:3198
+#: askbot/models/__init__.py:3232
 #, python-format
 msgid "one silver badge"
 msgid_plural "%(count)d silver badges"
 msgstr[0] "%(count)d 個銀牌"
 
-#: askbot/models/__init__.py:3205
+#: askbot/models/__init__.py:3239
 #, python-format
 msgid "one bronze badge"
 msgid_plural "%(count)d bronze badges"
 msgstr[0] "%(count)d 個銅牌"
 
-#: askbot/models/__init__.py:3216
+#: askbot/models/__init__.py:3250
 #, python-format
 msgid "%(item1)s and %(item2)s"
 msgstr "%(item1)s 和 %(item2)s"
 
-#: askbot/models/__init__.py:3218
+#: askbot/models/__init__.py:3252
 #, python-format
 msgid "%(user)s has %(badges)s"
 msgstr "%(user)s 有 %(badges)s"
 
-#: askbot/models/__init__.py:3364
+#: askbot/models/__init__.py:3400
 #, python-format
 msgid "At least %d karma point is required to post links"
 msgid_plural "At least %d karma points is required to post links"
 msgstr[0] "必須至少有 %d 點積分才能貼連結"
 
-#: askbot/models/__init__.py:4060
+#: askbot/models/__init__.py:4098
 #, python-format
 msgid ""
 "Congratulations, you have received a badge '%(badge_name)s'. Check out <a "
@@ -8468,9 +5438,31 @@ msgstr ""
 "恭喜，您獲得一枚「%(badge_name)s」徽章，查看<a\n"
 " href=\"%(user_profile)s\">您的個人檔案</a>。"
 
-#: askbot/models/__init__.py:4345 askbot/views/commands.py:555
+#: askbot/models/__init__.py:4380 askbot/views/commands.py:551
 msgid "Your tag subscription was saved, thanks!"
 msgstr "您的標籤訂閱已保存，非常感謝!"
+
+#: askbot/models/analytics.py:161
+msgid "logged in"
+msgstr ""
+
+#: askbot/models/analytics.py:162
+#, fuzzy
+#| msgid "Log out"
+msgid "logged out"
+msgstr "登出"
+
+#: askbot/models/analytics.py:164
+#, fuzzy
+#| msgid "answered"
+msgid "answer viewed"
+msgstr "已回答"
+
+#: askbot/models/analytics.py:173
+#, fuzzy
+#| msgid "watched"
+msgid "searched"
+msgstr "監看"
 
 #: askbot/models/badges.py:134
 #, python-format
@@ -8616,121 +5608,131 @@ msgstr "在一個標籤里非常活躍的人"
 msgid "message"
 msgstr "訊息"
 
-#: askbot/models/post.py:730
+#: askbot/models/post.py:727
+#, fuzzy
+#| msgid "Comment"
+msgid "comment"
+msgstr "評論"
+
+#: askbot/models/post.py:733
 msgid "piece of content"
 msgstr ""
 
-#: askbot/models/post.py:940 askbot/models/question.py:1507
+#: askbot/models/post.py:980 askbot/models/question.py:1506
 msgid "Sharing did not work, because group is unknown"
 msgstr "未分享成功，因為群組未知"
 
-#: askbot/models/post.py:961
+#: askbot/models/post.py:1001
 msgid "merged revision"
 msgstr "合併修訂"
 
-#: askbot/models/post.py:1787
+#: askbot/models/post.py:1200 askbot/templatetags/extra_filters_jinja.py:165
+msgid "more"
+msgstr "更多"
+
+#: askbot/models/post.py:1891
 msgid "Sorry, this content is not available"
 msgstr "對不起，此內容不可用"
 
-#: askbot/models/post.py:1789 askbot/models/post.py:1802
-#: askbot/models/post.py:1805
+#: askbot/models/post.py:1893 askbot/models/post.py:1906
+#: askbot/models/post.py:1909
 msgid "Sorry, this content is no longer available"
 msgstr "對不起，此內容不再可用"
 
-#: askbot/models/post.py:1818 askbot/models/post.py:1821
+#: askbot/models/post.py:1922 askbot/models/post.py:1925
 msgid "Sorry, this comment is no longer available"
 msgstr "對不起，此評論不再可用"
 
-#: askbot/models/post.py:1840
+#: askbot/models/post.py:1944
 msgid "This post is temporarily not available"
 msgstr "此貼文暫時不可用"
 
-#: askbot/models/post.py:2168
+#: askbot/models/post.py:2272
 msgid "Suggested edit"
 msgstr "推薦的編修"
 
-#: askbot/models/post.py:2261
+#: askbot/models/post.py:2365
 msgid "post revision"
 msgstr ""
 
-#: askbot/models/post.py:2262
+#: askbot/models/post.py:2366
 msgid "post revisions"
 msgstr ""
 
-#: askbot/models/post.py:2327
+#: askbot/models/post.py:2431
 #, python-format
 msgid ""
 "Thank you for your post to %(site)s. It will be published after the "
 "moderators review."
 msgstr "感謝您在 %(site)s 發文，版主審核過後將會發布文章。"
 
-#: askbot/models/post.py:2331
+#: askbot/models/post.py:2435
 #, python-format
 msgid "your post to %(site)s"
 msgstr "您的貼文到 %(site)s"
 
-#: askbot/models/post.py:2338
+#: askbot/models/post.py:2442
 msgid ""
 "Your post was placed on the moderation queue and will be published after the "
 "moderator approval."
 msgstr "您的文章待版主審核同意後就會發布。"
 
-#: askbot/models/post.py:2395
+#: askbot/models/post.py:2499
 #, fuzzy
 #| msgid "made an edit"
 msgid "proposed an edit"
 msgstr "進行編輯"
 
-#: askbot/models/post.py:2401
+#: askbot/models/post.py:2505
 msgid "posted"
 msgstr ""
 
-#: askbot/models/post.py:2402
+#: askbot/models/post.py:2506
 #, fuzzy
 #| msgid "updated tags"
 msgid "updated"
 msgstr "更新標籤"
 
-#: askbot/models/post.py:2442
+#: askbot/models/post.py:2546
 msgid "post flag reason"
 msgstr ""
 
-#: askbot/models/post.py:2443
+#: askbot/models/post.py:2547
 msgid "post flag reasons"
 msgstr ""
 
-#: askbot/models/question.py:157
+#: askbot/models/question.py:153
 #, python-format
 msgid "\" and \"%s\""
 msgstr "\" 和「%s」"
 
-#: askbot/models/question.py:160
+#: askbot/models/question.py:156
 msgid "\" and more"
 msgstr "\" 和其他"
 
-#: askbot/models/question.py:586
+#: askbot/models/question.py:585
 msgid "thread to group"
 msgstr ""
 
-#: askbot/models/question.py:587
+#: askbot/models/question.py:586
 msgid "threads to groups"
 msgstr ""
 
-#: askbot/models/question.py:1615
+#: askbot/models/question.py:1620
 #, python-format
 msgid "Tag %s is new and will be submitted for the moderators approval"
 msgstr "新標籤 %s 會提交給版主審核"
 
-#: askbot/models/question.py:1620
+#: askbot/models/question.py:1625
 #, python-format
 msgid "Tags %s are new and will be submitted for the moderators approval"
 msgstr "新標籤 %s 會提交給版主審核"
 
-#: askbot/models/question.py:1783
+#: askbot/models/question.py:1802
 msgid "favorite question"
 msgstr ""
 
-#: askbot/models/question.py:1784
+#: askbot/models/question.py:1803
 msgid "favorite questions"
 msgstr ""
 
@@ -8749,6 +5751,14 @@ msgstr "通過電子郵件添加內容"
 #: askbot/models/reply_by_email.py:114
 msgid "edited by email"
 msgstr "通過電子郵件編輯"
+
+#: askbot/models/repute.py:58
+msgid "vote"
+msgstr ""
+
+#: askbot/models/repute.py:59
+msgid "votes"
+msgstr "投票"
 
 #: askbot/models/repute.py:141 askbot/models/repute.py:142
 msgid "badge data"
@@ -8771,63 +5781,67 @@ msgstr ""
 msgid "<em>Changed by moderator. Reason:</em> %(reason)s"
 msgstr "<em>被版主修改。原因：</em> %(reason)s"
 
-#: askbot/models/user.py:323
+#: askbot/models/user.py:340
+msgid "activity"
+msgstr "活動"
+
+#: askbot/models/user.py:341
 msgid "activities"
 msgstr ""
 
-#: askbot/models/user.py:414
+#: askbot/models/user.py:438
 msgid "Entire forum"
 msgstr "整個論壇"
 
-#: askbot/models/user.py:415
+#: askbot/models/user.py:439
 msgid "Questions that I asked"
 msgstr "我提問的問題"
 
-#: askbot/models/user.py:416
+#: askbot/models/user.py:440
 msgid "Questions that I answered"
 msgstr "我回答的問題"
 
-#: askbot/models/user.py:418
+#: askbot/models/user.py:442
 msgid "Individually selected questions"
 msgstr "個人選擇的問題"
 
-#: askbot/models/user.py:419
+#: askbot/models/user.py:443
 msgid "Mentions and comment responses"
 msgstr "提及和評論回應"
 
-#: askbot/models/user.py:422
+#: askbot/models/user.py:446
 msgid "Instantly"
 msgstr "立即"
 
-#: askbot/models/user.py:423
+#: askbot/models/user.py:447
 msgid "Daily"
 msgstr "每日"
 
-#: askbot/models/user.py:424
+#: askbot/models/user.py:448
 msgid "Weekly"
 msgstr "每週"
 
-#: askbot/models/user.py:425
+#: askbot/models/user.py:449
 msgid "No email"
 msgstr "無電子郵件"
 
-#: askbot/models/user.py:639
+#: askbot/models/user.py:678
 msgid "Can join when they want"
 msgstr "當他們考慮時可以加入"
 
-#: askbot/models/user.py:640
+#: askbot/models/user.py:679
 msgid "Users ask permission"
 msgstr "使用者請求許可權"
 
-#: askbot/models/user.py:641
+#: askbot/models/user.py:680
 msgid "Moderator adds users"
 msgstr "版主新增使用者"
 
-#: askbot/models/user.py:691
+#: askbot/models/user.py:730
 msgid "Please give a list of valid email addresses."
 msgstr "請給予有效的電子郵件地址清單。"
 
-#: askbot/models/user.py:702
+#: askbot/models/user.py:741
 msgid "Please give a list of valid email domain names."
 msgstr "請給有效的電子郵件域名清單。"
 
@@ -9006,10 +6020,25 @@ msgctxt "urls"
 msgid "upload/"
 msgstr "upload/"
 
-#: askbot/urls.py:647
+#: askbot/urls.py:655
 msgctxt "urls"
 msgid "account/"
 msgstr "account/"
+
+#: askbot/utils/analytics_utils.py:6
+#: askbot/views/analytics/analytics_activity.py:49
+#: askbot/views/analytics/analytics_activity.py:115
+#, fuzzy
+#| msgctxt "urls"
+#| msgid "users/"
+msgid "All Users"
+msgstr "users/"
+
+#: askbot/utils/analytics_utils.py:12
+#, fuzzy
+#| msgid "Registered User"
+msgid "Rest of Users"
+msgstr "已註冊使用者"
 
 #: askbot/utils/category_tree.py:98 askbot/utils/category_tree.py:142
 #, python-format
@@ -9035,6 +6064,10 @@ msgstr "該功能僅限管理員使用"
 #: askbot/utils/forms.py:92
 msgid "this field is required"
 msgstr "此欄位不能空白"
+
+#: askbot/utils/forms.py:119
+msgid "Choose a screen name"
+msgstr "請決定顯示稱呼"
 
 #: askbot/utils/forms.py:129
 msgid "user name is required"
@@ -9088,158 +6121,202 @@ msgstr "請輸入有效的電子郵件地址"
 msgid "this email is already used by someone else, please choose another"
 msgstr "該電子郵件已被註冊，請選擇另一個再試"
 
+#: askbot/utils/forms.py:309
+msgid "Password"
+msgstr "密碼"
+
+#: askbot/utils/forms.py:317
+msgid "Password retyped"
+msgstr "再次輸入密碼"
+
 #: askbot/utils/forms.py:318
 msgid "please, retype your password"
 msgstr "請重新輸入密碼"
 
-#: askbot/utils/functions.py:185
+#: askbot/utils/functions.py:189
 msgid "2 days ago"
 msgstr "2 天前"
 
-#: askbot/utils/functions.py:187
+#: askbot/utils/functions.py:191
 msgid "yesterday"
 msgstr "昨天"
 
-#: askbot/utils/functions.py:190
+#: askbot/utils/functions.py:194
 #, python-format
 msgid "%(hr)d hour ago"
 msgid_plural "%(hr)d hours ago"
 msgstr[0] "%(hr)d小時前"
 
-#: askbot/utils/functions.py:196
+#: askbot/utils/functions.py:200
 #, python-format
 msgid "%(min)d min ago"
 msgid_plural "%(min)d mins ago"
 msgstr[0] "%(min)d分鐘前"
 
-#: askbot/utils/html.py:305
+#: askbot/utils/html.py:296
 msgid "please login"
 msgstr "請登入"
 
-#: askbot/views/avatar_views.py:180
+#: askbot/utils/ratelimit.py:337
+#, fuzzy, python-format
+#| msgid "in %(hr)d hour"
+#| msgid_plural "in %(hr)d hours"
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] "在 %(hr)d 小時內"
+
+#: askbot/utils/ratelimit.py:343
+#, fuzzy, python-format
+#| msgid "Account recovery email sent"
+msgid "%(count)d minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] "發送帳號恢復郵件"
+
+#: askbot/utils/ratelimit.py:346
+#, python-format
+msgid "%(count)d second"
+msgid_plural "%(count)d seconds"
+msgstr[0] ""
+
+#: askbot/views/analytics/analytics_activity.py:215
+#, fuzzy
+#| msgid "Google Analytics key"
+msgid "Analytics"
+msgstr "Google Analytics 金鑰"
+
+#: askbot/views/analytics/analytics_users.py:278
+#, python-brace-format
+msgid "Date range {range} is invalid."
+msgstr ""
+
+#: askbot/views/avatar_views.py:189
 msgid "Avatar uploaded and set as primary"
 msgstr "已上傳頭像並設為主要頭像"
 
-#: askbot/views/avatar_views.py:185
+#: askbot/views/avatar_views.py:194
 msgid "Please choose file to upload"
 msgstr "請選擇檔案上傳"
 
-#: askbot/views/commands.py:64
+#: askbot/views/commands.py:60
 msgid "Sorry, anonymous users cannot vote"
 msgstr "匿名使用者不能投票"
 
-#: askbot/views/commands.py:79
+#: askbot/views/commands.py:75
 msgid "Sorry you ran out of votes for today"
 msgstr "對不起，您今天的投票已用完"
 
-#: askbot/views/commands.py:84
+#: askbot/views/commands.py:80
 #, python-format
 msgid "You have %(votes_left)s votes left for today"
 msgstr "您今天還可以投%(votes_left)s次票"
 
-#: askbot/views/commands.py:152 askbot/views/users.py:322
+#: askbot/views/commands.py:148 askbot/views/users.py:322
 #: askbot/views/users.py:353
 msgid "Sorry, something is not right here..."
 msgstr "對不起，這裡出了些問題..."
 
-#: askbot/views/commands.py:156
+#: askbot/views/commands.py:152
 msgid "Sorry, but anonymous users cannot perform this action."
 msgstr "抱歉，匿名者不能進行此動作。"
 
-#: askbot/views/commands.py:164 askbot/views/commands.py:175
+#: askbot/views/commands.py:160 askbot/views/commands.py:171
 msgid "Request mode is not supported. Please try again."
 msgstr "不支援請求模式。請再試一次。"
 
-#: askbot/views/commands.py:216 askbot/views/commands.py:678
-#: askbot/views/commands.py:694 askbot/views/commands.py:737
+#: askbot/views/commands.py:212 askbot/views/commands.py:674
+#: askbot/views/commands.py:690 askbot/views/commands.py:733
 #, python-format
 msgid "anonymous users cannot %(perform_action)s"
 msgstr "匿名使用者無法 %(perform_action)s"
 
-#: askbot/views/commands.py:459
+#: askbot/views/commands.py:455
 msgid "Sorry, could not delete tag"
 msgstr "對不起，不能刪除標籤"
 
-#: askbot/views/commands.py:501
+#: askbot/views/commands.py:497
 #, python-format
 msgid "Admin tag %s cannot be added at this position"
 msgstr ""
 
-#: askbot/views/commands.py:559
+#: askbot/views/commands.py:555
 #, python-format
 msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
 msgstr "標籤訂閱已取消 (<a href=\"%(url)s\">撤銷</a>)。"
 
-#: askbot/views/commands.py:568
+#: askbot/views/commands.py:564
 #, python-format
 msgid "Please sign in to subscribe for: %(tags)s"
 msgstr "請登入以訂閱%(tags)s"
 
-#: askbot/views/commands.py:587
+#: askbot/views/commands.py:583
 msgid "Create"
 msgstr "創建"
 
-#: askbot/views/commands.py:695 askbot/views/commands.py:738
+#: askbot/views/commands.py:615
+msgid "Edit"
+msgstr "編輯"
+
+#: askbot/views/commands.py:691 askbot/views/commands.py:734
 msgid "make edits"
 msgstr "編輯"
 
-#: askbot/views/commands.py:705 askbot/views/commands.py:752
-#: askbot/views/users.py:841 askbot/views/writers.py:235
-#: askbot/views/writers.py:364 askbot/views/writers.py:445
-#: askbot/views/writers.py:535 askbot/views/writers.py:684
-#: askbot/views/writers.py:719
+#: askbot/views/commands.py:701 askbot/views/commands.py:748
+#: askbot/views/users.py:920 askbot/views/writers.py:269
+#: askbot/views/writers.py:399 askbot/views/writers.py:480
+#: askbot/views/writers.py:571 askbot/views/writers.py:721
+#: askbot/views/writers.py:756
 #, fuzzy
 #| msgid "mentioned in the post"
 msgid "Spam was detected in the post"
 msgstr "發布提醒"
 
-#: askbot/views/commands.py:899
+#: askbot/views/commands.py:895
 msgid "Please sign in to vote"
 msgstr "請登入後投票"
 
-#: askbot/views/commands.py:920
+#: askbot/views/commands.py:916
 msgid "Please sign in to delete/restore posts"
 msgstr "請登入後以刪除/恢復貼文"
 
-#: askbot/views/commands.py:982
+#: askbot/views/commands.py:978
 #, python-format
 msgid "Group %(name)s does not exist"
 msgstr "不存在 %(name)s 群組"
 
-#: askbot/views/commands.py:1370 askbot/views/commands.py:1403
+#: askbot/views/commands.py:1361 askbot/views/commands.py:1395
 msgid "Sorry, looks like sharing request was invalid"
 msgstr "對不起，分享請求無效"
 
-#: askbot/views/commands.py:1426
+#: askbot/views/commands.py:1419
 #, python-format
 msgid "%(user)s, welcome to group %(group)s!"
 msgstr "%(user)s，歡迎加入 %(group)s 群組！"
 
-#: askbot/views/commands.py:1480
+#: askbot/views/commands.py:1473
 #, fuzzy
 #| msgid "Sorry, only thread moderators can use this function"
 msgid "Sorry, only thread moderators or post owners can use this function"
 msgstr "對不起，只有版主才能使用這個功能"
 
-#: askbot/views/commands.py:1509
+#: askbot/views/commands.py:1501
 #, fuzzy
 #| msgid "The answer is now published"
 msgid "The post is now published"
 msgstr "已經發布答案"
 
-#: askbot/views/commands.py:1517
+#: askbot/views/commands.py:1509
 #, fuzzy
 #| msgid "The answer is now unpublished"
 msgid "The post is now unpublished"
 msgstr "已經取消答案發布"
 
-#: askbot/views/commands.py:1519
+#: askbot/views/commands.py:1511
 #, fuzzy
 #| msgid "your account is disabled"
 msgid "This feature is disabled"
 msgstr "您的帳號已停用"
 
-#: askbot/views/commands.py:1530
+#: askbot/views/commands.py:1522
 msgid "Sorry, only thread moderators can use this function"
 msgstr "對不起，只有版主才能使用這個功能"
 
@@ -9253,6 +6330,14 @@ msgstr "預覽失敗，因為資料不夠，或是算繪過程出錯"
 #, python-format
 msgid "About %(site)s"
 msgstr "關於 %(site)s"
+
+#: askbot/views/meta.py:78
+msgid "Help"
+msgstr "幫助"
+
+#: askbot/views/meta.py:93
+msgid "FAQ"
+msgstr "FAQ"
 
 #: askbot/views/meta.py:110
 msgid "Please sign in or register to send your feedback"
@@ -9309,14 +6394,14 @@ msgid "%d user blocked"
 msgid_plural "%d users blocked"
 msgstr[0] "有 %d 個使用者被凍結"
 
-#: askbot/views/readers.py:273
+#: askbot/views/readers.py:274
 #, python-format
 msgid ""
 "Please go to Settings -> %s and set the base url for your site to function "
 "properly"
 msgstr "請到 設定 ->%s 並且設定您網站的 base url 以便正確運作"
 
-#: askbot/views/readers.py:533
+#: askbot/views/readers.py:534
 msgid ""
 "Sorry, the comment you are looking for has been deleted and is no longer "
 "accessible"
@@ -9348,93 +6433,115 @@ msgstr "使用者狀態已修改"
 msgid "moderate user"
 msgstr "管理使用者"
 
-#: askbot/views/users.py:767
+#: askbot/views/users.py:549
+#, python-format
+msgid ""
+"A confirmation email has been sent to %(email)s. Please check your inbox and "
+"click the link to complete the email change."
+msgstr ""
+
+#: askbot/views/users.py:590
+#, python-format
+msgid "Your email address has been updated to %(email)s."
+msgstr ""
+
+#: askbot/views/users.py:597
+#, fuzzy
+#| msgid "Sorry, this account recovery key has expired or is invalid"
+msgid "Sorry, this email verification link has expired or is invalid."
+msgstr "對不起，這個帳號恢復已過期或不正確"
+
+#: askbot/views/users.py:846
 msgid "user profile overview"
 msgstr "使用者個人檔案概覽"
 
-#: askbot/views/users.py:954
+#: askbot/views/users.py:1033
 msgid "profile - recent activity"
 msgstr "個人檔案 - 最近活動"
 
-#: askbot/views/users.py:984
+#: askbot/views/users.py:1063
 msgid "profile - moderation"
 msgstr "個人檔案 - 審核"
 
-#: askbot/views/users.py:1096
+#: askbot/views/users.py:1175
 msgid "profile - responses"
 msgstr "個人檔案 - 回應"
 
-#: askbot/views/users.py:1109
+#: askbot/views/users.py:1188
 msgid "profile - network"
 msgstr "個人檔案 - 朋友圈"
 
-#: askbot/views/users.py:1137
+#: askbot/views/users.py:1216
 msgid "profile - votes"
 msgstr "個人檔案 - 投票"
 
-#: askbot/views/users.py:1190
+#: askbot/views/users.py:1269
 msgid "Profile - User's Karma"
 msgstr "個人檔案 - 使用者積分"
 
-#: askbot/views/users.py:1226
+#: askbot/views/users.py:1305
 msgid "profile - favorites"
 msgstr "個人檔案 - 收藏"
 
-#: askbot/views/users.py:1356 askbot/views/users.py:1360
+#: askbot/views/users.py:1435 askbot/views/users.py:1439
 msgid "changes saved"
 msgstr "儲存修改"
 
-#: askbot/views/users.py:1366
+#: askbot/views/users.py:1445
 msgid "email updates canceled"
 msgstr "取消電子郵件更新"
 
-#: askbot/views/users.py:1383
+#: askbot/views/users.py:1462
 msgid "profile - email subscriptions"
 msgstr "個人設定 - 郵件訂閱"
 
-#: askbot/views/users.py:1406
+#: askbot/views/users.py:1485
 #, python-format
 msgid "profile - %(section)s"
 msgstr "個人檔案 - %(section)s"
 
-#: askbot/views/writers.py:66
+#: askbot/views/writers.py:84
+msgid "You are posting too quickly. Please wait a while before posting again."
+msgstr ""
+
+#: askbot/views/writers.py:100
 msgid "Sorry, anonymous users cannot upload files"
 msgstr "抱歉，匿名使用者不能上傳檔案"
 
-#: askbot/views/writers.py:72
+#: askbot/views/writers.py:106
 #, fuzzy
 #| msgid "Sorry, commenting closed entries is not allowed"
 msgid "Uploading of files is not allowed"
 msgstr "對不起，無法在關閉的條目上留下評註"
 
-#: askbot/views/writers.py:87
+#: askbot/views/writers.py:121
 #, python-format
 msgid "allowed file types are '%(file_types)s'"
 msgstr "只允許上傳「%(file_types)s」類型的文件"
 
-#: askbot/views/writers.py:95
+#: askbot/views/writers.py:129
 #, fuzzy, python-format
 #| msgid "maximum upload file size is %(file_size)sK"
 msgid "maximum upload file size is %(file_size)s bytes"
 msgstr "只允許上傳不超過 %(file_size)sK 大小的檔案"
 
-#: askbot/views/writers.py:107
+#: askbot/views/writers.py:141
 msgid "Error uploading file. Please contact the site administrator. Thank you."
 msgstr "在檔案上傳過程中發生錯誤。請聯繫網站管理員，謝謝。"
 
-#: askbot/views/writers.py:199 askbot/views/writers.py:492
+#: askbot/views/writers.py:233 askbot/views/writers.py:527
 msgid "Please log in to make posts"
 msgstr "請登入再發文"
 
-#: askbot/views/writers.py:653
+#: askbot/views/writers.py:689
 msgid "This content is forbidden"
 msgstr "禁止此內容"
 
-#: askbot/views/writers.py:663
+#: askbot/views/writers.py:699
 msgid "Post not found"
 msgstr "未找到文章"
 
-#: askbot/views/writers.py:671
+#: askbot/views/writers.py:707
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot post comments. Please <a "
@@ -9442,11 +6549,11 @@ msgid ""
 msgstr ""
 "對不起，您已經退出，無法發表評論，請<a href=\"%(sign_in_url)s\">登入</a>。"
 
-#: askbot/views/writers.py:707
+#: askbot/views/writers.py:744
 msgid "Sorry, anonymous users cannot edit comments"
 msgstr "匿名使用者不能編輯評論"
 
-#: askbot/views/writers.py:771
+#: askbot/views/writers.py:808
 #, python-format
 msgid ""
 "Sorry, you appear to be logged out and cannot delete comments. Please <a "
@@ -9455,11 +6562,11 @@ msgstr ""
 "對不起，看來您已經登出，無法刪除該評論，請<a href=\"%(sign_in_url)s\">登入</"
 "a>。"
 
-#: askbot/views/writers.py:800
+#: askbot/views/writers.py:837
 msgid "sorry, we seem to have some technical difficulties"
 msgstr "對不起，好像有一些技術問題"
 
-#: askbot/views/writers.py:813
+#: askbot/views/writers.py:850
 #, python-format
 msgid ""
 "Sorry, only logged in users can convert comments to answers. Please <a "
@@ -9468,7 +6575,7 @@ msgstr ""
 "對不起，只有登入後才能將評論轉換為答案，請先<a href=\"%(sign_in_url)s\">登入"
 "</a>。"
 
-#: askbot/views/writers.py:844
+#: askbot/views/writers.py:881
 #, python-format
 msgid ""
 "Sorry, only logged in users can convert answers to comments. Please <a "
@@ -9477,16 +6584,1317 @@ msgstr ""
 "對不起，只有登入後才能將答案轉換為評論，請先<a href=\"%(sign_in_url)s\">登入"
 "</a>。"
 
-#: askbot/views/writers.py:869
+#: askbot/views/writers.py:906
 msgid "Error - could not find the destination post"
 msgstr "錯誤 - 無法找到目標貼文"
 
-#: askbot/views/writers.py:892
+#: askbot/views/writers.py:929
 #, python-format
 msgid ""
 "Cannot convert, because text has more characters than %(max_chars)s - "
 "maximum allowed for comments"
 msgstr "無法轉換，因為文字長度超過了評論允許的最大值 %(max_chars)s"
+
+#: testproject/testproject/settings.py:241
+#, fuzzy
+#| msgctxt "urls"
+#| msgid "account/"
+msgid "account/"
+msgstr "account/"
+
+#: testproject/testproject/settings.py:241
+msgid "signin/"
+msgstr "signin/"
+
+#~ msgid "nothing - not required"
+#~ msgstr "無 - 非必要"
+
+#~ msgid "account registration"
+#~ msgstr "帳號註冊"
+
+#~ msgid "Must be not be required"
+#~ msgstr "必須是非必要"
+
+#, fuzzy
+#~| msgid "Post not found"
+#~ msgid "Page not found"
+#~ msgstr "未找到文章"
+
+#, fuzzy
+#~| msgid "Sorry, could not delete tag"
+#~ msgid "Sorry, could not find the page you requested."
+#~ msgstr "對不起，不能刪除標籤"
+
+#, fuzzy
+#~| msgid "this answer has been selected as correct"
+#~ msgid "This page has been deleted"
+#~ msgstr "該回答已被認為正確"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "faq/"
+#~ msgid "faq"
+#~ msgstr "faq/"
+
+#, fuzzy
+#~| msgid "Sorry, something is not right here..."
+#~ msgid "Sorry, something went wrong."
+#~ msgstr "對不起，這裡出了些問題..."
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "feedback/"
+#~ msgid "back"
+#~ msgstr "feedback/"
+
+#, fuzzy
+#~| msgid "make edits"
+#~ msgid "Save edit"
+#~ msgstr "編輯"
+
+#, fuzzy
+#~| msgid "Login/Signup to Answer"
+#~ msgid "Login/Signup to Post"
+#~ msgstr "登入或註冊回答問題"
+
+#, fuzzy
+#~| msgid "Terms and conditions"
+#~ msgid "be clear and concise"
+#~ msgstr "條款和細則"
+
+#, fuzzy
+#~| msgid "Message is required"
+#~ msgid ", one of these is required"
+#~ msgstr "訊息是必填"
+
+#, fuzzy, python-format
+#~| msgid "Group settings: %(name)s"
+#~ msgid "Greetings from %(site_name)s"
+#~ msgstr "群組設定: %(name)s"
+
+#, fuzzy
+#~| msgid "edited by email"
+#~ msgid "Enter your email"
+#~ msgstr "通過電子郵件編輯"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "Recover account"
+#~ msgstr "account/"
+
+#, fuzzy
+#~| msgid "Please enter your %(username_token)s"
+#~ msgid "Please enter your <span>user name</span>, then sign in"
+#~ msgstr "請輸入%(username_token)s"
+
+#, fuzzy
+#~| msgid "account registration"
+#~ msgid "Complete registration"
+#~ msgstr "帳號註冊"
+
+#, fuzzy
+#~| msgid "Message explaining that user registrations are disabled"
+#~ msgid "New user registrations are disabled"
+#~ msgstr "說明使用者註冊的訊息已經停用"
+
+#, fuzzy
+#~| msgid "email updates canceled"
+#~ msgid "Email cannot be changed"
+#~ msgstr "取消電子郵件更新"
+
+#, fuzzy
+#~| msgid "Email address:"
+#~ msgid "Email address"
+#~ msgstr "電子信箱地址："
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "signup/"
+#~ msgid "Signup"
+#~ msgstr "signup/"
+
+#, fuzzy
+#~| msgid "you already gave an answer"
+#~ msgid "Already have an account?"
+#~ msgstr "您已經回答過"
+
+#, fuzzy
+#~| msgid "edited by email"
+#~ msgid "Recover it by email."
+#~ msgstr "通過電子郵件編輯"
+
+#, fuzzy
+#~| msgid "account registration"
+#~ msgid "Return to registration."
+#~ msgstr "帳號註冊"
+
+#, fuzzy
+#~| msgid "your account is disabled"
+#~ msgid "Your account details are:"
+#~ msgstr "您的帳號已停用"
+
+#, fuzzy
+#~| msgid "User name:"
+#~ msgid "Username:"
+#~ msgstr "使用者名稱："
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Password:"
+#~ msgstr "密碼"
+
+#, fuzzy
+#~| msgid "Please sign in to vote"
+#~ msgid "Please sign in here:"
+#~ msgstr "請登入後投票"
+
+#, fuzzy
+#~| msgid "<p>Sincerely,<br>{{ SITE_NAME }} Administrator</p>"
+#~ msgid ""
+#~ "Sincerely,\n"
+#~ "Q&A Forum Administrator"
+#~ msgstr "<p>謹此。<br>{{ SITE_NAME }} 管理員</p>"
+
+#, fuzzy
+#~| msgid "Site title for the Q&A forum"
+#~ msgid "Greetings from the Q&A forum"
+#~ msgstr "網站標題"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "logout/"
+#~ msgid "Logout"
+#~ msgstr "logout/"
+
+#, fuzzy
+#~| msgid "%(site)s user name and password"
+#~ msgid "or enter your <span>user name and password</span>"
+#~ msgstr "%(site)s 使用者名稱和密碼"
+
+#, fuzzy
+#~| msgid "Please sign in to vote"
+#~ msgid "Please, sign in"
+#~ msgstr "請登入後投票"
+
+#, fuzzy
+#~| msgid "User name:"
+#~ msgid "Username"
+#~ msgstr "使用者名稱："
+
+#, fuzzy
+#~| msgid "User name is required with the email"
+#~ msgid "Username or email"
+#~ msgstr "電子信箱地址需要使用者名稱"
+
+#, fuzzy
+#~| msgid "Change password"
+#~ msgid "New password"
+#~ msgstr "修改密碼"
+
+#, fuzzy
+#~| msgid "Password retyped"
+#~ msgid "Please, retype"
+#~ msgstr "再次輸入密碼"
+
+#~ msgid "Change password"
+#~ msgstr "修改密碼"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "provider"
+#~ msgstr "核准"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "last used"
+#~ msgstr "最不被推薦的問題"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "delete/"
+#~ msgid "delete"
+#~ msgstr "delete/"
+
+#, fuzzy
+#~| msgid "%d post deleted"
+#~| msgid_plural "%d posts deleted"
+#~ msgid "cannot be deleted"
+#~ msgstr "已刪除 %d 篇文章"
+
+#, fuzzy
+#~| msgid "%(site)s user name and password"
+#~ msgid "Create login name and password"
+#~ msgstr "%(site)s 使用者名稱和密碼"
+
+#, fuzzy
+#~| msgid "Email address:"
+#~ msgid "Confirm email address"
+#~ msgstr "電子信箱地址："
+
+#, fuzzy
+#~| msgid "Content License"
+#~ msgid "Continue"
+#~ msgstr "內容授權"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s gravatar image"
+#~ msgid "%(username)s's primary avatar"
+#~ msgstr "%(username)s 大頭貼"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s gravatar image"
+#~ msgid "%(username)s's avatar"
+#~ msgstr "%(username)s 大頭貼"
+
+#, fuzzy
+#~| msgid "Default avatar"
+#~ msgid "delete avatar"
+#~ msgstr "預設頭像"
+
+#, fuzzy
+#~| msgid "deleted answer"
+#~ msgid "Delete These"
+#~ msgstr "刪除回答"
+
+#, fuzzy
+#~| msgid "Upload files"
+#~ msgid "Uploaded"
+#~ msgstr "上傳檔案"
+
+#, fuzzy
+#~| msgid "Gravatar"
+#~ msgid "Primary avatar"
+#~ msgstr "Gravatar"
+
+#, fuzzy
+#~| msgid "Uploaded Avatar"
+#~ msgid "Upload another avatar."
+#~ msgstr "已上傳頭像"
+
+#, fuzzy
+#~| msgid "Uploaded Avatar"
+#~ msgid "Upload an avatar"
+#~ msgstr "已上傳頭像"
+
+#, fuzzy
+#~| msgid "Badge name"
+#~ msgid "Badge"
+#~ msgstr "徽章名稱"
+
+#, fuzzy, python-format
+#~| msgid "Badge name"
+#~ msgid "Badge \"%(name)s\""
+#~ msgstr "徽章名稱"
+
+#, fuzzy
+#~| msgid "received badge"
+#~ msgid "Nobody yet received this badge."
+#~ msgstr "收到的徽章"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "badges/"
+#~ msgid "Badges"
+#~ msgstr "badges/"
+
+#, fuzzy
+#~| msgid "Badge name"
+#~ msgid "Badge levels"
+#~ msgstr "徽章名稱"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "about/"
+#~ msgid "about"
+#~ msgstr "about/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "help/"
+#~ msgid "help"
+#~ msgstr "help/"
+
+#, fuzzy
+#~| msgid "Privacy policy"
+#~ msgid "privacy policy"
+#~ msgstr "隱私政策"
+
+#, fuzzy
+#~| msgid "External Services"
+#~ msgid "terms of service"
+#~ msgstr "外部服務"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "feedback/"
+#~ msgid "give feedback"
+#~ msgstr "feedback/"
+
+#, fuzzy
+#~| msgid "Please ask your question here"
+#~ msgid "Type your question or search"
+#~ msgstr "請在此提問"
+
+#, fuzzy, python-format
+#~| msgid "Use license logo"
+#~ msgid "%(site)s logo"
+#~ msgstr "使用授權條款 Logo"
+
+#, fuzzy
+#~| msgid "Title"
+#~ msgid "title"
+#~ msgstr "標題"
+
+#, fuzzy
+#~| msgid "i-names are not supported"
+#~ msgid "basic HTML tags are also supported"
+#~ msgstr "不支援 i-names"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "users/"
+#~ msgid "users"
+#~ msgstr "users/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "badges/"
+#~ msgid "badges"
+#~ msgstr "badges/"
+
+#, fuzzy
+#~| msgid "User settings"
+#~ msgid "settings"
+#~ msgstr "使用者設定"
+
+#, fuzzy
+#~| msgid "User name:"
+#~ msgid "User name"
+#~ msgstr "使用者名稱："
+
+#, fuzzy, python-format
+#~| msgid "First flagged post"
+#~ msgid "%(new)s new flagged posts"
+#~ msgstr "第一個被標記的貼文"
+
+#, fuzzy, python-format
+#~| msgid "First flagged post"
+#~ msgid "%(seen)s flagged posts"
+#~ msgstr "第一個被標記的貼文"
+
+#, fuzzy, python-format
+#~| msgid "The answer is now published"
+#~ msgid "Your post at %(site_name)s is now published"
+#~ msgstr "已經發布答案"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "To get an Akismet key please visit <a href=\"%(url)s\">Akismet site</a>"
+#~ msgid ""
+#~ "To change frequency and content of these alerts, please visit <a "
+#~ "href=\"%(url)s\">your user profile</a>."
+#~ msgstr "請訪問 <a href=\"%(url)s\">Akismet 網站</a> 獲取 Akismet 金鑰"
+
+#, fuzzy, python-format
+#~| msgid "Tag subscription was canceled (<a href=\"%(url)s\">undo</a>)."
+#~ msgid "%(author)s edited a <a href=\"%(post_url)s\">post</a>"
+#~ msgstr "標籤訂閱已取消 (<a href=\"%(url)s\">撤銷</a>)。"
+
+#, fuzzy
+#~| msgid "edited by email"
+#~ msgid "Preview of emails"
+#~ msgstr "通過電子郵件編輯"
+
+#, fuzzy, python-format
+#~| msgid "anonymous users cannot %(perform_action)s"
+#~ msgid "%(author)s %(performed_action)s"
+#~ msgstr "匿名使用者無法 %(perform_action)s"
+
+#, fuzzy
+#~| msgid "Tags"
+#~ msgid "Tags:"
+#~ msgstr "標籤"
+
+#, fuzzy, python-format
+#~| msgid "Enable moderation queue alerts"
+#~ msgid "%(site)s moderation alert"
+#~ msgstr "啟用審核列表通知"
+
+#, fuzzy
+#~| msgid "No email"
+#~ msgid "Askbot emails"
+#~ msgstr "無電子郵件"
+
+#, fuzzy
+#~| msgid "Subject line"
+#~ msgid "Subject"
+#~ msgstr "主題"
+
+#, fuzzy, python-format
+#~| msgid "Connect your %(provider)s account to %(site_name)s"
+#~ msgid "Great, you are ready to use %(site_name)s!"
+#~ msgstr "將您的%(provider)s帳號連結到%(site_name)s"
+
+#, fuzzy
+#~| msgid "Post was rejected"
+#~ msgid "Your post was rejected."
+#~ msgstr "貼文被拒"
+
+#, fuzzy
+#~| msgid "Question has no accepted answers"
+#~ msgid "your post was not accepted"
+#~ msgstr "仍沒有正確答案的問題"
+
+#, fuzzy, python-format
+#~| msgid "Please sign in to subscribe for: %(tags)s"
+#~ msgid "Link to unsubscribe from %(site_name)s"
+#~ msgstr "請登入以訂閱%(tags)s"
+
+#, fuzzy
+#~| msgid "Followed Questions"
+#~ msgid "Frequently Asked Questions "
+#~ msgstr "已關注問題"
+
+#, fuzzy
+#~| msgid "What should \"unanswered question\" mean?"
+#~ msgid "What should I avoid in my answers?"
+#~ msgstr "「未回答」問題是什麼意思？"
+
+#, fuzzy
+#~| msgid "delete comments"
+#~ msgid "add comments"
+#~ msgstr "刪除評論"
+
+#, fuzzy
+#~| msgid "answer own questions"
+#~ msgid " accept own answer to own questions"
+#~ msgstr "回答自己的問題"
+
+#, fuzzy
+#~| msgid "retag questions"
+#~ msgid "retag other's questions"
+#~ msgstr "整理標籤"
+
+#, fuzzy
+#~| msgid "Edit community wiki posts"
+#~ msgid "edit community wiki questions"
+#~ msgstr "編輯社群共筆文章"
+
+#, fuzzy
+#~| msgid "Accept any answer"
+#~ msgid "edit any answer"
+#~ msgstr "接受任意答案"
+
+#, fuzzy
+#~| msgid "delete comments"
+#~ msgid "delete any comment"
+#~ msgstr "刪除評論"
+
+#, fuzzy
+#~| msgid "Stellar Question"
+#~ msgid "Still have questions?"
+#~ msgstr "明星提問"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "feedback/"
+#~ msgid "Feedback"
+#~ msgstr "feedback/"
+
+#, fuzzy
+#~| msgid "Thanks for the feedback!"
+#~ msgid "Give us your feedback!"
+#~ msgstr "感謝您的意見回饋！"
+
+#, fuzzy
+#~| msgid "Who can send feedback"
+#~ msgid "Send Feedback"
+#~ msgstr "誰可以傳送回饋意見"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "complete/"
+#~ msgid "compose"
+#~ msgstr "complete/"
+
+#, fuzzy
+#~| msgid "Your message:"
+#~ msgid "Write your message"
+#~ msgstr "您的訊息："
+
+#, fuzzy, python-format
+#~| msgid "on %(date)s"
+#~ msgid "You wrote on %(date)s:"
+#~ msgstr "在%(date)s"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "Groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "All groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "all groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "My groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "my groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "Group"
+#~ msgstr "groups/"
+
+#, fuzzy, python-format
+#~| msgid "Welcome message"
+#~ msgid "Welcome %(username)s,"
+#~ msgstr "歡迎訊息"
+
+#, fuzzy
+#~| msgid "Welcome message"
+#~ msgid "Welcome,"
+#~ msgstr "歡迎訊息"
+
+#, fuzzy
+#~| msgid "Please enter your question"
+#~ msgid "Please search before asking your questions"
+#~ msgstr "請輸入問題"
+
+#, fuzzy
+#~| msgid "Tags"
+#~ msgid "Tag"
+#~ msgstr "標籤"
+
+#, fuzzy
+#~| msgid "Suggested edit"
+#~ msgid "Suggested by"
+#~ msgstr "推薦的編修"
+
+#, fuzzy
+#~| msgid "Ask Your Question"
+#~ msgid "Your decision"
+#~ msgstr "開始發問"
+
+#, fuzzy
+#~| msgid "Post not found"
+#~ msgid "Nothing found"
+#~ msgstr "未找到文章"
+
+#, fuzzy, python-format
+#~| msgid "Sorry, this content is not available"
+#~ msgid "Share this content on %(site)s"
+#~ msgstr "對不起，此內容不可用"
+
+#, fuzzy
+#~| msgid "Flag offensive"
+#~ msgid "flag offensive"
+#~ msgstr "舉報濫用"
+
+#, fuzzy
+#~| msgid "remove flags"
+#~ msgid "remove flag"
+#~ msgstr "移除標記"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "retag/"
+#~ msgid "retag"
+#~ msgstr "retag/"
+
+#, fuzzy
+#~| msgid "updated tags"
+#~ msgid "add tags"
+#~ msgstr "更新標籤"
+
+#, fuzzy
+#~| msgid "delete comments"
+#~ msgid "add a comment"
+#~ msgstr "刪除評論"
+
+#, fuzzy
+#~| msgid "delete comments"
+#~ msgid "see more comments"
+#~ msgstr "刪除評論"
+
+#, fuzzy
+#~| msgid "post comments"
+#~ msgid "upvote comment"
+#~ msgstr "發表評論"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "edit/"
+#~ msgid "edit"
+#~ msgstr "edit/"
+
+#, fuzzy
+#~| msgid "delete comments"
+#~ msgid "delete this comment"
+#~ msgstr "刪除評論"
+
+#, fuzzy
+#~| msgid "Accept own answer"
+#~ msgid "convert to answer"
+#~ msgstr "接受自己的回答"
+
+#, fuzzy
+#~| msgid "Comment"
+#~ msgid "Comments"
+#~ msgstr "評論"
+
+#, fuzzy
+#~| msgid "Anonymous"
+#~ msgid "anonymous user"
+#~ msgstr "匿名"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s karma is %(reputation)s"
+#~ msgid "%(username)s's website is %(url)s"
+#~ msgstr "%(username)s 積分是 %(reputation)s"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "revisions/"
+#~ msgid "previous"
+#~ msgstr "revisions/"
+
+#, fuzzy
+#~| msgid "First retag"
+#~ msgid "first page"
+#~ msgstr "首次重設標籤"
+
+#, fuzzy
+#~| msgid "Moderation queue has items"
+#~ msgid "Moderation queue is empty."
+#~ msgstr "審核列表中還有項目"
+
+#, fuzzy
+#~| msgid "more"
+#~ msgid "show more"
+#~ msgstr "更多"
+
+#, fuzzy
+#~| msgid "First upvote"
+#~ msgid "first post"
+#~ msgstr "第一個贊成票"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "approve posts"
+#~ msgstr "核准"
+
+#, fuzzy
+#~| msgid "Enable approved post alert"
+#~ msgid "approve posts and users"
+#~ msgstr "啟用核准貼文通知"
+
+#, fuzzy
+#~| msgid "delete posts"
+#~ msgid "visible posts"
+#~ msgstr "刪除文章"
+
+#, fuzzy
+#~| msgid "updated post reject reason"
+#~ msgid "add/manage reject reasons"
+#~ msgstr "已更新拒絕貼文理由"
+
+#, fuzzy
+#~| msgid "Blocked User"
+#~ msgid "block spammers"
+#~ msgstr "凍結帳號"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "moderation-queue/"
+#~ msgid "Moderation queue"
+#~ msgstr "moderation-queue/"
+
+#, fuzzy
+#~| msgid "When new post is published"
+#~ msgid "This response is published"
+#~ msgstr "當發布新文章之時"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "delete/"
+#~ msgid "undelete"
+#~ msgstr "delete/"
+
+#, fuzzy
+#~| msgid "Gave accepted answer"
+#~ msgid "See the accepted answer"
+#~ msgstr "提供已接受的答案"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "reopen/"
+#~ msgid "reopen"
+#~ msgstr "reopen/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "close/"
+#~ msgid "close"
+#~ msgstr "close/"
+
+#, fuzzy
+#~| msgid "followed"
+#~ msgid "Unfollow"
+#~ msgstr "追蹤中"
+
+#, fuzzy
+#~| msgid "followed"
+#~ msgid "Follow"
+#~ msgstr "追蹤中"
+
+#, fuzzy
+#~| msgid "subscribe to all tags"
+#~ msgid "subscribe to the rss feed"
+#~ msgstr "訂閱全部標籤"
+
+#, fuzzy
+#~| msgid "asked"
+#~ msgid "Asked"
+#~ msgstr "提問於"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "Last updated"
+#~ msgstr "最不被推薦的問題"
+
+#, fuzzy
+#~| msgid "Individually selected"
+#~ msgid "Individual users"
+#~ msgstr "個別選定"
+
+#, fuzzy
+#~| msgid "only interesting tags"
+#~ msgid "resetting tags"
+#~ msgstr "感興趣的標籤"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "questions"
+#~ msgid "Questions"
+#~ msgstr "questions"
+
+#, fuzzy
+#~| msgid "subscribe to all tags"
+#~ msgid "subscribe to the feed"
+#~ msgstr "訂閱全部標籤"
+
+#, fuzzy
+#~| msgid "Suggested tags"
+#~ msgid "reset tags"
+#~ msgstr "推薦的標籤"
+
+#, fuzzy
+#~| msgid "only interesting tags"
+#~ msgid "Interesting tags"
+#~ msgstr "感興趣的標籤"
+
+#, fuzzy
+#~| msgid "Mandatory tags"
+#~ msgid "Enter tag"
+#~ msgstr "必要標籤"
+
+#, fuzzy
+#~| msgid "exclude ignored tags"
+#~ msgid "Ignored tags"
+#~ msgstr "排除想忽視的標籤"
+
+#, fuzzy
+#~| msgid "only subscribed tags"
+#~ msgid "Subscribed tags"
+#~ msgstr "只要有訂閱的標籤"
+
+#, fuzzy
+#~| msgid "Enable email alerts"
+#~ msgid "Email me alerts for"
+#~ msgstr "啟用電子郵件通知"
+
+#, fuzzy
+#~| msgid "sorted by frequency of tag use"
+#~ msgid "Change frequency of emails"
+#~ msgstr "按標籤被使用的次數排序"
+
+#, fuzzy
+#~| msgid "Close question"
+#~ msgid "Close reason:"
+#~ msgstr "關閉問題"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "revisions/"
+#~ msgid "Revision history"
+#~ msgstr "revisions/"
+
+#, fuzzy, python-format
+#~| msgctxt "urls"
+#~| msgid "revisions/"
+#~ msgid "Revision %(rev)s"
+#~ msgstr "revisions/"
+
+#, fuzzy
+#~| msgid "post answers"
+#~ msgid "Post search"
+#~ msgstr "發表答案"
+
+#, fuzzy
+#~| msgid "gold"
+#~ msgid "go"
+#~ msgstr "金牌"
+
+#, fuzzy
+#~| msgid "subscribe to all tags"
+#~ msgid "Subscribe for tags"
+#~ msgstr "訂閱全部標籤"
+
+#, fuzzy
+#~| msgid "subscribe to all tags"
+#~ msgid "Please, subscribe for the following tags:"
+#~ msgstr "訂閱全部標籤"
+
+#, fuzzy
+#~| msgid "subscribed"
+#~ msgid "Subscribe"
+#~ msgstr "有訂閱"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "subscriptions/"
+#~ msgid "Tag subscriptions"
+#~ msgstr "subscriptions/"
+
+#, fuzzy
+#~| msgid "Real name"
+#~ msgid "by name"
+#~ msgstr "真實姓名"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "suggested-tags/"
+#~ msgid "suggested"
+#~ msgstr "suggested-tags/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "subscriptions/"
+#~ msgid "manage subscriptions"
+#~ msgstr "subscriptions/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "subscriptions/"
+#~ msgid "Manage tag subscriptions"
+#~ msgstr "subscriptions/"
+
+#, fuzzy
+#~| msgid "created tag description"
+#~ msgid "Manage tag subscription"
+#~ msgstr "建立的標籤敘述"
+
+#, fuzzy
+#~| msgid "Create"
+#~ msgid "Create new"
+#~ msgstr "創建"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "delete/"
+#~ msgid "Delete"
+#~ msgstr "delete/"
+
+#, fuzzy
+#~| msgid "Post not found"
+#~ msgid "Nothing found."
+#~ msgstr "未找到文章"
+
+#, fuzzy
+#~| msgid "Very active in one tag"
+#~ msgid "There are no tags."
+#~ msgstr "在一個標籤里非常活躍的人"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "questions"
+#~ msgid "Sections:"
+#~ msgstr "questions"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "messages"
+#~ msgstr "訊息"
+
+#, fuzzy
+#~| msgid "reopen questions"
+#~ msgid "group join requests"
+#~ msgstr "重新打開問題"
+
+#, fuzzy
+#~| msgid "approved"
+#~ msgid "Approve"
+#~ msgstr "核准"
+
+#, fuzzy
+#~| msgid "profile - messages"
+#~ msgid "private messages"
+#~ msgstr "個人檔案 - 訊息"
+
+#, fuzzy
+#~| msgid "Trigger email notifications"
+#~ msgid "notifications"
+#~ msgstr "觸發郵件通知"
+
+#, fuzzy
+#~| msgid "Trigger email notifications"
+#~ msgid "There are no notifications."
+#~ msgstr "觸發郵件通知"
+
+#, fuzzy
+#~| msgid "your account is disabled"
+#~ msgid "Your account has been terminated."
+#~ msgstr "您的帳號已停用"
+
+#, fuzzy
+#~| msgid "select country"
+#~ msgid "Select twitter account"
+#~ msgstr "選擇國家"
+
+#, fuzzy
+#~| msgid "Trigger tweets on others accounts"
+#~ msgid "use another account"
+#~ msgstr "用其它帳號發布 Tweet"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "unsubscribe/"
+#~ msgid "Unsubscribe"
+#~ msgstr "unsubscribe/"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "unsubscribe/"
+#~ msgid "Yes, unsubscribe"
+#~ msgstr "unsubscribe/"
+
+#, fuzzy
+#~| msgid "Unsubscribe link"
+#~ msgid "Bad unsubscribe link."
+#~ msgstr "取消訂閱連結"
+
+#, fuzzy
+#~| msgid "Please login to post"
+#~ msgid "Please, contact support."
+#~ msgstr "請登入後發文"
+
+#, fuzzy
+#~| msgid "Unsubscribe link"
+#~ msgid "Resend unsubscribe link"
+#~ msgstr "取消訂閱連結"
+
+#, fuzzy
+#~| msgid "sorry, there is no such user name"
+#~ msgid "Sorry, there was an unexpected error."
+#~ msgstr "對不起，沒有這個使用者名稱"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s gravatar image"
+#~ msgid "%(username)s's profile"
+#~ msgstr "%(username)s 大頭貼"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "signout/"
+#~ msgid "sign out"
+#~ msgstr "signout/"
+
+#, fuzzy
+#~| msgid "please login"
+#~ msgid "manage logins"
+#~ msgstr "請登入"
+
+#, fuzzy, python-format
+#~| msgid "Description"
+#~ msgid "%(description)s"
+#~ msgstr "描述"
+
+#, fuzzy
+#~| msgid "Answered"
+#~ msgid "Answer to:"
+#~ msgstr "已回答"
+
+#, fuzzy
+#~| msgid "completed user profile"
+#~ msgid "Edit user profile"
+#~ msgstr "已完成使用者個人檔案"
+
+#, fuzzy
+#~| msgid "edit posts"
+#~ msgid "edit profile"
+#~ msgstr "編輯文章"
+
+#, fuzzy
+#~| msgid "by date"
+#~ msgid "Update"
+#~ msgstr "依日期"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "subscriptions/"
+#~ msgid "subscriptions"
+#~ msgstr "subscriptions/"
+
+#, fuzzy
+#~| msgid "No email"
+#~ msgid "Stop Email"
+#~ msgstr "無電子郵件"
+
+#, fuzzy
+#~| msgid "only subscribed tags"
+#~ msgid "Subscribed Tags"
+#~ msgstr "只要有訂閱的標籤"
+
+#, fuzzy
+#~| msgid "followed"
+#~ msgid "unfollow"
+#~ msgstr "追蹤中"
+
+#, fuzzy
+#~| msgid "followed"
+#~ msgid "follow"
+#~ msgstr "追蹤中"
+
+#, fuzzy
+#~| msgid "followed"
+#~ msgid "following"
+#~ msgstr "追蹤中"
+
+#, fuzzy
+#~| msgid "upload files"
+#~ msgid "update profile"
+#~ msgstr "上傳檔案"
+
+#, fuzzy
+#~| msgid "Real name"
+#~ msgid "real name"
+#~ msgstr "真實姓名"
+
+#, fuzzy
+#~| msgid "No email"
+#~ msgid "email"
+#~ msgstr "無電子郵件"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "groups/"
+#~ msgid "groups"
+#~ msgstr "groups/"
+
+#, fuzzy
+#~| msgid "least voted"
+#~ msgid "last seen"
+#~ msgstr "最不被推薦的問題"
+
+#, fuzzy
+#~| msgid "Website"
+#~ msgid "website"
+#~ msgstr "個人網站"
+
+#, fuzzy
+#~| msgid "Documentation"
+#~ msgid "location"
+#~ msgstr "文件"
+
+#, fuzzy
+#~| msgctxt "urls"
+#~| msgid "select_languages/"
+#~ msgid "languages"
+#~ msgstr "select_languages/"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "manage account"
+#~ msgstr "account/"
+
+#, fuzzy
+#~| msgid "remove anonymity"
+#~ msgid "Remove account"
+#~ msgstr "刪除匿名"
+
+#, fuzzy
+#~| msgid "moderator"
+#~ msgid "moderation"
+#~ msgstr "版主"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s karma is %(reputation)s"
+#~ msgid "%(username)s's current status is \"%(status)s\""
+#~ msgstr "%(username)s 積分是 %(reputation)s"
+
+#, fuzzy
+#~| msgid "Change status to"
+#~ msgid "Change status"
+#~ msgstr "改變狀態至"
+
+#, fuzzy
+#~| msgid "User status changed"
+#~ msgid "User reputation changed"
+#~ msgstr "使用者狀態已修改"
+
+#, fuzzy
+#~| msgid "Message text"
+#~ msgid "Message sent"
+#~ msgstr "訊息文字"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "Send message"
+#~ msgstr "訊息"
+
+#, fuzzy, python-format
+#~| msgid "Followed Questions"
+#~ msgid "Followed by %(count)s person"
+#~ msgid_plural "Followed by %(count)s people"
+#~ msgstr[0] "已關注問題"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s karma is %(reputation)s"
+#~ msgid "%(username)s's network is empty"
+#~ msgstr "%(username)s 積分是 %(reputation)s"
+
+#, fuzzy
+#~| msgid "reopen questions"
+#~ msgid "There are no questions."
+#~ msgstr "重新打開問題"
+
+#, fuzzy, python-format
+#~| msgid "%(username)s gravatar image"
+#~ msgid "%(user_name)s's karma change log"
+#~ msgstr "%(username)s 大頭貼"
+
+#, fuzzy
+#~| msgid "Enable email alerts"
+#~ msgid "email alerts"
+#~ msgstr "啟用電子郵件通知"
+
+#, fuzzy
+#~| msgid "account/"
+#~ msgid "account"
+#~ msgstr "account/"
+
+#, fuzzy
+#~| msgid "Group settings"
+#~ msgid "Group info"
+#~ msgstr "群組設定"
+
+#, fuzzy
+#~| msgid "created tag description"
+#~ msgid "edit description"
+#~ msgstr "建立的標籤敘述"
+
+#, fuzzy
+#~| msgid "Show logo"
+#~ msgid "change logo"
+#~ msgstr "顯示 Logo"
+
+#, fuzzy
+#~| msgid "delete posts"
+#~ msgid "delete logo"
+#~ msgstr "刪除文章"
+
+#, fuzzy
+#~| msgid "ask questions"
+#~ msgid "Can post questions"
+#~ msgstr "提問"
+
+#, fuzzy
+#~| msgid "post answers"
+#~ msgid "Can post answers"
+#~ msgstr "發表答案"
+
+#, fuzzy
+#~| msgid "post comments"
+#~ msgid "Can post comments"
+#~ msgstr "發表評論"
+
+#, fuzzy
+#~| msgid "upload files"
+#~ msgid "Can upload file attachments"
+#~ msgstr "上傳檔案"
+
+#, fuzzy
+#~| msgid "upload files"
+#~ msgid "Can upload images"
+#~ msgstr "上傳檔案"
+
+#, fuzzy
+#~| msgid "Allowed email addresses"
+#~ msgid "List of preapproved email addresses"
+#~ msgstr "允許電子信箱地址"
+
+#, fuzzy
+#~| msgid "edited by email"
+#~ msgid "edit preapproved emails"
+#~ msgstr "通過電子郵件編輯"
+
+#, fuzzy
+#~| msgid "Allowed email domain names"
+#~ msgid "List of preapproved email domain names"
+#~ msgstr "允許的電子信箱域名"
+
+#, fuzzy
+#~| msgid "Allowed email domain names"
+#~ msgid "edit preapproved email domains"
+#~ msgstr "允許的電子信箱域名"
+
+#, fuzzy, python-format
+#~| msgid "Global user group name"
+#~ msgid "Users in group %(name)s"
+#~ msgstr "全域使用者群組名稱"
+
+#, fuzzy, python-format
+#~| msgid "Group settings: %(name)s"
+#~ msgid "people in group %(name)s"
+#~ msgstr "群組設定: %(name)s"
+
+#, fuzzy
+#~| msgid "Your user name"
+#~ msgid "by username"
+#~ msgstr "您的使用者名稱"
+
+#, fuzzy
+#~| msgid "Enable tag moderation"
+#~ msgid "image awaiting moderation"
+#~ msgstr "啟用標籤審核"
+
+#, fuzzy
+#~| msgid "Enable tag moderation"
+#~ msgid "link awaiting moderation"
+#~ msgstr "啟用標籤審核"
+
+#, fuzzy
+#~| msgid "made a new post"
+#~ msgid "Make new posts"
+#~ msgstr "已發新貼文"
 
 #~ msgid "Reverse ordering of comments"
 #~ msgstr "翻轉評論順序"
@@ -9533,14 +7941,8 @@ msgstr "無法轉換，因為文字長度超過了評論允許的最大值 %(max
 #~ "preview"
 #~ msgstr "要產生預覽至少需要一位使用者和一則個人訊息"
 
-#~ msgid "signin/"
-#~ msgstr "signin/"
-
 #~ msgid "Sites"
 #~ msgstr "網站"
-
-#~ msgid "Log out"
-#~ msgstr "登出"
 
 #~ msgid "Home"
 #~ msgstr "首頁"
