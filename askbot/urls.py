@@ -693,7 +693,7 @@ if 'avatar' in settings.INSTALLED_APPS:
         ),
         service_url(  # this url is used without changes as in the avatar app
             '^avatar/render-primary/(?P<user>[\w\d\.\-_]+)/(?P<size>[\d]+)/$',
-            ratelimit_exempt(AvatarViews.render_primary),
+            AvatarViews.render_primary,
             name='avatar_render_primary'
         ),
         service_url(
