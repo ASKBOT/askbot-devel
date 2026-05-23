@@ -3,6 +3,7 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``
