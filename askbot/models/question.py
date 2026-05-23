@@ -364,17 +364,23 @@ class ThreadManager(BaseQuerySetManager):
             # superlinearly and degrades to multi-second response times for
             # 6-8 tag queries even on small datasets. The subquery + HAVING
             # COUNT form is the relational idiom for set intersection.
-            tags = list(tags)
-            ThreadTagModel = self.model.tags.through
-            matching_thread_ids = (
-                ThreadTagModel.objects
-                .filter(tag__name__in=tags)
-                .values('thread_id')
-                .annotate(matched=Count('tag_id', distinct=True))
-                .filter(matched=len(tags))
-                .values_list('thread_id', flat=True)
-            )
-            qs = qs.filter(id__in=matching_thread_ids)
+            # Deduplicate: unified_tags() concatenates query_tags + tags,
+            # so the same tag can appear twice; an inflated len() would
+            # never match Count(distinct=True). Empty list means all
+            # requested tags were unknown, in which case the search is
+            # unfiltered by tags (the names are reported via meta_data).
+            tags = list(set(tags))
+            if tags:
+                ThreadTagModel = self.model.tags.through
+                matching_thread_ids = (
+                    ThreadTagModel.objects
+                    .filter(tag__name__in=tags)
+                    .values('thread_id')
+                    .annotate(matched=Count('tag_id', distinct=True))
+                    .filter(matched=len(tags))
+                    .values_list('thread_id', flat=True)
+                )
+                qs = qs.filter(id__in=matching_thread_ids)
         else:
             meta_data['non_existing_tags'] = list()
 

@@ -254,6 +254,34 @@ class ThreadTagModelsTests(AskbotTestCase):
         qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss)
         self.assertEqual(1, qs.count())
 
+    @with_settings(TAG_SEARCH_INPUT_ENABLED=False)
+    def test_run_adv_search_ANDing_tags_duplicate_across_query_and_selector(self):
+        # unified_tags() concatenates query_tags + tags, so the same tag in
+        # both the #tag query syntax and the selector produces a duplicate.
+        # The result set must still be the AND over the *distinct* tags.
+        ss = SearchState(scope=None, sort=None, query="#tag3",
+                         tags='tag1, tag3', author=None, page=None,
+                         user_logged_in=None)
+        qs, meta_data = Thread.objects.run_advanced_search(
+            request_user=self.user, search_state=ss)
+        # q1 (tag1,tag2,tag3) and q4 (tag1..tag6) both carry tag1 AND tag3
+        self.assertEqual(2, qs.count())
+        self.assertEqual({self.q1.thread_id, self.q4.thread_id},
+                         {t.id for t in qs})
+
+    @with_settings(TAG_SEARCH_INPUT_ENABLED=True)
+    def test_run_adv_search_ANDing_tags_all_nonexistent(self):
+        # When every requested tag is unknown, the search should not narrow
+        # the result set; it should return all visible threads and report
+        # the missing tags via meta_data.
+        ss = SearchState.get_empty()
+        ss = ss.add_tag('nope-one').add_tag('nope-two')
+        qs, meta_data = Thread.objects.run_advanced_search(
+            request_user=self.user, search_state=ss)
+        self.assertEqual(4, qs.count())
+        self.assertEqual({'nope-one', 'nope-two'},
+                         set(meta_data['non_existing_tags']))
+
     def test_run_adv_search_query_author(self):
         ss = SearchState(scope=None, sort=None, query="@user", tags=None, author=None, page=None, user_logged_in=None)
         qs, meta_data = Thread.objects.run_advanced_search(request_user=self.user, search_state=ss)
