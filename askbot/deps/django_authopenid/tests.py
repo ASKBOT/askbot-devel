@@ -58,7 +58,8 @@ class SignupWithPasswordEmailValidationTests(DjangoTestCase):
                    BLANK_EMAIL_ALLOWED=False,
                    TERMS_CONSENT_REQUIRED=False,
                    USE_RECAPTCHA=False,
-                   NEW_REGISTRATIONS_DISABLED=False)
+                   NEW_REGISTRATIONS_DISABLED=False,
+                   REGISTRATION_RATE_LIMIT_ENABLED=False)
     def test_validation_off_creates_user_directly(self):
         response = self._post_signup('ua', 'a@example.com')
         # Validation-off path redirects via get_next_url(request)
@@ -75,7 +76,8 @@ class SignupWithPasswordEmailValidationTests(DjangoTestCase):
                    BLANK_EMAIL_ALLOWED=False,
                    TERMS_CONSENT_REQUIRED=False,
                    USE_RECAPTCHA=False,
-                   NEW_REGISTRATIONS_DISABLED=False)
+                   NEW_REGISTRATIONS_DISABLED=False,
+                   REGISTRATION_RATE_LIMIT_ENABLED=False)
     def test_validation_on_delays_user_creation(self):
         response = self._post_signup('ub', 'b@example.com')
         # Validation-on path redirects to verify_email_and_register

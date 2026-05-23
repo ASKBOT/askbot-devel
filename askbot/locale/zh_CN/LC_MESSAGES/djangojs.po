@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: askbot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 14:58+0000\n"
+"POT-Creation-Date: 2026-04-26 00:48+0000\n"
 "PO-Revision-Date: 2020-08-16 19:55+0000\n"
 "Last-Translator: evgeny <evgeny.fadeev@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/askbot/askbot/"
@@ -279,6 +279,7 @@ msgstr "保存标签"
 #: askbot/media/js/pages/question/merge_questions_dialog.js:187
 #: askbot/media/js/utils/modal_dialog.js:9
 #: askbot/media/js/utils/text_property_editor.js:48
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Cancel"
 msgstr "取消"
 
@@ -396,6 +397,7 @@ msgstr "你确定不想发表此评论？"
 
 #: askbot/media/js/pages/question/edit_comment_form.js:362
 #: askbot/media/jslib/timeago.js:129
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "just now"
 msgstr "刚才"
 
@@ -431,11 +433,11 @@ msgstr "加载预览"
 msgid "Merge"
 msgstr "合并"
 
-#: askbot/media/js/pages/question/post_comments_widget.js:168
+#: askbot/media/js/pages/question/post_comments_widget.js:169
 msgid "Sorry, only one moderated comment per post is allowed"
 msgstr ""
 
-#: askbot/media/js/pages/question/post_comments_widget.js:173
+#: askbot/media/js/pages/question/post_comments_widget.js:174
 msgid "please sign in or register to post comments"
 msgstr "请登录或注册后再进行评论"
 
@@ -577,16 +579,39 @@ msgstr ""
 msgid "Please select at least one item"
 msgstr "请选择至少一项"
 
-#: askbot/media/js/utils.js:240
+#: askbot/media/js/utils.js:144
+msgid "%(count)s hour"
+msgid_plural "%(count)s hours"
+msgstr[0] ""
+
+#: askbot/media/js/utils.js:152
+msgid "%(count)s minute"
+msgid_plural "%(count)s minutes"
+msgstr[0] ""
+
+#: askbot/media/js/utils.js:158
+msgid "%(count)s second"
+msgid_plural "%(count)s seconds"
+msgstr[0] ""
+
+#: askbot/media/js/utils.js:194
+msgid "Too many requests. Please wait %(time)s and try again."
+msgstr ""
+
+#: askbot/media/js/utils.js:199
+msgid "Too many requests, please slow down."
+msgstr ""
+
+#: askbot/media/js/utils.js:313
 msgid "must be shorter than %(max_chars)s character"
 msgid_plural "must be shorter than %(max_chars)s characters"
 msgstr[0] "标签最多只能有%(max_chars)s个字符"
 
-#: askbot/media/js/utils.js:308
+#: askbot/media/js/utils.js:381
 msgid "and"
 msgstr "与"
 
-#: askbot/media/js/utils.js:326
+#: askbot/media/js/utils.js:399
 msgid "click to close"
 msgstr "点击消息框关闭"
 
@@ -604,36 +629,36 @@ msgstr "草稿已存..."
 msgid "click to edit"
 msgstr "点击消息框关闭"
 
-#: askbot/media/js/utils/file_upload_dialog.js:138
+#: askbot/media/js/utils/file_upload_dialog.js:139
 #, javascript-format
 msgid "Uploaded file: %s"
 msgstr "上传的文件：%s"
 
-#: askbot/media/js/utils/file_upload_dialog.js:152
+#: askbot/media/js/utils/file_upload_dialog.js:154
 msgid "Choose a different file"
 msgstr "选择其它文件"
 
-#: askbot/media/js/utils/file_upload_dialog.js:154
+#: askbot/media/js/utils/file_upload_dialog.js:156
 msgid "Choose a different image"
 msgstr "选择其它图片"
 
-#: askbot/media/js/utils/file_upload_dialog.js:168
+#: askbot/media/js/utils/file_upload_dialog.js:170
 msgid "Oops, looks like we had an error. Sorry."
 msgstr "哎呀！对不起，看来我们有了一个错误。"
 
-#: askbot/media/js/utils/file_upload_dialog.js:228
+#: askbot/media/js/utils/file_upload_dialog.js:235
 msgid "Choose a file to insert"
 msgstr "选择插入的文件"
 
-#: askbot/media/js/utils/file_upload_dialog.js:230
+#: askbot/media/js/utils/file_upload_dialog.js:237
 msgid "Choose an image to insert"
 msgstr "选择插入的图片"
 
-#: askbot/media/js/utils/file_upload_dialog.js:243
+#: askbot/media/js/utils/file_upload_dialog.js:250
 msgid "Allowed file types are:"
 msgstr "允许的文件类型："
 
-#: askbot/media/js/utils/file_upload_dialog.js:249
+#: askbot/media/js/utils/file_upload_dialog.js:263
 msgid "Or paste file url here"
 msgstr "或粘贴文件的超连接地址"
 
@@ -682,6 +707,13 @@ msgstr "已激活"
 msgid "disabled"
 msgstr "无效"
 
+#: askbot/media/js/utils/video_modal.js:47
+#: askbot/media/js/utils/video_modal.js:120
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:34
+msgid "Video"
+msgstr ""
+
 #: askbot/media/js/validators/question_validators.js:25
 #, javascript-format
 msgid "details must have > %s character"
@@ -689,536 +721,557 @@ msgid_plural "details must have > %s characters"
 msgstr[0] "详情至少需要 %s 个字符"
 
 #: askbot/media/jslib/timeago.js:97
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Jan"
 msgstr "一月"
 
 #: askbot/media/jslib/timeago.js:98
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Feb"
 msgstr "二月"
 
 #: askbot/media/jslib/timeago.js:99
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Mar"
 msgstr "三月"
 
 #: askbot/media/jslib/timeago.js:100
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Apr"
 msgstr "四月"
 
 #: askbot/media/jslib/timeago.js:101
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "May"
 msgstr "五月"
 
 #: askbot/media/jslib/timeago.js:102
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Jun"
 msgstr "六月"
 
 #: askbot/media/jslib/timeago.js:103
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Jul"
 msgstr "七月"
 
 #: askbot/media/jslib/timeago.js:104
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Aug"
 msgstr "八月"
 
 #: askbot/media/jslib/timeago.js:105
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Sep"
 msgstr "九月"
 
 #: askbot/media/jslib/timeago.js:106
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Oct"
 msgstr "十月"
 
 #: askbot/media/jslib/timeago.js:107
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Nov"
 msgstr "十一月"
 
 #: askbot/media/jslib/timeago.js:108
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "Dec"
 msgstr "十二月"
 
 #: askbot/media/jslib/timeago.js:116
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 #, javascript-format
 msgid "%s year ago"
 msgid_plural "%s years ago"
 msgstr[0] ""
 
 #: askbot/media/jslib/timeago.js:119
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "2 days ago"
 msgstr "2天以前"
 
 #: askbot/media/jslib/timeago.js:121
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 msgid "yesterday"
 msgstr "昨天"
 
 #: askbot/media/jslib/timeago.js:124
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 #, javascript-format
 msgid "%s hour ago"
 msgid_plural "%s hours ago"
 msgstr[0] "%s 小时之前"
 
 #: askbot/media/jslib/timeago.js:127
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
 #, javascript-format
 msgid "%s min ago"
 msgid_plural "%s mins ago"
 msgstr[0] "%s 分钟前"
 
-#: askbot/media/wmd/help-panel/editor_help_panel.js:1
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:6
-msgid "Create clickable links in your text."
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "Leave a comment to explain your downvote"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/editor_help_panel.js:1
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:9
-msgid "Inline link"
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "Minimum"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/editor_help_panel.js:1
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:10
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:16
-#: askbot/media/wmd/wmd.js:1876
-msgid "link text"
-msgstr "链接文字"
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "%s characters left"
+msgid "characters"
+msgstr "还可输入 %s 个字符"
 
-#: askbot/media/wmd/help-panel/src/HelpButton.svelte:24
-msgid "Formatting help"
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "add comment"
+msgid "Failed to load comments"
+msgstr "添加评论"
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "loading..."
+msgid "Loading..."
+msgstr "读取中..."
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "above"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/HelpButton.svelte:25
-msgid "Toggle formatting help"
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "below"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:20
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "post a comment"
+msgid "Failed to post comment"
+msgstr "save comment"
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "Thank you for your vote!"
+msgstr ""
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "We'd love to hear a bit more detailed feedback."
+msgstr ""
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "save comment"
+msgid "Leave a comment"
+msgstr "保存评论"
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "Skip"
+msgstr ""
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+msgid "previous comments shown below"
+msgstr ""
+
+#: askbot/media/svelte/dist/downvote_comment_prompt.js:1
+#, fuzzy
+#| msgid "add comment"
+msgid "Add Comment"
+msgstr "添加评论"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:26
 msgid "Links"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:21
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:27
 #, fuzzy
 #| msgid "image"
 msgid "Images"
 msgstr "图片"
 
-#: askbot/media/wmd/help-panel/src/settings.js:22
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:28
 msgid "Styling"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:23
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:29
 msgid "Lists"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:24
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:30
 #, fuzzy
 #| msgid "quote"
 msgid "Quotes"
 msgstr "引用"
 
-#: askbot/media/wmd/help-panel/src/settings.js:25
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:31
 msgid "Code"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:26
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:32
 msgid "HTML"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:27
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:19
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:33
 #, fuzzy
 #| msgid "enabled"
 msgid "Tables"
 msgstr "已激活"
 
-#: askbot/media/wmd/help-panel/src/settings.js:28
-msgid "Video"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/settings.js:29
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#: askbot/media/svelte/help-panel/settings.js:35
 msgid "Math"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/settings.js:30
-#, fuzzy
-#| msgid "link"
-msgid "Auto-link"
-msgstr "超链接"
-
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:6
-msgid "Special patterns are automatically converted to links."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Create clickable links in your text."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:9
-msgid "How it works"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Inline link"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:10
-msgid ""
-"Your administrator has configured patterns that automatically become "
-"clickable links."
+#: askbot/media/svelte/dist/editor_help_panel.js:1 askbot/media/wmd/wmd.js:1806
+msgid "link text"
+msgstr "链接文字"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "The text in brackets becomes the clickable link."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:14
-msgid "Example patterns"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Link with title"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:15
-msgid "Issue references like #123 or BUG-456 may link to your issue tracker."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Title"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:19
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:24
-msgid "Note"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "The title appears when hovering over the link."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/AutoLinkHelp.svelte:20
-msgid ""
-"The specific patterns available depend on your site's configuration. Contact "
-"your administrator for details."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Auto-linked URLs"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:6
-msgid "Quote text from other sources."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "URLs like https://example.com are automatically converted to links."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:9
-#, fuzzy
-#| msgid "quote"
-msgid "Basic quote"
-msgstr "引用"
-
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:10
-msgid "This is a quoted text."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Pattern shortcuts"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:14
-msgid "Multi-line quote"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "These patterns are automatically converted to links:"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
-msgid "First line of quote."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:15
-msgid "Second line of quote."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:19
-msgid "Nested quotes"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
-#, fuzzy
-#| msgid "quote"
-msgid "Outer quote"
-msgstr "引用"
-
-#: askbot/media/wmd/help-panel/src/tabs/BlockquotesHelp.svelte:20
-msgid "Nested quote"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:6
-msgid "Display code with syntax highlighting."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:9
-msgid "Inline code"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:11
-msgid "Wrap with single backticks."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:15
-msgid "Code block"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:17
-msgid "Wrap with triple backticks on separate lines."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:21
-msgid "Syntax highlighting"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:23
-msgid "Add language name after opening backticks."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:27
-msgid "Toolbar shortcut"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/CodeHelp.svelte:28
-msgid "Select code and click the code button to format it."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:6
-msgid "Some HTML tags are allowed in posts."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:9
-msgid "Allowed tags"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:14
-msgid "Structure tags"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/HtmlHelp.svelte:25
-msgid ""
-"Scripts, iframes, and other potentially unsafe tags are filtered out for "
-"security."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:6
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Embed images in your post."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:9
-#, fuzzy
-#| msgid "message sent"
-msgid "Image syntax"
-msgstr "消息已发"
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:11
-msgid "Alt text describes the image for accessibility."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:15
-msgid "Image with title"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:16
-msgid "\"Title text\""
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:17
-msgid "Title appears when hovering over the image."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:21
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "Uploaded file: %s"
 msgid "Uploading images"
 msgstr "上传的文件：%s"
 
-#: askbot/media/wmd/help-panel/src/tabs/ImagesHelp.svelte:22
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid ""
-"Click the image button in the toolbar to upload an image from your computer."
+"Click the image button in the toolbar to upload an image from your computer. "
+"The markdown link will be inserted automatically."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:11
-msgid "The text in brackets becomes the clickable link."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:15
-msgid "Link with title"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:17
-msgid "The title appears when hovering over the link."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:21
-msgid "Auto-linked URLs"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/LinksHelp.svelte:22
-msgid "URLs like https://example.com are automatically converted to links."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:6
-msgid "Create ordered, unordered, and task lists."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:9
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
-#| msgid "numbered list"
-msgid "Unordered list"
-msgstr "数字编号列表"
+#| msgid "enter image url"
+msgid "External images"
+msgstr ""
+"<b>输入图片地址</b></p><p>示例：<br />http://www.example.com/image.jpg   \"我"
+"的截图\""
 
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
-#, fuzzy
-#| msgid "List item"
-msgid "First item"
-msgstr "列表项目"
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
-msgid "Second item"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid ""
+"You can also link to external images using markdown syntax. Alt text "
+"describes the image for accessibility."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:10
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:16
-#, fuzzy
-#| msgid "List item"
-msgid "Third item"
-msgstr "列表项目"
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:11
-msgid "Also works with * or +"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Image with title"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:15
-#, fuzzy
-#| msgid "numbered list"
-msgid "Ordered list"
-msgstr "数字编号列表"
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:20
-msgid "Task list"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "\"Title text\""
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
-msgid "Unchecked task"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Title appears when hovering over the image."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:21
-msgid "Completed task"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:22
-msgid "Creates interactive checkboxes."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:26
-#, fuzzy
-#| msgid "bulleted list"
-msgid "Nested lists"
-msgstr "项目符号列表"
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
-msgid "Item"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
-#, fuzzy
-#| msgid "List item"
-msgid "Nested item"
-msgstr "列表项目"
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:27
-msgid "Another nested"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/ListsHelp.svelte:28
-msgid "Indent with 2 spaces for nesting."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:6
-msgid "Write mathematical expressions using LaTeX syntax."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:9
-msgid "Inline math"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:11
-msgid "Wrap with single dollar signs for inline formulas."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:15
-msgid "Display math"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:17
-msgid "Double dollar signs for centered block formulas."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:21
-msgid "LaTeX display mode"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:26
-msgid "Literal dollar signs"
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/MathHelp.svelte:28
-msgid "Use backslash to show actual dollar signs."
-msgstr ""
-
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:6
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Format text with bold, italic, and strikethrough."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:9
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Bold"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:10
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "link text"
 msgid "bold text"
 msgstr "链接文字"
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:11
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Or use __bold text__"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:15
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "italic"
 msgid "Italic"
 msgstr "斜体"
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:16
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "italic"
 msgid "italic text"
 msgstr "斜体"
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:17
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Or use _italic text_"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:21
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Bold and italic"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:22
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "bold and italic"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:26
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Strikethrough"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/StylingHelp.svelte:27
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "strikethrough"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:6
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Create ordered, unordered, and task lists."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "numbered list"
+msgid "Unordered list"
+msgstr "数字编号列表"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "List item"
+msgid "First item"
+msgstr "列表项目"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Second item"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "List item"
+msgid "Third item"
+msgstr "列表项目"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Also works with * or +"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "numbered list"
+msgid "Ordered list"
+msgstr "数字编号列表"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Task list"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Unchecked task"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Completed task"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Creates interactive checkboxes."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "bulleted list"
+msgid "Nested lists"
+msgstr "项目符号列表"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Item"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "List item"
+msgid "Nested item"
+msgstr "列表项目"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Another nested"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Indent with 2 spaces for nesting."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Quote text from other sources."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "quote"
+msgid "Basic quote"
+msgstr "引用"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "This is a quoted text."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Multi-line quote"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "First line of quote."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Second line of quote."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Nested quotes"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "quote"
+msgid "Outer quote"
+msgstr "引用"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Nested quote"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Display code with syntax highlighting."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Inline code"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "inline code"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Wrap with single backticks."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Code block"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "code block"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Wrap with triple backticks on separate lines."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Syntax highlighting"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Add language name after opening backticks."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Toolbar shortcut"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Select code and click the code button to format it."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Some HTML tags are allowed in posts."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Note"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid ""
+"Scripts, iframes, and other potentially unsafe tags are filtered out for "
+"security."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "enter at least %s more characters"
 msgid "Create tables using pipe characters."
 msgstr "至少还需输入 %s个字符"
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:9
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Basic table"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:10
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:11
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, javascript-format
 msgctxt "Header <number>"
 msgid "Header %s"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:12
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:13
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, javascript-format
 msgctxt "Cell <number>"
 msgid "Cell %s"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:17
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Column alignment"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgctxt "align column to"
 msgid "Left"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "enter url"
 msgctxt "align column to"
@@ -1227,43 +1280,83 @@ msgstr ""
 "<b>输入Web地址</b></p><p>示例：<br />http://www.cnprog.com/   \"我的网站\"</"
 "p>"
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgctxt "align column to"
 msgid "Right"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:18
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 #, fuzzy
 #| msgid "link text"
 msgid "text"
 msgstr "链接文字"
 
-#: askbot/media/wmd/help-panel/src/tabs/TablesHelp.svelte:19
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Use : to align columns (left, center, right)."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:6
-msgid "Embed videos from supported platforms."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid ""
+"Embed videos from supported platforms. Videos appear as clickable links that "
+"open in a player."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:9
-msgid "YouTube"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+#, fuzzy
+#| msgid "message sent"
+msgid "Basic syntax"
+msgstr "消息已发"
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Creates a video link. Click to open the player."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:11
-msgid "Use the video ID from the YouTube URL."
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "With title"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:15
-msgid "Vimeo"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Add an optional title that displays in the link and player header."
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:20
-msgid "Dailymotion"
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Supported platforms"
 msgstr ""
 
-#: askbot/media/wmd/help-panel/src/tabs/VideoHelp.svelte:25
+#: askbot/media/svelte/dist/editor_help_panel.js:1
 msgid "Finding the video ID"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Write mathematical expressions using LaTeX syntax."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Inline math"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Wrap with single dollar signs for inline formulas."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Display math"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Double dollar signs for centered block formulas."
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "LaTeX display mode"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Literal dollar signs"
+msgstr ""
+
+#: askbot/media/svelte/dist/editor_help_panel.js:1
+msgid "Use backslash to show actual dollar signs."
 msgstr ""
 
 #: askbot/media/wmd/wmd.js:31
@@ -1314,56 +1407,76 @@ msgstr "水平线"
 msgid "undo"
 msgstr "撤销"
 
-#: askbot/media/wmd/wmd.js:43 askbot/media/wmd/wmd.js:1181
+#: askbot/media/wmd/wmd.js:43 askbot/media/wmd/wmd.js:1110
 msgid "redo"
 msgstr "重做"
 
 #: askbot/media/wmd/wmd.js:54
-msgid "enter image url"
-msgstr ""
-"<b>输入图片地址</b></p><p>示例：<br />http://www.example.com/image.jpg   \"我"
-"的截图\""
+#, fuzzy
+#| msgid "Uploaded file: %s"
+msgid "Upload image"
+msgstr "上传的文件：%s"
 
 #: askbot/media/wmd/wmd.js:55
-msgid "enter url"
+msgid "Enter URL"
 msgstr ""
-"<b>输入Web地址</b></p><p>示例：<br />http://www.cnprog.com/   \"我的网站\"</"
-"p>"
 
 #: askbot/media/wmd/wmd.js:56
-msgid "upload file attachment"
-msgstr "上传文件附件"
+#, fuzzy
+#| msgid "Uploaded file: %s"
+msgid "Upload file"
+msgstr "上传的文件：%s"
 
-#: askbot/media/wmd/wmd.js:1712
+#: askbot/media/wmd/wmd.js:241
+msgid "e.g."
+msgstr ""
+
+#: askbot/media/wmd/wmd.js:313
+#, fuzzy
+#| msgid "Or paste file url here"
+msgid "Or paste image url here"
+msgstr "或粘贴文件的超连接地址"
+
+#: askbot/media/wmd/wmd.js:1642
 msgid "strong text"
 msgstr "加粗文本"
 
-#: askbot/media/wmd/wmd.js:1716
+#: askbot/media/wmd/wmd.js:1646
 msgid "emphasized text"
 msgstr "强调文本"
 
-#: askbot/media/wmd/wmd.js:1869
+#: askbot/media/wmd/wmd.js:1799
 msgid "image description"
 msgstr "图像描述"
 
-#: askbot/media/wmd/wmd.js:1872
+#: askbot/media/wmd/wmd.js:1802
 msgid "file name"
 msgstr "文件名"
 
-#: askbot/media/wmd/wmd.js:2309 askbot/media/wmd/wmd.js:2329
+#: askbot/media/wmd/wmd.js:2260 askbot/media/wmd/wmd.js:2273
 msgid "enter code here"
 msgstr "在这里输入代码"
 
-#: askbot/media/wmd/wmd.js:2423
+#: askbot/media/wmd/wmd.js:2367
 msgid "List item"
 msgstr "列表项目"
 
-#: askbot/media/wmd/wmd.js:2455
+#: askbot/media/wmd/wmd.js:2399
 msgid "Heading"
 msgstr "标题"
 
-#~ msgid "loading..."
-#~ msgstr "读取中..."
+#, fuzzy
+#~| msgid "link"
+#~ msgid "Auto-link"
+#~ msgstr "超链接"
+
+#~ msgid "enter url"
+#~ msgstr ""
+#~ "<b>输入Web地址</b></p><p>示例：<br />http://www.cnprog.com/   \"我的网站"
+#~ "\"</p>"
+
+#~ msgid "upload file attachment"
+#~ msgstr "上传文件附件"
 
 #~ msgid "details are required"
 #~ msgstr "必须提供详情"
@@ -1427,9 +1540,6 @@ msgstr "标题"
 
 #~ msgid "Post approved"
 #~ msgstr "your post is now restored!"
-
-#~ msgid "post a comment"
-#~ msgstr "save comment"
 
 #~ msgid "%s content minchars"
 #~ msgstr "please enter more than %s characters"

@@ -4,6 +4,7 @@
 
 This module contains views that allow adding, editing, and deleting main textual content.
 """
+import datetime
 import logging
 import os
 import os.path
@@ -32,6 +33,7 @@ from django.conf import settings
 from django.views.decorators import csrf
 from django.contrib.auth.models import User
 
+from askbot import const
 from askbot import exceptions as askbot_exceptions
 from askbot import forms
 from askbot import models
@@ -45,11 +47,48 @@ from askbot.utils.file_utils import store_file
 from askbot.utils.functions import encode_jwt
 from askbot.utils.http import is_ajax
 from askbot.utils.loading import load_module
+from askbot.utils.ratelimit import is_allowlisted, is_high_rep_exempt
 from askbot.views import context
 from askbot.templatetags import extra_filters_jinja as template_filters
 from askbot.importers.stackexchange import management as stackexchange#todo: may change
 from askbot.utils.slug import slugify
 from askbot import spam_checker
+
+
+def check_watched_user_post_rate_limit(user, request):
+    """Enforce post rate limit for watched users.
+
+    Raises PermissionDenied if the user has exceeded the post rate
+    limit within the configured window. Allowlisted IPs (uniform
+    "trusted IP" model — see ``askbot.utils.ratelimit.is_allowlisted``)
+    bypass the check entirely, including the DB count query.
+    """
+    if is_allowlisted(request):
+        return
+    # Ordering: after is_allowlisted (trusted-IP wins), before the
+    # enabled flag (so the bypass is meaningful only when the policy
+    # is on and would otherwise raise).
+    if is_high_rep_exempt(request):
+        return
+    if not askbot_settings.WATCHED_USER_POST_RATE_LIMIT_ENABLED:
+        return
+    if not user.is_watched():
+        return
+
+    max_posts = askbot_settings.WATCHED_USER_POST_RATE_LIMIT_MAX_POSTS
+    cutoff = timezone.now() - datetime.timedelta(
+        seconds=const.WATCHED_USER_POST_RATE_LIMIT_WINDOW_SECONDS
+    )
+    recent_count = models.Post.objects.filter(
+        author=user,
+        added_at__gte=cutoff,
+        deleted=False
+    ).count()
+    if recent_count >= max_posts:
+        raise exceptions.PermissionDenied(
+            _('You are posting too quickly. Please wait a while before posting again.')
+        )
+
 
 #todo: make this work with csrf
 @csrf.csrf_exempt
@@ -247,6 +286,7 @@ def ask(request):#view used to ask a new question
 
             if user:
                 try:
+                    check_watched_user_post_rate_limit(user, request)
                     question = user.post_question(
                         title=title,
                         body_text=text,
@@ -529,6 +569,7 @@ def answer(request, id, form_class=forms.AnswerForm):#process a new answer
                 user = form.get_post_user(request.user)
                 try:
                     text = form.cleaned_data['text']
+                    check_watched_user_post_rate_limit(user, request)
                     spam_checker_params = spam_checker.get_params_from_request(request)
                     enabled = askbot_settings.SPAM_FILTER_ENABLED
                     if enabled and spam_checker.is_spam(text, **spam_checker_params):
@@ -678,6 +719,7 @@ def post_comments(request):#generic ajax handler to load comments to an object
                 raise exceptions.PermissionDenied(askbot_settings.READ_ONLY_MESSAGE)
 
             text = form.cleaned_data['comment']
+            check_watched_user_post_rate_limit(user, request)
             spam_checker_params = spam_checker.get_params_from_request(request)
             enabled = askbot_settings.SPAM_FILTER_ENABLED
             if enabled and spam_checker.is_spam(text, **spam_checker_params):

@@ -34,6 +34,7 @@ def init():
     import askbot.conf.site_modes
     import askbot.conf.words
     import askbot.conf.api_settings
+    import askbot.conf.rate_limiting
 
 #import main settings object
 from askbot.conf.settings_wrapper import settings

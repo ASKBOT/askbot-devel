@@ -3,7 +3,41 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
-* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery
+* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery.
+* Added per subnet rate-limiting feature that allows
+  limiting three types of requests: get requests,
+  post requests from watched users
+  and user account registrations.
+
+  Rate limiting relies on the django-ratelimit app, which counts the requests
+  per subnet and stores this count in the shared cache.
+
+  When the user is rate-limited, they see a page advising them to slow down
+  or a similar banner message - when rate limited is detected
+  during an AJAX request. In the user registration flows this error
+  is shown as the form feedback.
+
+  Rate limited responses are with the 429 status code, with a
+  retry-after header set (in seconds).
+
+  Maximum number of requests per window can be adjusted.
+  The window durations are fixed: 1 minute for the get requests,
+  1 hour for the posts and 1 day for the registrations.
+
+  The size of the subnet can be set either per ip /32, local /24,
+  or regional /16, which can be adjusted in the livesettings.
+
+  IPv4 and IPv6 networks are supported.
+
+  Allow-listed IP ranges can be added in the livesettings.
+
+  High-reputation users can be allowed to bypass for the watched-user
+  post rate limit, controlled by two new livesettings.
+
+  The livesettings admin pages are exempt from request rate limiting.
+
+* Closed-forum-mode bypass via ``ASKBOT_INTERNAL_IPS`` now honors
+  CIDR ranges and IPv6 addresses (including IPv4-mapped IPv6).
 * Removed legacy ``askbot/container/`` directory and ``askbot_requirements.txt``
 * Added test to verify ``askbot.REQUIREMENTS`` and ``pyproject.toml`` dependencies stay in sync
 * Bumped ``urllib3`` dependency from ``>=1.21.1,<1.27`` to ``>=2,<3``
@@ -26,6 +60,7 @@ Development (not yet released)
 * Added the option to require validation of email address when users change it.
   Controlled by the ``EMAIL_VALIDATION_REQUIRED`` livesetting.
 * Changed the default of the ``EMAIL_VALIDATION_REQUIRED`` livesetting from ``False`` to ``True``.
+* Fixed: AJAX-injected system message banners now use the same markup as page-load banners.
 
 0.12.8 (Mar 15, 2026)
 ---------------------

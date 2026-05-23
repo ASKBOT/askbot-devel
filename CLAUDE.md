@@ -18,6 +18,9 @@ pre-commit install
 
 ## Testing
 
+If you want to override settings - either django or askbot livesettings - use decorators designed for this,
+not context managers, if the setting value should not change during the test.
+
 ```bash
 # Tox (recommended)
 tox
@@ -81,6 +84,14 @@ the said epic issue - i.e. `bd dep <X-id> --blocks <E-id>`
 
 Use `/land` skill when ending a work session.
 
+## Changelog
+
+Changelog is in askbot/doc/source/changelog.rst
+
+- all new edits should be appended to thes section "Development (not yet released)"
+- entries must be brief - ideally 1 liners, should not be too technical
+
+
 ## Architecture
 
 See `.claude/docs/architecture.md` for detailed architecture reference including:
@@ -89,3 +100,15 @@ See `.claude/docs/architecture.md` for detailed architecture reference including
 - Template system (Jinja2)
 - Authentication (django_authopenid fork)
 - Multi-language support, search, email, Celery tasks
+
+
+## Coding style
+
+Comments in the code must:
+
+- be concise
+- limit use of the technical jargon
+- must be written in clear simple English
+- should not cross reference files or lines of code - that info rots quickly
+
+Python code must adhere to PEP8 standards.

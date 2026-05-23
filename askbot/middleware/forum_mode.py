@@ -4,11 +4,11 @@ enabling support of closed forum mode
 """
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext as _
-from django.conf import settings
 from django.urls import resolve
 from askbot.conf import settings as askbot_settings
 from askbot.utils import url_utils
 from askbot.utils.functions import encode_jwt
+from askbot.utils.ratelimit import is_internal_ip
 from askbot.utils.views import is_askbot_view
 import urllib.request, urllib.parse, urllib.error
 
@@ -55,8 +55,7 @@ class ForumModeMiddleware(object):
             if not is_askbot_view(resolver_match.func):
                 return None
 
-            internal_ips = getattr(settings, 'ASKBOT_INTERNAL_IPS', None)
-            if internal_ips and request.META.get('REMOTE_ADDR') in internal_ips:
+            if is_internal_ip(request.META.get('REMOTE_ADDR')):
                 return None
 
             if is_view_allowed(resolver_match.func):
