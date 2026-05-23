@@ -3,6 +3,7 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery.
 * Added per subnet rate-limiting feature that allows
   limiting three types of requests: get requests,
   post requests from watched users
