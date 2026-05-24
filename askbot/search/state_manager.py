@@ -133,6 +133,12 @@ class SearchState(object):
                 tag = t.strip()
                 if tag not in self.tags:
                     self.tags.append(tag)
+            # Canonicalize tag order. Without this, every permutation of the
+            # same tag set produces a distinct URL serving identical results,
+            # which is wasteful (cache fragmentation, duplicate SEO content) and
+            # is exploited by scrapers to bypass per-URL caching by enumerating
+            # the N! orderings of a single tag set.
+            self.tags.sort()
 
         self.author = int(author) if author else None
         self.page = int(page) if page else 1

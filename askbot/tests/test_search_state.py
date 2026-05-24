@@ -285,8 +285,10 @@ class SearchStateTests(AskbotTestCase):
             page=None,
             user_logged_in=False
         )
+        # Tags are deduplicated AND sorted alphabetically for canonical URLs
+        # (collapses N! permutations into one cacheable URL).
         self.assertEqual(
-            'scope:all/sort:activity-desc/tags:valid1,dupped,valid2/page:1/',
+            'scope:all/sort:activity-desc/tags:dupped,valid1,valid2/page:1/',
             ss.query_string()
         )
 
