@@ -19,6 +19,13 @@ Development (not yet released)
   ``django-jinja`` to ``>=2.11,<3``. Required because modern
   ``django-jinja`` depends on ``Jinja2>=3``.
 
+* Batched dep bumps for Django 5.x compat (all retain Django 4.2
+  support): ``celery>=5.5,<6``, ``django-appconf>=1.2``,
+  ``django-avatar>=9.0``, ``django-compressor>=4.6,<5``,
+  ``django-countries>=8.2``, ``django-picklefield>=3.2,<4``,
+  ``django-ratelimit>=4.1,<5``, ``jinja2-simple-tags>=0.6,<1``,
+  ``pyjwt>=2.10,<3``.
+
 0.12.9 (May 24, 2026)
 ---------------------
 * Optimized multi-tag question search: replaced per-tag JOINs with a single subquery,
