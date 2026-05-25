@@ -204,7 +204,7 @@ INSTALLED_APPS = (
     'tinymce',
     'askbot.deps.group_messaging',
     #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
-    'captcha',
+    'django_recaptcha',
     'avatar',
 )
 
@@ -342,7 +342,7 @@ COMPRESS_FILTERS = {
 }
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
-JINJA2_TEMPLATES = ('captcha',)
+JINJA2_TEMPLATES = ('django_recaptcha',)
 
 # Use migrate for tests instead of South migrations. Without this, some tests
 # fail spuriously in MySQL.

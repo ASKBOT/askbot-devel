@@ -26,7 +26,7 @@ from askbot.mail import extract_first_email_address
 from askbot.conf import settings as askbot_settings
 from askbot.conf import get_tag_email_filter_strategy_choices
 from askbot.models import UserProfile
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 
 def split_tags(data):
     split_re = re.compile(const.TAG_SPLIT_REGEX)

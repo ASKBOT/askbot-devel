@@ -43,7 +43,7 @@ REQUIREMENTS = {
     'oauth2': 'oauth2<=1.9.0.post1',
     'openid': 'python-openid2>=3.0',
     'picklefield': 'django-picklefield>=3.2,<4',
-    'captcha': 'django-recaptcha==3.0.0',
+    'django_recaptcha': 'django-recaptcha>=4.1,<5',
     'cas': 'python-cas>=1.4.0,<1.7',
     'premailer': 'premailer==3.10.0',
     'psycopg2': 'psycopg2-binary>=2.9.6',

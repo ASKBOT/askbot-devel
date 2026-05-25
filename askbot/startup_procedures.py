@@ -335,10 +335,10 @@ def test_template_settings():
     try:
         jinja2_apps = getattr(django_settings, 'JINJA2_TEMPLATES')
     except AttributeError:
-        errors.append("add to settings.py:\nJINJA2_TEMPLATES = ('captcha',)")
+        errors.append("add to settings.py:\nJINJA2_TEMPLATES = ('django_recaptcha',)")
     else:
-        if 'captcha' not in jinja2_apps:
-            errors.append("add to JINJA2_TEMPLATES in settings.py\n    'captcha',")
+        if 'django_recaptcha' not in jinja2_apps:
+            errors.append("add to JINJA2_TEMPLATES in settings.py\n    'django_recaptcha',")
     print_errors(errors)
 
 
@@ -861,8 +861,8 @@ def test_locale_middlewares():
 
 def test_recaptcha():
     errors = list()
-    if 'captcha' not in django_settings.INSTALLED_APPS:
-        errors.append("Please add to the INSTALLED_APPS:\n    'captcha',")
+    if 'django_recaptcha' not in django_settings.INSTALLED_APPS:
+        errors.append("Please add to the INSTALLED_APPS:\n    'django_recaptcha',")
 
     try:
         nocaptcha = getattr(django_settings, 'NOCAPTCHA')

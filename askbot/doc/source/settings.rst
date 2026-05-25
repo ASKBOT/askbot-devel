@@ -71,7 +71,7 @@ example INSTALLED_APPS:
         'followit',
         'askbot.deps.group_messaging',
         #'avatar',#experimental use git clone git://github.com/ericflo/django-avatar.git$
-        'captcha',
+        'django_recaptcha',
         'avatar',
     )
 TODO: describe all of them here.

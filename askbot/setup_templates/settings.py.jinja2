@@ -194,7 +194,7 @@ INSTALLED_APPS = (
 
     ## extra packages
     'avatar',
-    'captcha',
+    'django_recaptcha',
     'compressor',
     'django_jinja',
     'django_countries',
@@ -390,7 +390,7 @@ COMPRESS_FILTERS = {
 }
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 JINJA2_EXTENSIONS = ('compressor.contrib.jinja2ext.CompressorExtension',)
-JINJA2_TEMPLATES = ('captcha',) # FIXME: unused but checked in startup_procedures
+JINJA2_TEMPLATES = ('django_recaptcha',) # FIXME: unused but checked in startup_procedures
 
 # Use migrate for tests instead of South migrations. Without this, some tests
 # fail spuriously in MySQL.

@@ -26,6 +26,12 @@ Development (not yet released)
   ``django-ratelimit>=4.1,<5``, ``jinja2-simple-tags>=0.6,<1``,
   ``pyjwt>=2.10,<3``.
 
+* Bumped ``django-recaptcha`` to ``>=4.1,<5``. The package namespace
+  was renamed upstream from ``captcha`` to ``django_recaptcha``;
+  imports, ``INSTALLED_APPS``, ``JINJA2_TEMPLATES``,
+  ``SILENCED_SYSTEM_CHECKS``, and the startup checks were updated
+  accordingly.
+
 0.12.9 (May 24, 2026)
 ---------------------
 * Optimized multi-tag question search: replaced per-tag JOINs with a single subquery,
