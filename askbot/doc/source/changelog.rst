@@ -7,8 +7,9 @@ Development (not yet released)
   Django pin is now ``>=4.2,<5.3``. Replaced removed APIs
   (``get_storage_class``, ``ping_google``), made ``_fixture_setup``
   compatible with Django 5.x's classmethod signature, and adjusted
-  timezone handling for ``USE_TZ=True`` defaults. ``tox.ini`` now
-  exercises both ``django42`` and ``django52`` factors.
+  timezone handling for ``USE_TZ=True`` defaults. ``tox.ini`` and the
+  GitHub Actions workflow now exercise both ``django42`` and ``django52``
+  factors, and the workflow also runs the django_authopenid tests.
 
 * Django 5.2 LTS preparation (no Django bump yet): removed
   ``default_app_config``, dropped legacy ``Signal(providing_args=...)``,
