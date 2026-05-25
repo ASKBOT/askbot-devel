@@ -1,9 +1,15 @@
 Changes in Askbot
 =================
 
-Development (not yet released)
-------------------------------
-* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery.
+0.12.9 (May 24, 2026)
+---------------------
+* Optimized multi-tag question search: replaced per-tag JOINs with a single subquery,
+  provides large speedup for looking up questions via multiple tags.
+
+* When searching by tags, only one order of tags is accepted as canonical.
+  With caching middleware enabled, saves resources when serving
+  anonymous tagged question list page views.
+
 * Added per subnet rate-limiting feature that allows
   limiting three types of requests: get requests,
   post requests from watched users
