@@ -15,6 +15,10 @@ Development (not yet released)
 * Bumped ``django-livesettings3`` to ``>=1.7.0,<2`` for Django 5.x support;
   still works under Django 4.2.
 
+* Lifted the ``Jinja2<3.1`` cap to ``>=3.1,<4`` and tightened
+  ``django-jinja`` to ``>=2.11,<3``. Required because modern
+  ``django-jinja`` depends on ``Jinja2>=3``.
+
 0.12.9 (May 24, 2026)
 ---------------------
 * Optimized multi-tag question search: replaced per-tag JOINs with a single subquery,
