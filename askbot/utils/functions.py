@@ -171,7 +171,8 @@ def not_a_robot_request(request):
 
 def diff_date(date, use_on_prefix=False):
     """Gives human friendly label for difference in dates"""
-    now = datetime.datetime.now()#datetime(*time.localtime()[0:6])#???
+    from django.utils import timezone as _tz
+    now = _tz.now() if _tz.is_aware(date) else datetime.datetime.now()
     diff = now - date
     days = diff.days
     hours = int(diff.seconds/3600)

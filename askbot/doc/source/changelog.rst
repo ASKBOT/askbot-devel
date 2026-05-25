@@ -3,6 +3,13 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Upgraded to Django 5.2 LTS while keeping Django 4.2 supported.
+  Django pin is now ``>=4.2,<5.3``. Replaced removed APIs
+  (``get_storage_class``, ``ping_google``), made ``_fixture_setup``
+  compatible with Django 5.x's classmethod signature, and adjusted
+  timezone handling for ``USE_TZ=True`` defaults. ``tox.ini`` now
+  exercises both ``django42`` and ``django52`` factors.
+
 * Django 5.2 LTS preparation (no Django bump yet): removed
   ``default_app_config``, dropped legacy ``Signal(providing_args=...)``,
   modernised vendored ``url()`` imports, replaced ``NullBooleanField`` in

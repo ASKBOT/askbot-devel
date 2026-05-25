@@ -1,4 +1,5 @@
 from askbot.search.state_manager import SearchState
+import django
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
@@ -54,8 +55,13 @@ class PageLoadTestCase(AskbotTestCase):
         super(PageLoadTestCase, cls).tearDownClass()
         management.call_command('flush', verbosity=0, interactive=False)
 
-    def _fixture_setup(self):
-        pass
+    if django.VERSION >= (5, 0):
+        @classmethod
+        def _fixture_setup(cls):
+            pass
+    else:
+        def _fixture_setup(self):
+            pass
 
     def _fixture_teardown(self):
         pass

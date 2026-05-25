@@ -1,6 +1,7 @@
 """utility functions used by Askbot test cases
 """
 from functools import wraps
+import django
 from django.apps import apps
 from django.contrib.auth.management import create_permissions
 from django.contrib.sites.management import create_default_site
@@ -133,12 +134,21 @@ class AskbotTestCase(TestCase):
     to django TestCase class
     """
 
-    def _fixture_setup(self):
-        super(AskbotTestCase, self)._fixture_setup()
-        for app_config in apps.get_app_configs():
-            create_contenttypes(app_config)
-            create_permissions(app_config)
-            create_default_site(app_config)
+    if django.VERSION >= (5, 0):
+        @classmethod
+        def _fixture_setup(cls):
+            super()._fixture_setup()
+            for app_config in apps.get_app_configs():
+                create_contenttypes(app_config)
+                create_permissions(app_config)
+                create_default_site(app_config)
+    else:
+        def _fixture_setup(self):
+            super(AskbotTestCase, self)._fixture_setup()
+            for app_config in apps.get_app_configs():
+                create_contenttypes(app_config)
+                create_permissions(app_config)
+                create_default_site(app_config)
 
     def _fixture_teardown(self):
         post_migrate.disconnect(create_default_site, sender=apps.get_app_config('sites'))

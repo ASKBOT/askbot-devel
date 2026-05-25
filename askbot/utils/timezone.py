@@ -4,15 +4,15 @@ from django.conf import settings as django_settings
 
 def make_aware(value, tz=None):
     """
-    Makes a naive datetime.datetime in a given time zone aware.
+    Returns a timezone-aware datetime.
 
-    If conversion is ambigous regarding the daytime savings,
-    assume that the daytime savings is on, b/c we
-    don't care about such exactitude here
+    Aware inputs are returned unchanged; naive inputs get the chosen
+    timezone (defaulting to settings.TIME_ZONE) attached without
+    converting wall-clock time. If a DST transition makes the time
+    ambiguous, daylight saving is assumed in effect.
     """
     if timezone.is_aware(value):
-        raise ValueError(
-            "make_aware expects a naive datetime, got %s" % value)
+        return value
 
     if tz is None:
         tz_code = django_settings.TIME_ZONE

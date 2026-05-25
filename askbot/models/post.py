@@ -3,7 +3,6 @@ import operator
 import logging
 from urllib.parse import quote as django_urlquote
 
-from django.contrib.sitemaps import ping_google
 from django.conf import settings as django_settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -626,13 +625,6 @@ class Post(models.Model):
             diff = sanitize_html(self.get_snippet())
 
         timestamp = self.get_time_of_last_edit()
-
-        try:
-            from askbot.conf import settings as askbot_settings
-            if askbot_settings.GOOGLE_SITEMAP_CODE != '':
-                ping_google()
-        except Exception:
-            logging.debug('cannot ping google - did you register with them?')
 
         return {'diff': diff, 'newly_mentioned_users': newly_mentioned_users}
 

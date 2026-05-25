@@ -62,7 +62,10 @@ class AskbotStaticSettings(AppConf):
     # only report on updates after this date, useful when
     # enabling delayed email alerts on a site with a lot of content
     # in order to prevent sending too many outdated alerts
-    DELAYED_EMAIL_ALERTS_CUTOFF_TIMESTAMP = timezone.datetime.fromtimestamp(0)
+    DELAYED_EMAIL_ALERTS_CUTOFF_TIMESTAMP = (
+        timezone.datetime.fromtimestamp(0, tz=timezone.get_default_timezone())
+        if getattr(settings, 'USE_TZ', False)
+        else timezone.datetime.fromtimestamp(0))
     QUESTION_PAGE_BASE_URL = pgettext('urls', 'question') + '/'
     SERVICE_URL_PREFIX = 's/' # prefix for non-UI urls
     SELF_TEST = True # if true - run startup self-test

@@ -2,7 +2,7 @@
 import random
 import time
 import urllib.parse
-from django.core.files.storage import get_storage_class
+from django.core.files.storage import default_storage
 
 def make_file_name(ext, prefix=''):
     name = str(time.time())
@@ -11,13 +11,9 @@ def make_file_name(ext, prefix=''):
 
 
 def store_file(file_name, file_object):
-    """Creates an instance of django's file storage
-    object based on the file-like object,
-    Returns access url of the stored file.
-    """
-    storage = get_storage_class()()
-    storage.save(file_name, file_object)
-    file_url = storage.url(file_name)
+    """Saves a file via the default storage backend and returns its URL."""
+    default_storage.save(file_name, file_object)
+    file_url = default_storage.url(file_name)
     parsed_url = urllib.parse.urlparse(file_url)
     file_url = urllib.parse.urlunparse(
         urllib.parse.ParseResult(
