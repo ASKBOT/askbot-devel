@@ -33,7 +33,7 @@ REQUIREMENTS = {
     'jsonfield': 'jsonfield>=2.0.0',
     'jwt': 'pyjwt<=2.12.1',
     'keyedcache': 'django-keyedcache3>=1.5.1',
-    'livesettings': 'django-livesettings3==1.6.3',
+    'livesettings': 'django-livesettings3>=1.7.0,<2',
     'linkify_it': 'linkify-it-py==2.0.2',
     'markdown_it': 'markdown-it-py==4.0.0',
     'markupsafe': 'markupsafe',
