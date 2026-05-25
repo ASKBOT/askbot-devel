@@ -474,6 +474,24 @@ def test_new_skins():
             )
 
 
+def get_staticfiles_backend():
+    """returns the dotted path of the staticfiles storage backend.
+
+    reads from the modern STORAGES dict first (Django 4.2+ shape used
+    by every supported version) and falls back to the legacy
+    STATICFILES_STORAGE setting for projects that have not migrated
+    yet. returns an empty string when neither is configured.
+    """
+    storages = getattr(django_settings, 'STORAGES', None)
+    if isinstance(storages, dict):
+        staticfiles = storages.get('staticfiles')
+        if isinstance(staticfiles, dict):
+            backend = staticfiles.get('BACKEND')
+            if backend:
+                return backend
+    return getattr(django_settings, 'STATICFILES_STORAGE', '') or ''
+
+
 def test_staticfiles():
     """tests configuration of the staticfiles app"""
     errors = list()
@@ -570,7 +588,7 @@ def test_staticfiles():
                 'ASKBOT_EXTRA_SKINS_DIR just above STATICFILES_DIRS.'
             )
 
-    if django_settings.STATICFILES_STORAGE == \
+    if get_staticfiles_backend() == \
         'django.contrib.staticfiles.storage.StaticFilesStorage':
         if os.path.dirname(django_settings.STATIC_ROOT) == '':
             # static root is needed only for local storoge of
@@ -607,7 +625,7 @@ def test_staticfiles():
         )
 
     print_errors(errors)
-    if django_settings.STATICFILES_STORAGE == \
+    if get_staticfiles_backend() == \
         'django.contrib.staticfiles.storage.StaticFilesStorage':
 
         if not os.path.isdir(django_settings.STATIC_ROOT):

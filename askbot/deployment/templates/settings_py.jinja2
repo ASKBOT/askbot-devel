@@ -119,7 +119,15 @@ FILE_UPLOAD_HANDLERS = (
 )
 ASKBOT_ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif', '.bmp', '.png', '.tiff')
 ASKBOT_MAX_UPLOAD_FILE_SIZE = 1024 * 1024 #result in bytes
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
 
 
 #TEMPLATE_DIRS = (,) #template have no effect in askbot, use the variable below

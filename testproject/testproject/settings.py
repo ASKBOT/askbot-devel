@@ -155,7 +155,20 @@ FILE_UPLOAD_HANDLERS = (
 )
 ASKBOT_ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif', '.bmp', '.png', '.tiff')
 ASKBOT_MAX_UPLOAD_FILE_SIZE = 1024 * 1024 #result in bytes
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}
+
+# Default primary key field for any non-askbot apps added to this project.
+# The askbot app pins its own value via AskbotConfig.default_auto_field so
+# existing deployments do not see migration churn here.
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 
 #TEMPLATE_DIRS = (,) #template have no effect in askbot, use the variable below

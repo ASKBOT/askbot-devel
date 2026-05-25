@@ -11,8 +11,6 @@ import traceback
 
 VERSION = (0, 12, 9)
 
-default_app_config = 'askbot.apps.AskbotConfig' #pylint: disable=invalid-name
-
 #keys are module names used by python imports,
 #values - the package qualifier to use for pip
 REQUIREMENTS = {

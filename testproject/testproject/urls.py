@@ -2,18 +2,13 @@
 main url configuration file for the askbot site
 """
 from django.conf import settings
-try:
-    from django.conf.urls import handler404
-    from django.conf.urls import include, url
-except ImportError:
-    from django.conf.urls.defaults import handler404
-    from django.conf.urls.defaults import include, url
+from django.conf.urls import handler404
+from django.contrib import admin
+from django.urls import include, re_path as url
+from django.views import static as StaticViews
 
 from askbot import is_multilingual
 from askbot.views.error import internal_error as handler500
-from django.conf import settings
-from django.contrib import admin
-from django.views import static as StaticViews
 
 admin.autodiscover()
 
@@ -39,10 +34,5 @@ urlpatterns += [
         {'document_root': settings.MEDIA_ROOT.replace('\\','/')},
     )
 ]
-
-if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-                    url(r'^rosetta/', include('rosetta.urls')),
-                )
 
 handler500 = 'askbot.views.error.internal_error'

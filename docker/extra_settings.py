@@ -22,8 +22,8 @@ MIDDLEWARE = ('whitenoise.middleware.WhiteNoiseMiddleware',) + tuple(MIDDLEWARE)
 # per request so files created after startup are found. Fine for hobby traffic.
 WHITENOISE_USE_FINDERS = True
 WHITENOISE_AUTOREFRESH = True
-# Remove old-style setting that conflicts with STORAGES (Django 4.2+)
-del DEFAULT_FILE_STORAGE
+# Use Django 4.2+ STORAGES dict; the base settings no longer set
+# DEFAULT_FILE_STORAGE, so no legacy key to delete here.
 STORAGES = {
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',

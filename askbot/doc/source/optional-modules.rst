@@ -230,14 +230,29 @@ with::
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
     MEDIA_ROOT = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'media')
     
-In addition, replace the following::
-    
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-    
+In addition, replace the following ``STORAGES`` entry::
+
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+
 with::
-    
-    DEFAULT_FILE_STORAGE = 's3utils.MediaRootS3BotoStorage'
-    
+
+    STORAGES = {
+        'default': {
+            'BACKEND': 's3utils.MediaRootS3BotoStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+
+
 Last but not least, we would need to update the ``INSTALLED_APPS`` field to let Django know that the storage modules have been installed::
     
         INSTALLED_APPS = (

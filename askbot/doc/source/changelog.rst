@@ -1,6 +1,17 @@
 Changes in Askbot
 =================
 
+Development (not yet released)
+------------------------------
+* Django 5.2 LTS preparation (no Django bump yet): removed
+  ``default_app_config``, dropped legacy ``Signal(providing_args=...)``,
+  modernised vendored ``url()`` imports, replaced ``NullBooleanField`` in
+  the StackExchange importer, and migrated ``DEFAULT_FILE_STORAGE`` to the
+  ``STORAGES`` dict in deployment templates, the test project, the docker
+  overrides, and the user-facing docs. The startup check for the static
+  files backend now reads ``STORAGES`` first and falls back to the legacy
+  setting.
+
 0.12.9 (May 24, 2026)
 ---------------------
 * Optimized multi-tag question search: replaced per-tag JOINs with a single subquery,

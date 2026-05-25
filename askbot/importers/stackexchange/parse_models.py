@@ -19,7 +19,7 @@ types = {
    'string':'models.CharField',
    'text':'models.TextField',
    'int':'models.IntegerField',
-   'boolean':'models.NullBooleanField',
+   'boolean':'models.BooleanField',
    'dateTime':'models.DateTimeField',
    'base64Binary':'models.TextField',
    'double':'models.IntegerField',
