@@ -9,7 +9,7 @@ import platform
 import sys
 import traceback
 
-VERSION = (0, 12, 9)
+VERSION = (0, 13, 0)
 
 #keys are module names used by python imports,
 #values - the package qualifier to use for pip

@@ -9,9 +9,9 @@ such as `Linux` or `MacOS` and a Python environment.
 1) Introduction.
 ----------------
 
-Currently Askbot supports major versions of Django `3.x`.
-Versions `0.11.x` and later require `Python 3.6-3.10`, and earlier versions require `Python 2.7`.
-See the compatibility table at the end of this document.
+Askbot `0.13.x` supports Django `4.2` and `5.2` and requires `Python 3.10+`.
+Earlier versions support older Django and Python releases - see the
+compatibility table at the end of this document.
 
 Askbot versions start with `0`, for example `0.11.2`.
 Versions with different second numbers should be considered as different major versions.
@@ -31,8 +31,8 @@ and run the production migration.
 
 Configure a fresh uncustomized installation of Askbot of desired version.
 
-First, decide which version of Python is required. For Askbot versions `0.11.0` and later, use `Python 3.6-3.10`.
-For earlier versions, use `Python 2.7`. Then install Askbot.
+First, decide which version of Python is required. For Askbot versions `0.12.x` and later, use `Python 3.10+`.
+For `0.11.x` use `Python 3.6-3.10`, and for earlier versions use `Python 2.7`. Then install Askbot.
 
 For example, for the latest `0.11.x` run:
 
@@ -40,12 +40,6 @@ For example, for the latest `0.11.x` run:
 
 Configure this version by running `askbot-setup` and follow the instructions.
 During the configuration, point your instance to the database.
-
-Then run the database migrations:
-
-For example, to install the latest `0.11.x` run the following command:
-
-    pip install 'askbot<0.12
 
 Then, run the following command to upgrade the database:
 
@@ -80,6 +74,10 @@ The following table shows the compatibility of Askbot versions with Django and P
 +-----------------------+---------------------------------+-------------------+
 | Version of Askbot (*) | Version of the Django framework | Version of Python |
 +=======================+=================================+===================+
+| `0.13.x`              | `4.2`, `5.2`                    | `3.10+`           |
++-----------------------+---------------------------------+-------------------+
+| `0.12.x`              | `4.2`                           | `3.10+`           |
++-----------------------+---------------------------------+-------------------+
 | `0.11.x`              | `2.x - 3.x`                     | `3.6-3.10`        |
 +-----------------------+---------------------------------+-------------------+
 | `0.10.x`              | `1.8.x`                         | `2.7`             |

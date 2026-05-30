@@ -1,8 +1,8 @@
 Changes in Askbot
 =================
 
-Development (not yet released)
-------------------------------
+0.13.0 (May 30, 2026)
+---------------------
 * Upgraded to Django 5.2 LTS while keeping Django 4.2 supported.
   Django pin is now ``>=4.2,<5.3``. Replaced removed APIs
   (``get_storage_class``, ``ping_google``), made ``_fixture_setup``
