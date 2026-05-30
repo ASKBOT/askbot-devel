@@ -42,8 +42,13 @@ class FunctionTests(TestCase):
 
     def test_decode_jwt_rejects_tampered_token(self):
         token = encode_jwt({'next_url': '/questions/'})
-        # Tamper with the token by altering a character in the signature
-        tampered = token[:-1] + ('A' if token[-1] != 'A' else 'B')
+        # Tamper with the payload segment so the signature no longer matches.
+        # Mutating the last char of the signature is unreliable because
+        # base64url's trailing bits may be unused, leaving the decoded
+        # signature bytes unchanged.
+        header, payload, signature = token.split('.')
+        flipped = 'B' if payload[0] != 'B' else 'C'
+        tampered = '.'.join([header, flipped + payload[1:], signature])
         with self.assertRaises(Exception):
             decode_jwt(tampered)
 
