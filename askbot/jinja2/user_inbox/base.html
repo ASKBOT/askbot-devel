@@ -8,10 +8,6 @@
     <div id="re_sections">
       {% trans %}Sections:{% endtrans %}
       {% set sep = joiner('|') %}
-      {#{{ sep() }}
-      <a href="{{request.user.get_absolute_url()}}?sort=inbox&section=messages"
-        {% if inbox_section == 'messages' %}class="on"{% endif %}
-      >{% trans %}messages{% endtrans %}</a>#}
       {% if re_count > 0 %}{{ sep() }}
         <a href="{{request.user.get_absolute_url()}}?sort=inbox&section=forum"
           {% if inbox_section == 'forum' %}class="on"{% endif %}

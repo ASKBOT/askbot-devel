@@ -802,39 +802,6 @@ see outdated content on your site.
         askbot_warning(message)
 
 
-def test_group_messaging():
-    """tests correctness of the "group_messaging" app configuration"""
-    errors = list()
-    if 'askbot.deps.group_messaging' not in django_settings.INSTALLED_APPS:
-        errors.append("add to the INSTALLED_APPS:\n'askbot.deps.group_messaging',")
-
-    if 'group_messaging' in django_settings.INSTALLED_APPS:
-        errors.append("remove from the INSTALLED_APPS:\n'group_messaging',")
-
-    settings_sample = ("GROUP_MESSAGING = {\n"
-    "    'BASE_URL_GETTER_FUNCTION': 'askbot.models.user_get_profile_url',\n"
-    "    'BASE_URL_PARAMS': {'section': 'messages', 'sort': 'inbox'}\n"
-    "}")
-
-    settings = getattr(django_settings, 'GROUP_MESSAGING', {})
-    if settings:
-        url_params = settings.get('BASE_URL_PARAMS', {})
-        have_wrong_params = not (
-            url_params.get('section', None) == 'messages' and
-            url_params.get('sort', None) == 'inbox')
-        url_getter = settings.get('BASE_URL_GETTER_FUNCTION', None)
-        if url_getter != 'askbot.models.user_get_profile_url' or have_wrong_params:
-            errors.append(
-                "make setting 'GROUP_MESSAGING to be exactly:\n" + settings_sample)
-
-        url_params = settings.get('BASE_URL_PARAMS', None)
-    else:
-        errors.append('add this to your settings.py:\n' + settings_sample)
-
-    if errors:
-        print_errors(errors)
-
-
 def test_secret_key():
     key = django_settings.SECRET_KEY
     if key.strip() == '':
@@ -969,7 +936,6 @@ and for making posts by email"""
     test_celery()
     test_compressor()
     test_custom_user_profile_tab()
-    #test_group_messaging()
     test_haystack()
     test_jinja2()
     #test_longerusername()

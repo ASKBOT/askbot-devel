@@ -7,7 +7,6 @@ from askbot.models import (
     User,
     UserProfile
 )
-#from askbot.deps.group_messaging.models import get_unread_inbox_counter
 from askbot import const
 
 # TODO: this command is broken - doesn't take into account UNIQUE constraints
@@ -126,13 +125,6 @@ class Command(MergeUsersBaseCommand):
             if followed.pk != self.to_user.pk:
                 if not self.to_user.is_following(followed):
                     self.to_user.follow_user(followed)
-
-        #add inbox counters and delete dupes
-        #from_ctr = get_unread_inbox_counter(self.from_user)
-        #to_ctr = get_unread_inbox_counter(self.to_user)
-        #to_ctr.count += from_ctr.count
-        #to_ctr.save()
-        #from_ctr.delete()
 
         #delete subscriptions (todo: merge properly)
         self.from_user.notification_subscriptions.all().delete()

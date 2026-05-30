@@ -813,34 +813,6 @@ class ApprovedPostNotificationRespondable(BaseEmail):
         return context
 
 
-#class GroupMessagingEmailAlert(BaseEmail):
-#    template_path = 'group_messaging/email_alert'
-#    title = _('Private message notification')
-#    description = _('Sent when a private message is sent to the user')
-#    preview_error_message = _(
-#        'At least one user and one personal message are required to '
-#        'generate a preview'
-#    )
-#
-#    def is_enabled(self):
-#        from askbot.deps.group_messaging.models import Message
-#        if Message.objects.count() == 0:
-#            return False
-#        return askbot_settings.ENABLE_EMAIL_ALERTS \
-#            and askbot_settings.GROUP_MESSAGING_EMAIL_ALERT_ENABLED
-#
-#    def get_mock_context(self):
-#        from askbot.deps.group_messaging.models import Message
-#        messages = Message.objects.all().order_by('-id')
-#        if messages.count() == 0:
-#            return None
-#        message = messages[0]
-#        return {
-#            'messages': message.get_timeline(),
-#            'message': message,
-#            'recipient_user': get_user()
-#        }
-
 class EmailChangeVerification(BaseEmail):
     template_path = 'email/email_change_verification'
     title = _('Email change verification')

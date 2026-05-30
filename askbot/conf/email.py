@@ -115,15 +115,6 @@ settings.register(
 settings.register(
     livesettings.BooleanValue(
         EMAIL,
-        'GROUP_MESSAGING_EMAIL_ALERT_ENABLED',
-        description=_('Enable private messaging alerts'),
-        default=True
-    )
-)
-
-settings.register(
-    livesettings.BooleanValue(
-        EMAIL,
         'MODERATION_QUEUE_NOTIFICATION_ENABLED',
         description=_('Enable moderation queue alerts'),
         default=True

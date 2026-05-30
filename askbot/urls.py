@@ -638,7 +638,6 @@ urlpatterns = [
     re_path(r'^analytics/$', views.analytics_home.analytics_index, name='analytics_index'),
     re_path(r'^analytics/users/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics_users.analytics_users, name='analytics_users'),
     re_path(r'^analytics/activity/(?P<activity_segment>.+)/(?P<content_segment>.+)/(?P<users_segment>.+)/(?P<dates>.+)/$', views.analytics.analytics_activity.analytics_activity, name='analytics_activity'),
-    #service_url(r'^private-messages/', include('askbot.deps.group_messaging.urls')),
     livesettings_urls,
     re_path(r'^preview-emails/$', views.emails.list_emails, name='list_emails'),
     re_path(r'^preview-emails/(?P<slug>.+)/$', views.emails.preview_email, name='preview_email'),

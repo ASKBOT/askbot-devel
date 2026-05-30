@@ -7,10 +7,6 @@
     <a {% if tab_name=="inbox" %}class="js-selected"{% endif %}
       href="{{ url('user_profile', view_user.id,  view_user.username|slugify) }}?sort=inbox"
     >{% trans %}notifications{% endtrans %}</a>
-    {#
-    <a {% if tab_name == "messages" %} class="js-selected"{% endif %} href="{{ request.user.get_absolute_url() }}?sort=inbox&section=messages"
-    ><span>{% trans %}private messages{% endtrans %}</span></a>
-    #}
     {% if settings.MULTILINGUAL %}
       <a {% if tab_name=="langs" %}class="js-selected"{% endif %}
         href="{{ url('user_select_languages', view_user.id,  view_user.username|slugify) }}"

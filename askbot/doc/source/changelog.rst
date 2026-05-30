@@ -11,15 +11,6 @@ Development (not yet released)
   GitHub Actions workflow now exercise both ``django42`` and ``django52``
   factors, and the workflow also runs the django_authopenid tests.
 
-* Django 5.2 LTS preparation (no Django bump yet): removed
-  ``default_app_config``, dropped legacy ``Signal(providing_args=...)``,
-  modernised vendored ``url()`` imports, replaced ``NullBooleanField`` in
-  the StackExchange importer, and migrated ``DEFAULT_FILE_STORAGE`` to the
-  ``STORAGES`` dict in deployment templates, the test project, the docker
-  overrides, and the user-facing docs. The startup check for the static
-  files backend now reads ``STORAGES`` first and falls back to the legacy
-  setting.
-
 * Bumped ``django-livesettings3`` to ``>=1.7.0,<2`` for Django 5.x support;
   still works under Django 4.2.
 
@@ -39,6 +30,9 @@ Development (not yet released)
   imports, ``INSTALLED_APPS``, ``JINJA2_TEMPLATES``,
   ``SILENCED_SYSTEM_CHECKS``, and the startup checks were updated
   accordingly.
+
+* Removed the unused ``group_messaging`` dependency; a migration drops its
+  tables if present.
 
 0.12.9 (May 24, 2026)
 ---------------------

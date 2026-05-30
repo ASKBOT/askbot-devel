@@ -138,7 +138,6 @@ STORAGES = {
 INSTALLED_APPS = (
     'askbot',
     'askbot.deps.django_authopenid',
-    #'askbot.deps.group_messaging',
 
     ## part of django
     'django.contrib.admin',
@@ -210,11 +209,6 @@ ENABLE_HAYSTACK_SEARCH = False # don't enable it, will be removed
 
 #delayed notifications, time in seconds, 5 mins by default
 NOTIFICATION_DELAY_TIME = 60 * 5
-
-GROUP_MESSAGING = {
-    'BASE_URL_GETTER_FUNCTION': 'askbot.models.user_get_profile_url',
-    'BASE_URL_PARAMS': {'section': 'messages', 'sort': 'inbox'}
-}
 
 ASKBOT_CSS_DEVEL = False
 if 'ASKBOT_CSS_DEVEL' in locals() and ASKBOT_CSS_DEVEL == True:

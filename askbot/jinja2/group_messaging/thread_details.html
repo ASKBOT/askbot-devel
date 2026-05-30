@@ -1,7 +1,0 @@
-{% from "group_messaging/macros.html" import message %}
-<ul class="js-thread" data-thread-id="{{ root_message.id }}" data-thread-ordering="forward">
-    <li>{{ message(root_message, request.user) }}</li>
-    {% for response in responses %}
-        <li>{{ message(response, request.user) }}</li>
-    {% endfor %}
-</ul>
