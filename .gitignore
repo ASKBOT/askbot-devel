@@ -9,7 +9,7 @@ push
 propagate
 the.diff
 askbot/media/style/.sass-cache/
-.sass-cache
+.sass-cache*
 db
 rebuild-locales.pl
 /src
@@ -25,9 +25,8 @@ settings.py
 .coverage
 *.iml
 lint
-env
-env-md
-env-docs
+env*
+venv*
 .vagrant
 /Vagrantfile
 /custom_settings
