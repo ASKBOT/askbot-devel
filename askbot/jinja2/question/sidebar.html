@@ -39,7 +39,7 @@
 
 {#% include "question/sidebar_sharing_tools.html" %#}
 
-{% if show_public_question_stats %}
+{% if show_basic_question_stats %}
 <div class="sidebar-box">
     <h2>{% trans %}Stats{% endtrans %}</h2>
     <p>
@@ -54,18 +54,22 @@
 </div>
 {% endif %}
 
-{% if show_admin_question_stats %}
+{% if show_analytics_question_stats %}
 <div class="sidebar-box">
     <h2>{% trans %}Stats{% endtrans %}</h2>
     <p>
         {% trans %}Asked{% endtrans %}: <strong>{{ macros.timeago(question.added_at) }}</strong>
     </p>
-    <h3>{% trans %}Visits{% endtrans %}</h3>
+    <p>
+        {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>
+    </p>
+    <h2 style="margin-top: 1rem">{% trans %}Visits{% endtrans %}</h2>
     {% for segment in views_per_segment_name %}
     <p>
         {{ segment.segment_name }}: <strong>{{ segment.views_count|intcomma }} {% trans %}times{% endtrans %}</strong>
     </p>
     {% endfor %}
+    {% if show_links_to_analytics %}
     <p>
         <a href="{{ url('analytics_activity',
                         activity_segment=analytics_activity_field.QUESTION_VIEWED,
@@ -84,9 +88,7 @@
             {% trans %}See all activity{% endtrans %}
         </a>
     </p>
-    <p>
-        {% trans %}Last updated{% endtrans %}: <strong title="{{ thread.last_activity_at }}">{{thread.last_activity_at|diff_date}}</strong>
-    </p>
+    {% endif %}
 </div>
 {% endif %}
 

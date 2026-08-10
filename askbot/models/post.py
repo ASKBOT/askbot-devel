@@ -759,6 +759,64 @@ class Post(models.Model):
 
         return load_function(renderer_path)
 
+    def get_context_for_sidebar(self, user):
+        """Returns template context for the question page stats sidebar"""
+        context = {}
+        sidebar_meta_enabled = askbot_settings.SIDEBAR_QUESTION_SHOW_META
+        domains_enabled = django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED
+        groups_enabled = askbot_settings.GROUPS_ENABLED
+        # analytics needs multiple configs - the list of two conditions is incomplete
+        analytics_enabled = groups_enabled and domains_enabled
+        # covers the cases of "analytics disabled" and/or sidebar meta info disabled
+        if user.is_anonymous or not (analytics_enabled and sidebar_meta_enabled):
+            return {
+                'show_basic_question_stats': sidebar_meta_enabled,
+                'show_analytics_question_stats': False,
+                'show_links_to_analytics': False,
+                'views_per_segment_name': []
+            }
+
+        # both analytics and sidebar meta are enabled, so we collect all we need for display
+        # for each named segment, get views of this question [{"segment_name": <string>, views_count": <num>},]
+        from askbot.models.analytics import Event
+        from askbot.utils.analytics_utils import get_analytics_default_segment_config
+        named_segment_group_ids = []
+        for named_segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS:
+            named_segment_group_ids.extend(named_segment['group_ids'])
+
+        is_mod = user.is_admin_or_mod()
+        user_group_ids = [group.id for group in user.get_groups(used_for_analytics = True)]
+        can_see_light_analytics = is_mod or bool(set(named_segment_group_ids) & set(user_group_ids))
+
+        # if the user does not belong to any named segment groups, they cannot se per segment analytics
+        # here we shortcut and do not collect the per-segment analytics
+        if not can_see_light_analytics:
+            return {
+                'show_basic_question_stats': True,
+                'show_analytics_question_stats': False,
+                'views_per_segment_name': [],
+                'show_links_to_analytics': False
+            }
+
+        views_per_segment_name = []
+        for named_segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS:
+            views_per_segment_name.append({
+                'segment_name': named_segment['name'],
+                'views_count': Event.objects.get_question_visits_count_by_group_ids(self, named_segment['group_ids'])
+            })
+        # get stats for teh default segment
+        views_per_segment_name.append({
+            'segment_name': get_analytics_default_segment_config()['name'],
+            'views_count': Event.objects.get_question_visits_count_by_default_segment(self)
+        })
+
+        return {
+            'show_basic_question_stats': False,
+            'show_analytics_question_stats': True,
+            'views_per_segment_name': views_per_segment_name,
+            'show_links_to_analytics': is_mod
+        }
+
     def has_group(self, group):
         """true if post belongs to the group"""
         return self.groups.filter(id=group.id).exists()

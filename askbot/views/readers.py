@@ -52,7 +52,6 @@ from askbot.templatetags import extra_tags
 from askbot.utils import functions
 from askbot.utils.decorators import anonymous_forbidden, ajax_only, get_only
 from askbot.utils.diff import textDiff as htmldiff
-from askbot.utils.analytics_utils import get_analytics_default_segment_config
 from askbot.utils.html import sanitize_html
 from askbot.utils.http import is_ajax
 from askbot.utils.loading import load_module
@@ -728,27 +727,15 @@ def question(request, id):#refactor - long subroutine. display question body, an
         'user_flag_counts_by_post_id': thread.get_flag_counts_by_post_id(request.user),
         'user_can_post_comment': user_can_post_comment,#in general
         'question_detail_page': True,
-        'show_public_question_stats': not user_is_mod and askbot_settings.SIDEBAR_QUESTION_SHOW_META,
-        'show_admin_question_stats': user_is_mod,
         'analytics_activity_field': AnalyticsActivityField
     }
-    # users that have access to analytics will see number of views per major analytics segment
-    # in the sidebar of the question, if the organizations for analytics are enabled
-    if user_is_mod and django_settings.ASKBOT_ANALYTICS_EMAIL_DOMAIN_ORGANIZATIONS_ENABLED:
-        # for each named segment, get views of this question [{"segment_name": <string>, views_count": <num>},]
-        from askbot.models.analytics import Event
-        views_per_segment_name = []
-        for named_segment in django_settings.ASKBOT_ANALYTICS_NAMED_SEGMENTS:
-            views_per_segment_name.append({
-                'segment_name': named_segment['name'],
-                'views_count': Event.objects.get_question_visits_count_by_group_ids(question_post, named_segment['group_ids'])
-            })
-            
-        views_per_segment_name.append({
-            'segment_name': get_analytics_default_segment_config()['name'],
-            'views_count': Event.objects.get_question_visits_count_by_default_segment(question_post)
-        })
-        data['views_per_segment_name'] = views_per_segment_name
+
+    # context for analytics, populates:
+    # * show_basic_question_stats
+    # * show_analytics_question_stats
+    # * show_links_to_analytics
+    # * views_per_segment_name
+    data.update(question_post.get_context_for_sidebar(request.user))
 
     #shared with ...
     if askbot_settings.GROUPS_ENABLED:
