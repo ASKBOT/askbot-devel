@@ -773,7 +773,7 @@ class Post(models.Model):
         # analytics needs multiple configs - the list of two conditions is incomplete
         analytics_enabled = groups_enabled and domains_enabled
         # covers the cases of "analytics disabled" and/or sidebar meta info disabled
-        if not (analytics_enabled and sidebar_meta_enabled):
+        if user.is_anonymous or not (analytics_enabled and sidebar_meta_enabled):
             return {
                 'show_basic_question_stats': sidebar_meta_enabled,
                 'show_analytics_question_stats': False,
