@@ -41,6 +41,9 @@
     <script src="../js/utils/alert_box.js"></script>
     <script src="../js/utils/modal_dialog.js"></script>
     <script src="../js/utils/file_upload_dialog.js"></script>
+    <!-- editorType is left unset above, so loading wmd.js only defines the
+         top-level Attacklab.editorTransfer unit and does not init the editor. -->
+    <script src="../wmd/wmd.js"></script>
 
     <script>
         // ---- Test framework ----
@@ -221,6 +224,86 @@
 
                 done();
             }, 200);
+        });
+
+        // ==================================================================
+        // Test 4: classifyTransferFile routes images vs other files
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'classifyTransferFile routes image vs file and derives extension';
+            var details = '';
+            var et = Attacklab.editorTransfer;
+            try {
+                var image = et.classifyTransferFile({ type: 'image/png' });
+                var pdf = et.classifyTransferFile({ type: 'application/pdf', name: 'x.pdf' });
+                var named = et.classifyTransferFile({ type: '', name: 'photo.png' });
+                details += 'name-less png: ' + JSON.stringify(image) + '\n';
+                details += 'named pdf: ' + JSON.stringify(pdf) + '\n';
+                details += 'named png, no type: ' + JSON.stringify(named) + '\n';
+
+                assert(image.route === 'image', 'image blob should route to image');
+                assert(image.extension === 'png', 'name-less image blob extension from MIME');
+                assert(pdf.route === 'file', 'pdf should route to file');
+                assert(pdf.extension === 'pdf', 'pdf extension from file name');
+                assert(named.route === 'image', 'png name with no MIME should route to image');
+                addResult(name, true, details + 'Classification and extension derivation are correct.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+            done();
+        });
+
+        // ==================================================================
+        // Test 5: makeDropOrderFlusher emits in drop order and skips failures
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'makeDropOrderFlusher emits in drop order, skips a failed slot';
+            var details = '';
+            var et = Attacklab.editorTransfer;
+            try {
+                var emitted = [];
+                var flusher = et.makeDropOrderFlusher(3, function (result) {
+                    emitted.push(result.id);
+                });
+                flusher.settle(2, { ok: true, id: 2 });
+                flusher.settle(0, { ok: true, id: 0 });
+                details += 'after settling 2 then 0: [' + emitted.join(',') + ']\n';
+                assert(emitted.join(',') === '0', 'only slot 0 flushes while slot 1 is unsettled');
+
+                flusher.settle(1, { ok: false });
+                details += 'after failing slot 1: [' + emitted.join(',') + ']\n';
+                assert(emitted.join(',') === '0,2',
+                    'failed slot 1 is skipped and slot 2 flushes in drop order');
+                addResult(name, true, details + 'Ordering and failure-skipping work.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+            done();
+        });
+
+        // ==================================================================
+        // Test 6: buildUploadName inserts a unique suffix before the extension
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'buildUploadName keeps the base, adds a unique suffix before the ext';
+            var details = '';
+            var et = Attacklab.editorTransfer;
+            try {
+                var a = et.buildUploadName('image.png', 'png', 'pasted-image');
+                var b = et.buildUploadName('image.png', 'png', 'pasted-image');
+                var nameless = et.buildUploadName('', 'png', 'pasted-image');
+                details += 'first: ' + a + '\nsecond: ' + b + '\nname-less: ' + nameless + '\n';
+
+                assert(/^image-.+\.png$/.test(a), 'should be image-<suffix>.png');
+                assert(a !== 'image.png', 'must not reuse the original name verbatim');
+                assert(a !== b, 'two uploads of the same name must differ');
+                assert(/^pasted-image-.+\.png$/.test(nameless),
+                    'name-less blob should use the fallback base');
+                addResult(name, true, details + 'Upload names are unique and keep the extension.');
+            } catch (e) {
+                addResult(name, false, details + 'FAILED: ' + e.message);
+            }
+            done();
         });
 
         // ---- Run ----
