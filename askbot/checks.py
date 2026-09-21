@@ -8,7 +8,7 @@ hits the live container — complements the runtime WARNING emitted in
 import logging
 
 from django.conf import settings
-from django.core.checks import Info, Warning, register
+from django.core.checks import Error, Info, Warning, register
 
 from askbot.utils.ratelimit import PER_PROCESS_CACHE_BACKENDS
 
@@ -174,3 +174,22 @@ def check_ratelimit_middleware_installed(app_configs, **kwargs):
              "admin UI.",
         id='askbot.W005',
     )]
+
+
+@register()
+def check_upload_permission_functions_callable(app_configs, **kwargs):
+    """E001: upload-permission override settings must be callables."""
+    errors = []
+    for setting_name in ('ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION',
+                         'ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION'):
+        value = getattr(settings, setting_name, None)
+        if not callable(value):
+            errors.append(Error(
+                f'{setting_name} is set to {value!r}, which is not '
+                f'callable; image/attachment uploads will crash.',
+                hint=f'Set {setting_name} to a callable taking a single '
+                     f'user argument, or remove it to keep the default '
+                     f'behavior.',
+                id='askbot.E001',
+            ))
+    return errors

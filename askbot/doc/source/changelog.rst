@@ -1,6 +1,12 @@
 Changes in Askbot
 =================
 
+Development (not yet released)
+------------------------------
+* Added ``ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION`` and
+  ``ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION`` settings to override
+  image and attachment upload permissions.
+
 0.13.0 (May 30, 2026)
 ---------------------
 * Upgraded to Django 5.2 LTS while keeping Django 4.2 supported.

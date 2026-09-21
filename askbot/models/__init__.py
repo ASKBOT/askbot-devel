@@ -992,6 +992,14 @@ def user_can_upload_image(user):
     return user.can_upload_file()
 
 
+def user_can_upload_attachment_check(self):
+    return django_settings.ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION(self)
+
+
+def user_can_upload_image_check(self):
+    return django_settings.ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION(self)
+
+
 def user_assert_can_join_or_leave_group(self):
     _assert_user_can(
         user=self,
@@ -3753,8 +3761,8 @@ User.add_to_class('get_avatar_url', user_get_avatar_url)
 User.add_to_class('can_terminate_account', user_can_terminate_account)
 User.add_to_class('can_manage_account', user_can_manage_account)
 User.add_to_class('can_upload_file', user_can_upload_file)
-User.add_to_class('can_upload_attachment', user_can_upload_attachment)
-User.add_to_class('can_upload_image', user_can_upload_image)
+User.add_to_class('can_upload_attachment', user_can_upload_attachment_check)
+User.add_to_class('can_upload_image', user_can_upload_image_check)
 User.add_to_class('calculate_avatar_url', user_calculate_avatar_url)
 User.add_to_class('clear_avatar_urls', user_clear_avatar_urls)
 User.add_to_class('clear_cached_data', user_clear_cached_data)
