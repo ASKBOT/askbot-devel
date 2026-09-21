@@ -3,6 +3,7 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Fixed large images overflowing the live Markdown preview box in the editor.
 * Added ``ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION`` and
   ``ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION`` settings to override
   image and attachment upload permissions.

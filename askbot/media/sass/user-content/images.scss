@@ -2,6 +2,7 @@
 // Ensures images don't overflow their containers
 
 .post-body img,
-.js-editable-content img {
+.js-editable-content img,
+.wmd-preview img {
   max-width: 100%;
 }

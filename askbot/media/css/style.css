@@ -9246,7 +9246,8 @@ pre code .esc {
 }
 
 .post-body img,
-.js-editable-content img {
+.js-editable-content img,
+.wmd-preview img {
   max-width: 100%;
 }
 
