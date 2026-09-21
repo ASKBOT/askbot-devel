@@ -1,5 +1,145 @@
 var Attacklab = Attacklab || {};
 
+// Pure helpers for moving dropped and pasted files into the editor. They live
+// outside the editor closure so they can be unit tested on their own: no DOM,
+// no globals, no upload calls.
+Attacklab.editorTransfer = (function(){
+
+	var imageExtensions = {
+		png: 1, jpg: 1, jpeg: 1, gif: 1, bmp: 1, tiff: 1, tif: 1, webp: 1, svg: 1
+	};
+
+	// Map an image MIME type to a file extension. The server checks the
+	// uploaded file name's extension, and pasted image blobs often have none.
+	var imagePasteExtension = function(mimeType){
+		var map = {
+			'image/png': 'png',
+			'image/jpeg': 'jpg',
+			'image/jpg': 'jpg',
+			'image/gif': 'gif',
+			'image/bmp': 'bmp',
+			'image/tiff': 'tiff',
+			'image/webp': 'webp'
+		};
+		mimeType = mimeType || '';
+		if (map[mimeType]) {
+			return map[mimeType];
+		}
+		var slash = mimeType.indexOf('/');
+		if (slash !== -1) {
+			return mimeType.slice(slash + 1).replace(/[^a-z0-9]/gi, '');
+		}
+		return '';
+	};
+
+	var extensionFromName = function(name){
+		if (!name) {
+			return '';
+		}
+		var dot = name.lastIndexOf('.');
+		if (dot === -1 || dot === name.length - 1) {
+			return '';
+		}
+		return name.slice(dot + 1).replace(/[^a-z0-9]/gi, '');
+	};
+
+	// Return every File in a drop's dataTransfer or a paste's clipboardData.
+	// Prefer the items list (drops expose files there); fall back to the files
+	// list so a file is never counted twice.
+	var getFilesFromTransfer = function(transfer){
+		var files = [];
+		if (!transfer) {
+			return files;
+		}
+		var items = transfer.items;
+		if (items && items.length) {
+			for (var i = 0; i < items.length; i++) {
+				var item = items[i];
+				if (item && item.kind === 'file' && item.getAsFile) {
+					var file = item.getAsFile();
+					if (file) {
+						files.push(file);
+					}
+				}
+			}
+			if (files.length) {
+				return files;
+			}
+		}
+		var fileList = transfer.files;
+		if (fileList && fileList.length) {
+			for (var j = 0; j < fileList.length; j++) {
+				files.push(fileList[j]);
+			}
+		}
+		return files;
+	};
+
+	// Decide how one file should be inserted and which extension to validate.
+	// Named files (drops and OS-manager pastes) use the name's extension; a
+	// name-less pasted image blob falls back to its MIME type.
+	var classifyTransferFile = function(file){
+		var type = (file && file.type) || '';
+		var name = (file && file.name) || '';
+		var extension = extensionFromName(name);
+		var isImage = type.indexOf('image/') === 0 ||
+			(!!extension && imageExtensions[extension.toLowerCase()] === 1);
+		if (!extension && isImage) {
+			extension = imagePasteExtension(type);
+		}
+		return { route: isImage ? 'image' : 'file', extension: extension };
+	};
+
+	// Buffer per-file results so inserts happen in drop order regardless of
+	// which upload finishes first. Each settled slot that is now contiguous
+	// from the front is emitted; failed or empty slots (ok === false) are
+	// skipped without stalling the ones behind them.
+	var makeDropOrderFlusher = function(count, emit){
+		var slots = new Array(count);
+		var settled = new Array(count);
+		var pointer = 0;
+		return {
+			settle: function(index, result){
+				if (index < 0 || index >= count || settled[index]) {
+					return;
+				}
+				slots[index] = result;
+				settled[index] = true;
+				while (pointer < count && settled[pointer]) {
+					var current = slots[pointer];
+					if (current && current.ok !== false) {
+						emit(current);
+					}
+					pointer++;
+				}
+			}
+		};
+	};
+
+	// Build a collision-resistant name for the uploaded file. The browser
+	// hands pasted screenshots a fixed name (image.png in Chrome), which would
+	// overwrite or resolve to a same-named file already on the server, so the
+	// stored name gets a timestamp and random suffix. The original name is kept
+	// only for the visible link text, not for what is stored.
+	var buildUploadName = function(originalName, extension, fallbackBase){
+		var base = fallbackBase || 'upload';
+		if (originalName) {
+			var dot = originalName.lastIndexOf('.');
+			base = (dot > 0) ? originalName.slice(0, dot) : originalName;
+		}
+		var stamp = (new Date()).getTime() + '-' + Math.floor(Math.random() * 100000);
+		return base + '-' + stamp + (extension ? '.' + extension : '');
+	};
+
+	return {
+		imagePasteExtension: imagePasteExtension,
+		getFilesFromTransfer: getFilesFromTransfer,
+		classifyTransferFile: classifyTransferFile,
+		buildUploadName: buildUploadName,
+		makeDropOrderFlusher: makeDropOrderFlusher
+	};
+})();
+
 Attacklab.wmdBase = function(){
 
 	// A few handy aliases for readability.
@@ -1137,10 +1277,10 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 
 		// Insert image markdown at the caret, reusing the button machinery so
 		// the change is undoable and the preview refreshes.
-		var insertImageMarkdown = function(url, description){
+		var insertImageMarkdown = function(url, description, prefix){
 			var fakeButton = {};
 			fakeButton.textOp = function(chunk){
-				chunk.startTag = '![';
+				chunk.startTag = (prefix || '') + '![';
 				chunk.endTag = '](' + url + ')';
 				if (!chunk.selection) {
 					chunk.selection = description || gettext('image description');
@@ -1149,26 +1289,38 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 			doClick(fakeButton);
 		};
 
-		// Map an image MIME type to a file extension. The server checks the
-		// uploaded file name's extension, and pasted images often have none.
-		var imagePasteExtension = function(mimeType){
-			var map = {
-				'image/png': 'png',
-				'image/jpeg': 'jpg',
-				'image/jpg': 'jpg',
-				'image/gif': 'gif',
-				'image/bmp': 'bmp',
-				'image/tiff': 'tiff',
-				'image/webp': 'webp'
+		// Insert a file link markdown at the caret, reusing the button
+		// machinery so the change is undoable and the preview refreshes. The
+		// file name is passed in directly so concurrent uploads do not race
+		// over a shared value.
+		var insertFileMarkdown = function(url, filename, prefix){
+			var fakeButton = {};
+			fakeButton.textOp = function(chunk){
+				chunk.startTag = (prefix || '') + '[';
+				chunk.endTag = '](' + url + ')';
+				if (!chunk.selection) {
+					chunk.selection = filename || gettext('file name');
+				}
 			};
-			if (map[mimeType]) {
-				return map[mimeType];
+			doClick(fakeButton);
+		};
+
+		// Pure drop/paste helpers, defined at module level for testability.
+		var editorTransfer = wmd.editorTransfer;
+
+		// Join failure messages into one notice, dropping duplicates so a batch
+		// of same-reason rejections reads as a single line.
+		var joinUnique = function(messages){
+			var seen = {};
+			var unique = [];
+			for (var i = 0; i < messages.length; i++) {
+				var message = messages[i];
+				if (!seen[message]) {
+					seen[message] = true;
+					unique.push(message);
+				}
 			}
-			var slash = mimeType.indexOf('/');
-			if (slash !== -1) {
-				return mimeType.slice(slash + 1).replace(/[^a-z0-9]/gi, '');
-			}
-			return '';
+			return unique.join(' ');
 		};
 
 		var imagePasteTypeAllowed = function(extension){
@@ -1184,85 +1336,156 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 			return false;
 		};
 
-		var getPastedImageBlob = function(event){
-			var clipboardData = event.clipboardData || window.clipboardData;
-			if (!clipboardData || !clipboardData.items) {
-				return null;
-			}
-			var items = clipboardData.items;
-			for (var i = 0; i < items.length; i++) {
-				var item = items[i];
-				if (item.kind === 'file' && item.type && item.type.indexOf('image/') === 0) {
-					return item.getAsFile();
-				}
-			}
-			return null;
-		};
-
-		var pastedContentHasNonImageFile = function(event){
-			var clipboardData = event.clipboardData || window.clipboardData;
-			if (!clipboardData || !clipboardData.items) {
+		// True when a drag or paste transfer carries at least one file. The
+		// files themselves are not readable during dragover, but the types
+		// list already reports 'Files'.
+		var transferHasFiles = function(transfer){
+			if (!transfer) {
 				return false;
 			}
-			var items = clipboardData.items;
-			for (var i = 0; i < items.length; i++) {
-				var item = items[i];
-				if (item.kind === 'file' && (!item.type || item.type.indexOf('image/') !== 0)) {
-					return true;
+			var types = transfer.types;
+			if (types) {
+				for (var i = 0; i < types.length; i++) {
+					if (types[i] === 'Files') {
+						return true;
+					}
 				}
 			}
-			return false;
+			var items = transfer.items;
+			if (items) {
+				for (var j = 0; j < items.length; j++) {
+					if (items[j].kind === 'file') {
+						return true;
+					}
+				}
+			}
+			return !!(transfer.files && transfer.files.length);
 		};
 
-		// Upload an image pasted from the clipboard (Ctrl-V or right-click
-		// Paste) and insert its markdown. Gated on the image upload permission,
-		// independent of the attachment button.
-		var handleImagePaste = function(event){
-			var blob = getPastedImageBlob(event);
-			if (!blob) {
+		// Accept file drags so the editor becomes a drop target. Text drags are
+		// left to the browser so native drag/drop inside the textarea keeps
+		// working.
+		var handleDragOver = function(event){
+			if (transferHasFiles(event.dataTransfer)) {
+				event.preventDefault();
+			}
+		};
+
+		// One handler for both file paste and drag-and-drop. It extracts every
+		// file, uploads each through the matching permission gate, and inserts
+		// markdown in drop order. Text paste/drop is left to the browser.
+		var handleFileTransfer = function(event){
+			var isDrop = event.type === 'drop';
+			var transfer = isDrop ?
+				event.dataTransfer : (event.clipboardData || window.clipboardData);
+			var hasFiles = transferHasFiles(transfer);
+
+			if (isDrop) {
+				// Any file drop must be prevented, accepted or not, or the
+				// browser navigates the tab to the file and loses the draft.
+				if (hasFiles) {
+					event.preventDefault();
+				}
+			} else {
+				// Leave native text/image paste undisturbed when no file is
+				// present; only take over when a file is being pasted.
+				if (!hasFiles) {
+					return;
+				}
+				event.preventDefault();
+			}
+
+			var files = editorTransfer.getFilesFromTransfer(transfer);
+			if (!files.length) {
 				return;
 			}
 
-			// Handle the image ourselves so the blob is not also pasted as text.
-			event.preventDefault();
+			var canUploadImage = askbot && askbot.data && askbot.data.userCanUploadImage;
+			var canUploadAttachment = askbot && askbot.data && askbot.data.userCanUploadAttachment;
 
-			var canUpload = askbot && askbot.data && askbot.data.userCanUploadImage;
-			if (!canUpload) {
-				notify.show(gettext('Uploading of files is not allowed'), true);
-				return;
-			}
+			var rejections = [];
+			var settledCount = 0;
+			var total = files.length;
 
-			var extension = imagePasteExtension(blob.type);
-			if (!extension || !imagePasteTypeAllowed(extension)) {
-				notify.show(gettext('Sorry, this file type is not allowed.'), true);
-				return;
-			}
-
-			var fileName = 'pasted-image-' + (new Date()).getTime() + '.' + extension;
-
-			uploadBlob(blob, fileName, {
-				onSuccess: function(fileURL){
-					insertImageMarkdown(fileURL);
-				},
-				onError: function(message){
-					notify.show(message, true);
+			// insertImageMarkdown / insertFileMarkdown leave the description
+			// placeholder selected, which is handy for a single paste but makes
+			// a following insert wrap the previous one. For a multi-file drop,
+			// put a blank line before every file after the first so they stack
+			// one per line, then collapse the caret past the just-inserted
+			// "](url)" so the next file lands as a sibling, not nested inside.
+			var emittedCount = 0;
+			var flusher = editorTransfer.makeDropOrderFlusher(total, function(result){
+				result.insert(emittedCount > 0 ? '\n\n' : '');
+				emittedCount++;
+				if (total > 1) {
+					var tail = '](' + result.url + ')';
+					var caret = inputBox.selectionEnd + tail.length;
+					try {
+						inputBox.selectionStart = caret;
+						inputBox.selectionEnd = caret;
+					} catch (e) {
+						// Some browsers reject setting a range on a hidden field.
+					}
 				}
 			});
-		};
 
-		// Pasting a non-image file is not an upload path today. When attachment
-		// uploads are disabled, tell the user instead of dropping it silently.
-		var handleAttachmentPaste = function(event){
-			if (event.defaultPrevented) {
-				return;
-			}
-			if (!pastedContentHasNonImageFile(event)) {
-				return;
-			}
-			var canUpload = askbot && askbot.data && askbot.data.userCanUploadAttachment;
-			if (!canUpload) {
-				event.preventDefault();
-				notify.show(gettext('Uploading of files is not allowed'), true);
+			var afterSettle = function(){
+				settledCount++;
+				if (settledCount === total && rejections.length) {
+					notify.show(joinUnique(rejections), true);
+				}
+			};
+
+			var reject = function(index, message){
+				rejections.push(message);
+				flusher.settle(index, { ok: false });
+				afterSettle();
+			};
+
+			for (var k = 0; k < files.length; k++) {
+				(function(file, index){
+					var classification = editorTransfer.classifyTransferFile(file);
+					var isImage = classification.route === 'image';
+					var extension = classification.extension;
+
+					var canUpload = isImage ? canUploadImage : canUploadAttachment;
+					if (!canUpload) {
+						reject(index, gettext('Uploading of files is not allowed'));
+						return;
+					}
+					if (!extension || !imagePasteTypeAllowed(extension)) {
+						reject(index, gettext('Sorry, this file type is not allowed.'));
+						return;
+					}
+
+					// Upload under a unique name so a fixed paste name (Chrome
+					// gives screenshots image.png) cannot clash with a file
+					// already on the server. Keep the original name only for
+					// the visible file-link text.
+					var displayName = file.name;
+					var uploadName = editorTransfer.buildUploadName(
+						file.name, extension, isImage ? 'pasted-image' : 'pasted-file');
+
+					uploadBlob(file, uploadName, {
+						onSuccess: function(fileURL){
+							flusher.settle(index, {
+								ok: true,
+								url: fileURL,
+								insert: function(prefix){
+									if (isImage) {
+										insertImageMarkdown(fileURL, undefined, prefix);
+									} else {
+										insertFileMarkdown(fileURL, displayName, prefix);
+									}
+								}
+							});
+							afterSettle();
+						},
+						onError: function(message){
+							reject(index, message);
+						}
+					});
+				})(files[k], k);
 			}
 		};
 
@@ -1396,10 +1619,13 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 				}
 			});
 
-			// Additive binding so undo-save, preview-refresh and auto-resize
-			// paste handlers keep working.
-			inputBox.addEventListener('paste', handleImagePaste);
-			inputBox.addEventListener('paste', handleAttachmentPaste);
+			// Additive bindings so the existing undo-save, preview-refresh and
+			// auto-resize paste/drop handlers keep working. Never assign
+			// inputBox.ondrop here: the editor already uses that single slot.
+			inputBox.addEventListener('paste', handleFileTransfer);
+			inputBox.addEventListener('drop', handleFileTransfer);
+			inputBox.addEventListener('dragover', handleDragOver);
+			inputBox.addEventListener('dragenter', handleDragOver);
 
 			if (inputBox.form) {
 				var submitCallback = inputBox.form.onsubmit;

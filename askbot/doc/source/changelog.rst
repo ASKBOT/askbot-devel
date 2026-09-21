@@ -10,6 +10,8 @@ Development (not yet released)
   directly into the post editor.
 * Pasting a file into the post editor now shows a notice when uploads are
   disabled, instead of silently doing nothing.
+* Files (images and other allowed types) can now be dragged onto the post
+  editor to upload them; non-image files can also be pasted best-effort.
 
 0.13.0 (May 30, 2026)
 ---------------------
