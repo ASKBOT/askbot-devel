@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload Dialog Test: Duplicate ID Bug Fix</title>
+    <title>Upload Dialog Test: uploadBlob path and DOM cleanup</title>
     <style>
         body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
         .test-case { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
@@ -13,9 +13,9 @@
     </style>
 </head>
 <body>
-    <h1>Upload Dialog Test: Duplicate ID Bug Fix</h1>
-    <p>Tests that unique file-input IDs prevent the second upload from sending the first image's file,
-       and that stale dialog DOM is cleaned up on close.</p>
+    <h1>Upload Dialog Test: uploadBlob path and DOM cleanup</h1>
+    <p>Tests that the shared uploadBlob helper posts a blob as multipart form data and reports
+       success and server errors, and that stale dialog DOM is cleaned up on close.</p>
     <div id="results"></div>
 
     <!-- Mocks (before library scripts that may reference askbot at load time) -->
@@ -41,7 +41,6 @@
     <script src="../js/utils/alert_box.js"></script>
     <script src="../js/utils/modal_dialog.js"></script>
     <script src="../js/utils/file_upload_dialog.js"></script>
-    <script src="../jslib/jquery.ajaxfileupload.js"></script>
 
     <script>
         // ---- Test framework ----
@@ -98,139 +97,92 @@
         }
 
         // ==================================================================
-        // Test 1: BUG REPRO — Duplicate IDs cause wrong element lookup
+        // Test 1: uploadBlob posts a blob as multipart and reports success
         // ==================================================================
         testQueue.push(function (done) {
-            var name = 'BUG: Duplicate IDs cause wrong element lookup';
+            var name = 'uploadBlob posts a blob and reports success';
             var details = '';
 
-            var dlgA = createDialog('file-upload');
-            var dlgB = createDialog('file-upload');
+            var origAjax = $.ajax;
+            var captured = null;
+            $.ajax = function (opts) {
+                captured = opts;
+                var xml = $.parseXML(
+                    '<result><file_url>/up/pasted.png</file_url>' +
+                    '<orig_file_name>pasted.png</orig_file_name><error></error></result>');
+                setTimeout(function () { opts.success(xml); }, 0);
+            };
 
-            // Simulate: dialog A was shown then closed (hidden but still in DOM)
-            $('body').append(dlgA.getElement());
-            dlgA.getElement().hide();
+            var blob = new Blob(['x'], { type: 'image/png' });
+            var okURL = null, okName = null, errMsg = null;
+            uploadBlob(blob, 'pasted.png', {
+                onSuccess: function (url, origName) { okURL = url; okName = origName; },
+                onError: function (m) { errMsg = m; }
+            });
 
-            // Dialog B is the current active one
-            $('body').append(dlgB.getElement());
-
-            var allWithId = $('[id="file-upload"]');
-            var firstMatch = document.getElementById('file-upload');
-
-            details += 'Elements with id="file-upload": ' + allWithId.length + '\n';
-            details += 'getElementById returns dialog A input (old): ' + (firstMatch === dlgA._upload_input[0]) + '\n';
-            details += 'getElementById returns dialog B input (current): ' + (firstMatch === dlgB._upload_input[0]) + '\n';
-
-            try {
-                assert(allWithId.length > 1,
-                    'Expected >1 elements with id="file-upload", got ' + allWithId.length);
-                assert(firstMatch === dlgA._upload_input[0],
-                    'getElementById should return dialog A\'s input (the old hidden one)');
-                assert(firstMatch !== dlgB._upload_input[0],
-                    'getElementById should NOT return dialog B\'s input');
-                addResult(name, true, details + 'Bug confirmed: jQuery finds old dialog\'s input, not the current one.');
-            } catch (e) {
-                addResult(name, false, details + 'FAILED: ' + e.message);
-            }
-
-            dlgA.getElement().remove();
-            dlgB.getElement().remove();
-            done();
+            setTimeout(function () {
+                try {
+                    assert(captured, '$.ajax should have been called');
+                    assert(captured.url === '/fake-upload', 'should post to the upload url');
+                    assert(captured.type === 'POST', 'should use POST');
+                    assert(captured.processData === false, 'processData must be false');
+                    assert(captured.contentType === false, 'contentType must be false');
+                    assert(captured.data instanceof FormData, 'data must be FormData');
+                    var sent = captured.data.get('file-upload');
+                    details += 'FormData file-upload name: ' + (sent && sent.name) + '\n';
+                    assert(sent && sent.name === 'pasted.png', 'file name should be passed to FormData');
+                    details += 'onSuccess url: ' + okURL + ', name: ' + okName + '\n';
+                    assert(okURL === '/up/pasted.png', 'onSuccess should get parsed file_url');
+                    assert(okName === 'pasted.png', 'onSuccess should get parsed orig_file_name');
+                    assert(errMsg === null, 'onError should not be called on success');
+                    addResult(name, true, details + 'uploadBlob posts a blob and parses the success response.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+                $.ajax = origAjax;
+                done();
+            }, 30);
         });
 
         // ==================================================================
-        // Test 2: BUG REPRO — jQuery.createUploadForm selects wrong input
+        // Test 2: uploadBlob surfaces a server error message
         // ==================================================================
         testQueue.push(function (done) {
-            var name = 'BUG: jQuery.createUploadForm selects wrong input';
+            var name = 'uploadBlob surfaces a server error';
             var details = '';
 
-            var dlgA = createDialog('file-upload');
-            var dlgB = createDialog('file-upload');
+            var origAjax = $.ajax;
+            $.ajax = function (opts) {
+                var xml = $.parseXML(
+                    '<result><file_url></file_url><orig_file_name></orig_file_name>' +
+                    '<error>allowed file types are ...</error></result>');
+                setTimeout(function () { opts.success(xml); }, 0);
+            };
 
-            $('body').append(dlgA.getElement());
-            dlgA.getElement().hide();
-            $('body').append(dlgB.getElement());
+            var blob = new Blob(['x'], { type: 'image/png' });
+            var okCalled = false, errMsg = null;
+            uploadBlob(blob, 'pasted.png', {
+                onSuccess: function () { okCalled = true; },
+                onError: function (m) { errMsg = m; }
+            });
 
-            // Mark inputs so we can tell them apart
-            dlgA._upload_input.attr('data-dialog', 'A');
-            dlgB._upload_input.attr('data-dialog', 'B');
-
-            var formId = Date.now();
-            var form = jQuery.createUploadForm(formId, 'file-upload');
-
-            var grabbed = form.find('input[type="file"]');
-            var grabbedFrom = grabbed.attr('data-dialog');
-
-            details += 'createUploadForm grabbed input from dialog: ' + grabbedFrom + '\n';
-            details += 'Expected: A (the old hidden dialog — wrong one)\n';
-
-            try {
-                assert(grabbedFrom === 'A',
-                    'Expected to grab dialog A\'s input, got: ' + grabbedFrom);
-                addResult(name, true, details + 'Bug confirmed: upload plugin grabs old dialog\'s file input.');
-            } catch (e) {
-                addResult(name, false, details + 'FAILED: ' + e.message);
-            }
-
-            form.remove();
-            dlgA.getElement().remove();
-            dlgB.getElement().remove();
-            done();
+            setTimeout(function () {
+                details += 'onError message: ' + errMsg + '\n';
+                try {
+                    assert(okCalled === false, 'onSuccess should not be called on error');
+                    assert(errMsg === 'allowed file types are ...',
+                        'onError should receive the server error text');
+                    addResult(name, true, details + 'uploadBlob routes server errors to onError.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+                $.ajax = origAjax;
+                done();
+            }, 30);
         });
 
         // ==================================================================
-        // Test 3: FIX — Unique IDs resolve element lookup correctly
-        // ==================================================================
-        testQueue.push(function (done) {
-            var name = 'FIX: Unique IDs resolve element lookup correctly';
-            var details = '';
-
-            var dlgC = createDialog('file-upload-1');
-            var dlgD = createDialog('file-upload-2');
-
-            // Dialog C closed (hidden), dialog D is current
-            $('body').append(dlgC.getElement());
-            dlgC.getElement().hide();
-            $('body').append(dlgD.getElement());
-
-            dlgD._upload_input.attr('data-dialog', 'D');
-
-            var matchCount = $('[id="file-upload-2"]').length;
-            var found = document.getElementById('file-upload-2');
-            var isCorrect = found === dlgD._upload_input[0];
-
-            details += 'Elements with id="file-upload-2": ' + matchCount + '\n';
-            details += 'getElementById returns dialog D input (correct): ' + isCorrect + '\n';
-
-            // Verify createUploadForm also works
-            var formId = Date.now();
-            var form = jQuery.createUploadForm(formId, 'file-upload-2');
-            var grabbed = form.find('input[type="file"]');
-            var grabbedFrom = grabbed.attr('data-dialog');
-
-            details += 'createUploadForm grabbed input from dialog: ' + grabbedFrom + '\n';
-
-            try {
-                assert(matchCount === 1,
-                    'Expected exactly 1 element with id="file-upload-2", got ' + matchCount);
-                assert(isCorrect,
-                    'getElementById should return dialog D\'s input');
-                assert(grabbedFrom === 'D',
-                    'createUploadForm should grab dialog D\'s input, got: ' + grabbedFrom);
-                addResult(name, true, details + 'Fix works: unique IDs ensure correct element lookup.');
-            } catch (e) {
-                addResult(name, false, details + 'FAILED: ' + e.message);
-            }
-
-            form.remove();
-            dlgC.getElement().remove();
-            dlgD.getElement().remove();
-            done();
-        });
-
-        // ==================================================================
-        // Test 4: FIX — DOM cleanup via modal:after-close
+        // Test 3: FIX — DOM cleanup via modal:after-close
         // ==================================================================
         testQueue.push(function (done) {
             var name = 'FIX: modal:after-close removes old dialog from DOM';

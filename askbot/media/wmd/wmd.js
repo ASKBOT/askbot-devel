@@ -1135,6 +1135,137 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 			*/
 		};
 
+		// Insert image markdown at the caret, reusing the button machinery so
+		// the change is undoable and the preview refreshes.
+		var insertImageMarkdown = function(url, description){
+			var fakeButton = {};
+			fakeButton.textOp = function(chunk){
+				chunk.startTag = '![';
+				chunk.endTag = '](' + url + ')';
+				if (!chunk.selection) {
+					chunk.selection = description || gettext('image description');
+				}
+			};
+			doClick(fakeButton);
+		};
+
+		// Map an image MIME type to a file extension. The server checks the
+		// uploaded file name's extension, and pasted images often have none.
+		var imagePasteExtension = function(mimeType){
+			var map = {
+				'image/png': 'png',
+				'image/jpeg': 'jpg',
+				'image/jpg': 'jpg',
+				'image/gif': 'gif',
+				'image/bmp': 'bmp',
+				'image/tiff': 'tiff',
+				'image/webp': 'webp'
+			};
+			if (map[mimeType]) {
+				return map[mimeType];
+			}
+			var slash = mimeType.indexOf('/');
+			if (slash !== -1) {
+				return mimeType.slice(slash + 1).replace(/[^a-z0-9]/gi, '');
+			}
+			return '';
+		};
+
+		var imagePasteTypeAllowed = function(extension){
+			var allowed = (askbot && askbot.settings && askbot.settings.allowedUploadFileTypes) || [];
+			if (allowed.length === 0) {
+				return true;
+			}
+			for (var i = 0; i < allowed.length; i++) {
+				if (allowed[i].toLowerCase() === extension.toLowerCase()) {
+					return true;
+				}
+			}
+			return false;
+		};
+
+		var getPastedImageBlob = function(event){
+			var clipboardData = event.clipboardData || window.clipboardData;
+			if (!clipboardData || !clipboardData.items) {
+				return null;
+			}
+			var items = clipboardData.items;
+			for (var i = 0; i < items.length; i++) {
+				var item = items[i];
+				if (item.kind === 'file' && item.type && item.type.indexOf('image/') === 0) {
+					return item.getAsFile();
+				}
+			}
+			return null;
+		};
+
+		var pastedContentHasNonImageFile = function(event){
+			var clipboardData = event.clipboardData || window.clipboardData;
+			if (!clipboardData || !clipboardData.items) {
+				return false;
+			}
+			var items = clipboardData.items;
+			for (var i = 0; i < items.length; i++) {
+				var item = items[i];
+				if (item.kind === 'file' && (!item.type || item.type.indexOf('image/') !== 0)) {
+					return true;
+				}
+			}
+			return false;
+		};
+
+		// Upload an image pasted from the clipboard (Ctrl-V or right-click
+		// Paste) and insert its markdown. Gated on the image upload permission,
+		// independent of the attachment button.
+		var handleImagePaste = function(event){
+			var blob = getPastedImageBlob(event);
+			if (!blob) {
+				return;
+			}
+
+			// Handle the image ourselves so the blob is not also pasted as text.
+			event.preventDefault();
+
+			var canUpload = askbot && askbot.data && askbot.data.userCanUploadImage;
+			if (!canUpload) {
+				notify.show(gettext('Uploading of files is not allowed'), true);
+				return;
+			}
+
+			var extension = imagePasteExtension(blob.type);
+			if (!extension || !imagePasteTypeAllowed(extension)) {
+				notify.show(gettext('Sorry, this file type is not allowed.'), true);
+				return;
+			}
+
+			var fileName = 'pasted-image-' + (new Date()).getTime() + '.' + extension;
+
+			uploadBlob(blob, fileName, {
+				onSuccess: function(fileURL){
+					insertImageMarkdown(fileURL);
+				},
+				onError: function(message){
+					notify.show(message, true);
+				}
+			});
+		};
+
+		// Pasting a non-image file is not an upload path today. When attachment
+		// uploads are disabled, tell the user instead of dropping it silently.
+		var handleAttachmentPaste = function(event){
+			if (event.defaultPrevented) {
+				return;
+			}
+			if (!pastedContentHasNonImageFile(event)) {
+				return;
+			}
+			var canUpload = askbot && askbot.data && askbot.data.userCanUploadAttachment;
+			if (!canUpload) {
+				event.preventDefault();
+				notify.show(gettext('Uploading of files is not allowed'), true);
+			}
+		};
+
 		var setupEditor = function(){
 
             //prevent double initialization of the same editor
@@ -1264,6 +1395,11 @@ util.prompt = function (text, defaultInputText, makeLinkMarkdown, dialogType) {
 					}
 				}
 			});
+
+			// Additive binding so undo-save, preview-refresh and auto-resize
+			// paste handlers keep working.
+			inputBox.addEventListener('paste', handleImagePaste);
+			inputBox.addEventListener('paste', handleAttachmentPaste);
 
 			if (inputBox.form) {
 				var submitCallback = inputBox.form.onsubmit;

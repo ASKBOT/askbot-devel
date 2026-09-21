@@ -6,6 +6,10 @@ Development (not yet released)
 * Added ``ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION`` and
   ``ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION`` settings to override
   image and attachment upload permissions.
+* Images can now be pasted from the clipboard (Ctrl-V or right-click Paste)
+  directly into the post editor.
+* Pasting a file into the post editor now shows a notice when uploads are
+  disabled, instead of silently doing nothing.
 
 0.13.0 (May 30, 2026)
 ---------------------
