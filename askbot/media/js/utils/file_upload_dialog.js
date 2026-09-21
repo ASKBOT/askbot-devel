@@ -1,4 +1,50 @@
 /**
+ * Uploads a File or Blob to the site upload endpoint and reports the result.
+ * Used by both the upload dialog and the editor's clipboard-image paste, so
+ * there is a single client upload path. Sends multipart form data via jQuery
+ * $.ajax, which keeps the global ajaxStart/ajaxComplete events firing (the
+ * dialog relies on them to toggle its spinner).
+ *
+ * options.onSuccess(fileURL, origFileName) is called on success.
+ * options.onError(message) is called when the server or transport reports one.
+ */
+var uploadBlob = function (fileOrBlob, filename, options) {
+    options = options || {};
+    var formData = new FormData();
+    formData.append('file-upload', fileOrBlob, filename);
+    $.ajax({
+        url: askbot.urls.upload,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'xml',
+        success: function (data) {
+            var fileURL = $(data).find('file_url').text();
+            var origFileName = $(data).find('orig_file_name').text();
+            /*
+             * hopefully a fix for the "fakepath" issue
+             * https://www.mediawiki.org/wiki/Special:Code/MediaWiki/83225
+             */
+            fileURL = fileURL.replace(/\w:.*\\(.*)$/, '$1');
+            var error = $(data).find('error').text();
+            if (error !== '') {
+                if (options.onError) {
+                    options.onError(error);
+                }
+            } else if (options.onSuccess) {
+                options.onSuccess(fileURL, origFileName);
+            }
+        },
+        error: function () {
+            if (options.onError) {
+                options.onError(gettext('Oops, looks like we had an error. Sorry.'));
+            }
+        }
+    });
+};
+
+/**
  * @constructor
  */
 var FileUploadDialog = function () {
@@ -116,58 +162,37 @@ FileUploadDialog.prototype.startFileUpload = function (startUploadHandler) {
         label.show();
     });
 
-    /* important!!! upload input must be loaded by id
-     * because ajaxFileUpload monkey-patches the upload form */
     var uploadInput = this.getInputElement();
     uploadInput.ajaxStart(function () { uploadInput.hide(); });
     uploadInput.ajaxComplete(function () { uploadInput.show(); });
 
-    //var localFilePath = upload_input.val();
-
     var me = this;
 
-    $.ajaxFileUpload({
-        url: askbot.urls.upload,
-        secureuri: false,//todo: check on https
-        fileElementId: this.getInputId(),
-        dataType: 'xml',
-        success: function (data, status) {
+    var fileInput = uploadInput.get(0);
+    var file = fileInput && fileInput.files && fileInput.files[0];
+    if (!file) {
+        me.installFileUploadHandler(startUploadHandler);
+        return false;
+    }
 
-            var fileURL = $(data).find('file_url').text();
-            var origFileName = $(data).find('orig_file_name').text();
+    uploadBlob(file, file.name, {
+        onSuccess: function (fileURL, origFileName) {
             var newStatus = interpolate(
                                 gettext('Uploaded file: %s'),
                                 [origFileName]
                             );
-            /*
-            * hopefully a fix for the "fakepath" issue
-            * https://www.mediawiki.org/wiki/Special:Code/MediaWiki/83225
-            */
-            fileURL = fileURL.replace(/\w:.*\\(.*)$/, '$1');
-            var error = $(data).find('error').text();
-            if (error !== '') {
-                me.setErrorText(error);
-            } else {
-                me._origFileName = origFileName;
-                me.getUrlInputElement().attr('value', fileURL);
-                me.setLabelText(newStatus);
-                var buttonText = gettext('Choose a different file');
-                if (me.getFileType() === 'image') {
-                    buttonText = gettext('Choose a different image');
-                }
-                me.setButtonText(buttonText);
+            me._origFileName = origFileName;
+            me.getUrlInputElement().attr('value', fileURL);
+            me.setLabelText(newStatus);
+            var buttonText = gettext('Choose a different file');
+            if (me.getFileType() === 'image') {
+                buttonText = gettext('Choose a different image');
             }
-
-            /* re-install this as the upload extension
-             * will remove the handler to prevent double uploading
-             * this hack is a manipulation around the
-             * ajaxFileUpload jQuery plugin. */
+            me.setButtonText(buttonText);
             me.installFileUploadHandler(startUploadHandler);
         },
-        error: function (data, status, e) {
-            /* re-install this as the upload extension
-            * will remove the handler to prevent double uploading */
-            me.setErrorText(gettext('Oops, looks like we had an error. Sorry.'));
+        onError: function (error) {
+            me.setErrorText(error);
             me.installFileUploadHandler(startUploadHandler);
         }
     });

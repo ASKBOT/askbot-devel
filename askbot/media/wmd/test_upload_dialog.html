@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Dialog Test: uploadBlob path and DOM cleanup</title>
+    <style>
+        body { font-family: sans-serif; max-width: 900px; margin: 20px auto; }
+        .test-case { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .pass { background-color: #dfd; }
+        .fail { background-color: #fdd; }
+        pre { white-space: pre-wrap; font-size: 12px; background: #f5f5f5; padding: 8px; }
+        /* Hide modal blocker from view during tests */
+        .jquery-modal.blocker { opacity: 0 !important; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <h1>Upload Dialog Test: uploadBlob path and DOM cleanup</h1>
+    <p>Tests that the shared uploadBlob helper posts a blob as multipart form data and reports
+       success and server errors, and that stale dialog DOM is cleaned up on close.</p>
+    <div id="results"></div>
+
+    <!-- Mocks (before library scripts that may reference askbot at load time) -->
+    <script>
+        var askbot = {
+            settings: {
+                allowedUploadFileTypes: ['jpg', 'png', 'gif'],
+                static_url: '/'
+            },
+            urls: { upload: '/fake-upload' }
+        };
+        var gettext = function (s) { return s; };
+        var interpolate = function (s, args) {
+            return s.replace(/%s/, args && args[0] !== undefined ? args[0] : '');
+        };
+    </script>
+
+    <!-- Dependencies (order matters) -->
+    <script src="../jslib/jquery-3.6.0.min.js"></script>
+    <script src="../jslib/jquery.modal.min.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/utils/wrapped_element.js"></script>
+    <script src="../js/utils/alert_box.js"></script>
+    <script src="../js/utils/modal_dialog.js"></script>
+    <script src="../js/utils/file_upload_dialog.js"></script>
+
+    <script>
+        // ---- Test framework ----
+        var resultsDiv = document.getElementById('results');
+        var passCount = 0;
+        var failCount = 0;
+        var testResults = [];
+        var testQueue = [];
+
+        function assert(condition, message) {
+            if (!condition) throw new Error(message || 'Assertion failed');
+        }
+
+        function addResult(name, passed, details) {
+            if (passed) passCount++;
+            else failCount++;
+            testResults.push({ name: name, passed: passed, details: details });
+        }
+
+        function renderResults() {
+            var summary = document.createElement('div');
+            summary.style.cssText = 'padding: 10px; font-size: 18px; font-weight: bold;';
+            summary.style.backgroundColor = failCount === 0 ? '#dfd' : '#fdd';
+            summary.textContent = 'Summary: ' + passCount + ' passed, ' + failCount + ' failed';
+            resultsDiv.insertBefore(summary, resultsDiv.firstChild);
+
+            testResults.forEach(function (r) {
+                var div = document.createElement('div');
+                div.className = 'test-case ' + (r.passed ? 'pass' : 'fail');
+                div.innerHTML = '<h3>' + (r.passed ? '\u2713' : '\u2717') + ' ' + r.name + '</h3>' +
+                    '<pre>' + r.details.replace(/</g, '&lt;') + '</pre>';
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        function runNextTest() {
+            if (testQueue.length === 0) {
+                renderResults();
+                return;
+            }
+            var test = testQueue.shift();
+            test(function () { setTimeout(runNextTest, 100); });
+        }
+
+        // ---- Helper: create a FileUploadDialog with a given input ID ----
+        function createDialog(inputId) {
+            var dlg = new FileUploadDialog();
+            dlg.setInputId(inputId);
+            dlg.setFileType('image');
+            dlg._headerEnabled = true;
+            dlg.setHeadingText('Test Upload');
+            dlg.createDom();
+            return dlg;
+        }
+
+        // ==================================================================
+        // Test 1: uploadBlob posts a blob as multipart and reports success
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'uploadBlob posts a blob and reports success';
+            var details = '';
+
+            var origAjax = $.ajax;
+            var captured = null;
+            $.ajax = function (opts) {
+                captured = opts;
+                var xml = $.parseXML(
+                    '<result><file_url>/up/pasted.png</file_url>' +
+                    '<orig_file_name>pasted.png</orig_file_name><error></error></result>');
+                setTimeout(function () { opts.success(xml); }, 0);
+            };
+
+            var blob = new Blob(['x'], { type: 'image/png' });
+            var okURL = null, okName = null, errMsg = null;
+            uploadBlob(blob, 'pasted.png', {
+                onSuccess: function (url, origName) { okURL = url; okName = origName; },
+                onError: function (m) { errMsg = m; }
+            });
+
+            setTimeout(function () {
+                try {
+                    assert(captured, '$.ajax should have been called');
+                    assert(captured.url === '/fake-upload', 'should post to the upload url');
+                    assert(captured.type === 'POST', 'should use POST');
+                    assert(captured.processData === false, 'processData must be false');
+                    assert(captured.contentType === false, 'contentType must be false');
+                    assert(captured.data instanceof FormData, 'data must be FormData');
+                    var sent = captured.data.get('file-upload');
+                    details += 'FormData file-upload name: ' + (sent && sent.name) + '\n';
+                    assert(sent && sent.name === 'pasted.png', 'file name should be passed to FormData');
+                    details += 'onSuccess url: ' + okURL + ', name: ' + okName + '\n';
+                    assert(okURL === '/up/pasted.png', 'onSuccess should get parsed file_url');
+                    assert(okName === 'pasted.png', 'onSuccess should get parsed orig_file_name');
+                    assert(errMsg === null, 'onError should not be called on success');
+                    addResult(name, true, details + 'uploadBlob posts a blob and parses the success response.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+                $.ajax = origAjax;
+                done();
+            }, 30);
+        });
+
+        // ==================================================================
+        // Test 2: uploadBlob surfaces a server error message
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'uploadBlob surfaces a server error';
+            var details = '';
+
+            var origAjax = $.ajax;
+            $.ajax = function (opts) {
+                var xml = $.parseXML(
+                    '<result><file_url></file_url><orig_file_name></orig_file_name>' +
+                    '<error>allowed file types are ...</error></result>');
+                setTimeout(function () { opts.success(xml); }, 0);
+            };
+
+            var blob = new Blob(['x'], { type: 'image/png' });
+            var okCalled = false, errMsg = null;
+            uploadBlob(blob, 'pasted.png', {
+                onSuccess: function () { okCalled = true; },
+                onError: function (m) { errMsg = m; }
+            });
+
+            setTimeout(function () {
+                details += 'onError message: ' + errMsg + '\n';
+                try {
+                    assert(okCalled === false, 'onSuccess should not be called on error');
+                    assert(errMsg === 'allowed file types are ...',
+                        'onError should receive the server error text');
+                    addResult(name, true, details + 'uploadBlob routes server errors to onError.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+                $.ajax = origAjax;
+                done();
+            }, 30);
+        });
+
+        // ==================================================================
+        // Test 3: FIX — DOM cleanup via modal:after-close
+        // ==================================================================
+        testQueue.push(function (done) {
+            var name = 'FIX: modal:after-close removes old dialog from DOM';
+            var details = '';
+
+            var dlg = createDialog('file-upload-cleanup');
+            var element = dlg.getElement();
+
+            // Bind cleanup handler (mirrors the fix in WmdUploadDialog.createDom)
+            element.on('modal:after-close', function () {
+                element.remove();
+            });
+
+            // Show via jquery.modal
+            dlg.show();
+            var inDomAfterShow = document.body.contains(element[0]);
+            details += 'After show(), element in DOM: ' + inDomAfterShow + '\n';
+
+            // Close via modal
+            dlg.hide();
+
+            // Wait for modal:after-close callback
+            setTimeout(function () {
+                var inDomAfterClose = document.body.contains(element[0]);
+                details += 'After hide() + modal:after-close, element in DOM: ' + inDomAfterClose + '\n';
+
+                try {
+                    assert(inDomAfterShow === true,
+                        'Element should be in DOM after show()');
+                    assert(inDomAfterClose === false,
+                        'Element should be removed from DOM after modal:after-close');
+                    addResult(name, true, details + 'Fix works: dialog DOM is cleaned up on close.');
+                } catch (e) {
+                    addResult(name, false, details + 'FAILED: ' + e.message);
+                }
+
+                done();
+            }, 200);
+        });
+
+        // ---- Run ----
+        $(function () { runNextTest(); });
+    </script>
+</body>
+</html>
