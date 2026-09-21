@@ -7,6 +7,12 @@ Settings for ``settings.py`` file
   when enabling email alerts on a site with a lot of existing content.
   This prevents spamming users with update alerts on content created
   long before the perioding email alerts were enabled.
+* ``ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION`` - a python callable taking
+  ``(user)`` that decides image upload permission. The default preserves
+  the current behavior.
+* ``ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION`` - a python callable taking
+  ``(user)`` that decides attachment upload permission. The default preserves
+  the current behavior.
 
 There are more settings that are not documented yet,
 but most are described in the ``settings.py`` template:

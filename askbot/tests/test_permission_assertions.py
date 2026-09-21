@@ -2,7 +2,7 @@ import datetime
 from django.test.client import Client
 from django.urls import reverse
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core import exceptions
 from django.utils import timezone
 from askbot.tests import utils
@@ -1618,6 +1618,88 @@ class UploadPermissionAssertionTests(PermissionAssertionTestCase):
             self.user.assert_can_upload_file()
         except exceptions.PermissionDenied:
             self.fail('high rep user must be able to upload')
+
+upload_override_calls = []
+
+UPLOAD_MIN_REP = 10
+
+
+def upload_override_true(user):
+    upload_override_calls.append(user)
+    return True
+
+
+def upload_override_false(user):
+    upload_override_calls.append(user)
+    return False
+
+
+class UploadPermissionOverrideTests(PermissionAssertionTestCase):
+    """Tests the overridable image/attachment upload permission callables."""
+
+    def extraSetUp(self):
+        del upload_override_calls[:]
+
+    @with_settings(IMAGE_UPLOADS_ENABLED=True, ATTACHMENT_UPLOADS_ENABLED=True,
+                   MIN_REP_TO_UPLOAD_FILES=UPLOAD_MIN_REP)
+    def test_default_matches_stock_when_enabled(self):
+        self.user.reputation = UPLOAD_MIN_REP
+        self.user.save()
+        self.assertTrue(self.user.can_upload_image())
+        self.assertTrue(self.user.can_upload_attachment())
+
+    @with_settings(IMAGE_UPLOADS_ENABLED=False, ATTACHMENT_UPLOADS_ENABLED=False,
+                   MIN_REP_TO_UPLOAD_FILES=UPLOAD_MIN_REP)
+    def test_default_matches_stock_when_disabled(self):
+        self.user.reputation = UPLOAD_MIN_REP
+        self.user.save()
+        self.assertFalse(self.user.can_upload_image())
+        self.assertFalse(self.user.can_upload_attachment())
+
+    @with_settings(IMAGE_UPLOADS_ENABLED=True, ATTACHMENT_UPLOADS_ENABLED=True,
+                   MIN_REP_TO_UPLOAD_FILES=UPLOAD_MIN_REP)
+    def test_default_matches_stock_when_low_karma(self):
+        self.user.reputation = UPLOAD_MIN_REP - 1
+        self.user.save()
+        self.assertFalse(self.user.can_upload_image())
+        self.assertFalse(self.user.can_upload_attachment())
+
+    @override_settings(
+        ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION=upload_override_true,
+        ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION=upload_override_false)
+    @with_settings(IMAGE_UPLOADS_ENABLED=False, ATTACHMENT_UPLOADS_ENABLED=True)
+    def test_override_is_sole_decider(self):
+        # image override says True even though uploads are disabled;
+        # attachment override says False even though everything else allows it
+        self.assertTrue(self.user.can_upload_image())
+        self.assertFalse(self.user.can_upload_attachment())
+
+    @override_settings(
+        ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION=upload_override_true,
+        ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION=upload_override_false)
+    def test_override_receives_the_user(self):
+        self.user.can_upload_image()
+        self.user.can_upload_attachment()
+        self.assertEqual(upload_override_calls, [self.user, self.user])
+
+    @override_settings(
+        ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION=upload_override_true,
+        ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION=upload_override_false)
+    def test_upload_endpoint_honors_override(self):
+        client = Client()
+        client.force_login(self.user)
+        response = client.post(reverse('upload'))
+        # image override lets the user past the OR-gate, so the failure
+        # is no longer the permission denial
+        self.assertNotIn('Uploading of files is not allowed',
+                         response.content.decode())
+
+    def test_upload_endpoint_rejects_anonymous(self):
+        client = Client()
+        response = client.post(reverse('upload'))
+        self.assertIn('anonymous users cannot upload',
+                      response.content.decode())
+
 
 class ClosedForumTests(utils.AskbotTestCase):
     def setUp(self):

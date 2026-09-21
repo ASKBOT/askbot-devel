@@ -23,6 +23,19 @@ def default_user_can_manage_admin_tags(user):
 
     return False
 
+
+def default_user_can_upload_image(user):
+    """Stock image-upload permission decision."""
+    from askbot.models import user_can_upload_image
+    return user_can_upload_image(user)
+
+
+def default_user_can_upload_attachment(user):
+    """Stock attachment-upload permission decision."""
+    from askbot.models import user_can_upload_attachment
+    return user_can_upload_attachment(user)
+
+
 class AskbotStaticSettings(AppConf):
     ALLOWED_UPLOAD_FILE_TYPES = ('.jpg', '.jpeg', '.gif',
                                 '.bmp', '.png', '.tiff')
@@ -72,6 +85,8 @@ class AskbotStaticSettings(AppConf):
     SPAM_CHECKER_TIMEOUT_SECONDS = 1
     TRANSLATE_URL = True # set true to localize urls
     USER_CAN_MANAGE_ADMIN_TAGS_FUNCTION = default_user_can_manage_admin_tags
+    USER_CAN_UPLOAD_IMAGE_FUNCTION = default_user_can_upload_image
+    USER_CAN_UPLOAD_ATTACHMENT_FUNCTION = default_user_can_upload_attachment
     USER_DATA_EXPORT_DIR = const.DEFAULT_USER_DATA_EXPORT_DIR
     USE_LOCAL_FONTS = False
     SEARCH_FRONTEND_SRC_URL = None

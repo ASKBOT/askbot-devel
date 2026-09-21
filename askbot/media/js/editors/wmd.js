@@ -22,7 +22,7 @@ WMD.prototype.filterEnabledButtons = function (buttons) {
   var buttonsList = buttons.split(' ');
   var filteredList = buttonsList.filter(function (button) {
     if (button === 'image') return askbot.data.userCanUploadImage;
-    if (button === 'image') return askbot.data.userCanUploadAttachment;
+    if (button === 'attachment') return askbot.data.userCanUploadAttachment;
     return true;
   });
   return filteredList.join(' ');
