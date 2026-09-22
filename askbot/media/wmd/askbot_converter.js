@@ -12,6 +12,28 @@
  * PURIFY_CONFIG and ALLOWED_ATTR_MAP are loaded from wmd/sanitize_config.js
  * (auto-generated from askbot/const/sanitizer_config.py).
  */
+/**
+ * Turn the raw allowlist setting into a clean list of TLDs.
+ *
+ * Splits on commas and whitespace, lowercases each entry, drops a leading
+ * dot, and keeps only entries made of TLD-safe characters. Must match the
+ * Python parser in askbot/utils/markup.py.
+ */
+function parseTldAllowlist(text) {
+  if (!text) {
+    return [];
+  }
+  var tlds = [];
+  var tokens = text.split(/[\s,]+/);
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i].trim().toLowerCase().replace(/^\.+/, '');
+    if (token && /^[a-z0-9-]+$/.test(token)) {
+      tlds.push(token);
+    }
+  }
+  return tlds;
+}
+
 var getAskbotMarkdownConverter = function() {
   askbot['controllers'] = askbot['controllers'] || {};
   var converter = askbot['controllers']['markdownConverter'];
@@ -99,8 +121,22 @@ AskbotMarkdownConverter.prototype._createMarkdownInstance = function() {
   // Note: Video embedding is handled by extract/restore pattern in makeHtml()
   // for security (iframes inserted after sanitization)
 
-  // Custom link patterns (auto-linking based on regex patterns)
   var settings = askbot['settings'] || {};
+
+  // Turn off bare-domain and "www." auto-linking only when explicitly off.
+  // An absent value keeps the default (on), matching the Python side.
+  if (settings.linkifyFuzzyEnabled === false) {
+    md.linkify.set({fuzzyLink: false});
+  }
+
+  // Restrict which domain endings auto-link as bare domains. Applied only
+  // when non-empty; an empty list would kill all bare-domain links.
+  var tldAllowlist = parseTldAllowlist(settings.linkifyTldAllowlist);
+  if (tldAllowlist.length) {
+    md.linkify.tlds(tldAllowlist, false);
+  }
+
+  // Custom link patterns (auto-linking based on regex patterns)
   md.use(linkPatternsPlugin, {
     enabled: settings.autoLinkEnabled || false,
     patterns: settings.autoLinkPatterns || '',

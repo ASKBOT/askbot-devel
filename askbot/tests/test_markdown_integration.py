@@ -3,6 +3,7 @@ Integration tests for complete markdown-it-py setup with all plugins.
 """
 from bs4 import BeautifulSoup
 from django.test import TestCase
+from askbot.conf.markup import LINKIFY_TLD_ALLOWLIST_DEFAULT
 from askbot.tests.utils import with_settings
 from askbot.utils.markup import get_md_converter, reset_md_converter, markdown_input_converter
 
@@ -461,8 +462,11 @@ Code should not be linkified: `http://example.com`
         # Quotes should be URL-encoded in href
         self.assertEqual(links[0]['href'], 'http://example.com/quotes-are-%22part%22')
 
+    @with_settings(LINKIFY_FUZZY_ENABLED=True,
+                   LINKIFY_TLD_ALLOWLIST=LINKIFY_TLD_ALLOWLIST_DEFAULT + ' ws')
     def test_linkify_unicode_domain(self):
         """Unicode domains should be linked with punycode href."""
+        reset_md_converter()
         md = get_md_converter()
         text = '✪df.ws/1234'
         html = md.render(text)
@@ -488,6 +492,82 @@ Code should not be linkified: `http://example.com`
         self.assertEqual(len(links), 1)
         # Should add http:// and create a link
         self.assertEqual(links[0]['href'], 'http://example.com/')
+
+    @with_settings(LINKIFY_FUZZY_ENABLED=True,
+                   LINKIFY_TLD_ALLOWLIST=LINKIFY_TLD_ALLOWLIST_DEFAULT)
+    def test_linkify_default_skips_file_extensions(self):
+        """Default allowlist leaves file-ish tokens unlinked but links .com."""
+        reset_md_converter()
+        md = get_md_converter()
+        text = 'config-user.mk and main.py but example.com links'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'http://example.com')
+
+    @with_settings(LINKIFY_FUZZY_ENABLED=True,
+                   LINKIFY_TLD_ALLOWLIST=LINKIFY_TLD_ALLOWLIST_DEFAULT)
+    def test_linkify_explicit_scheme_still_links_dropped_tld(self):
+        """A dropped TLD still links when the URL has an explicit scheme."""
+        reset_md_converter()
+        md = get_md_converter()
+        text = 'http://config-user.mk here'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'http://config-user.mk')
+
+    @with_settings(LINKIFY_FUZZY_ENABLED=False,
+                   LINKIFY_TLD_ALLOWLIST=LINKIFY_TLD_ALLOWLIST_DEFAULT)
+    def test_linkify_fuzzy_disabled(self):
+        """Fuzzy off drops bare domains but keeps scheme URLs and emails."""
+        reset_md_converter()
+        md = get_md_converter()
+        text = 'bare example.com, http://example.com, user@example.com'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        hrefs = [link['href'] for link in links]
+        self.assertIn('http://example.com', hrefs)
+        self.assertIn('mailto:user@example.com', hrefs)
+        # The bare 'example.com' should not become its own link
+        self.assertEqual(len(links), 2)
+
+    @with_settings(LINKIFY_FUZZY_ENABLED=True, LINKIFY_TLD_ALLOWLIST='org')
+    def test_linkify_custom_allowlist(self):
+        """A custom allowlist links only its own TLDs."""
+        reset_md_converter()
+        md = get_md_converter()
+        text = 'example.org and example.com'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'http://example.org')
+
+    @with_settings(LINKIFY_FUZZY_ENABLED=True, LINKIFY_TLD_ALLOWLIST='')
+    def test_linkify_empty_allowlist_keeps_default_links(self):
+        """A blank allowlist does not kill all bare-domain links."""
+        reset_md_converter()
+        md = get_md_converter()
+        text = 'example.com works'
+        html = md.render(text)
+
+        soup = BeautifulSoup(html, 'html5lib')
+        links = soup.find_all('a')
+
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]['href'], 'http://example.com')
 
     def test_script_in_code_block_escaped(self):
         """Script tags in code blocks should be escaped (full pipeline test)."""

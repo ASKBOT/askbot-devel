@@ -15,9 +15,15 @@
  *       "autoLinkEnabled": false,
  *       "autoLinkPatterns": "",
  *       "autoLinkUrls": "",
- *       "markupCodeFriendly": false
+ *       "markupCodeFriendly": false,
+ *       "linkifyFuzzyEnabled": true,
+ *       "linkifyTldAllowlist": "com org net ..."
  *     }
  *   }
+ *
+ * When linkifyFuzzyEnabled is absent it defaults to true, and when
+ * linkifyTldAllowlist is absent it falls back to the shipped default list -
+ * matching how the Python side defaults these settings.
  *
  * Output format (stdout):
  *   {
@@ -47,6 +53,30 @@ const createDOMPurify = require('dompurify');
 const domWindow = new JSDOM('').window;
 const DOMPurify = createDOMPurify(domWindow);
 
+// Must stay identical to the livesettings default in askbot/conf/markup.py
+// and the fallback in test_markdown_parity.py.
+const SHIPPED_TLD_ALLOWLIST_DEFAULT =
+    'com org net edu gov mil int info biz io dev app co xyz me';
+
+/**
+ * Turn the raw allowlist setting into a clean list of TLDs.
+ * Must match the Python parser in askbot/utils/markup.py.
+ */
+function parseTldAllowlist(text) {
+    if (!text) {
+        return [];
+    }
+    const tlds = [];
+    const tokens = text.split(/[\s,]+/);
+    for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i].trim().toLowerCase().replace(/^\.+/, '');
+        if (token && /^[a-z0-9-]+$/.test(token)) {
+            tlds.push(token);
+        }
+    }
+    return tlds;
+}
+
 /**
  * Create and configure a markdown-it instance with the given settings.
  *
@@ -63,6 +93,22 @@ function createMarkdownInstance(settings) {
     // Enable GFM extensions
     md.enable(['table', 'strikethrough']);
     md.enable('linkify');
+
+    // Mirror the fuzzy-link toggle. Absent means on (the Python default).
+    if (settings.linkifyFuzzyEnabled === false) {
+        md.linkify.set({ fuzzyLink: false });
+    }
+
+    // Mirror the TLD allowlist. When the setting is absent, fall back to the
+    // shipped default, because the Python side defaults it to that list; a
+    // bare list here would diverge from Python on unset inputs.
+    const allowlistSource = settings.linkifyTldAllowlist !== undefined
+        ? settings.linkifyTldAllowlist
+        : SHIPPED_TLD_ALLOWLIST_DEFAULT;
+    const tldAllowlist = parseTldAllowlist(allowlistSource);
+    if (tldAllowlist.length) {
+        md.linkify.tlds(tldAllowlist, false);
+    }
 
     // Configure syntax highlighting with highlight.js
     md.options.highlight = function(code, lang) {

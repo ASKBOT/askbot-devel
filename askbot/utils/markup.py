@@ -91,6 +91,27 @@ def highlight_code(code, lang, attrs):
         return escape(code)
 
 
+# Only entries made of these characters are accepted as a TLD, so admin
+# input cannot inject regex metacharacters into linkify's compiled pattern.
+TLD_ALLOWLIST_CHARS_RE = re.compile(r'^[a-z0-9-]+$')
+
+
+def parse_tld_allowlist(text):
+    """Turns the raw allowlist setting into a clean list of TLDs.
+
+    Splits on commas and whitespace, lowercases each entry, drops a leading
+    dot, and keeps only entries made of TLD-safe characters. The same rules
+    are used by the JavaScript converter - keep the two in sync."""
+    if not text:
+        return []
+    tlds = []
+    for token in re.split(r'[\s,]+', text):
+        token = token.strip().lower().lstrip('.')
+        if token and TLD_ALLOWLIST_CHARS_RE.match(token):
+            tlds.append(token)
+    return tlds
+
+
 # Singleton pattern - create converter once
 _MD_CONVERTER = None
 
@@ -124,6 +145,18 @@ def get_md_converter():
 
     # Explicitly enable linkify feature for automatic URL detection
     md.enable('linkify')
+
+    # Turn off bare-domain and "www." auto-linking when disabled.
+    # Left at the default when enabled, so an absent value keeps it on.
+    if not askbot_settings.LINKIFY_FUZZY_ENABLED:
+        md.linkify.set({'fuzzy_link': False})
+
+    # Restrict which domain endings auto-link as bare domains. Skipped when
+    # the list is empty, since replacing the list with nothing would kill all
+    # bare-domain links instead of just narrowing them.
+    tld_allowlist = parse_tld_allowlist(askbot_settings.LINKIFY_TLD_ALLOWLIST)
+    if tld_allowlist:
+        md.linkify.tlds(tld_allowlist, keep_old=False)
 
     # Configure syntax highlighting
     md.options['highlight'] = highlight_code
