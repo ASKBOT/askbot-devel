@@ -22,6 +22,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from django.test import TestCase
 
+from askbot.conf.markup import LINKIFY_TLD_ALLOWLIST_DEFAULT
 from askbot.tests.utils import with_settings
 from askbot.utils.markup import markdown_input_converter, reset_md_converter
 
@@ -291,6 +292,9 @@ class TestMarkdownParity(TestCase):
             'AUTO_LINK_PATTERNS': settings.get('autoLinkPatterns', ''),
             'AUTO_LINK_URLS': settings.get('autoLinkUrls', ''),
             'MARKUP_CODE_FRIENDLY': settings.get('markupCodeFriendly', False),
+            'LINKIFY_FUZZY_ENABLED': settings.get('linkifyFuzzyEnabled', True),
+            'LINKIFY_TLD_ALLOWLIST': settings.get(
+                'linkifyTldAllowlist', LINKIFY_TLD_ALLOWLIST_DEFAULT),
         }
 
         # Apply settings and get Python output
@@ -489,6 +493,50 @@ class TestMarkdownParity(TestCase):
             'autoLinkUrls': r'https://bugs.example.com/\1'
         }
         self.assert_parity("Fixed #bug123", settings)
+
+    # Linkify fuzzy toggle and TLD allowlist tests
+
+    @skip_if_no_node
+    def test_linkify_default_drops_file_extensions(self):
+        """With the shipped allowlist, file-ish tokens do not auto-link."""
+        settings = {
+            'linkifyFuzzyEnabled': True,
+            'linkifyTldAllowlist': LINKIFY_TLD_ALLOWLIST_DEFAULT,
+        }
+        self.assert_parity(
+            "See config-user.mk and main.py but example.com",
+            settings
+        )
+
+    @skip_if_no_node
+    def test_linkify_fuzzy_disabled(self):
+        """Fuzzy off leaves bare domains as text but keeps scheme URLs."""
+        settings = {
+            'linkifyFuzzyEnabled': False,
+            'linkifyTldAllowlist': LINKIFY_TLD_ALLOWLIST_DEFAULT,
+        }
+        self.assert_parity(
+            "bare example.com vs http://example.com and user@example.com",
+            settings
+        )
+
+    @skip_if_no_node
+    def test_linkify_custom_allowlist(self):
+        """A custom allowlist links only its own TLDs."""
+        settings = {'linkifyFuzzyEnabled': True, 'linkifyTldAllowlist': 'org'}
+        self.assert_parity("example.org and example.com", settings)
+
+    @skip_if_no_node
+    def test_linkify_allowlist_parser_edge_cases(self):
+        """Both parsers handle dots, mixed separators, punycode and blanks."""
+        settings = {
+            'linkifyFuzzyEnabled': True,
+            'linkifyTldAllowlist': '.io, org  net,, xn--p1ai',
+        }
+        self.assert_parity(
+            "sub.io and a.org and b.net and c.com here",
+            settings
+        )
 
     # URL truncation tests
 

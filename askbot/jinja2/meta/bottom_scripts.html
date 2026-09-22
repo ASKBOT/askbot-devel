@@ -38,6 +38,8 @@
   askbot['settings']['markupCodeFriendly'] = {{ settings.MARKUP_CODE_FRIENDLY|as_js_bool }};
   askbot['settings']['videoEmbeddingEnabled'] = {{ settings.ENABLE_VIDEO_EMBEDDING|as_js_bool }};
   askbot['settings']['autoLinkEnabled'] = {{ settings.ENABLE_AUTO_LINKING|as_js_bool }};
+  askbot['settings']['linkifyFuzzyEnabled'] = {{ settings.LINKIFY_FUZZY_ENABLED|as_js_bool }};
+  askbot['settings']['linkifyTldAllowlist'] = {{ settings.LINKIFY_TLD_ALLOWLIST|tojson }};
   {% if settings.ENABLE_AUTO_LINKING %}
     askbot['settings']['autoLinkPatterns'] = {{ settings.AUTO_LINK_PATTERNS|tojson }};
     askbot['settings']['autoLinkUrls'] = {{ settings.AUTO_LINK_URLS|tojson }};

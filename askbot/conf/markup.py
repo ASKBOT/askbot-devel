@@ -16,6 +16,16 @@ MARKUP = ConfigurationGroup(
     super_group=DATA_AND_FORMATTING
 )
 
+# Default list of TLDs that may be auto-linked as bare domains.
+# Everyday web and common modern gTLDs, plus io/co/me. Two-letter file
+# extensions that are also ccTLDs (mk, py, md, sh, rs...) are left out so
+# tokens like 'config-user.mk' or 'main.py' are not turned into links.
+# This exact string is duplicated in the JS converter and parity runner -
+# keep the three copies identical.
+LINKIFY_TLD_ALLOWLIST_DEFAULT = (
+    'com org net edu gov mil int info biz io dev app co xyz me'
+)
+
 
 def regex_settings_validation(*args):
     """
@@ -94,6 +104,39 @@ settings.register(
     )
 )
 
+
+settings.register(
+    BooleanValue(
+        MARKUP,
+        'LINKIFY_FUZZY_ENABLED',
+        description=_('Auto-link bare domains and "www." addresses'),
+        help_text=_(
+            'If checked, text like "example.com" or "www.example.com" '
+            'becomes a link even without a "http://" prefix. '
+            'When unchecked, only addresses with an explicit scheme '
+            '(such as "http://" or "mailto:") are auto-linked. '
+            'This change takes effect after a server restart.'
+        ),
+        default=True
+    )
+)
+
+settings.register(
+    LongStringValue(
+        MARKUP,
+        'LINKIFY_TLD_ALLOWLIST',
+        description=_('Domain endings allowed for bare-domain auto-linking'),
+        help_text=_(
+            'Only bare domains ending in one of these will be auto-linked, '
+            'for example "com" or "org". Separate entries with spaces or '
+            'commas. A leading dot is optional (".io" and "io" are the same). '
+            'This limits which "word.ending" tokens turn into links, so that '
+            'file names like "main.py" are left alone. '
+            'This change takes effect after a server restart.'
+        ),
+        default=LINKIFY_TLD_ALLOWLIST_DEFAULT
+    )
+)
 
 settings.register(
     LongStringValue(

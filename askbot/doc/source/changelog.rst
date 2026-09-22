@@ -3,6 +3,9 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Added settings to control auto-linking of bare domains: a toggle for
+  "word.tld" detection and a list of allowed domain endings, so file names
+  like ``main.py`` are no longer turned into links.
 * Fixed large images overflowing the live Markdown preview box in the editor.
 * Added ``ASKBOT_USER_CAN_UPLOAD_IMAGE_FUNCTION`` and
   ``ASKBOT_USER_CAN_UPLOAD_ATTACHMENT_FUNCTION`` settings to override
