@@ -19,6 +19,7 @@ from askbot.tests.utils import AskbotTestCase
 from askbot.tests.utils import with_settings
 from askbot import (const, models)
 from askbot import models
+from askbot.conf import settings as askbot_settings
 from askbot.models import LocalizedUserProfile, UserProfile
 
 class ExportUserDataTests(AskbotTestCase):
@@ -388,5 +389,179 @@ class ManagementCommandTests(AskbotTestCase):
         self.assertEqual(count, 2)
         self.assertEqual(AuthGroup.objects.filter(name='Org1').count(), 1)
         self.assertEqual(AuthGroup.objects.filter(name='Org2').count(), 1)
+
+
+class FindStaleLinkificationsTests(AskbotTestCase):
+    """Tests for the askbot_find_stale_linkifications command.
+
+    The allowlist has to change within a test - one value while seeding the
+    stale link, another while running the command - so settings are set
+    imperatively here rather than with a decorator.
+    """
+    def setUp(self):
+        from askbot.conf.markup import LINKIFY_TLD_ALLOWLIST_DEFAULT
+        self.default_allowlist = LINKIFY_TLD_ALLOWLIST_DEFAULT
+        self.user = self.create_user('poster')
+
+    def tearDown(self):
+        from askbot.utils import markup
+        askbot_settings.update('LINKIFY_TLD_ALLOWLIST', self.default_allowlist)
+        askbot_settings.update('LINKIFY_FUZZY_ENABLED', True)
+        markup.reset_md_converter()
+
+    def set_allowlist(self, value):
+        from askbot.utils import markup
+        askbot_settings.update('LINKIFY_FUZZY_ENABLED', True)
+        askbot_settings.update('LINKIFY_TLD_ALLOWLIST', value)
+        markup.reset_md_converter()
+
+    def seed_stale_question(self, body_text='see config-user.mk for details'):
+        """Posts a question while '.mk' is allowed, then drops it again so the
+        stored autolink no longer matches the current settings."""
+        self.set_allowlist(self.default_allowlist + ' mk')
+        question = self.post_question(user=self.user, body_text=body_text)
+        self.set_allowlist(self.default_allowlist)
+        return question
+
+    def run_command(self, **kwargs):
+        out = io.StringIO()
+        with patch('sys.stdout', new=out):
+            management.call_command(
+                'askbot_find_stale_linkifications', verbosity=0, **kwargs)
+        return out.getvalue()
+
+    def test_seed_produces_stale_autolink(self):
+        question = self.seed_stale_question()
+        self.assertIn('href="http://config-user.mk"', question.html)
+
+    def test_dry_run_reports_and_does_not_write(self):
+        question = self.seed_stale_question()
+        output = self.run_command()
+        self.assertIn(f'post {question.id}', output)
+        self.assertIn('config-user.mk', output)
+        reloaded = self.reload_object(question)
+        self.assertIn('href="http://config-user.mk"', reloaded.html)
+
+    def test_fix_removes_stale_autolink(self):
+        question = self.seed_stale_question()
+        self.run_command(fix=True)
+        reloaded = self.reload_object(question)
+        self.assertNotIn('href="http://config-user.mk"', reloaded.html)
+        self.assertIn('config-user.mk', reloaded.html)
+
+    def test_fix_preserves_explicit_link_and_mention(self):
+        mentioned = self.create_user('mentioned')
+        body = ('see config-user.mk and [example](http://example.com) '
+                'thanks @mentioned')
+        question = self.seed_stale_question(body_text=body)
+
+        output = self.run_command()
+        self.assertNotIn('example.com', output)
+        self.assertNotIn('@mentioned', output)
+
+        self.run_command(fix=True)
+        reloaded = self.reload_object(question)
+        self.assertNotIn('href="http://config-user.mk"', reloaded.html)
+        self.assertIn('href="http://example.com"', reloaded.html)
+        self.assertIn('@mentioned', reloaded.html)
+
+    def test_deleted_and_unapproved_posts_are_ignored(self):
+        deleted = self.seed_stale_question()
+        models.Post.objects.filter(pk=deleted.id).update(deleted=True)
+        unapproved = self.seed_stale_question()
+        models.Post.objects.filter(pk=unapproved.id).update(approved=False)
+
+        output = self.run_command()
+        self.assertNotIn(f'post {deleted.id}', output)
+        self.assertNotIn(f'post {unapproved.id}', output)
+
+        self.run_command(fix=True)
+        for post in (deleted, unapproved):
+            reloaded = self.reload_object(post)
+            self.assertIn('href="http://config-user.mk"', reloaded.html)
+
+    def test_fix_is_idempotent(self):
+        self.seed_stale_question()
+        self.run_command(fix=True)
+        output = self.run_command()
+        self.assertIn('0 posts with stale auto-links', output)
+
+    def test_fix_does_not_bump_edit_tracking(self):
+        question = self.seed_stale_question()
+        before = self.reload_object(question)
+        rev_count = models.PostRevision.objects.filter(post=question).count()
+
+        self.run_command(fix=True)
+
+        after = self.reload_object(question)
+        self.assertEqual(after.last_edited_at, before.last_edited_at)
+        self.assertEqual(after.last_edited_by, before.last_edited_by)
+        self.assertEqual(after.added_at, before.added_at)
+        self.assertEqual(
+            models.PostRevision.objects.filter(post=question).count(),
+            rev_count)
+
+    def test_fix_of_accepted_answer_fires_no_activity(self):
+        self.set_allowlist(self.default_allowlist + ' mk')
+        question = self.post_question(user=self.user)
+        answerer = self.create_user('answerer')
+        answer = self.post_answer(
+            user=answerer, question=question,
+            body_text='answer with config-user.mk link')
+        models.Post.objects.filter(pk=answer.id).update(endorsed=True)
+        self.set_allowlist(self.default_allowlist)
+
+        activity_qs = models.Activity.objects.filter(
+            activity_type=const.TYPE_ACTIVITY_MARK_ANSWER)
+        before = activity_qs.count()
+
+        self.run_command(fix=True)
+
+        reloaded = self.reload_object(answer)
+        self.assertNotIn('href="http://config-user.mk"', reloaded.html)
+        self.assertEqual(activity_qs.count(), before)
+
+    def test_link_free_post_is_never_rendered(self):
+        stale = self.seed_stale_question()
+        plain = self.post_question(
+            user=self.user, body_text='no links here at all')
+
+        rendered_ids = []
+        real_parse = models.Post.parse_post_text
+
+        def spy(self):
+            rendered_ids.append(self.pk)
+            return real_parse(self)
+
+        with patch.object(models.Post, 'parse_post_text', spy):
+            self.run_command(fix=True)
+
+        self.assertIn(stale.id, rendered_ids)
+        self.assertNotIn(plain.id, rendered_ids)
+
+    def test_bad_post_is_skipped_in_both_modes(self):
+        good = self.seed_stale_question()
+        bad = self.seed_stale_question()
+
+        real_parse = models.Post.parse_post_text
+
+        def maybe_raise(self):
+            if self.pk == bad.id:
+                raise ValueError('boom')
+            return real_parse(self)
+
+        with patch.object(models.Post, 'parse_post_text', maybe_raise):
+            output = self.run_command()
+            self.assertIn(f'post {good.id}', output)
+            self.assertIn(f'could not process post {bad.id}', output)
+            self.assertIn('1 posts skipped as un-renderable', output)
+
+            fix_output = self.run_command(fix=True)
+            self.assertIn(f'could not process post {bad.id}', fix_output)
+
+        good_reloaded = self.reload_object(good)
+        bad_reloaded = self.reload_object(bad)
+        self.assertNotIn('href="http://config-user.mk"', good_reloaded.html)
+        self.assertIn('href="http://config-user.mk"', bad_reloaded.html)
 
 

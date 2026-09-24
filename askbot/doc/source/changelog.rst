@@ -3,6 +3,9 @@ Changes in Askbot
 
 Development (not yet released)
 ------------------------------
+* Added ``askbot_find_stale_linkifications`` command to report and optionally
+  re-render posts whose stored HTML contains bare-domain auto-links the current
+  linkify settings no longer produce.
 * Added settings to control auto-linking of bare domains: a toggle for
   "word.tld" detection and a list of allowed domain endings, so file names
   like ``main.py`` are no longer turned into links.
