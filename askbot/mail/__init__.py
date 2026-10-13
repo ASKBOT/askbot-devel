@@ -23,6 +23,20 @@ from askbot.utils.html import get_text_from_html
 
 DEBUG_EMAIL = django_settings.ASKBOT_DEBUG_INCOMING_EMAIL
 
+def _log_email_sent(subject, recipient_list):
+    """Append a line to the email log for monitoring/daily summaries."""
+    log_path = getattr(django_settings, 'EMAIL_LOG_FILE', None)
+    if not log_path:
+        return
+    try:
+        import datetime
+        ts = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        recipients = ','.join(str(r) for r in recipient_list)
+        with open(log_path, 'a') as f:
+            f.write(f'[{ts}] to={recipients} subject={subject}\n')
+    except Exception:
+        pass  # never break email sending over logging
+
 #or the future API
 def prefix_the_subject_line(subject):
     """prefixes the subject line with the
@@ -110,6 +124,8 @@ def send_mail( # pylint: disable=too-many-arguments
             attachments=attachments
         )
         logging.debug('sent update to %s' % ','.join(map(str, recipient_list)))
+        # Log email activity for monitoring
+        _log_email_sent(subject_line, recipient_list)
     except Exception as error: # pylint: disable=broad-except
         sys.stderr.write('\n' + str(error) + '\n')
         if raise_on_failure:
