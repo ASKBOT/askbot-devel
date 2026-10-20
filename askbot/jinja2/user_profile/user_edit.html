@@ -20,7 +20,13 @@
 <form name="" action="{{ url('edit_user',  view_user.id ) }}" method="post">{{ csrf_input }}
     <table class="user-details">
         <tr>
-            <td>{{ form.username.label_tag() }}</td>
+            <td>
+                {% if settings.EDITABLE_SCREEN_NAME %}
+                    {{ form.username.label_tag() }}
+                {% else %}
+                    {% trans %}Screen name{% endtrans %}
+                {% endif %}
+            </td>
             <td>
                 {% if settings.EDITABLE_SCREEN_NAME %}
                     {{ form.username }}
