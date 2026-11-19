@@ -22,7 +22,7 @@ PostVote.init();
 DownvoteComment.init();
 
 $(document).ready(function(){
-  $("#js-answers-sort-" + askbot['data']['answersSortTab']).attr('className',"js-active");
+  $("#js-answers-sort-" + askbot['data']['answersSortTab']).attr('class',"js-active");
 
   if (askbot['data']['threadIsClosed'] === false) {
     initEditor();
