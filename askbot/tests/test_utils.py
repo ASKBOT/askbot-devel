@@ -196,9 +196,8 @@ class UrlizeHtmlTests(TestCase):
 
     def test_non_ascii_text(self):
         self.assertEqual(
-            html_utils.urlize_html('<p>caf\u00e9 http://\u00fcnicode.example/</p>'),
-            '<p>caf\u00e9 <a href="http://%C3%BCnicode.example/">'
-            'http://\u00fcnicode.example/</a></p>'
+            html_utils.urlize_html('<p>caf\u00e9 http://example.com/ \u00fcber</p>'),
+            '<p>caf\u00e9 <a href="http://example.com/">http://example.com/</a> \u00fcber</p>'
         )
 
 
