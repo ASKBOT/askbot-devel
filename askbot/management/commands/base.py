@@ -172,8 +172,8 @@ class BaseImportXMLCommand(BaseCommand):
         xml = obj._source_xml
         soup = BeautifulSoup(xml, ['lxml', 'xml'])
         ids = []
-        for field in soup.findAll('field', attrs={'name': field_name}):
-            objs = field.findAll('object')
+        for field in soup.find_all('field', attrs={'name': field_name}):
+            objs = field.find_all('object')
             for obj_item in objs:
                 ids.append(obj_item.attrs['pk'])
         return ids

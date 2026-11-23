@@ -6,3 +6,4 @@ lamson==1.1
 django-lamson
 psycopg2-binary
 time-machine
+responses>=0.25,<1

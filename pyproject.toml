@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "askbot"
-requires-python = ">=3.10"
+requires-python = ">=3.11.5"
 dynamic = ["version"]
 description = "Question and Answer forum, like StackOverflow, written in python and Django"
 readme = "README.md"
@@ -33,11 +33,11 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
 ]
 dependencies = [
-    "aiohttp<4.0",
     "akismet==1.0.1",
-    "beautifulsoup4<=4.7.1",
-    "bleach==5.0.1",
+    "beautifulsoup4>=4.13,<5",
+    "bleach>=6.4,<7",
     "celery>=5.5,<6",
+    "cryptography",
     "django>=4.2,<5.3",
     "django-appconf>=1.2",
     "django-avatar>=9.0",
@@ -58,19 +58,17 @@ dependencies = [
     "markdown-it-py==4.0.0",
     "markupsafe",
     "mdit-py-plugins==0.5.0",
-    "mock==3.0.5",
     "oauth2<=1.9.0.post1",
-    "okta-jwt-verifier==0.2.3",
     "premailer==3.10.0",
     "psycopg2-binary>=2.9.6",
     "pygments>=2.15.0",
-    "pyjwt>=2.10,<3",
+    "pyjwt>=2.15,<3",
     "python-cas>=1.4.0,<1.7",
     "python-openid2>=3.0",
     "regex",
     "requests-oauthlib>=1.2.0",
     "requirements-parser>=0.2.0",
-    "responses>=0.9.0,<=0.23.1",
+    "soupsieve>=4.0,<5",
     "tldextract==5.1.2",
     "unidecode",
     "urllib3>=2,<3",

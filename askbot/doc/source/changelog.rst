@@ -1,8 +1,15 @@
 Changes in Askbot
 =================
 
-Development (not yet released)
-------------------------------
+0.14.0 (November 23, 2026)
+--------------------------
+* Dropped Python 3.10 support; askbot now requires Python 3.11.5 or newer.
+* Security upgrades: bleach 6.4, beautifulsoup4 4.13+, soupsieve 4,
+  PyJWT 2.15.
+* OIDC login now checks tokens with PyJWT. Askbot no longer installs
+  ``okta-jwt-verifier``, ``python-jose``, ``aiohttp``, ``mock`` or
+  ``responses`` (now a test-only requirement); install them yourself if your
+  deployment imports them directly.
 * Added ``askbot_find_stale_linkifications`` command to report and optionally
   re-render posts whose stored HTML contains bare-domain auto-links the current
   linkify settings no longer produce.

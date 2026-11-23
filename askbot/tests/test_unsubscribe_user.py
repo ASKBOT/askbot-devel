@@ -22,7 +22,7 @@ class UnsubscribeUserTests(AskbotTestCase):
 
         #load the unsubscribe page
         response = self.client.get(unsub_url)
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, 'html5lib')
         form = soup.find('form', attrs={'action': reverse('user_unsubscribe')})
         #collect the unsubscribe parameters from the page
         csrftoken = form.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']
@@ -52,7 +52,7 @@ class UnsubscribeUserTests(AskbotTestCase):
         user.email_key = ''
         response = self.client.get(unsub_url)
         self.assertEqual(response.context['result'], 'bad_key')
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, 'html5lib')
         form = soup.find('form', attrs={'action': reverse('user_unsubscribe')})
         #collect the unsubscribe parameters from the page
         csrftoken = form.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']
@@ -71,7 +71,7 @@ class UnsubscribeUserTests(AskbotTestCase):
         email = django.core.mail.outbox[0]
         email_html = email.alternatives[0][0]
 
-        soup = BeautifulSoup(email_html)
+        soup = BeautifulSoup(email_html, 'html5lib')
         link = soup.find('a')
         new_unsub_url = link['href']
         parsed_url = urlparse(new_unsub_url)
@@ -81,7 +81,7 @@ class UnsubscribeUserTests(AskbotTestCase):
         response = self.client.get(new_unsub_url)
         self.assertEqual(response.context['result'], 'ready')
 
-        soup = BeautifulSoup(response.content)
+        soup = BeautifulSoup(response.content, 'html5lib')
         form = soup.find('form', attrs={'action': reverse('user_unsubscribe')})
         #collect the unsubscribe parameters from the page
         csrftoken = form.find('input', attrs={'name': 'csrfmiddlewaretoken'})['value']
