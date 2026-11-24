@@ -2,7 +2,7 @@
 import datetime
 from unittest.mock import patch
 
-from django.test import RequestFactory
+from django.test import RequestFactory, override_settings
 from django.utils import timezone
 from django.contrib.sessions.backends.db import SessionStore
 
@@ -32,7 +32,7 @@ class SessionDatetimeTests(AskbotTestCase):
 
         record_question_visit(request, self.question, timezone.now())
 
-        value = request.session['question_view_times'][self.question.id]
+        value = request.session['question_view_times'][str(self.question.id)]
         self.assertIsInstance(value, str)
         # Should be parseable as ISO
         parsed = datetime.datetime.fromisoformat(value)
@@ -48,14 +48,14 @@ class SessionDatetimeTests(AskbotTestCase):
         # Pre-populate session with an ISO string from a past visit
         past = (timezone.now() - datetime.timedelta(hours=1)).isoformat()
         request.session['question_view_times'] = {
-            self.question.id: past
+            str(self.question.id): past
         }
 
         # Should not raise
         record_question_visit(request, self.question, timezone.now())
 
         # Value should be updated — verify it's still a string
-        value = request.session['question_view_times'][self.question.id]
+        value = request.session['question_view_times'][str(self.question.id)]
         self.assertIsInstance(value, str)
         # Parse both to compare timestamps (new should be >= past)
         parsed_new = datetime.datetime.fromisoformat(value)
@@ -77,3 +77,90 @@ class SessionDatetimeTests(AskbotTestCase):
         mock_defer.assert_called_once()
         call_kwargs = mock_defer.call_args[1]['kwargs']
         self.assertTrue(call_kwargs['update_view_count'])
+
+
+@override_settings(
+    SESSION_SERIALIZER='django.contrib.sessions.serializers.JSONSerializer'
+)
+class SessionReloadTests(AskbotTestCase):
+    """Visit times must survive saving and reloading a JSON session."""
+
+    def setUp(self):
+        self.author = self.create_user('author')
+        self.visitor = self.create_user('visitor')
+        self.question = self.post_question(user=self.author)
+        self.factory = RequestFactory()
+
+    def _make_request(self, session):
+        request = self.factory.get(self.question.get_absolute_url())
+        request.user = self.visitor
+        request.session = session
+        return request
+
+    def _reload(self, session):
+        session.save()
+        return SessionStore(session_key=session.session_key)
+
+    def _visit(self, session, timestamp=None):
+        from askbot.models import record_question_visit
+        request = self._make_request(session)
+        record_question_visit(request, self.question, timestamp or timezone.now())
+        return request
+
+    @staticmethod
+    def _last_update_view_count(mock_defer):
+        return mock_defer.call_args_list[-1][1]['kwargs']['update_view_count']
+
+    @patch('askbot.models.defer_celery_task')
+    @patch('askbot.models.functions.not_a_robot_request', return_value=True)
+    def test_repeat_visit_after_session_reload_does_not_count(self, mock_robot, mock_defer):
+        session = SessionStore()
+        self._visit(session)
+        self.assertTrue(self._last_update_view_count(mock_defer))
+
+        self._visit(self._reload(session))
+        self.assertFalse(self._last_update_view_count(mock_defer))
+
+    @patch('askbot.models.defer_celery_task')
+    @patch('askbot.models.functions.not_a_robot_request', return_value=True)
+    def test_visit_marks_session_modified(self, mock_robot, mock_defer):
+        first = timezone.now() - datetime.timedelta(hours=1)
+        session = SessionStore()
+        self._visit(session, first)
+        session = self._reload(session)
+
+        second = timezone.now()
+        request = self._visit(session, second)
+        self.assertTrue(request.session.modified)
+
+        session = self._reload(request.session)
+        stored = session['question_view_times'][str(self.question.id)]
+        self.assertEqual(datetime.datetime.fromisoformat(stored), second)
+
+    @patch('askbot.models.defer_celery_task')
+    @patch('askbot.models.functions.not_a_robot_request', return_value=True)
+    def test_new_activity_after_reload_counts_again(self, mock_robot, mock_defer):
+        session = SessionStore()
+        self._visit(session, timezone.now() - datetime.timedelta(hours=1))
+        session = self._reload(session)
+
+        thread = self.question.thread
+        thread.last_activity_at = timezone.now()
+        thread.last_activity_by = self.author
+        thread.save()
+        self.question = self.reload_object(self.question)
+
+        self._visit(session)
+        self.assertTrue(self._last_update_view_count(mock_defer))
+
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
+    def test_question_page_reload_counts_view_once(self):
+        self.client.force_login(self.visitor)
+        url = self.question.get_absolute_url()
+        for _ in range(2):
+            response = self.client.get(
+                url, HTTP_ACCEPT_LANGUAGE='en', HTTP_USER_AGENT='Mozilla Gecko'
+            )
+            self.assertEqual(response.status_code, 200)
+        thread = self.reload_object(self.question.thread)
+        self.assertEqual(thread.view_count, 1)

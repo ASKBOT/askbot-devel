@@ -4172,7 +4172,9 @@ def record_question_visit(request, question, timestamp, **kwargs):
         if 'question_view_times' not in request.session:
             request.session['question_view_times'] = {}
 
-        last_seen_raw = request.session['question_view_times'].get(question.id, None)
+        # string key, because JSON sessions turn int keys into strings
+        visit_key = str(question.id)
+        last_seen_raw = request.session['question_view_times'].get(visit_key, None)
 
         # Parse ISO string back to datetime (session stores strings for JSON serialization)
         last_seen = None
@@ -4193,7 +4195,9 @@ def record_question_visit(request, question, timestamp, **kwargs):
             else:
                 update_view_count = True
 
-        request.session['question_view_times'][question.id] = timestamp.isoformat()
+        request.session['question_view_times'][visit_key] = timestamp.isoformat()
+        # changing the nested dict alone does not mark the session for saving
+        request.session.modified = True
         #2) run the slower jobs in a celery task
         from askbot import tasks
         defer_celery_task(

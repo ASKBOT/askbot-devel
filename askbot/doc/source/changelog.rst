@@ -1,6 +1,10 @@
 Changes in Askbot
 =================
 
+Development (not yet released)
+------------------------------
+* Fixed question view counts going up on every page reload.
+
 0.14.0 (November 23, 2026)
 --------------------------
 * Dropped Python 3.10 support; askbot now requires Python 3.11.5 or newer.
