@@ -7,7 +7,7 @@ warm-up + repeats so the numbers are stable enough to compare branches.
 
 Usage:
     cd askbot_site
-    ../env-md/bin/python ../perf_tag_search.py --base-url http://127.0.0.1:8000
+    ../venv/bin/python ../perf_tag_search.py --base-url http://127.0.0.1:8000
 
 The dev server must already be running (manage.py runserver, gunicorn, etc.)
 on the URL passed in. Run the script once before applying the optimization
