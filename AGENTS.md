@@ -28,12 +28,12 @@ not context managers, if the setting value should not change during the test.
 # Tox (recommended)
 tox
 
-Use virtual environment `env-md`
+Use virtual environment `venv`
 
 # Direct
 cd askbot_site/
 
-../env-md/bin/python manage.py test --parallel 8 askbot.tests askbot.deps.django_authopenid.tests
+../venv/bin/python manage.py test --parallel 8 askbot.tests askbot.deps.django_authopenid.tests
 
 # Database config (if needed)
 DB_TYPE=postgres DB_USER=askbot DB_PASS=askB0T! DB_HOST=localhost DB_PORT=5432 DB_NAME=askbotfortox
@@ -46,7 +46,7 @@ DB_TYPE=postgres DB_USER=askbot DB_PASS=askB0T! DB_HOST=localhost DB_PORT=5432 D
 Use `manage.py shell` with heredoc for one-off scripts that need Django context:
 
 ```bash
-cd askbot_site && ../env-md/bin/python manage.py shell << 'EOF'
+cd askbot_site && ../venv/bin/python manage.py shell << 'EOF'
 from askbot.utils.markup import markdown_input_converter
 
 result = markdown_input_converter("**test**")

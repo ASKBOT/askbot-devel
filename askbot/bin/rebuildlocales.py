@@ -3,7 +3,7 @@
 Rebuild locale files for askbot.
 
 Run from the project root:
-    ./env-md/bin/python askbot/bin/rebuildlocales.py
+    ./venv/bin/python askbot/bin/rebuildlocales.py
 
 This script:
 1. Runs jinja2_makemessages for HTML/Python/text templates
