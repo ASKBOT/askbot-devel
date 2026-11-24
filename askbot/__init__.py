@@ -9,19 +9,19 @@ import platform
 import sys
 import traceback
 
-VERSION = (0, 13, 0)
+VERSION = (0, 14, 0)
 
 #keys are module names used by python imports,
 #values - the package qualifier to use for pip
 REQUIREMENTS = {
-    'aiohttp': 'aiohttp<4.0',
     'appconf': 'django-appconf>=1.2',
     'akismet': 'akismet==1.0.1',
     'avatar': 'django-avatar>=9.0',
-    'bleach': 'bleach==5.0.1',
-    'bs4': 'beautifulsoup4<=4.7.1',
+    'bleach': 'bleach>=6.4,<7',
+    'bs4': 'beautifulsoup4>=4.13,<5',
     'compressor': 'django-compressor>=4.6,<5',
     'celery': 'celery>=5.5,<6',
+    'cryptography': 'cryptography',
     'django': 'django>=4.2,<5.3',
     'django_countries': 'django-countries>=8.2',
     'django_jinja': 'django-jinja>=2.11,<3',
@@ -31,7 +31,7 @@ REQUIREMENTS = {
     'jinja2': 'Jinja2>=3.1,<4',
     'jinja2_simple_tags': 'jinja2-simple-tags>=0.6,<1',
     'jsonfield': 'jsonfield>=2.0.0',
-    'jwt': 'pyjwt>=2.10,<3',
+    'jwt': 'pyjwt>=2.15,<3',
     'keyedcache': 'django-keyedcache3>=1.5.1',
     'livesettings': 'django-livesettings3>=1.7.0,<2',
     'linkify_it': 'linkify-it-py==2.0.2',
@@ -39,7 +39,6 @@ REQUIREMENTS = {
     'markupsafe': 'markupsafe',
     'mdit_py_plugins': 'mdit-py-plugins==0.5.0',
     'pygments': 'pygments>=2.15.0',
-    'mock': 'mock==3.0.5',
     'oauth2': 'oauth2<=1.9.0.post1',
     'openid': 'python-openid2>=3.0',
     'picklefield': 'django-picklefield>=3.2,<4',
@@ -47,11 +46,10 @@ REQUIREMENTS = {
     'cas': 'python-cas>=1.4.0,<1.7',
     'premailer': 'premailer==3.10.0',
     'psycopg2': 'psycopg2-binary>=2.9.6',
-    'okta_jwt_verifier': 'okta-jwt-verifier==0.2.3',
-    'responses': 'responses>=0.9.0,<=0.23.1',
     'requests_oauthlib': 'requests-oauthlib>=1.2.0',
     'requirements': 'requirements-parser>=0.2.0',
     'regex': 'regex',
+    'soupsieve': 'soupsieve>=4.0,<5',
     'tldextract': 'tldextract==5.1.2',
     'unidecode': 'unidecode',
     'urllib3': 'urllib3>=2,<3'

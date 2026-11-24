@@ -8,7 +8,7 @@ The latest stable version of askbot can be installed from the official `Python P
 
 There are several methods to install Askbot. The recommended choice of the method depends on whether you are planning to modify the source code and/or templates or not.
 
-Installation was tested with Python 3.7 with the following commands:
+Askbot 0.14.x requires Python 3.11.5+. Install it with the following commands:
 
     pip install --upgrade pip
     pip install setuptools-rust

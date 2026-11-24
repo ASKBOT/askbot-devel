@@ -9,7 +9,7 @@ such as `Linux` or `MacOS` and a Python environment.
 1) Introduction.
 ----------------
 
-Askbot `0.13.x` supports Django `4.2` and `5.2` and requires `Python 3.10+`.
+Askbot `0.14.x` supports Django `4.2` and `5.2` and requires `Python 3.11.5+`.
 Earlier versions support older Django and Python releases - see the
 compatibility table at the end of this document.
 
@@ -31,7 +31,7 @@ and run the production migration.
 
 Configure a fresh uncustomized installation of Askbot of desired version.
 
-First, decide which version of Python is required. For Askbot versions `0.12.x` and later, use `Python 3.10+`.
+First, decide which version of Python is required. For Askbot versions `0.14.x` and later, use `Python 3.11.5+`; for `0.12.x` - `0.13.x` use `Python 3.10+`.
 For `0.11.x` use `Python 3.6-3.10`, and for earlier versions use `Python 2.7`. Then install Askbot.
 
 For example, for the latest `0.11.x` run:
@@ -74,6 +74,8 @@ The following table shows the compatibility of Askbot versions with Django and P
 +-----------------------+---------------------------------+-------------------+
 | Version of Askbot (*) | Version of the Django framework | Version of Python |
 +=======================+=================================+===================+
+| `0.14.x`              | `4.2`, `5.2`                    | `3.11.5+`         |
++-----------------------+---------------------------------+-------------------+
 | `0.13.x`              | `4.2`, `5.2`                    | `3.10+`           |
 +-----------------------+---------------------------------+-------------------+
 | `0.12.x`              | `4.2`                           | `3.10+`           |

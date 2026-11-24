@@ -1,6 +1,6 @@
 # Agent Instructions
 
-Askbot is a Django-based Q&A forum (like StackOverflow). Django 4.2, Python 3.8+, PostgreSQL recommended.
+Askbot is a Django-based Q&A forum (like StackOverflow). Django 4.2/5.2, Python 3.11.5+, PostgreSQL recommended.
 
 This file is the single source of truth for agent guidance. `CLAUDE.md` is a
 symlink to it, so Claude Code, Codex, and other tools all read the same content.

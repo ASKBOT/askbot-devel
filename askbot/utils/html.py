@@ -40,18 +40,13 @@ def sanitize_html(html_string):
     sanitization in markup.py/markdown_input_converter(). This is
     more secure than allowing arbitrary iframes through sanitization.
     """
-    # Extend base allowed tags with markdown-specific ones
-    tags = ALLOWED_HTML_ELEMENTS + MARKDOWN_EXTRA_TAGS
+    tags = frozenset(ALLOWED_HTML_ELEMENTS) | frozenset(MARKDOWN_EXTRA_TAGS)
 
-    # Merge base attributes with markdown-specific ones
-    attributes = ALLOWED_HTML_ATTRIBUTES
+    attributes = {tag: list(attrs) for tag, attrs in ALLOWED_HTML_ATTRIBUTES.items()}
     for tag, attrs in MARKDOWN_EXTRA_ATTRIBUTES.items():
-        if tag in attributes:
-            existing = set(attributes[tag])
-            existing.update(attrs)
-            attributes[tag] = list(existing)
-        else:
-            attributes[tag] = attrs
+        merged = set(attributes.get(tag, ()))
+        merged.update(attrs)
+        attributes[tag] = list(merged)
 
     return bleach.clean(html_string,
                         tags=tags,
@@ -105,7 +100,7 @@ def urlize_html(html_string, trim_url_limit=40):
     """
     soup = BeautifulSoup(html_string, 'html5lib')
     extract_nodes = []
-    for node in soup.findAll(text=True):
+    for node in soup.find_all(string=True):
         parent_tags = [p.name for p in node.parents]
         skip_tags = ['a', 'img', 'pre', 'code']
         if set(parent_tags) & set(skip_tags):
@@ -138,7 +133,7 @@ def urlize_html(html_string, trim_url_limit=40):
     for node in extract_nodes:
         node.extract()
 
-    result = str(soup.find('body').renderContents(), 'utf8')
+    result = str(soup.find('body').encode_contents(), 'utf8')
     if html_string.endswith('\n') and not result.endswith('\n'):
         result += '\n'
 
@@ -158,7 +153,7 @@ def replace_links_with_text(html_string):
         url = image.get('src', '')
         text = image.get('alt', '')
         if url == '' or re.match(abs_url_re, url):
-            image.replaceWith(format_url_replacement(url, text))
+            image.replace_with(format_url_replacement(url, text))
 
     links = soup.find_all('a')
     for link in links:
@@ -166,11 +161,11 @@ def replace_links_with_text(html_string):
         text = ''.join(link.text) or ''
 
         if text == '':#this is due to an issue with url inlining in comments
-            link.replaceWith('')
+            link.replace_with('')
         elif url == '' or re.match(abs_url_re, url):
-            link.replaceWith(format_url_replacement(url, text))
+            link.replace_with(format_url_replacement(url, text))
 
-    return str(soup.find('body').renderContents(), 'utf-8')
+    return str(soup.find('body').encode_contents(), 'utf-8')
 
 
 def get_text_from_html(html_text):
@@ -184,14 +179,14 @@ def get_text_from_html(html_text):
     for link in links:
         url = link.get('href', '')
         text = ''.join(link.text) or ''
-        link.replaceWith(format_url_replacement(url, text))
+        link.replace_with(format_url_replacement(url, text))
 
     #replace <img> tags with plain text
     images = soup.find_all('img')
     for image in images:
         url = image.get('src', '')
         text = image.get('alt', '')
-        image.replaceWith(format_url_replacement(url, text))
+        image.replace_with(format_url_replacement(url, text))
 
     #extract and join phrases
     body_element = soup.find('body')
@@ -215,8 +210,8 @@ def strip_tags(html_string, tags=None):
     soup = BeautifulSoup(html_string, 'html5lib')
     for tag in tags:
         tag_matches = soup.find_all(tag)
-        list(map(lambda v: v.replaceWith(''), tag_matches))
-    return str(soup.find('body').renderContents(), 'utf-8')
+        list(map(lambda v: v.replace_with(''), tag_matches))
+    return str(soup.find('body').encode_contents(), 'utf-8')
 
 
 def has_moderated_tags(html_string):
@@ -248,7 +243,7 @@ def moderate_tags(html_string):
         if links:
             template = get_template('widgets/moderated_link.html')
             aviso = BeautifulSoup(template.render(), 'html5lib').find('body')
-            list(map(lambda v: v.replaceWith(aviso), links))
+            list(map(lambda v: v.replace_with(aviso), links))
             replaced = True
 
     if askbot_settings.MODERATE_IMAGES:
@@ -256,11 +251,11 @@ def moderate_tags(html_string):
         if images:
             template = get_template('widgets/moderated_link.html')
             aviso = BeautifulSoup(template.render(), 'html5lib').find('body')
-            list(map(lambda v: v.replaceWith(aviso), images))
+            list(map(lambda v: v.replace_with(aviso), images))
             replaced = True
 
     if replaced:
-        return str(soup.find('body').renderContents(), 'utf-8')
+        return str(soup.find('body').encode_contents(), 'utf-8')
 
     return html_string
 

@@ -8,7 +8,7 @@ and Sailing Cai and some code written for OSQA.
 
 Demos and hosting are available at http://askbot.com.
 
-Branch `master` - released as versions 0.13.x - supports Django 5.2, Django 4.2, Python 3.10+
+Branch `master` - released as versions 0.14.x - supports Django 5.2, Django 4.2, Python 3.11.5+
 
 Branch `0.12.x` - released as versions 0.12.x - supports Django 4.2, Python 3.10+
 

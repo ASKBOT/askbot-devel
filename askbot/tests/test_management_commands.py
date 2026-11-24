@@ -20,6 +20,7 @@ from askbot.tests.utils import with_settings
 from askbot import (const, models)
 from askbot import models
 from askbot.conf import settings as askbot_settings
+from askbot.management.commands.base import BaseImportXMLCommand
 from askbot.models import LocalizedUserProfile, UserProfile
 
 class ExportUserDataTests(AskbotTestCase):
@@ -565,3 +566,24 @@ class FindStaleLinkificationsTests(AskbotTestCase):
         self.assertIn('href="http://config-user.mk"', bad_reloaded.html)
 
 
+
+
+class BaseImportXMLCommandTests(unittest.TestCase):
+    def test_get_m2m_ids_for_field(self):
+        source_xml = (
+            '<django-objects version="1.0">'
+            '<object model="askbot.thread" pk="7">'
+            '<field name="tags" rel="ManyToManyRel" to="askbot.tag">'
+            '<object pk="3"></object><object pk="5"></object>'
+            '</field>'
+            '<field name="followed_by" rel="ManyToManyRel" to="auth.user">'
+            '<object pk="9"></object>'
+            '</field>'
+            '</object>'
+            '</django-objects>'
+        )
+        obj = MagicMock(_source_xml=source_xml)
+        command = BaseImportXMLCommand()
+        self.assertEqual(command.get_m2m_ids_for_field(obj, 'tags'), ['3', '5'])
+        self.assertEqual(command.get_m2m_ids_for_field(obj, 'followed_by'), ['9'])
+        self.assertEqual(command.get_m2m_ids_for_field(obj, 'missing'), [])

@@ -1,17 +1,31 @@
 """OpenId Connect protocol"""
-import asyncio
 import logging
+import jwt
 import requests
 from django.core.cache import cache
-from askbot.deps.django_authopenid.protocols.oidc.jwt_verifier import JwtVerifier
-from okta_jwt_verifier import JWTUtils
+import askbot
 
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+JWT_ALGORITHMS = ['RS256']
+JWT_LEEWAY_SECONDS = 120
+# PyJWKClient caches the provider keys, and OidcProtocol is rebuilt per request
+JWK_CLIENTS = {}
+
+
+def get_jwk_client(jwks_url):
+    """Returns a shared key set client for the url"""
+    client = JWK_CLIENTS.get(jwks_url)
+    if client is None:
+        client = jwt.PyJWKClient(
+            jwks_url,
+            headers={'User-Agent': f'askbot/{askbot.get_version()}'}
+        )
+        JWK_CLIENTS[jwks_url] = client
+    return client
+
 
 def get_jwt_payload(token):
-    """Returns parsed JWT payload as dict"""
-    return JWTUtils.parse_token(token)[1]
+    """Returns JWT payload as dict, without checking the signature"""
+    return jwt.decode(token, options={'verify_signature': False})
 
 class OidcProtocol:
     """Encapsulates the basic api necessary for the authorization flow of the
@@ -108,26 +122,36 @@ class OidcProtocol:
             logging.critical('Error in authorization function: %s', error)
             return False
 
+    def decode_verified_token(self, token, audience):
+        """Returns claims of a token signed by the provider,
+        raises a jwt.PyJWTError if the token is not valid"""
+        signing_key = get_jwk_client(self.jwks_url).get_signing_key_from_jwt(token)
+        return jwt.decode(token,
+                          signing_key.key,
+                          algorithms=JWT_ALGORITHMS,
+                          audience=audience,
+                          issuer=self.provider_url,
+                          leeway=JWT_LEEWAY_SECONDS,
+                          options={'require': ['iss', 'aud', 'exp']})
+
     def is_access_token_valid(self, access_token):
         """Validates the OIDC access token"""
-        jwt_verifier = JwtVerifier(issuer=self.provider_url,
-                                   client_id=self.client_id,
-                                   jwks_uri=self.jwks_url,
-                                   audience=self.audience)
         try:
-            loop.run_until_complete(jwt_verifier.verify_access_token(access_token))
+            self.decode_verified_token(access_token, self.audience)
             return True
-        except Exception: #pylint: disable=broad-except
+        except Exception as error: #pylint: disable=broad-except
+            logging.warning('OIDC access token is invalid: %s', error)
             return False
 
     def is_id_token_valid(self, id_token, csrf_token):
         """Validates OIDC id token"""
-        jwt_verifier = JwtVerifier(issuer=self.provider_url,
-                                   client_id=self.client_id,
-                                   jwks_uri=self.jwks_url,
-                                   audience=self.audience)
         try:
-            loop.run_until_complete(jwt_verifier.verify_id_token(id_token, nonce=csrf_token))
-            return True
-        except Exception: #pylint: disable=broad-except
+            claims = self.decode_verified_token(id_token, self.client_id)
+        except Exception as error: #pylint: disable=broad-except
+            logging.warning('OIDC ID token is invalid: %s', error)
             return False
+
+        if 'nonce' in claims and claims['nonce'] != csrf_token:
+            logging.warning('OIDC ID token is invalid: nonce mismatch')
+            return False
+        return True

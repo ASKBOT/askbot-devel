@@ -163,6 +163,96 @@ class HTMLUtilsTests(TestCase):
         )
 
 
+class UrlizeHtmlTests(TestCase):
+    def test_bare_url_linked(self):
+        self.assertEqual(
+            html_utils.urlize_html('see http://example.com now'),
+            'see <a href="http://example.com">http://example.com</a> now'
+        )
+
+    def test_www_domain_linked_and_existing_link_kept(self):
+        self.assertEqual(
+            html_utils.urlize_html(
+                '<p>visit www.example.com and <a href="http://x.com">http://y.com</a></p>'
+            ),
+            '<p>visit <a href="http://www.example.com">www.example.com</a>'
+            ' and <a href="http://x.com">http://y.com</a></p>'
+        )
+
+    def test_urls_in_pre_and_code_untouched(self):
+        html = '<pre>http://in-pre.com</pre><code>http://in-code.com</code>'
+        self.assertEqual(html_utils.urlize_html(html), html)
+
+    def test_entities_and_trailing_newline_kept(self):
+        self.assertEqual(
+            html_utils.urlize_html('<p>a &amp; b http://e.com/?a=1&amp;b=2</p>\n'),
+            '<p>a &amp; b <a href="http://e.com/?a=1&amp;b=2">'
+            'http://e.com/?a=1&amp;b=2</a></p>\n'
+        )
+
+    def test_text_without_links_unchanged(self):
+        html = '<p>plain text, no links</p>'
+        self.assertEqual(html_utils.urlize_html(html), html)
+
+    def test_non_ascii_text(self):
+        self.assertEqual(
+            html_utils.urlize_html('<p>caf\u00e9 http://example.com/ \u00fcber</p>'),
+            '<p>caf\u00e9 <a href="http://example.com/">http://example.com/</a> \u00fcber</p>'
+        )
+
+
+class StripTagsTests(TestCase):
+    def test_strips_given_tags_with_contents(self):
+        self.assertEqual(
+            html_utils.strip_tags('<p>a<img src="http://e.com/i.png">b</p>', tags=['img']),
+            '<p>ab</p>'
+        )
+        self.assertEqual(
+            html_utils.strip_tags('<p><a href="http://e.com">x</a> y <b>z</b></p>',
+                                  tags=['a', 'b']),
+            '<p> y </p>'
+        )
+
+    def test_blank_input_returned_as_is(self):
+        self.assertEqual(html_utils.strip_tags('   ', tags=['a']), '   ')
+
+    def test_non_ascii_text(self):
+        self.assertEqual(
+            html_utils.strip_tags('<p>caf\u00e9 <i>x</i></p>', tags=['i']),
+            '<p>caf\u00e9 </p>'
+        )
+
+
+class ModerateTagsTests(TestCase):
+    link_html = '<p>see <a href="http://e.com">link</a></p>'
+    image_html = '<p>pic <img src="http://e.com/i.png" alt="i"></p>'
+    moderated_link_html = ('<p>see <span class="moderated-item"><i></i>'
+                           'link awaiting moderation</span></p>')
+    moderated_image_html = ('<p>pic <span class="moderated-item"><i></i>'
+                            'link awaiting moderation</span></p>')
+
+    @with_settings(MODERATE_LINKS=True, MODERATE_IMAGES=True)
+    def test_links_and_images_moderated(self):
+        self.assertEqual(html_utils.moderate_tags(self.link_html), self.moderated_link_html)
+        self.assertEqual(html_utils.moderate_tags(self.image_html), self.moderated_image_html)
+        self.assertEqual(html_utils.moderate_tags('<p>no links</p>'), '<p>no links</p>')
+
+    @with_settings(MODERATE_LINKS=True, MODERATE_IMAGES=False)
+    def test_only_links_moderated(self):
+        self.assertEqual(html_utils.moderate_tags(self.link_html), self.moderated_link_html)
+        self.assertEqual(html_utils.moderate_tags(self.image_html), self.image_html)
+
+    @with_settings(MODERATE_LINKS=False, MODERATE_IMAGES=True)
+    def test_only_images_moderated(self):
+        self.assertEqual(html_utils.moderate_tags(self.link_html), self.link_html)
+        self.assertEqual(html_utils.moderate_tags(self.image_html), self.moderated_image_html)
+
+    @with_settings(MODERATE_LINKS=False, MODERATE_IMAGES=False)
+    def test_nothing_moderated(self):
+        self.assertEqual(html_utils.moderate_tags(self.link_html), self.link_html)
+        self.assertEqual(html_utils.moderate_tags(self.image_html), self.image_html)
+
+
 class SanitizeHtml(TestCase):
     def test_strip_forbidden_attributes(self):
         html = '<p id="foo" class="bar">TEXT</p>'
@@ -173,3 +263,65 @@ class SanitizeHtml(TestCase):
         html = '<button onClick="javascript:alert(\'foobar\')">click me</button>'
         new_html = sanitize_html(html)
         self.assertEqual(new_html, 'click me')
+
+    def assertSanitized(self, html, expected):
+        self.assertEqual(sanitize_html(html), expected)
+
+    def test_javascript_href_removed(self):
+        self.assertSanitized('<a href="javascript:alert(1)">x</a>', '<a>x</a>')
+
+    def test_javascript_href_with_zero_width_space_removed(self):
+        # GHSA-8rfp-98v4-mmr6, fixed in bleach 6.4
+        self.assertSanitized('<a href="javascript​:alert(1)">x</a>', '<a>x</a>')
+
+    def test_safe_link_kept(self):
+        html = '<a href="http://example.com/" title="t">x</a>'
+        self.assertSanitized(html, html)
+
+    def test_image_kept(self):
+        html = '<img src="http://example.com/a.png" alt="pic">'
+        self.assertSanitized(html, html)
+
+    def test_comments_stripped(self):
+        self.assertSanitized('<p>a<!-- secret -->b</p>', '<p>ab</p>')
+
+    def test_task_list_kept(self):
+        html = ('<ul class="contains-task-list"><li class="task-list-item">'
+                '<input type="checkbox" checked disabled> done</li></ul>')
+        self.assertSanitized(html, html)
+
+    def test_task_list_input_extra_attributes_stripped(self):
+        self.assertSanitized('<input type="text" name="q" value="v">',
+                             '<input type="text">')
+
+    def test_code_highlight_classes_kept(self):
+        html = ('<pre><code class="language-python">'
+                '<span class="k">def</span></code></pre>')
+        self.assertSanitized(html, html)
+
+    def test_iframe_stripped(self):
+        self.assertSanitized('<iframe src="http://evil.example/"></iframe>after',
+                             'after')
+
+    def test_script_tag_stripped(self):
+        self.assertSanitized('<script>alert(1)</script>after', 'alert(1)after')
+
+    def test_entities_preserved(self):
+        self.assertSanitized('<p title="x">&amp; &lt;b&gt; 5 &gt; 3</p>',
+                             '<p>&amp; &lt;b&gt; 5 &gt; 3</p>')
+        html = '<a href="http://e.com/?a=1&amp;b=2">q</a>'
+        self.assertSanitized(html, html)
+
+    def test_uppercase_tags_lowercased(self):
+        self.assertSanitized('<P>Upper <B>bold</B></P>', '<p>Upper <b>bold</b></p>')
+
+    def test_table_attributes(self):
+        self.assertSanitized(
+            '<table><tbody><tr><td colspan="2" style="color:red">c</td></tr></tbody></table>',
+            '<table><tbody><tr><td colspan="2">c</td></tr></tbody></table>'
+        )
+
+    def test_shared_attribute_config_not_modified(self):
+        from askbot.const.sanitizer_config import ALLOWED_HTML_ATTRIBUTES
+        sanitize_html('<p>x</p>')
+        self.assertNotIn('span', ALLOWED_HTML_ATTRIBUTES)

@@ -43,10 +43,18 @@ class AskbotConfigError(ImproperlyConfigured):
     """Prints an error with a preamble and possibly a footer"""
     def __init__(self, error_message):
         msg = PREAMBLE + error_message
-        if sys.__stdin__.isatty():
+        if stdin_is_tty():
             #print footer only when askbot is run from the shell
             msg += FOOTER
-            super(AskbotConfigError, self).__init__(msg)
+        super(AskbotConfigError, self).__init__(msg)
+
+
+def stdin_is_tty():
+    """False also when stdin is missing or closed, as in some servers"""
+    try:
+        return bool(sys.__stdin__) and sys.__stdin__.isatty()
+    except ValueError:
+        return False
 
 
 def domain_is_bad():
@@ -901,8 +909,8 @@ def test_versions():
     upgrade_msg = 'About upgrades, please read http://askbot.org/doc/upgrade.html'
     if dj_ver < (3, 0) or dj_ver >= (5, 3):
         errors.append('This version of Askbot supports django 3.x - 5.2 ' + upgrade_msg)
-    elif py_ver[:3] < (3, 10, 0):
-        errors.append('Askbot requires Python 3.10 - 3.12')
+    elif py_ver[:3] < (3, 11, 5):
+        errors.append('Askbot requires Python 3.11.5 - 3.12')
     elif py_ver[:3] >= (3, 13, 0):
         errors.append(
             'Askbot was not tested with Python > 3.12.x\n'
